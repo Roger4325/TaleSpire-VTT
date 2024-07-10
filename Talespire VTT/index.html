@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+    function logSymbioteEvent(event) {
+        console.log(event);
+    }
+
+function handleClientsResponse(clientsResponse) {
+
+    for (let client of clients) {
+    }
+}
+
+function handleClientEvents(eventResponse) {
+    let client = eventResponse.payload.client;
+    let name = eventResponse.payload.client.player.name;
+    TS.clients.isMe(client.id).then((isMe) => {
+        console.log("client event changed")
+        switch (eventResponse.kind) {
+            case "clientJoinedBoard":
+                if (!isMe) {
+                    addClient(client);
+                }
+                break;
+            case "clientLeftBoard":
+                if (!isMe) {
+                    clients.splice(clients.indexOf({ id: client.id, name: name }), 1);
+                }
+                break;
+            case "clientModeChanged":
+                if (isMe) {
+                    if (eventResponse.payload.clientMode == "gm") {
+                        console.log("swtiched to GM mode")
+                        window.open("DMScreen.html")
+
+                    } else {
+                        console.log("swtiched to player mode")
+                        window.open("PlayerCharacter.html")
+                    }
+                } else {
+                    addClient(client);
+                }
+                break;
+            default:
+                break;
+        }
+    }).catch((response) => {
+        console.error("error on trying to see whether client is own client", response);
+    });
+}
+
+function addClient(client) {
+    TS.clients.isMe(client.id).then((isMe) => {
+        if (!isMe) {
+            let newPlayerSelect = document.createElement("option");
+            newPlayerSelect.value = client.id;
+            newPlayerSelect.innerText = client.player.name;
+            document.getElementById("recipient-select").appendChild(newPlayerSelect);
+
+            clients.push({ id: client.id, name: client.name });
+        }
+    });
+}
+
+async function onStateChangeEvent(msg) {
+    if (msg.kind === "hasInitialized") {
+        //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
+
+        let clients = await TS.clients.getClientsInThisBoard();
+        if (!clients.cause) {
+            //if "cause" is undefined this means our call succeeded
+            for (let client of clients) {
+                TS.clients.isMe(client.id).then((isMe) => {
+                    if (isMe) {
+                        TS.clients.getMoreInfo([client.id]).then((response) => {
+                            if (response[0].clientMode == "gm") {
+                                console.log("isGM");
+                                window.open("DMScreen.html")
+                            }
+                            else{
+                                console.log("isPlayer");
+                                window.open("PlayerCharacter.html")
+                            }
+                        }).catch((response) => {
+                            console.error("error on trying to get info", response);
+                        });
+                    } else {
+                        addClient(client);
+                    }
+                }).catch((response) => {
+                    console.error("error on trying to see whether client is own client", response);
+                });
+            }
+        }
+    }
+}
+
+</script>
+
+<head>
+</head>
+
+<body>
+</body>
+</html>

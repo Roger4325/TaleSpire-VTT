@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<script>
+    function logSymbioteEvent(event) {
+        console.log(event);
+    }
+
+</script>
+<html>
+    <head>
+        <title>template</title>
+        <link rel="stylesheet" href="stylePlayerCharacter.css">
+        <link rel="stylesheet" href="styleShared.css">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+<body>
+    <header>
+        <div id="settings-container">
+            <div id="settings-dropdown">
+                <ul>
+                    <li>
+                        <div id="restButtons">
+                            <button id="shortRestButton">Short Rest</button>
+                            <button id="longRestButton">Long Rest</button>
+                        </div>
+                    </li>
+                    <li>Option 2</li>
+                    <li>Option 3</li>
+                    <!-- Add more options as needed -->
+                </ul>
+            </div>
+            <div id="settings-toggle">
+                <i class="fa fa-cog" id="settings-icon"></i>
+            </div>
+        </div>
+        <h1>Talespire Character Sheet</h1>
+        <nav class="tabs">
+            <ul>
+                <li><a href="#playerStats">Player Stats</a></li>
+                <li><a href="#actions">Actions</a></li>
+                <li><a href="#SpellList">Spell List</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#features">Features & Traits</a></li>
+                <li><a href="#Docs">Quick notes</a></li>
+            </ul>
+        </nav>
+        <hr>
+        
+        <div id="playerInformation">
+            <div id="playerPictureContainer"> 
+                <button id="get-selection-button" class="nonRollButton">Link mini</button>
+                <div id="characterPicture" class="characterPicture"></div>
+                
+                <div id="toggleContainer" class="toggle-container">
+                    <div id="disadvButton" class="toggle-button">DisAdv</div>
+                    <div id="normalButton" class="toggle-button active">Flat</div>
+                    <div id="advButton" class="toggle-button">Adv</div>
+                </div>
+            </div>
+            <div id="playerCharacterContainer">
+                <label for="playerCharacterInput"></label>
+                <input type="text" id="playerCharacterInput" class = "inputBox" placeholder="Character Name">
+                <div id="playerAuxStats" class="abilityScores">
+                    <div id ="character Init" class="abilitybox">Init
+                        <hr>
+                        <div class="playerStats">
+                            <label class="actionButtonLabel" for="initiativeButton" value="5" data-dice-type="1d20" data-name="Initiative"></label>
+                            <button id="initiativeButton"class="actionButton" title="click me" contenteditable="true">+5</button>
+                        </div>
+                    </div>
+                    
+                    <div id ="armorClass" class="abilitybox">AC
+                        <hr>
+                        <div id="AC" class="playerStats" contenteditable="true"> 20</div>
+                    </div>
+                    <div id ="walkingSpeed" class="abilitybox">Speed
+                        <hr>
+                        <div id="speed" class="playerStats"  contenteditable="true"> 30ft.</div>
+                    </div>
+                </div>
+                <div id="playerTempStats"class="abilityScores">
+                    <div id ="prof" class="abilitybox">Prof
+                        <hr>
+                        <div id="profBonus"class="playerStats">2</div>
+                    </div>
+                    <div id ="characterLevelContainer" class="abilitybox">
+                            <div id="levelText">
+                                <span>Level</span>
+                                <span id ="characterLevel" class="playerStats levelStat" contenteditable="true">1</span>
+                            </div>
+                        <hr>
+                            <div>XP: 
+                                <span id="playerXP" class="playerStats levelStat" contenteditable="true">0</span>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div id="healthContainer">
+                <div id="playerHealth">
+                    <div class ="playerHealth">
+                        <button id="healButton" class="nonRollButton">Heal</button>  
+                        <input type="int" id="healthInput" class= "inputBox" placeholder="">
+                        <button id="damageButton" class="nonRollButton">Damage</button>                            
+                    </div>
+                    <div class="playerHealth">
+                        <div>
+                            <span>Current</span>
+                            <span> / </span>
+                            <span>Max</span>
+                        </div>
+                        <div id="playerHealthTracker">
+                            <span id="currentCharacterHP" contenteditable="true">0</span>
+                            <span> / </span>
+                            <span id="maxCharacterHP" contenteditable="true">50</span>
+                        </div>
+                        <div>
+                            <span>Player HitPoints</span>
+                        </div>                        
+                    </div>
+
+                    <div>
+                        <div id="tempHPText">Temp Health</div>
+                        <div>
+                            <input type="int" id="tempHP" class= "inputBox" placeholder="">
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="conditionHeader">
+                        <label for="condition-select"></label>
+                        <select id="condition-select">
+                            <option value="Aid">Aid</option>
+                            <option value="Bane">Bane</option>
+                            <option value="Blinded">Blinded</option>
+                            <option value="Bless">Bless</option>
+                            <option value="Concentration">Concentration</option>
+                            <option value="Charmed">Charmed</option>
+                            <option value="Deafended">Deafended</option>
+                            <option value="EmboldeningBond">Emboldening Bond</option>
+                            <option value="Exhaustion">Exhaustion</option>
+                            <option value="Frightened">Frightened</option>
+                            <option value="Grappled">Grappled</option>
+                            <option value="Guidance">Guidance</option>
+                            <option value="Heroism">Heroism</option>
+                            <option value="Incapacitated">Incapacitated</option>
+                            <option value="Invisible">Invisible</option>
+                            <option value="Paralyzed">Paralyzed</option>
+                            <option value="Petrified">Petrified</option>
+                            <option value="Poisioned">Poisioned</option>
+                            <option value="Prone">Prone</option>
+                            <option value="Restrained">Restrained</option>
+                            <option value="Sanctuary">Sanctuary</option>
+                            <option value="ShieldofFaith">Shield of Faith</option>
+                            <option value="Stunned">Stunned</option>
+                            <option value="Unconscious">Unconscious</option>
+                        <!-- Add more condition options here -->
+                        </select>
+                        <button class="nonRollButton" onclick="playerConditions()">Condition</button>
+                    </div>
+                    <div id="conditionTracker"></div>
+                </div>
+            </div>
+        </div>
+        <hr>
+    </header>
+    <main>
+        <section id="playerStats">
+            <div id="playerAbilityScores" class="abilityScores">
+                <div class="abilitybox">STR
+                    <hr>
+                    <div id="strengthScore" class="abilityScore" contenteditable="true"> 20</div>
+                        <div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Str Check" data-ability="STR"></label>
+                            <button class="actionButton abilitybuttonstyler">+5</button>
+                        </div>                        
+                </div>
+                <div class="abilitybox">DEX
+                    <hr>
+                    <div id="dexterityScore" class="abilityScore" contenteditable="true"> 20</div>
+                    <div>
+                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Dex Check" data-ability="DEX"></label>
+                        <button class="actionButton abilitybuttonstyler" title="click me">+5</button>
+                    </div> 
+                </div>
+                <div class="abilitybox">CON
+                    <hr>
+                    <div id="constitutionScore" class="abilityScore" contenteditable="true"> 20</div>
+                    <div>
+                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Con Check" data-ability="CON"></label>
+                        <button class="actionButton abilitybuttonstyler">+5</button>
+                    </div>                     
+                </div>
+                <div class="abilitybox">INT
+                    <hr>
+                    <div id="intelligenceScore" class="abilityScore" contenteditable="true"> 20</div>
+                    <div>
+                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Int Check" data-ability="INT"></label>
+                        <button class="actionButton abilitybuttonstyler">+5</button>
+                    </div>                     
+                </div>
+                <div class="abilitybox">WIS
+                    <hr>
+                    <div id="wisdomScore" class="abilityScore" contenteditable="true"> 20</div>
+                    <div>
+                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Wis Check" data-ability="WIS"></label>
+                        <button class="actionButton abilitybuttonstyler">+5</button>
+                    </div>                     
+                </div>
+                <div class="abilitybox">CHA
+                    <hr>
+                    <div id="charismaScore" class="abilityScore" contenteditable="true"> 20</div>
+                    <div>
+                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Cha Check" data-ability="CHA"></label>
+                        <button class="actionButton abilitybuttonstyler">+5</button>
+                    </div>                     
+                </div>
+            </div>
+
+
+            <div class="bottom-player-stats-container">
+                <div class="skill-container">
+                    <h2>Skills</h2>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton1" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="acrobaticsAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Acrobatics</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Acrobatics"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton2" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="animalHandlingAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Animal Handling</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Animal Handling"></label>
+                            <button class="actionButton skillbuttonstyler">+12</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton3" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="arcanaAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Arcana</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Arcana"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton4" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="athleticsAbilityMod" class="abilityMod" contenteditable="true">STR</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Athletics</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Athletics"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton6" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="deceptionAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Deception</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Deception"></label>
+                            <button class="actionButton skillbuttonstyler">+12</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton7" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="historyAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div class="skillBlock">
+                            <div class="skillName">History</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="History"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton8" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="insightAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Insight</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Insight"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton9" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="intimidationAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Intimidation</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Intimidation"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton10" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="investigationAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Investigation</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Investigation"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton11" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="medicineAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Medicine</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Medicine"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton12" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="natureAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Nature</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Nature"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton13" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="perceptionAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Perception</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Perception"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton14" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="performanceAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Performance</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Performance"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton15" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="persuasionAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Persuasion</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Persuasion"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton16" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="religionAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Religion</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Religion"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton17" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="sleightofHandAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Sleight of Hand</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Sleight of Hand"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton18" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="stealthAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Stealth</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Stealth"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                    <div class="skill-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton19" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div id="survivalAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div class="skillBlock">
+                            <div class="skillName">Survival</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Survival"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>                    
+                    </div>
+                </div>
+
+
+                <div class="saves-container">
+                    <h2>Saves</h2>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton20" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">STR Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Strength Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton21" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">Dex Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Dex Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton22" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">CON Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Constitution Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton23" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">INT Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Intelligence Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton24" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">WIS Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Wisdom Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+                    <div class="saves-row">
+                        <div class="proficiencyButtons">
+                            <button id="proficiencyButton25" title="not proficient" class="notProficient" value="0"></button>
+                        </div>
+                        <div class="savesBlock">
+                            <div class="saveName">CHA Save</div>
+                            <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Charisma Save"></label>
+                            <button class="actionButton skillbuttonstyler">5</button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="passives-container">
+                    <div class="passivesBlock">
+                        <div class="passives">Passive WIS Perception</div><span id ="passivePerception"></span>
+
+                    </div>
+                    <div class="passivesBlock">
+                        <div class="passives"> Passive INT (Investigation)</div> <span id ="passiveInvestigation"></span>
+                    </div>
+                    <div class="passivesBlock">
+                        <div class="passives">Passive WIS (Insight)</div><span id ="passiveInsight"></span>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="actions">
+            <div class="actions-container">
+                <div class="actionsubtabs">
+                    <div class="actionsubtab" data-category="all">All</div>
+                    <div class="actionsubtab" data-category="attacks">Attacks</div>
+                    <div class="actionsubtab" data-category="actions">Actions</div>
+                    <div class="actionsubtab" data-category="bonus-actions">Bonus Actions</div>
+                    <div class="actionsubtab" data-category="reactions">Reactions</div>
+                    <div class="actionsubtab" data-category="other">Other</div>
+                </div>
+        
+                <div class="actions-list">
+                    <!-- Default actions for Attacks, Actions, Bonus Actions, Reactions -->
+                        <table class="actionTable">
+                            <thead>
+                                <tr>
+                                    <th>Prof</th>
+                                    <th>Name</th>
+                                    <th>Reach</th>
+                                    <th>ToHit</th>
+                                    <th>Damage</th>
+                                    <th>Settings</th>
+                                    <!-- <th>Modifier</th>
+                                    <th>Properties</th>
+                                    <th>Details</th>
+                                    <th>Cat</th> -->
+                                </tr>
+                            </thead>
+                            <tbody id="actionTableBody">
+                                <tr data-category="">
+                                    <td>
+                                        <div class="proficiencyButtons">
+                                            <button id="proficiencyActionButton" title="not proficient" class="notProficient actionProficiencyButton" value="0"></button>
+                                        </div>
+                                    </td>
+                                    <td contenteditable="true">Maul</td>
+                                    <td contenteditable="true">5ft. Reach</td>
+                                    <td>
+                                        <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="toHitButton"></label>
+                                        <button id =toHitDice class="actionButton skillbuttonstyler">5</button>
+                                    </td>
+                                    
+                                    <td>
+                                        <label class="actionButtonLabel" value="5" data-dice-type="2d6+4d4" data-name="Maul"></label>
+                                        <button class="actionButton skillbuttonstyler">2d6+4d4+5</button>
+                                    </td>
+                                    <td>
+                                        <button class="nonRollButton rowSetting" onclick="toggleAdditionalInfo()">Action Setting
+
+                                        </button>
+                                        <div id="additionalInfoContainer" class="additional-info-container">
+                                            <button class="close-button" onclick="toggleAdditionalInfo()">Close</button>
+                                                <div class="abilityStats-container">
+                                                    <div class="abilityStatDropdown">
+                                                        <label for="abilityDropdown"></label>
+                                                        <select class="ability-dropdown">
+                                                            <option value="STR">STR</option>
+                                                            <option value="DEX">DEX</option>
+                                                            <option value="CON">CON</option>
+                                                            <option value="INT">INT</option>
+                                                            <option value="WIS">WIS</option>
+                                                            <option value="CHA">CHA</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            <div contenteditable="true">Heavy, Two-Handed</div>
+                                            <div contenteditable="true">A brightly Colored Maul</div>
+                                            <div class="dropdown">
+                                                <button class="dropbtn">Set</button>
+                                                <div id="checkboxContainer" class="dropdown-content">
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <input>Magic Bonus
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    <div class="add-action-button" onclick="newTableRow()">
+                        <span>+</span>
+                    </div>
+                    <!-- Add more default actions as needed -->
+                </div>
+        
+            </div>
+        </section>
+        
+    </main>
+    
+
+        
+       
+</body>
+    <script>
+    </script>
+    <footer>
+        &copy; 2023 Steel Wing Productions
+    </footer>
+    <script src="PlayerScript.js" defer></script>
+    <script src="SharedScript.js" defer></script>
+</html>

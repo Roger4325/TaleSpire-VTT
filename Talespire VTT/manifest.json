@@ -1,0 +1,58 @@
+{
+  "manifestVersion": 1,
+  "name": "Talespire VTT",
+  "summary": "A VTT like experiance for Talespire",
+  "descriptionFilePath": "/README.md",
+  "version": "0.0.1",
+  "license": "MIT",
+  "about": {
+    "website": "https://www.example.com/Talespire+VTT",
+    "authors": ["illume63"]
+  },
+  "kind": "webView",
+  "entryPoint": "/index.html",
+  "api": {
+    "version": "0.1",
+    "initTimeout": 10,
+    "subscriptions": {
+      "dice": {
+        "onRollResults": "handleRollResult"
+      },
+      "symbiote": {
+        "onVisibilityEvent": "logSymbioteEvent",
+        "onStateChangeEvent": "onStateChangeEvent"
+        
+      },
+      "creatures": {
+        "onCreatureStateChange": "onCreatureStateChange"
+      },
+      "sync": {
+        "onSyncMessage": "handleSyncEvents"
+      },
+      "clients": {
+        "onClientEvent": "handleClientEvents"
+      },
+      "players": {
+        "onCampaignPlayerEvent": "handlePlayerPermissionEvents"
+      }
+    },
+    "interop": {
+      "id": "10f34bc9-dfa2-4623-a691-bf0a1fb2d9d0"
+    }
+  },
+  "controls": {
+    "reload": true
+  },
+  "environment": {
+    "capabilities": [
+      "playAudio",
+      "runInBackground"
+    ],
+    "extras": [
+      "icons",
+      "fonts",
+      "colorStyles"
+    ],
+    "webViewBackgroundColor": "#000"
+  }
+}
