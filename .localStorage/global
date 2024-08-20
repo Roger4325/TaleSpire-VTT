@@ -33,7 +33,7 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "A brightly Colored Maul",
+            "": "1",
             "proficiencyButton1": ".5",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
@@ -58,7 +58,6 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
-            "proficiencyActionButton": "1",
             "conditions": [],
             "actionTable": [
                 {
@@ -66,15 +65,15 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
-                        "fourthColumn": "+4",
+                        "fourthColumn": "+7",
                         "fifthColumn": "2d6+4d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
+                        "seventhColumn": "CON",
                         "ninthColumn": {
                             "attacks": false,
-                            "actions": false,
+                            "actions": true,
                             "bonus-actions": false,
-                            "reactions": false,
+                            "reactions": true,
                             "other": false
                         }
                     }

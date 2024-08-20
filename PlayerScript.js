@@ -708,6 +708,7 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent) {
 
             // Call the function to generate checkboxes
             generateCheckboxes(dropdownContent, checkboxData);
+
         }
     }
 }
@@ -726,6 +727,7 @@ function attachAbilityDropdownListeners() {
             dropdown.addEventListener('change', function () {
                 updateToHitDice(dropdown);
                 updateContent();
+                calculateActionDamageDice()
             });
 
             // Mark the dropdown with a custom attribute to indicate that the event listener is added
@@ -737,7 +739,6 @@ function attachAbilityDropdownListeners() {
 function toggleAdditionalInfo() {
     let container = document.getElementById("additionalInfoContainer");
 
-    console.log("toggleAdditionalInfo is being called")
 
     // Toggle the 'active' class to trigger the transition effect
     container.classList.toggle("active");
@@ -850,11 +851,8 @@ function updateDisplayedRows(selectedCategories) {
 
     allRows.forEach(row => {
 
-        console.log(row)
         // Get the data-category attribute or set it to an empty string if not present
         const rowCategories = (row.getAttribute('data-category') || '').trim().split(' ');
-
-        console.log(rowCategories)
 
         // Check if the "all" category is present in selectedCategories
         const showAllCategories = selectedCategories && selectedCategories.includes('all');
@@ -1098,7 +1096,6 @@ function processActionTableRow(){
 
             rowData['ninthColumn'] = ninthColumnData;
 
-            console.log('%cSaving Checkbox Data for row ' + (index + 1), 'color: red', ninthColumnData); // Log the saved checkbox data for the current row
         } else {
             console.error('Element with ID "checkboxContainer" not found in row ' + (index + 1));
         }
@@ -1165,7 +1162,7 @@ function updateCharacterUI(characterData, characterName) {
     conditionsMap.set(conditionTrackerDiv, conditionsSet);
     updateConditionsUI(conditionsSet);
     updateAbilityScoreModifiers(characterData);
-    // updateActionTableUI(characterData.actionTable);
+    updateActionTableUI(characterData.actionTable);
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -1280,8 +1277,6 @@ function updateActionTableUI(actionTableData) {
             const row = rowData[rowIndex];
             const newRow = document.createElement('tr');
 
-            console.log(row)
-
             // Set up proficiency button
             const profCell = document.createElement('td');
             const profButtonDiv = createProficiencyButton(row.proficiencyButton);
@@ -1319,14 +1314,14 @@ function updateActionTableUI(actionTableData) {
             // Set up Damage label and button
             const damageCell = document.createElement('td');
             const damageLabel = document.createElement('label');
-            damageLabel.className = "actionButtonLabel";
-            damageLabel.setAttribute('value', row.fifthColumn || "2d6+4d4+5");
-            damageLabel.setAttribute('data-dice-type', "2d6+4d4");
+            damageLabel.className = "actionButtonLabel damageDiceButton";
+            damageLabel.setAttribute('value', findAbilityScoreLabel(row.seventhColumn).getAttribute('value') || "0");
+            damageLabel.setAttribute('data-dice-type', row.fifthColumn);
             damageLabel.setAttribute('data-name', row.secondColumn || "default"); // Use action name as data-name attribute
 
             const damageButton = document.createElement('button');
-            damageButton.className = "actionButton skillbuttonstyler";
-            damageButton.textContent = row.fifthColumn || "2d6+4d4+5"; // Default value if empty
+            damageButton.className = "actionButton damageDiceButton skillbuttonstyler";
+            damageButton.textContent = row.fifthColumn & findAbilityScoreLabel(row.seventhColumn).getAttribute('value')|| "2d6+4d4+5"; // Default value if empty
             damageCell.appendChild(damageLabel);
             damageCell.appendChild(damageButton);
             newRow.appendChild(damageCell);
@@ -1335,10 +1330,18 @@ function updateActionTableUI(actionTableData) {
             const columnSixCell = createColumnSixContent(row);
             newRow.appendChild(columnSixCell);
 
+
+            // Set the data-category attribute based on the selected checkboxes
+            const checkboxes = row["ninthColumn"];
+            const selectedCategories = Object.keys(checkboxes).filter(key => checkboxes[key]);
+            newRow.setAttribute('data-category', selectedCategories.join(' '));
+
             // Append the row to the table body
             tableBody.appendChild(newRow);
         }
     });
+
+    calculateActionDamageDice()
 }
 
 // Helper function to create column six. The settings menu on the Action table.
@@ -1414,16 +1417,7 @@ function createColumnSixContent(rowData) {
     checkboxContainer.id = "checkboxContainer";
     checkboxContainer.className = "dropdown-content";
 
-    for (const [key, value] of Object.entries(checkboxes)) {
-        const checkboxLabel = document.createElement('label');
-        const checkbox = document.createElement('input');
-        checkbox.type = "checkbox";
-        checkbox.name = key;
-        checkbox.checked = value;
-        checkboxLabel.appendChild(checkbox);
-        checkboxLabel.appendChild(document.createTextNode(key));
-        checkboxContainer.appendChild(checkboxLabel);
-    }
+    generateCheckboxes(checkboxContainer, checkboxData, { actionTable: [{ 1: { ninthColumn: checkboxes } }] });
 
     dropdownDiv.appendChild(checkboxContainer);
     additionalInfoContainer.appendChild(dropdownDiv);
@@ -1447,8 +1441,21 @@ function createColumnSixContent(rowData) {
 function createProficiencyButton(value) {
     const button = document.createElement('button');
     button.classList.add('actionProficiencyButton');
+
+    // Find the matching proficiency level object based on the value
+    const proficiencyLevel = skillProficiencyLevels.find(level => level.value === value);
+
+    if (proficiencyLevel) {
+        // Set the button's class and title based on the proficiency level
+        button.classList.add(proficiencyLevel.class);
+        button.title = proficiencyLevel.title;
+    } else {
+        // If no match is found, set a default class and title
+        button.classList.add('notProficient');
+        button.title = 'not proficient';
+    }
+
     button.value = value;
-    // Add any other properties or classes needed for styling
 
     // Create a div container to match your existing structure
     const proficiencyButtonsDiv = document.createElement('div');
@@ -1456,7 +1463,46 @@ function createProficiencyButton(value) {
 
     // Add the proficiency button to the div container
     proficiencyButtonsDiv.appendChild(button);
-
     return proficiencyButtonsDiv;
 }
 
+// Helper function to calculate action damage dice based on ability modifier
+function calculateActionDamageDice() {
+    const allRows = document.querySelectorAll('.actionTable tbody tr');
+
+    allRows.forEach(row => {
+        // Select the label with class 'damageDiceButton'
+        const damageLabel = row.querySelector('label.damageDiceButton');
+        const damageButton = row.querySelector('button.damageDiceButton');
+        const abilityDropdown = row.querySelector('.ability-dropdown');
+
+
+        if (damageLabel && damageButton && abilityDropdown) {
+            // Get the selected ability from the dropdown
+            const selectedAbility = abilityDropdown.value;
+
+            // Find the corresponding ability modifier using the provided function
+            const abilityScoreLabel = findAbilityScoreLabel(selectedAbility).getAttribute('value');
+
+            damageLabel.setAttribute ('value', abilityScoreLabel)
+
+            console.log(abilityScoreLabel)
+            console.log(damageLabel.getAttribute('data-dice-type'))
+
+            if (abilityScoreLabel > 0){
+                damageButton.textContent = damageLabel.getAttribute('data-dice-type') + "+" + abilityScoreLabel
+            }
+            else if (abilityScoreLabel < 0){
+                damageButton.textContent = damageLabel.getAttribute('data-dice-type') + abilityScoreLabel
+            }
+            else{
+                damageButton.textContent = damageLabel.getAttribute('data-dice-type')
+            }
+
+            
+
+            console.log(damageButton.textContent)
+            
+        }
+    });
+}
