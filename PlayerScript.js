@@ -737,6 +737,8 @@ function attachAbilityDropdownListeners() {
 function toggleAdditionalInfo() {
     let container = document.getElementById("additionalInfoContainer");
 
+    console.log("toggleAdditionalInfo is being called")
+
     // Toggle the 'active' class to trigger the transition effect
     container.classList.toggle("active");
 
@@ -808,6 +810,7 @@ function updateAllToHitDice() {
 // Function to generate checkboxes
 function generateCheckboxes(checkboxContainer, checkboxData, tyrnData) {
     // Check if checkboxes are already present in the container
+
     const existingCheckboxes = checkboxContainer.getElementsByClassName('category-checkbox');
 
     if (existingCheckboxes.length === 0) {
@@ -842,11 +845,16 @@ function generateCheckboxes(checkboxContainer, checkboxData, tyrnData) {
 
 // Function to update displayed rows based on selected categories
 function updateDisplayedRows(selectedCategories) {
+
     const allRows = document.querySelectorAll('.actionTable tbody tr');
 
     allRows.forEach(row => {
+
+        console.log(row)
         // Get the data-category attribute or set it to an empty string if not present
         const rowCategories = (row.getAttribute('data-category') || '').trim().split(' ');
+
+        console.log(rowCategories)
 
         // Check if the "all" category is present in selectedCategories
         const showAllCategories = selectedCategories && selectedCategories.includes('all');
@@ -1019,86 +1027,87 @@ function getAllEditableContent() {
 function processActionTableRow(){
 
     // Add the ActionTable into the content to be saved
-const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
-const actionTableData = [];
+    const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
+    const actionTableData = [];
 
-actionTableRows.forEach((row, index) => {
-    const rowData = {};
-    let proficiencyButtonValue;
+    actionTableRows.forEach((row, index) => {
+        const rowData = {};
+        let proficiencyButtonValue;
 
-    // Get proficiency button value
-    const proficiencyButton = row.querySelector('.proficiencyButtons .actionProficiencyButton');
-    if (proficiencyButton) {
-        proficiencyButtonValue = proficiencyButton.value;
+        // Get proficiency button value
+        const proficiencyButton = row.querySelector('.proficiencyButtons .actionProficiencyButton');
+        if (proficiencyButton) {
+            proficiencyButtonValue = proficiencyButton.value;
 
-        // Save the proficiency button value as the first object
-        rowData['proficiencyButton'] = proficiencyButtonValue;
-    }
+            // Save the proficiency button value as the first object
+            rowData['proficiencyButton'] = proficiencyButtonValue;
+        }
 
-    const secondColumnCell = row.querySelector('td:nth-child(2)');
-    const thirdColumnCell = row.querySelector('td:nth-child(3)');
-    const fourthColumnCell = row.querySelector('td:nth-child(4)');
-    const sixthColumnCell = row.querySelector('td:nth-child(6)');
-    const seventhColumnCell = row.querySelector('td:nth-child(7)');
-    const eighthColumnCell = row.querySelector('td:nth-child(8)');
+        const secondColumnCell = row.querySelector('td:nth-child(2)');
+        const thirdColumnCell = row.querySelector('td:nth-child(3)');
+        const fourthColumnCell = row.querySelector('td:nth-child(4)');
+        const fifthColumnCell = row.querySelector('td:nth-child(5) label.actionButtonLabel').getAttribute('data-dice-type');
+        const sixthColumnCell = row.querySelector('td:nth-child(6)');
+        const seventhColumnCell = row.querySelector('.ability-dropdown');
+        const eighthColumnCell = row.querySelector('td:nth-child(8)');
 
-    if (secondColumnCell) {
-        rowData['secondColumn'] = secondColumnCell.textContent.trim();
-    }
+        if (secondColumnCell) {
+            rowData['secondColumn'] = secondColumnCell.textContent.trim();
+        }
 
-    if (thirdColumnCell) {
-        rowData['thirdColumn'] = thirdColumnCell.textContent.trim();
-    }
+        if (thirdColumnCell) {
+            rowData['thirdColumn'] = thirdColumnCell.textContent.trim();
+        }
 
-    if (fourthColumnCell) {
-        rowData['fourthColumn'] = "";
-    }
+        if (fourthColumnCell) {
+            rowData['fourthColumn'] = fourthColumnCell.textContent.trim();
+        }
 
-    const fifthColumnCell = row.querySelector('.ability-dropdown');
-    if (fifthColumnCell) {
-        rowData['fifthColumn'] = fifthColumnCell.value;
-    }
+        
+        if (fifthColumnCell) {
+            rowData['fifthColumn'] = fifthColumnCell;
+        }
 
-    if (sixthColumnCell) {
-        rowData['sixthColumn'] = sixthColumnCell.textContent.trim();
-    }
+        if (sixthColumnCell) {
+            rowData['sixthColumn'] = "ActionSettings";
+        }
 
-    if (seventhColumnCell) {
-        rowData['seventhColumn'] = seventhColumnCell.textContent.trim();
-    }
-    if (eighthColumnCell) {
-        rowData['eighthColumn'] = eighthColumnCell.textContent.trim();
-    }
+        if (seventhColumnCell) {
+            rowData['seventhColumn'] = seventhColumnCell.value;
+        }
+        if (eighthColumnCell) {
+            rowData['eighthColumn'] = eighthColumnCell.textContent.trim();
+        }
 
-    
-    // Save the selected options from checkboxes in the ninth column
-    const ninthColumnCell = row.querySelector('.dropdown-content');
-    if (ninthColumnCell) {
-        const checkboxes = ninthColumnCell.querySelectorAll('input[type="checkbox"]');
+        
+        // Save the selected options from checkboxes in the ninth column
+        const ninthColumnCell = row.querySelector('.dropdown-content');
+        if (ninthColumnCell) {
+            const checkboxes = ninthColumnCell.querySelectorAll('input[type="checkbox"]');
 
-        console.log('%cChecking checkboxes for row ' + (index + 1), 'color: red'); // Log that we are checking checkboxes for the current row
+            console.log('%cChecking checkboxes for row ' + (index + 1), 'color: red'); // Log that we are checking checkboxes for the current row
 
-        const ninthColumnData = {};
+            const ninthColumnData = {};
 
-        checkboxes.forEach(checkbox => {
-            const category = checkbox.dataset.category;
-            if (category) {
-                ninthColumnData[category] = checkbox.checked;
-            }
-        });
+            checkboxes.forEach(checkbox => {
+                const category = checkbox.dataset.category;
+                if (category) {
+                    ninthColumnData[category] = checkbox.checked;
+                }
+            });
 
-        rowData['ninthColumn'] = ninthColumnData;
+            rowData['ninthColumn'] = ninthColumnData;
 
-        console.log('%cSaving Checkbox Data for row ' + (index + 1), 'color: red', ninthColumnData); // Log the saved checkbox data for the current row
-    } else {
-        console.error('Element with ID "checkboxContainer" not found in row ' + (index + 1));
-    }
+            console.log('%cSaving Checkbox Data for row ' + (index + 1), 'color: red', ninthColumnData); // Log the saved checkbox data for the current row
+        } else {
+            console.error('Element with ID "checkboxContainer" not found in row ' + (index + 1));
+        }
 
 
 
-    // Add the row data to the array
-    actionTableData.push({ [index + 1]: rowData });
-});
+        // Add the row data to the array
+        actionTableData.push({ [index + 1]: rowData });
+    });
 
 return actionTableData;
 }
@@ -1233,7 +1242,7 @@ function loadAndDisplayCharacter(characterName) {
 
             if (tyrnData) {
                 updateCharacterUI(tyrnData, characterName);
-                generateCheckboxes(checkboxContainer, checkboxData, tyrnData)
+                // generateCheckboxes(checkboxContainer, checkboxData, tyrnData)
             } else {
                 console.error("Tyrn's data not found.");
                 // Handle the case where Tyrn's data is not found, e.g., show a message to the user
@@ -1259,14 +1268,8 @@ function loadAndDisplayCharacter(characterName) {
 
 
 // Testing Code
-
 function updateActionTableUI(actionTableData) {
-    // Assuming that your table body element has the ID 'actionTableBody'
     const tableBody = document.getElementById('actionTableBody');
-
-    console.log(tableBody);
-
-    console.log(actionTableData);
 
     // Clear existing rows
     tableBody.innerHTML = '';
@@ -1276,59 +1279,167 @@ function updateActionTableUI(actionTableData) {
         for (const rowIndex in rowData) {
             const row = rowData[rowIndex];
             const newRow = document.createElement('tr');
-            // newRow.setAttribute('data-category', ''); // Add any data category if needed
 
-            // Loop through columns in the row
-            for (const columnKey in row) {
-                const cellValue = row[columnKey];
-                const newCell = document.createElement('td');
+            console.log(row)
 
-                // Handle special cases for different columns, e.g., proficiencyButton, dropdowns, etc.
-                if (columnKey === 'proficiencyButton') {
-                    // Create and set proficiency button
-                    const proficiencyButton = createProficiencyButton(cellValue);
-                    newCell.appendChild(proficiencyButton);
-                } else if (columnKey === 'fourthColumn') {
-                    const { label, button } = createFourthColumn(cellValue);
-                    newCell.appendChild(label);
-                    newCell.appendChild(button);
-                } else if (columnKey === 'fifthColumn') {
-                    // Create and set dropdown with the selected value
-                    const dropdown = createDropdown(cellValue);
-                    newCell.appendChild(dropdown);
-                } else if (columnKey === 'ninthColumn') {
-                    // Create and set checkboxes based on the checkbox data
-                    generateCheckboxes(newCell, checkboxData);
-                } else {
-                    // Set text content for other columns
-                    newCell.textContent = cellValue;
-                }
+            // Set up proficiency button
+            const profCell = document.createElement('td');
+            const profButtonDiv = createProficiencyButton(row.proficiencyButton);
+            profCell.appendChild(profButtonDiv);
+            newRow.appendChild(profCell);
 
-                // Append the cell to the row
-                newRow.appendChild(newCell);
-            }
+            // Set up action name (editable)
+            const nameCell = document.createElement('td');
+            nameCell.contentEditable = "true";
+            nameCell.textContent = row.secondColumn;
+            newRow.appendChild(nameCell);
+
+            // Set up reach/range (editable)
+            const reachCell = document.createElement('td');
+            reachCell.contentEditable = "true";
+            reachCell.textContent = row.thirdColumn;
+            newRow.appendChild(reachCell);
+
+            // Set up ToHit label and button
+            const toHitCell = document.createElement('td');
+            const toHitLabel = document.createElement('label');
+            toHitLabel.className = "actionButtonLabel";
+            toHitLabel.setAttribute('value', row.fourthColumn || "5");
+            toHitLabel.setAttribute('data-dice-type', "1d20");
+            toHitLabel.setAttribute('data-name', "toHitButton");
+
+            const toHitButton = document.createElement('button');
+            toHitButton.id = "toHitDice";
+            toHitButton.className = "actionButton skillbuttonstyler";
+            toHitButton.textContent = row.fourthColumn || "5"; // Default value if empty
+            toHitCell.appendChild(toHitLabel);
+            toHitCell.appendChild(toHitButton);
+            newRow.appendChild(toHitCell);
+
+            // Set up Damage label and button
+            const damageCell = document.createElement('td');
+            const damageLabel = document.createElement('label');
+            damageLabel.className = "actionButtonLabel";
+            damageLabel.setAttribute('value', row.fifthColumn || "2d6+4d4+5");
+            damageLabel.setAttribute('data-dice-type', "2d6+4d4");
+            damageLabel.setAttribute('data-name', row.secondColumn || "default"); // Use action name as data-name attribute
+
+            const damageButton = document.createElement('button');
+            damageButton.className = "actionButton skillbuttonstyler";
+            damageButton.textContent = row.fifthColumn || "2d6+4d4+5"; // Default value if empty
+            damageCell.appendChild(damageLabel);
+            damageCell.appendChild(damageButton);
+            newRow.appendChild(damageCell);
+            
+            // Create and append the content for the sixth column
+            const columnSixCell = createColumnSixContent(row);
+            newRow.appendChild(columnSixCell);
 
             // Append the row to the table body
-            console.log(newRow);
             tableBody.appendChild(newRow);
         }
     });
 }
 
-// Helper function to create the label and button for the fourth column
-function createFourthColumn(value) {
-    const label = document.createElement('label');
-    label.classList.add('actionButtonLabel');
-    label.value = '5'; // Adjust this value based on your requirements
-    label.dataset.diceType = '1d20';
-    label.dataset.name = 'toHitButton';
+// Helper function to create column six. The settings menu on the Action table.
+function createColumnSixContent(rowData) {
+    // Extract the required data
+    const ability = rowData["seventhColumn"];  // For the ability dropdown
+    const checkboxes = rowData["ninthColumn"]; // For the checkboxes
 
+    // Create the outer td element
+    const td = document.createElement('td');
+
+    // Create the 'Action Setting' button
     const button = document.createElement('button');
-    button.id = 'toHitDice';
-    button.classList.add('actionButton', 'skillbuttonstyler');
-    button.textContent = '5'; // Adjust this value based on your requirements
+    button.className = "nonRollButton rowSetting";
+    button.setAttribute("onclick", "toggleAdditionalInfo()");
+    button.innerText = "Action Setting";
 
-    return { label, button };
+    // Create the additional info container
+    const additionalInfoContainer = document.createElement('div');
+    additionalInfoContainer.id = "additionalInfoContainer";
+    additionalInfoContainer.className = "additional-info-container";
+
+    // Close button
+    const closeButton = document.createElement('button');
+    closeButton.className = "close-button";
+    closeButton.setAttribute("onclick", "toggleAdditionalInfo()");
+    closeButton.innerText = "Close";
+    additionalInfoContainer.appendChild(closeButton);
+
+    // Ability dropdown
+    const abilityStatsContainer = document.createElement('div');
+    abilityStatsContainer.className = "abilityStats-container";
+    const abilityStatDropdown = document.createElement('div');
+    abilityStatDropdown.className = "abilityStatDropdown";
+    const select = document.createElement('select');
+    select.className = "ability-dropdown";
+    const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+    abilities.forEach(ab => {
+        const option = document.createElement('option');
+        option.value = ab;
+        option.innerText = ab;
+        if (ab === ability) {
+            option.selected = true;
+        }
+        select.appendChild(option);
+    });
+
+    abilityStatDropdown.appendChild(select);
+    abilityStatsContainer.appendChild(abilityStatDropdown);
+    additionalInfoContainer.appendChild(abilityStatsContainer);
+
+    // Add contenteditable divs for weapon properties and description
+    const propertiesDiv = document.createElement('div');
+    propertiesDiv.contentEditable = "true";
+    propertiesDiv.innerText = "Heavy, Two-Handed"; // Hardcoded example, replace as needed
+    additionalInfoContainer.appendChild(propertiesDiv);
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.contentEditable = "true";
+    descriptionDiv.innerText = "A brightly Colored Maul"; // Hardcoded example, replace as needed
+    additionalInfoContainer.appendChild(descriptionDiv);
+
+    // Dropdown for the checkboxes
+    const dropdownDiv = document.createElement('div');
+    dropdownDiv.className = "dropdown";
+    const dropbtn = document.createElement('button');
+    dropbtn.className = "dropbtn";
+    dropbtn.innerText = "Set";
+    dropdownDiv.appendChild(dropbtn);
+
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.id = "checkboxContainer";
+    checkboxContainer.className = "dropdown-content";
+
+    for (const [key, value] of Object.entries(checkboxes)) {
+        const checkboxLabel = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = "checkbox";
+        checkbox.name = key;
+        checkbox.checked = value;
+        checkboxLabel.appendChild(checkbox);
+        checkboxLabel.appendChild(document.createTextNode(key));
+        checkboxContainer.appendChild(checkboxLabel);
+    }
+
+    dropdownDiv.appendChild(checkboxContainer);
+    additionalInfoContainer.appendChild(dropdownDiv);
+
+    // Magic Bonus input
+    const magicBonusDiv = document.createElement('div');
+    const magicBonusInput = document.createElement('input');
+    magicBonusInput.placeholder = "Magic Bonus";
+    magicBonusDiv.appendChild(magicBonusInput);
+    additionalInfoContainer.appendChild(magicBonusDiv);
+
+    // Append the button and the additional info container to the td
+    td.appendChild(button);
+    td.appendChild(additionalInfoContainer);
+
+    return td;
 }
 
 
@@ -1349,24 +1460,3 @@ function createProficiencyButton(value) {
     return proficiencyButtonsDiv;
 }
 
-
-// Helper function to create dropdowns
-function createDropdown(selectedValue) {
-    const dropdown = document.createElement('select');
-    dropdown.classList.add('ability-dropdown');
-    // Add any other properties or classes needed for styling
-
-    // Add options to the dropdown
-    const options = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-    options.forEach((optionValue) => {
-        const option = document.createElement('option');
-        option.value = optionValue;
-        option.textContent = optionValue;
-        dropdown.appendChild(option);
-    });
-
-    // Set the selected value
-    dropdown.value = selectedValue;
-
-    return dropdown;
-}
