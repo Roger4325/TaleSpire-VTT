@@ -163,7 +163,7 @@ async function playerSetUP(){
     //Setting up event listeners for the Action Catgories.
     const dropdownBtn = document.querySelector('.dropbtn');
     const dropdownContent = document.querySelector('.dropdown-content');
-    addToggleDropdownListener(dropdownBtn, dropdownContent);
+    addToggleDropdownListener(dropdownBtn, dropdownContent,);
 
 
     // const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
@@ -693,7 +693,7 @@ function passives(){
 // Actions Sections. 
 
 // Function to add toggle dropdown listener
-function addToggleDropdownListener(dropdownBtn, dropdownContent) {
+function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
     // Check if the element and its properties are valid
     if (dropdownBtn && dropdownContent) {
         // Check if the element already has the event listener
@@ -706,8 +706,9 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent) {
             // Set a flag indicating that the event listener is added
             dropdownBtn.hasEventListener = true;
 
+
             // Call the function to generate checkboxes
-            generateCheckboxes(dropdownContent, checkboxData);
+            generateCheckboxes(dropdownContent, checkboxData, null, newRow);
 
         }
     }
@@ -736,17 +737,19 @@ function attachAbilityDropdownListeners() {
     });
 }
 
-function toggleAdditionalInfo() {
-    let container = document.getElementById("additionalInfoContainer");
+function toggleAdditionalInfo(containerId) {
+    let container = document.getElementById(containerId);
 
+    console.log(container)
 
-    // Toggle the 'active' class to trigger the transition effect
-    container.classList.toggle("active");
+    if (container) {
+        container.classList.toggle("active");
 
-    if (container.classList.contains("active")) {
-        container.style.display = "block";
-    } else {
-        container.style.display = "none";
+        if (container.classList.contains("active")) {
+            container.style.display = "block";
+        } else {
+            container.style.display = "none";
+        }
     }
 }
 
@@ -809,13 +812,22 @@ function updateAllToHitDice() {
 
 
 // Function to generate checkboxes
-function generateCheckboxes(checkboxContainer, checkboxData, tyrnData) {
-    // Check if checkboxes are already present in the container
+function generateCheckboxes(checkboxContainer, checkboxData, rowElement) {
+    // Default to the first row if rowElement is undefined or null
+    if (!rowElement) {
+        const tableBody = document.querySelector('.actionTable tbody');
+        rowElement = tableBody.querySelector('tr:first-child');
+    }
 
-    const existingCheckboxes = checkboxContainer.getElementsByClassName('category-checkbox');
+    // Get the row index to identify the correct checkbox container
+    const rowIndex = Array.from(rowElement.parentElement.children).indexOf(rowElement);
+    const checkboxContainerId = 'checkboxContainer' + rowIndex;
 
-    if (existingCheckboxes.length === 0) {
-        // If no checkboxes are found, add them
+    // Select the correct checkbox container using the unique ID
+    const correctCheckboxContainer = document.getElementById(checkboxContainerId);
+
+    // If no checkboxes are found, add them
+    if (correctCheckboxContainer && correctCheckboxContainer.children.length === 0) {
         checkboxData.forEach(item => {
             const checkboxLabel = document.createElement('label');
             const checkboxInput = document.createElement('input');
@@ -824,19 +836,13 @@ function generateCheckboxes(checkboxContainer, checkboxData, tyrnData) {
             checkboxInput.type = 'checkbox';
             checkboxInput.className = 'category-checkbox';
             checkboxInput.dataset.category = item.category;
-            
-            const ninthColumnData = tyrnData?.actionTable?.[0]?.[1]?.ninthColumn;
-
-            if (ninthColumnData && ninthColumnData[item.category]) {
-                checkboxInput.checked = true;
-            }
 
             // Set the label text
             checkboxLabel.textContent = item.label;
             
-            // Append the checkbox to the container
+            // Append the checkbox to the label and the label to the correct container
             checkboxLabel.appendChild(checkboxInput);
-            checkboxContainer.appendChild(checkboxLabel);
+            correctCheckboxContainer.appendChild(checkboxLabel);
         });
     }
 }
@@ -895,6 +901,21 @@ function newTableRow() {
     const lastRow = tableBody.querySelector('tr:last-child');
     const newRow = lastRow.cloneNode(true);
 
+    const rowIndex = tableBody.children.length; // Current number of rows
+
+    // Update IDs for the new row
+    const additionalInfoContainer = newRow.querySelector('.additional-info-container');
+    const newContainerId = 'additionalInfoContainer' + rowIndex;
+    additionalInfoContainer.id = newContainerId;
+
+    // Update the Action Setting button's onclick attribute
+    const actionSettingButton = newRow.querySelector('.rowSetting');
+    actionSettingButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`)
+
+    // Update the Close button's onclick attribute
+    const closeButton = newRow.querySelector('.close-button');
+    closeButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`);
+
     // Set the default data-category attribute for the new row (you can adjust this as needed)
     newRow.setAttribute('data-category', '');
 
@@ -922,7 +943,7 @@ function newTableRow() {
     selectCell.appendChild(newSelect);
 
    // Update the id of the proficiency button in the new row based on the row index
-   const rowIndex = tableBody.children.length; // Current number of rows
+
    const proficiencyButtons = newRow.querySelectorAll('.actionProficiencyButton');
    proficiencyButtons.forEach(button => {
        const newProficiencyId = 'proficiencyActionButton' + rowIndex;
@@ -935,10 +956,11 @@ function newTableRow() {
     // Get the dropdown button and content for the new row
     const dropdownBtn = newRow.querySelector('.dropbtn');
     const dropdownContent = newRow.querySelector('.dropdown-content');
+    dropdownContent.setAttribute('id','checkboxContainer'+rowIndex)
 
     // Add the event listener only if it hasn't been added before
     newRow.addEventListener('blur', getAllEditableContent());
-    addToggleDropdownListener(dropdownBtn, dropdownContent);
+    addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
     attachAbilityDropdownListeners();
     addProficiencyButtonListener()
     rollableButtons()
@@ -1083,8 +1105,6 @@ function processActionTableRow(){
         if (ninthColumnCell) {
             const checkboxes = ninthColumnCell.querySelectorAll('input[type="checkbox"]');
 
-            console.log('%cChecking checkboxes for row ' + (index + 1), 'color: red'); // Log that we are checking checkboxes for the current row
-
             const ninthColumnData = {};
 
             checkboxes.forEach(checkbox => {
@@ -1162,7 +1182,7 @@ function updateCharacterUI(characterData, characterName) {
     conditionsMap.set(conditionTrackerDiv, conditionsSet);
     updateConditionsUI(conditionsSet);
     updateAbilityScoreModifiers(characterData);
-    updateActionTableUI(characterData.actionTable);
+    // updateActionTableUI(characterData.actionTable);
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -1239,7 +1259,6 @@ function loadAndDisplayCharacter(characterName) {
 
             if (tyrnData) {
                 updateCharacterUI(tyrnData, characterName);
-                // generateCheckboxes(checkboxContainer, checkboxData, tyrnData)
             } else {
                 console.error("Tyrn's data not found.");
                 // Handle the case where Tyrn's data is not found, e.g., show a message to the user
@@ -1327,7 +1346,8 @@ function updateActionTableUI(actionTableData) {
             newRow.appendChild(damageCell);
             
             // Create and append the content for the sixth column
-            const columnSixCell = createColumnSixContent(row);
+            const columnSixCell = createColumnSixContent(row,rowIndex,newRow);
+            console.log(columnSixCell)
             newRow.appendChild(columnSixCell);
 
 
@@ -1338,6 +1358,11 @@ function updateActionTableUI(actionTableData) {
 
             // Append the row to the table body
             tableBody.appendChild(newRow);
+
+            console.log(checkboxes)
+
+            generateCheckboxes("", checkboxes, newRow);
+            
         }
     });
 
@@ -1345,10 +1370,16 @@ function updateActionTableUI(actionTableData) {
 }
 
 // Helper function to create column six. The settings menu on the Action table.
-function createColumnSixContent(rowData) {
+function createColumnSixContent(rowData,rowIndex, row) {
+
+    console.log(rowIndex)
+
+    let rowIndexupdated = rowIndex - 1;
+
     // Extract the required data
     const ability = rowData["seventhColumn"];  // For the ability dropdown
     const checkboxes = rowData["ninthColumn"]; // For the checkboxes
+
 
     // Create the outer td element
     const td = document.createElement('td');
@@ -1356,18 +1387,18 @@ function createColumnSixContent(rowData) {
     // Create the 'Action Setting' button
     const button = document.createElement('button');
     button.className = "nonRollButton rowSetting";
-    button.setAttribute("onclick", "toggleAdditionalInfo()");
+    button.setAttribute("onclick", `toggleAdditionalInfo('additionalInfoContainer${rowIndex}')`);
     button.innerText = "Action Setting";
 
     // Create the additional info container
     const additionalInfoContainer = document.createElement('div');
-    additionalInfoContainer.id = "additionalInfoContainer";
+    additionalInfoContainer.id = `additionalInfoContainer${rowIndex}`;
     additionalInfoContainer.className = "additional-info-container";
 
     // Close button
     const closeButton = document.createElement('button');
     closeButton.className = "close-button";
-    closeButton.setAttribute("onclick", "toggleAdditionalInfo()");
+    closeButton.setAttribute("onclick", `toggleAdditionalInfo('additionalInfoContainer${rowIndex}')`);
     closeButton.innerText = "Close";
     additionalInfoContainer.appendChild(closeButton);
 
@@ -1414,10 +1445,10 @@ function createColumnSixContent(rowData) {
     dropdownDiv.appendChild(dropbtn);
 
     const checkboxContainer = document.createElement('div');
-    checkboxContainer.id = "checkboxContainer";
+    checkboxContainer.id = `checkboxContainer${rowIndex}`;
     checkboxContainer.className = "dropdown-content";
 
-    generateCheckboxes(checkboxContainer, checkboxData, { actionTable: [{ 1: { ninthColumn: checkboxes } }] });
+    // generateCheckboxes(checkboxContainer, checkboxes, row);
 
     dropdownDiv.appendChild(checkboxContainer);
     additionalInfoContainer.appendChild(dropdownDiv);

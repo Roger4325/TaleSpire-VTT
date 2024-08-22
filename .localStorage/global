@@ -33,7 +33,7 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "1",
+            "": "0",
             "proficiencyButton1": ".5",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
@@ -58,22 +58,41 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
+            "proficiencyActionButton1": "0",
             "conditions": [],
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "1",
+                        "proficiencyButton": "0",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
-                        "fourthColumn": "+7",
+                        "fourthColumn": "+-1",
                         "fifthColumn": "2d6+4d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "CON",
+                        "seventhColumn": "STR",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": true
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "New Text",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+-1",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": true,
                             "bonus-actions": false,
-                            "reactions": true,
+                            "reactions": false,
                             "other": false
                         }
                     }
