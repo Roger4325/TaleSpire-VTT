@@ -58,6 +58,7 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
+            "proficiencyActionButton6": "1",
             "conditions": [],
             "actionTable": [
                 {
@@ -65,32 +66,14 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
-                        "fourthColumn": "+4",
+                        "fourthColumn": "+6",
                         "fifthColumn": "2d6+4d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
+                        "seventhColumn": "CHA",
                         "ninthColumn": {
                             "attacks": true,
                             "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "TASHA",
-                        "thirdColumn": "10ft Reach",
-                        "fourthColumn": "+4",
-                        "fifthColumn": "2d6+4d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
+                            "bonus-actions": true,
                             "reactions": false,
                             "other": false
                         }

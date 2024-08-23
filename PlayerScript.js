@@ -706,11 +706,6 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
 
             // Set a flag indicating that the event listener is added
             dropdownBtn.hasEventListener = true;
-
-
-            // Call the function to generate checkboxes
-            generateCheckboxes(checkboxData, newRow);
-
         }
     }
 }
@@ -810,7 +805,7 @@ function updateAllToHitDice() {
 
 
 // Function to generate checkboxes
-function generateCheckboxes(checkboxData, rowElement) {
+function generateCheckboxes(storedData, rowElement) {
 
     // Default to the first row if rowElement is undefined or null
     if (!rowElement) {
@@ -827,27 +822,29 @@ function generateCheckboxes(checkboxData, rowElement) {
 
     // If no checkboxes are found, add them
     if (correctCheckboxContainer && correctCheckboxContainer.children.length === 0) {
-        Object.keys(checkboxData).forEach(key => {
+        checkboxData.forEach((item, index) => {
             const checkboxLabel = document.createElement('label');
             const checkboxInput = document.createElement('input');
             
             // Set the checkbox attributes
             checkboxInput.type = 'checkbox';
             checkboxInput.className = 'category-checkbox';
-            checkboxInput.dataset.category = key;
+            checkboxInput.dataset.category = item.category;
 
-            // Set the checkbox state based on the stored data
-            checkboxInput.checked = checkboxData[key] || false;
+            // Retrieve the state from the stored data (storedData)
+            const isChecked = storedData && storedData[item.category] ? storedData[item.category] : false;
+            checkboxInput.checked = isChecked;
 
-            // Set the label text
-            checkboxLabel.textContent = key.replace(/-/g, ' '); // Replace hyphens with spaces for better readability
-            
+            // Set the label text based on the index
+            checkboxLabel.textContent = checkboxData[index].label;
+
             // Append the checkbox to the label and the label to the correct container
             checkboxLabel.appendChild(checkboxInput);
             correctCheckboxContainer.appendChild(checkboxLabel);
         });
     }
 }
+
 
 
 
@@ -907,7 +904,7 @@ function newTableRow() {
     const lastRow = tableBody.querySelector('tr:last-child');
     const newRow = lastRow.cloneNode(true);
 
-    const rowIndex = tableBody.children.length; // Current number of rows
+    const rowIndex = tableBody.children.length + 1; // Current number of rows
 
     // Update IDs for the new row
     const additionalInfoContainer = newRow.querySelector('.additional-info-container');
@@ -968,7 +965,7 @@ function newTableRow() {
     // Get the dropdown button and content for the new row
     const dropdownBtn = newRow.querySelector('.dropbtn');
     const dropdownContent = newRow.querySelector('.dropdown-content');
-    dropdownContent.setAttribute('id','checkboxContainer'+rowIndex)
+    dropdownContent.setAttribute('id','checkboxContainer'+ rowIndex)
 
     console.log(dropdownContent);
 
@@ -1122,12 +1119,16 @@ function processActionTableRow(){
 
             const ninthColumnData = {};
 
-            checkboxes.forEach(checkbox => {
-                const category = checkbox.dataset.category;
+            checkboxes.forEach((checkbox, index) => {
+                // Get the category from the checkboxData array based on the index
+                const category = checkboxData[index].category;
+        
                 if (category) {
+                    // Use the correct category from the checkboxData array
                     ninthColumnData[category] = checkbox.checked;
                 }
             });
+        
 
             rowData['ninthColumn'] = ninthColumnData;
 
@@ -1359,7 +1360,7 @@ function updateActionTableUI(actionTableData) {
             newRow.appendChild(damageCell);
             
             // Create and append the content for the sixth column
-            const columnSixCell = createColumnSixContent(row,rowIndex,newRow);
+            const columnSixCell = createColumnSixContent(row,rowIndex);
             console.log(columnSixCell)
             newRow.appendChild(columnSixCell);
 
@@ -1372,6 +1373,13 @@ function updateActionTableUI(actionTableData) {
             // Append the row to the table body
             tableBody.appendChild(newRow);
 
+
+             // Add the toggle dropdown listener to the dropdown button
+             const dropdownBtn = newRow.querySelector('.dropbtn');
+             const dropdownContent = newRow.querySelector('.dropdown-content');
+             dropdownContent.setAttribute('id', 'checkboxContainer' + (rowIndex-1));
+             addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
+
             console.log(checkboxes)
 
             generateCheckboxes(checkboxes, newRow);
@@ -1383,7 +1391,7 @@ function updateActionTableUI(actionTableData) {
 }
 
 // Helper function to create column six. The settings menu on the Action table.
-function createColumnSixContent(rowData,rowIndex, row) {
+function createColumnSixContent(rowData,rowIndex) {
 
     // Extract the required data
     const ability = rowData["seventhColumn"];  // For the ability dropdown
