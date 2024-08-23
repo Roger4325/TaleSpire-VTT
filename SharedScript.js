@@ -30,6 +30,7 @@ function setupNav(){
         // Display the initial section (e.g., Player Stats)
         const initialTab = tabs[0];
         initialTab.click();
+
 }
 
 

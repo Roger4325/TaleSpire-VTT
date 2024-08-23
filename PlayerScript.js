@@ -701,6 +701,7 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
             // Toggle the dropdown content on button click
             dropdownBtn.addEventListener('click', function () {
                 dropdownContent.style.display = (dropdownContent.style.display === 'block') ? 'none' : 'block';
+                console.log("click")
             });
 
             // Set a flag indicating that the event listener is added
@@ -708,7 +709,7 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
 
 
             // Call the function to generate checkboxes
-            generateCheckboxes(dropdownContent, checkboxData, newRow);
+            generateCheckboxes(checkboxData, newRow);
 
         }
     }
@@ -740,8 +741,6 @@ function attachAbilityDropdownListeners() {
 function toggleAdditionalInfo(containerId) {
     let container = document.getElementById(containerId);
 
-    console.log(container)
-
     if (container) {
         container.classList.toggle("active");
 
@@ -759,7 +758,6 @@ function toggleAdditionalInfo(containerId) {
 // Function to update toHitDice based on the selected ability stat
 function updateToHitDice(proficiencyButton) {
 
-    
     // Get the associated  row for the proficiency button
     const row = proficiencyButton.closest('tr');
 
@@ -812,9 +810,8 @@ function updateAllToHitDice() {
 
 
 // Function to generate checkboxes
-function generateCheckboxes(checkboxContainer, checkboxData, rowElement) {
+function generateCheckboxes(checkboxData, rowElement) {
 
-    console.log(rowElement)
     // Default to the first row if rowElement is undefined or null
     if (!rowElement) {
         const tableBody = document.querySelector('.actionTable tbody');
@@ -830,17 +827,20 @@ function generateCheckboxes(checkboxContainer, checkboxData, rowElement) {
 
     // If no checkboxes are found, add them
     if (correctCheckboxContainer && correctCheckboxContainer.children.length === 0) {
-        checkboxData.forEach(item => {
+        Object.keys(checkboxData).forEach(key => {
             const checkboxLabel = document.createElement('label');
             const checkboxInput = document.createElement('input');
             
             // Set the checkbox attributes
             checkboxInput.type = 'checkbox';
             checkboxInput.className = 'category-checkbox';
-            checkboxInput.dataset.category = item.category;
+            checkboxInput.dataset.category = key;
+
+            // Set the checkbox state based on the stored data
+            checkboxInput.checked = checkboxData[key] || false;
 
             // Set the label text
-            checkboxLabel.textContent = item.label;
+            checkboxLabel.textContent = key.replace(/-/g, ' '); // Replace hyphens with spaces for better readability
             
             // Append the checkbox to the label and the label to the correct container
             checkboxLabel.appendChild(checkboxInput);
@@ -848,6 +848,8 @@ function generateCheckboxes(checkboxContainer, checkboxData, rowElement) {
         });
     }
 }
+
+
 
 
 
@@ -879,6 +881,7 @@ function updateDisplayedRows(selectedCategories) {
 
 // Function to toggle a category in a list of categories
 function toggleCategory(categoryList, category) {
+
     const categories = categoryList.trim().split(' ');
     const index = categories.indexOf(category);
 
@@ -897,6 +900,7 @@ function toggleCategory(categoryList, category) {
 
 function newTableRow() {
     // Get the table body
+
     const tableBody = document.querySelector('.actionTable tbody');
 
     // Create a new row element by cloning the last row
@@ -919,7 +923,7 @@ function newTableRow() {
     closeButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`);
 
     // Set the default data-category attribute for the new row (you can adjust this as needed)
-    // newRow.setAttribute('data-category', '');
+    newRow.setAttribute('data-category', '');
 
     // Set default text for each cell in the new row
     newRow.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
@@ -952,6 +956,12 @@ function newTableRow() {
        button.id = newProficiencyId;
    });
 
+    // Reset checkboxes to unchecked state
+    const checkboxes = newRow.querySelectorAll('.category-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = false;
+    });
+
     // Append the new row to the table body
     tableBody.appendChild(newRow);
 
@@ -962,9 +972,11 @@ function newTableRow() {
 
     console.log(dropdownContent);
 
+    addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
+
     // Add the event listener only if it hasn't been added before
     newRow.addEventListener('blur', getAllEditableContent());
-    addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
+    
     attachAbilityDropdownListeners();
     addProficiencyButtonListener()
     rollableButtons()
@@ -1034,7 +1046,6 @@ function getAllEditableContent() {
     // Call the function to process action table rows and update the content object
     const actionTableData = processActionTableRow();
     content['actionTable'] = actionTableData;
-
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
     saveToGlobalStorage("characters", characterName.value, content, true);
@@ -1124,8 +1135,6 @@ function processActionTableRow(){
             console.error('Element with ID "checkboxContainer" not found in row ' + (index + 1));
         }
 
-
-
         // Add the row data to the array
         actionTableData.push({ [index + 1]: rowData });
     });
@@ -1186,7 +1195,7 @@ function updateCharacterUI(characterData, characterName) {
     conditionsMap.set(conditionTrackerDiv, conditionsSet);
     updateConditionsUI(conditionsSet);
     updateAbilityScoreModifiers(characterData);
-    // updateActionTableUI(characterData.actionTable);
+    updateActionTableUI(characterData.actionTable);
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -1365,7 +1374,7 @@ function updateActionTableUI(actionTableData) {
 
             console.log(checkboxes)
 
-            generateCheckboxes("", checkboxes, newRow);
+            generateCheckboxes(checkboxes, newRow);
             
         }
     });
@@ -1375,10 +1384,6 @@ function updateActionTableUI(actionTableData) {
 
 // Helper function to create column six. The settings menu on the Action table.
 function createColumnSixContent(rowData,rowIndex, row) {
-
-    console.log(rowIndex)
-
-    let rowIndexupdated = rowIndex - 1;
 
     // Extract the required data
     const ability = rowData["seventhColumn"];  // For the ability dropdown
@@ -1448,11 +1453,13 @@ function createColumnSixContent(rowData,rowIndex, row) {
     dropbtn.innerText = "Set";
     dropdownDiv.appendChild(dropbtn);
 
+    const updatedrowIndex = rowIndex - 1
+
     const checkboxContainer = document.createElement('div');
-    checkboxContainer.id = `checkboxContainer${rowIndex}`;
+    checkboxContainer.id = `checkboxContainer${updatedrowIndex}`;
     checkboxContainer.className = "dropdown-content";
 
-    // generateCheckboxes(checkboxContainer, checkboxes, row);
+
 
     dropdownDiv.appendChild(checkboxContainer);
     additionalInfoContainer.appendChild(dropdownDiv);
