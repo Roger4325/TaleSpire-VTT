@@ -33,8 +33,8 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "0",
-            "proficiencyButton1": ".5",
+            "": "A brightly Colored Maul",
+            "proficiencyButton1": "0",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
             "proficiencyButton4": "0",
@@ -58,14 +58,37 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
+            "proficiencyActionButton": "1",
             "proficiencyActionButton1": "0",
+            "proficiencyActionButton2": "0",
+            "proficiencyActionButton3": "0",
+            "proficiencyActionButton4": "0",
+            "proficiencyActionButton5": "0",
             "conditions": [],
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "0",
+                        "proficiencyButton": "1",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "WIS",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Shortsword",
+                        "thirdColumn": "New Text",
                         "fourthColumn": "+-1",
                         "fifthColumn": "2d6+4d4",
                         "sixthColumn": "ActionSettings",
@@ -73,14 +96,14 @@
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
-                            "bonus-actions": false,
+                            "bonus-actions": true,
                             "reactions": false,
-                            "other": true
+                            "other": false
                         }
                     }
                 },
                 {
-                    "2": {
+                    "3": {
                         "proficiencyButton": "0",
                         "secondColumn": "New Text",
                         "thirdColumn": "New Text",
@@ -90,7 +113,61 @@
                         "seventhColumn": "STR",
                         "ninthColumn": {
                             "attacks": false,
-                            "actions": true,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": true,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "4": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "New Text",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+-1",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "New Text",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+-1",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "New Text",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+-1",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false

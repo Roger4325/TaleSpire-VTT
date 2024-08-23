@@ -708,7 +708,7 @@ function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
 
 
             // Call the function to generate checkboxes
-            generateCheckboxes(dropdownContent, checkboxData, null, newRow);
+            generateCheckboxes(dropdownContent, checkboxData, newRow);
 
         }
     }
@@ -813,6 +813,8 @@ function updateAllToHitDice() {
 
 // Function to generate checkboxes
 function generateCheckboxes(checkboxContainer, checkboxData, rowElement) {
+
+    console.log(rowElement)
     // Default to the first row if rowElement is undefined or null
     if (!rowElement) {
         const tableBody = document.querySelector('.actionTable tbody');
@@ -917,7 +919,7 @@ function newTableRow() {
     closeButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`);
 
     // Set the default data-category attribute for the new row (you can adjust this as needed)
-    newRow.setAttribute('data-category', '');
+    // newRow.setAttribute('data-category', '');
 
     // Set default text for each cell in the new row
     newRow.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
@@ -957,6 +959,8 @@ function newTableRow() {
     const dropdownBtn = newRow.querySelector('.dropbtn');
     const dropdownContent = newRow.querySelector('.dropdown-content');
     dropdownContent.setAttribute('id','checkboxContainer'+rowIndex)
+
+    console.log(dropdownContent);
 
     // Add the event listener only if it hasn't been added before
     newRow.addEventListener('blur', getAllEditableContent());
