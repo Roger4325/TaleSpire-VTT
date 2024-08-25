@@ -1670,3 +1670,44 @@ function addDeleteButtonListener(deleteButton) {
         }
     });
 }
+
+function createSpellSlot() {
+    const slot = document.createElement('span');
+    slot.classList.add('spell-slot');
+    slot.textContent = '';
+    slot.addEventListener('click', () => {
+        if (slot.textContent === '') {
+            slot.textContent = 'X';
+            slot.classList.add('used');
+        } else {
+            slot.textContent = '';
+            slot.classList.remove('used');
+        }
+    });
+    return slot;
+}
+
+function addSpellSlot(levelContainer) {
+    if (levelContainer) {
+        const newSlot = createSpellSlot();
+        levelContainer.appendChild(newSlot);
+        console.log("Spell slot added:", newSlot); // Debugging log
+    } else {
+        console.error("Level container not found!"); // Error log if container is not found
+    }
+
+    console.log(AppData.spellLookupInfo);  // Accessing the spell data
+}
+
+document.querySelectorAll('.add-spell-slot').forEach(button => {
+    button.addEventListener('click', function () {
+        // Traverse the DOM to find the nearest .spell-slots container
+        const spellSlotsContainer = this.closest('.spell-group').querySelector('.spell-slots');
+        
+        if (spellSlotsContainer) {
+            addSpellSlot(spellSlotsContainer);
+        } else {
+            console.error("Spell slots container not found!"); // Error log if container is not found
+        }
+    });
+});

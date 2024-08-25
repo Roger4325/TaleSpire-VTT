@@ -357,13 +357,19 @@ select{
     }
 
 
+
+
+
+
+
+
 /* Actions Section */
 
 
 .additional-info-container {
     border: solid 1px var(--ts-button-background);
     padding: 5px;
-    display: none; /* Initial display state */
+    display: none; 
     position: fixed;
     top: 0;
     right: 0;
@@ -379,6 +385,13 @@ select{
     right: 5px;
 }
 
+.actionTable .actionProficiencyButton{
+    margin: 0px;
+    width: 15px;
+    height: 15px;
+    padding:0px;
+
+}
 
 .actionTable{
     border: solid 1px var(--ts-button-background);
@@ -396,9 +409,12 @@ select{
 
 .actionTable th, .actionTable td {
     border: solid 1px var(--ts-button-background);
-    padding: 5px; 
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0px;
 }
-
 
 
 /* Style for the dropdown content */
@@ -509,4 +525,71 @@ select{
     position: fixed;
     bottom: 20px;
     left: 20px;
+}
+
+
+
+
+
+/*Spell Section*/
+.spell-section {
+    margin: 10px 0;
+}
+
+.spell-level {
+    margin-bottom: 15px;
+}
+
+.minihr {
+    border: 1px solid var(--ts-button-background);
+    margin: 10px 0;
+}
+
+.add-spell-button, .add-slot-button {
+    background-color: var(--ts-accent-background);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3px;
+    padding: 2px 5px;
+    font-size: 12px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.add-spell-button:hover, .add-slot-button:hover {
+    background-color: var(--ts-button-hover);
+    transition: ease-in-out .15s;
+}
+
+.slots-container {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.spell-slots {
+    display: flex;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.spell-slots {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.spell-slot {
+    width: 20px;
+    height: 20px;
+    border: 1px solid white;
+    background-color: var(--ts-background-secondary);
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    cursor: pointer;
+}
+
+.spell-slot.used {
+    background-color: gray;
+    color: red;
 }

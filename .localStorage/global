@@ -5,12 +5,12 @@
             "initiativeButton": "+5",
             "AC": "20",
             "speed": "30ft.",
-            "characterLevel": "15",
-            "playerXP": "0",
+            "characterLevel": "6",
+            "playerXP": "14000",
             "currentCharacterHP": "50",
             "maxCharacterHP": "50",
             "strengthScore": "8",
-            "dexterityScore": "10",
+            "dexterityScore": "18",
             "constitutionScore": "15",
             "intelligenceScore": "20",
             "wisdomScore": "17",
@@ -33,15 +33,15 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "1",
-            "proficiencyButton1": "0",
+            "": "0",
+            "proficiencyButton1": "1",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
             "proficiencyButton4": "0",
             "proficiencyButton6": "0",
             "proficiencyButton7": "0",
             "proficiencyButton8": "0",
-            "proficiencyButton9": "2",
+            "proficiencyButton9": "0",
             "proficiencyButton10": "0",
             "proficiencyButton11": "0",
             "proficiencyButton12": "0",
@@ -49,7 +49,7 @@
             "proficiencyButton14": ".5",
             "proficiencyButton15": "0",
             "proficiencyButton16": "0",
-            "proficiencyButton17": "0",
+            "proficiencyButton17": "2",
             "proficiencyButton18": "0",
             "proficiencyButton19": "0",
             "proficiencyButton20": "0",
@@ -66,7 +66,7 @@
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
                         "fourthColumn": "-1",
-                        "fifthColumn": "2d6+4d4",
+                        "fifthColumn": "2d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
                         "ninthColumn": {
@@ -81,17 +81,53 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Corey",
-                        "thirdColumn": "30 ft Reach",
-                        "fourthColumn": "+4",
-                        "fifthColumn": "2d6+1d4",
+                        "secondColumn": "LongBow",
+                        "thirdColumn": "120/320",
+                        "fourthColumn": "+7",
+                        "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
+                        "seventhColumn": "DEX",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Short Sword",
+                        "thirdColumn": "5 ft. Reach",
+                        "fourthColumn": "+7",
+                        "fifthColumn": "1d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": true,
+                            "reactions": true,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "4": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Eldritch Blast",
+                        "thirdColumn": "120 ft",
+                        "fourthColumn": "+1",
+                        "fifthColumn": "1d10",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "CHA",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
                             "bonus-actions": false,
-                            "reactions": true,
+                            "reactions": false,
                             "other": false
                         }
                     }

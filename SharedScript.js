@@ -34,6 +34,13 @@ function setupNav(){
 }
 
 
+
+//Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
+const AppData = {
+    spellLookupInfo: null,
+};
+
+
 document.getElementById('settings-toggle').addEventListener('click', function() {
     console.log("click")
     const settingsContainer = document.getElementById('settings-container');
@@ -146,6 +153,9 @@ async function onInit() {
     }
     await playerSetUP();
     rollableButtons();
+
+    //Initialize spell List
+    AppData.spellLookupInfo = await readSpellJson();
 }
 
 //Function for parsing text and creating a rollable button.
@@ -427,6 +437,9 @@ function showErrorModal(errorMessage) {
 }
 
 
+
+
+
 // Delete data from global storage
 function removeFromGlobalStorage(dataType, dataId) {
     // Load the existing data from global storage
@@ -462,4 +475,48 @@ function removeFromGlobalStorage(dataType, dataId) {
             // Handle any errors that occur during the process
             errorModal('Failed to delete data from global storage: ' + error);
         });
+}
+
+
+
+
+
+// read the JSON file spells.json and save the data and names to variables
+async function readSpellJson() {
+    try {
+        const allSpellData = await loadDataFromGlobalStorage("spells"); // Load data from global storage
+        const isGlobalDataAnObject = typeof allSpellData === 'object';
+
+        // Fetch the data from the JSON file
+        const response = await fetch('spells.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const spellsData = await response.json();
+
+        let combinedData;
+
+        if (isGlobalDataAnObject) {
+            // If global data is an object, convert it into an array
+            combinedData = Object.values(allSpellData);
+        } else {
+            // If global data is already an array, use it as is
+            combinedData = allSpellData;
+        }
+
+        // Combine the data from global storage and the JSON file
+        combinedData = [...combinedData, ...spellsData];
+
+        // Extract spell names from the combined data
+        const spellNames = combinedData.map(spell => spell.name);
+        console.log('returning from readSpellJSON');
+
+        return {
+            spellNames: spellNames,
+            spellsData: combinedData
+        };
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return null;
+    }
 }
