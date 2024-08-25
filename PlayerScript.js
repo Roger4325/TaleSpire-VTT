@@ -166,10 +166,10 @@ async function playerSetUP(){
     addToggleDropdownListener(dropdownBtn, dropdownContent,);
 
 
-    // const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
-    // actionTableRows.forEach((row) => {
-    //     // row.addEventListener('blur', updateContent());
-    // });
+    const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
+    actionTableRows.forEach((row) => {
+        row.addEventListener('blur', updateContent());
+    });
 
     // attaching eventlisteners for the Actions Table Ability Select Dropdown.
     attachAbilityDropdownListeners();
@@ -177,6 +177,16 @@ async function playerSetUP(){
     // Call updateAllToHitDice on load
     updateAllToHitDice();
     addProficiencyButtonListener()
+
+    const spellCastingAbility = document.querySelector('.spellcasting-dropdown');
+    console.log(spellCastingAbility);
+
+    spellCastingAbility.addEventListener('change', function(event) {
+        console.log(event.target.value); // Logs the selected value
+        updateSpelltoHitDice(event.target.value);
+        updateSpellSaveDC(event.target.value)
+    });
+
 }  
     
 
@@ -1377,7 +1387,6 @@ function updateActionTableUI(actionTableData) {
             
             // Create and append the content for the sixth column
             const columnSixCell = createColumnSixContent(row, rowIndex, newRow);
-            console.log(columnSixCell)
             newRow.appendChild(columnSixCell);
 
 
@@ -1395,8 +1404,6 @@ function updateActionTableUI(actionTableData) {
              const dropdownContent = newRow.querySelector('.dropdown-content');
              dropdownContent.setAttribute('id', 'checkboxContainer' + (rowIndex-1));
              addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
-
-            console.log(checkboxes)
 
             generateCheckboxes(checkboxes, newRow);
 
@@ -1565,9 +1572,6 @@ function calculateActionDamageDice() {
 
             damageLabel.setAttribute ('value', abilityScoreLabel)
 
-            console.log(abilityScoreLabel)
-            console.log(damageLabel.getAttribute('data-dice-type'))
-
             if (abilityScoreLabel > 0){
                 damageButton.textContent = damageLabel.getAttribute('data-dice-type') + "+" + abilityScoreLabel
             }
@@ -1577,10 +1581,6 @@ function calculateActionDamageDice() {
             else{
                 damageButton.textContent = damageLabel.getAttribute('data-dice-type')
             }
-
-            
-
-            console.log(damageButton.textContent)
             
         }
     });
@@ -1671,6 +1671,14 @@ function addDeleteButtonListener(deleteButton) {
     });
 }
 
+
+
+
+
+
+
+
+//Working on Spell Table
 function createSpellSlot() {
     const slot = document.createElement('span');
     slot.classList.add('spell-slot');
@@ -1711,3 +1719,318 @@ document.querySelectorAll('.add-spell-slot').forEach(button => {
         }
     });
 });
+
+function createSpellTable() {
+    // Create the table element
+    const table = document.createElement('div');
+    table.classList.add('spell-table');
+
+    // Create the header row
+    const headerRow = document.createElement('div');
+    headerRow.classList.add('spell-row', 'spell-header');
+
+    const headers = ['Spell Name', 'Cast Time', 'To Hit/DC', 'Components', 'Concentration'];
+    headers.forEach(headerText => {
+        const headerCell = document.createElement('div');
+        headerCell.classList.add('spell-header-cell');
+        headerCell.textContent = headerText;
+        headerRow.appendChild(headerCell);
+    });
+
+    table.appendChild(headerRow);
+    return table;
+}
+
+function createSpellRow(spell,spellLevel) {
+    const row = document.createElement('div');
+    row.classList.add('spell-row');
+    row.title = spell.description;
+    row.id = `${spellLevel}`+ row.index;
+
+    // Spell name input field
+    const spellNameContainer = document.createElement('div');
+    spellNameContainer.classList.add('spell-name');
+
+    const spellNameInput = document.createElement('input');
+    spellNameInput.classList.add('spell-name-input');
+    spellNameInput.type = 'text';
+    spellNameInput.value = spell.name;
+    spellNameInput.setAttribute('spell-level', spellLevel); // Use spell.level if it's available
+    spellNameInput.placeholder = 'Select Spell...';
+
+    // Create dropdown container
+    const dropdownContainer = document.createElement('div');
+    dropdownContainer.classList.add('dropdown-container');
+    
+    // Create dropdown list
+    const dropdownList = document.createElement('ul');
+    dropdownList.classList.add('dropdown-list');
+    dropdownContainer.appendChild(dropdownList);
+
+    console.log(dropdownList)
+
+    // Add event listeners to tie into the dropdown
+    spellNameInput.addEventListener('focus', function() {
+        // Get the level to filter by
+        const level = spellLevel;
+
+        const inputRef = event.target
+
+        console.log(inputRef)
+        
+        // Retrieve spell data object and array
+        const spellDataObject = AppData.spellLookupInfo;
+        const spellDataArray = spellDataObject.spellsData;
+    
+        // Filter spells based on level
+        const filteredSpells = spellDataArray.filter(spell => spell.level === level);
+    
+        // Map to spell names
+        const filteredSpellNames = filteredSpells.map(spell => spell.name);
+    
+        console.log(filteredSpellNames);
+    
+        // Populate dropdown or other UI with filtered spell names
+        populateListWithAllSpells(filteredSpellNames,dropdownList,row);
+        dropdownContainer.style.display = 'block';
+    });
+
+    // Hide dropdown on click outside
+    document.addEventListener('click', function(event) {
+        if (!dropdownContainer.contains(event.target) && event.target !== spellNameInput) {
+            dropdownContainer.style.display = 'none'; // Hide dropdown
+        }
+    });
+
+    spellNameContainer.appendChild(spellNameInput);
+    spellNameContainer.appendChild(dropdownContainer)
+
+    // Other spell details
+    const castTime = document.createElement('div');
+    castTime.classList.add('spell-cast-time');
+    castTime.textContent = spell.castTime;
+
+    const toHitOrDC = document.createElement('div');
+    toHitOrDC.classList.add('spell-to-hit-dc');
+    toHitOrDC.textContent = spell.toHitOrDC;
+
+    const components = document.createElement('div');
+    components.classList.add('spell-components');
+    components.textContent = spell.components;
+
+    const concentration = document.createElement('div');
+    concentration.classList.add('spell-concentration');
+    concentration.textContent = spell.concentration ? 'Yes' : 'No';
+
+    // Append all elements to the row
+    row.appendChild(spellNameContainer);
+    row.appendChild(castTime);
+    row.appendChild(toHitOrDC);
+    row.appendChild(components);
+    row.appendChild(concentration);
+
+    return row;
+}
+
+
+function addSpellToContainer(spellContainer) {
+    const spellData = {
+        name: "Default",
+        castTime: "1 Action",
+        toHitOrDC: "+5",
+        components: "V,S,M",
+        concentration: false,
+        description: "This is a default spell description."
+    };
+
+    let table = spellContainer.querySelector('.spell-table');
+    let spellLevel = spellContainer.getAttribute('spellLevel')
+    
+    // If table doesn't exist, create it
+    if (!table) {
+        table = createSpellTable();
+        spellContainer.appendChild(table);
+    }
+
+    // Add the new spell row
+    const spellRow = createSpellRow(spellData,spellLevel);
+    table.appendChild(spellRow);
+}
+
+document.querySelectorAll('.add-spell-button').forEach(button => {
+    button.addEventListener('click', function () {
+        const spellContainer = this.nextElementSibling;
+
+        if (spellContainer && spellContainer.classList.contains('spell-container')) {
+            addSpellToContainer(spellContainer);
+        } else {
+            console.error("Spell container not found!");
+        }
+    });
+});
+
+
+
+function populateListWithAllSpells(spellsData, inputRef,row) {
+    // Sort spell names alphabetically
+    spellsData.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+    const spellList = inputRef;
+
+    spellsData.forEach((spellName) => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('listSelection');
+        listItem.textContent = spellName;
+        listItem.addEventListener('click', () => {
+            // Find the corresponding spell object if needed or update details directly
+            const spell = { name: spellName }; // Mock object if needed
+            loadSpell(spell,row);
+        });
+        spellList.appendChild(listItem);
+    });
+}
+
+
+function loadSpell(spell,row) {
+    // Retrieve the spell data object and array
+    const spellDataObject = AppData.spellLookupInfo;
+    const spellDataArray = spellDataObject.spellsData;
+    const spellmodifier = document.querySelector('.spellcasting-dropdown').value
+
+    // Find the corresponding spell object based on the spell name
+    const spellDetails = spellDataArray.find(spellData => spellData.name === spell.name);
+    
+    if (!spellDetails) {
+        console.error(`Spell "${spell.name}" not found.`);
+        return;
+    }
+
+    if (!row) {
+        console.error('Row not found.');
+        return;
+    }
+
+    // Update each field in the row with the spell details
+    const spellNameInput = row.querySelector('.spell-name-input');
+    if (spellNameInput) {
+        spellNameInput.value = spellDetails.name;
+    }
+
+    const castTime = row.querySelector('.spell-cast-time');
+    if (castTime) {
+        castTime.textContent = spellDetails.casting_time;
+    }
+
+    const toHitOrDC = row.querySelector('.spell-to-hit-dc');
+    if (toHitOrDC) {
+        const toHitOrDCContent = updateSpelltoHitorDC(spellDetails.toHitOrDC);
+        if (toHitOrDCContent) {
+            toHitOrDC.textContent = ''; // Clear existing content
+            toHitOrDC.appendChild(toHitOrDCContent);
+            updateSpelltoHitDice(spellmodifier);
+            updateSpellSaveDC(spellmodifier)
+        }
+
+    }
+
+    const components = row.querySelector('.spell-components');
+    if (components) {
+        components.textContent = spellDetails.components;
+    }
+
+    const concentration = row.querySelector('.spell-concentration');
+    if (concentration) {
+        concentration.textContent = spellDetails.concentration;
+    }
+}
+
+function updateSpelltoHitorDC(spellDetails) {
+
+    if (spellDetails === "toHit") {
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('to-hit-container');
+
+        const label = document.createElement('label');
+        label.classList.add('actionButtonLabel');
+        label.setAttribute('value', '5');
+        label.setAttribute('data-dice-type', '1d20');
+        label.setAttribute('data-name', 'Spell Attack');
+
+        const button = document.createElement('button');
+        button.classList.add('actionButton', 'skillbuttonstyler', 'spell-attack-button');
+        button.textContent = '+5';
+
+        containerDiv.appendChild(label);
+        containerDiv.appendChild(button);
+
+        return containerDiv;
+    } else if (spellDetails === "DC") {
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('dc-container');
+
+        const label = document.createElement('label');
+        const span = document.createElement('span');
+        span.classList.add('spell-save-dc');
+
+        containerDiv.appendChild(label);
+        containerDiv.appendChild(span);
+
+        return containerDiv;
+    } else {
+        const containerDiv = document.createElement('div');
+        return containerDiv;
+    }
+}
+
+
+
+function updateSpellSaveDC(ability){
+    const spellSection = document.getElementById('SpellList');
+    const spellDCSelections = spellSection.querySelectorAll('.spell-save-dc');
+    
+    const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+    const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+
+    spellDCSelections.forEach((span) =>{
+        span.textContent = spellSaveDc;
+        console.log("here")
+    });
+
+    console.log(spellSaveDc)
+
+    return spellSaveDc
+}
+
+function updateSpelltoHitDice(ability) {
+    const spellSection = document.getElementById('SpellList');
+    const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button");
+
+    const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+    const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+    
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus;
+
+    // Loop through each spell attack button
+    spellAttackButtons.forEach((button, index) => {
+        // Update button text content
+        if (spellAttackBonus >= 0 ){
+            button.textContent = "+" + spellAttackBonus;
+        }
+        else{
+            button.textContent = spellAttackBonus; 
+        }
+       
+
+        // Find the associated label
+        const label = button.previousElementSibling; // Assuming the label is the sibling before the button
+
+        if (label) {
+            // Update label value and data-name
+            label.setAttribute('value', spellAttackBonus); // Example, adjust logic as needed
+            label.setAttribute('data-name', label.getAttribute('data-name') || 'Spell Attack');
+        }
+    });
+    rollableButtons()
+}

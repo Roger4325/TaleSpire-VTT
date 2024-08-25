@@ -62,11 +62,11 @@
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "0",
+                        "proficiencyButton": "1",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
-                        "fourthColumn": "-1",
-                        "fifthColumn": "2d6",
+                        "fourthColumn": "+2",
+                        "fifthColumn": "2d10",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
                         "ninthColumn": {

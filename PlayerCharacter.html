@@ -601,23 +601,52 @@
 
 
         <section id="SpellList">
+            <div class = "spell-casting-info">
+                <div class="spellcastingDropdown">
+                    <div>
+                        <label for="spellcastingDropdown">Spellcasting Modifier:</label>
+                        <select class="spellcasting-dropdown">
+                            <option value="STR">STR</option>
+                            <option value="DEX">DEX</option>
+                            <option value="CON">CON</option>
+                            <option value="INT">INT</option>
+                            <option value="WIS">WIS</option>
+                            <option value="CHA">CHA</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <span class="spellcasting-toHit">Spell Attack :</span>
+                    <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Spell Attack"></label>
+                    <button class="actionButton skillbuttonstyler spell-attack-button">+5</button>
+                </div>
+                <div>
+                    <label>Spell Save DC:</label>
+                    <span class="spell-save-dc" >__</span>
+                </div>
+            </div>
+            
+            <hr>
             <div class="spell-group">
-                <h2>Cantrips <button class="add-spell">+</button></h2>
-                <div class="spell-container" id="cantrip-container"></div>
+                <h2>Cantrips</h2>
+                <button class="add-spell-button">+</button>
+                <div class="spell-container" spellLevel="Cantrip" id="cantrip-container"></div>
                 <hr class="minihr">
             </div>
-            <hr class="minihr">
             <div class="spell-group">
                 <h2>Level 1 
                     <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level1-slots"></div> <!-- This is where the slots will be added -->
+                    <div class="spell-slots" id="level1-slots"></div>
                 </h2>
                 <button class="add-spell-button">+</button>
-                <div class="spell-container" id="level1-container"></div>
+                <div class="spell-container" spellLevel="1st-level" id="level1-container"></div>
             </div>
             <hr class="minihr">
             <!-- Repeat for other spell levels -->
         </section>
+        
+        
+        
         
         
 

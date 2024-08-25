@@ -515,6 +515,7 @@ async function readSpellJson() {
             spellNames: spellNames,
             spellsData: combinedData
         };
+        
     } catch (error) {
         console.error('Error loading data:', error);
         return null;

@@ -12,7 +12,8 @@
         "casting_time": "1 action",
         "level": "2nd-level",
         "school": "Evocation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Acid Splash",
@@ -27,7 +28,8 @@
         "casting_time": "1 action",
         "level": "Cantrip",
         "school": "Conjuration",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Aid",
@@ -92,7 +94,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Ranger",
         "archetype": "Cleric: Nature",
-        "domains": "Nature"
+        "domains": "Nature",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Animal Messenger",
@@ -108,7 +111,8 @@
         "casting_time": "1 action",
         "level": "2nd-level",
         "school": "Enchantment",
-        "class": "Bard, Druid, Ranger, Ritual Caster"
+        "class": "Bard, Druid, Ranger, Ritual Caster",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Animal Shapes",
@@ -235,7 +239,8 @@
         "casting_time": "1 action",
         "level": "5th-level",
         "school": "Evocation",
-        "class": "Wizard"
+        "class": "Wizard",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Arcane Lock",
@@ -334,7 +339,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Paladin",
         "archetype": "Paladin: Vengeance",
-        "oaths": "Vengeance"
+        "oaths": "Vengeance",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Banishment",
@@ -351,7 +357,8 @@
         "level": "4th-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin, Sorcerer, Warlock, Wizard",
-        "oaths": "Vengeance"
+        "oaths": "Vengeance",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Barkskin",
@@ -403,7 +410,8 @@
         "casting_time": "1 action",
         "level": "3rd-level",
         "school": "Necromancy",
-        "class": "Bard, Cleric, Wizard"
+        "class": "Bard, Cleric, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Blade Barrier",
@@ -418,7 +426,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Evocation",
-        "class": "Cleric"
+        "class": "Cleric",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Bless",
@@ -451,7 +460,8 @@
         "level": "4th-level",
         "school": "Necromancy",
         "class": "Druid, Sorcerer, Warlock, Wizard",
-        "circles": "Desert"
+        "circles": "Desert",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Blindness/Deafness",
@@ -468,7 +478,8 @@
         "school": "Necromancy",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Fiend",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Blink",
@@ -536,7 +547,8 @@
         "class": "Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Call Lightning",
@@ -554,7 +566,8 @@
         "class": "Cleric, Druid",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
-        "circles": "Forest"
+        "circles": "Forest",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Calm Emotions",
@@ -571,7 +584,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Warlock",
         "archetype": "Warlock: Archfey",
-        "patrons": "Archfey"
+        "patrons": "Archfey",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Chain Lightning",
@@ -587,7 +601,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Evocation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Charm Person",
@@ -604,7 +619,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery",
-        "domains": "Trickery"
+        "domains": "Trickery",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Chill Touch",
@@ -619,7 +635,8 @@
         "casting_time": "1 action",
         "level": "Cantrip",
         "school": "Necromancy",
-        "class": "Sorcerer, Warlock, Wizard"
+        "class": "Sorcerer, Warlock, Wizard",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Circle of Death",
@@ -635,7 +652,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Necromancy",
-        "class": "Sorcerer, Warlock, Wizard"
+        "class": "Sorcerer, Warlock, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Clairvoyance",
@@ -686,7 +704,8 @@
         "school": "Conjuration",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Underdark",
-        "circles": "Underdark"
+        "circles": "Underdark",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Color Spray",
@@ -720,7 +739,8 @@
         "class": "Cleric, Paladin, Warlock",
         "archetype": "Warlock: Fiend",
         "domains": "Knowledge",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Commune",
@@ -787,7 +807,8 @@
         "level": "4th-level",
         "school": "Enchantment",
         "class": "Bard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Cone of Cold",
@@ -805,7 +826,8 @@
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Arctic",
-        "circles": "Arctic"
+        "circles": "Arctic",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Confusion",
@@ -823,7 +845,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Knowledge",
-        "domains": "Knowledge"
+        "domains": "Knowledge",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Conjure Animals",
@@ -946,7 +969,8 @@
         "level": "5th-level",
         "school": "Necromancy",
         "class": "Cleric, Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Contingency",
@@ -994,7 +1018,8 @@
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Control Weather",
@@ -1207,7 +1232,8 @@
         "casting_time": "1 action",
         "level": "7th-level",
         "school": "Evocation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Demiplane",
@@ -1272,7 +1298,7 @@
     },
     {
         "name": "Detect Thoughts",
-        "desc": "For the duration of the spell, you can read the thoughts of some creatures. While casting the spell and at your action in each round until the spell, you may focus your mind on a creature you can see 30 feet of you. If the chosen creature has an Intelligence of 3 or less, or if she does not speak any language, the creature is not affected.You first read the surface thoughts of the creature, which occupies her mind at that moment. In an action, you can direct your attention to the thoughts of another creature or attempt to deepen your reading thoughts of the same creature. If you deepen your reading, the target must make a backup of Wisdom, otherwise you get access to his argument (if any), in his emotional state and thought that concerns his mind on a broader spectrum Such a concern, love or hate. If successful, the spell ends. In all cases, the target is aware that his mind is under your eyes. Unless you are directing your attention to the thoughts of another creature, the target can use his action turn to roll Intelligence opposite your roll Intelligence. If she has the upper hand, the spell ends.The questions verbally directed to the target guide the train of thought. This spell is especially effective during an interrogation.You can also use this spell to detect the presence of thinking creatures that are invisible to you. When you cast this spell, or in an action for the duration of the spell, you can find thoughts to 30 feet of you. The spell can override most obstacles but it is blocked by 2 feet stone 2 inches of precious metal, or a thin sheet of lead. You can not detect a creature with an Intelligence of 3 or less or speaking any language.After detecting the presence of a creature in this way, you can read his thoughts for the rest of the spell's duration as described above, even if you can not see it, but only if it remains in the range of the spell.",
+        "desc": "For the duration of the spell, you can read the thoughts of some creatures. While casting the spell and at your action in each round until the spell, you may focus your mind on a creature you can see 30 feet of you. If the chosen creature has an Intelligence of 3 or less, or if she does not speak any language, the creature is not affected.You first read the surface thoughts of the creature, which occupies her mind at that moment. In an action, you can direct your attention to the thoughts of another creature or attempt to deepen your reading thoughts of the same creature. If you deepen your reading, the target must make a Wisdom saving throw, otherwise you get access to his argument (if any), in his emotional state and thought that concerns his mind on a broader spectrum Such a concern, love or hate. If successful, the spell ends. In all cases, the target is aware that his mind is under your eyes. Unless you are directing your attention to the thoughts of another creature, the target can use his action turn to roll Intelligence opposite your roll Intelligence. If she has the upper hand, the spell ends.The questions verbally directed to the target guide the train of thought. This spell is especially effective during an interrogation.You can also use this spell to detect the presence of thinking creatures that are invisible to you. When you cast this spell, or in an action for the duration of the spell, you can find thoughts to 30 feet of you. The spell can override most obstacles but it is blocked by 2 feet stone 2 inches of precious metal, or a thin sheet of lead. You can not detect a creature with an Intelligence of 3 or less or speaking any language.After detecting the presence of a creature in this way, you can read his thoughts for the rest of the spell's duration as described above, even if you can not see it, but only if it remains in the range of the spell.",
         "page": "phb 231",
         "range": "Self",
         "components": "V, S, M",
@@ -1286,7 +1312,8 @@
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Great Old One",
         "patrons": "Great Old One",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Dimension Door",
@@ -1321,7 +1348,8 @@
         "class": "Bard, Cleric, Sorcerer, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Disintegrate",
@@ -1337,7 +1365,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Transmutation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Dispel Evil and Good",
@@ -1439,7 +1468,8 @@
         "class": "Cleric, Druid, Sorcerer, Warlock",
         "archetype": "Cleric: Nature<br/> Warlock: Archfey, Great Old One",
         "domains": "Nature",
-        "patrons": "Archfey, Great Old One"
+        "patrons": "Archfey, Great Old One",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Dominate Monster",
@@ -1454,7 +1484,8 @@
         "casting_time": "1 action",
         "level": "8th-level",
         "school": "Enchantment",
-        "class": "Bard, Sorcerer, Warlock, Wizard"
+        "class": "Bard, Sorcerer, Warlock, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Dominate Person",
@@ -1472,7 +1503,8 @@
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery<br/> Warlock: Archfey, Great Old One",
         "domains": "Trickery",
-        "patrons": "Archfey, Great Old One"
+        "patrons": "Archfey, Great Old One",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Dream",
@@ -1521,7 +1553,8 @@
         "level": "8th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Eldritch Blast",
@@ -1536,7 +1569,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Warlock",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Enhance Ability",
@@ -1568,7 +1602,8 @@
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Entangle",
@@ -1583,7 +1618,8 @@
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Enthrall",
@@ -1598,7 +1634,8 @@
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Warlock",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Etherealness",
@@ -1643,7 +1680,8 @@
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Fabricate",
@@ -1676,7 +1714,8 @@
         "archetype": "Cleric: Light<br/> Warlock: Archfey",
         "domains": "Light",
         "patrons": "Archfey",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "False Life",
@@ -1708,7 +1747,8 @@
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Feather Fall",
@@ -1740,7 +1780,8 @@
         "level": "8th-level",
         "school": "Enchantment",
         "class": "Bard, Druid, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Find Familiar",
@@ -1817,7 +1858,8 @@
         "level": "7th-level",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Fireball",
@@ -1836,7 +1878,8 @@
         "class": "Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Fire Bolt",
@@ -1851,7 +1894,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "higher_level": "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10)."
+        "higher_level": "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Fire Shield",
@@ -1884,7 +1928,8 @@
         "level": "7th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Flame Blade",
@@ -1900,7 +1945,8 @@
         "casting_time": "1 bonus action",
         "level": "2nd-level",
         "school": "Evocation",
-        "class": "Druid"
+        "class": "Druid",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Flame Strike",
@@ -1920,7 +1966,8 @@
         "archetype": "Paladin: Devotion<br/> Warlock: Fiend",
         "domains": "Light, War",
         "oaths": "Devotion",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Flaming Sphere",
@@ -1938,7 +1985,8 @@
         "school": "Conjuration",
         "class": "Cleric, Druid, Wizard",
         "archetype": "Cleric: Light",
-        "domains": "Light"
+        "domains": "Light",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Flesh to Stone",
@@ -1954,7 +2002,8 @@
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Fly",
@@ -1987,7 +2036,8 @@
         "school": "Conjuration",
         "class": "Cleric, Druid, Ranger, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
-        "domains": "Tempest"
+        "domains": "Tempest",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Forbiddance",
@@ -2182,7 +2232,8 @@
         "casting_time": "1 hour",
         "level": "3rd-level",
         "school": "Abjuration",
-        "class": "Bard, Cleric, Wizard"
+        "class": "Bard, Cleric, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Goodberry",
@@ -2214,7 +2265,8 @@
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Greater Invisibility",
@@ -2312,7 +2364,8 @@
         "casting_time": "1 action",
         "level": "1st-level",
         "school": "Evocation",
-        "class": "Cleric"
+        "class": "Cleric",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Gust of Wind",
@@ -2330,7 +2383,8 @@
         "class": "Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Hallow",
@@ -2365,7 +2419,8 @@
         "school": "Illusion",
         "class": "Bard, Druid, Warlock, Wizard",
         "circles": "Desert",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Harm",
@@ -2381,7 +2436,8 @@
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Haste",
@@ -2461,7 +2517,8 @@
         "casting_time": "1 reaction",
         "level": "1st-level",
         "school": "Evocation",
-        "class": "Warlock"
+        "class": "Warlock",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Heroes' Feast",
@@ -2511,7 +2568,8 @@
         "class": "Bard, Cleric, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: War<br/> Paladin: Vengeance",
         "domains": "War",
-        "oaths": "Vengeance"
+        "oaths": "Vengeance",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Hold Person",
@@ -2530,7 +2588,8 @@
         "class": "Bard, Cleric, Druid, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Paladin: Vengeance",
         "circles": "Arctic",
-        "oaths": "Vengeance"
+        "oaths": "Vengeance",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Holy Aura",
@@ -2546,7 +2605,8 @@
         "level": "8th-level",
         "school": "Abjuration",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Hunter's Mark",
@@ -2579,7 +2639,8 @@
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Ice Storm",
@@ -2599,7 +2660,8 @@
         "archetype": "Cleric: Tempest<br/> Paladin: Ancients",
         "domains": "Tempest",
         "circles": "Arctic",
-        "oaths": "Ancients"
+        "oaths": "Ancients",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Identify",
@@ -2649,7 +2711,8 @@
         "level": "9th-level",
         "school": "Abjuration",
         "class": "Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Incendiary Cloud",
@@ -2664,7 +2727,8 @@
         "level": "8th-level",
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Inflict Wounds",
@@ -2679,7 +2743,8 @@
         "casting_time": "1 action",
         "level": "1st-level",
         "school": "Necromancy",
-        "class": "Cleric"
+        "class": "Cleric",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Insect Plague",
@@ -2697,7 +2762,8 @@
         "school": "Conjuration",
         "class": "Cleric, Druid, Sorcerer",
         "domains": "Nature, Tempest",
-        "circles": "Desert, Grassland, Swamp, Underdark"
+        "circles": "Desert, Grassland, Swamp, Underdark",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Invisibility",
@@ -2812,7 +2878,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Bard, Cleric, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Lightning Bolt",
@@ -2830,7 +2897,8 @@
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Mountain",
-        "circles": "Mountain"
+        "circles": "Mountain",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Locate Animals or Plants",
@@ -3022,7 +3090,8 @@
         "casting_time": "1 action",
         "level": "3rd-level",
         "school": "Illusion",
-        "class": "Bard, Sorcerer, Warlock, Wizard"
+        "class": "Bard, Sorcerer, Warlock, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Mass Cure Wounds",
@@ -3084,7 +3153,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Enchantment",
-        "class": "Bard, Sorcerer, Warlock, Wizard"
+        "class": "Bard, Sorcerer, Warlock, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Maze",
@@ -3163,7 +3233,8 @@
         "level": "9th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Mind Blank",
@@ -3194,7 +3265,8 @@
         "level": "Cantrip",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Mirage Arcane",
@@ -3209,7 +3281,8 @@
         "level": "7th-level",
         "school": "Illusion",
         "class": "Bard, Druid, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Mirror Image",
@@ -3277,7 +3350,8 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Wizard",
         "archetype": "Cleric: Trickery",
-        "domains": "Trickery"
+        "domains": "Trickery",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Moonbeam",
@@ -3295,7 +3369,8 @@
         "school": "Evocation",
         "class": "Druid, Paladin",
         "archetype": "Paladin: Ancients",
-        "oaths": "Ancients"
+        "oaths": "Ancients",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Move Earth",
@@ -3381,7 +3456,8 @@
         "casting_time": "1 action",
         "level": "4th-level",
         "school": "Illusion",
-        "class": "Wizard"
+        "class": "Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Phantom Steed",
@@ -3427,7 +3503,8 @@
         "casting_time": "1 hour",
         "level": "5th-level",
         "school": "Abjuration",
-        "class": "Bard, Cleric, Druid, Wizard"
+        "class": "Bard, Cleric, Druid, Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Plane Shift",
@@ -3478,7 +3555,8 @@
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Sorcerer, Warlock, Wizard",
-        "higher_level": "This spell’s damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12)."
+        "higher_level": "This spell’s damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12).",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Polymorph",
@@ -3496,7 +3574,8 @@
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Power Word Kill",
@@ -3571,7 +3650,8 @@
         "level": "7th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Prismatic Wall",
@@ -3586,7 +3666,8 @@
         "level": "9th-level",
         "school": "Abjuration",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Produce Flame",
@@ -3601,7 +3682,8 @@
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Druid",
-        "higher_level": "This spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8)."
+        "higher_level": "This spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Programmed Illusion",
@@ -3617,7 +3699,8 @@
         "level": "6th-level",
         "school": "Illusion",
         "class": "Bard, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Project Image",
@@ -3633,7 +3716,8 @@
         "level": "7th-level",
         "school": "Illusion",
         "class": "Bard, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Protection from Energy",
@@ -3730,7 +3814,8 @@
         "level": "2nd-level",
         "school": "Necromancy",
         "class": "Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Ray of Frost",
@@ -3745,7 +3830,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8)."
+        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Regenerate",
@@ -3840,7 +3926,8 @@
         "level": "7th-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Revivify",
@@ -3888,7 +3975,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Cleric",
-        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8)."
+        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Sanctuary",
@@ -3924,7 +4012,8 @@
         "class": "Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Scrying",
@@ -3944,7 +4033,8 @@
         "domains": "Knowledge, Light",
         "circles": "Coast, Swamp",
         "oaths": "Vengeance",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "See Invisibility",
@@ -3977,7 +4067,8 @@
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Archfey",
         "patrons": "Archfey",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Sending",
@@ -4045,7 +4136,8 @@
         "school": "Evocation",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Tempest",
-        "domains": "Tempest"
+        "domains": "Tempest",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Shield",
@@ -4093,7 +4185,8 @@
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Shocking Grasp",
@@ -4108,7 +4201,8 @@
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8)."
+        "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Silence",
@@ -4141,7 +4235,8 @@
         "level": "1st-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Simulacrum",
@@ -4194,7 +4289,8 @@
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
         "circles": "Arctic",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Slow",
@@ -4212,7 +4308,8 @@
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Arctic",
         "circles": "Arctic",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Spare the Dying",
@@ -4314,7 +4411,8 @@
         "archetype": "Cleric: Nature",
         "domains": "Nature",
         "circles": "Arctic, Mountain",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Spirit Guardians",
@@ -4331,7 +4429,8 @@
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric",
-        "domains": "War"
+        "domains": "War",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Spiritual Weapon",
@@ -4347,7 +4446,8 @@
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric",
-        "domains": "Life, War"
+        "domains": "Life, War",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Stinking Cloud",
@@ -4366,7 +4466,8 @@
         "archetype": "Druid: Swamp, Underdark<br/> Warlock: Fiend",
         "circles": "Swamp, Underdark",
         "patrons": "Fiend",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Stone Shape",
@@ -4418,7 +4519,8 @@
         "level": "9th-level",
         "school": "Conjuration",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Suggestion",
@@ -4436,7 +4538,8 @@
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Knowledge",
         "domains": "Knowledge",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Sunbeam",
@@ -4452,7 +4555,8 @@
         "level": "6th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Sunburst",
@@ -4468,7 +4572,8 @@
         "level": "8th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Symbol",
@@ -4484,7 +4589,8 @@
         "level": "7th-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Telekinesis",
@@ -4501,7 +4607,8 @@
         "class": "Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Great Old One",
         "patrons": "Great Old One",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Teleport",
@@ -4564,7 +4671,8 @@
         "school": "Evocation",
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
-        "domains": "Tempest"
+        "domains": "Tempest",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Time Stop",
@@ -4645,7 +4753,8 @@
         "level": "9th-level",
         "school": "Transmutation",
         "class": "Bard, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "True Resurrection",
@@ -4723,7 +4832,8 @@
         "casting_time": "1 action",
         "level": "3rd-level",
         "school": "Necromancy",
-        "class": "Warlock, Wizard"
+        "class": "Warlock, Wizard",
+        "toHitOrDC": "toHit"
     },
     {
         "name": "Vicious Mockery",
@@ -4738,7 +4848,8 @@
         "level": "Cantrip",
         "school": "Enchantment",
         "class": "Bard",
-        "higher_level": "This spell’s damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4)."
+        "higher_level": "This spell’s damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4).",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wall of Fire",
@@ -4757,7 +4868,8 @@
         "class": "Cleric, Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
-        "patrons": "Fiend"
+        "patrons": "Fiend",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wall of Force",
@@ -4789,7 +4901,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Evocation",
-        "class": "Wizard"
+        "class": "Wizard",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wall of Stone",
@@ -4806,7 +4919,8 @@
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "circles": "Desert, Mountain",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wall of Thorns",
@@ -4822,7 +4936,8 @@
         "casting_time": "1 action",
         "level": "6th-level",
         "school": "Conjuration",
-        "class": "Druid"
+        "class": "Druid",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Warding Bond",
@@ -4889,7 +5004,8 @@
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Underdark",
         "circles": "Underdark",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Weird",
@@ -4904,7 +5020,8 @@
         "level": "9th-level",
         "school": "Illusion",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wind Walk",
@@ -4938,7 +5055,8 @@
         "class": "Cleric, Druid, Ranger",
         "archetype": "Cleric: Nature",
         "domains": "Nature",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     },
     {
         "name": "Wish",
@@ -4984,6 +5102,7 @@
         "school": "Enchantment",
         "class": "Bard, Cleric, Paladin",
         "oaths": "Devotion",
-        "higher_level": ""
+        "higher_level": "",
+        "toHitOrDC": "DC"
     }
 ]
