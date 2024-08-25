@@ -413,7 +413,18 @@ function loadDataFromGlobalStorage(dataType) {
     });
 }
 
+//Error Modal that will display any and all errors that happen when the user does something that they shouldn't like putting incorrect dice into a dice only input.
+function showErrorModal(errorMessage) {
+    const modal = document.getElementById('errorModal');
+    const modalMessage = document.getElementById('errorModalMessage');
+    
+    modalMessage.textContent = errorMessage;
+    modal.style.display = 'block';
 
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 4000);
+}
 
 
 // Delete data from global storage

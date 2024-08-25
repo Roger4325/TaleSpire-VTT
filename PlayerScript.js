@@ -780,7 +780,13 @@ function updateToHitDice(proficiencyButton) {
             const toHitDiceValue = abilityScoreValue + (proficiencyBonus * proficiencyValue);
 
             // Update the toHitDice button text content and value
-            toHitDiceButton.textContent = "+" + toHitDiceValue;
+            if(toHitDiceValue >= 0){
+                toHitDiceButton.textContent = "+" + toHitDiceValue;
+            }
+            else{
+                toHitDiceButton.textContent = toHitDiceValue;
+            }
+            
 
             // Get the previous sibling label
             const previousLabel = toHitDiceButton.previousElementSibling;
@@ -970,6 +976,16 @@ function newTableRow() {
     console.log(dropdownContent);
 
     addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
+
+    // Add blur event listener
+    const inputElement = newRow.querySelector('.actionDamageDice');
+    addDamageDiceInputListener(inputElement, newRow);
+
+    // Create the delete button and append it
+    const deleteButtonDiv = newRow.querySelector('.removeButton')
+    console.log(deleteButtonDiv)
+    addDeleteButtonListener(deleteButtonDiv)
+    
 
     // Add the event listener only if it hasn't been added before
     newRow.addEventListener('blur', getAllEditableContent());
@@ -1360,7 +1376,7 @@ function updateActionTableUI(actionTableData) {
             newRow.appendChild(damageCell);
             
             // Create and append the content for the sixth column
-            const columnSixCell = createColumnSixContent(row,rowIndex);
+            const columnSixCell = createColumnSixContent(row, rowIndex, newRow);
             console.log(columnSixCell)
             newRow.appendChild(columnSixCell);
 
@@ -1383,6 +1399,8 @@ function updateActionTableUI(actionTableData) {
             console.log(checkboxes)
 
             generateCheckboxes(checkboxes, newRow);
+
+            
             
         }
     });
@@ -1391,11 +1409,10 @@ function updateActionTableUI(actionTableData) {
 }
 
 // Helper function to create column six. The settings menu on the Action table.
-function createColumnSixContent(rowData,rowIndex) {
+function createColumnSixContent(rowData,rowIndex, newRow) {
 
     // Extract the required data
     const ability = rowData["seventhColumn"];  // For the ability dropdown
-    const checkboxes = rowData["ninthColumn"]; // For the checkboxes
 
 
     // Create the outer td element
@@ -1479,6 +1496,18 @@ function createColumnSixContent(rowData,rowIndex) {
     magicBonusDiv.appendChild(magicBonusInput);
     additionalInfoContainer.appendChild(magicBonusDiv);
 
+    // Create the damage dice input field
+    const damageDiceInput = createDamageDiceInput(rowIndex);
+    additionalInfoContainer.appendChild(damageDiceInput);
+
+    // Add blur event listener
+    const inputElement = damageDiceInput.querySelector('.actionDamageDice');
+    addDamageDiceInputListener(inputElement, newRow);
+
+    // Create the delete button and append it
+    const deleteButtonDiv = createDeleteButton(rowIndex);
+    additionalInfoContainer.appendChild(deleteButtonDiv);
+
     // Append the button and the additional info container to the td
     td.appendChild(button);
     td.appendChild(additionalInfoContainer);
@@ -1553,6 +1582,91 @@ function calculateActionDamageDice() {
 
             console.log(damageButton.textContent)
             
+        }
+    });
+}
+
+
+function addDamageDiceInputListener(inputElement, rowElement) {
+    inputElement.addEventListener('blur', function () {
+        const newValue = inputElement.value;
+        const damageButton = rowElement.querySelector('button.damageDiceButton');
+        const damageLabel = rowElement.querySelector('.damageDiceButton');
+
+        // Define the pattern to validate the dice input
+        const dicePattern = /^(\d+d(4|6|8|10|12|20))(\+\d+d(4|6|8|10|12|20))*$/;
+
+        // Check if the input matches the required pattern
+        if (!dicePattern.test(newValue)) {
+            showErrorModal(`Invalid input: "${newValue}". Please enter a valid dice format like '4d4+5d6'.`);
+            return;
+        }
+
+        // Calculate the total number of dice
+        const totalDice = newValue.split('+').reduce((acc, dice) => {
+            const count = parseInt(dice.split('d')[0], 10);
+            return acc + count;
+        }, 0);
+
+        // Check if the total number of dice exceeds the limit
+        if (totalDice > 40) {
+            showErrorModal(`Too many dice: "${newValue}". The total number of dice cannot exceed 40.`);
+            return;
+        }
+
+        // Update the damage button and label if everything is valid
+        if (damageButton && damageLabel) {
+            const modifier = parseInt(damageLabel.getAttribute('value'), 10);
+
+            if (modifier > 0) {
+                damageButton.textContent = newValue + "+" + modifier;
+            } else if (modifier < 0) {
+                damageButton.textContent = newValue + modifier;
+            } else {
+                damageButton.textContent = newValue;
+            }
+
+            damageLabel.setAttribute('data-dice-type', newValue);
+        }
+    });
+}
+
+
+function createDamageDiceInput(rowIndex) {
+    const div = document.createElement('div');
+    const input = document.createElement('input');
+    input.id = `damageDiceActions${rowIndex}`;
+    input.className = 'actionDamageDice';
+    input.placeholder = 'Enter damage dice';
+
+    const label = document.createElement('span');
+    label.textContent = 'Only Dice';
+
+    div.appendChild(input);
+    div.appendChild(label);
+
+    return div;
+}
+
+function createDeleteButton(rowIndex) {
+    const deleteButtonDiv = document.createElement('div');
+    const deleteButton = document.createElement('button');
+    deleteButton.id = `deleteRowButton${rowIndex}`;
+    deleteButton.className = 'removeButton';
+    deleteButton.textContent = 'Delete Current Row';
+    deleteButtonDiv.appendChild(deleteButton);
+
+    // Add the event listener
+    addDeleteButtonListener(deleteButton);
+
+    return deleteButtonDiv;
+}
+
+function addDeleteButtonListener(deleteButton) {
+    deleteButton.addEventListener('click', function () {
+        const row = deleteButton.closest('tr');
+        if (row) {
+            row.remove();
         }
     });
 }

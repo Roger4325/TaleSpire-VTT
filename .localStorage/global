@@ -7,7 +7,7 @@
             "speed": "30ft.",
             "characterLevel": "15",
             "playerXP": "0",
-            "currentCharacterHP": "0",
+            "currentCharacterHP": "50",
             "maxCharacterHP": "50",
             "strengthScore": "8",
             "dexterityScore": "10",
@@ -58,23 +58,40 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
-            "proficiencyActionButton6": "1",
             "conditions": [],
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "1",
+                        "proficiencyButton": "0",
                         "secondColumn": "Maul",
                         "thirdColumn": "5ft. Reach",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "-1",
                         "fifthColumn": "2d6+4d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "CHA",
+                        "seventhColumn": "STR",
                         "ninthColumn": {
                             "attacks": true,
-                            "actions": true,
-                            "bonus-actions": true,
+                            "actions": false,
+                            "bonus-actions": false,
                             "reactions": false,
+                            "other": true
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Corey",
+                        "thirdColumn": "30 ft Reach",
+                        "fourthColumn": "+4",
+                        "fifthColumn": "2d6+1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": true,
                             "other": false
                         }
                     }
