@@ -13,7 +13,9 @@
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "4d4",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Acid Splash",
@@ -29,7 +31,9 @@
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Aid",
@@ -240,7 +244,9 @@
         "level": "5th-level",
         "school": "Evocation",
         "class": "Wizard",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "4d8",
+        "damage_dice_upcast": "2d8"
     },
     {
         "name": "Arcane Lock",
@@ -427,7 +433,8 @@
         "level": "6th-level",
         "school": "Evocation",
         "class": "Cleric",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "6d10"
     },
     {
         "name": "Bless",
@@ -461,7 +468,9 @@
         "school": "Necromancy",
         "class": "Druid, Sorcerer, Warlock, Wizard",
         "circles": "Desert",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Blindness/Deafness",
@@ -529,7 +538,9 @@
         "casting_time": "1 bonus action",
         "level": "2nd-level",
         "school": "Evocation",
-        "class": "Paladin"
+        "class": "Paladin",
+        "damage_dice": "2d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Burning Hands",
@@ -548,7 +559,9 @@
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
         "patrons": "Fiend",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "3d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Call Lightning",
@@ -567,7 +580,9 @@
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
         "circles": "Forest",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "3d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Calm Emotions",
@@ -602,7 +617,9 @@
         "level": "6th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d8",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Charm Person",
@@ -636,7 +653,9 @@
         "level": "Cantrip",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Circle of Death",
@@ -653,7 +672,9 @@
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d6",
+        "damage_dice_upcast": "2d6"
     },
     {
         "name": "Clairvoyance",
@@ -705,7 +726,9 @@
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Underdark",
         "circles": "Underdark",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "5d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Color Spray",
@@ -827,7 +850,9 @@
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Arctic",
         "circles": "Arctic",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Confusion",
@@ -1133,7 +1158,9 @@
         "level": "1st-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Druid, Paladin, Ranger",
-        "domains": "Life"
+        "domains": "Life",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Dancing Lights",
@@ -1233,7 +1260,9 @@
         "level": "7th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Demiplane",
@@ -1366,7 +1395,10 @@
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d6",
+        "additonal_damage":"40",
+        "damage_dice_upcast": "3d6"
     },
     {
         "name": "Dispel Evil and Good",
@@ -1554,7 +1586,9 @@
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "5d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Eldritch Blast",
@@ -1570,7 +1604,9 @@
         "school": "Evocation",
         "class": "Warlock",
         "higher_level": "",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d10",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Enhance Ability",
@@ -1859,7 +1895,10 @@
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "7d8",
+        "additonal_damage": "30",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Fireball",
@@ -1879,7 +1918,9 @@
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
         "patrons": "Fiend",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Fire Bolt",
@@ -1895,7 +1936,9 @@
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "This spell’s damage increases by 1d10 when you reach 5th level (2d10), 11th level (3d10), and 17th level (4d10).",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Fire Shield",
@@ -1913,7 +1956,9 @@
         "class": "Warlock, Wizard",
         "archetype": "Warlock: Fiend",
         "patrons": "Fiend",
-        "higher_level": ""
+        "higher_level": "",
+        "damage_dice": "2d8",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Fire Storm",
@@ -1929,7 +1974,9 @@
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "7d10",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Flame Blade",
@@ -1946,7 +1993,9 @@
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Druid",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "3d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Flame Strike",
@@ -1967,7 +2016,9 @@
         "domains": "Light, War",
         "oaths": "Devotion",
         "patrons": "Fiend",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "4d6+4d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Flaming Sphere",
@@ -1986,7 +2037,9 @@
         "class": "Cleric, Druid, Wizard",
         "archetype": "Cleric: Light",
         "domains": "Light",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Flesh to Stone",
@@ -2365,7 +2418,9 @@
         "level": "1st-level",
         "school": "Evocation",
         "class": "Cleric",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "4d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Gust of Wind",
@@ -2437,7 +2492,9 @@
         "school": "Necromancy",
         "class": "Cleric",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "14d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Haste",
@@ -2486,7 +2543,9 @@
         "casting_time": "1 bonus action",
         "level": "1st-level",
         "school": "Evocation",
-        "class": "Bard, Cleric, Druid"
+        "class": "Bard, Cleric, Druid",
+        "damage_dice": "1d4",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Heat Metal",
@@ -2502,7 +2561,9 @@
         "casting_time": "1 action",
         "level": "2nd-level",
         "school": "Transmutation",
-        "class": "Bard, Druid"
+        "class": "Bard, Druid",
+        "damage_dice": "2d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Hellish Rebuke",
@@ -2518,7 +2579,9 @@
         "level": "1st-level",
         "school": "Evocation",
         "class": "Warlock",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Heroes' Feast",
@@ -2623,7 +2686,9 @@
         "school": "Divination",
         "class": "Paladin, Ranger",
         "archetype": "Paladin: Vengeance",
-        "oaths": "Vengeance"
+        "oaths": "Vengeance",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Hypnotic Pattern",
@@ -2644,7 +2709,7 @@
     },
     {
         "name": "Ice Storm",
-        "desc": "A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high cylinder centered on a point within range. Each creature in the cylinder must make a dexterity saving throw. A creature takes 2d8 bludgeoning damage and 4d6 cold damage on a failed save, or half as much damage on a successful one.Hailstones turn the storm’s area of effect into difficult terrain until the end of your next turn.",
+        "desc": "A hail of rock-hard ice pounds to the ground in a 20-foot-radius, 40-foot-high cylinder centered on a point within range. Each creature in the cylinder must make a dexterity saving throw. A creature takes 2d8 bludgeoning damage and 4d6 cold damage on a failed save, or half as much damage on a successful one. Hailstones turn the storm’s area of effect into difficult terrain until the end of your next turn.",
         "higher_level": "When you cast this spell using a spell slot of 5th level or higher, the bludgeoning damage increases by 1d8 for each slot level above 4th.",
         "page": "phb 252",
         "range": "300 feet",
@@ -2661,7 +2726,9 @@
         "domains": "Tempest",
         "circles": "Arctic",
         "oaths": "Ancients",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d8+4d6",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Identify",
@@ -2728,7 +2795,9 @@
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d8",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Inflict Wounds",
@@ -2744,7 +2813,9 @@
         "level": "1st-level",
         "school": "Necromancy",
         "class": "Cleric",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "3d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Insect Plague",
@@ -2763,7 +2834,9 @@
         "class": "Cleric, Druid, Sorcerer",
         "domains": "Nature, Tempest",
         "circles": "Desert, Grassland, Swamp, Underdark",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "4d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Invisibility",
@@ -2898,7 +2971,9 @@
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Mountain",
         "circles": "Mountain",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "8d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Locate Animals or Plants",
@@ -3041,7 +3116,10 @@
         "casting_time": "1 action",
         "level": "1st-level",
         "school": "Evocation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "damage_dice": "1d4",
+        "additonal_damage":"1",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Magic Mouth",
@@ -3107,7 +3185,9 @@
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Bard, Cleric, Druid",
-        "domains": "Life"
+        "domains": "Life",
+        "damage_dice": "3d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Mass Heal",
@@ -3137,7 +3217,9 @@
         "casting_time": "1 bonus action",
         "level": "3rd-level",
         "school": "Evocation",
-        "class": "Cleric"
+        "class": "Cleric",
+        "damage_dice": "1d4",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Mass Suggestion",
@@ -3234,7 +3316,9 @@
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "20d6+20d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Mind Blank",
@@ -3370,7 +3454,9 @@
         "class": "Druid, Paladin",
         "archetype": "Paladin: Ancients",
         "oaths": "Ancients",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Move Earth",
@@ -3445,7 +3531,7 @@
     },
     {
         "name": "Phantasmal Killer",
-        "desc": "You tap into the nightmares of a creature you can see within range and create an illusory manifestation of its deepest fears, visible only to that creature. The target must make a wisdom saving throw. On a failed save, the target becomes frightened for the duration. At the start of each of the target’s turns before the spell ends, the target must succeed on a wisdom saving throw or take 4 d10 psychic damage. On a successful save, the spell ends.",
+        "desc": "You tap into the nightmares of a creature you can see within range and create an illusory manifestation of its deepest fears, visible only to that creature. The target must make a wisdom saving throw. On a failed save, the target becomes frightened for the duration. At the start of each of the target’s turns before the spell ends, the target must succeed on a wisdom saving throw or take 4d10 psychic damage. On a successful save, the spell ends.",
         "higher_level": "When you cast this spell using a spell slot of 5th level or higher, the damage increases by 1dlO for each slot level above 4th.",
         "page": "phb 265",
         "range": "120 feet",
@@ -3457,7 +3543,9 @@
         "level": "4th-level",
         "school": "Illusion",
         "class": "Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "4d10",
+        "damage_dice_upcast": "1d10"
     },
     {
         "name": "Phantom Steed",
@@ -3556,7 +3644,9 @@
         "school": "Conjuration",
         "class": "Sorcerer, Warlock, Wizard",
         "higher_level": "This spell’s damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12).",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "1d12",
+        "damage_dice_upcast": "1d12"
     },
     {
         "name": "Polymorph",
@@ -3620,7 +3710,9 @@
         "casting_time": "10 minutes",
         "level": "2nd-level",
         "school": "Evocation",
-        "class": "Cleric"
+        "class": "Cleric",
+        "damage_dice": "2d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Prestidigitation",
@@ -3651,7 +3743,9 @@
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Prismatic Wall",
@@ -3667,7 +3761,9 @@
         "school": "Abjuration",
         "class": "Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Produce Flame",
@@ -3831,7 +3927,9 @@
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Regenerate",
@@ -3976,7 +4074,9 @@
         "school": "Evocation",
         "class": "Cleric",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Sanctuary",
@@ -3999,7 +4099,7 @@
     {
         "name": "Scorching Ray",
         "desc": "You generate three rays of fire and will throw to targets in the range of the spell. You can project them on one or more targets.Perform a remote attack spell for each department. If it hits, the target takes 2d6 fire damage.",
-        "higher_level": "When you cast this spell using a 3 or higher level spell slot, you generate an additional radius for each level of higher spell slot 2.",
+        "higher_level": "When you cast this spell using a 3 or higher level spell slot, you generate an additional ray for each level of higher than 2nd level",
         "page": "phb 273",
         "range": "120 feet",
         "components": "V, S",
@@ -4013,7 +4113,9 @@
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
         "patrons": "Fiend",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "2d6",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Scrying",
@@ -4137,7 +4239,9 @@
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "3d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Shield",
@@ -4186,7 +4290,9 @@
         "school": "Transmutation",
         "class": "Druid",
         "higher_level": "",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Shocking Grasp",
@@ -4202,7 +4308,9 @@
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Silence",
@@ -4270,7 +4378,9 @@
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Archfey",
-        "patrons": "Archfey"
+        "patrons": "Archfey",
+        "damage_dice": "5d8",
+        "damage_dice_upcast": "2d8"
     },
     {
         "name": "Sleet Storm",
@@ -4412,7 +4522,9 @@
         "domains": "Nature",
         "circles": "Arctic, Mountain",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d4",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Spirit Guardians",
@@ -4430,7 +4542,9 @@
         "school": "Conjuration",
         "class": "Cleric",
         "domains": "War",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "3d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Spiritual Weapon",
@@ -4447,7 +4561,9 @@
         "school": "Evocation",
         "class": "Cleric",
         "domains": "Life, War",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Stinking Cloud",
@@ -4507,22 +4623,6 @@
         "higher_level": ""
     },
     {
-        "name": "Storm of Vengeance",
-        "desc": "A churning storm cloud forms, centered on a point you can see and spreading to a radius of 360 feet. Lightning flashes in the area, thunder booms, and strong winds roar. Each creature under the cloud (no more than 5,000 feet beneath the cloud) when it appears must make a constitution saving throw. On a failed save, a creature takes 2d6 thunder damage and becomes deafened for 5 minutes.Each round you maintain concentration on this spell, the storm produces additional effects on your turn. <b>Round 2.</b> Acidic rain falls from the cloud. Each creature and object under the cloud takes 1d6 acid damage.<b>Round 3.</b> You call six bolts of lightning from the cloud to strike six creatures or objects of your choice beneath the cloud. A given creature or object can’t be struck by more than one bolt. A struck creature must make a dexterity saving throw. The creature takes 10d6 lightning damage on a failed save, or half as much damage on a successful one.<b>Round 4.</b> Hailstones rain down from the cloud. Each creature under the cloud takes 2d6 bludgeoning damage.<b>Round 5-10.</b> Gusts and freezing rain assail the area under the cloud. The area becomes difficult terrain and is heavily obscured. Each creature there takes 1d6 cold damage. Ranged weapon attacks in the area are impossible. The wind and rain count as a severe distraction for the purposes of maintaining concentration on spells. Finally, gusts of strong wind (ranging from 20 to 50 miles per hour) automatically disperse fog, mists, and similar phenomena in the area, whether mundane or magical.",
-        "page": "phb 279",
-        "range": "Sight",
-        "components": "V, S",
-        "ritual": "no",
-        "duration": "Up to 1 minute",
-        "concentration": "yes",
-        "casting_time": "1 action",
-        "level": "9th-level",
-        "school": "Conjuration",
-        "class": "Druid",
-        "higher_level": "",
-        "toHitOrDC": "DC"
-    },
-    {
         "name": "Suggestion",
         "desc": "You suggest a course of activity (limited to a sentence or two) and magically influence a creature you can see within range that can hear and understand you. Creatures that can’t be charmed are immune to this effect. The suggestion must be worded in such a manner as to make the course of action sound reasonable. Asking the creature to stab itself, throw itself onto a spear, immolate itself, or do some other obviously harmful act ends the spell.The target must make a wisdom saving throw. On a failed save, it pursues the course of action you described to the best of its ability. The suggested course of action can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do.You can also specify conditions that will trigger a special activity during the duration. For example, you might suggest that a knight give her warhorse to the first beggar she meets. If the condition isn’t met before the spell expires, the activity isn’t performed.If you or any of your companions damage the target, the spell ends.",
         "page": "phb 279",
@@ -4556,7 +4656,9 @@
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "6d8",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Sunburst",
@@ -4573,7 +4675,9 @@
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "12d6",
+        "damage_dice_upcast": ""
     },
     {
         "name": "Symbol",
@@ -4672,7 +4776,9 @@
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "2d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Time Stop",
@@ -4833,7 +4939,9 @@
         "level": "3rd-level",
         "school": "Necromancy",
         "class": "Warlock, Wizard",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "damage_dice": "3d6",
+        "damage_dice_upcast": "1d6"
     },
     {
         "name": "Vicious Mockery",
@@ -4849,7 +4957,9 @@
         "school": "Enchantment",
         "class": "Bard",
         "higher_level": "This spell’s damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4).",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "1d4",
+        "damage_dice_upcast": "1d4"
     },
     {
         "name": "Wall of Fire",
@@ -4869,7 +4979,9 @@
         "archetype": "Cleric: Light<br/> Warlock: Fiend",
         "domains": "Light",
         "patrons": "Fiend",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "5d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Wall of Force",
@@ -4902,7 +5014,9 @@
         "level": "6th-level",
         "school": "Evocation",
         "class": "Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "10d6",
+        "damage_dice_upcast": "2d6"
     },
     {
         "name": "Wall of Stone",
@@ -4937,7 +5051,9 @@
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Druid",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "damage_dice": "7d8",
+        "damage_dice_upcast": "1d8"
     },
     {
         "name": "Warding Bond",
