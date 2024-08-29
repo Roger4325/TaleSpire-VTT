@@ -482,10 +482,21 @@ const tempHP = document.getElementById("tempHP");
 const healthInput = document.getElementById("healthInput");
 
 function healCreature(healingAmount) {
-    const currentHPValue = parseInt(currentCharacterHP.textContent);
+    const maxHPValue = parseInt(maxCharacterHP.textContent);
+    let currentHPValue = parseInt(currentCharacterHP.textContent);
 
     if (healingAmount > 0) {
         currentCharacterHP.textContent = currentHPValue + healingAmount;
+
+        currentHPValue = parseInt(currentCharacterHP.textContent)
+
+        if (currentHPValue > maxHPValue){
+            currentCharacterHP.textContent = maxHPValue;
+        }
+
+
+
+        
     }
     updateContent()
 }
