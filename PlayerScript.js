@@ -185,6 +185,7 @@ async function playerSetUP(){
         console.log(event.target.value); // Logs the selected value
         updateSpelltoHitDice(event.target.value);
         updateSpellSaveDC(event.target.value)
+        updateAllSpellDCs()
     });
 
 }  
@@ -1714,8 +1715,6 @@ function addSpellSlot(levelContainer) {
     } else {
         console.error("Level container not found!"); // Error log if container is not found
     }
-
-    console.log(AppData.spellLookupInfo);  // Accessing the spell data
 }
 
 document.querySelectorAll('.add-spell-slot').forEach(button => {
@@ -1733,16 +1732,16 @@ document.querySelectorAll('.add-spell-slot').forEach(button => {
 
 function createSpellTable() {
     // Create the table element
-    const table = document.createElement('div');
+    const table = document.createElement('table');
     table.classList.add('spell-table');
 
     // Create the header row
-    const headerRow = document.createElement('div');
+    const headerRow = document.createElement('tr');
     headerRow.classList.add('spell-row', 'spell-header');
 
-    const headers = ['Spell Name', 'Cast Time', 'To Hit/DC', 'Components', 'Concentration'];
+    const headers = ['Spell Name', 'Time', 'Hit/DC', 'Dice', 'Con', 'Notes'];
     headers.forEach(headerText => {
-        const headerCell = document.createElement('div');
+        const headerCell = document.createElement('th');
         headerCell.classList.add('spell-header-cell');
         headerCell.textContent = headerText;
         headerRow.appendChild(headerCell);
@@ -1753,13 +1752,13 @@ function createSpellTable() {
 }
 
 function createSpellRow(spell,spellLevel) {
-    const row = document.createElement('div');
+    const row = document.createElement('tr');
     row.classList.add('spell-row');
     row.title = spell.description;
     row.id = `${spellLevel}`+ row.index;
 
     // Spell name input field
-    const spellNameContainer = document.createElement('div');
+    const spellNameContainer = document.createElement('td');
     spellNameContainer.classList.add('spell-name');
 
     const spellNameInput = document.createElement('input');
@@ -1778,17 +1777,11 @@ function createSpellRow(spell,spellLevel) {
     dropdownList.classList.add('dropdown-list');
     dropdownContainer.appendChild(dropdownList);
 
-    console.log(dropdownList)
-
     // Add event listeners to tie into the dropdown
     spellNameInput.addEventListener('focus', function() {
         // Get the level to filter by
         const level = spellLevel;
 
-        const inputRef = event.target
-
-        console.log(inputRef)
-        
         // Retrieve spell data object and array
         const spellDataObject = AppData.spellLookupInfo;
         const spellDataArray = spellDataObject.spellsData;
@@ -1798,8 +1791,6 @@ function createSpellRow(spell,spellLevel) {
     
         // Map to spell names
         const filteredSpellNames = filteredSpells.map(spell => spell.name);
-    
-        console.log(filteredSpellNames);
     
         // Populate dropdown or other UI with filtered spell names
         populateListWithAllSpells(filteredSpellNames,dropdownList,row);
@@ -1817,19 +1808,23 @@ function createSpellRow(spell,spellLevel) {
     spellNameContainer.appendChild(dropdownContainer)
 
     // Other spell details
-    const castTime = document.createElement('div');
+    const castTime = document.createElement('td');
     castTime.classList.add('spell-cast-time');
     castTime.textContent = spell.castTime;
 
-    const toHitOrDC = document.createElement('div');
+    const toHitOrDC = document.createElement('td');
     toHitOrDC.classList.add('spell-to-hit-dc');
     toHitOrDC.textContent = spell.toHitOrDC;
 
-    const components = document.createElement('div');
+    const spellDice = document.createElement('td');
+    spellDice.classList.add('spell-dice');
+    spellDice.textContent = spell.spellDice
+
+    const components = document.createElement('td');
     components.classList.add('spell-components');
     components.textContent = spell.components;
 
-    const concentration = document.createElement('div');
+    const concentration = document.createElement('td');
     concentration.classList.add('spell-concentration');
     concentration.textContent = spell.concentration ? 'Yes' : 'No';
 
@@ -1837,6 +1832,7 @@ function createSpellRow(spell,spellLevel) {
     row.appendChild(spellNameContainer);
     row.appendChild(castTime);
     row.appendChild(toHitOrDC);
+    row.appendChild(spellDice);
     row.appendChild(components);
     row.appendChild(concentration);
 
@@ -1847,8 +1843,9 @@ function createSpellRow(spell,spellLevel) {
 function addSpellToContainer(spellContainer) {
     const spellData = {
         name: "Default",
-        castTime: "1 Action",
+        castTime: "1A",
         toHitOrDC: "+5",
+        spellDice: "1d10",
         components: "V,S,M",
         concentration: false,
         description: "This is a default spell description."
@@ -1857,7 +1854,7 @@ function addSpellToContainer(spellContainer) {
     let table = spellContainer.querySelector('.spell-table');
     let spellLevel = spellContainer.getAttribute('spellLevel')
     
-    // If table doesn't exist, create it
+    // If table doesn't exist, create itS
     if (!table) {
         table = createSpellTable();
         spellContainer.appendChild(table);
@@ -1902,14 +1899,18 @@ function populateListWithAllSpells(spellsData, inputRef,row) {
 }
 
 
+
+
 function loadSpell(spell,row) {
     // Retrieve the spell data object and array
+
     const spellDataObject = AppData.spellLookupInfo;
     const spellDataArray = spellDataObject.spellsData;
+
     const spellmodifier = document.querySelector('.spellcasting-dropdown').value
 
     // Find the corresponding spell object based on the spell name
-    const spellDetails = spellDataArray.find(spellData => spellData.name === spell.name);
+    let spellDetails = spellDataArray.find(spellData => spellData.name === spell.name);
     
     if (!spellDetails) {
         console.error(`Spell "${spell.name}" not found.`);
@@ -1940,8 +1941,18 @@ function loadSpell(spell,row) {
             toHitOrDC.appendChild(toHitOrDCContent);
             updateSpelltoHitDice(spellmodifier);
             updateSpellSaveDC(spellmodifier)
+            updateSpellsDC(spellmodifier, spellDetails.spell_save_dc_type, row)
         }
 
+    }
+
+    const spellDice = row.querySelector('.spell-dice');
+    if (spellDice){
+
+        spellDice.innerHTML = "";
+
+        spellDice.appendChild(updateSpellDamageDice(spellmodifier,spellDetails.damage_dice,spellDetails))
+        
     }
 
     const components = row.querySelector('.spell-components');
@@ -1953,9 +1964,12 @@ function loadSpell(spell,row) {
     if (concentration) {
         concentration.textContent = spellDetails.concentration;
     }
+
+    rollableButtons()
 }
 
 function updateSpelltoHitorDC(spellDetails) {
+    
 
     if (spellDetails === "toHit") {
         const containerDiv = document.createElement('div');
@@ -1981,7 +1995,7 @@ function updateSpelltoHitorDC(spellDetails) {
 
         const label = document.createElement('label');
         const span = document.createElement('span');
-        span.classList.add('spell-save-dc');
+        span.classList.add('spell-save');
 
         containerDiv.appendChild(label);
         containerDiv.appendChild(span);
@@ -1992,6 +2006,122 @@ function updateSpelltoHitorDC(spellDetails) {
         return containerDiv;
     }
 }
+
+function updateSpellDamageDice(ability, damageDice, spellDetails){
+    if (damageDice){
+
+        const containerDiv = document.createElement('div');
+        containerDiv.classList.add('to-hit-container');
+    
+        const label = document.createElement('label');
+        label.classList.add('actionButtonLabel', 'damageDiceButton');
+        label.setAttribute('data-dice-type', damageDice);
+        label.setAttribute('data-name', 'Damage Type'); //This is a tempory placeholder until I add in damage types to each spell. 
+
+        const button = document.createElement('button');
+        button.classList.add('actionButton', 'damageDiceButton', 'spell-damage-button'); 
+
+        if(spellDetails.ability_modifier === "yes"){
+            const spellMod =parseInt(findAbilityScoreLabel(ability).getAttribute('value'))
+
+            if(spellMod >= 0){
+                label.setAttribute('value', spellMod);
+                button.textContent = damageDice + "+" + parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+            
+                containerDiv.appendChild(label);
+                containerDiv.appendChild(button); 
+            }
+            else{
+                label.setAttribute('value', spellMod);
+                button.textContent = damageDice + parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+            
+                containerDiv.appendChild(label);
+                containerDiv.appendChild(button); 
+            }
+
+       
+        }
+
+        else{
+            label.setAttribute('value', '0');
+            button.textContent = damageDice;
+
+            containerDiv.appendChild(label);
+            containerDiv.appendChild(button);   
+        }
+
+        
+        return containerDiv
+    }
+
+    else {
+        const containerDiv = document.createElement('div')
+        return containerDiv
+    }
+
+
+}
+
+
+function updateSpellsDC(ability, saveType, row){
+    const spellDCSelections = row.querySelector('.spell-save');
+    const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+    const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+    if(saveType){
+        spellDCSelections.textContent = saveType + " " + spellSaveDc;
+    }
+
+    return spellSaveDc
+}
+
+
+function updateAllSpellDCs() {
+    const spellDataObject = AppData.spellLookupInfo;
+    const spellDataArray = spellDataObject.spellsData;
+    const spellModifier = document.querySelector('.spellcasting-dropdown').value;
+
+    // Get all rows in the spell list table
+    const spellRows = document.querySelectorAll('.spell-table .spell-row');
+
+    // Loop through each spell row in the table
+    spellRows.forEach(row => {
+        // Try different selectors depending on your structure
+        const spellNameInput = row.querySelector('.spell-name-input');
+        console.log("Row:", row);
+        console.log("Spell Name Input:", spellNameInput);
+
+        if (spellNameInput) {
+            const spellName = spellNameInput.value.trim();
+            console.log("Spell Name:", spellName);
+
+            // Find the corresponding spell object in the JSON data based on the spell name
+            const spellDetails = spellDataArray.find(spellData => spellData.name === spellName);
+
+            if (spellDetails) {
+                const saveType = spellDetails.spell_save_dc_type;
+
+                const spellDCSelection = row.querySelector('.spell-save');
+                const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
+                const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+
+                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8;
+
+
+
+                if (saveType) {
+                    spellDCSelection.textContent = saveType + " " + spellSaveDC;
+                    console.log("here", spellDCSelection.textContent)
+                }
+
+            }
+        } else {
+            console.log("Spell Name Input not found in this row.");
+        }
+    });
+}
+
 
 
 
@@ -2006,15 +2136,12 @@ function updateSpellSaveDC(ability){
 
     spellDCSelections.forEach((span) =>{
         span.textContent = spellSaveDc;
-        console.log("here")
     });
-
-    console.log(spellSaveDc)
 
     return spellSaveDc
 }
 
-function updateSpelltoHitDice(ability) {
+function updateSpelltoHitDice(ability,) {
     const spellSection = document.getElementById('SpellList');
     const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button");
 

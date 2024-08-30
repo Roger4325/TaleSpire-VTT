@@ -9,14 +9,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "toHitOrDC": "toHit",
         "damage_dice": "4d4",
         "damage_dice_upcast": "1d4",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Acid Splash",
@@ -28,14 +29,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "1d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
+        
     },
     {
         "name": "Aid",
@@ -48,10 +51,11 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
-        "class": "Cleric, Paladin"
+        "class": "Cleric, Paladin",
+        "ability_modifier": "no"
     },
     {
         "name": "Alarm",
@@ -67,7 +71,8 @@
         "casting_time": "1 minute",
         "level": "1st-level",
         "school": "Abjuration",
-        "class": "Ranger, Ritual Caster, Wizard"
+        "class": "Ranger, Ritual Caster, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Alter Self",
@@ -79,10 +84,11 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Animal Friendship",
@@ -95,14 +101,15 @@
         "ritual": "no",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Ranger",
         "archetype": "Cleric: Nature",
         "domains": "Nature",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Animal Messenger",
@@ -115,11 +122,12 @@
         "ritual": "yes",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Druid, Ranger, Ritual Caster",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "ability_modifier": "no"
     },
     {
         "name": "Animal Shapes",
@@ -131,10 +139,11 @@
         "ritual": "no",
         "duration": "Up to 24 hours",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Transmutation",
-        "class": "Druid"
+        "class": "Druid",
+        "ability_modifier": "no"
     },
     {
         "name": "Animate Dead",
@@ -150,7 +159,8 @@
         "casting_time": "1 minute",
         "level": "3rd-level",
         "school": "Necromancy",
-        "class": "Cleric, Wizard"
+        "class": "Cleric, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Animate Objects",
@@ -162,10 +172,11 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Transmutation",
-        "class": "Bard, Sorcerer, Wizard"
+        "class": "Bard, Sorcerer, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Antilife Shell",
@@ -177,10 +188,11 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Abjuration",
-        "class": "Druid"
+        "class": "Druid",
+        "ability_modifier": "no"
     },
     {
         "name": "Antimagic Field",
@@ -193,10 +205,11 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Abjuration",
-        "class": "Cleric, Wizard"
+        "class": "Cleric, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Antipathy/Sympathy",
@@ -212,7 +225,8 @@
         "casting_time": "1 hour",
         "level": "8th-level",
         "school": "Enchantment",
-        "class": "Druid, Wizard"
+        "class": "Druid, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Arcane Eye",
@@ -225,12 +239,13 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Divination",
         "class": "Cleric, Wizard",
         "archetype": "Cleric: Knowledge",
-        "domains": "Knowledge"
+        "domains": "Knowledge",
+        "ability_modifier": "no"
     },
     {
         "name": "Arcane Hand",
@@ -243,14 +258,15 @@
         "ritual": "no",
         "duration": "1 Minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Evocation",
         "class": "Wizard",
         "toHitOrDC": "toHit",
         "damage_dice": "4d8",
         "damage_dice_upcast": "2d8",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Arcane Lock",
@@ -263,11 +279,12 @@
         "ritual": "no",
         "duration": "Until dispelled",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
         "class": "Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Arcanist's Magic Aura",
@@ -280,10 +297,11 @@
         "ritual": "no",
         "duration": "24 Hours ",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Illusion",
-        "class": "Wizard"
+        "class": "Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Astral Projection",
@@ -299,7 +317,8 @@
         "casting_time": "1 hour",
         "level": "9th-level",
         "school": "Necromancy",
-        "class": "Cleric, Warlock, Wizard"
+        "class": "Cleric, Warlock, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Augury",
@@ -316,7 +335,8 @@
         "level": "2nd-level",
         "school": "Divination",
         "class": "Cleric, Ritual Caster",
-        "domains": "Knowledge"
+        "domains": "Knowledge",
+        "ability_modifier": "no"
     },
     {
         "name": "Awaken",
@@ -332,7 +352,8 @@
         "casting_time": "8 hours",
         "level": "5th-level",
         "school": "Transmutation",
-        "class": "Bard, Druid"
+        "class": "Bard, Druid",
+        "ability_modifier": "no"
     },
     {
         "name": "Bane",
@@ -345,14 +366,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Paladin",
         "archetype": "Paladin: Vengeance",
         "oaths": "Vengeance",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "cha"
+        "spell_save_dc_type": "cha",
+        "ability_modifier": "no"
     },
     {
         "name": "Banishment",
@@ -365,13 +387,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin, Sorcerer, Warlock, Wizard",
         "oaths": "Vengeance",
         "toHitOrDC": "toHit",
-        "spell_save_dc_type": "cha"
+        "spell_save_dc_type": "cha",
+        "ability_modifier": "no"
     },
     {
         "name": "Barkskin",
@@ -384,13 +407,14 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Ranger",
         "archetype": "Cleric: Nature",
         "domains": "Nature",
-        "circles": "Forest"
+        "circles": "Forest",
+        "ability_modifier": "no"
     },
     {
         "name": "Beacon of Hope",
@@ -402,13 +426,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin",
         "archetype": "Paladin: Devotion",
         "domains": "Life",
-        "oaths": "Devotion"
+        "oaths": "Devotion",
+        "ability_modifier": "no"
     },
     {
         "name": "Bestow Curse",
@@ -420,12 +445,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Necromancy",
         "class": "Bard, Cleric, Wizard",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Blade Barrier",
@@ -437,13 +463,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Evocation",
         "class": "Cleric",
         "toHitOrDC": "DC",
         "damage_dice": "6d10",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Bless",
@@ -456,12 +483,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Cleric, Paladin",
         "domains": "Life",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Blight",
@@ -473,7 +501,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Necromancy",
         "class": "Druid, Sorcerer, Warlock, Wizard",
@@ -481,7 +509,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "8d8",
         "damage_dice_upcast": "1d8",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Blindness/Deafness",
@@ -493,14 +522,15 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Necromancy",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Fiend",
         "patrons": "Fiend",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Blink",
@@ -512,14 +542,15 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery<br/> Warlock: Archfey",
         "domains": "Trickery",
         "patrons": "Archfey",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Blur",
@@ -531,13 +562,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Illusion",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Desert",
         "circles": "Desert",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Branding Smite",
@@ -549,13 +581,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Paladin",
         "damage_dice": "2d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Burning Hands",
@@ -567,7 +600,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Cleric, Sorcerer, Warlock, Wizard",
@@ -577,7 +610,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "3d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Call Lightning",
@@ -589,7 +623,7 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric, Druid",
@@ -599,7 +633,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "3d10",
         "damage_dice_upcast": "1d10",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Calm Emotions",
@@ -611,14 +646,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Warlock",
         "archetype": "Warlock: Archfey",
         "patrons": "Archfey",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "cha"
+        "spell_save_dc_type": "cha",
+        "ability_modifier": "no"
     },
     {
         "name": "Chain Lightning",
@@ -631,14 +667,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "10d8",
         "damage_dice_upcast": "",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Charm Person",
@@ -650,14 +687,15 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Chill Touch",
@@ -669,14 +707,15 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
         "toHitOrDC": "toHit",
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Circle of Death",
@@ -689,14 +728,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "8d6",
         "damage_dice_upcast": "2d6",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Clairvoyance",
@@ -708,13 +748,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "3rd-level",
         "school": "Divination",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Great Old One",
         "patrons": "Great Old One",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Clone",
@@ -730,7 +771,8 @@
         "level": "8th-level",
         "school": "Necromancy",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Cloudkill",
@@ -742,7 +784,7 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Druid, Sorcerer, Wizard",
@@ -751,7 +793,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "5d8",
         "damage_dice_upcast": "1d8",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Color Spray",
@@ -764,13 +807,14 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Illusion",
         "class": "Sorcerer, Wizard",
         "damage_dice": "6d10",
         "damage_dice_upcast": "2d10",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Command",
@@ -782,7 +826,7 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Cleric, Paladin, Warlock",
@@ -790,7 +834,8 @@
         "domains": "Knowledge",
         "patrons": "Fiend",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Commune",
@@ -808,7 +853,8 @@
         "class": "Cleric, Paladin, Ritual Caster",
         "archetype": "Paladin: Devotion",
         "oaths": "Devotion",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Commune with Nature",
@@ -826,7 +872,8 @@
         "archetype": "Paladin: Ancients",
         "circles": "Arctic, Forest",
         "oaths": "Ancients",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Comprehend Languages",
@@ -838,11 +885,12 @@
         "ritual": "yes",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Divination",
         "class": "Bard, Ritual Caster, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Compulsion",
@@ -853,13 +901,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Enchantment",
         "class": "Bard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Cone of Cold",
@@ -872,7 +921,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
@@ -881,7 +930,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "8d8",
         "damage_dice_upcast": "1d8",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Confusion",
@@ -894,14 +944,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Knowledge",
         "domains": "Knowledge",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Animals",
@@ -913,10 +964,11 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
-        "class": "Druid, Ranger"
+        "class": "Druid, Ranger",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Celestial",
@@ -931,7 +983,8 @@
         "casting_time": "1 minute",
         "level": "7th-level",
         "school": "Conjuration",
-        "class": "Cleric"
+        "class": "Cleric",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Elemental",
@@ -948,7 +1001,8 @@
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Druid, Wizard",
-        "circles": "Coast"
+        "circles": "Coast",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Fey",
@@ -963,7 +1017,8 @@
         "casting_time": "1 minute",
         "level": "6th-level",
         "school": "Conjuration",
-        "class": "Druid, Warlock"
+        "class": "Druid, Warlock",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Minor Elementals",
@@ -978,7 +1033,8 @@
         "casting_time": "1 minute",
         "level": "4th-level",
         "school": "Conjuration",
-        "class": "Druid, Wizard"
+        "class": "Druid, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Conjure Woodland Beings",
@@ -991,10 +1047,11 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Conjuration",
-        "class": "Druid, Ranger"
+        "class": "Druid, Ranger",
+        "ability_modifier": "no"
     },
     {
         "name": "Contact Other Plane",
@@ -1009,7 +1066,8 @@
         "level": "5th-level",
         "school": "Divination",
         "class": "Ritual Caster, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Contagion",
@@ -1020,17 +1078,18 @@
         "ritual": "no",
         "duration": "7 days",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Necromancy",
         "class": "Cleric, Druid",
         "higher_level": "",
         "toHitOrDC": "toHit",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Contingency",
-        "desc": "Choose a spell of 5th level or lower that you can cast, that has a casting time of 1 action, and that can target you. You cast that spell—called the contingent spell—as part of casting contingency, expending spell slots for both, but the contingent spell doesn't come into effect. Instead, it takes effect when a certain circumstance occurs. You describe that circumstance when you cast the two spells. For example, a contingency cast with water breathing might stipulate that water breathing comes into effect when you are engulfed in water or a similar liquid. The contingent spell takes effect immediately after the circumstance is met for the first time, whether or not you want it to. and then contingency ends.The contingent spell takes effect only on you, even if it can normally target others. You can use only one contingency spell at a time. If you cast this spell again, the effect of another contingency spell on you ends. Also, contingency ends on you if its material component is ever not on your person.",
+        "desc": "Choose a spell of 5th level or lower that you can cast, that has a casting time of 1A, and that can target you. You cast that spell—called the contingent spell—as part of casting contingency, expending spell slots for both, but the contingent spell doesn't come into effect. Instead, it takes effect when a certain circumstance occurs. You describe that circumstance when you cast the two spells. For example, a contingency cast with water breathing might stipulate that water breathing comes into effect when you are engulfed in water or a similar liquid. The contingent spell takes effect immediately after the circumstance is met for the first time, whether or not you want it to. and then contingency ends.The contingent spell takes effect only on you, even if it can normally target others. You can use only one contingency spell at a time. If you cast this spell again, the effect of another contingency spell on you ends. Also, contingency ends on you if its material component is ever not on your person.",
         "page": "phb 227",
         "range": "Self",
         "components": "V, S, M",
@@ -1038,11 +1097,12 @@
         "ritual": "no",
         "duration": "10 days",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "6th-level",
         "school": "Evocation",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Continual Flame",
@@ -1054,11 +1114,12 @@
         "ritual": "no",
         "duration": "Until dispelled",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Control Water",
@@ -1070,12 +1131,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "ability_modifier": "no"
     },
     {
         "name": "Control Weather",
@@ -1087,13 +1149,14 @@
         "ritual": "no",
         "duration": "Up to 8 hours",
         "concentration": "yes",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "8th-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Wizard",
         "domains": "Tempest",
         "circles": "Coast",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Counterspell",
@@ -1105,10 +1168,11 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 reaction",
+        "casting_time": "1R",
         "level": "3rd-level",
         "school": "Abjuration",
-        "class": "Sorcerer, Warlock, Wizard"
+        "class": "Sorcerer, Warlock, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Create Food and Water",
@@ -1119,13 +1183,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Paladin",
         "archetype": "Druid: Desert",
         "circles": "Desert",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Create or Destroy Water",
@@ -1138,10 +1203,11 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Transmutation",
-        "class": "Cleric, Druid"
+        "class": "Cleric, Druid",
+        "ability_modifier": "no"
     },
     {
         "name": "Create Undead",
@@ -1157,7 +1223,8 @@
         "casting_time": "1 minute",
         "level": "6th-level",
         "school": "Necromancy",
-        "class": "Cleric, Warlock, Wizard"
+        "class": "Cleric, Warlock, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Creation",
@@ -1173,7 +1240,8 @@
         "casting_time": "1 minute",
         "level": "5th-level",
         "school": "Illusion",
-        "class": "Sorcerer, Wizard"
+        "class": "Sorcerer, Wizard",
+        "ability_modifier": "no"
     },
     {
         "name": "Cure Wounds",
@@ -1185,13 +1253,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Druid, Paladin, Ranger",
         "domains": "Life",
         "damage_dice": "1d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "ability_modifier": "yes"
     },
     {
         "name": "Dancing Lights",
@@ -1203,11 +1272,12 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Darkness",
@@ -1219,13 +1289,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Druid: Swamp",
         "circles": "Swamp",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Darkvision",
@@ -1237,11 +1308,12 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Druid, Ranger, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Daylight",
@@ -1252,13 +1324,14 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Paladin, Ranger, Sorcerer",
         "domains": "Light",
         "circles": "Grassland",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Death Ward",
@@ -1269,12 +1342,13 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin",
         "domains": "Life",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Delayed Blast Fireball",
@@ -1287,14 +1361,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "8d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Demiplane",
@@ -1305,11 +1380,12 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Conjuration",
         "class": "Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Detect Evil and Good",
@@ -1320,11 +1396,12 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Divination",
         "class": "Cleric, Paladin",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Detect Magic",
@@ -1335,11 +1412,12 @@
         "ritual": "yes",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Divination",
         "class": "Bard, Cleric, Druid, Paladin, Ranger, Ritual Caster, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Detect Poison and Disease",
@@ -1351,11 +1429,12 @@
         "ritual": "yes",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Divination",
         "class": "Cleric, Druid, Paladin, Ranger, Ritual Caster",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Detect Thoughts",
@@ -1367,7 +1446,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Divination",
         "class": "Bard, Sorcerer, Warlock, Wizard",
@@ -1375,7 +1454,8 @@
         "patrons": "Great Old One",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Dimension Door",
@@ -1386,14 +1466,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Conjuration",
         "class": "Bard, Cleric, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery<br/> Paladin: Vengeance",
         "domains": "Trickery",
         "oaths": "Vengeance",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Disguise Self",
@@ -1404,7 +1485,7 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Illusion",
         "class": "Bard, Cleric, Sorcerer, Wizard",
@@ -1412,7 +1493,8 @@
         "domains": "Trickery",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "int"
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Disintegrate",
@@ -1425,7 +1507,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
@@ -1433,7 +1515,8 @@
         "damage_dice": "10d6",
         "additonal_damage":"40",
         "damage_dice_upcast": "3d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Dispel Evil and Good",
@@ -1445,11 +1528,12 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Dispel Magic",
@@ -1461,13 +1545,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Druid, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
-        "oaths": "Devotion"
+        "oaths": "Devotion",
+        "ability_modifier": "no"
     },
     {
         "name": "Divination",
@@ -1479,13 +1564,14 @@
         "ritual": "yes",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Divination",
         "class": "Cleric, Druid, Ritual Caster",
         "archetype": "Druid: Forest, Grassland",
         "circles": "Forest, Grassland",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Divine Favor",
@@ -1496,13 +1582,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Cleric, Paladin",
         "archetype": "Cleric: War",
         "domains": "War",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Divine Word",
@@ -1513,12 +1600,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "7th-level",
         "school": "Evocation",
         "class": "Cleric",
         "higher_level": "",
-        "spell_save_dc_type": "cha"
+        "spell_save_dc_type": "cha",
+        "ability_modifier": "no"
     },
     {
         "name": "Dominate Beast",
@@ -1530,7 +1618,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Enchantment",
         "class": "Cleric, Druid, Sorcerer, Warlock",
@@ -1538,7 +1626,8 @@
         "domains": "Nature",
         "patrons": "Archfey, Great Old One",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Dominate Monster",
@@ -1550,12 +1639,13 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Dominate Person",
@@ -1567,7 +1657,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
@@ -1575,7 +1665,8 @@
         "domains": "Trickery",
         "patrons": "Archfey, Great Old One",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Dream",
@@ -1593,7 +1684,8 @@
         "class": "Bard, Druid, Warlock, Wizard",
         "archetype": "Druid: Grassland",
         "circles": "Grassland",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Druidcraft",
@@ -1604,11 +1696,12 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Earthquake",
@@ -1620,7 +1713,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
@@ -1628,7 +1721,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "5d6",
         "damage_dice_upcast": "",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Eldritch Blast",
@@ -1639,7 +1733,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Warlock",
@@ -1647,7 +1741,8 @@
         "toHitOrDC": "toHit",
         "damage_dice": "1d10",
         "damage_dice_upcast": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Enhance Ability",
@@ -1660,11 +1755,12 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Bard, Cleric, Druid, Sorcerer",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Enlarge/Reduce",
@@ -1676,13 +1772,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Entangle",
@@ -1693,13 +1790,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Druid",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "str"
+        "spell_save_dc_type": "str",
+        "ability_modifier": "no"
     },
     {
         "name": "Enthrall",
@@ -1710,13 +1808,14 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Warlock",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Etherealness",
@@ -1728,11 +1827,12 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Transmutation",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Expeditious Retreat",
@@ -1743,12 +1843,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Transmutation",
         "class": "Sorcerer, Warlock, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Eyebite",
@@ -1759,13 +1860,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Fabricate",
@@ -1776,12 +1878,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Faerie Fire",
@@ -1792,7 +1895,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Druid, Warlock",
@@ -1801,7 +1904,8 @@
         "patrons": "Archfey",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "False Life",
@@ -1814,11 +1918,12 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Necromancy",
         "class": "Sorcerer, Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Fear",
@@ -1830,13 +1935,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "wis"
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Feather Fall",
@@ -1848,12 +1954,13 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 reaction",
+        "casting_time": "1R",
         "level": "1st-level",
         "school": "Transmutation",
         "class": "Bard, Sorcerer, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Feeblemind",
@@ -1865,13 +1972,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Enchantment",
         "class": "Bard, Druid, Warlock, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "int"
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Find Familiar",
@@ -1888,7 +1996,8 @@
         "school": "Conjuration",
         "class": "Ritual Caster, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Find Steed",
@@ -1899,12 +2008,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "2nd-level",
         "school": "Conjuration",
         "class": "Paladin",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Find the Path",
@@ -1921,7 +2031,8 @@
         "school": "Divination",
         "class": "Bard, Cleric, Druid",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Find Traps",
@@ -1932,12 +2043,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Divination",
         "class": "Cleric, Druid, Ranger",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Finger of Death",
@@ -1948,7 +2060,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Necromancy",
         "class": "Sorcerer, Warlock, Wizard",
@@ -1957,7 +2069,8 @@
         "damage_dice": "7d8",
         "additonal_damage": "30",
         "damage_dice_upcast": "1d4",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Fireball",
@@ -1970,7 +2083,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Cleric, Sorcerer, Warlock, Wizard",
@@ -1980,7 +2093,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "8d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Fire Bolt",
@@ -1991,7 +2105,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
@@ -1999,7 +2113,8 @@
         "toHitOrDC": "toHit",
         "damage_dice": "1d10",
         "damage_dice_upcast": "1d10",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Fire Shield",
@@ -2011,7 +2126,7 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Evocation",
         "class": "Warlock, Wizard",
@@ -2020,7 +2135,8 @@
         "higher_level": "",
         "damage_dice": "2d8",
         "damage_dice_upcast": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Fire Storm",
@@ -2031,7 +2147,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer",
@@ -2039,7 +2155,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "7d10",
         "damage_dice_upcast": "",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Flame Blade",
@@ -2052,14 +2169,15 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Druid",
         "toHitOrDC": "toHit",
         "damage_dice": "3d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Flame Strike",
@@ -2072,7 +2190,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Evocation",
         "class": "Cleric, Paladin, Warlock",
@@ -2083,7 +2201,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "4d6+4d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Flaming Sphere",
@@ -2096,7 +2215,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Wizard",
@@ -2105,7 +2224,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "2d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Flesh to Stone",
@@ -2117,13 +2237,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Warlock, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "con"
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Fly",
@@ -2136,11 +2257,12 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Sorcerer, Warlock, Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Fog Cloud",
@@ -2152,14 +2274,15 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Ranger, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Forbiddance",
@@ -2171,12 +2294,13 @@
         "ritual": "yes",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "6th-level",
         "school": "Abjuration",
         "class": "Cleric, Ritual Caster",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Forcecage",
@@ -2188,12 +2312,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Evocation",
         "class": "Bard, Warlock, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Foresight",
@@ -2210,7 +2335,8 @@
         "school": "Divination",
         "class": "Bard, Druid, Warlock, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Freedom of Movement",
@@ -2222,7 +2348,7 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Druid, Paladin, Ranger",
@@ -2231,7 +2357,8 @@
         "circles": "Arctic, Coast, Forest, Grassland, Swamp",
         "oaths": "Devotion",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Gaseous Form",
@@ -2243,14 +2370,15 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Druid: Underdark",
         "circles": "Underdark",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Gate",
@@ -2262,12 +2390,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Conjuration",
         "class": "Cleric, Sorcerer, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Geas",
@@ -2283,7 +2412,8 @@
         "level": "5th-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Paladin, Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Gentle Repose",
@@ -2295,12 +2425,13 @@
         "ritual": "yes",
         "duration": "10 days",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Necromancy",
         "class": "Cleric, Ritual Caster, Wizard",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Giant Insect",
@@ -2311,12 +2442,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Druid",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Glibness",
@@ -2327,12 +2459,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Transmutation",
         "class": "Bard, Warlock",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Globe of Invulnerability",
@@ -2345,11 +2478,12 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Abjuration",
         "class": "Sorcerer, Wizard",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Glyph of Warding",
@@ -2367,7 +2501,8 @@
         "school": "Abjuration",
         "class": "Bard, Cleric, Wizard",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "int"
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Goodberry",
@@ -2379,12 +2514,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Transmutation",
         "class": "Druid, Ranger",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Grease",
@@ -2396,13 +2532,14 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "spell_save_dc_type": "dex"
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Greater Invisibility",
@@ -2413,7 +2550,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Illusion",
         "class": "Bard, Druid, Sorcerer, Warlock, Wizard",
@@ -2421,7 +2558,8 @@
         "circles": "Underdark",
         "patrons": "Archfey",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Greater Restoration",
@@ -2433,12 +2571,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Druid",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Guardian of Faith",
@@ -2449,7 +2588,7 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Conjuration",
         "class": "Cleric, Paladin",
@@ -2457,7 +2596,8 @@
         "domains": "Life, Light",
         "oaths": "Devotion",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Guidance",
@@ -2468,12 +2608,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Divination",
         "class": "Cleric, Druid",
         "higher_level": "",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Guiding Bolt",
@@ -2485,14 +2626,15 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Cleric",
         "toHitOrDC": "toHit",
         "damage_dice": "4d6",
         "damage_dice_upcast": "1d6",
-        "spell_save_dc_type": ""
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Gust of Wind",
@@ -2504,14 +2646,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Tempest",
         "domains": "Tempest",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "str",
+        "ability_modifier": "no"
     },
     {
         "name": "Hallow",
@@ -2529,7 +2673,9 @@
         "class": "Cleric, Warlock",
         "archetype": "Warlock: Fiend",
         "patrons": "Fiend",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Hallucinatory Terrain",
@@ -2541,13 +2687,15 @@
         "ritual": "no",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "4th-level",
         "school": "Illusion",
         "class": "Bard, Druid, Warlock, Wizard",
         "circles": "Desert",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Harm",
@@ -2559,14 +2707,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Cleric",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "14d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Haste",
@@ -2578,14 +2728,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Druid, Paladin, Sorcerer, Wizard",
         "archetype": "Druid: Grassland<br/> Paladin: Vengeance",
         "circles": "Grassland",
         "oaths": "Vengeance",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Heal",
@@ -2597,10 +2749,12 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Evocation",
-        "class": "Cleric, Druid"
+        "class": "Cleric, Druid",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Healing Word",
@@ -2612,12 +2766,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Druid",
         "damage_dice": "1d4",
-        "damage_dice_upcast": "1d4"
+        "damage_dice_upcast": "1d4",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Heat Metal",
@@ -2630,12 +2786,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Bard, Druid",
         "damage_dice": "2d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Hellish Rebuke",
@@ -2647,13 +2805,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 reaction",
+        "casting_time": "1R",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Warlock",
         "toHitOrDC": "DC",
         "damage_dice": "2d10",
-        "damage_dice_upcast": "1d10"
+        "damage_dice_upcast": "1d10",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Heroes' Feast",
@@ -2665,11 +2825,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Cleric, Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Heroism",
@@ -2680,11 +2842,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Bard, Paladin",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Hold Monster",
@@ -2697,14 +2861,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: War<br/> Paladin: Vengeance",
         "domains": "War",
         "oaths": "Vengeance",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Hold Person",
@@ -2717,14 +2883,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Druid, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Paladin: Vengeance",
         "circles": "Arctic",
         "oaths": "Vengeance",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Holy Aura",
@@ -2736,12 +2904,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Abjuration",
         "class": "Cleric",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Hunter's Mark",
@@ -2753,14 +2923,16 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Divination",
         "class": "Paladin, Ranger",
         "archetype": "Paladin: Vengeance",
         "oaths": "Vengeance",
         "damage_dice": "1d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Hypnotic Pattern",
@@ -2772,12 +2944,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Ice Storm",
@@ -2790,7 +2964,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Paladin, Sorcerer, Wizard",
@@ -2800,7 +2974,9 @@
         "oaths": "Ancients",
         "toHitOrDC": "DC",
         "damage_dice": "2d8+4d6",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Identify",
@@ -2818,7 +2994,9 @@
         "class": "Bard, Cleric, Ritual Caster, Wizard",
         "archetype": "Cleric: Knowledge",
         "domains": "Knowledge",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Illusory Script",
@@ -2834,7 +3012,9 @@
         "level": "1st-level",
         "school": "Illusion",
         "class": "Bard, Ritual Caster, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Imprisonment",
@@ -2851,7 +3031,9 @@
         "school": "Abjuration",
         "class": "Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Incendiary Cloud",
@@ -2862,14 +3044,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "10d8",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Inflict Wounds",
@@ -2881,13 +3065,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Necromancy",
         "class": "Cleric",
         "toHitOrDC": "toHit",
         "damage_dice": "3d10",
-        "damage_dice_upcast": "1d10"
+        "damage_dice_upcast": "1d10",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Insect Plague",
@@ -2900,7 +3086,7 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Sorcerer",
@@ -2908,7 +3094,9 @@
         "circles": "Desert, Grassland, Swamp, Underdark",
         "toHitOrDC": "DC",
         "damage_dice": "4d10",
-        "damage_dice_upcast": "1d10"
+        "damage_dice_upcast": "1d10",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Invisibility",
@@ -2921,12 +3109,14 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Illusion",
         "class": "Bard, Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Druid: Grassland",
-        "circles": "Grassland"
+        "circles": "Grassland",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Jump",
@@ -2938,11 +3128,13 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Transmutation",
         "class": "Druid, Ranger, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Knock",
@@ -2953,11 +3145,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Legend Lore",
@@ -2969,12 +3163,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "5th-level",
         "school": "Divination",
         "class": "Bard, Cleric, Wizard",
         "domains": "Knowledge",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Lesser Restoration",
@@ -2985,13 +3181,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Druid, Paladin, Ranger",
         "domains": "Life",
         "oaths": "Devotion",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Levitate",
@@ -3003,11 +3201,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Light",
@@ -3019,12 +3219,14 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Bard, Cleric, Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Lightning Bolt",
@@ -3037,7 +3239,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
@@ -3045,7 +3247,9 @@
         "circles": "Mountain",
         "toHitOrDC": "DC",
         "damage_dice": "8d6",
-        "damage_dice_upcast": "1d6"
+        "damage_dice_upcast": "1d6",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Locate Animals or Plants",
@@ -3057,11 +3261,13 @@
         "ritual": "yes",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Divination",
         "class": "Bard, Druid, Ranger, Ritual Caster",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Locate Creature",
@@ -3073,12 +3279,14 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Divination",
         "class": "Bard, Cleric, Druid, Paladin, Ranger, Wizard",
         "circles": "Swamp",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Locate Object",
@@ -3090,11 +3298,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Divination",
         "class": "Bard, Cleric, Druid, Paladin, Ranger, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Longstrider",
@@ -3107,10 +3317,12 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Transmutation",
-        "class": "Bard, Druid, Ranger, Wizard"
+        "class": "Bard, Druid, Ranger, Wizard",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mage Armor",
@@ -3122,11 +3334,13 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Abjuration",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mage Hand",
@@ -3137,11 +3351,13 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Magic Circle",
@@ -3157,7 +3373,9 @@
         "casting_time": "1 minute",
         "level": "3rd-level",
         "school": "Abjuration",
-        "class": "Cleric, Paladin, Warlock, Wizard"
+        "class": "Cleric, Paladin, Warlock, Wizard",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Magic Jar",
@@ -3173,7 +3391,9 @@
         "level": "6th-level",
         "school": "Necromancy",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Magic Missile",
@@ -3185,13 +3405,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "damage_dice": "1d4",
         "additonal_damage":"1",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Magic Mouth",
@@ -3207,7 +3429,9 @@
         "level": "2nd-level",
         "school": "Illusion",
         "class": "Bard, Ritual Caster, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Magic Weapon",
@@ -3219,12 +3443,14 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Cleric, Paladin, Wizard",
         "archetype": "Cleric: War",
-        "domains": "War"
+        "domains": "War",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Major Image",
@@ -3237,11 +3463,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Mass Cure Wounds",
@@ -3253,13 +3481,15 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Bard, Cleric, Druid",
         "domains": "Life",
         "damage_dice": "3d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Mass Heal",
@@ -3270,11 +3500,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Conjuration",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mass Healing Word",
@@ -3286,12 +3518,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Cleric",
         "damage_dice": "1d4",
-        "damage_dice_upcast": "1d4"
+        "damage_dice_upcast": "1d4",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Mass Suggestion",
@@ -3304,11 +3538,13 @@
         "ritual": "no",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Maze",
@@ -3319,11 +3555,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Conjuration",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Meld into Stone",
@@ -3334,13 +3572,15 @@
         "ritual": "yes",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Ritual Caster",
         "archetype": "Druid: Mountain",
         "circles": "Mountain",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mending",
@@ -3356,7 +3596,9 @@
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Cleric, Bard, Druid, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Message",
@@ -3368,11 +3610,13 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Meteor Swarm",
@@ -3383,14 +3627,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "20d6+20d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Mind Blank",
@@ -3401,11 +3647,13 @@
         "ritual": "no",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Abjuration",
         "class": "Bard, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Minor Illusion",
@@ -3417,12 +3665,14 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Mirage Arcane",
@@ -3433,12 +3683,14 @@
         "ritual": "no",
         "duration": "10 days",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "7th-level",
         "school": "Illusion",
         "class": "Bard, Druid, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mirror Image",
@@ -3449,14 +3701,16 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Illusion",
         "class": "Cleric, Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Trickery<br/> Druid: Coast",
         "domains": "Trickery",
         "circles": "Coast",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Mislead",
@@ -3467,11 +3721,13 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Illusion",
         "class": "Bard, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Misty Step",
@@ -3482,14 +3738,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "2nd-level",
         "school": "Conjuration",
         "class": "Druid, Paladin, Sorcerer, Warlock, Wizard",
         "archetype": "Druid: Coast<br/> Paladin: Ancients, Vengeance",
         "circles": "Coast",
         "oaths": "Ancients, Vengeance",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Modify Memory",
@@ -3501,13 +3759,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Moonbeam",
@@ -3520,7 +3780,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Druid, Paladin",
@@ -3528,7 +3788,9 @@
         "oaths": "Ancients",
         "toHitOrDC": "DC",
         "damage_dice": "2d10",
-        "damage_dice_upcast": "1d10"
+        "damage_dice_upcast": "1d10",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Move Earth",
@@ -3540,11 +3802,13 @@
         "ritual": "no",
         "duration": "Up to 2 hours",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Nondetection",
@@ -3556,13 +3820,15 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Ranger, Wizard",
         "archetype": "Cleric: Knowledge",
         "domains": "Knowledge",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Pass without Trace",
@@ -3574,14 +3840,16 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
         "class": "Cleric, Druid, Ranger",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
         "circles": "Grassland",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Passwall",
@@ -3593,13 +3861,15 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Transmutation",
         "class": "Druid, Wizard",
         "archetype": "Druid: Mountain",
         "circles": "Mountain",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Phantasmal Killer",
@@ -3611,13 +3881,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Illusion",
         "class": "Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "4d10",
-        "damage_dice_upcast": "1d10"
+        "damage_dice_upcast": "1d10",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Phantom Steed",
@@ -3632,7 +3904,9 @@
         "level": "3rd-level",
         "school": "Illusion",
         "class": "Ritual Caster, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Planar Ally",
@@ -3643,11 +3917,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Planar Binding",
@@ -3664,7 +3940,9 @@
         "level": "5th-level",
         "school": "Abjuration",
         "class": "Bard, Cleric, Druid, Wizard",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "chr",
+        "ability_modifier": "no"
     },
     {
         "name": "Plane Shift",
@@ -3676,22 +3954,24 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Conjuration",
         "class": "Cleric, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Plant Growth",
-        "desc": "This spell channels vitality into plants within a specific area. There are two possible uses for the spell, granting either immediate or long-term benefits.If you cast this spell using 1 action, choose a point within range. All normal plants in a 100-foot radius centered on that point become thick and overgrown. A creature moving through the area must spend 4 feet of movement for every 1 foot it moves.You can exclude one or more areas of any size within the spell’s area from being affected.If you cast this spell over 8 hours, you enrich the land. All plants in a half-mile radius centered on a point within range become enriched for 1 year. The plants yield twice the normal amount of food when harvested.",
+        "desc": "This spell channels vitality into plants within a specific area. There are two possible uses for the spell, granting either immediate or long-term benefits.If you cast this spell using 1A, choose a point within range. All normal plants in a 100-foot radius centered on that point become thick and overgrown. A creature moving through the area must spend 4 feet of movement for every 1 foot it moves.You can exclude one or more areas of any size within the spell’s area from being affected.If you cast this spell over 8 hours, you enrich the land. All plants in a half-mile radius centered on a point within range become enriched for 1 year. The plants yield twice the normal amount of food when harvested.",
         "page": "phb 266",
         "range": "150 feet",
         "components": "V, S",
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Bard, Cleric, Druid, Paladin, Ranger, Warlock",
@@ -3700,7 +3980,9 @@
         "circles": "Forest",
         "oaths": "Ancients",
         "patrons": "Archfey",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Poison Spray",
@@ -3711,14 +3993,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Sorcerer, Warlock, Wizard",
         "higher_level": "This spell’s damage increases by 1d12 when you reach 5th level (2d12), 11th level (3d12), and 17th level (4d12).",
         "toHitOrDC": "DC",
         "damage_dice": "1d12",
-        "damage_dice_upcast": "1d12"
+        "damage_dice_upcast": "1d12",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Polymorph",
@@ -3730,14 +4014,16 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
         "archetype": "Cleric: Trickery",
         "domains": "Trickery",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Power Word Kill",
@@ -3748,11 +4034,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Power Word Stun",
@@ -3763,11 +4051,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Prayer of Healing",
@@ -3779,12 +4069,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric",
         "damage_dice": "2d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Prestidigitation",
@@ -3795,11 +4087,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Prismatic Spray",
@@ -3810,14 +4104,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "10d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Prismatic Wall",
@@ -3828,14 +4124,16 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Abjuration",
         "class": "Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "10d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Produce Flame",
@@ -3846,12 +4144,14 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Conjuration",
         "class": "Druid",
         "higher_level": "This spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Programmed Illusion",
@@ -3863,12 +4163,14 @@
         "ritual": "no",
         "duration": "Until dispelled",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Illusion",
         "class": "Bard, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Project Image",
@@ -3880,12 +4182,14 @@
         "ritual": "no",
         "duration": "Up to 24 hours",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Illusion",
         "class": "Bard, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Protection from Energy",
@@ -3896,14 +4200,16 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Abjuration",
         "class": "Cleric, Druid, Paladin, Ranger, Sorcerer, Wizard",
         "archetype": "Paladin: Ancients, Vengeance",
         "circles": "Desert",
         "oaths": "Ancients, Vengeance",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Protection from Evil and Good",
@@ -3915,12 +4221,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin, Warlock, Wizard",
         "oaths": "Devotion",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Protection from Poison",
@@ -3931,11 +4239,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
         "class": "Cleric, Druid, Paladin, Ranger",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Purify Food and Drink",
@@ -3946,11 +4256,13 @@
         "ritual": "yes",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Paladin, Ritual Caster",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Raise Dead",
@@ -3967,7 +4279,9 @@
         "school": "Necromancy",
         "class": "Bard, Cleric, Paladin",
         "domains": "Life",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Ray of Enfeeblement",
@@ -3978,12 +4292,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Necromancy",
         "class": "Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "toHit"
+        "toHitOrDC": "toHit",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Ray of Frost",
@@ -3994,14 +4310,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
         "toHitOrDC": "toHit",
         "damage_dice": "1d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Regenerate",
@@ -4017,7 +4335,9 @@
         "level": "7th-level",
         "school": "Transmutation",
         "class": "Bard, Cleric, Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Reincarnate",
@@ -4033,7 +4353,9 @@
         "level": "5th-level",
         "school": "Transmutation",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Remove Curse",
@@ -4044,11 +4366,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Resistance",
@@ -4060,11 +4384,13 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Abjuration",
         "class": "Cleric, Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Resurrection",
@@ -4080,7 +4406,9 @@
         "level": "7th-level",
         "school": "Necromancy",
         "class": "Bard, Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Reverse Gravity",
@@ -4092,12 +4420,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Revivify",
@@ -4109,12 +4439,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric, Paladin",
         "domains": "Life",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Rope Trick",
@@ -4126,11 +4458,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Sacred Flame",
@@ -4141,14 +4475,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Cleric",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
         "toHitOrDC": "DC",
         "damage_dice": "1d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Sanctuary",
@@ -4160,13 +4496,15 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin",
         "archetype": "Paladin: Devotion",
         "oaths": "Devotion",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Scorching Ray",
@@ -4178,7 +4516,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric, Sorcerer, Warlock, Wizard",
@@ -4187,7 +4525,9 @@
         "patrons": "Fiend",
         "toHitOrDC": "toHit",
         "damage_dice": "2d6",
-        "damage_dice_upcast": "1d4"
+        "damage_dice_upcast": "1d4",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Scrying",
@@ -4199,7 +4539,7 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "10 minutes",
+        "casting_time": "10m",
         "level": "5th-level",
         "school": "Divination",
         "class": "Bard, Cleric, Druid, Paladin, Warlock, Wizard",
@@ -4208,7 +4548,9 @@
         "circles": "Coast, Swamp",
         "oaths": "Vengeance",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "See Invisibility",
@@ -4220,11 +4562,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Divination",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Seeming",
@@ -4235,14 +4579,16 @@
         "ritual": "no",
         "duration": "8 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Archfey",
         "patrons": "Archfey",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Sending",
@@ -4254,13 +4600,15 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Warlock, Wizard",
         "archetype": "Warlock: Great Old One",
         "patrons": "Great Old One",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Sequester",
@@ -4272,11 +4620,13 @@
         "ritual": "no",
         "duration": "Until dispelled",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Transmutation",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Shapechange",
@@ -4288,11 +4638,13 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Transmutation",
         "class": "Druid, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Shatter",
@@ -4305,7 +4657,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
@@ -4313,7 +4665,9 @@
         "domains": "Tempest",
         "toHitOrDC": "DC",
         "damage_dice": "3d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Shield",
@@ -4324,11 +4678,13 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 reaction",
+        "casting_time": "1R",
         "level": "1st-level",
         "school": "Abjuration",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Shield of Faith",
@@ -4340,12 +4696,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "1st-level",
         "school": "Abjuration",
         "class": "Cleric, Paladin",
         "domains": "War",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Shillelagh",
@@ -4357,14 +4715,16 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Druid",
         "higher_level": "",
         "toHitOrDC": "toHit",
         "damage_dice": "1d8",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Shocking Grasp",
@@ -4375,14 +4735,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Evocation",
         "class": "Sorcerer, Wizard",
         "higher_level": "The spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
         "toHitOrDC": "toHit",
         "damage_dice": "1d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Silence",
@@ -4393,13 +4755,15 @@
         "ritual": "yes",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Illusion",
         "class": "Bard, Cleric, Druid, Ranger, Ritual Caster",
         "archetype": "Druid: Desert",
         "circles": "Desert",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Silent Image",
@@ -4411,12 +4775,14 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Illusion",
         "class": "Bard, Sorcerer, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Simulacrum",
@@ -4432,7 +4798,9 @@
         "level": "7th-level",
         "school": "Illusion",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Sleep",
@@ -4445,14 +4813,16 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Enchantment",
         "class": "Bard, Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Archfey",
         "patrons": "Archfey",
         "damage_dice": "5d8",
-        "damage_dice_upcast": "2d8"
+        "damage_dice_upcast": "2d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Sleet Storm",
@@ -4464,7 +4834,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Sorcerer, Wizard",
@@ -4472,11 +4842,13 @@
         "domains": "Tempest",
         "circles": "Arctic",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Slow",
-        "desc": "You alter time around up to six creatures of your choice in a 40-foot cube within range. Each target must succeed on a wisdom saving throw or be affected by this spell for the duration.An affected target’s speed is halved, it takes a -2 penalty to AC and dexterity saving throws, and it can’t use reactions. On its turn, it can use either an action or a bonus action, not both. Regardless of the creature’s abilities or magic items, it can’t make more than one melee or ranged attack during its turn.If the creature attempts to cast a spell with a casting time of 1 action, roll a d20. On an 11 or higher, the spell doesn’t take effect until the creature’s next turn, and the creature must use its action on that turn to complete the spell. If it can’t, the spell is wasted.A creature affected by this spell makes another wisdom saving throw at the end of its turn. On a successful save, the effect ends for it.",
+        "desc": "You alter time around up to six creatures of your choice in a 40-foot cube within range. Each target must succeed on a wisdom saving throw or be affected by this spell for the duration.An affected target’s speed is halved, it takes a -2 penalty to AC and dexterity saving throws, and it can’t use reactions. On its turn, it can use either an action or a bonus action, not both. Regardless of the creature’s abilities or magic items, it can’t make more than one melee or ranged attack during its turn.If the creature attempts to cast a spell with a casting time of 1A, roll a d20. On an 11 or higher, the spell doesn’t take effect until the creature’s next turn, and the creature must use its action on that turn to complete the spell. If it can’t, the spell is wasted.A creature affected by this spell makes another wisdom saving throw at the end of its turn. On a successful save, the effect ends for it.",
         "page": "phb 277",
         "range": "120 feet",
         "components": "V, S, M",
@@ -4484,14 +4856,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Arctic",
         "circles": "Arctic",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Spare the Dying",
@@ -4502,11 +4876,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Necromancy",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Speak with Animals",
@@ -4517,14 +4893,16 @@
         "ritual": "yes",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Divination",
         "class": "Bard, Cleric, Druid, Paladin, Ranger, Ritual Caster",
         "archetype": "Cleric: Nature<br/> Paladin: Ancients",
         "domains": "Nature",
         "oaths": "Ancients",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Speak with Dead",
@@ -4536,12 +4914,14 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Necromancy",
         "class": "Bard, Cleric",
         "domains": "Knowledge",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Speak with Plants",
@@ -4552,11 +4932,13 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Bard, Druid, Ranger",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Spider Climb",
@@ -4568,13 +4950,15 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Druid, Sorcerer, Warlock, Wizard",
         "archetype": "Druid: Forest, Mountain, Underdark",
         "circles": "Forest, Mountain, Underdark",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Spike Growth",
@@ -4586,7 +4970,7 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Ranger",
@@ -4596,7 +4980,9 @@
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "2d4",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Spirit Guardians",
@@ -4609,14 +4995,16 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Cleric",
         "domains": "War",
         "toHitOrDC": "DC",
         "damage_dice": "3d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Spiritual Weapon",
@@ -4628,14 +5016,16 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 bonus action",
+        "casting_time": "1BA",
         "level": "2nd-level",
         "school": "Evocation",
         "class": "Cleric",
         "domains": "Life, War",
         "toHitOrDC": "toHit",
         "damage_dice": "1d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes"
     },
     {
         "name": "Stinking Cloud",
@@ -4647,7 +5037,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Conjuration",
         "class": "Bard, Druid, Sorcerer, Warlock, Wizard",
@@ -4655,7 +5045,9 @@
         "circles": "Swamp, Underdark",
         "patrons": "Fiend",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Stone Shape",
@@ -4667,12 +5059,14 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Wizard",
         "circles": "Mountain, Underdark",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Stoneskin",
@@ -4684,7 +5078,7 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Abjuration",
         "class": "Cleric, Druid, Paladin, Ranger, Sorcerer, Wizard",
@@ -4692,7 +5086,9 @@
         "domains": "War",
         "circles": "Mountain",
         "oaths": "Ancients",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Suggestion",
@@ -4704,14 +5100,16 @@
         "ritual": "no",
         "duration": "Up to 8 hours",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
         "archetype": "Cleric: Knowledge",
         "domains": "Knowledge",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Sunbeam",
@@ -4723,14 +5121,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "6d8",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Sunburst",
@@ -4742,14 +5142,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "8th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
         "damage_dice": "12d6",
-        "damage_dice_upcast": ""
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Symbol",
@@ -4766,7 +5168,9 @@
         "school": "Abjuration",
         "class": "Bard, Cleric, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no"
     },
     {
         "name": "Telekinesis",
@@ -4777,14 +5181,16 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Transmutation",
         "class": "Sorcerer, Warlock, Wizard",
         "archetype": "Warlock: Great Old One",
         "patrons": "Great Old One",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "str",
+        "ability_modifier": "no"
     },
     {
         "name": "Teleport",
@@ -4795,11 +5201,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "7th-level",
         "school": "Conjuration",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Teleportation Circle",
@@ -4815,7 +5223,9 @@
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Bard, Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Thaumaturgy",
@@ -4826,11 +5236,13 @@
         "ritual": "no",
         "duration": "1 minute",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Transmutation",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Thunderwave",
@@ -4842,7 +5254,7 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Evocation",
         "class": "Bard, Cleric, Druid, Sorcerer, Wizard",
@@ -4850,7 +5262,9 @@
         "domains": "Tempest",
         "toHitOrDC": "DC",
         "damage_dice": "2d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no"
     },
     {
         "name": "Time Stop",
@@ -4861,11 +5275,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Transmutation",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Tongues",
@@ -4877,11 +5293,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Divination",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Transport via Plants",
@@ -4892,11 +5310,13 @@
         "ritual": "no",
         "duration": "1 round",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Tree Stride",
@@ -4907,7 +5327,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Conjuration",
         "class": "Cleric, Druid, Paladin, Ranger",
@@ -4915,7 +5335,9 @@
         "domains": "Nature",
         "circles": "Forest",
         "oaths": "Ancients",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "True Polymorph",
@@ -4927,12 +5349,14 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Transmutation",
         "class": "Bard, Warlock, Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "True Resurrection",
@@ -4948,7 +5372,9 @@
         "level": "9th-level",
         "school": "Necromancy",
         "class": "Cleric, Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "True Seeing",
@@ -4960,11 +5386,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Divination",
         "class": "Bard, Cleric, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "True Strike",
@@ -4975,11 +5403,13 @@
         "ritual": "no",
         "duration": "Up to 1 round",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Divination",
         "class": "Bard, Sorcerer, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Unseen Servant",
@@ -4991,11 +5421,13 @@
         "ritual": "yes",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "1st-level",
         "school": "Conjuration",
         "class": "Bard, Ritual Caster, Warlock, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Vampiric Touch",
@@ -5007,13 +5439,15 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Necromancy",
         "class": "Warlock, Wizard",
         "toHitOrDC": "toHit",
         "damage_dice": "3d6",
-        "damage_dice_upcast": "1d6"
+        "damage_dice_upcast": "1d6",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Vicious Mockery",
@@ -5024,14 +5458,16 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "Cantrip",
         "school": "Enchantment",
         "class": "Bard",
         "higher_level": "This spell’s damage increases by 1d4 when you reach 5th level (2d4), 11th level (3d4), and 17th level (4d4).",
         "toHitOrDC": "DC",
         "damage_dice": "1d4",
-        "damage_dice_upcast": "1d4"
+        "damage_dice_upcast": "1d4",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Wall of Fire",
@@ -5044,7 +5480,7 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "4th-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Sorcerer, Warlock, Wizard",
@@ -5053,7 +5489,9 @@
         "patrons": "Fiend",
         "toHitOrDC": "DC",
         "damage_dice": "5d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Wall of Force",
@@ -5065,11 +5503,13 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Evocation",
         "class": "Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Wall of Ice",
@@ -5082,13 +5522,15 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Evocation",
         "class": "Wizard",
         "toHitOrDC": "DC",
         "damage_dice": "10d6",
-        "damage_dice_upcast": "2d6"
+        "damage_dice_upcast": "2d6",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Wall of Stone",
@@ -5100,13 +5542,15 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "5th-level",
         "school": "Evocation",
         "class": "Druid, Sorcerer, Wizard",
         "circles": "Desert, Mountain",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Wall of Thorns",
@@ -5119,13 +5563,15 @@
         "ritual": "no",
         "duration": "Up to 10 minutes",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Druid",
         "toHitOrDC": "DC",
         "damage_dice": "7d8",
-        "damage_dice_upcast": "1d8"
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Warding Bond",
@@ -5137,11 +5583,13 @@
         "ritual": "no",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Abjuration",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Water Breathing",
@@ -5153,12 +5601,14 @@
         "ritual": "yes",
         "duration": "24 hours",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Druid, Ranger, Ritual Caster, Sorcerer, Wizard",
         "circles": "Coast",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Water Walk",
@@ -5169,12 +5619,14 @@
         "ritual": "yes",
         "duration": "1 hour",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Transmutation",
         "class": "Cleric, Druid, Ranger, Ritual Caster, Sorcerer",
         "circles": "Coast, Swamp",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Web",
@@ -5186,14 +5638,16 @@
         "ritual": "no",
         "duration": "Up to 1 hour",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Conjuration",
         "class": "Druid, Sorcerer, Wizard",
         "archetype": "Druid: Underdark",
         "circles": "Underdark",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no"
     },
     {
         "name": "Weird",
@@ -5204,12 +5658,14 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Illusion",
         "class": "Wizard",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "wis",
+        "ability_modifier": "no"
     },
     {
         "name": "Wind Walk",
@@ -5225,7 +5681,9 @@
         "level": "6th-level",
         "school": "Transmutation",
         "class": "Druid",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Wind Wall",
@@ -5237,14 +5695,16 @@
         "ritual": "no",
         "duration": "Up to 1 minute",
         "concentration": "yes",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "3rd-level",
         "school": "Evocation",
         "class": "Cleric, Druid, Ranger",
         "archetype": "Cleric: Nature",
         "domains": "Nature",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "str",
+        "ability_modifier": "no"
     },
     {
         "name": "Wish",
@@ -5255,11 +5715,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "9th-level",
         "school": "Conjuration",
         "class": "Sorcerer, Wizard",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Word of Recall",
@@ -5270,11 +5732,13 @@
         "ritual": "no",
         "duration": "Instantaneous",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "6th-level",
         "school": "Conjuration",
         "class": "Cleric",
-        "higher_level": ""
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
     },
     {
         "name": "Zone of Truth",
@@ -5285,12 +5749,14 @@
         "ritual": "no",
         "duration": "10 minutes",
         "concentration": "no",
-        "casting_time": "1 action",
+        "casting_time": "1A",
         "level": "2nd-level",
         "school": "Enchantment",
         "class": "Bard, Cleric, Paladin",
         "oaths": "Devotion",
         "higher_level": "",
-        "toHitOrDC": "DC"
+        "toHitOrDC": "DC",
+        "spell_save_dc_type": "cha",
+        "ability_modifier": "no"
     }
 ]
