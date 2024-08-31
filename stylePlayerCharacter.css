@@ -588,13 +588,6 @@ select{
     color: red;
 }
 
-/* .spell-row {
-    display: grid;
-    padding: 2px 2px;
-    grid-template-columns: 2fr .8fr .8fr .8fr 1fr 1.5fr;
-    justify-content: start;
-} */
-
 .spell-table{
     border: solid 1px var(--ts-button-background);
     border-radius: 5px;
@@ -610,23 +603,39 @@ select{
     font-size: 12px;
 }
 
-.spell-table th, .spell-table td {
+.spell-table th {
     border: solid 1px var(--ts-button-background);
     padding-top: 2px;
     padding-bottom: 2px;
-    padding-left: 5px;
+    padding-left: 2px;
     padding-right: 0px;
 }
+
+.spell-table td {
+    border: solid 1px var(--ts-button-background);
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin: 0;
+}
+
 
 
 .spell-name-input{
     position: relative;
-    width: 100px;
+    width: 190px;
     color: white;
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--ts-button-background);
-    margin:0;
+    margin: 0;
+    padding: 2px;
+    text-align: center;
     
+}
+
+.dropdown-container{
+    font-size: 15px;
 }
 
 .dropdown-list{
