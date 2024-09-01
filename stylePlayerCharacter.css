@@ -666,12 +666,16 @@ select{
 }
 
 .spell-casting-info {
-    margin-left: 20px;
+    margin-left: 2px;
     display: flex;
     justify-content: space-between; /* Distributes space between the items */
     align-items: center; 
-    width: 90%;
+    width: 95%;
     font-size: 16px;
+}
+
+.spell-level-dropdown{
+    width: 40px;
 }
 
 

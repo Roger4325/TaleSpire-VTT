@@ -95,49 +95,56 @@
                             "other": false
                         }
                     }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Guiding Bolt",
-                        "thirdColumn": "120ft",
-                        "fourthColumn": "+4",
-                        "fifthColumn": "4d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "WIS",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": true,
-                            "reactions": true,
-                            "other": false
-                        }
-                    }
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "CHA",
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "4",
                 "Cantrip": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Druidcraft"
+                        }
+                    ],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Charm Person"
+                        }
+                    ],
                     "slots": []
                 },
                 "2nd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Augury"
+                        }
+                    ],
                     "slots": []
                 },
                 "3rd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Clairvoyance"
+                        }
+                    ],
                     "slots": []
                 },
                 "4th-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Compulsion"
+                        }
+                    ],
                     "slots": []
                 },
                 "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
                     "spells": [],
                     "slots": []
                 }

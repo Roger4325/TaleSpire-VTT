@@ -187,6 +187,33 @@ async function playerSetUP(){
         updateAllSpellDamageDice()
     });
 
+
+    //Spell Level Dropdown Listener
+    document.querySelector('.spell-level-dropdown').addEventListener('change', function() {
+        const selectedLevel = parseInt(this.value, 10); // Get the selected level as an integer
+        const spellGroups = document.querySelectorAll('.spell-group'); // Get all spell groups
+    
+        spellGroups.forEach(spellGroup => {
+            const spellLevelAttr = spellGroup.getAttribute('spellLevel'); // Get the spellLevel attribute
+    
+            // Convert spell level attribute to a number for comparison
+            let spellLevelNumber;
+    
+            if (spellLevelAttr === 'Cantrip') {
+                spellLevelNumber = 0; // Treat cantrips as level 0
+            } else {
+                spellLevelNumber = parseInt(spellLevelAttr.split('-')[0], 10);
+            }
+    
+            // Show or hide the spell group based on the selected level
+            if (spellLevelNumber <= selectedLevel) {
+                spellGroup.style.display = 'block';
+            } else {
+                spellGroup.style.display = 'none';
+            }
+        });
+    });
+
 }  
     
 
@@ -2134,8 +2161,16 @@ function updateSpellDamageDice(ability, damageDice, spellDetails){
         }
 
         else{
-            label.setAttribute('value', '0');
-            button.textContent = damageDice;
+            const spellAdditionalDamage = spellDetails.additonal_damage
+            if(spellAdditionalDamage){
+                damageDice = damageDice + "+" + spellAdditionalDamage
+                label.setAttribute('value', spellAdditionalDamage);
+                button.textContent = damageDice ;
+            }
+            else{
+                label.setAttribute('value', '0');
+                button.textContent = damageDice ;
+            }
 
             containerDiv.appendChild(label);
             containerDiv.appendChild(button);   
@@ -2192,6 +2227,7 @@ function updateAllSpellDamageDice() {
 
                     const toHitContainer = row.querySelector('.spell-dice .to-hit-container');
                     const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
+                    const spellAdditionalDamage = spellDetails.additonal_damage
 
                     // Calculate the new damage dice (adjust based on your calculation method)
                     const diceType = spellDetails.damage_dice;
@@ -2200,6 +2236,9 @@ function updateAllSpellDamageDice() {
                     
                     if(spellAbilityScoreModifier >= 0){
                         newDamage = diceType + "+" + spellAbilityScoreModifier;
+                        if(spellAdditionalDamage){
+                            newDamage = newDamage + "+" + spellAdditionalDamage;
+                        }
                     }
 
                     else{
@@ -2409,6 +2448,9 @@ function processSpellData() {
     const spellcastingModifier = document.querySelector('.spellcasting-dropdown').value;
     spellData['spellcastingModifier'] = spellcastingModifier;
 
+    const spellLevelSelected = document.querySelector('.spell-level-dropdown').value
+    spellData['spelllevelselected'] = spellLevelSelected;
+
     // Loop through each spell level container
     const spellContainers = document.querySelectorAll('.spell-container');
     spellContainers.forEach(container => {
@@ -2439,14 +2481,17 @@ function processSpellData() {
     const spellGroups = document.querySelectorAll('.spell-group');
     spellGroups.forEach(group => {
         const spellLevel = group.querySelector('.spell-container').getAttribute('spelllevel');
-        const spellSlotsContainer = group.querySelector('.spell-slots');
+        if(spellLevel !== "Cantrip"){
+            const spellSlotsContainer = group.querySelector('.spell-slots');
 
-        if (spellSlotsContainer) {
-            const slots = spellSlotsContainer.querySelectorAll('.spell-slot');
-            spellData[spellLevel].slots = Array.from(slots).map(slot => slot.classList.contains('used'));
-        } else {
-            console.warn(`No spell slots container found for level: ${spellLevel}`);
+            if (spellSlotsContainer) {
+                const slots = spellSlotsContainer.querySelectorAll('.spell-slot');
+                spellData[spellLevel].slots = Array.from(slots).map(slot => slot.classList.contains('used'));
+            } else {
+                console.warn(`No spell slots container found for level: ${spellLevel}`);
+            }
         }
+
     });
 
     return spellData;
@@ -2464,14 +2509,47 @@ function loadSpellData(spellData) {
         spellcastingDropdown.value = spellData.spellcastingModifier;
     }
 
+    const spellLevelDropdown = document.querySelector('.spell-level-dropdown');
+    if (spellLevelDropdown && spellData.spelllevelselected) {
+        spellLevelDropdown.value = spellData.spelllevelselected;
+
+        // Call the filtering function based on the selected spell level
+        filterSpellsByLevel(spellData.spelllevelselected);
+    }
+
     // Loop through each spell level in the saved data
     Object.keys(spellData).forEach(spellLevel => {
-        if (spellLevel === 'spellcastingModifier') return; // Skip the modifier
+        if (spellLevel === 'spellcastingModifier' || spellLevel === 'spelllevelselected') return; // Skip the modifier and selected level
 
         const { spells, slots } = spellData[spellLevel];
 
-        // Find the corresponding spell container by spell level
-        const spellContainer = document.querySelector(`.spell-container[spelllevel="${spellLevel}"]`);
+        // Find the corresponding spell group by spell level
+        const spellGroup = document.querySelector(`.spell-group[spellLevel="${spellLevel}"]`);
+        // Handle spell slots only for levels that are not cantrips
+        if (spellLevel !== 'Cantrip') {
+            const spellSlotsContainer = spellGroup.querySelector('.spell-slots');
+            if (spellSlotsContainer) {
+                // Clear existing slots
+                spellSlotsContainer.innerHTML = '';
+
+                // Add new spell slots based on saved slots
+                if (Array.isArray(slots) && slots.length > 0) {
+                    slots.forEach(isUsed => {
+                        const newSlot = createSpellSlot();
+                        if (isUsed) {
+                            newSlot.textContent = 'X';
+                            newSlot.classList.add('used');
+                        }
+                        spellSlotsContainer.appendChild(newSlot);
+                    });
+                }
+            } else {
+                console.error(`Spell slots container for level ${spellLevel} not found.`);
+            }
+        }
+
+        // Handle spell data within the spell container
+        const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spelllevel="${spellLevel}"]`) : null;
 
         if (spellContainer) {
             // Check for existing spell table or create one if it doesn't exist
@@ -2487,25 +2565,6 @@ function loadSpellData(spellData) {
                 spellTable.appendChild(spellRow);
                 loadSpell(spell, spellRow);  // Populates the row with spell details
             });
-
-            // Update spell slots after loading spells
-            const spellSlotsContainer = spellContainer.querySelector('.spell-slots');
-            if (spellSlotsContainer) {
-                // Clear existing slots
-                spellSlotsContainer.innerHTML = '';
-
-                // Add new spell slots based on saved slots
-                slots.forEach(isUsed => {
-                    const newSlot = createSpellSlot();
-                    if (isUsed) {
-                        newSlot.textContent = 'X';
-                        newSlot.classList.add('used');
-                    }
-                    spellSlotsContainer.appendChild(newSlot);
-                });
-            } else {
-                console.error(`Spell slots container for level ${spellLevel} not found.`);
-            }
         } else {
             console.error(`Spell container for level ${spellLevel} not found.`);
         }
@@ -2517,3 +2576,25 @@ function loadSpellData(spellData) {
 }
 
 
+// Function to filter spells by selected level
+function filterSpellsByLevel(selectedLevel) {
+    const spellGroups = document.querySelectorAll('.spell-group');
+
+    spellGroups.forEach(spellGroup => {
+        const spellLevelAttr = spellGroup.getAttribute('spellLevel');
+
+        let spellLevelNumber;
+
+        if (spellLevelAttr === 'Cantrip') {
+            spellLevelNumber = 0; // Treat cantrips as level 0
+        } else {
+            spellLevelNumber = parseInt(spellLevelAttr.split('-')[0], 10);
+        }
+
+        if (spellLevelNumber <= selectedLevel) {
+            spellGroup.style.display = 'block';
+        } else {
+            spellGroup.style.display = 'none';
+        }
+    });
+}
