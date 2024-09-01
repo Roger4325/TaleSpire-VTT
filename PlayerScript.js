@@ -50,7 +50,6 @@ const savesProficiencyLevels = [
 //ConditionsMap is the map of conditions that can be set onto the player. This is used for tracking conditions.
 const conditionsMap = new Map();
 
-
 async function playerSetUP(){
 
     //Adding event listeners to the toggle buttons for Adv and Disadv
@@ -168,7 +167,7 @@ async function playerSetUP(){
 
     const actionTableRows = document.querySelectorAll('.actionTable tbody tr');
     actionTableRows.forEach((row) => {
-        row.addEventListener('blur', updateContent());
+        row.addEventListener('blur', updateContent);
     });
 
     // attaching eventlisteners for the Actions Table Ability Select Dropdown.
@@ -179,7 +178,6 @@ async function playerSetUP(){
     addProficiencyButtonListener()
 
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown');
-    console.log(spellCastingAbility);
 
     spellCastingAbility.addEventListener('change', function(event) {
         console.log(event.target.value); // Logs the selected value
@@ -216,6 +214,13 @@ function handleXPChange(event){
     updateSkillModifier()
     updateSaveModifier()
     updateAllToHitDice();
+    updateAllSpellDCs();
+    updateAllSpellDamageDice();
+    updateSpellDCHeader()
+
+
+    const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+    updateSpelltoHitDice(spellCastingAbility)
 }
 
 // function to calculate the level Xp from the level they just changed too and set the xp value to the lowest. 
@@ -331,9 +336,17 @@ function handleAbilityScoreChange(event) {
 
         // Update the ability score if the user entered a valid value
         scoreElement.textContent = newValue;
-        updateSkillModifier()
-        updateSaveModifier()
+        updateSkillModifier();
+        updateSaveModifier();
         updateAllToHitDice();
+        updateAllSpellDCs();
+        updateAllSpellDamageDice();
+        updateSpellDCHeader()
+
+
+        const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+        updateSpelltoHitDice(spellCastingAbility)
+        
     }
 }
 
@@ -703,9 +716,9 @@ function getSkillValue(skillName) {
 
 
 function passives(){
-    document.getElementById("passivePerception").textContent = getSkillValue('Perception');
-    document.getElementById("passiveInvestigation").textContent = getSkillValue('Investigation');
-    document.getElementById("passiveInsight").textContent = getSkillValue('Insight');
+    document.getElementById("passivePerception").textContent = parseInt(getSkillValue('Perception')) + 10;
+    document.getElementById("passiveInvestigation").textContent = parseInt(getSkillValue('Investigation')) + 10;
+    document.getElementById("passiveInsight").textContent = parseInt(getSkillValue('Insight')) +10;
 
 }
 
@@ -1066,7 +1079,7 @@ function getAllEditableContent() {
     });
 
     // Add proficiency levels to the content object
-    proficiencyButtons.forEach((button, index) => {
+    proficiencyButtons.forEach((button) => {
         content[button.id] = button.value;
     });
 
@@ -1082,6 +1095,9 @@ function getAllEditableContent() {
     // Call the function to process action table rows and update the content object
     const actionTableData = processActionTableRow();
     content['actionTable'] = actionTableData;
+
+    const spellData = processSpellData();
+    content['spellData'] = spellData;
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
     saveToGlobalStorage("characters", characterName.value, content, true);
@@ -1236,6 +1252,8 @@ function updateCharacterUI(characterData, characterName) {
     updateConditionsUI(conditionsSet);
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
+    loadSpellData(characterData.spellData);
+
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -1768,7 +1786,7 @@ function createSpellTable() {
     const headerRow = document.createElement('tr');
     headerRow.classList.add('spell-row', 'spell-header');
 
-    const headers = ['Spell Name', 'Time', 'Hit/DC', 'Dice', 'Con', 'Notes'];
+    const headers = ['Spell Name', 'Time', 'Hit/DC', 'Dice', 'Con', 'Notes','Del'];
     headers.forEach(headerText => {
         const headerCell = document.createElement('th');
         headerCell.classList.add('spell-header-cell');
@@ -1797,12 +1815,12 @@ function createSpellRow(spell,spellLevel) {
     spellNameInput.setAttribute('spell-level', spellLevel); // Use spell.level if it's available
     spellNameInput.placeholder = 'Select Spell...';
 
-   // Create the magnifying glass button
-   const magGlassButton = document.createElement('button');
-   magGlassButton.classList.add('mag-glass-button');
-   magGlassButton.textContent = '🔍'; // Magnifying glass symbol
-   magGlassButton.addEventListener('click', function() {
-       details(spell); // Call the details() function when clicked
+    // Create the magnifying glass button
+    const magGlassButton = document.createElement('button');
+    magGlassButton.classList.add('mag-glass-button');
+    magGlassButton.textContent = 'i'; // Magnifying glass symbol
+    magGlassButton.addEventListener('click', function() {
+    showSpellCardDetails(spellNameInput.value);
    });
 
     // Create the dice button
@@ -1838,7 +1856,7 @@ function createSpellRow(spell,spellLevel) {
         const filteredSpellNames = filteredSpells.map(spell => spell.name);
     
         // Populate dropdown or other UI with filtered spell names
-        populateListWithAllSpells(filteredSpellNames,dropdownList,row);
+        populateListWithAllSpells(filteredSpellNames,dropdownList,row,dropdownContainer);
         dropdownContainer.style.display = 'block';
     });
 
@@ -1851,7 +1869,7 @@ function createSpellRow(spell,spellLevel) {
 
     spellNameContainer.appendChild(spellNameInput);
     spellNameContainer.appendChild(dropdownContainer);
-    // spellNameContainer.appendChild(magGlassButton); // Append the magnifying glass button
+    spellNameContainer.appendChild(magGlassButton); // Append the magnifying glass button
     // spellNameContainer.appendChild(diceButton); // Append the dice button
 
     // Other spell details
@@ -1875,6 +1893,17 @@ function createSpellRow(spell,spellLevel) {
     components.classList.add('spell-components');
     components.textContent = spell.components;
 
+    // Create the remove button
+    const removeCell = document.createElement('td');
+    const removeButton = document.createElement('button');
+    removeButton.textContent = 'X'; 
+    removeButton.classList.add('remove-row-button');
+    removeButton.addEventListener('click', function() {
+        removeSpellRow(row);
+    });
+    removeCell.appendChild(removeButton);
+
+
     // Append all elements to the row
     row.appendChild(spellNameContainer);
     row.appendChild(castTime);
@@ -1882,35 +1911,44 @@ function createSpellRow(spell,spellLevel) {
     row.appendChild(spellDice);
     row.appendChild(concentration);
     row.appendChild(components);
+    row.appendChild(removeCell);
 
     return row;
 }
 
+function removeSpellRow(row) {
+    row.parentElement.removeChild(row);
+}
 
-function addSpellToContainer(spellContainer) {
-    const spellData = {
-        name: "Default",
-        castTime: "1A",
-        toHitOrDC: "+5",
-        spellDice: "1d10",
-        concentration: false,
-        components: "V,S,M",
-        description: "This is a default spell description."
-    };
+
+function addSpellToContainer(spellContainer, spellData = null) {
+    // Default spell data if not provided
+    if (!spellData) {
+        spellData = {
+            name: "Default",
+            castTime: "1A",
+            toHitOrDC: "+5",
+            spellDice: "1d10",
+            concentration: false,
+            components: "V,S,M",
+            description: "This is a default spell description."
+        };
+    }
 
     let table = spellContainer.querySelector('.spell-table');
-    let spellLevel = spellContainer.getAttribute('spellLevel')
-    
-    // If table doesn't exist, create itS
+    let spellLevel = spellContainer.getAttribute('spellLevel');
+
+    // If table doesn't exist, create it
     if (!table) {
         table = createSpellTable();
         spellContainer.appendChild(table);
     }
 
     // Add the new spell row
-    const spellRow = createSpellRow(spellData,spellLevel);
+    const spellRow = createSpellRow(spellData, spellLevel);
     table.appendChild(spellRow);
 }
+
 
 document.querySelectorAll('.add-spell-button').forEach(button => {
     button.addEventListener('click', function () {
@@ -1926,7 +1964,7 @@ document.querySelectorAll('.add-spell-button').forEach(button => {
 
 
 
-function populateListWithAllSpells(spellsData, inputRef, row) {
+function populateListWithAllSpells(spellsData, inputRef, row, dropdownContainer) {
     // Sort spell names alphabetically
     spellsData.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
 
@@ -1943,6 +1981,7 @@ function populateListWithAllSpells(spellsData, inputRef, row) {
             // Find the corresponding spell object if needed or update details directly
             const spell = { name: spellName }; // Mock object if needed
             loadSpell(spell, row);
+            dropdownContainer.style.display = 'none'; // Hide dropdown
         });
         spellList.appendChild(listItem);
     });
@@ -2197,12 +2236,9 @@ function updateAllSpellDCs() {
     spellRows.forEach(row => {
         // Try different selectors depending on your structure
         const spellNameInput = row.querySelector('.spell-name-input');
-        console.log("Row:", row);
-        console.log("Spell Name Input:", spellNameInput);
 
         if (spellNameInput) {
             const spellName = spellNameInput.value.trim();
-            console.log("Spell Name:", spellName);
 
             // Find the corresponding spell object in the JSON data based on the spell name
             const spellDetails = spellDataArray.find(spellData => spellData.name === spellName);
@@ -2220,7 +2256,6 @@ function updateAllSpellDCs() {
 
                 if (saveType) {
                     spellDCSelection.textContent = saveType + " " + spellSaveDC;
-                    console.log("here", spellDCSelection.textContent)
                 }
 
             }
@@ -2230,7 +2265,29 @@ function updateAllSpellDCs() {
     });
 }
 
+function updateSpellDCHeader(){
+    const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+    const spellSection = document.getElementById('SpellList');
+    const spellDCSelection = spellSection.querySelector('.spell-dc');
 
+
+    const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(spellCastingAbility).getAttribute('value'));
+    const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+
+    spellDCSelection.textContent = spellSaveDc;
+
+    const spellAttackLabel = spellSection.querySelector('.actionButtonLabel');
+    const spellAttackButton = spellSection.querySelector('.spell-attack-button');
+    
+    // Update the label value and button text
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus;
+    spellAttackLabel.setAttribute('value', spellAttackBonus);
+    spellAttackButton.textContent = `+${spellAttackBonus}`;
+
+
+}
 
 
 function updateSpellSaveDC(ability){
@@ -2249,7 +2306,7 @@ function updateSpellSaveDC(ability){
     return spellSaveDc
 }
 
-function updateSpelltoHitDice(ability,) {
+function updateSpelltoHitDice(ability) {
     const spellSection = document.getElementById('SpellList');
     const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button");
 
@@ -2280,3 +2337,183 @@ function updateSpelltoHitDice(ability,) {
     });
     rollableButtons()
 }
+
+let currentSelectedSpellName = '';
+
+function showSpellCardDetails(spellName) {
+
+     // Check if the spell card is currently visible
+     if (spellCardContainer.classList.contains('visible') && currentSelectedSpellName === spellName) {
+        // Hide the card if it's already open
+        spellCardContainer.classList.remove('visible');
+        spellCardContainer.classList.add('hidden');
+        return; // Exit the function early
+    }
+
+    const spellDataObject = AppData.spellLookupInfo;
+    const spellDataArray = spellDataObject.spellsData;
+    const spell = spellDataArray.find(spell => spell.name === spellName);
+
+    console.log(spellName);
+
+    if (spell) {
+
+        currentSelectedSpellName = spellName
+        // Reusable function to populate data conditionally
+        const populateField = (elementId, label, value) => {
+            const element = document.getElementById(elementId);
+            if (value) {
+                element.innerHTML = `<strong>${label}:</strong> ${value}`;
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        };
+
+        // Populate the spell card with data
+        document.getElementById('spellName').textContent = spell.name;
+        populateField('spellLevel', 'Level', spell.level);
+        populateField('spellSchool', 'School', spell.school);
+        populateField('spellCastingTime', 'Casting Time', spell.casting_time);
+        populateField('spellRange', 'Range', spell.range);
+        populateField('spellComponents', 'Components', spell.components);
+        populateField('spellDuration', 'Duration', spell.duration);
+        populateField('spellDescription', 'Description', spell.desc);
+        populateField('spellMaterials', 'Materials', spell.material)
+        populateField('spellHigherLevel', 'Up Cast', spell.higher_level);
+        populateField('spellToHitOrDC', spell.toHitOrDC === 'toHit' ? 'Spell Attack' : 'Spell Save DC', spell.toHitOrDC === 'toHit' ? 'Spell Attack' : spell.spell_save_dc_type);
+        populateField('spellDamageDice', 'Damage', spell.damage_dice);
+
+        // Show the spell card with the slide-in animation
+        const spellCardContainer = document.getElementById('spellCardContainer');
+        spellCardContainer.classList.remove('hidden');
+        spellCardContainer.classList.add('visible');
+
+        // Add an event listener to the close button
+        document.getElementById('closeSpellCard').onclick = function() {
+            spellCardContainer.classList.remove('visible');
+            spellCardContainer.classList.add('hidden');
+            currentSelectedSpellName = '';
+        };
+
+        // Make sure the card is visible (in case it was previously hidden)
+        spellCardContainer.style.display = 'block';
+    }
+}
+
+
+function processSpellData() {
+    const spellData = {};
+
+    // Get selected spellcasting modifier
+    const spellcastingModifier = document.querySelector('.spellcasting-dropdown').value;
+    spellData['spellcastingModifier'] = spellcastingModifier;
+
+    // Loop through each spell level container
+    const spellContainers = document.querySelectorAll('.spell-container');
+    spellContainers.forEach(container => {
+        const spellLevel = container.getAttribute('spelllevel');
+        spellData[spellLevel] = {
+            spells: [],
+            slots: []
+        };
+
+        // Collect spell details
+        const spellRows = container.querySelectorAll('.spell-row');
+        spellRows.forEach(row => {
+            const spellDetails = {};
+
+            // Get spell details
+            const spellNameInput = row.querySelector('.spell-name-input');
+            const spellName = spellNameInput ? spellNameInput.value.trim() : '';
+            
+            // Only add spell if the name is not empty
+            if (spellName) {
+                spellDetails['name'] = spellName;
+                spellData[spellLevel].spells.push(spellDetails);
+            }
+        });
+    });
+
+    // Collect spell slots information
+    const spellGroups = document.querySelectorAll('.spell-group');
+    spellGroups.forEach(group => {
+        const spellLevel = group.querySelector('.spell-container').getAttribute('spelllevel');
+        const spellSlotsContainer = group.querySelector('.spell-slots');
+
+        if (spellSlotsContainer) {
+            const slots = spellSlotsContainer.querySelectorAll('.spell-slot');
+            spellData[spellLevel].slots = Array.from(slots).map(slot => slot.classList.contains('used'));
+        } else {
+            console.warn(`No spell slots container found for level: ${spellLevel}`);
+        }
+    });
+
+    return spellData;
+}
+
+
+
+
+
+
+function loadSpellData(spellData) {
+    // Set the selected spellcasting modifier
+    const spellcastingDropdown = document.querySelector('.spellcasting-dropdown');
+    if (spellcastingDropdown && spellData.spellcastingModifier) {
+        spellcastingDropdown.value = spellData.spellcastingModifier;
+    }
+
+    // Loop through each spell level in the saved data
+    Object.keys(spellData).forEach(spellLevel => {
+        if (spellLevel === 'spellcastingModifier') return; // Skip the modifier
+
+        const { spells, slots } = spellData[spellLevel];
+
+        // Find the corresponding spell container by spell level
+        const spellContainer = document.querySelector(`.spell-container[spelllevel="${spellLevel}"]`);
+
+        if (spellContainer) {
+            // Check for existing spell table or create one if it doesn't exist
+            let spellTable = spellContainer.querySelector('.spell-table');
+            if (!spellTable) {
+                spellTable = createSpellTable();  // Assumes this function creates a table element
+                spellContainer.appendChild(spellTable);
+            }
+
+            // Populate the spell table with saved spells
+            spells.forEach(spell => {
+                const spellRow = createSpellRow(spell, spellLevel);
+                spellTable.appendChild(spellRow);
+                loadSpell(spell, spellRow);  // Populates the row with spell details
+            });
+
+            // Update spell slots after loading spells
+            const spellSlotsContainer = spellContainer.querySelector('.spell-slots');
+            if (spellSlotsContainer) {
+                // Clear existing slots
+                spellSlotsContainer.innerHTML = '';
+
+                // Add new spell slots based on saved slots
+                slots.forEach(isUsed => {
+                    const newSlot = createSpellSlot();
+                    if (isUsed) {
+                        newSlot.textContent = 'X';
+                        newSlot.classList.add('used');
+                    }
+                    spellSlotsContainer.appendChild(newSlot);
+                });
+            } else {
+                console.error(`Spell slots container for level ${spellLevel} not found.`);
+            }
+        } else {
+            console.error(`Spell container for level ${spellLevel} not found.`);
+        }
+    });
+
+    updateAllSpellDCs();
+    updateAllSpellDamageDice();
+    updateSpellDCHeader();
+}
+
+

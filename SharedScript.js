@@ -140,7 +140,7 @@ let contentPacks = null;
 async function onInit() {
     console.log("onInit")
     setupNav();
-    loadAndDisplayCharacter("Tryn");
+    
     let contentPacksFragments = await TS.contentPacks.getContentPacks();
     if (contentPacksFragments.cause != undefined) {
         console.error("error in getting asset packs", contentPacksFragments);
@@ -151,11 +151,15 @@ async function onInit() {
         console.error("error in getting more info on asset data", contentPacks);
         return;
     }
+    //Initialize spell List
+    AppData.spellLookupInfo = await readSpellJson();
     await playerSetUP();
     rollableButtons();
 
-    //Initialize spell List
-    AppData.spellLookupInfo = await readSpellJson();
+    loadAndDisplayCharacter("Tryn");
+
+    
+    
 }
 
 //Function for parsing text and creating a rollable button.
@@ -195,7 +199,6 @@ function parseAndReplaceDice(action, text) {
 function rollableButtons() {
     const actionButtons = document.getElementsByClassName("actionButton");
 
-    // Use a forEach loop to add a click event listener to each button
     Array.from(actionButtons).forEach(button => {
         if (!button.hasRollableButtonListener) {
             button.addEventListener('click', function () {
@@ -203,7 +206,6 @@ function rollableButtons() {
                 const label = button.previousElementSibling;
 
                 if (label && label.classList.contains('actionButtonLabel')) {
-                    // Extract the desired attributes from the label
                     const diceValue = parseInt(label.getAttribute('value'), 10);
                     const diceType = label.getAttribute('data-dice-type');
                     const diceName = label.getAttribute('data-name');
@@ -211,17 +213,35 @@ function rollableButtons() {
                     // Check the current advantage/disadvantage state and adjust the dice type accordingly
                     const isAdvantage = toggleContainer.querySelector("#advButton").classList.contains("active");
                     const isDisadvantage = toggleContainer.querySelector("#disadvButton").classList.contains("active");
-
+                    
                     let type = "normal";
-                    if (isAdvantage) {
-                        // Rolling with advantage (roll two dice and keep the higher)
-                        type = "advantage";
-                    } else if (isDisadvantage) {
-                        // Rolling with disadvantage (roll two dice and keep the lower)
-                        type = "disadvantage";
-                    }
 
-                    const diceRoll = dicePacker(diceType, diceValue);
+                    let diceRoll = dicePacker(diceType, diceValue);
+
+                    // Check for conditions in the conditionsMap
+                    const conditionTrackerDiv = document.getElementById('conditionTracker');
+                    const conditionsSet = conditionsMap.get(conditionTrackerDiv);
+                    if (diceType === '1d20'){
+                        if (isAdvantage) {
+                            type = "advantage";
+                        } else if (isDisadvantage) {
+                            type = "disadvantage";
+                        }    
+                        if (conditionsSet) {
+                            // Apply the effects of Bless or Guidance if present
+                            if (conditionsSet.has('Bless') || conditionsSet.has('Guidance')) {
+                                diceRoll += dicePacker("+1d4",0); // Add 1d4 to the roll
+                                console.log("Bless")
+                            }
+    
+                            // Apply the effects of Bane if present
+                            if (conditionsSet.has('Bane')) {
+                                diceRoll += dicePacker("-1d4",0); // Subtract 1d4 from the roll
+                                console.log("bane")
+                            }
+                        }
+                    }
+                    
 
                     console.log(diceRoll);
 
@@ -235,6 +255,8 @@ function rollableButtons() {
         }
     });
 }
+
+
 
 
 

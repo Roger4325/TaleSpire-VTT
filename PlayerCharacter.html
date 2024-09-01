@@ -622,7 +622,7 @@
                 </div>
                 <div>
                     <label>Spell Save DC:</label>
-                    <span class="spell-save-dc" >__</span>
+                    <span class="spell-save-dc spell-dc" >__</span>
                 </div>
             </div>
             
@@ -635,9 +635,9 @@
             </div>
             <div class="spell-group">
                 <h2>Level 1 
-                    <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level1-slots"></div>
                     <button class="remove-spell-slot">-</button>
+                    <div class="spell-slots" id="level1-slots"></div>
+                    <button class="add-spell-slot">+</button>                    
                 </h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="1st-level" id="level1-container"></div>
@@ -645,9 +645,9 @@
             <hr class="minihr">
             <div class="spell-group">
                 <h2>Level 2 
-                    <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level2-slots"></div>
                     <button class="remove-spell-slot">-</button>
+                    <div class="spell-slots" id="level2-slots"></div>
+                    <button class="add-spell-slot">+</button>                    
                 </h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="2nd-level" id="level2-container"></div>
@@ -655,9 +655,9 @@
             <hr class="minihr">
             <div class="spell-group">
                 <h2>Level 3 
-                    <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level3-slots"></div>
                     <button class="remove-spell-slot">-</button>
+                    <div class="spell-slots" id="level3-slots"></div>
+                    <button class="add-spell-slot">+</button>                    
                 </h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="3rd-level" id="level3-container"></div>
@@ -665,9 +665,10 @@
             <hr class="minihr">
             <div class="spell-group">
                 <h2>Level 4 
-                    <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level4-slots"></div>
                     <button class="remove-spell-slot">-</button>
+                    <div class="spell-slots" id="level4-slots"></div>
+                    <button class="add-spell-slot">+</button>
+                    
                 </h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="4th-level" id="level4-container"></div>
@@ -675,9 +676,10 @@
             <hr class="minihr">
             <div class="spell-group">
                 <h2>Level 5 
-                    <button class="add-spell-slot">+</button>
-                    <div class="spell-slots" id="level5-slots"></div>
                     <button class="remove-spell-slot">-</button>
+                    <div class="spell-slots" id="level5-slots"></div>
+                    <button class="add-spell-slot">+</button>
+                    
                 </h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="5th-level" id="level5-container"></div>
@@ -686,11 +688,23 @@
             <!-- Repeat for other spell levels -->
         </section>
         
-        
-        
-        
-        
-
+        <div id="spellCardContainer" class="spell-card-container hidden">
+            <div class="spell-card">
+                <button id="closeSpellCard" class="close-button">X</button>
+                <h2 id="spellName"></h2>
+                <p id="spellLevel"></p>
+                <p id="spellSchool"></p>
+                <p id="spellCastingTime"></p>
+                <p id="spellRange"></p>
+                <p id="spellComponents"></p>
+                <p id="spellDuration"></p>
+                <p id="spellDescription"></p>
+                <p id="spellMaterials"></p>
+                <p id="spellHigherLevel"></p>
+                <p id="spellToHitOrDC"></p>
+                <p id="spellDamageDice"></p>
+            </div>
+        </div>
 
 
         <div id="errorModal" class="modal">

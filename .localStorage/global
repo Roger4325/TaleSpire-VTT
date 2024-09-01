@@ -5,16 +5,16 @@
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
-            "characterLevel": "6",
-            "playerXP": "14000",
+            "characterLevel": "9",
+            "playerXP": "48000",
             "currentCharacterHP": "56",
             "maxCharacterHP": "56",
             "strengthScore": "8",
-            "dexterityScore": "14",
+            "dexterityScore": "18",
             "constitutionScore": "16",
-            "intelligenceScore": "13",
-            "wisdomScore": "20",
-            "charismaScore": "8",
+            "intelligenceScore": "10",
+            "wisdomScore": "11",
+            "charismaScore": "20",
             "acrobaticsAbilityMod": "DEX",
             "animalHandlingAbilityMod": "WIS",
             "arcanaAbilityMod": "INT",
@@ -38,20 +38,20 @@
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
             "proficiencyButton4": "0",
-            "proficiencyButton6": "0",
+            "proficiencyButton6": "1",
             "proficiencyButton7": "0",
-            "proficiencyButton8": "1",
-            "proficiencyButton9": "0",
+            "proficiencyButton8": "0",
+            "proficiencyButton9": "1",
             "proficiencyButton10": "0",
             "proficiencyButton11": "0",
             "proficiencyButton12": "0",
-            "proficiencyButton13": "1",
+            "proficiencyButton13": "0",
             "proficiencyButton14": "0",
-            "proficiencyButton15": "0",
-            "proficiencyButton16": "1",
-            "proficiencyButton17": "0",
-            "proficiencyButton18": "0",
-            "proficiencyButton19": "1",
+            "proficiencyButton15": "1",
+            "proficiencyButton16": "0",
+            "proficiencyButton17": "1",
+            "proficiencyButton18": "1",
+            "proficiencyButton19": "0",
             "proficiencyButton20": "0",
             "proficiencyButton21": "0",
             "proficiencyButton22": "0",
@@ -65,16 +65,16 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Crossbow L",
                         "thirdColumn": "80 (320)",
-                        "fourthColumn": "+5",
+                        "fourthColumn": "+8",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
                         "ninthColumn": {
-                            "attacks": true,
+                            "attacks": false,
                             "actions": false,
-                            "bonus-actions": false,
+                            "bonus-actions": true,
                             "reactions": false,
-                            "other": true
+                            "other": false
                         }
                     }
                 },
@@ -83,7 +83,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Rapier",
                         "thirdColumn": "5 ft. Reach",
-                        "fourthColumn": "+5",
+                        "fourthColumn": "+8",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -101,7 +101,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Guiding Bolt",
                         "thirdColumn": "120ft",
-                        "fourthColumn": "+8",
+                        "fourthColumn": "+4",
                         "fifthColumn": "4d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "WIS",
@@ -114,7 +114,34 @@
                         }
                     }
                 }
-            ]
+            ],
+            "spellData": {
+                "spellcastingModifier": "CHA",
+                "Cantrip": {
+                    "spells": [],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "2nd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "3rd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            }
         }
     }
 }
