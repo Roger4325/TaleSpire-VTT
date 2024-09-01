@@ -2,7 +2,7 @@
     "characters": {
         "Tryn": {
             "characterTempHp": "",
-            "initiativeButton": "+2",
+            "initiativeButton": "-3",
             "AC": "19",
             "speed": "30ft.",
             "characterLevel": "9",

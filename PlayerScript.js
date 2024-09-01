@@ -84,7 +84,15 @@ async function playerSetUP(){
     document.getElementById("initiativeButton").addEventListener('blur', function(){
         const labelElement = this.closest('.playerStats').querySelector('.actionButtonLabel');
         const inputValue = this.textContent.trim(); // Remove leading and trailing spaces
-        const extractedNumber = parseButtonText(inputValue);
+        console.log(inputValue)
+        let extractedNumber = ""
+        if (inputValue >= 0){
+            extractedNumber = parseButtonText(inputValue);
+        }
+        else{
+            extractedNumber = inputValue
+        }
+        
         labelElement.setAttribute('value', extractedNumber);
     });
     document.getElementById("initiativeButton").addEventListener('keydown', function(event) {
@@ -756,7 +764,7 @@ function passives(){
 // Actions Sections. 
 
 // Function to add toggle dropdown listener
-function addToggleDropdownListener(dropdownBtn, dropdownContent,newRow) {
+function addToggleDropdownListener(dropdownBtn, dropdownContent) {
     // Check if the element and its properties are valid
     if (dropdownBtn && dropdownContent) {
         // Check if the element already has the event listener
@@ -1255,15 +1263,24 @@ function updateCharacterUI(characterData, characterName) {
     characterNameElement.value = characterName; // Adjust based on your actual property names
     characterTempHpElement.value = characterData.characterTempHp;
 
+    const characterInit = document.getElementById("initiativeButton");
+    const characterInitLabel = document.querySelector(`.playerStats label[for="initiativeButton"]`);
+    characterInit.textContent = characterData.initiativeButton
+    characterInitLabel.setAttribute('value', characterData.initiativeButton.replace("+", ""));
+
+    console.log(characterInit)
+    console.log(characterInitLabel)
+
     // Update other content-editable elements
     for (const property in characterData) {
-        if (characterData.hasOwnProperty(property) && property !== "characterName" && property !== "characterTempHp" && property !== "conditions") {
+        if (characterData.hasOwnProperty(property) && property !== "characterName" && property !== "characterTempHp" && property !== "conditions" && property !== "initiativeButton") {
             const element = document.getElementById(property);
             if (element) {
                 element.innerText = characterData[property];
             }
         }
     }
+
     updateProficiencyButtons(characterData, skillProficiencyLevels, savesProficiencyLevels);
     const characterLevel = parseInt(characterData.characterLevel);
     document.getElementById('characterLevel').textContent = characterLevel;
