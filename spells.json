@@ -17,7 +17,8 @@
         "damage_dice": "4d4",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Acid"
     },
     {
         "name": "Acid Splash",
@@ -37,7 +38,8 @@
         "damage_dice": "1d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Acid"
         
     },
     {
@@ -266,7 +268,8 @@
         "damage_dice": "4d8",
         "damage_dice_upcast": "2d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Blundgeoning"
     },
     {
         "name": "Arcane Lock",
@@ -470,7 +473,8 @@
         "toHitOrDC": "DC",
         "damage_dice": "6d10",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Slashing"
     },
     {
         "name": "Bless",
@@ -510,7 +514,8 @@
         "damage_dice": "8d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Blindness/Deafness",
@@ -588,7 +593,8 @@
         "damage_dice": "2d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Burning Hands",
@@ -611,7 +617,8 @@
         "damage_dice": "3d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Call Lightning",
@@ -634,7 +641,8 @@
         "damage_dice": "3d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Lightning"
     },
     {
         "name": "Calm Emotions",
@@ -675,7 +683,8 @@
         "damage_dice": "10d8",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Lightning"
     },
     {
         "name": "Charm Person",
@@ -715,11 +724,12 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Circle of Death",
-        "desc": "A sphere of negative energy ripples out in a 60-footradius sphere from a point within range. Each creature in that area must make a constitution saving throw. A target takes 8d6 necrotic damage on a failed save, or half as much damage on a successful one.",
+        "desc": "A sphere of negative energy ripples out in a 60-foot radius sphere from a point within range. Each creature in that area must make a constitution saving throw. A target takes 8d6 necrotic damage on a failed save, or half as much damage on a successful one.",
         "higher_level": "When you cast this spell using a spell slot of 7th level or higher, the damage increases by 2d6 for each slot level above 6th.",
         "page": "phb 221",
         "range": "150 feet",
@@ -736,7 +746,8 @@
         "damage_dice": "8d6",
         "damage_dice_upcast": "2d6",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Clairvoyance",
@@ -794,7 +805,8 @@
         "damage_dice": "5d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Posion"
     },
     {
         "name": "Color Spray",
@@ -931,7 +943,8 @@
         "damage_dice": "8d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Cold"
     },
     {
         "name": "Confusion",
@@ -1137,7 +1150,8 @@
         "class": "Cleric, Druid, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Blundgeoning"
     },
     {
         "name": "Control Weather",
@@ -1260,7 +1274,8 @@
         "domains": "Life",
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Dancing Lights",
@@ -1369,7 +1384,8 @@
         "damage_dice": "8d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Demiplane",
@@ -1516,7 +1532,8 @@
         "additonal_damage":"40",
         "damage_dice_upcast": "3d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Force"
     },
     {
         "name": "Dispel Evil and Good",
@@ -1722,7 +1739,8 @@
         "damage_dice": "5d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Blundgeoning"
     },
     {
         "name": "Eldritch Blast",
@@ -1742,7 +1760,8 @@
         "damage_dice": "1d10",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Force"
     },
     {
         "name": "Enhance Ability",
@@ -2070,7 +2089,8 @@
         "additonal_damage": "30",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Fireball",
@@ -2094,7 +2114,8 @@
         "damage_dice": "8d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Fire Bolt",
@@ -2114,7 +2135,8 @@
         "damage_dice": "1d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Fire Shield",
@@ -2136,7 +2158,8 @@
         "damage_dice": "2d8",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire/Cold"
     },
     {
         "name": "Fire Storm",
@@ -2156,7 +2179,8 @@
         "damage_dice": "7d10",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Flame Blade",
@@ -2177,7 +2201,8 @@
         "damage_dice": "3d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Flame Strike",
@@ -2199,10 +2224,12 @@
         "oaths": "Devotion",
         "patrons": "Fiend",
         "toHitOrDC": "DC",
-        "damage_dice": "4d6+4d6",
+        "damage_dice": "4d6/4d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire",
+        "damage_type_02": "Radiant"
     },
     {
         "name": "Flaming Sphere",
@@ -2225,7 +2252,8 @@
         "damage_dice": "2d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Flesh to Stone",
@@ -2634,7 +2662,8 @@
         "damage_dice": "4d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Gust of Wind",
@@ -2716,7 +2745,8 @@
         "damage_dice": "14d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Haste",
@@ -2773,7 +2803,8 @@
         "damage_dice": "1d4",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Heat Metal",
@@ -2793,7 +2824,8 @@
         "damage_dice": "2d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Hellish Rebuke",
@@ -2813,7 +2845,8 @@
         "damage_dice": "2d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Heroes' Feast",
@@ -2973,10 +3006,12 @@
         "circles": "Arctic",
         "oaths": "Ancients",
         "toHitOrDC": "DC",
-        "damage_dice": "2d8+4d6",
+        "damage_dice": "2d8/4d6",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Cold",
+        "damage_type_02": "Blundgeoning"
     },
     {
         "name": "Identify",
@@ -3053,7 +3088,8 @@
         "damage_dice": "10d8",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Inflict Wounds",
@@ -3073,7 +3109,8 @@
         "damage_dice": "3d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Insect Plague",
@@ -3096,7 +3133,8 @@
         "damage_dice": "4d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Piercing"
     },
     {
         "name": "Invisibility",
@@ -3249,7 +3287,8 @@
         "damage_dice": "8d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Lightning"
     },
     {
         "name": "Locate Animals or Plants",
@@ -3413,7 +3452,8 @@
         "additonal_damage":"1",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Force"
     },
     {
         "name": "Magic Mouth",
@@ -3489,7 +3529,8 @@
         "damage_dice": "3d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Mass Heal",
@@ -3525,7 +3566,8 @@
         "damage_dice": "1d4",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Mass Suggestion",
@@ -3636,7 +3678,9 @@
         "damage_dice": "20d6+20d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire",
+        "damage_type_02": "Blundgeoning"
     },
     {
         "name": "Mind Blank",
@@ -3790,7 +3834,8 @@
         "damage_dice": "2d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Move Earth",
@@ -3889,7 +3934,8 @@
         "damage_dice": "4d10",
         "damage_dice_upcast": "1d10",
         "spell_save_dc_type": "wis",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Psychic"
     },
     {
         "name": "Phantom Steed",
@@ -4002,7 +4048,8 @@
         "damage_dice": "1d12",
         "damage_dice_upcast": "1d12",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Posion"
     },
     {
         "name": "Polymorph",
@@ -4076,7 +4123,8 @@
         "damage_dice": "2d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Prestidigitation",
@@ -4113,7 +4161,8 @@
         "damage_dice": "10d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Random"
     },
     {
         "name": "Prismatic Wall",
@@ -4133,7 +4182,8 @@
         "damage_dice": "10d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Random"
     },
     {
         "name": "Produce Flame",
@@ -4150,8 +4200,10 @@
         "class": "Druid",
         "higher_level": "This spell’s damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
         "toHitOrDC": "toHit",
+        "damage_dice": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Programmed Illusion",
@@ -4319,7 +4371,8 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Cold"
     },
     {
         "name": "Regenerate",
@@ -4484,7 +4537,8 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Sanctuary",
@@ -4527,7 +4581,8 @@
         "damage_dice": "2d6",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Scrying",
@@ -4667,7 +4722,8 @@
         "damage_dice": "3d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Thunder"
     },
     {
         "name": "Shield",
@@ -4724,7 +4780,8 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Blundgeoning"
     },
     {
         "name": "Shocking Grasp",
@@ -4744,7 +4801,8 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Lightning"
     },
     {
         "name": "Silence",
@@ -4982,7 +5040,8 @@
         "damage_dice": "2d4",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "wis",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Piercing"
     },
     {
         "name": "Spirit Guardians",
@@ -5004,7 +5063,29 @@
         "damage_dice": "3d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "wis",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant/Necrotic"
+    },
+    {
+        "name": "Spirit Shroud",
+        "desc": "You call forth spirits of the dead, which flit around you for the spell’s duration. The spirits are intangible and invulnerable. Until the spell ends, any attack you make deals 1d8 extra damage when you hit a creature within 10 feet of you. This damage is radiant, necrotic, or cold (your choice when you cast the spell). Any creature that takes this damage can’t regain hit points until the start of your next turn. In addition, any creature of your choice that you can see that starts its turn within 10 feet of you has its speed reduced by 10 feet until the start of your next turn.",
+        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for every two slot levels above 3rd.",
+        "page": "phb 278",
+        "range": "Self",
+        "components": "V, S",
+        "material": "A holy symbol.",
+        "ritual": "no",
+        "duration": "Up to 1 minutes",
+        "concentration": "yes",
+        "casting_time": "1BA",
+        "level": "3rd-level",
+        "school": "Necromancy",
+        "class": "Paladin",
+        "toHitOrDC": "",
+        "damage_dice": "3d8",
+        "damage_dice_upcast": "1d8",
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant/Necrotic/Cold"
     },
     {
         "name": "Spiritual Weapon",
@@ -5025,7 +5106,8 @@
         "damage_dice": "1d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "",
-        "ability_modifier": "yes"
+        "ability_modifier": "yes",
+        "damage_type_01": "Force"
     },
     {
         "name": "Stinking Cloud",
@@ -5130,7 +5212,8 @@
         "damage_dice": "6d8",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Sunburst",
@@ -5151,7 +5234,8 @@
         "damage_dice": "12d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Radiant"
     },
     {
         "name": "Symbol",
@@ -5264,7 +5348,8 @@
         "damage_dice": "2d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "con",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Thunder"
     },
     {
         "name": "Time Stop",
@@ -5447,7 +5532,8 @@
         "damage_dice": "3d6",
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Vicious Mockery",
@@ -5467,7 +5553,8 @@
         "damage_dice": "1d4",
         "damage_dice_upcast": "1d4",
         "spell_save_dc_type": "wis",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Psychic"
     },
     {
         "name": "Wall of Fire",
@@ -5491,7 +5578,8 @@
         "damage_dice": "5d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Fire"
     },
     {
         "name": "Wall of Force",
@@ -5530,7 +5618,8 @@
         "damage_dice": "10d6",
         "damage_dice_upcast": "2d6",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Cold"
     },
     {
         "name": "Wall of Stone",
@@ -5571,7 +5660,8 @@
         "damage_dice": "7d8",
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "dex",
-        "ability_modifier": "no"
+        "ability_modifier": "no",
+        "damage_type_01": "Piercing"
     },
     {
         "name": "Warding Bond",

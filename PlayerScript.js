@@ -805,18 +805,47 @@ function attachAbilityDropdownListeners() {
 }
 
 function toggleAdditionalInfo(containerId) {
-    let container = document.getElementById(containerId);
+    // Get the new container and currently active container
+    let newContainer = document.getElementById(containerId);
+    let activeContainer = document.querySelector('.additional-info-container.active');
 
-    if (container) {
-        container.classList.toggle("active");
+    // If the same container is clicked, hide it and return early
+    if (activeContainer && activeContainer === newContainer) {
+        activeContainer.classList.remove('active');
+        setTimeout(() => {
+            activeContainer.classList.add('hidden');
+        }, 200);
+        return;
+    }
 
-        if (container.classList.contains("active")) {
-            container.style.display = "block";
-        } else {
-            container.style.display = "none";
-        }
+    // If another container is open, switch instantly without animation
+    if (activeContainer) {
+        // Disable the transition for the new container for instant switching
+        newContainer.style.transition = 'none'; // Disable transition
+
+        // Hide the active container
+        activeContainer.classList.remove('active');
+        activeContainer.classList.add('hidden');
+
+        // Immediately show the new container (without animation)
+        newContainer.classList.remove('hidden');
+        newContainer.classList.add('active');
+
+        // Re-enable the transition after a short delay to ensure it's set back
+        setTimeout(() => {
+            newContainer.style.transition = ''; // Re-enable transition
+        }, 50); // Small delay to ensure the transition doesn't affect the instant switch
+    } else {
+        // If no container is open, apply the sliding effect
+        newContainer.classList.remove('hidden');
+        newContainer.classList.add('active');
     }
 }
+
+
+
+
+
 
 
 
@@ -829,6 +858,9 @@ function updateToHitDice(proficiencyButton) {
 
     // Find the toHitDice button in the same row
     const toHitDiceButton = row.querySelector('.actionButton.skillbuttonstyler');
+    const magicBonusInput = row.querySelector('.magic-bonus-weapon');
+
+    const magicBonus = parseInt(magicBonusInput.value) || 0;
 
     if (toHitDiceButton) {
         // Get the selected ability stat from the associated ability dropdown
@@ -848,7 +880,7 @@ function updateToHitDice(proficiencyButton) {
 
             // Add proficiency bonus to toHitDiceValue
             const proficiencyBonus = parseInt(document.getElementById('profBonus').textContent);
-            const toHitDiceValue = abilityScoreValue + (proficiencyBonus * proficiencyValue);
+            const toHitDiceValue = abilityScoreValue + (proficiencyBonus * proficiencyValue) + magicBonus;
 
             // Update the toHitDice button text content and value
             if(toHitDiceValue >= 0){
@@ -1171,7 +1203,9 @@ function processActionTableRow(){
         const fifthColumnCell = row.querySelector('td:nth-child(5) label.actionButtonLabel').getAttribute('data-dice-type');
         const sixthColumnCell = row.querySelector('td:nth-child(6)');
         const seventhColumnCell = row.querySelector('.ability-dropdown');
-        const eighthColumnCell = row.querySelector('td:nth-child(8)');
+        const eighthColumnCell = row.querySelector('.magic-bonus-weapon');
+        const tenthColumnCell = row.querySelector('.actionDescriptiveText01');
+        const elventhColumnCell = row.querySelector('.actionDescriptiveText02');
 
         if (secondColumnCell) {
             rowData['secondColumn'] = secondColumnCell.textContent.trim();
@@ -1198,7 +1232,13 @@ function processActionTableRow(){
             rowData['seventhColumn'] = seventhColumnCell.value;
         }
         if (eighthColumnCell) {
-            rowData['eighthColumn'] = eighthColumnCell.textContent.trim();
+            rowData['eighthColumn'] = eighthColumnCell.value;
+        }
+        if (tenthColumnCell) {
+            rowData['tenthColumn'] = tenthColumnCell.textContent;
+        }
+        if (elventhColumnCell) {
+            rowData['elventhColumn'] = elventhColumnCell.textContent;
         }
 
         
@@ -1392,9 +1432,73 @@ function loadAndDisplayCharacter(characterName) {
 
 
 
+function magicBonusInputListeners() {
+    const magicBonusListeners = document.querySelectorAll('.magic-bonus-weapon');
+
+    magicBonusListeners.forEach((listener) => {
+        // Listen for blur and keydown events
+        listener.addEventListener('blur', handleBlur);
+        listener.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default behavior of Enter key
+                listener.blur(); // Trigger blur event manually
+            }
+        });
+    });
+
+    // Handle the blur event
+    function handleBlur(event) {
+        console.log("Event triggered");
+        calculateActionDamageDice();
+        updateAllToHitDice();
+    }
+}
 
 
 
+function actionTableEventListenerSetup() {
+    // Select all editable cells with the given classes
+    const nameCells = document.querySelectorAll('.actionName');
+    const rangeCells = document.querySelectorAll('.actionRange');
+    
+    // Function to handle the blur event
+    function handleBlur(event) {
+        const cell = event.target;
+        const updatedContent = cell.textContent;
+
+        // Find the row containing the cell
+        const row = cell.closest('tr');
+
+        if (cell.classList.contains('actionName')) {
+            // Update related elements based on the cell's updated content
+            const toHitLabel = row.querySelector('.actionButtonLabel');
+            if (toHitLabel) {
+                toHitLabel.setAttribute('data-name', updatedContent);
+            }
+            const damageDiceLabel = row.querySelector('.actionButtonLabel.damageDiceButton');
+            if (damageDiceLabel) {
+                damageDiceLabel.setAttribute('data-name', "Piercing"); // Hardcoded example needs to be changed once I implement damage types. 
+            }
+
+        }
+        
+        console.log("Cell updated:", cell, "New content:", updatedContent);
+        getAllEditableContent()
+    }
+
+    // Add event listeners to all relevant cells
+    [nameCells, rangeCells].forEach(cellList => {
+        cellList.forEach(cell => {
+            cell.addEventListener('blur', handleBlur);
+            cell.addEventListener('keydown', function (event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent default Enter behavior
+                    cell.blur(); // Trigger blur event manually
+                }
+            });
+        });
+    });
+}
 
 
 
@@ -1420,12 +1524,14 @@ function updateActionTableUI(actionTableData) {
             // Set up action name (editable)
             const nameCell = document.createElement('td');
             nameCell.contentEditable = "true";
+            nameCell.classList.add('actionName');
             nameCell.textContent = row.secondColumn;
             newRow.appendChild(nameCell);
 
             // Set up reach/range (editable)
             const reachCell = document.createElement('td');
             reachCell.contentEditable = "true";
+            reachCell.classList.add('actionReach');
             reachCell.textContent = row.thirdColumn;
             newRow.appendChild(reachCell);
 
@@ -1435,7 +1541,7 @@ function updateActionTableUI(actionTableData) {
             toHitLabel.className = "actionButtonLabel";
             toHitLabel.setAttribute('value', row.fourthColumn || "5");
             toHitLabel.setAttribute('data-dice-type', "1d20");
-            toHitLabel.setAttribute('data-name', "toHitButton");
+            toHitLabel.setAttribute('data-name', row.secondColumn);
 
             const toHitButton = document.createElement('button');
             toHitButton.id = "toHitDice";
@@ -1451,8 +1557,7 @@ function updateActionTableUI(actionTableData) {
             damageLabel.className = "actionButtonLabel damageDiceButton";
             damageLabel.setAttribute('value', findAbilityScoreLabel(row.seventhColumn).getAttribute('value') || "0");
             damageLabel.setAttribute('data-dice-type', row.fifthColumn);
-            damageLabel.setAttribute('data-name', row.secondColumn || "default"); // Use action name as data-name attribute
-
+            damageLabel.setAttribute('data-name', "Piercing default" || "default"); //HardCoded example this needs to be updated once Damage Type is implemented. 
             const damageButton = document.createElement('button');
             damageButton.className = "actionButton damageDiceButton skillbuttonstyler";
             damageButton.textContent = row.fifthColumn & findAbilityScoreLabel(row.seventhColumn).getAttribute('value')|| "2d6+4d4+5"; // Default value if empty
@@ -1463,7 +1568,6 @@ function updateActionTableUI(actionTableData) {
             // Create and append the content for the sixth column
             const columnSixCell = createColumnSixContent(row, rowIndex, newRow);
             newRow.appendChild(columnSixCell);
-
 
             // Set the data-category attribute based on the selected checkboxes
             const checkboxes = row["ninthColumn"];
@@ -1488,6 +1592,8 @@ function updateActionTableUI(actionTableData) {
     });
 
     calculateActionDamageDice()
+    magicBonusInputListeners()
+    actionTableEventListenerSetup()
 }
 
 // Helper function to create column six. The settings menu on the Action table.
@@ -1544,12 +1650,14 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Add contenteditable divs for weapon properties and description
     const propertiesDiv = document.createElement('div');
     propertiesDiv.contentEditable = "true";
-    propertiesDiv.innerText = "Heavy, Two-Handed"; // Hardcoded example, replace as needed
+    propertiesDiv.classList.add('actionDescriptiveText01')
+    propertiesDiv.innerText = rowData["tenthColumn"]
     additionalInfoContainer.appendChild(propertiesDiv);
 
     const descriptionDiv = document.createElement('div');
     descriptionDiv.contentEditable = "true";
-    descriptionDiv.innerText = "A brightly Colored Maul"; // Hardcoded example, replace as needed
+    descriptionDiv.classList.add('actionDescriptiveText02')
+    descriptionDiv.innerText = rowData["elventhColumn"]
     additionalInfoContainer.appendChild(descriptionDiv);
 
     // Dropdown for the checkboxes
@@ -1557,7 +1665,7 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     dropdownDiv.className = "dropdown";
     const dropbtn = document.createElement('button');
     dropbtn.className = "dropbtn";
-    dropbtn.innerText = "Set";
+    dropbtn.innerText = "Filter Actions";
     dropdownDiv.appendChild(dropbtn);
 
     const updatedrowIndex = rowIndex - 1
@@ -1575,8 +1683,18 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     const magicBonusDiv = document.createElement('div');
     const magicBonusInput = document.createElement('input');
     magicBonusInput.placeholder = "Magic Bonus";
+    magicBonusInput.classList.add('magic-bonus-weapon')
+    magicBonusInput.value = rowData["eighthColumn"]
     magicBonusDiv.appendChild(magicBonusInput);
     additionalInfoContainer.appendChild(magicBonusDiv);
+
+    const damageTypeDiv = document.createElement('div');     //This is currently not working. And Needs to be fixed
+    const damageTypeInput = document.createElement('input');
+    damageTypeInput.placeholder = "Damage Type";
+    damageTypeInput.classList.add('damage-type')
+    damageTypeInput.value = "Piercing" //Tempory until I have proper damage type implemented. 
+    damageTypeDiv.appendChild(magicBonusInput);
+    additionalInfoContainer.appendChild(damageTypeDiv);
 
     // Create the damage dice input field
     const damageDiceInput = createDamageDiceInput(rowIndex);
@@ -1585,6 +1703,7 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Add blur event listener
     const inputElement = damageDiceInput.querySelector('.actionDamageDice');
     addDamageDiceInputListener(inputElement, newRow);
+    attachAbilityDropdownListeners()
 
     // Create the delete button and append it
     const deleteButtonDiv = createDeleteButton(rowIndex);
@@ -1593,6 +1712,8 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Append the button and the additional info container to the td
     td.appendChild(button);
     td.appendChild(additionalInfoContainer);
+
+    
 
     return td;
 }
@@ -1637,13 +1758,17 @@ function calculateActionDamageDice() {
         const damageButton = row.querySelector('button.damageDiceButton');
         const abilityDropdown = row.querySelector('.ability-dropdown');
 
+        const magicBonusInput = row.querySelector('.magic-bonus-weapon');
+
+        const magicBonus = parseInt(magicBonusInput.value) || 0;
+
 
         if (damageLabel && damageButton && abilityDropdown) {
             // Get the selected ability from the dropdown
             const selectedAbility = abilityDropdown.value;
 
             // Find the corresponding ability modifier using the provided function
-            const abilityScoreLabel = findAbilityScoreLabel(selectedAbility).getAttribute('value');
+            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + magicBonus;
 
             damageLabel.setAttribute ('value', abilityScoreLabel)
 
@@ -1663,8 +1788,13 @@ function calculateActionDamageDice() {
 
 
 function addDamageDiceInputListener(inputElement, rowElement) {
-    inputElement.addEventListener('blur', function () {
-        const newValue = inputElement.value;
+    const processInput = () => {
+        const newValue = inputElement.value.trim(); // Use trim() to remove any leading/trailing spaces
+
+        if (!newValue) {
+            return;
+        }
+
         const damageButton = rowElement.querySelector('button.damageDiceButton');
         const damageLabel = rowElement.querySelector('.damageDiceButton');
 
@@ -1703,8 +1833,20 @@ function addDamageDiceInputListener(inputElement, rowElement) {
 
             damageLabel.setAttribute('data-dice-type', newValue);
         }
+    };
+
+    // Trigger the process when input loses focus (blur)
+    inputElement.addEventListener('blur', processInput);
+
+    // Trigger the process when 'Enter' is pressed
+    inputElement.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Prevent the default behavior of Enter key (like form submission)
+            inputElement.blur(); // Manually trigger the blur event
+        }
     });
 }
+
 
 
 function createDamageDiceInput(rowIndex) {
@@ -1715,7 +1857,7 @@ function createDamageDiceInput(rowIndex) {
     input.placeholder = 'Enter damage dice';
 
     const label = document.createElement('span');
-    label.textContent = 'Only Dice';
+    label.textContent = '';
 
     div.appendChild(input);
     div.appendChild(label);
@@ -2151,7 +2293,7 @@ function updateSpellDamageDice(ability, damageDice, spellDetails){
         const label = document.createElement('label');
         label.classList.add('actionButtonLabel', 'damageDiceButton');
         label.setAttribute('data-dice-type', damageDice);
-        label.setAttribute('data-name', 'Damage Type'); //This is a tempory placeholder until I add in damage types to each spell. 
+        label.setAttribute('data-name', spellDetails.damage_type_01);
 
         const button = document.createElement('button');
         button.classList.add('actionButton', 'damageDiceButton', 'spell-damage-button'); 
@@ -2266,6 +2408,7 @@ function updateAllSpellDamageDice() {
                     const labelElement = toHitContainer.querySelector('label.damageDiceButton');
                     labelElement.setAttribute('value', spellAbilityScoreModifier);
                     labelElement.setAttribute('data-dice-type', diceType);
+                    labelElement.setAttribute('data-name',"fuckboi")
 
                     const buttonElement = toHitContainer.querySelector('button.damageDiceButton');
                     buttonElement.textContent = newDamage;
@@ -2364,7 +2507,7 @@ function updateSpellSaveDC(ability){
 
 function updateSpelltoHitDice(ability) {
     const spellSection = document.getElementById('SpellList');
-    const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button");
+    const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button")
 
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
@@ -2384,11 +2527,22 @@ function updateSpelltoHitDice(ability) {
 
         // Find the associated label
         const label = button.previousElementSibling; // Assuming the label is the sibling before the button
-
         if (label) {
             // Update label value and data-name
             label.setAttribute('value', spellAttackBonus); // Example, adjust logic as needed
             label.setAttribute('data-name', label.getAttribute('data-name') || 'Spell Attack');
+
+            // Get the row associated with this label
+            const row = button.closest('tr');
+            
+            if (row) {
+                // Get the value of the currently selected input in the row
+                const spellNameInput = row.querySelector('.spell-name-input');
+                const selectedSpellName = spellNameInput ? spellNameInput.value : '';
+                
+                // Update the label's data-name attribute with the selected spell name
+                label.setAttribute('data-name', selectedSpellName);
+            } 
         }
     });
     rollableButtons()

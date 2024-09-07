@@ -536,8 +536,8 @@
                                             <button id="proficiencyActionButton" title="not proficient" class="notProficient actionProficiencyButton" value="0"></button>
                                         </div>
                                     </td>
-                                    <td contenteditable="true">Maul</td>
-                                    <td contenteditable="true">5ft. Reach</td>
+                                    <td contenteditable="true" class ="actionName">Maul</td>
+                                    <td contenteditable="true" class ="actionRange">5ft. Reach</td>
                                     <td>
                                         <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="toHitButton"></label>
                                         <button id =toHitDice class="actionButton skillbuttonstyler">5</button>
@@ -566,17 +566,20 @@
                                                         </select>
                                                     </div>
                                                 </div>
-                                            <div contenteditable="true">Heavy, Two-Handed</div>
-                                            <div contenteditable="true">A brightly Colored Maul</div>
+                                            <div contenteditable="true" class = "actionDescriptiveText01">Heavy, Two-Handed</div>
+                                            <div contenteditable="true" class = "actionDescriptiveText02">A brightly Colored Maul</div>
                                             <div class="dropdown">
-                                                <button class="dropbtn">Set</button>
+                                                <button class="dropbtn">Filter Actions</button>
                                                 <div id="checkboxContainer0" class="dropdown-content"></div>
                                             </div>
                                             <div>
-                                                <input>Magic Bonus
+                                                <input class="magic-bonus-weapon" value="0">Magic Bonus
                                             </div>
                                             <div>
-                                                <input id="damageDiceActions0" class ="actionDamageDice">The Dice for damage
+                                                <input id="damageDiceActions0" class ="actionDamageDice">
+                                            </div>
+                                            <div>
+                                                <input class="damage-type" value="0">Damage Type
                                             </div>
                                             <hr>
                                             <div>

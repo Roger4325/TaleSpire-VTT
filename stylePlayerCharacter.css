@@ -38,7 +38,19 @@
     background-color: var(--ts-button-hover);
     color: white;
 }
-/* End of Styling for the toggle buttons */
+
+#disadvButton:hover{
+    background-color: rgb(190, 34, 34);
+}
+#advButton:hover{
+    background-color: green;
+}
+#disadvButton.active{
+    background-color: rgb(190, 34, 34);
+}
+#advButton.active{
+    background-color: green;
+}
 
 #playerCharacterContainer{
     min-height:175px;
@@ -185,6 +197,14 @@ select{
     width: 20px;
     font-size: 15px;
     margin-top: 5px;
+}
+
+#healButton:hover{
+    background-color: green;
+}
+
+#damageButton:hover{
+    background-color: rgb(190, 34, 34);
 }
 
 #conditionHeader{
@@ -365,18 +385,49 @@ select{
 
 /* Actions Section */
 
-
+/* Default: Hidden off-screen */
 .additional-info-container {
-    border: solid 1px var(--ts-button-background);
-    padding: 5px;
-    display: none; 
     position: fixed;
     top: 0;
-    right: 0;
-    height: 100%;
-    background-color: black;
-    overflow-y: auto;
+    right: -100%; /* Off-screen */
+    width: 100%;
+    height: auto;
+    background-color: var(--ts-background-secondary);
+    box-shadow: -2px 0 10px rgb(0, 0, 0);
+    z-index: 1000;
+    font-size: 14px;
+    padding: 2px;
+    transition: right 0.5s ease; /* Slide-in animation */
 }
+
+.additional-info-container div{
+    padding: 2px;
+}
+
+.additional-info-container input{
+    border: solid 1px var(--ts-button-background);
+    background-color: var(--ts-background-secondary);
+    color: white;
+}
+
+
+
+
+/* When active, panel slides in */
+.additional-info-container.active {
+    right: 0;
+}
+
+/* When hidden, panel moves off-screen instantly */
+.additional-info-container.hidden {
+    right: -100%; /* Off-screen instantly */
+    transition: none; /* No transition when hidden */
+}
+
+
+
+
+
 
 
 .close-button {
@@ -456,14 +507,24 @@ select{
 
 
 .dropdown-content {
-    width: 115px;
+    width: 125px;
     display: none;
     position: absolute;
     background-color: var(--ts-background-secondary);
-    padding: 0px;
+    padding: 0px 10px;
     z-index: 1;
     border: solid 1px var(--ts-button-background);
-    right:15px;
+    left:15px;
+    top: 5px;
+}
+
+.ability-dropdown {
+    justify-content: left;
+    width: 80px;
+    background-color: var(--ts-background-secondary);
+    padding: 0px 10px;
+    z-index: 1;
+    border: solid 1px var(--ts-button-background);
 }
 
 /* Style for the checkbox labels */
@@ -471,6 +532,7 @@ select{
     display: block;
     margin-bottom: 5px;
     text-align: left;
+
 }
 
 /* Style for the checkboxes */
