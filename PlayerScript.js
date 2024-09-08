@@ -581,18 +581,22 @@ function damageCreature() {
 //Proficiency toggle interaction Add click event listener to each button
 function addProficiencyButtonListener() {
     const proficiencyButtons = document.querySelectorAll(".proficiencyButtons button");
+    const actionTable = document.querySelector('.actionTable');
     
     proficiencyButtons.forEach(button => {
         if (!button.hasProficiencyButtonListener) {
-            button.dataset.currentLevel = 0; // Set the initial current level as a data attribute
+            console.log(button.getAttribute('value'));
+            button.dataset.currentLevel = button.getAttribute('value'); // Set the initial current level as a data attribute
 
             button.addEventListener("click", function () {
                 let currentLevel = parseInt(button.dataset.currentLevel, 10);
                 updateProficiency(button, currentLevel, true);
                 updateSkillModifier();
                 updateSaveModifier();
-                updateToHitDice(button);
                 updateContent();
+                if (actionTable.contains(button)){
+                    updateToHitDice(button);
+                }
             });
 
             button.hasProficiencyButtonListener = true;
@@ -1594,6 +1598,8 @@ function updateActionTableUI(actionTableData) {
     calculateActionDamageDice()
     magicBonusInputListeners()
     actionTableEventListenerSetup()
+    attachAbilityDropdownListeners()
+    addProficiencyButtonListener()
 }
 
 // Helper function to create column six. The settings menu on the Action table.
@@ -1703,7 +1709,6 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Add blur event listener
     const inputElement = damageDiceInput.querySelector('.actionDamageDice');
     addDamageDiceInputListener(inputElement, newRow);
-    attachAbilityDropdownListeners()
 
     // Create the delete button and append it
     const deleteButtonDiv = createDeleteButton(rowIndex);

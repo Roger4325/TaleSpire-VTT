@@ -2,19 +2,19 @@
     "characters": {
         "Tryn": {
             "characterTempHp": "",
-            "initiativeButton": "+8",
+            "initiativeButton": "+4",
             "AC": "18",
             "speed": "30ft.",
-            "characterLevel": "8",
-            "playerXP": "34000",
+            "characterLevel": "5",
+            "playerXP": "6500",
             "currentCharacterHP": "87",
             "maxCharacterHP": "87",
-            "strengthScore": "8",
+            "strengthScore": "16",
             "dexterityScore": "18",
             "constitutionScore": "16",
-            "intelligenceScore": "12",
+            "intelligenceScore": "6",
             "wisdomScore": "11",
-            "charismaScore": "20",
+            "charismaScore": "12",
             "acrobaticsAbilityMod": "DEX",
             "animalHandlingAbilityMod": "WIS",
             "arcanaAbilityMod": "INT",
@@ -34,30 +34,30 @@
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
             "": "1",
-            "proficiencyButton1": "0",
+            "proficiencyButton1": "1",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
-            "proficiencyButton4": "0",
-            "proficiencyButton6": "1",
+            "proficiencyButton4": "1",
+            "proficiencyButton6": "0",
             "proficiencyButton7": "0",
             "proficiencyButton8": "0",
-            "proficiencyButton9": "1",
+            "proficiencyButton9": "0",
             "proficiencyButton10": "0",
             "proficiencyButton11": "0",
             "proficiencyButton12": "0",
-            "proficiencyButton13": "0",
+            "proficiencyButton13": "1",
             "proficiencyButton14": "0",
-            "proficiencyButton15": "1",
+            "proficiencyButton15": "0",
             "proficiencyButton16": "0",
             "proficiencyButton17": "1",
-            "proficiencyButton18": "1",
+            "proficiencyButton18": "0",
             "proficiencyButton19": "0",
-            "proficiencyButton20": "0",
+            "proficiencyButton20": "1",
             "proficiencyButton21": "0",
-            "proficiencyButton22": "0",
+            "proficiencyButton22": "1",
             "proficiencyButton23": "0",
-            "proficiencyButton24": "1",
-            "proficiencyButton25": "1",
+            "proficiencyButton24": "0",
+            "proficiencyButton25": "0",
             "conditions": [],
             "actionTable": [
                 {
@@ -65,10 +65,10 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Longbow +3",
                         "thirdColumn": "150 (600)",
-                        "fourthColumn": "+10",
+                        "fourthColumn": "+9",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
+                        "seventhColumn": "CON",
                         "eighthColumn": "3",
                         "tenthColumn": "Ammunition, Heavy, Range, Two-Handed, Slow",
                         "elventhColumn": "A tall, curved bow of polished wood.",
@@ -104,31 +104,14 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "CHA",
-                "spelllevelselected": "3",
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "0",
                 "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Eldritch Blast"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Alarm"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Command"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false,
@@ -137,26 +120,7 @@
                     ]
                 },
                 "2nd-level": {
-                    "spells": [
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Find Steed"
-                        },
-                        {
-                            "name": "Locate Object"
-                        },
-                        {
-                            "name": "Misty Step"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false,
@@ -164,42 +128,18 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Counterspell"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Nondetection"
-                        },
-                        {
-                            "name": "Revivify"
-                        },
-                        {
-                            "name": "Spirit Shroud"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false
                     ]
                 },
                 "4th-level": {
-                    "spells": [
-                        {
-                            "name": "Compulsion"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "5th-level": {
-                    "spells": [
-                        {
-                            "name": "Flame Strike"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "6th-level": {
