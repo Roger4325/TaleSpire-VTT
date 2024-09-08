@@ -277,7 +277,7 @@ function dicePacker(diceType,diceModifier){
 
 
 function roll(diceName, diceRoll, type) {
-    let typeStr = type == "advantage" ? " (Adv)" : type == "disadvantage" ? " (Disadv)" : " (Normal)";
+    let typeStr = type == "advantage" ? " (Adv)" : type == "disadvantage" ? " (Disadv)" : "";
 
     if (type === "normal") {
         // Roll normally (only one set of dice)
