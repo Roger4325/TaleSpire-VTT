@@ -89,17 +89,19 @@ function handleClientEvents(eventResponse) {
 }
 
 function addClient(client) {
-TS.clients.isMe(client.id).then((isMe) => {
-    if (!isMe) {
-        let newPlayerSelect = document.createElement("option");
-        newPlayerSelect.value = client.id;
-        newPlayerSelect.innerText = client.player.name;
-        document.getElementById("recipient-select").appendChild(newPlayerSelect);
+    console.log(client)
+    TS.clients.isMe(client.id).then((isMe) => {
+        if (!isMe) {
+            let newPlayerSelect = document.createElement("option");
+            newPlayerSelect.value = client.id;
+            newPlayerSelect.innerText = client.player.name;
+            console.log(newPlayerSelect)
+            // document.getElementById("recipient-select").appendChild(newPlayerSelect);
 
-        clients.push({ id: client.id, name: client.name });
+            // clients.push({ id: client.id, name: client.name });
+        }
+    });
     }
-});
-}
 
 async function onStateChangeEvent(msg) {
 if (msg.kind === "hasInitialized") {

@@ -222,9 +222,32 @@ async function playerSetUP(){
         });
     });
 
+    document.querySelectorAll('.deathSavesButton').forEach(button => {
+        button.addEventListener('click', function () {
+            // Toggle the active class on click
+            console.log("click")
+            button.classList.toggle('active');
+        });
+    });   
+    // Add event listener to toggle the inspiration button when clicked
+    document.getElementById("inspirationBox").addEventListener("click", toggleInspiration);
+
+
 }  
     
+function toggleInspiration() {
+    const inspirationButton = document.getElementById("inspirationBox");
+    const starContainer = inspirationButton.querySelector('.star-container')
 
+    // Toggle 'active' and 'inactive' class to show/hide the star icon
+    if (starContainer.classList.contains("active")) {
+        starContainer.classList.remove("active");
+        starContainer.classList.add("inactive");
+    } else {
+        starContainer.classList.remove("inactive");
+        starContainer.classList.add("active");
+    }
+}
 
 
 function handleXPChange(event){
@@ -585,7 +608,6 @@ function addProficiencyButtonListener() {
     
     proficiencyButtons.forEach(button => {
         if (!button.hasProficiencyButtonListener) {
-            console.log(button.getAttribute('value'));
             button.dataset.currentLevel = button.getAttribute('value'); // Set the initial current level as a data attribute
 
             button.addEventListener("click", function () {
@@ -1312,9 +1334,6 @@ function updateCharacterUI(characterData, characterName) {
     characterInit.textContent = characterData.initiativeButton
     characterInitLabel.setAttribute('value', characterData.initiativeButton.replace("+", ""));
 
-    console.log(characterInit)
-    console.log(characterInitLabel)
-
     // Update other content-editable elements
     for (const property in characterData) {
         if (characterData.hasOwnProperty(property) && property !== "characterName" && property !== "characterTempHp" && property !== "conditions" && property !== "initiativeButton") {
@@ -1600,6 +1619,7 @@ function updateActionTableUI(actionTableData) {
     actionTableEventListenerSetup()
     attachAbilityDropdownListeners()
     addProficiencyButtonListener()
+    rollableButtons()
 }
 
 // Helper function to create column six. The settings menu on the Action table.

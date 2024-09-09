@@ -56,7 +56,15 @@
                     <div id="normalButton" class="toggle-button active">Flat</div>
                     <div id="advButton" class="toggle-button">Adv</div>
                 </div>
+                <div id="inspiration" class="abilitybox">
+                    Inspiration
+                    <hr>
+                    <button id="inspirationBox" class="inspiration-button">
+                        <div class="star-container"><i class="fa fa-star" id="star-icon"></i></div>
+                    </button>
+                </div>
             </div>
+            
             <div id="playerCharacterContainer">
                 <label for="playerCharacterInput"></label>
                 <input type="text" id="playerCharacterInput" class = "inputBox" placeholder="Character Name">
@@ -93,6 +101,31 @@
                                 <span id="playerXP" class="playerStats levelStat" contenteditable="true">0</span>
                             </div>
                     </div>
+                </div>
+                <div id="playerStates" class="abilityScores PlayerStates">
+                    <div id="deathSaves" class="abilitybox">Death Saves
+                        <hr>
+                        <div id="successes" class="deathSaves">
+                            <div class="deathSaves-row">
+                                <span class="deathSaves-label">Success :</span>
+                                <div class="buttons-wrapper">
+                                    <button id="deathSavesButton01" class="deathSavesButton successDeathSavesButton" value="0"></button>
+                                    <button id="deathSavesButton02" class="deathSavesButton successDeathSavesButton" value="0"></button>
+                                    <button id="deathSavesButton03" class="deathSavesButton successDeathSavesButton" value="0"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="failures" class="deathSaves">
+                            <div class="deathSaves-row">
+                                <span class="deathSaves-label">Failure :</span>
+                                <div class="buttons-wrapper">
+                                    <button id="deathSavesButton04" class="deathSavesButton" value="0"></button>
+                                    <button id="deathSavesButton05" class="deathSavesButton" value="0"></button>
+                                    <button id="deathSavesButton06" class="deathSavesButton" value="0"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                                    
                 </div>
             </div>
             <div id="healthContainer">

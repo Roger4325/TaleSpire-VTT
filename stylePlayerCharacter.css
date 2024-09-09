@@ -20,6 +20,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0;
+    margin-bottom: 8px;
 }
 
 .toggle-button {
@@ -85,6 +86,110 @@ select{
     gap: 10px;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     
+}
+
+#inspiration {
+    font-size: 16px;
+    text-align: center;
+    margin: 0;
+    width: 125px; /* Fixed size for the box */
+    height: 70px; /* Fixed size for the box */
+}
+
+.inspiration-button {
+    background-color: transparent;
+    cursor: pointer;
+    min-width: 100%; 
+    min-height: 50%; 
+    border-color: transparent;
+}
+
+/* Star icon styling */
+.star-container {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* White text */
+    font-weight: bold;
+    padding: 5px 5px;
+    border-radius: 50px; /* Rounded pill shape */
+    background-color: #d4af37; /* Gold color for D&D feel */
+    border: 3px solid #7f5a20; /* Darker gold border */
+    height: 20px;
+    width: 40px;
+    font-size: 18px;
+    color: #f5f5f5; /* Slightly lighter star color */
+    border-color: transparent;
+}
+
+.inspiration-button:hover .star-container {
+    transform: scale(1.02); /* Increase size by 20% */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Add shadow for emphasis */
+}
+
+/* Inactive button state (empty) */
+.star-container.inactive {
+    background-color: transparent; /* Gray background for inactive state */
+    border-color: transparent; /* Darker border for inactive state */
+    color: transparent; /* Hides the text/icon */
+}
+
+#deathSaves {
+    font-size: 18px;
+}
+
+.PlayerStates{
+    display:grid;
+    grid-template-columns: 1fr;
+    margin: 0;
+    padding: 0;
+}
+
+.deathSaves {
+    font-size: 16px;
+    padding: 0px 5px;
+    display: flex;
+    justify-content: center; /* Align content horizontally */
+    align-items: center;
+    /* margin: 5px 0; */
+}
+
+.deathSavesButton {
+    margin-left: 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid white;
+    background-color: transparent;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.deathSavesButton.active {
+    background-color: rgb(190, 34, 34);
+}
+
+.successDeathSavesButton.active {
+    background-color: green;
+}
+
+
+.deathSaves-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* Ensures alignment from the start of the line */
+}
+
+.deathSaves-label {
+    min-width: 70px; /* Set a minimum width for both labels so they take up the same space */
+    text-align: left; /* Optional: you can center the text inside the space, or leave it aligned left */
+    font-size: 16px;
+    margin-right: 10px; /* Adds a gap between the label and buttons */
+}
+
+.buttons-wrapper {
+    display: flex; /* Align buttons in a row */
+    gap: 5px; /* Space between buttons */
 }
 
 #playerAbilityScores{
