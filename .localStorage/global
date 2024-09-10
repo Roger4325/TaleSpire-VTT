@@ -172,8 +172,8 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "STR",
-                "spelllevelselected": "0",
+                "spellcastingModifier": "INT",
+                "spelllevelselected": "3",
                 "Cantrip": {
                     "spells": [],
                     "slots": []
@@ -196,7 +196,14 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Galder's Tower"
+                        },
+                        {
+                            "name": "Thunder Step"
+                        }
+                    ],
                     "slots": [
                         false,
                         false
