@@ -923,25 +923,18 @@ select{
 
 /* General section styles */
 #features {
-    background-color: #000; /* Black background */
-    color: #f5f5f5; /* Light color for text and elements */
+    background-color: black; 
+    color: white;
     padding: 20px;
     border-radius: 8px;
     font-family: 'Verdana', sans-serif;
-    max-width: 800px;
+    max-width: 600px;
     margin: 0 auto;
-}
-
-#features h2 {
-    font-size: 24px;
-    color: #d4af37; /* Gold for headers */
-    text-align: center;
-    margin-bottom: 15px;
 }
 
 /* Group container styles */
 .group-container {
-    background-color: #1a1a1a; /* Dark gray background */
+    background-color: var(--ts-background-secondary);
     padding: 15px;
     border-radius: 6px;
     margin-bottom: 20px;
@@ -957,25 +950,27 @@ select{
 .group-title {
     flex-grow: 1;
     background-color: #333;
-    color: #f5f5f5;
+    color: white;
     padding: 8px;
-    border: 1px solid #7f5a20; /* Dark gold border */
+    border: 1px solid var(--ts-button-background);
     border-radius: 5px;
     font-size: 16px;
+    font-weight: bold;
 }
 
 .add-trait-button, .add-group-button {
-    background-color: #d4af37; /* Gold button */
-    color: #000;
+    background-color: var(--ts-button-background);
+    color: white;
     padding: 8px 15px;
     border: none;
     border-radius: 5px;
     font-size: 14px;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 .add-trait-button:hover, .add-group-button:hover {
-    background-color: #bf8b2f; /* Darker gold on hover */
+    background-color: var(--ts-button-hover);
 }
 
 /* Trait item styles */
@@ -983,31 +978,33 @@ select{
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-left: 10px;
 }
 
 .trait-item {
     background-color: #2b2b2b; /* Slightly lighter dark gray */
     padding: 10px;
     border-radius: 5px;
-    border: 1px solid #4a4a4a; /* Subtle border */
+    border: 1px solid var(--ts-button-background);
+    margin-top: 10px;
 }
 
 .trait-name {
     background-color: #333;
-    color: #f5f5f5;
+    color: white;
     padding: 5px;
     border-radius: 5px;
-    width: 100%;
-    border: 1px solid #7f5a20;
+    width: 98%;
+    border: 1px solid var(--ts-button-background);
     font-size: 16px;
     margin-bottom: 8px;
 }
 
 .trait-description {
-    width: 100%;
+    width: 97%;
     background-color: #333;
-    color: #f5f5f5;
-    border: 1px solid #7f5a20;
+    color: white;
+    border: 1px solid var(--ts-button-background);
     border-radius: 5px;
     padding: 8px;
     font-size: 14px;
@@ -1026,12 +1023,12 @@ select{
 
 .trait-uses label {
     font-size: 14px;
-    color: #d4af37; /* Gold for labels */
+    color: var(--ts-button-background);
 }
 
 .trait-uses button {
-    background-color: #d4af37;
-    color: #000;
+    background-color: var(--ts-button-background);
+    color: white;
     border: none;
     padding: 5px 10px;
     border-radius: 5px;
@@ -1040,15 +1037,15 @@ select{
 }
 
 .trait-uses button:hover {
-    background-color: #bf8b2f;
+    background-color: var(--ts-button-hover);
 }
 
 .trait-uses-counter {
     width: 50px;
     text-align: center;
     background-color: #333;
-    color: #f5f5f5;
-    border: 1px solid #7f5a20;
+    color: white;
+    border: 1px solid var(--ts-button-background);
     border-radius: 5px;
     padding: 5px;
 }
@@ -1060,15 +1057,15 @@ select{
 
 .trait-settings label {
     font-size: 14px;
-    color: #d4af37;
+    color: white;
 }
 
 .adjust-ability-input {
-    width: 100%;
+    width: 98%;
     background-color: #333;
-    color: #f5f5f5;
+    color: white;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid #7f5a20;
+    border: 1px solid var(--ts-button-background);
     font-size: 14px;
 }

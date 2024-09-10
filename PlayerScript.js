@@ -2848,3 +2848,149 @@ function filterSpellsByLevel(selectedLevel) {
         }
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Working on the feature and traits section
+const featuresSection = document.getElementById('features');
+const addGroupButton = document.querySelector('.add-group-button');
+let groupCounter = 0; // Keep track of the number of groups for unique IDs
+
+// Function to create a new group of traits
+function createNewGroup() {
+    groupCounter++;
+
+    // Create group container
+    const groupContainer = document.createElement('div');
+    groupContainer.classList.add('group-container');
+    groupContainer.id = `group${groupCounter}`;
+
+    // Create group header
+    const groupHeader = document.createElement('div');
+    groupHeader.classList.add('group-header');
+    const groupTitle = document.createElement('input');
+    groupTitle.classList.add('group-title');
+    groupTitle.placeholder = `Feature Group ${groupCounter}`;
+    const addTraitButton = document.createElement('button');
+    addTraitButton.classList.add('add-trait-button');
+    addTraitButton.textContent = '+ Add New Trait';
+
+    // Add event listener to add new traits to the group
+    addTraitButton.addEventListener('click', function () {
+        addNewTrait(groupContainer);
+    });
+
+    groupHeader.appendChild(groupTitle);
+    groupHeader.appendChild(addTraitButton);
+    groupContainer.appendChild(groupHeader);
+
+    // Create the trait list (initially empty)
+    const traitsList = document.createElement('div');
+    traitsList.classList.add('traits-list');
+    groupContainer.appendChild(traitsList);
+
+    // Add the group to the features section
+    featuresSection.insertBefore(groupContainer, addGroupButton);
+
+    // Automatically show the group if it was hidden
+    featuresSection.style.display = 'block';
+}
+
+
+
+
+// Function to add a new trait to a specific group
+function addNewTrait(groupContainer) {
+    const traitsList = groupContainer.querySelector('.traits-list');
+
+    // Create the trait item
+    const traitItem = document.createElement('div');
+    traitItem.classList.add('trait-item');
+
+    // Trait Name Input
+    const traitName = document.createElement('input');
+    traitName.classList.add('trait-name');
+    traitName.placeholder = 'Trait Name (e.g., Channel Divinity)';
+
+    // Trait Description Textarea
+    const traitDescription = document.createElement('textarea');
+    traitDescription.classList.add('trait-description');
+    traitDescription.placeholder = 'Describe the trait here...';
+
+    // Trait Usage Counter
+    const traitUses = document.createElement('div');
+    traitUses.classList.add('trait-uses');
+    const usesLabel = document.createElement('label');
+    usesLabel.textContent = 'Uses:';
+    const subtractButton = document.createElement('button');
+    subtractButton.textContent = '-';
+    subtractButton.classList.add('subtract-use');
+    const usesCounter = document.createElement('input');
+    usesCounter.type = 'number';
+    usesCounter.classList.add('trait-uses-counter');
+    usesCounter.value = 3; // Default value
+    usesCounter.min = 0;
+    const addButton = document.createElement('button');
+    addButton.textContent = '+';
+    addButton.classList.add('add-use');
+
+    // Add event listeners for counter buttons
+    subtractButton.addEventListener('click', function () {
+        if (usesCounter.value > 0) {
+            usesCounter.value--;
+        }
+    });
+    addButton.addEventListener('click', function () {
+        usesCounter.value++;
+    });
+
+    // Append uses controls
+    traitUses.appendChild(usesLabel);
+    traitUses.appendChild(subtractButton);
+    traitUses.appendChild(usesCounter);
+    traitUses.appendChild(addButton);
+
+    // Trait Ability Adjustment Input
+    const traitSettings = document.createElement('div');
+    traitSettings.classList.add('trait-settings');
+    const abilityLabel = document.createElement('label');
+    abilityLabel.textContent = 'Adjust Ability (e.g., add CHA to rolls):';
+    const adjustAbilityInput = document.createElement('input');
+    adjustAbilityInput.classList.add('adjust-ability-input');
+    adjustAbilityInput.placeholder = 'Ability Modifier or Effect';
+
+    // Append ability adjustment
+    traitSettings.appendChild(abilityLabel);
+    traitSettings.appendChild(adjustAbilityInput);
+
+    // Append trait parts to trait item
+    traitItem.appendChild(traitName);
+    traitItem.appendChild(traitDescription);
+    traitItem.appendChild(traitUses);
+    traitItem.appendChild(traitSettings);
+
+    // Add the trait item to the list of traits in the group
+    traitsList.appendChild(traitItem);
+
+    // Automatically show the trait list if hidden
+    traitsList.style.display = 'block';
+}
+
+// Event listener for adding a new group
+addGroupButton.addEventListener('click', createNewGroup);
