@@ -916,3 +916,159 @@ select{
     border: none;
     cursor: pointer;
 }
+
+
+
+
+
+/* General section styles */
+#features {
+    background-color: #000; /* Black background */
+    color: #f5f5f5; /* Light color for text and elements */
+    padding: 20px;
+    border-radius: 8px;
+    font-family: 'Verdana', sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+#features h2 {
+    font-size: 24px;
+    color: #d4af37; /* Gold for headers */
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Group container styles */
+.group-container {
+    background-color: #1a1a1a; /* Dark gray background */
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.group-title {
+    flex-grow: 1;
+    background-color: #333;
+    color: #f5f5f5;
+    padding: 8px;
+    border: 1px solid #7f5a20; /* Dark gold border */
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.add-trait-button, .add-group-button {
+    background-color: #d4af37; /* Gold button */
+    color: #000;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.add-trait-button:hover, .add-group-button:hover {
+    background-color: #bf8b2f; /* Darker gold on hover */
+}
+
+/* Trait item styles */
+.traits-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.trait-item {
+    background-color: #2b2b2b; /* Slightly lighter dark gray */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #4a4a4a; /* Subtle border */
+}
+
+.trait-name {
+    background-color: #333;
+    color: #f5f5f5;
+    padding: 5px;
+    border-radius: 5px;
+    width: 100%;
+    border: 1px solid #7f5a20;
+    font-size: 16px;
+    margin-bottom: 8px;
+}
+
+.trait-description {
+    width: 100%;
+    background-color: #333;
+    color: #f5f5f5;
+    border: 1px solid #7f5a20;
+    border-radius: 5px;
+    padding: 8px;
+    font-size: 14px;
+    resize: none;
+    height: 60px;
+    margin-bottom: 8px;
+}
+
+/* Uses tracker */
+.trait-uses {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.trait-uses label {
+    font-size: 14px;
+    color: #d4af37; /* Gold for labels */
+}
+
+.trait-uses button {
+    background-color: #d4af37;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.trait-uses button:hover {
+    background-color: #bf8b2f;
+}
+
+.trait-uses-counter {
+    width: 50px;
+    text-align: center;
+    background-color: #333;
+    color: #f5f5f5;
+    border: 1px solid #7f5a20;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+/* Trait settings for adjusting abilities */
+.trait-settings {
+    margin-top: 10px;
+}
+
+.trait-settings label {
+    font-size: 14px;
+    color: #d4af37;
+}
+
+.adjust-ability-input {
+    width: 100%;
+    background-color: #333;
+    color: #f5f5f5;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #7f5a20;
+    font-size: 14px;
+}
