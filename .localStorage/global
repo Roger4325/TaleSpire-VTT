@@ -65,13 +65,14 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Unarmed",
                         "thirdColumn": "5 Ft.",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+7",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
-                        "eighthColumn": "",
+                        "eighthColumn": "1",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Bludgeoning",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -93,6 +94,7 @@
                         "eighthColumn": "",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -114,6 +116,7 @@
                         "eighthColumn": "",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -135,6 +138,29 @@
                         "eighthColumn": "2",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "LongSword",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+6",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "",
+                        "tenthColumn": "Finesse",
+                        "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Slashing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,

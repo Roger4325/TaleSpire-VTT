@@ -1122,6 +1122,8 @@ function newTableRow() {
     attachAbilityDropdownListeners();
     addProficiencyButtonListener()
     rollableButtons()
+    addBlurAndEnterListenersToDamageTypes();
+    updateAllDamageButtonDataNames()
 }
 
 
@@ -1232,6 +1234,7 @@ function processActionTableRow(){
         const eighthColumnCell = row.querySelector('.magic-bonus-weapon');
         const tenthColumnCell = row.querySelector('.actionDescriptiveText01');
         const elventhColumnCell = row.querySelector('.actionDescriptiveText02');
+        const twelvethColumnCell = row.querySelector('.damage-type');
 
         if (secondColumnCell) {
             rowData['secondColumn'] = secondColumnCell.textContent.trim();
@@ -1265,6 +1268,9 @@ function processActionTableRow(){
         }
         if (elventhColumnCell) {
             rowData['elventhColumn'] = elventhColumnCell.textContent;
+        }
+        if (twelvethColumnCell) {
+            rowData['twelvethColumn'] = twelvethColumnCell.value;
         }
 
         
@@ -1620,6 +1626,8 @@ function updateActionTableUI(actionTableData) {
     attachAbilityDropdownListeners()
     addProficiencyButtonListener()
     rollableButtons()
+    addBlurAndEnterListenersToDamageTypes();
+    updateAllDamageButtonDataNames()
 }
 
 // Helper function to create column six. The settings menu on the Action table.
@@ -1714,17 +1722,17 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     magicBonusDiv.appendChild(magicBonusInput);
     additionalInfoContainer.appendChild(magicBonusDiv);
 
-    const damageTypeDiv = document.createElement('div');     //This is currently not working. And Needs to be fixed
-    const damageTypeInput = document.createElement('input');
-    damageTypeInput.placeholder = "Damage Type";
-    damageTypeInput.classList.add('damage-type')
-    damageTypeInput.value = "Piercing" //Tempory until I have proper damage type implemented. 
-    damageTypeDiv.appendChild(magicBonusInput);
-    additionalInfoContainer.appendChild(damageTypeDiv);
-
     // Create the damage dice input field
     const damageDiceInput = createDamageDiceInput(rowIndex);
     additionalInfoContainer.appendChild(damageDiceInput);
+
+    const damageTypeDiv = document.createElement('div');
+    const damageTypeInput = document.createElement('input');
+    damageTypeInput.placeholder = "Damage Type";
+    damageTypeInput.classList.add('damage-type')
+    damageTypeInput.value = rowData["twelvethColumn"]
+    damageTypeDiv.appendChild(damageTypeInput);
+    additionalInfoContainer.appendChild(damageTypeDiv);
 
     // Add blur event listener
     const inputElement = damageDiceInput.querySelector('.actionDamageDice');
@@ -1742,6 +1750,52 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
 
     return td;
 }
+
+function addBlurAndEnterListenersToDamageTypes() {
+    // Query all elements with the class 'damage-type'
+    const damageTypeInputs = document.querySelectorAll('.damage-type');
+    
+    // Loop through each element and add event listeners
+    damageTypeInputs.forEach(inputElement => {
+        // Add blur event listener
+        inputElement.addEventListener('blur', function() {
+            updateAllDamageButtonDataNames();
+            updateContent()
+        });
+
+        // Add Enter key listener that triggers blur
+        inputElement.addEventListener('keydown', function(event) {
+            if (event.key === "Enter") {
+                inputElement.blur(); // Trigger blur when Enter is pressed
+            }
+        });
+    });
+}
+
+function updateAllDamageButtonDataNames() {
+    // Query all table rows that contain damage-type inputs
+    const rows = document.querySelectorAll('#actionTableBody tr');
+
+    rows.forEach(row => {
+        // Find the damage-type input in the current row
+        const damageTypeInput = row.querySelector('.damage-type');
+        
+        if (damageTypeInput) {
+            const newDamageType = damageTypeInput.value.trim();
+            
+            // Find the damage button label inside the same row that is not 'toHit'
+            const damageButtonLabel = row.querySelector('.damageDiceButton[data-name]');
+            if (damageButtonLabel && damageButtonLabel.getAttribute('data-name') !== 'toHitButton') {
+                // Update the data-name attribute of the damage button label
+                damageButtonLabel.setAttribute('data-name', newDamageType);
+                console.log(`Updated damage button data-name to: ${newDamageType}`);
+            }
+        }
+    });
+}
+
+
+
 
 
 // Helper function to create proficiency buttons
