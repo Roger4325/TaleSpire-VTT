@@ -2912,78 +2912,152 @@ function createNewGroup() {
     featuresSection.style.display = 'block';
 }
 
-
-
-
 // Function to add a new trait to a specific group
 function addNewTrait(groupContainer) {
     const traitsList = groupContainer.querySelector('.traits-list');
 
     // Create the trait item
     const traitItem = document.createElement('div');
-    traitItem.classList.add('trait-item');
+    traitItem.classList.add('trait-item');    
 
     // Trait Name Input
     const traitName = document.createElement('input');
     traitName.classList.add('trait-name');
     traitName.placeholder = 'Trait Name (e.g., Channel Divinity)';
 
+
+    const activeButton = document.createElement('input');
+    activeButton.type ='checkbox'
+    activeButton.classList.add('activeFeature');
+
+    
+
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
     traitDescription.placeholder = 'Describe the trait here...';
 
-    // Trait Usage Counter
+    // Create the "i" button for displaying the submenu
+    const infoButton = document.createElement('button');
+    infoButton.innerHTML = '<i>i</i>';
+    infoButton.classList.add('info-button');
+
+    // Submenu container (initially hidden)
+    const traitSettings = document.createElement('div');
+    traitSettings.classList.add('trait-settings');
+    traitSettings.style.display = 'none'; // Initially hidden
+
+    // Add event listener to toggle the submenu display
+    infoButton.addEventListener('click', function () {
+        if (traitSettings.style.display === 'none') {
+            traitSettings.style.display = 'block';
+        } else {
+            traitSettings.style.display = 'none';
+        }
+    });
+
+    // Trait Usage Section (number input and checkboxes)
     const traitUses = document.createElement('div');
     traitUses.classList.add('trait-uses');
     const usesLabel = document.createElement('label');
-    usesLabel.textContent = 'Uses:';
-    const subtractButton = document.createElement('button');
-    subtractButton.textContent = '-';
-    subtractButton.classList.add('subtract-use');
-    const usesCounter = document.createElement('input');
-    usesCounter.type = 'number';
-    usesCounter.classList.add('trait-uses-counter');
-    usesCounter.value = 3; // Default value
-    usesCounter.min = 0;
-    const addButton = document.createElement('button');
-    addButton.textContent = '+';
-    addButton.classList.add('add-use');
+    usesLabel.textContent = 'Number of Uses:';
+    const usesInput = document.createElement('input');
+    usesInput.type = 'number';
+    usesInput.classList.add('trait-uses-input');
+    usesInput.value = 3; // Default value
+    usesInput.min = 1;
+    usesInput.max = 10;
 
-    // Add event listeners for counter buttons
-    subtractButton.addEventListener('click', function () {
-        if (usesCounter.value > 0) {
-            usesCounter.value--;
+    // Container for dynamically generated checkboxes (on main page)
+    const checkboxesContainerMain = document.createElement('div');
+    checkboxesContainerMain.classList.add('trait-checkboxes-main');
+
+    // Function to update the checkboxes on the main section
+    function updateCheckboxes() {
+        const numberOfUses = parseInt(usesInput.value);
+        checkboxesContainerMain.innerHTML = 'Uses: '; // Clear existing checkboxes
+
+        for (let i = 0; i < numberOfUses; i++) {
+            const checkboxMain = document.createElement('input');
+            checkboxMain.type = 'checkbox';
+            checkboxMain.classList.add('trait-checkbox-main');
+            checkboxesContainerMain.appendChild(checkboxMain);
+        }
+    }
+
+    // Update checkboxes when the input changes
+    usesInput.addEventListener('input', updateCheckboxes);
+
+    // Initially generate checkboxes
+    updateCheckboxes();
+
+    // Append uses controls to the submenu
+    traitUses.appendChild(usesLabel);
+    traitUses.appendChild(usesInput);
+
+    // Ability Adjustment Section
+    const adjustmentTypeLabel = document.createElement('label');
+    adjustmentTypeLabel.textContent = 'Adjust Ability (e.g., add to saves or rolls):';
+    const adjustmentType = document.createElement('select');
+    adjustmentType.classList.add('adjustment-type');
+    const options = ['Saving Throws', 'Attack Rolls', 'Damage Rolls', 'Other'];
+    options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option;
+        opt.textContent = option;
+        adjustmentType.appendChild(opt);
+    });
+
+    const adjustmentValueLabel = document.createElement('label');
+    adjustmentValueLabel.textContent = 'Adjustment Value (e.g., +5 or CHA modifier):';
+    const adjustmentValue = document.createElement('input');
+    adjustmentValue.classList.add('adjustment-value');
+    adjustmentValue.placeholder = 'Enter value or formula';
+
+    const adjustmentConditionLabel = document.createElement('label');
+    adjustmentConditionLabel.textContent = 'Condition (e.g., while raging):';
+    const adjustmentCondition = document.createElement('input');
+    adjustmentCondition.classList.add('adjustment-condition');
+    adjustmentCondition.placeholder = 'Enter condition (if any)';
+
+    // Append ability adjustment fields
+    traitSettings.appendChild(adjustmentTypeLabel);
+    traitSettings.appendChild(adjustmentType);
+    traitSettings.appendChild(adjustmentValueLabel);
+    traitSettings.appendChild(adjustmentValue);
+    traitSettings.appendChild(adjustmentConditionLabel);
+    traitSettings.appendChild(adjustmentCondition);
+
+    // Delete Trait Button
+    const deleteTraitButton = document.createElement('button');
+    deleteTraitButton.textContent = 'Delete Trait';
+    deleteTraitButton.classList.add('delete-trait-button');
+
+    // Event listener for deleting the trait
+    deleteTraitButton.addEventListener('click', function () {
+        // Remove the trait item from the DOM
+        traitItem.remove();
+
+        // Check if there are no more traits in the group, delete the group
+        if (traitsList.children.length === 0) {
+            groupContainer.remove();
         }
     });
-    addButton.addEventListener('click', function () {
-        usesCounter.value++;
-    });
 
-    // Append uses controls
-    traitUses.appendChild(usesLabel);
-    traitUses.appendChild(subtractButton);
-    traitUses.appendChild(usesCounter);
-    traitUses.appendChild(addButton);
-
-    // Trait Ability Adjustment Input
-    const traitSettings = document.createElement('div');
-    traitSettings.classList.add('trait-settings');
-    const abilityLabel = document.createElement('label');
-    abilityLabel.textContent = 'Adjust Ability (e.g., add CHA to rolls):';
-    const adjustAbilityInput = document.createElement('input');
-    adjustAbilityInput.classList.add('adjust-ability-input');
-    adjustAbilityInput.placeholder = 'Ability Modifier or Effect';
-
-    // Append ability adjustment
-    traitSettings.appendChild(abilityLabel);
-    traitSettings.appendChild(adjustAbilityInput);
+    // Append the delete button to the submenu
+    traitSettings.appendChild(traitUses);
+    traitSettings.appendChild(deleteTraitButton);
 
     // Append trait parts to trait item
+    traitItem.appendChild(activeButton);
     traitItem.appendChild(traitName);
     traitItem.appendChild(traitDescription);
-    traitItem.appendChild(traitUses);
-    traitItem.appendChild(traitSettings);
+    traitItem.appendChild(checkboxesContainerMain); // Checkboxes for uses (main view)
+    traitItem.appendChild(infoButton); // The "i" button for the submenu
+    traitItem.appendChild(traitSettings); // Submenu with uses and adjustments
+
+    // Append the uses control and submenu to the trait settings
+    
 
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);

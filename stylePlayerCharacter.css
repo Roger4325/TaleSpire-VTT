@@ -1069,3 +1069,68 @@ select{
     border: 1px solid var(--ts-button-background);
     font-size: 14px;
 }
+
+.trait-settings {
+    display: none;
+    border: 1px solid var(--ts-button-background);
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 10px;
+    width: 96%;
+}
+
+.setting-group {
+    margin-bottom: 15px;
+}
+
+.setting-group h4 {
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.setting-group label {
+    display: block;
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.trait-uses-input,
+.adjustment-type,
+.adjustment-value,
+.adjustment-condition {
+    width: 98%;
+    padding: 6px;
+    font-size: 12px;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.trait-uses-input:focus,
+.adjustment-type:focus,
+.adjustment-value:focus,
+.adjustment-condition:focus {
+    border-color: red;
+}
+
+.delete-trait-button {
+    background-color: #ff6666;
+    color: white;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    width: 20%;
+    text-align: center;
+}
+
+.delete-trait-button:hover {
+    background-color: #ff4d4d;
+}
+

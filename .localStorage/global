@@ -196,18 +196,122 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Galder's Tower"
-                        },
-                        {
-                            "name": "Thunder Step"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false
                     ]
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            }
+        },
+        "": {
+            "characterTempHp": "",
+            "initiativeButton": "+5",
+            "AC": "20",
+            "speed": "30ft.",
+            "characterLevel": "1",
+            "playerXP": "0",
+            "currentCharacterHP": "0",
+            "maxCharacterHP": "50",
+            "strengthScore": " 20",
+            "dexterityScore": " 20",
+            "constitutionScore": " 20",
+            "intelligenceScore": " 20",
+            "wisdomScore": " 20",
+            "charismaScore": " 20",
+            "acrobaticsAbilityMod": "DEX",
+            "animalHandlingAbilityMod": "WIS",
+            "arcanaAbilityMod": "INT",
+            "athleticsAbilityMod": "STR",
+            "deceptionAbilityMod": "CHA",
+            "historyAbilityMod": "INT",
+            "insightAbilityMod": "WIS",
+            "intimidationAbilityMod": "CHA",
+            "investigationAbilityMod": "INT",
+            "medicineAbilityMod": "WIS",
+            "natureAbilityMod": "INT",
+            "perceptionAbilityMod": "WIS",
+            "performanceAbilityMod": "CHA",
+            "persuasionAbilityMod": "CHA",
+            "religionAbilityMod": "INT",
+            "sleightofHandAbilityMod": "DEX",
+            "stealthAbilityMod": "DEX",
+            "survivalAbilityMod": "WIS",
+            "": "A brightly Colored Maul",
+            "proficiencyButton1": "0",
+            "proficiencyButton2": "0",
+            "proficiencyButton3": "0",
+            "proficiencyButton4": "0",
+            "proficiencyButton6": "0",
+            "proficiencyButton7": "0",
+            "proficiencyButton8": "0",
+            "proficiencyButton9": "0",
+            "proficiencyButton10": "0",
+            "proficiencyButton11": "0",
+            "proficiencyButton12": "0",
+            "proficiencyButton13": "0",
+            "proficiencyButton14": "0",
+            "proficiencyButton15": "0",
+            "proficiencyButton16": "0",
+            "proficiencyButton17": "0",
+            "proficiencyButton18": "0",
+            "proficiencyButton19": "0",
+            "proficiencyButton20": "0",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "0",
+            "proficiencyButton23": "0",
+            "proficiencyButton24": "0",
+            "proficiencyButton25": "0",
+            "proficiencyActionButton": "0",
+            "conditions": [],
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Maul",
+                        "thirdColumn": "5ft. Reach",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "2d6+4d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "0",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "0",
+                        "ninthColumn": {}
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "0",
+                "Cantrip": {
+                    "spells": [],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "2nd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "3rd-level": {
+                    "spells": [],
+                    "slots": []
                 },
                 "4th-level": {
                     "spells": [],
