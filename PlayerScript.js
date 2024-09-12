@@ -1981,7 +1981,7 @@ function createSpellSlot() {
     slot.textContent = '';
     slot.addEventListener('click', () => {
         if (slot.textContent === '') {
-            slot.textContent = 'X';
+            slot.textContent = ' ';
             slot.classList.add('used');
         } else {
             slot.textContent = '';
@@ -2643,8 +2643,6 @@ function showSpellCardDetails(spellName) {
     const spellDataArray = spellDataObject.spellsData;
     const spell = spellDataArray.find(spell => spell.name === spellName);
 
-    console.log(spellName);
-
     if (spell) {
 
         currentSelectedSpellName = spellName
@@ -2787,7 +2785,7 @@ function loadSpellData(spellData) {
                     slots.forEach(isUsed => {
                         const newSlot = createSpellSlot();
                         if (isUsed) {
-                            newSlot.textContent = 'X';
+                            newSlot.textContent = '';
                             newSlot.classList.add('used');
                         }
                         spellSlotsContainer.appendChild(newSlot);

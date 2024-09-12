@@ -92,49 +92,26 @@ function addClient(client) {
     console.log(client)
     TS.clients.isMe(client.id).then((isMe) => {
         if (!isMe) {
+
+            createCharacterCard(client)
+
             let newPlayerSelect = document.createElement("option");
             newPlayerSelect.value = client.id;
             newPlayerSelect.innerText = client.player.name;
             console.log(newPlayerSelect)
-            // document.getElementById("recipient-select").appendChild(newPlayerSelect);
+            document.getElementById("recipient-select").appendChild(newPlayerSelect);
 
-            // clients.push({ id: client.id, name: client.name });
+            clients.push({ id: client.id, name: client.name });
         }
     });
-    }
+}
 
 async function onStateChangeEvent(msg) {
-if (msg.kind === "hasInitialized") {
-    console.log("hasIntitialized")
-    //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
-    onInit()
-    let clients = await TS.clients.getClientsInThisBoard();
-    if (!clients.cause) {
-        //if "cause" is undefined this means our call succeeded
-        for (let client of clients) {
-            TS.clients.isMe(client.id).then((isMe) => {
-                if (isMe) {
-                    TS.clients.getMoreInfo([client.id]).then((response) => {
-                        if (response[0].clientMode == "gm") {
-                            console.log("isGM");
-                            //window.open("DMScreen.html")
-                        }
-                        else{
-                            console.log("isPlayer");
-                            //window.open("PlayerCharacter.html")
-                        }
-                    }).catch((response) => {
-                        console.error("error on trying to get info", response);
-                    });
-                } else {
-                    addClient(client);
-                }
-            }).catch((response) => {
-                console.error("error on trying to see whether client is own client", response);
-            });
-        }
+    if (msg.kind === "hasInitialized") {
+        console.log("hasIntitialized")
+        //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
+        onInit()
     }
-}
 }
 
 let contentPacks = null;
@@ -153,6 +130,8 @@ async function onInit() {
         console.error("error in getting more info on asset data", contentPacks);
         return;
     }
+
+
     //Initialize spell List
     AppData.spellLookupInfo = await readSpellJson();
     await playerSetUP();

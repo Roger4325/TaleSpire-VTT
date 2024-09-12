@@ -751,8 +751,7 @@ select{
 }
 
 .spell-slot.used {
-    background-color: gray;
-    color: red;
+    background-color: var(--ts-button-background);
 }
 
 .spell-table{

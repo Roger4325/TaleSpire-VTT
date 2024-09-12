@@ -13,8 +13,59 @@
     </head>
     
     <body>
-        <h1 style="margin-top: 0">template</h1>
-        <button onclick="roll()">DM Screen</button>
+        <header>
+            <div id="settings-container">
+                <div id="settings-dropdown">
+                    <ul>
+                        <li>
+                            <div id="restButtons">
+                                <button id="shortRestButton">Short Rest</button>
+                                <button id="longRestButton">Long Rest</button>
+                            </div>
+                        </li>
+                        <li>Option 2</li>
+                        <li>Option 3</li>
+                        <!-- Add more options as needed -->
+                    </ul>
+                </div>
+                <div id="settings-toggle">
+                    <i class="fa fa-cog" id="settings-icon"></i>
+                </div>
+            </div>
+            <h1>Talespire DM Screen</h1>
+            <nav class="tabs">
+                <ul>
+                    <li><a href="#Init">Initiative Tracker</a></li>
+                    <li><a href="#actions">Actions</a></li>
+                    <li><a href="#SpellList">Spell List</a></li>
+                    <li><a href="#inventory">Inventory</a></li>
+                    <li><a href="#features">Features & Traits</a></li>
+                    <li><a href="#Docs">Quick notes</a></li>
+                </ul>
+            </nav>
+    
+            
+            
+        </header>
+        
+        <section id="Init">
+            <div id="monster-tracker"></div>
+                <div id="monster-cards-container">
+                    <!-- Monster cards will be added here dynamically -->
+                </div>
+
+                <div id="initiative-tracker" class="initiative-tracker"></div>
+            
+                <!-- Monster detailed card that pops up when clicked -->
+                <div id="monster-detail-card">
+                    <h2 id="monster-detail-name">Monster Name</h2>
+                    <p>AC: <span id="monster-detail-ac">--</span></p>
+                    <p>HP: <span id="monster-detail-hp">--</span></p>
+                    <p>Details: <span id="monster-detail-info">More monster details...</span></p>
+                </div>
+            </div>
+        </section>
+        
        
     </body>
     <script>

@@ -1,0 +1,70 @@
+.monster-init input{
+    width: 35px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--ts-button-background);
+}
+
+.monster-hp input {
+    width: 40px;
+}
+
+.monster-card {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 2px solid var(--ts-button-background);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.monster-card:hover {
+    background-color: var(--ts-button-background);
+}
+
+.monster-init {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ts-button-background);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.monster-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.monster-hp {
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-border-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.monster-hp input {
+    margin: 0 5px;
+}
+
+#monster-detail-card {
+    display: none;
+    background-color: var(--ts-background-secondary);
+    border: 2px solid var(--ts-button-background);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}

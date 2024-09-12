@@ -3,10 +3,10 @@
         "Tryn": {
             "characterTempHp": "0",
             "initiativeButton": "+4",
-            "AC": "20",
+            "AC": "15",
             "speed": "30ft.\n",
-            "characterLevel": "5",
-            "playerXP": "6500",
+            "characterLevel": "9",
+            "playerXP": "48000",
             "currentCharacterHP": "13",
             "maxCharacterHP": "53",
             "strengthScore": "16",
@@ -34,7 +34,7 @@
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
             "": "1",
-            "proficiencyButton1": "1",
+            "proficiencyButton1": "2",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
             "proficiencyButton4": "1",
@@ -65,7 +65,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Unarmed",
                         "thirdColumn": "5 Ft.",
-                        "fourthColumn": "+7",
+                        "fourthColumn": "+8",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
@@ -87,7 +87,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Rapier",
                         "thirdColumn": "5 ft",
-                        "fourthColumn": "+7",
+                        "fourthColumn": "+8",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -109,7 +109,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Spear",
                         "thirdColumn": "20(60)",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+7",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
@@ -131,7 +131,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Longbow",
                         "thirdColumn": "600ft",
-                        "fourthColumn": "+9",
+                        "fourthColumn": "+10",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -153,7 +153,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "LongSword",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+7",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
@@ -172,16 +172,23 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "INT",
-                "spelllevelselected": "3",
+                "spellcastingModifier": "CHA",
+                "spelllevelselected": "6",
                 "Cantrip": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Resistance"
+                        }
+                    ],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Guiding Bolt"
+                        }
+                    ],
                     "slots": [
-                        false,
                         false,
                         false,
                         false
@@ -211,7 +218,11 @@
                     "slots": []
                 },
                 "6th-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Eyebite"
+                        }
+                    ],
                     "slots": []
                 }
             }
