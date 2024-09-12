@@ -540,6 +540,7 @@ function longRest() {
 
     // Call the healCreature function with the max HP as the healing amount
     healCreature(maxHPValue);
+    resetSpellSlots()
 }
 
 
@@ -1970,7 +1971,14 @@ function addDeleteButtonListener(deleteButton) {
 
 
 
+function resetSpellSlots(){
+    const spellSlots = document.querySelectorAll('.spell-slot');
 
+    spellSlots.forEach(slot =>{
+        slot.textContent = '';
+        slot.classList.remove('used');
+    });
+}
 
 
 

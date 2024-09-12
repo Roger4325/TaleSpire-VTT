@@ -7,7 +7,7 @@
             "speed": "30ft.\n",
             "characterLevel": "9",
             "playerXP": "48000",
-            "currentCharacterHP": "13",
+            "currentCharacterHP": "53",
             "maxCharacterHP": "53",
             "strengthScore": "16",
             "dexterityScore": "18",
@@ -177,7 +177,7 @@
                 "Cantrip": {
                     "spells": [
                         {
-                            "name": "Resistance"
+                            "name": "Eldritch Blast"
                         }
                     ],
                     "slots": []
@@ -189,6 +189,7 @@
                         }
                     ],
                     "slots": [
+                        false,
                         false,
                         false,
                         false
@@ -203,7 +204,11 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Fireball"
+                        }
+                    ],
                     "slots": [
                         false,
                         false
@@ -211,11 +216,38 @@
                 },
                 "4th-level": {
                     "spells": [],
-                    "slots": []
+                    "slots": [
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    ]
                 },
                 "5th-level": {
                     "spells": [],
-                    "slots": []
+                    "slots": [
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false,
+                        false
+                    ]
                 },
                 "6th-level": {
                     "spells": [
