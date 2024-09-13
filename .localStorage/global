@@ -255,9 +255,31 @@
                             "name": "Eyebite"
                         }
                     ],
-                    "slots": []
+                    "slots": [
+                        false
+                    ]
                 }
-            }
+            },
+            "groupTraitData": [
+                {
+                    "group-title": "Test",
+                    "traits": [
+                        {
+                            "traitName": "Testing",
+                            "traitDescription": "testing a new idea",
+                            "checkboxStates": [
+                                true,
+                                true,
+                                true
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ]
         },
         "": {
             "characterTempHp": "",
@@ -368,7 +390,8 @@
                     "spells": [],
                     "slots": []
                 }
-            }
+            },
+            "groupTraitData": []
         }
     }
 }

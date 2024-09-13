@@ -1195,6 +1195,11 @@ function getAllEditableContent() {
     const spellData = processSpellData();
     content['spellData'] = spellData;
 
+    // Save group and trait data
+    const groupTraitData = processGroupTraitData();
+    content['groupTraitData'] = groupTraitData;
+    
+
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
     saveToGlobalStorage("characters", characterName.value, content, true);
 
@@ -1367,6 +1372,7 @@ function updateCharacterUI(characterData, characterName) {
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
     loadSpellData(characterData.spellData);
+    loadGroupTraitData(characterData.groupTraitData)
 
 }
 
@@ -2878,8 +2884,8 @@ const featuresSection = document.getElementById('features');
 const addGroupButton = document.querySelector('.add-group-button');
 let groupCounter = 0; // Keep track of the number of groups for unique IDs
 
-// Function to create a new group of traits
-function createNewGroup() {
+// Function to create a new group of traits with optional data for loading
+function createNewGroup(groupData = null) {
     groupCounter++;
 
     // Create group container
@@ -2893,6 +2899,12 @@ function createNewGroup() {
     const groupTitle = document.createElement('input');
     groupTitle.classList.add('group-title');
     groupTitle.placeholder = `Feature Group ${groupCounter}`;
+
+    // If groupData is provided, populate the group title
+    if (groupData && groupData['group-title']) {
+        groupTitle.value = groupData['group-title'];
+    }
+
     const addTraitButton = document.createElement('button');
     addTraitButton.classList.add('add-trait-button');
     addTraitButton.textContent = '+ Add New Trait';
@@ -2911,15 +2923,26 @@ function createNewGroup() {
     traitsList.classList.add('traits-list');
     groupContainer.appendChild(traitsList);
 
+    // If groupData is provided, load its traits
+    if (groupData && groupData.traits) {
+        groupData.traits.forEach(trait => {
+            addNewTrait(groupContainer, trait);  // Pass the trait data
+        });
+    }
+
     // Add the group to the features section
     featuresSection.insertBefore(groupContainer, addGroupButton);
 
     // Automatically show the group if it was hidden
     featuresSection.style.display = 'block';
+
+    // Return the created groupContainer for use in other functions
+    return groupContainer;
 }
 
-// Function to add a new trait to a specific group
-function addNewTrait(groupContainer) {
+
+// Function to add a new trait to a specific group, with optional trait data
+function addNewTrait(groupContainer, traitData = null) {
     const traitsList = groupContainer.querySelector('.traits-list');
 
     // Create the trait item
@@ -2931,17 +2954,20 @@ function addNewTrait(groupContainer) {
     traitName.classList.add('trait-name');
     traitName.placeholder = 'Trait Name (e.g., Channel Divinity)';
 
-
-    const activeButton = document.createElement('input');
-    activeButton.type ='checkbox'
-    activeButton.classList.add('activeFeature');
-
-    
+    // If traitData is provided, populate the trait name
+    if (traitData && traitData.traitName) {
+        traitName.value = traitData.traitName;
+    }
 
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
     traitDescription.placeholder = 'Describe the trait here...';
+
+    // If traitData is provided, populate the description
+    if (traitData && traitData.traitDescription) {
+        traitDescription.value = traitData.traitDescription;
+    }
 
     // Create the "i" button for displaying the submenu
     const infoButton = document.createElement('button');
@@ -2955,11 +2981,7 @@ function addNewTrait(groupContainer) {
 
     // Add event listener to toggle the submenu display
     infoButton.addEventListener('click', function () {
-        if (traitSettings.style.display === 'none') {
-            traitSettings.style.display = 'block';
-        } else {
-            traitSettings.style.display = 'none';
-        }
+        traitSettings.style.display = traitSettings.style.display === 'none' ? 'block' : 'none';
     });
 
     // Trait Usage Section (number input and checkboxes)
@@ -2970,7 +2992,7 @@ function addNewTrait(groupContainer) {
     const usesInput = document.createElement('input');
     usesInput.type = 'number';
     usesInput.classList.add('trait-uses-input');
-    usesInput.value = 3; // Default value
+    usesInput.value = traitData && traitData.numberOfUses ? traitData.numberOfUses : 3;
     usesInput.min = 1;
     usesInput.max = 10;
 
@@ -2987,6 +3009,12 @@ function addNewTrait(groupContainer) {
             const checkboxMain = document.createElement('input');
             checkboxMain.type = 'checkbox';
             checkboxMain.classList.add('trait-checkbox-main');
+
+            // Check if traitData contains saved checkbox states
+            if (traitData && traitData.checkboxStates && traitData.checkboxStates[i] !== undefined) {
+                checkboxMain.checked = traitData.checkboxStates[i];
+            }
+
             checkboxesContainerMain.appendChild(checkboxMain);
         }
     }
@@ -2994,7 +3022,7 @@ function addNewTrait(groupContainer) {
     // Update checkboxes when the input changes
     usesInput.addEventListener('input', updateCheckboxes);
 
-    // Initially generate checkboxes
+    // Initially generate checkboxes based on traitData
     updateCheckboxes();
 
     // Append uses controls to the submenu
@@ -3014,17 +3042,32 @@ function addNewTrait(groupContainer) {
         adjustmentType.appendChild(opt);
     });
 
+    // If traitData is provided, populate the adjustment type
+    if (traitData && traitData.adjustmentType) {
+        adjustmentType.value = traitData.adjustmentType;
+    }
+
     const adjustmentValueLabel = document.createElement('label');
     adjustmentValueLabel.textContent = 'Adjustment Value (e.g., +5 or CHA modifier):';
     const adjustmentValue = document.createElement('input');
     adjustmentValue.classList.add('adjustment-value');
     adjustmentValue.placeholder = 'Enter value or formula';
 
+    // If traitData is provided, populate the adjustment value
+    if (traitData && traitData.adjustmentValue) {
+        adjustmentValue.value = traitData.adjustmentValue;
+    }
+
     const adjustmentConditionLabel = document.createElement('label');
     adjustmentConditionLabel.textContent = 'Condition (e.g., while raging):';
     const adjustmentCondition = document.createElement('input');
     adjustmentCondition.classList.add('adjustment-condition');
     adjustmentCondition.placeholder = 'Enter condition (if any)';
+
+    // If traitData is provided, populate the adjustment condition
+    if (traitData && traitData.adjustmentCondition) {
+        adjustmentCondition.value = traitData.adjustmentCondition;
+    }
 
     // Append ability adjustment fields
     traitSettings.appendChild(adjustmentTypeLabel);
@@ -3055,15 +3098,11 @@ function addNewTrait(groupContainer) {
     traitSettings.appendChild(deleteTraitButton);
 
     // Append trait parts to trait item
-    traitItem.appendChild(activeButton);
     traitItem.appendChild(traitName);
     traitItem.appendChild(traitDescription);
     traitItem.appendChild(checkboxesContainerMain); // Checkboxes for uses (main view)
     traitItem.appendChild(infoButton); // The "i" button for the submenu
     traitItem.appendChild(traitSettings); // Submenu with uses and adjustments
-
-    // Append the uses control and submenu to the trait settings
-    
 
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
@@ -3072,5 +3111,87 @@ function addNewTrait(groupContainer) {
     traitsList.style.display = 'block';
 }
 
+
 // Event listener for adding a new group
 addGroupButton.addEventListener('click', createNewGroup);
+
+
+
+
+
+
+// Saving Trait data 
+function processGroupTraitData() {
+    // Select all group containers
+
+    const groupContainers = document.querySelectorAll('.group-container');
+    const groupTraitData = [];
+    console.log(groupContainers)
+    groupContainers.forEach((group, index) => {
+        const groupData = {};
+        const groupName = group.querySelector('.group-title').value;
+        groupData['group-title'] = groupName;
+
+        // Select all traits within this group
+        const traits = group.querySelectorAll('.trait-item');
+        const traitData = [];
+
+        traits.forEach((trait) => {
+            const traitDataObject = {};
+            const traitName = trait.querySelector('.trait-name').value;
+            const traitDescription = trait.querySelector('.trait-description').value;
+
+            // Save the trait name and value
+            traitDataObject['traitName'] = traitName;
+            traitDataObject['traitDescription'] = traitDescription;
+
+            // Save the trait checkbox state if available
+            const checkboxes = trait.querySelectorAll('.trait-checkbox-main');
+            traitDataObject['checkboxStates'] = Array.from(checkboxes).map(checkbox => checkbox.checked);
+
+            // Save any other trait-specific fields (like dropdowns, etc.)
+            const traitSettings = trait.querySelector('.trait-settings');
+
+            if (traitSettings) {
+                const adjustmentType = traitSettings.querySelector('.adjustment-type').value;
+                const adjustmentValue = traitSettings.querySelector('.adjustment-value').value;
+                const adjustmentCondition = traitSettings.querySelector('.adjustment-condition').value;
+                const numberOfUses = traitSettings.querySelector('.trait-uses-input').value;
+
+                // Save the trait settings in the traitDataObject
+                traitDataObject['adjustmentType'] = adjustmentType;
+                traitDataObject['adjustmentValue'] = adjustmentValue;
+                traitDataObject['adjustmentCondition'] = adjustmentCondition;
+                traitDataObject['numberOfUses'] = numberOfUses;
+            }
+
+            // Add the trait data to the list of traits for this group
+            traitData.push(traitDataObject);
+        });
+
+        // Save the traits for this group
+        groupData['traits'] = traitData;
+
+        // Add the group data to the overall groupTraitData array
+        groupTraitData.push(groupData);
+    });
+
+    return groupTraitData;
+}
+
+// Loading features and traits and filling with the correct information.
+function loadGroupTraitData(groupTraitData) {
+    // Clear any existing groups (if necessary)
+    const groupContainerElement = document.querySelector('#feature-groups-container'); // Adjust the selector to the correct container where groups should be appended.
+    groupContainerElement.innerHTML = ''; // Clear any previous data.
+
+    // Loop through each group in groupTraitData
+    groupTraitData.forEach(group => {
+        // Use createNewGroup to create a group container with proper groupData
+        const groupContainer = createNewGroup(group);
+
+        // Append the group container to the parent container
+        groupContainerElement.appendChild(groupContainer);
+    });
+}
+
