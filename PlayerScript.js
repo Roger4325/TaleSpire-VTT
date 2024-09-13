@@ -2119,25 +2119,41 @@ function createSpellRow(spell,spellLevel) {
     dropdownList.classList.add('dropdown-list');
     dropdownContainer.appendChild(dropdownList);
 
-    // Add event listeners to tie into the dropdown
-    spellNameInput.addEventListener('focus', function() {
+
+
+    // Add a combined event listener for both 'focus' and 'input'
+    spellNameInput.addEventListener('input', function(event) {
+        // Get the current input value (empty string for 'focus')
+        const searchQuery = event.type === 'input' ? spellNameInput.value.toLowerCase() : '';
+
         // Get the level to filter by
         const level = spellLevel;
 
         // Retrieve spell data object and array
         const spellDataObject = AppData.spellLookupInfo;
         const spellDataArray = spellDataObject.spellsData;
-    
-        // Filter spells based on level
+        
+        // First, filter spells based on level
         const filteredSpells = spellDataArray.filter(spell => spell.level === level);
-    
-        // Map to spell names
-        const filteredSpellNames = filteredSpells.map(spell => spell.name);
-    
-        // Populate dropdown or other UI with filtered spell names
-        populateListWithAllSpells(filteredSpellNames,dropdownList,row,dropdownContainer);
-        dropdownContainer.style.display = 'block';
+
+        // Further filter spells based on the user's input if they are typing
+        const filteredSpellNames = filteredSpells
+            .map(spell => spell.name)
+            .filter(name => name.toLowerCase().includes(searchQuery)); // Filter by user input
+
+        // Populate the dropdown or other UI with the filtered spell names
+        populateListWithAllSpells(filteredSpellNames, dropdownList, row, dropdownContainer);
+
+        // Show the dropdown if it has items to display, otherwise hide it
+        dropdownContainer.style.display = filteredSpellNames.length > 0 ? 'block' : 'none';
     });
+
+    // Add 'focus' listener to show dropdown when the input is focused
+    spellNameInput.addEventListener('focus', function() {
+        spellNameInput.dispatchEvent(new Event('input')); // Trigger the 'input' event on focus
+    });
+
+
 
     // Hide dropdown on click outside
     document.addEventListener('click', function(event) {

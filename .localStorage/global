@@ -173,21 +173,13 @@
             ],
             "spellData": {
                 "spellcastingModifier": "CHA",
-                "spelllevelselected": "6",
+                "spelllevelselected": "3",
                 "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Eldritch Blast"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Guiding Bolt"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false,
@@ -204,11 +196,7 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Fireball"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         false,
                         false
@@ -216,38 +204,11 @@
                 },
                 "4th-level": {
                     "spells": [],
-                    "slots": [
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    ]
+                    "slots": []
                 },
                 "5th-level": {
                     "spells": [],
-                    "slots": [
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false,
-                        false
-                    ]
+                    "slots": []
                 },
                 "6th-level": {
                     "spells": [
