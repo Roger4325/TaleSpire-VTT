@@ -2,19 +2,19 @@
     "characters": {
         "Tryn": {
             "characterTempHp": "0",
-            "initiativeButton": "+4",
+            "initiativeButton": "+2",
             "AC": "15",
             "speed": "30ft.\n",
-            "characterLevel": "9",
-            "playerXP": "48000",
-            "currentCharacterHP": "53",
-            "maxCharacterHP": "53",
-            "strengthScore": "16",
-            "dexterityScore": "18",
+            "characterLevel": "6",
+            "playerXP": "14000",
+            "currentCharacterHP": "56",
+            "maxCharacterHP": "56",
+            "strengthScore": "8",
+            "dexterityScore": "14",
             "constitutionScore": "16",
-            "intelligenceScore": "6",
-            "wisdomScore": "11",
-            "charismaScore": "12",
+            "intelligenceScore": "13",
+            "wisdomScore": "20",
+            "charismaScore": "8",
             "acrobaticsAbilityMod": "DEX",
             "animalHandlingAbilityMod": "WIS",
             "arcanaAbilityMod": "INT",
@@ -34,13 +34,13 @@
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
             "": "1",
-            "proficiencyButton1": "2",
+            "proficiencyButton1": "0",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
-            "proficiencyButton4": "1",
+            "proficiencyButton4": "0",
             "proficiencyButton6": "0",
             "proficiencyButton7": "0",
-            "proficiencyButton8": "0",
+            "proficiencyButton8": "1",
             "proficiencyButton9": "0",
             "proficiencyButton10": "0",
             "proficiencyButton11": "0",
@@ -48,31 +48,33 @@
             "proficiencyButton13": "1",
             "proficiencyButton14": "0",
             "proficiencyButton15": "0",
-            "proficiencyButton16": "0",
-            "proficiencyButton17": "1",
+            "proficiencyButton16": "1",
+            "proficiencyButton17": "0",
             "proficiencyButton18": "0",
-            "proficiencyButton19": "0",
-            "proficiencyButton20": "1",
+            "proficiencyButton19": "1",
+            "proficiencyButton20": "0",
             "proficiencyButton21": "0",
-            "proficiencyButton22": "1",
+            "proficiencyButton22": "0",
             "proficiencyButton23": "0",
-            "proficiencyButton24": "0",
-            "proficiencyButton25": "0",
-            "conditions": [],
+            "proficiencyButton24": "1",
+            "proficiencyButton25": "1",
+            "conditions": [
+                "Bless"
+            ],
             "actionTable": [
                 {
                     "1": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Unarmed",
-                        "thirdColumn": "5 Ft.",
-                        "fourthColumn": "+8",
+                        "secondColumn": "Rapier",
+                        "thirdColumn": "5 ft",
+                        "fourthColumn": "+5",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "1",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
-                        "twelvethColumn": "Bludgeoning",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -85,82 +87,16 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Rapier",
-                        "thirdColumn": "5 ft",
-                        "fourthColumn": "+8",
+                        "secondColumn": "Crossbow, light",
+                        "thirdColumn": "80 (320)",
+                        "fourthColumn": "+5",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
-                        "eighthColumn": "",
+                        "eighthColumn": "0",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
                         "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Spear",
-                        "thirdColumn": "20(60)",
-                        "fourthColumn": "+7",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "",
-                        "tenthColumn": "Finesse",
-                        "elventhColumn": "A slender, sharp blade with ornate hilt.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "4": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Longbow",
-                        "thirdColumn": "600ft",
-                        "fourthColumn": "+10",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "2",
-                        "tenthColumn": "Finesse",
-                        "elventhColumn": "A slender, sharp blade with ornate hilt.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "5": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "LongSword",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+7",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "",
-                        "tenthColumn": "Finesse",
-                        "elventhColumn": "A slender, sharp blade with ornate hilt.",
-                        "twelvethColumn": "Slashing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -172,14 +108,49 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "CHA",
+                "spellcastingModifier": "WIS",
                 "spelllevelselected": "3",
                 "Cantrip": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        }
+                    ],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        }
+                    ],
                     "slots": [
                         false,
                         false,
@@ -188,7 +159,26 @@
                     ]
                 },
                 "2nd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        }
+                    ],
                     "slots": [
                         false,
                         false,
@@ -196,8 +186,22 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Create Food and Water"
+                        },
+                        {
+                            "name": "Sending"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        }
+                    ],
                     "slots": [
+                        false,
                         false,
                         false
                     ]
@@ -223,20 +227,86 @@
             },
             "groupTraitData": [
                 {
-                    "group-title": "Test",
+                    "group-title": "Class Features",
                     "traits": [
                         {
-                            "traitName": "Testing",
-                            "traitDescription": "testing a new idea",
+                            "traitName": "Eyes of Night",
+                            "traitDescription": "You have darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
                             "checkboxStates": [
-                                true,
-                                true,
-                                true
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Vigilant Blessing",
+                            "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Channel Divinity: Twilight Sanctuary",
+                            "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:\n\n- You grant it 1d6+6 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
+                            "checkboxStates": [
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "2"
+                        },
+                        {
+                            "traitName": "Channel Divinity: Destroy Undead",
+                            "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Steps of Night",
+                            "traitDescription": "You can draw on the mystical power of night to dash from shadow to shadow. As a bonus action when you are in dim light or darkness, you can magically teleport to dim light or darkness that you can see withing 60ft. of you. You can use this bonus action a number of time equal to your proficiency bonus, and you regain all expended used when you finish a short or long rest. ",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
                             "adjustmentCondition": "",
                             "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Race Features",
+                    "traits": [
+                        {
+                            "traitName": "Earth Walk",
+                            "traitDescription": "You can move across difficult terrain without expending extra movement if you are using your walking speed on the ground or a floor.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Merge with Stone",
+                            "traitDescription": "You learn blade ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast pass without trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
                         }
                     ]
                 }

@@ -2220,13 +2220,13 @@ function addSpellToContainer(spellContainer, spellData = null) {
     // Default spell data if not provided
     if (!spellData) {
         spellData = {
-            name: "Default",
-            castTime: "1A",
-            toHitOrDC: "+5",
-            spellDice: "1d10",
+            name: "",
+            castTime: "",
+            toHitOrDC: "",
+            spellDice: "",
             concentration: false,
-            components: "V,S,M",
-            description: "This is a default spell description."
+            components: "",
+            description: ""
         };
     }
 
@@ -2395,7 +2395,7 @@ function updateSpelltoHitorDC(spellDetails) {
 
 function updateSpellDamageDice(ability, damageDice, spellDetails){
     if (damageDice){
-
+        
         const containerDiv = document.createElement('div');
         containerDiv.classList.add('to-hit-container');
     
@@ -2517,7 +2517,7 @@ function updateAllSpellDamageDice() {
                     const labelElement = toHitContainer.querySelector('label.damageDiceButton');
                     labelElement.setAttribute('value', spellAbilityScoreModifier);
                     labelElement.setAttribute('data-dice-type', diceType);
-                    labelElement.setAttribute('data-name',"fuckboi")
+                    labelElement.setAttribute('data-name', spellDetails.damage_type_01)
 
                     const buttonElement = toHitContainer.querySelector('button.damageDiceButton');
                     buttonElement.textContent = newDamage;
