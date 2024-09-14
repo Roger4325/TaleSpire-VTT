@@ -127,6 +127,12 @@
                         },
                         {
                             "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Eldritch Blast"
+                        },
+                        {
+                            "name": "Vicious Mockery"
                         }
                     ],
                     "slots": []
@@ -221,97 +227,22 @@
                             "name": "Eyebite"
                         }
                     ],
-                    "slots": [
-                        false
-                    ]
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
                 }
             },
-            "groupTraitData": [
-                {
-                    "group-title": "Class Features",
-                    "traits": [
-                        {
-                            "traitName": "Eyes of Night",
-                            "traitDescription": "You have darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
-                            "checkboxStates": [
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "1"
-                        },
-                        {
-                            "traitName": "Vigilant Blessing",
-                            "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Channel Divinity: Twilight Sanctuary",
-                            "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:\n\n- You grant it 1d6+6 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
-                            "checkboxStates": [
-                                false,
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "2"
-                        },
-                        {
-                            "traitName": "Channel Divinity: Destroy Undead",
-                            "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Steps of Night",
-                            "traitDescription": "You can draw on the mystical power of night to dash from shadow to shadow. As a bonus action when you are in dim light or darkness, you can magically teleport to dim light or darkness that you can see withing 60ft. of you. You can use this bonus action a number of time equal to your proficiency bonus, and you regain all expended used when you finish a short or long rest. ",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "3"
-                        }
-                    ]
-                },
-                {
-                    "group-title": "Race Features",
-                    "traits": [
-                        {
-                            "traitName": "Earth Walk",
-                            "traitDescription": "You can move across difficult terrain without expending extra movement if you are using your walking speed on the ground or a floor.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Merge with Stone",
-                            "traitDescription": "You learn blade ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast pass without trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.",
-                            "checkboxStates": [
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "1"
-                        }
-                    ]
-                }
-            ]
+            "groupTraitData": []
         },
         "": {
             "characterTempHp": "",

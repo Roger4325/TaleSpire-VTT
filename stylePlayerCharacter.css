@@ -750,6 +750,11 @@ select{
     cursor: pointer;
 }
 
+.spell-group{
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
 .spell-slot.used {
     background-color: var(--ts-button-background);
 }

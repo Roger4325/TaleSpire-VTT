@@ -190,20 +190,29 @@ function rollableButtons() {
                     const diceType = label.getAttribute('data-dice-type');
                     const diceName = label.getAttribute('data-name');
 
+                    // Check if there are multiple dice types separated by '/'
+                    const diceGroups = diceType.split('/');
+                    
                     // Check the current advantage/disadvantage state and adjust the dice type accordingly
                     const isAdvantage = toggleContainer.querySelector("#advButton").classList.contains("active");
                     const isDisadvantage = toggleContainer.querySelector("#disadvButton").classList.contains("active");
                     
                     let type = "normal";
-                    let diceRoll = dicePacker(diceType, diceValue);
+                    let diceRolls = []; // Array to hold all dice rolls for this spell
                     let blessRoll = ""; // For Bless or Guidance
                     let baneRoll = ""; // For Bane
+
+                    // Iterate through each dice group
+                    diceGroups.forEach(diceGroup => {
+                        const diceRoll = dicePacker(diceGroup, diceValue);
+                        diceRolls.push(diceRoll);
+                    });
 
                     // Check for conditions in the conditionsMap
                     const conditionTrackerDiv = document.getElementById('conditionTracker');
                     const conditionsSet = conditionsMap.get(conditionTrackerDiv);
                     
-                    if (diceType === '1d20') {
+                    if (diceGroups.some(group => group.includes('d20'))) {
                         if (isAdvantage) {
                             type = "advantage";
                         } else if (isDisadvantage) {
@@ -221,9 +230,8 @@ function rollableButtons() {
                         }
                     }
 
-                    console.log(diceRoll, blessRoll, baneRoll);
-
-                    roll(diceName, diceRoll, blessRoll, baneRoll, type);
+                    // Pass the array of dice rolls to the roll function
+                    roll(diceName, diceRolls, blessRoll, baneRoll, type);
                 } else {
                     console.log("Dice Label not found");
                 }
@@ -233,6 +241,7 @@ function rollableButtons() {
         }
     });
 }
+
 
 
 
@@ -254,11 +263,19 @@ function dicePacker(diceType,diceModifier){
 }
 
 
-function roll(diceName, diceRoll, blessRoll, baneRoll, type) {
+function roll(diceName, diceRolls, blessRoll, baneRoll, type) {
     let typeStr = type === "advantage" ? " (Adv)" : type === "disadvantage" ? " (Disadv)" : "";
-    let rolls = type === "normal" 
-        ? [{ name: diceName + typeStr, roll: diceRoll }] 
-        : [{ name: diceName + typeStr, roll: diceRoll }, { name: diceName + typeStr, roll: diceRoll }];
+    let rolls = [];
+
+    // Iterate over each dice roll group
+    diceRolls.forEach((diceRoll, index) => {
+        let rollName = diceName + (diceRolls.length > 1 ? `` : "") + typeStr;
+        if (type === "normal") {
+            rolls.push({ name: rollName, roll: diceRoll });
+        } else {
+            rolls.push({ name: rollName, roll: diceRoll }, { name: rollName, roll: diceRoll });
+        }
+    });
 
     let suffix = combineBlessBane(rolls, blessRoll, baneRoll);
 
@@ -276,28 +293,26 @@ function roll(diceName, diceRoll, blessRoll, baneRoll, type) {
 
 
 
+
 async function handleRollResult(rollEvent) {
-    if (trackedIds[rollEvent.payload.rollId] == undefined) {
+    if (trackedIds[rollEvent.payload.rollId] === undefined) {
         console.log("undefined roll");
         return;
     }
 
-    if (rollEvent.kind == "rollResults") {
+    if (rollEvent.kind === "rollResults") {
         let roll = rollEvent.payload;
-        let finalResult;
-        let resultGroup = {};
+        let resultGroups = []; // Store all the result groups here
 
         let blessRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bless");
         let baneRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bane");
 
-        if (roll.resultsGroups != undefined) {
+        if (roll.resultsGroups !== undefined) {
             // Determine if it's advantage or disadvantage
             let isAdvantage = trackedIds[roll.rollId] === "advantage";
             let isDisadvantage = trackedIds[roll.rollId] === "disadvantage";
 
-            // Set the initial value for comparison
-            finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
-
+            // Iterate over each group, skipping "Bless" and "Bane"
             for (let group of roll.resultsGroups) {
                 // Skip "Bless" and "Bane" groups
                 if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
@@ -308,33 +323,36 @@ async function handleRollResult(rollEvent) {
                     result: group.result
                 }, blessRollGroup, baneRollGroup);
 
-                let groupSum = await TS.dice.evaluateDiceResultsGroup(combinedGroup);
-
-                // Update finalResult and resultGroup based on advantage or disadvantage
-                if (isAdvantage && groupSum > finalResult) {
-                    finalResult = groupSum;
-                    resultGroup = combinedGroup;
-                } else if (isDisadvantage && groupSum < finalResult) {
-                    finalResult = groupSum;
-                    resultGroup = combinedGroup;
-                }
+                resultGroups.push(combinedGroup);
             }
 
-            // Handle normal rolls (no advantage or disadvantage)
-            if (trackedIds[roll.rollId] === "normal") {
-                let mainRollGroup = roll.resultsGroups[0];
-                let combinedGroup = combineWithBlessBane({
-                    name: mainRollGroup.name,
-                    result: mainRollGroup.result
-                }, blessRollGroup, baneRollGroup);
+            // For advantage or disadvantage
+            if (isAdvantage || isDisadvantage) {
+                let finalResultGroup = null;
+                let finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
 
-                finalResult = await TS.dice.evaluateDiceResultsGroup(combinedGroup);
-                resultGroup = combinedGroup;
+                for (let group of resultGroups) {
+                    let groupSum = await TS.dice.evaluateDiceResultsGroup(group);
+
+                    if (isAdvantage && groupSum > finalResult) {
+                        finalResult = groupSum;
+                        finalResultGroup = group;
+                    } else if (isDisadvantage && groupSum < finalResult) {
+                        finalResult = groupSum;
+                        finalResultGroup = group;
+                    }
+                }
+
+                // Display the best/worst roll based on advantage/disadvantage
+                if (finalResultGroup) {
+                    await displayResult([finalResultGroup], roll.rollId); // Send the group in an array
+                }
+            } else {
+                // Normal roll - send all result groups together
+                await displayResult(resultGroups, roll.rollId);
             }
         }
-
-        displayResult(resultGroup, roll.rollId);
-    } else if (rollEvent.kind == "rollRemoved") {
+    } else if (rollEvent.kind === "rollRemoved") {
         // Handle the case when the user removes the roll
     }
 }
@@ -343,16 +361,19 @@ async function handleRollResult(rollEvent) {
 
 
 
-async function displayResult(resultGroup, rollId) {
-    if (resultGroup.length < 2) {
-        console.log("resultGroup length is less than 2");
-    }
-    if (resultGroup.length < 1) {
-        console.log("resultGroup length is less than 1");
-    }
 
-    TS.dice.sendDiceResult([resultGroup], rollId).catch((response) => console.error("error in sending dice result", response));
+
+async function displayResult(resultGroups, rollId) {
+    try {
+        // Send all result groups together in one call
+        await TS.dice.sendDiceResult(resultGroups, rollId);
+    } catch (error) {
+        console.error("Error in sending dice result:", error);
+    }
 }
+
+
+
 
 
 // Helper function to add "Bless" and "Bane" rolls

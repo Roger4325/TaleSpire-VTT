@@ -2347,7 +2347,7 @@ function loadSpell(spell,row) {
 
     const components = row.querySelector('.spell-components');
     if (components) {
-        components.textContent = spellDetails.components;
+        components.textContent = spellDetails.components + spellDetails.ritual;
     }
 
 
@@ -2393,67 +2393,95 @@ function updateSpelltoHitorDC(spellDetails) {
     }
 }
 
-function updateSpellDamageDice(ability, damageDice, spellDetails){
-    if (damageDice){
+function updateSpellDamageDice(ability, damageDice, spellDetails) {
+    if (damageDice) {
+
+        // Get the character's current level
+        const characterLevel = parseInt(document.querySelector('#characterLevel').textContent) || 1;
+
+        // Adjust cantrip damage based on character level
+        let adjustedDamageDice = damageDice;
+        if (spellDetails.level.toLowerCase() === "cantrip") {
+            if(spellDetails.damage_dice_upcast){
+                adjustedDamageDice = getCantripDamageDice(damageDice, characterLevel, spellDetails);
+            }
+        }
         
         const containerDiv = document.createElement('div');
         containerDiv.classList.add('to-hit-container');
-    
+
         const label = document.createElement('label');
         label.classList.add('actionButtonLabel', 'damageDiceButton');
-        label.setAttribute('data-dice-type', damageDice);
+        label.setAttribute('data-dice-type', adjustedDamageDice);
         label.setAttribute('data-name', spellDetails.damage_type_01);
 
         const button = document.createElement('button');
-        button.classList.add('actionButton', 'damageDiceButton', 'spell-damage-button'); 
+        button.classList.add('actionButton', 'damageDiceButton', 'spell-damage-button');
 
-        if(spellDetails.ability_modifier === "yes"){
-            const spellMod =parseInt(findAbilityScoreLabel(ability).getAttribute('value'))
 
-            if(spellMod >= 0){
+        if (spellDetails.ability_modifier === "yes") {
+            const spellMod = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
+
+            if (spellMod >= 0) {
                 label.setAttribute('value', spellMod);
-                button.textContent = damageDice + "+" + parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
-            
-                containerDiv.appendChild(label);
-                containerDiv.appendChild(button); 
-            }
-            else{
+                button.textContent = adjustedDamageDice + "+" + spellMod;
+            } else {
                 label.setAttribute('value', spellMod);
-                button.textContent = damageDice + parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
-            
-                containerDiv.appendChild(label);
-                containerDiv.appendChild(button); 
-            }
-
-       
-        }
-
-        else{
-            const spellAdditionalDamage = spellDetails.additonal_damage
-            if(spellAdditionalDamage){
-                damageDice = damageDice + "+" + spellAdditionalDamage
-                label.setAttribute('value', spellAdditionalDamage);
-                button.textContent = damageDice ;
-            }
-            else{
-                label.setAttribute('value', '0');
-                button.textContent = damageDice ;
+                button.textContent = adjustedDamageDice + spellMod;
             }
 
             containerDiv.appendChild(label);
-            containerDiv.appendChild(button);   
+            containerDiv.appendChild(button);
+        } else {
+            const spellAdditionalDamage = spellDetails.additonal_damage;
+            if (spellAdditionalDamage) {
+                adjustedDamageDice = adjustedDamageDice + "+" + spellAdditionalDamage;
+                label.setAttribute('value', spellAdditionalDamage);
+                button.textContent = adjustedDamageDice;
+            } else {
+                label.setAttribute('value', '0');
+                button.textContent = adjustedDamageDice;
+            }
+
+            containerDiv.appendChild(label);
+            containerDiv.appendChild(button);
         }
 
-        
-        return containerDiv
+        return containerDiv;
+    } else {
+        const containerDiv = document.createElement('div');
+        return containerDiv;
+    }
+}
+
+// Updated getCantripDamageDice function
+function getCantripDamageDice(baseDice, characterLevel, spellDetails) {
+    const levels = [5, 11, 17]; // Level thresholds for cantrip damage increases
+    const damageDiceUpcast = spellDetails.damage_dice_upcast;
+
+    // Determine the scaling factor based on the character level
+    let scaleFactor = 1;
+    for (let i = 0; i < levels.length; i++) {
+        if (characterLevel >= levels[i]) {
+            scaleFactor++;
+        } else {
+            break;
+        }
     }
 
-    else {
-        const containerDiv = document.createElement('div')
-        return containerDiv
+    // Handle split damage types like "1d8/1d12"
+    if (baseDice.includes("/")) {
+        const diceParts = baseDice.split("/");
+        const scaledDice = diceParts.map(dice => {
+            const [num, dieType] = dice.match(/(\d+)d(\d+)/).slice(1, 3);
+            return (scaleFactor * parseInt(num)) + "d" + dieType;
+        });
+        return scaledDice.join("/");
+    } else {
+        // Handle standard single dice type
+        const [num, dieType] = baseDice.match(/(\d+)d(\d+)/).slice(1, 3);
+        return (scaleFactor * parseInt(num)) + "d" + dieType;
     }
-
-
 }
 
 
@@ -2476,6 +2504,9 @@ function updateAllSpellDamageDice() {
     const spellDataArray = spellDataObject.spellsData;
     const spellModifier = document.querySelector('.spellcasting-dropdown').value;
 
+    // Get the character's current level
+    const characterLevel = parseInt(document.querySelector('#characterLevel').textContent) || 1;
+
     // Get all rows in the spell list table
     const spellRows = document.querySelectorAll('.spell-table .spell-row');
 
@@ -2483,49 +2514,71 @@ function updateAllSpellDamageDice() {
     spellRows.forEach(row => {
         const spellNameInput = row.querySelector('.spell-name-input');
         if (spellNameInput) {
-
             const spellName = spellNameInput.value.trim();
 
             // Find the corresponding spell object in the JSON data based on the spell name
             const spellDetails = spellDataArray.find(spellData => spellData.name === spellName);
 
-                // Check if the spell uses an ability modifier in its damage calculation
-                if (spellDetails.ability_modifier === "yes") {
+            if (spellDetails) {
+                const toHitContainer = row.querySelector('.spell-dice .to-hit-container');
 
-
-                    const toHitContainer = row.querySelector('.spell-dice .to-hit-container');
-                    const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
-                    const spellAdditionalDamage = spellDetails.additonal_damage
-
-                    // Calculate the new damage dice (adjust based on your calculation method)
-                    const diceType = spellDetails.damage_dice;
-
-                    let newDamage = ""
-                    
-                    if(spellAbilityScoreModifier >= 0){
-                        newDamage = diceType + "+" + spellAbilityScoreModifier;
-                        if(spellAdditionalDamage){
-                            newDamage = newDamage + "+" + spellAdditionalDamage;
+                // Only proceed if toHitContainer exists
+                if (toHitContainer) {
+                    // Adjust cantrip damage based on character level
+                    let adjustedDamageDice = spellDetails.damage_dice;
+                    if (spellDetails.level.toLowerCase() === "cantrip") {
+                        if (spellDetails.damage_dice_upcast) {
+                            adjustedDamageDice = getCantripDamageDice(adjustedDamageDice, characterLevel, spellDetails);
                         }
                     }
 
-                    else{
-                        newDamage = diceType + spellAbilityScoreModifier;
+                    // Check if the spell uses an ability modifier in its damage calculation
+                    if (spellDetails.ability_modifier === "yes") {
+                        const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
+                        let newDamage = "";
+
+                        if (spellAbilityScoreModifier >= 0) {
+                            newDamage = adjustedDamageDice + "+" + spellAbilityScoreModifier;
+                            if (spellDetails.additonal_damage) {
+                                newDamage = newDamage + "+" + spellDetails.additonal_damage;
+                            }
+                        } else {
+                            newDamage = adjustedDamageDice + spellAbilityScoreModifier;
+                        }
+
+                        const labelElement = toHitContainer.querySelector('label.damageDiceButton');
+                        const buttonElement = toHitContainer.querySelector('button.damageDiceButton');
+
+                        // Only proceed if labelElement and buttonElement exist
+                        if (labelElement && buttonElement) {
+                            labelElement.setAttribute('value', spellAbilityScoreModifier);
+                            labelElement.setAttribute('data-dice-type', adjustedDamageDice);
+                            labelElement.setAttribute('data-name', spellDetails.damage_type_01);
+
+                            buttonElement.textContent = newDamage;
+                        }
+                    } else {
+                        // Handle cantrips and other spells without an ability modifier
+                        const labelElement = toHitContainer.querySelector('label.damageDiceButton');
+                        const buttonElement = toHitContainer.querySelector('button.damageDiceButton');
+
+                        // Only proceed if labelElement and buttonElement exist
+                        if (labelElement && buttonElement) {
+                            labelElement.setAttribute('value', ""); // No ability modifier
+                            labelElement.setAttribute('data-dice-type', adjustedDamageDice);
+                            labelElement.setAttribute('data-name', spellDetails.damage_type_01);
+
+                            buttonElement.textContent = adjustedDamageDice;
+                        }
                     }
-                    
-
-                    const labelElement = toHitContainer.querySelector('label.damageDiceButton');
-                    labelElement.setAttribute('value', spellAbilityScoreModifier);
-                    labelElement.setAttribute('data-dice-type', diceType);
-                    labelElement.setAttribute('data-name', spellDetails.damage_type_01)
-
-                    const buttonElement = toHitContainer.querySelector('button.damageDiceButton');
-                    buttonElement.textContent = newDamage;
-
+                } else {
+                    // console.log("toHitContainer not found in this row for spell: " + spellName);
                 }
-
+            } else {
+                // console.log("Spell not found in spell data: " + spellName);
+            }
         } else {
-            console.log("Spell Name Input not found in this row.");
+            // console.log("Spell Name Input not found in this row.");
         }
     });
 }
@@ -3142,7 +3195,6 @@ function processGroupTraitData() {
 
     const groupContainers = document.querySelectorAll('.group-container');
     const groupTraitData = [];
-    console.log(groupContainers)
     groupContainers.forEach((group, index) => {
         const groupData = {};
         const groupName = group.querySelector('.group-title').value;
