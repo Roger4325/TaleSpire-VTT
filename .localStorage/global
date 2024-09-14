@@ -111,6 +111,7 @@
             "spellData": {
                 "spellcastingModifier": "WIS",
                 "spelllevelselected": "3",
+                "spellmagicbonus": "3",
                 "Cantrip": {
                     "spells": [
                         {

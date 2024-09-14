@@ -196,6 +196,21 @@ async function playerSetUP(){
     });
 
 
+
+    const dropdown = document.querySelector('.magic-bonus-dropdown');
+    // Add the change event listener
+    dropdown.addEventListener('change', (event) => {
+        // Log the selected value to the console
+        updateAllSpellDCs()
+        updateAllSpellDamageDice()
+        updateAllToHitDice()
+        const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+        updateSpelltoHitDice(spellCastingAbility)
+        updateSpellDCHeader()
+    });
+
+
+
     //Spell Level Dropdown Listener
     document.querySelector('.spell-level-dropdown').addEventListener('change', function() {
         const selectedLevel = parseInt(this.value, 10); // Get the selected level as an integer
@@ -1885,7 +1900,7 @@ function addDamageDiceInputListener(inputElement, rowElement) {
         const damageLabel = rowElement.querySelector('.damageDiceButton');
 
         // Define the pattern to validate the dice input
-        const dicePattern = /^(\d+d(4|6|8|10|12|20))(\+\d+d(4|6|8|10|12|20))*$/;
+        const dicePattern = /^(\d+d(4|6|8|10|12|20))([+/]\d+d(4|6|8|10|12|20))*$/;
 
         // Check if the input matches the required pattern
         if (!dicePattern.test(newValue)) {
@@ -2215,7 +2230,6 @@ function removeSpellRow(row) {
     row.parentElement.removeChild(row);
 }
 
-
 function addSpellToContainer(spellContainer, spellData = null) {
     // Default spell data if not provided
     if (!spellData) {
@@ -2424,7 +2438,7 @@ function updateSpellDamageDice(ability, damageDice, spellDetails) {
 
             if (spellMod >= 0) {
                 label.setAttribute('value', spellMod);
-                button.textContent = adjustedDamageDice + "+" + spellMod;
+                button.textContent = adjustedDamageDice + "+" + spellMod ;
             } else {
                 label.setAttribute('value', spellMod);
                 button.textContent = adjustedDamageDice + spellMod;
@@ -2486,11 +2500,12 @@ function getCantripDamageDice(baseDice, characterLevel, spellDetails) {
 
 
 function updateSpellsDC(ability, saveType, row){
+    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellDCSelections = row.querySelector('.spell-save');
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
     if(saveType){
         spellDCSelections.textContent = saveType + " " + spellSaveDc;
     }
@@ -2586,6 +2601,7 @@ function updateAllSpellDamageDice() {
 
 
 function updateAllSpellDCs() {
+    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellDataObject = AppData.spellLookupInfo;
     const spellDataArray = spellDataObject.spellsData;
     const spellModifier = document.querySelector('.spellcasting-dropdown').value;
@@ -2611,7 +2627,7 @@ function updateAllSpellDCs() {
                 const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
                 const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8;
+                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + magicBonus;
 
 
 
@@ -2627,6 +2643,7 @@ function updateAllSpellDCs() {
 }
 
 function updateSpellDCHeader(){
+    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
     const spellSection = document.getElementById('SpellList');
     const spellDCSelection = spellSection.querySelector('.spell-dc');
@@ -2635,7 +2652,7 @@ function updateSpellDCHeader(){
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(spellCastingAbility).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
 
     spellDCSelection.textContent = spellSaveDc;
 
@@ -2643,7 +2660,7 @@ function updateSpellDCHeader(){
     const spellAttackButton = spellSection.querySelector('.spell-attack-button');
     
     // Update the label value and button text
-    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus;
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus;
     spellAttackLabel.setAttribute('value', spellAttackBonus);
     spellAttackButton.textContent = `+${spellAttackBonus}`;
 
@@ -2652,13 +2669,14 @@ function updateSpellDCHeader(){
 
 
 function updateSpellSaveDC(ability){
+    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellSection = document.getElementById('SpellList');
     const spellDCSelections = spellSection.querySelectorAll('.spell-save-dc');
     
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
 
     spellDCSelections.forEach((span) =>{
         span.textContent = spellSaveDc;
@@ -2668,13 +2686,16 @@ function updateSpellSaveDC(ability){
 }
 
 function updateSpelltoHitDice(ability) {
+    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellSection = document.getElementById('SpellList');
     const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button")
 
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
     
-    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus;
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus;
+
+    console.log(spellAttackBonus)
 
     // Loop through each spell attack button
     spellAttackButtons.forEach((button, index) => {
@@ -2782,6 +2803,9 @@ function processSpellData() {
     const spellLevelSelected = document.querySelector('.spell-level-dropdown').value
     spellData['spelllevelselected'] = spellLevelSelected;
 
+    const magicBonus = document.querySelector('.magic-bonus-dropdown').value
+    spellData['spellmagicbonus'] = magicBonus;
+
     // Loop through each spell level container
     const spellContainers = document.querySelectorAll('.spell-container');
     spellContainers.forEach(container => {
@@ -2840,6 +2864,12 @@ function loadSpellData(spellData) {
         spellcastingDropdown.value = spellData.spellcastingModifier;
     }
 
+    const magicBonus = document.querySelector('.magic-bonus-dropdown');
+    if(magicBonus && spellData.spellmagicbonus){
+        magicBonus.value = spellData.spellmagicbonus;
+    }
+    
+
     const spellLevelDropdown = document.querySelector('.spell-level-dropdown');
     if (spellLevelDropdown && spellData.spelllevelselected) {
         spellLevelDropdown.value = spellData.spelllevelselected;
@@ -2850,7 +2880,7 @@ function loadSpellData(spellData) {
 
     // Loop through each spell level in the saved data
     Object.keys(spellData).forEach(spellLevel => {
-        if (spellLevel === 'spellcastingModifier' || spellLevel === 'spelllevelselected') return; // Skip the modifier and selected level
+        if (spellLevel === 'spellcastingModifier' || spellLevel === 'spelllevelselected' || spellLevel === 'spellmagicbonus') return; // Skip the modifier and selected level
 
         const { spells, slots } = spellData[spellLevel];
 

@@ -841,15 +841,17 @@ select{
     display: flex;
     justify-content: space-between; /* Distributes space between the items */
     align-items: center; 
-    width: 95%;
-    font-size: 16px;
+    width: 98%;
+    font-size: 12px;
 }
 
 .spell-level-dropdown{
     width: 40px;
 }
 
-
+.magic-bonus-dropdown{
+    width: 40px;
+}
 
 
 

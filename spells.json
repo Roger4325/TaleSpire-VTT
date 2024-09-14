@@ -3735,7 +3735,7 @@
         "class": "Sorcerer, Wizard",
         "higher_level": "",
         "toHitOrDC": "DC",
-        "damage_dice": "20d6+20d6",
+        "damage_dice": "20d6/20d6",
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
         "ability_modifier": "no",
