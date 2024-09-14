@@ -284,21 +284,25 @@ async function handleRollResult(rollEvent) {
 
     if (rollEvent.kind == "rollResults") {
         let roll = rollEvent.payload;
-        let finalResult = 0;
+        let finalResult;
         let resultGroup = {};
-        
+
         let blessRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bless");
         let baneRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bane");
 
         if (roll.resultsGroups != undefined) {
+            // Determine if it's advantage or disadvantage
+            let isAdvantage = trackedIds[roll.rollId] === "advantage";
+            let isDisadvantage = trackedIds[roll.rollId] === "disadvantage";
 
-            let comparisonFn = trackedIds[roll.rollId] == "advantage" ? Math.max : Math.min;
-            let defaultValue = trackedIds[roll.rollId] == "advantage" ? 0 : Number.MAX_SAFE_INTEGER;
+            // Set the initial value for comparison
+            finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
 
             for (let group of roll.resultsGroups) {
-                // Skip "Bless/Guidance" and "Bane" groups if present
+                // Skip "Bless" and "Bane" groups
                 if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
 
+                // Combine with Bless and Bane
                 let combinedGroup = combineWithBlessBane({
                     name: group.name,
                     result: group.result
@@ -306,14 +310,18 @@ async function handleRollResult(rollEvent) {
 
                 let groupSum = await TS.dice.evaluateDiceResultsGroup(combinedGroup);
 
-                if ((comparisonFn === Math.max && groupSum > finalResult) || 
-                    (comparisonFn === Math.min && groupSum < finalResult)) {
+                // Update finalResult and resultGroup based on advantage or disadvantage
+                if (isAdvantage && groupSum > finalResult) {
+                    finalResult = groupSum;
+                    resultGroup = combinedGroup;
+                } else if (isDisadvantage && groupSum < finalResult) {
                     finalResult = groupSum;
                     resultGroup = combinedGroup;
                 }
             }
 
-            if (trackedIds[roll.rollId] == "normal") {
+            // Handle normal rolls (no advantage or disadvantage)
+            if (trackedIds[roll.rollId] === "normal") {
                 let mainRollGroup = roll.resultsGroups[0];
                 let combinedGroup = combineWithBlessBane({
                     name: mainRollGroup.name,
@@ -327,9 +335,10 @@ async function handleRollResult(rollEvent) {
 
         displayResult(resultGroup, roll.rollId);
     } else if (rollEvent.kind == "rollRemoved") {
-        // If you want special handling when the user doesn't roll the dice
+        // Handle the case when the user removes the roll
     }
 }
+
 
 
 
