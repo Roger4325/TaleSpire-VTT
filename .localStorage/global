@@ -59,6 +59,7 @@
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
             "conditions": [
+                "Bane",
                 "Bless"
             ],
             "actionTable": [
