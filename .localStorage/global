@@ -58,10 +58,7 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
-            "conditions": [
-                "Bane",
-                "Bless"
-            ],
+            "conditions": [],
             "actionTable": [
                 {
                     "1": {
@@ -111,7 +108,7 @@
             "spellData": {
                 "spellcastingModifier": "WIS",
                 "spelllevelselected": "3",
-                "spellmagicbonus": "3",
+                "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
                         {
@@ -128,12 +125,6 @@
                         },
                         {
                             "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Eldritch Blast"
-                        },
-                        {
-                            "name": "Vicious Mockery"
                         }
                     ],
                     "slots": []
@@ -209,7 +200,7 @@
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false,
                         false
                     ]
