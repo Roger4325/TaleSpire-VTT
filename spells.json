@@ -2270,8 +2270,7 @@
         "damage_dice_upcast": "1d6",
         "spell_save_dc_type": "dex",
         "ability_modifier": "no",
-        "damage_type_01": "Fire",
-        "damage_type_02": "Radiant"
+        "damage_type_01": "Fire/Radiant"
     },
     {
         "name": "Flaming Sphere",
@@ -3070,8 +3069,7 @@
         "damage_dice_upcast": "1d8",
         "spell_save_dc_type": "dex",
         "ability_modifier": "no",
-        "damage_type_01": "Cold",
-        "damage_type_02": "Blundgeoning"
+        "damage_type_01": "Blundgeoning/Cold"
     },
     {
         "name": "Identify",
@@ -3739,8 +3737,7 @@
         "damage_dice_upcast": "",
         "spell_save_dc_type": "dex",
         "ability_modifier": "no",
-        "damage_type_01": "Fire",
-        "damage_type_02": "Blundgeoning"
+        "damage_type_01": "Fire/Blundgeoning"
     },
     {
         "name": "Mind Blank",

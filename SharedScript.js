@@ -194,6 +194,8 @@ function rollableButtons() {
 
                     // Check if there are multiple dice types separated by '/'
                     const diceGroups = diceType.split('/');
+                    // Split dice names by '/'
+                    const diceNames = diceName.split('/');
                     
                     // Check the current advantage/disadvantage state and adjust the dice type accordingly
                     const isAdvantage = toggleContainer.querySelector("#advButton").classList.contains("active");
@@ -209,7 +211,10 @@ function rollableButtons() {
                         // Only apply the modifier to the first group
                         const modifier = (index === 0) ? diceValue : 0;
                         const diceRoll = dicePacker(diceGroup, modifier);
-                        diceRolls.push(diceRoll);
+                        diceRolls.push({
+                            name: diceNames[index] || diceName, // Use split name if available, fallback to original name
+                            roll: diceRoll
+                        });
                     });
 
                     // Check for conditions in the conditionsMap
@@ -235,7 +240,7 @@ function rollableButtons() {
                     }
 
                     // Pass the array of dice rolls to the roll function
-                    roll(diceName, diceRolls, blessRoll, baneRoll, type);
+                    roll(diceRolls, blessRoll, baneRoll, type);
                 } else {
                     console.log("Dice Label not found");
                 }
@@ -246,38 +251,28 @@ function rollableButtons() {
     });
 }
 
-
-
-
-
-
-
-
-
 //packs dice rolls for diceRoller to roll into talespire.
-function dicePacker(diceType,diceModifier){
-                
+function dicePacker(diceType, diceModifier) {
     let sign = "";
     if (diceModifier >= 0) {
         sign = "+";
     }
     
     const diceRoll = diceType + sign + diceModifier;
-    return diceRoll
+    return diceRoll;
 }
 
-
-function roll(diceName, diceRolls, blessRoll, baneRoll, type) {
+function roll(diceRolls, blessRoll, baneRoll, type) {
     let typeStr = type === "advantage" ? " (Adv)" : type === "disadvantage" ? " (Disadv)" : "";
     let rolls = [];
 
     // Iterate over each dice roll group
-    diceRolls.forEach((diceRoll, index) => {
-        let rollName = diceName + (diceRolls.length > 1 ? `` : "") + typeStr;
+    diceRolls.forEach((diceRoll) => {
+        let rollName = diceRoll.name + typeStr;
         if (type === "normal") {
-            rolls.push({ name: rollName, roll: diceRoll });
+            rolls.push({ name: rollName, roll: diceRoll.roll });
         } else {
-            rolls.push({ name: rollName, roll: diceRoll }, { name: rollName, roll: diceRoll });
+            rolls.push({ name: rollName, roll: diceRoll.roll }, { name: rollName, roll: diceRoll.roll });
         }
     });
 
@@ -285,16 +280,13 @@ function roll(diceName, diceRolls, blessRoll, baneRoll, type) {
 
     // Add the suffix to the main roll names
     rolls.forEach(roll => {
-        if (roll.name.startsWith(diceName)) {
-            roll.name += suffix;
-        }
+        roll.name += suffix;
     });
 
     TS.dice.putDiceInTray(rolls, true).then((diceSetResponse) => {
         trackedIds[diceSetResponse] = type;
     });
 }
-
 
 
 
@@ -310,7 +302,7 @@ async function handleRollResult(rollEvent) {
 
         let blessRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bless");
         let baneRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bane");
-
+        
         if (roll.resultsGroups !== undefined) {
             // Determine if it's advantage or disadvantage
             let isAdvantage = trackedIds[roll.rollId] === "advantage";
@@ -336,28 +328,75 @@ async function handleRollResult(rollEvent) {
                 let finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
 
                 for (let group of resultGroups) {
+                    // Check if the group contains a d20 roll
+                    let containsD20 = group.result.operands && group.result.operands.some(operand => operand.kind === 'd20');
+                
+                    // Skip this group if it does not contain a d20 roll
+                    if (!containsD20) continue;
+                
                     let groupSum = await TS.dice.evaluateDiceResultsGroup(group);
-
+                
                     if (isAdvantage && groupSum > finalResult) {
                         finalResult = groupSum;
                         finalResultGroup = group;
                     } else if (isDisadvantage && groupSum < finalResult) {
+                        console.log("disadvantage")
                         finalResult = groupSum;
                         finalResultGroup = group;
                     }
                 }
 
+                 // Locate the "Bless" and "Bane" groups
+                let blessGroup = roll.resultsGroups.find(group => {
+                    return group.name.includes('Bless') && group.result.kind === 'd4';
+                });
+                let baneGroup = roll.resultsGroups.find(group => {
+                    return group.name.includes('Bane') && group.result.kind === 'd4';
+                });
+
+                if (finalResultGroup) {
+                    // Add the "Bless" result if it exists
+                    if (blessGroup) {
+                        finalResultGroup.result = {
+                            operator: '+',
+                            operands: [
+                                finalResultGroup.result,
+                                blessGroup.result // Add the Bless roll to the final result
+                            ]
+                        };
+                    }
+                    if (baneGroup) {
+                        finalResultGroup.result = {
+                            operator: '-',
+                            operands: [
+                                finalResultGroup.result,
+                                baneGroup.result // Add the Bless roll to the final result
+                            ]
+                        };
+                    }
+                }
+
                 // Display the best/worst roll based on advantage/disadvantage
                 if (finalResultGroup) {
+                    console.log("here")
+                    console.log(finalResultGroup)
                     await displayResult([finalResultGroup], roll.rollId); // Send the group in an array
                 }
             } 
             
             else {
-                // Normal roll - send all result groups together
-                if (resultGroups.length > 1) {
+                // Normal roll - check the original roll results for "Bless" and "Bane"
+                if (roll.resultsGroups.length > 1 && 
+                    !roll.resultsGroups.some(group => {
+                        // Convert group name to lower case for case-insensitive comparison
+                        let groupName = group.name.trim().toLowerCase();
+                        return groupName.includes('bane') || groupName.includes('bless');
+                    })) {
+                    // Proceed if neither Bless nor Bane are present
+                    console.log("Neither Bless nor Bane found in resultsGroups");
+
+
                     let totalValue = 0; // To accumulate the sum of all dice results
-            
                     resultGroups.forEach((diceGroup) => {
                         // Check if the result has operands (complex operation)
                         if (diceGroup.result.operands) {
@@ -384,13 +423,69 @@ async function handleRollResult(rollEvent) {
                             value: totalValue // Store just the total value
                         }
                     };
-
-                    console.log(combinedResultGroup)
+                    
 
                     resultGroups.push(combinedResultGroup)
-                } 
 
-                await displayResult(resultGroups, roll.rollId);
+                    await displayResult(resultGroups, roll.rollId);
+                }
+                
+                else {
+                    // Normal roll
+                    let combinedGroup = null;
+
+                    let baneGroup = roll.resultsGroups.find(group => {
+                        return group.name.includes('Bane') && group.result.kind === 'd4';
+                    });
+                    let blessGroup = roll.resultsGroups.find(group => {
+                        return group.name.includes('Bless') && group.result.kind === 'd4';
+                    });
+                              
+                    // Iterate through all result groups
+                    for (let group of roll.resultsGroups) {
+                        // Skip "Bless" and "Bane" groups for now
+                        if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
+                        
+                        if (!combinedGroup) {
+                            // Initialize combinedGroup with the first non-Bless/Bane group
+                            combinedGroup = {
+                                name: group.name, // Preserve the original name
+                                result: group.result
+                            };
+                        }
+                    }
+
+                    
+                    if (blessGroup) {
+                        combinedGroup.result = {
+                            operator: '+',
+                            operands: [
+                                combinedGroup.result,
+                                blessGroup.result // Add the Bane roll to the final result
+                            ]
+                        };
+                    }
+
+                    if (baneGroup) {
+                        combinedGroup.result = {
+                            operator: '-',
+                            operands: [
+                                combinedGroup.result,
+                                baneGroup.result // Add the Bane roll to the final result
+                            ]
+                        };
+                    }
+                
+                    // If no valid groups were found, return early
+                    if (!combinedGroup) {
+                        console.log("No valid roll groups found");
+                        return;
+                    }
+                
+                    // Display the combined result
+                    await displayResult([combinedGroup], roll.rollId);
+                }
+                
                     
             }
             
@@ -399,10 +494,6 @@ async function handleRollResult(rollEvent) {
         // Handle the case when the user removes the roll
     }
 }
-
-
-
-
 
 
 

@@ -110,13 +110,13 @@
                         "secondColumn": "Testing",
                         "thirdColumn": "New Text",
                         "fourthColumn": "+5",
-                        "fifthColumn": "1d8/4d6",
+                        "fifthColumn": "1d8/10d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
                         "eighthColumn": "0",
                         "tenthColumn": "Finesse",
                         "elventhColumn": "A slender, sharp blade with ornate hilt.",
-                        "twelvethColumn": "Piercing",
+                        "twelvethColumn": "Piercing /Sneak Attack",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -129,8 +129,8 @@
             ],
             "spellData": {
                 "spellcastingModifier": "WIS",
-                "spelllevelselected": "9",
-                "spellmagicbonus": "0",
+                "spelllevelselected": "3",
+                "spellmagicbonus": "1",
                 "Cantrip": {
                     "spells": [
                         {
@@ -228,19 +228,23 @@
                     ]
                 },
                 "4th-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Ice Storm"
+                        }
+                    ],
                     "slots": []
                 },
                 "5th-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Flame Strike"
+                        }
+                    ],
                     "slots": []
                 },
                 "6th-level": {
-                    "spells": [
-                        {
-                            "name": "Eyebite"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "7th-level": {
