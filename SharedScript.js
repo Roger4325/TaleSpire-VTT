@@ -177,6 +177,8 @@ function parseAndReplaceDice(action, text) {
 }
 
 
+let trackedIds = {};
+
 function rollableButtons() {
     const actionButtons = document.getElementsByClassName("actionButton");
 
@@ -203,8 +205,10 @@ function rollableButtons() {
                     let baneRoll = ""; // For Bane
 
                     // Iterate through each dice group
-                    diceGroups.forEach(diceGroup => {
-                        const diceRoll = dicePacker(diceGroup, diceValue);
+                    diceGroups.forEach((diceGroup, index) => {
+                        // Only apply the modifier to the first group
+                        const modifier = (index === 0) ? diceValue : 0;
+                        const diceRoll = dicePacker(diceGroup, modifier);
                         diceRolls.push(diceRoll);
                     });
 
@@ -247,7 +251,7 @@ function rollableButtons() {
 
 
 
-let trackedIds = {};
+
 
 
 //packs dice rolls for diceRoller to roll into talespire.
@@ -347,10 +351,49 @@ async function handleRollResult(rollEvent) {
                 if (finalResultGroup) {
                     await displayResult([finalResultGroup], roll.rollId); // Send the group in an array
                 }
-            } else {
+            } 
+            
+            else {
                 // Normal roll - send all result groups together
+                if (resultGroups.length > 1) {
+                    let totalValue = 0; // To accumulate the sum of all dice results
+            
+                    resultGroups.forEach((diceGroup) => {
+                        // Check if the result has operands (complex operation)
+                        if (diceGroup.result.operands) {
+                            // Loop through each operand in the current result group
+                            diceGroup.result.operands.forEach(operand => {
+                                if (operand.kind && operand.results) {
+                                    // It's a dice roll, sum up the results
+                                    totalValue += operand.results.reduce((sum, roll) => sum + roll, 0);
+                                } else if (operand.value) {
+                                    // It's a static value
+                                    totalValue += operand.value;
+                                }
+                            });
+                        } else if (diceGroup.result.kind && diceGroup.result.results) {
+                            // Direct dice results (simple dice rolls like d6)
+                            totalValue += diceGroup.result.results.reduce((sum, roll) => sum + roll, 0);
+                        }
+                    });
+            
+                    // Create a simple result group to hold only the total value
+                    let combinedResultGroup = {
+                        name: 'Combined Total',
+                        result: {
+                            value: totalValue // Store just the total value
+                        }
+                    };
+
+                    console.log(combinedResultGroup)
+
+                    resultGroups.push(combinedResultGroup)
+                } 
+
                 await displayResult(resultGroups, roll.rollId);
+                    
             }
+            
         }
     } else if (rollEvent.kind === "rollRemoved") {
         // Handle the case when the user removes the roll

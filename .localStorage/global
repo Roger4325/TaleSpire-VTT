@@ -103,11 +103,33 @@
                             "other": false
                         }
                     }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Testing",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "1d8/4d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "0",
+                        "tenthColumn": "Finesse",
+                        "elventhColumn": "A slender, sharp blade with ornate hilt.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
                 }
             ],
             "spellData": {
                 "spellcastingModifier": "WIS",
-                "spelllevelselected": "3",
+                "spelllevelselected": "9",
                 "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
@@ -230,7 +252,11 @@
                     "slots": []
                 },
                 "9th-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Meteor Swarm"
+                        }
+                    ],
                     "slots": []
                 }
             },
