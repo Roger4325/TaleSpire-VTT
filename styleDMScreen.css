@@ -68,3 +68,107 @@
     margin-top: 20px;
     border-radius: 10px;
 }
+
+
+
+
+
+
+
+
+/*TESTING SECTION*/
+
+
+/* Monster card styles */
+.monster-card {
+    margin-left: 30px;
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 2px solid var(--ts-button-background);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative; /* Ensure dropdown positioning is relative to card */
+}
+
+.monster-init {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--ts-button-background);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.monster-init input {
+    width: 35px;
+    padding: 5px;
+    font-size: 16px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--ts-button-background);
+}
+
+.monster-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.monster-hp {
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-border-color);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.monster-hp input {
+    width: 40px;
+    margin: 0 5px;
+}
+
+/* Dropdown container */
+.dropdown-container {
+    position: relative; /* To position the dropdown list */
+    width: 100%; /* Ensures the dropdown takes full width of the container */
+}
+
+.monster-name-input {
+    width: 100%; /* Full width input */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--ts-button-background);
+}
+
+.monster-list {
+    position: absolute; /* Position dropdown list below input */
+    top: 100%; /* Below the input field */
+    left: 0;
+    width: 100%;
+    max-height: 200px; /* Max height of the dropdown list */
+    overflow-y: auto; /* Scroll if content is too long */
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-border-color);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for better visibility */
+    z-index: 1000; /* Ensure dropdown is above other elements */
+    display: none; /* Initially hidden */
+}
+
+.monster-list li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+.monster-list li:hover {
+    background-color: var(--ts-button-background); /* Highlight on hover */
+}
