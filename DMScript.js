@@ -331,6 +331,9 @@ function populateMonsterCard(card, monster) {
     reorderCards(); // Reorder cards after adding the new monster
 }
 
+
+
+
 let currentSelectedMonsterName = '';
 
 function showMonsterCardDetails(monsterName) {
@@ -352,7 +355,7 @@ function showMonsterCardDetails(monsterName) {
         currentSelectedMonsterName = monsterName;
 
         // Reusable function to populate data conditionally
-        const populateField = (elementId, label, value) => {
+        const populateField = (elementId, label, value) => { //Really need to use parse and replace text here so that each action or anything that is rollable is added as a button.
             const element = document.getElementById(elementId);
             if (value || value === 0) {
                 element.innerHTML = `<strong>${label}:</strong> ${value}`;

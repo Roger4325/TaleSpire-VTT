@@ -51,28 +51,77 @@
         <section id="Init">
             <!-- Monster Card Container -->
             <div id="monsterCardContainer" class="monster-card-container hidden">
-                <div class="monster-card">
+                <div class="monster-block">
                     <button id="closeMonsterCard">Close</button>
-                    <h2 id="monsterName"></h2>
-                    <p id="monsterType"></p>
-                    <hr class="divider" id="monsterBasicStatsDivider">
-                    <p id="monsterAC"></p>
-                    <p id="monsterHP"></p>
-                    <p id="monsterSpeed"></p>
-                    <hr class="divider" id="monsterStatsDivider">
-                    <p id="monsterStats"></p>
-                    <hr class="divider" id="monsterSavesDivider">
-                    <p id="monsterSavingThrows"></p>
-                    <p id="monsterSkills"></p>
-                    <p id="monsterDamageImmunities"></p>
-                    <p id="monsterConditionImmunities"></p>
-                    <p id="monsterSenses"></p>
-                    <p id="monsterLanguages"></p>
-                    <p id="monsterChallenge"></p>
-                    <hr class="divider" id="monsterAbilitiesDivider">
-                    <p id="monsterAbilities"></p>
-                    <hr class="divider" id="monsterActionsDivider">
-                    <p id="monsterActions"></p>
+                    <div id="monsterName" class="monster-name">Goblin</div>
+                    <div id="monsterType" class="monster-subtitle">Small humanoid, neutral evil</div>
+                    <hr>
+                    <div class="monster-section">
+                        <div id="monsterAC" class="monster-section-title">Armor Class</div>
+                        <div>15 (natural armor)</div>
+                    </div>
+                    <div class="monster-section">
+                        <div id="monsterHP" class="monster-section-title">Hit Points</div>
+                        <div>30 (4d8 + 12)</div>
+                    </div>
+                    <div class="monster-section">
+                        <div id="monsterSpeed" class="monster-section-title">Speed</div>
+                        <div>30 ft.</div>
+                    </div>
+                    <hr>
+            
+                    <!-- Stats Block -->
+                    <div  id="monsterStats" class="monster-stats">
+                        <div class="monster-stat">STR 8 (-1)</div>
+                        <div class="monster-stat">DEX 14 (+2)</div>
+                        <div class="monster-stat">CON 10 (+0)</div>
+                        <div class="monster-stat">INT 10 (+0)</div>
+                        <div class="monster-stat">WIS 8 (-1)</div>
+                        <div class="monster-stat">CHA 8 (-1)</div>
+                    </div>
+                    <hr id="monsterStatsDivider">
+            
+                    <!-- Senses, Languages, Challenge -->
+                    <div id="monsterSavingThrows" class="monster-section">
+                        <div class="monster-section-title">Senses</div>
+                        <div>Darkvision 60 ft., Passive Perception 9</div>
+                    </div>
+                    <div id="monsterSkills" class="monster-section"></div>
+                    <div id="monsterDamageImmunities" class="monster-section"></div>
+                    <div id="monsterConditionImmunities" class="monster-section"></div>
+                    <div id="monsterSenses" class="monster-section"></div>
+                    <div class="monster-section">
+                        <div id="monsterLanguages" class="monster-section-title">Languages</div>
+                        <div>Common, Goblin</div>
+                    </div>
+                    <div id="monsterChallenge" class="monster-section">
+                        <div class="monster-section-title">Challenge</div>
+                        <div>1/4 (50 XP)</div>
+                    </div>
+                    <hr>
+            
+                    <!-- Special Abilities -->
+                    <div id="monsterAbilities" class="monster-abilities">
+                        <div class="monster-ability">
+                            <div class="monster-section-title">Nimble Escape</div>
+                            <div class="description-text">The goblin can take the Disengage or Hide action as a bonus action on each of its turns.</div>
+                        </div>
+                    </div>
+                    <hr id="monsterAbilitiesDivider">
+            
+                    <!-- Actions -->
+                    <div id="monsterActions" class="monster-actions">
+                        <div class="monster-actions-title">Actions</div>
+                        <div class="monster-action">
+                            <div class="monster-section-title">Scimitar</div>
+                            <div class="description-text">Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.</div>
+                        </div>
+                        <div class="monster-action">
+                            <div class="monster-section-title">Shortbow</div>
+                            <div class="description-text">Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.</div>
+                        </div>
+                    </div>
+                    <hr id="monsterActionsDivider">
                 </div>
             </div>
             <button id="add-monster-button">Add Monster</button>

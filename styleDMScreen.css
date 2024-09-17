@@ -180,60 +180,63 @@
     position: fixed;
     top: 0;
     right: -100%; /* Initially hidden off-screen */
-    width: 300px; /* Adjust the width to your preference */
+    width: 100%; /* Max width of 600px */
     height: auto;
     background-color: var(--ts-background-secondary);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
     transition: right 0.5s ease;
     z-index: 1000;
     font-size: 14px;
-    padding: 10px;
+    padding: 15px;
     border: 1px solid var(--ts-accent-color);
     overflow-y: auto; /* Add scroll if content overflows */
+    max-height: 90vh; /* Ensure it doesn't overflow viewport height */
 }
 
 /* Visibility controls for the container */
 .monster-card-container.visible {
-    right: 0; /* Slides in from the right */
+    right: -20px; /* Slides in from the right */
+    opacity: 1;
 }
 
 .monster-card-container.hidden {
     right: -100%; /* Slides out to the right */
+    opacity: 0;
 }
 
 /* Internal monster card content */
-.monster-card {
+.monster-block {
     padding: 10px;
     font-size: 14px;
 }
 
 /* Monster name styling */
-.monster-card .monster-name {
+.monster-block .monster-name {
     font-size: 20px;
     font-weight: bold;
     text-align: center;
 }
 
 /* Subtitle, e.g., size, type, and alignment */
-.monster-card .monster-subtitle {
+.monster-block .monster-subtitle {
     font-style: italic;
     text-align: center;
     margin-bottom: 10px;
 }
 
 /* Sections like 'Armor Class', 'Hit Points', etc. */
-.monster-card .monster-section {
+.monster-block .monster-section {
     margin-bottom: 10px;
 }
 
 /* Section titles */
-.monster-card .monster-section-title {
+.monster-block .monster-section-title {
     font-weight: bold;
     margin-bottom: 5px;
 }
 
 /* Stats block styling */
-.monster-card .monster-stats {
+.monster-block .monster-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 5px;
@@ -241,14 +244,14 @@
 }
 
 /* Each individual stat (e.g., STR, DEX, CON) */
-.monster-card .monster-stat {
+.monster-block .monster-stat {
     font-size: 12px;
     padding: 5px;
     border: 1px solid var(--ts-accent-color);
 }
 
 /* Divider between sections */
-.monster-card hr {
+.monster-block hr {
     border: 0;
     height: 1px;
     background-color: var(--ts-accent-color);
@@ -256,26 +259,26 @@
 }
 
 /* Special abilities and actions */
-.monster-card .monster-abilities,
-.monster-card .monster-actions {
+.monster-block .monster-abilities,
+.monster-block .monster-actions {
     margin-top: 10px;
 }
 
 /* Individual ability or action */
-.monster-card .monster-ability,
-.monster-card .monster-action {
+.monster-block .monster-ability,
+.monster-block .monster-action {
     margin-bottom: 5px;
 }
 
 /* Actions heading */
-.monster-card .monster-actions-title {
+.monster-block .monster-actions-title {
     font-weight: bold;
     margin-top: 10px;
     margin-bottom: 5px;
 }
 
 /* Description texts for actions/abilities */
-.monster-card .description-text {
+.monster-block .description-text {
     font-size: 12px;
     margin-left: 10px;
 }
