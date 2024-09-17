@@ -709,7 +709,7 @@ select{
 
 .minihr {
     border: 1px solid var(--ts-button-background);
-    margin: 10px 0;
+    margin-bottom: 0px;
 }
 
 .spell-slot-controls {
@@ -776,6 +776,7 @@ select{
 }
 
 .spell-group{
+    margin-top: -5px;
     margin-bottom: 20px;
     padding-bottom: 20px;
 }

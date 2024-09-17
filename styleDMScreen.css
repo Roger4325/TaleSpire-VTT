@@ -172,3 +172,110 @@
 .monster-list li:hover {
     background-color: var(--ts-button-background); /* Highlight on hover */
 }
+
+
+
+/* Main container for the monster card */
+.monster-card-container {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Initially hidden off-screen */
+    width: 300px; /* Adjust the width to your preference */
+    height: auto;
+    background-color: var(--ts-background-secondary);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    transition: right 0.5s ease;
+    z-index: 1000;
+    font-size: 14px;
+    padding: 10px;
+    border: 1px solid var(--ts-accent-color);
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+/* Visibility controls for the container */
+.monster-card-container.visible {
+    right: 0; /* Slides in from the right */
+}
+
+.monster-card-container.hidden {
+    right: -100%; /* Slides out to the right */
+}
+
+/* Internal monster card content */
+.monster-card {
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Monster name styling */
+.monster-card .monster-name {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Subtitle, e.g., size, type, and alignment */
+.monster-card .monster-subtitle {
+    font-style: italic;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Sections like 'Armor Class', 'Hit Points', etc. */
+.monster-card .monster-section {
+    margin-bottom: 10px;
+}
+
+/* Section titles */
+.monster-card .monster-section-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+/* Stats block styling */
+.monster-card .monster-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    text-align: center;
+}
+
+/* Each individual stat (e.g., STR, DEX, CON) */
+.monster-card .monster-stat {
+    font-size: 12px;
+    padding: 5px;
+    border: 1px solid var(--ts-accent-color);
+}
+
+/* Divider between sections */
+.monster-card hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--ts-accent-color);
+    margin: 10px 0;
+}
+
+/* Special abilities and actions */
+.monster-card .monster-abilities,
+.monster-card .monster-actions {
+    margin-top: 10px;
+}
+
+/* Individual ability or action */
+.monster-card .monster-ability,
+.monster-card .monster-action {
+    margin-bottom: 5px;
+}
+
+/* Actions heading */
+.monster-card .monster-actions-title {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Description texts for actions/abilities */
+.monster-card .description-text {
+    font-size: 12px;
+    margin-left: 10px;
+}

@@ -92,9 +92,6 @@ function addClient(client) {
     console.log(client)
     TS.clients.isMe(client.id).then((isMe) => {
         if (!isMe) {
-
-            createCharacterCard(client)
-
             let newPlayerSelect = document.createElement("option");
             newPlayerSelect.value = client.id;
             newPlayerSelect.innerText = client.player.name;
