@@ -20,133 +20,437 @@ function extractRollResult(message) {
 
 const monsters = [
     {
-        name: 'Goblin',
-        hp: { current: 15, max: 15 },
-        ac: 13,
-        speed: '30 ft.',
-        info: 'Small, green, and cunning.',
-        initiative: 0,
-        stats: {
-            str: 8,
-            dex: 14,
-            con: 10,
-            int: 10,
-            wis: 8,
-            cha: 8
+        "Ancient Black Dragon": {
+            "Id": "Ancient Black Dragon",
+            "Name": "Ancient Black Dragon",
+            "Path": "",
+            "Source": "Monster Manual",
+            "Type": "Gargantuan dragon, chaotic evil",
+            "HP": {
+                "Value": 367,
+                "Notes": "(21d20+147)"
+            },
+            "AC": {
+                "Value": 22,
+                "Notes": "(natural armor)"
+            },
+            "InitiativeModifier": 2,
+            "InitiativeAdvantage": false,
+            "Speed": [
+                "40 ft.",
+                "fly 80 ft.",
+                "swim 40 ft."
+            ],
+            "Abilities": {
+                "Str": 27,
+                "Dex": 14,
+                "Con": 25,
+                "Int": 16,
+                "Wis": 15,
+                "Cha": 19
+            },
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [
+                "acid"
+            ],
+            "ConditionImmunities": [],
+            "Saves": [
+                {
+                    "Name": "Dex",
+                    "Modifier": 9
+                },
+                {
+                    "Name": "Con",
+                    "Modifier": 14
+                },
+                {
+                    "Name": "Wis",
+                    "Modifier": 9
+                },
+                {
+                    "Name": "Cha",
+                    "Modifier": 11
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "Perception",
+                    "Modifier": 16
+                },
+                {
+                    "Name": "Stealth",
+                    "Modifier": 9
+                }
+            ],
+            "Senses": [
+                "blindsight 60 ft.",
+                "darkvision 120 ft."
+            ],
+            "Languages": [
+                "Common",
+                "Draconic"
+            ],
+            "Challenge": "21",
+            "Traits": [
+                {
+                    "Name": "Amphibious",
+                    "Content": "The dragon can breathe air and water.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Legendary Resistance (3/Day)",
+                    "Content": "If the dragon fails a saving throw, it can choose to succeed instead.",
+                    "Usage": ""
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Multiattack",
+                    "Content": "The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Bite",
+                    "Content": "Melee Weapon Attack: +15 to hit, reach 15 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 9 (2d8) acid damage.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Claw",
+                    "Content": "Melee Weapon Attack: +15 to hit, reach 10 ft., one target. Hit: 15 (2d6 + 8) slashing damage.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Tail",
+                    "Content": "Melee Weapon Attack: +15 to hit, reach 20 ft ., one target. Hit: 17 (2d8 + 8) bludgeoning damage.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Frightful Presence",
+                    "Content": "Each creature of the dragon's choice that is within 120 feet of the dragon and aware of it must succeed on a DC 19 Wisdom saving throw or become frightened for 1 minute. A creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature's saving throw is successful or the effect ends for it, the creature is immune to the dragon's Frightful Presence for the next 24 hours.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Acid Breath (Recharge 5-6)",
+                    "Content": "The dragon exhales acid in a 90-foot line that is 10 feet wide. Each creature in that line must make a DC 22 Dexterity saving throw, taking 67 (15d8) acid damage on a failed save, or half as much damage on a successful one.",
+                    "Usage": ""
+                }
+            ],
+            "Reactions": [],
+            "LegendaryActions": [
+                {
+                    "Name": "Detect",
+                    "Content": "The dragon makes a Wisdom (Perception) check.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Tail Attack",
+                    "Content": "The dragon makes a tail attack.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Wing Attack (Costs 2 Actions)",
+                    "Content": "The dragon beats its wings. Each creature within 15 ft. of the dragon must succeed on a DC 23 Dexterity saving throw or take 15 (2d6 + 8) bludgeoning damage and be knocked prone. The dragon can then fly up to half its flying speed.",
+                    "Usage": ""
+                }
+            ],
+            "Description": "",
+            "Player": "",
+            "Version": "1.8.0",
+            "ImageURL": ""
         },
-        savingThrows: 'DEX +2',
-        skills: 'Stealth +6, Perception +2',
-        damageImmunities: '',
-        conditionImmunities: '',
-        senses: 'Darkvision 60 ft., Passive Perception 9',
-        languages: 'Common, Goblin',
-        challenge: '1/4 (50 XP)',
-        specialAbilities: [
-            {
-                name: 'Nimble Escape',
-                desc: 'The goblin can take the Disengage or Hide action as a bonus action on each of its turns.'
-            }
-        ],
-        actions: [
-            {
-                name: 'Scimitar',
-                desc: 'Melee Weapon Attack: +4 to hit, reach 5 ft., one target. Hit: 5 (1d6 + 2) slashing damage.'
+        "Aboleth": {
+            "Id": "Aboleth",
+            "Name": "Aboleth",
+            "Path": "",
+            "Source": "Monster Manual",
+            "Type": "Large aberration, lawful evil",
+            "HP": {
+                "Value": 135,
+                "Notes": "(18d10+36)"
             },
-            {
-                name: 'Shortbow',
-                desc: 'Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.'
-            }
-        ]
-    },
-    {
-        name: 'Orc',
-        hp: { current: 30, max: 30 },
-        ac: 16,
-        speed: '30 ft.',
-        info: 'Big, brutish, and aggressive.',
-        initiative: 0,
-        stats: {
-            str: 16,
-            dex: 12,
-            con: 16,
-            int: 7,
-            wis: 11,
-            cha: 10
+            "AC": {
+                "Value": 17,
+                "Notes": "(natural armor)"
+            },
+            "InitiativeModifier": -1,
+            "InitiativeAdvantage": false,
+            "Speed": [
+                "10 ft.",
+                "swim 40 ft."
+            ],
+            "Abilities": {
+                "Str": 21,
+                "Dex": 9,
+                "Con": 15,
+                "Int": 18,
+                "Wis": 15,
+                "Cha": 18
+            },
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [],
+            "ConditionImmunities": [],
+            "Saves": [
+                {
+                    "Name": "Con",
+                    "Modifier": 6
+                },
+                {
+                    "Name": "Int",
+                    "Modifier": 8
+                },
+                {
+                    "Name": "Wis",
+                    "Modifier": 6
+                }
+            ],
+            "Skills": [
+                {
+                    "Name": "History",
+                    "Modifier": 12
+                },
+                {
+                    "Name": "Perception",
+                    "Modifier": 10
+                }
+            ],
+            "Senses": [
+                "darkvision 120 ft."
+            ],
+            "Languages": [
+                "Deep Speech",
+                "telepathy 120 ft."
+            ],
+            "Challenge": "10",
+            "Traits": [
+                {
+                    "Name": "Amphibious",
+                    "Content": "The aboleth can breathe air and water.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Mucous Cloud",
+                    "Content": "While underwater, the aboleth is surrounded by transformative mucus. A creature that touches the aboleth or that hits it with a melee attack while within 5 ft. of it must make a DC 14 Constitution saving throw. On a failure, the creature is diseased for 1d4 hours. The diseased creature can breathe only underwater.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Probing Telepathy",
+                    "Content": "If a creature communicates telepathically with the aboleth, the aboleth learns the creature's greatest desires if the aboleth can see the creature.",
+                    "Usage": ""
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Multiattack",
+                    "Content": "The aboleth makes three tentacle attacks.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Tentacle",
+                    "Content": "Melee Weapon Attack: +9 to hit, reach 10 ft., one target. Hit: 12 (2d6 + 5) bludgeoning damage. If the target is a creature, it must succeed on a DC 14 Constitution saving throw or become diseased. The disease has no effect for 1 minute and can be removed by any magic that cures disease. After 1 minute, the diseased creature's skin becomes translucent and slimy, the creature can't regain hit points unless it is underwater, and the disease can be removed only by heal or another disease-curing spell of 6th level or higher. When the creature is outside a body of water, it takes 6 (1d12) acid damage every 10 minutes unless moisture is applied to the skin before 10 minutes have passed.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Tail",
+                    "Content": "Melee Weapon Attack: +9 to hit, reach 10 ft. one target. Hit: 15 (3d6 + 5) bludgeoning damage.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Enslave (3/day)",
+                    "Content": "The aboleth targets one creature it can see within 30 ft. of it. The target must succeed on a DC 14 Wisdom saving throw or be magically charmed by the aboleth until the aboleth dies or until it is on a different plane of existence from the target. The charmed target is under the aboleth's control and can't take reactions, and the aboleth and the target can communicate telepathically with each other over any distance.\nWhenever the charmed target takes damage, the target can repeat the saving throw. On a success, the effect ends. No more than once every 24 hours, the target can also repeat the saving throw when it is at least 1 mile away from the aboleth.",
+                    "Usage": ""
+                }
+            ],
+            "Reactions": [],
+            "LegendaryActions": [
+                {
+                    "Name": "Detect",
+                    "Content": "The aboleth makes a Wisdom (Perception) check.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Tail Swipe",
+                    "Content": "The aboleth makes one tail attack.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Psychic Drain (Costs 2 Actions)",
+                    "Content": "One creature charmed by the aboleth takes 10 (3d6) psychic damage, and the aboleth regains hit points equal to the damage the creature takes.",
+                    "Usage": ""
+                }
+            ],
+            "Description": "",
+            "Player": "",
+            "Version": "1.8.0",
+            "ImageURL": ""
         },
-        savingThrows: 'STR +5, CON +3',
-        skills: 'Intimidation +2',
-        damageImmunities: '',
-        conditionImmunities: '',
-        senses: 'Darkvision 60 ft., Passive Perception 10',
-        languages: 'Common, Orc',
-        challenge: '1/2 (100 XP)',
-        specialAbilities: [
-            {
-                name: 'Aggressive',
-                desc: 'As a bonus action, the orc can move up to its speed toward a hostile creature that it can see.'
-            }
-        ],
-        actions: [
-            {
-                name: 'Greataxe',
-                desc: 'Melee Weapon Attack: +5 to hit, reach 5 ft., one target. Hit: 9 (1d12 + 3) slashing damage.'
+        "Djinni": {
+            "Id": "Djinni",
+            "Name": "Djinni",
+            "Path": "",
+            "Source": "Monster Manual",
+            "Type": "Large elemental, chaotic good",
+            "HP": {
+                "Value": 161,
+                "Notes": "(14d10+84)"
             },
-            {
-                name: 'Javelin',
-                desc: 'Melee or Ranged Weapon Attack: +5 to hit, range 30/120 ft., one target. Hit: 7 (1d6 + 3) piercing damage.'
-            }
-        ]
-    },
-    {
-        name: 'Dragon',
-        hp: { current: 200, max: 200 },
-        ac: 19,
-        speed: '40 ft., fly 80 ft.',
-        info: 'A powerful and fearsome creature.',
-        initiative: 0,
-        stats: {
-            str: 27,
-            dex: 10,
-            con: 25,
-            int: 16,
-            wis: 13,
-            cha: 21
+            "AC": {
+                "Value": 17,
+                "Notes": "(natural armor)"
+            },
+            "InitiativeModifier": 2,
+            "InitiativeAdvantage": false,
+            "Speed": [
+                "30 ft.",
+                "fly 90 ft."
+            ],
+            "Abilities": {
+                "Str": 21,
+                "Dex": 15,
+                "Con": 22,
+                "Int": 15,
+                "Wis": 16,
+                "Cha": 20
+            },
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [
+                "lightning",
+                "thunder"
+            ],
+            "ConditionImmunities": [],
+            "Saves": [
+                {
+                    "Name": "Dex",
+                    "Modifier": 6
+                },
+                {
+                    "Name": "Wis",
+                    "Modifier": 7
+                },
+                {
+                    "Name": "Cha",
+                    "Modifier": 9
+                }
+            ],
+            "Skills": [],
+            "Senses": [
+                "darkvision 120 ft."
+            ],
+            "Languages": [
+                "Auran"
+            ],
+            "Challenge": "11",
+            "Traits": [
+                {
+                    "Name": "Elemental Demise",
+                    "Content": "If the djinni dies, its body disintegrates into a warm breeze, leaving behind only equipment the djinni was wearing or carrying.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Innate Spellcasting",
+                    "Content": "The djinni's innate spellcasting ability is Charisma (spell save DC 17, +9 to hit with spell attacks). It can innately cast the following spells, requiring no material components: \n\nAt will: detect evil and good, detect magic, thunderwave 3/day each: create food and water (can create wine instead of water), tongues, wind walk\n1/day each: conjure elemental (air elemental only), creation, gaseous form, invisibility, major image, plane shift",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Variant: Genie Powers",
+                    "Content": "Genies have a variety of magical capabilities, including spells. A few have even greater powers that allow them to alter their appearance or the nature of reality.\n\nDisguises.\nSome genies can veil themselves in illusion to pass as other similarly shaped creatures. Such genies can innately cast the disguise self spell at will, often with a longer duration than is normal for that spell. Mightier genies can cast the true polymorph spell one to three times per day, possibly with a longer duration than normal. Such genies can change only their own shape, but a rare few can use the spell on other creatures and objects as well.\nWishes.\nThe genie power to grant wishes is legendary among mortals. Only the most potent genies, such as those among the nobility, can do so. A particular genie that has this power can grant one to three wishes to a creature that isn't a genie. Once a genie has granted its limit of wishes, it can't grant wishes again for some amount of time (usually 1 year). and cosmic law dictates that the same genie can expend its limit of wishes on a specific creature only once in that creature's existence.\nTo be granted a wish, a creature within 60 feet of the genie states a desired effect to it. The genie can then cast the wish spell on the creature's behalf to bring about the effect. Depending on the genie's nature, the genie might try to pervert the intent of the wish by exploiting the wish's poor wording. The perversion of the wording is usually crafted to be to the genie's benefit.",
+                    "Usage": ""
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Multiattack",
+                    "Content": "The djinni makes three scimitar attacks.",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Scimitar",
+                    "Content": "Melee Weapon Attack: +9 to hit, reach 5 ft., one target. Hit: 12 (2d6 + 5) slashing damage plus 3 (1d6) lightning or thunder damage (djinni's choice).",
+                    "Usage": ""
+                },
+                {
+                    "Name": "Create Whirlwind",
+                    "Content": "A 5-foot-radius, 30-foot-tall cylinder of swirling air magically forms on a point the djinni can see within 120 feet of it. The whirlwind lasts as long as the djinni maintains concentration (as if concentrating on a spell). Any creature but the djinni that enters the whirlwind must succeed on a DC 18 Strength saving throw or be restrained by it. The djinni can move the whirlwind up to 60 feet as an action, and creatures restrained by the whirlwind move with it. The whirlwind ends if the djinni loses sight of it.\nA creature can use its action to free a creature restrained by the whirlwind, including itself, by succeeding on a DC 18 Strength check. If the check succeeds, the creature is no longer restrained and moves to the nearest space outside the whirlwind.",
+                    "Usage": ""
+                }
+            ],
+            "Reactions": [],
+            "LegendaryActions": [],
+            "Description": "",
+            "Player": "",
+            "Version": "1.8.0",
+            "ImageURL": ""
         },
-        savingThrows: 'DEX +5, CON +12, WIS +6, CHA +10',
-        skills: 'Perception +16, Stealth +5',
-        damageImmunities: 'Fire',
-        conditionImmunities: '',
-        senses: 'Blindsight 60 ft., Darkvision 120 ft., Passive Perception 26',
-        languages: 'Common, Draconic',
-        challenge: '17 (18,000 XP)',
-        specialAbilities: [
-            {
-                name: 'Legendary Resistance (3/Day)',
-                desc: 'If the dragon fails a saving throw, it can choose to succeed instead.'
+        "Zombie": {
+            "Id": "Zombie",
+            "Name": "Zombie",
+            "Path": "",
+            "Source": "",
+            "Type": "M undead, monster manual, neutral evil",
+            "HP": {
+                "Value": 22,
+                "Notes": "(3d8+9)"
             },
-            {
-                name: 'Frightful Presence',
-                desc: 'Each creature of the dragon\'s choice that is within 120 feet and aware of it must succeed on a DC 16 Wisdom saving throw or become frightened for 1 minute.'
-            }
-        ],
-        actions: [
-            {
-                name: 'Multiattack',
-                desc: 'The dragon can use its Frightful Presence. It then makes three attacks: one with its bite and two with its claws.'
+            "AC": {
+                "Value": 8,
+                "Notes": ""
             },
-            {
-                name: 'Bite',
-                desc: 'Melee Weapon Attack: +14 to hit, reach 10 ft., one target. Hit: 19 (2d10 + 8) piercing damage plus 7 (2d6) fire damage.'
+            "InitiativeModifier": -2,
+            "InitiativeAdvantage": false,
+            "Speed": [
+                "20 ft."
+            ],
+            "Abilities": {
+                "Str": 13,
+                "Dex": 6,
+                "Con": 16,
+                "Int": 3,
+                "Wis": 6,
+                "Cha": 5
             },
-            {
-                name: 'Claw',
-                desc: 'Melee Weapon Attack: +14 to hit, reach 5 ft., one target. Hit: 15 (2d6 + 8) slashing damage.'
-            },
-            {
-                name: 'Fire Breath (Recharge 5-6)',
-                desc: 'The dragon exhales fire in a 60-foot cone. Each creature in that area must make a DC 20 Dexterity saving throw, taking 63 (18d6) fire damage on a failed save, or half as much damage on a successful one.'
-            }
-        ]
+            "DamageVulnerabilities": [],
+            "DamageResistances": [],
+            "DamageImmunities": [],
+            "ConditionImmunities": [
+                "poisoned"
+            ],
+            "Saves": [
+                {
+                    "Name": "Wis",
+                    "Modifier": 0
+                }
+            ],
+            "Skills": [],
+            "Senses": [
+                "darkvision 60 ft."
+            ],
+            "Languages": [
+                "understands all languages it spoke in life but can't speak"
+            ],
+            "Challenge": "1/4",
+            "Traits": [
+                {
+                    "Name": "Undead Fortitude",
+                    "Content": "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5+the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead.",
+                    "Usage": ""
+                }
+            ],
+            "Actions": [
+                {
+                    "Name": "Slam",
+                    "Content": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 4 (1d6 + 1) bludgeoning damage.",
+                    "Usage": ""
+                }
+            ],
+            "Reactions": [],
+            "LegendaryActions": [],
+            "Description": "",
+            "Player": "",
+            "Version": "1.5.6",
+            "ImageURL": "https://www.aidedd.org/dnd/images/zombie.jpg"
+        }
     }
     // Add more monsters as needed
 ];
@@ -162,11 +466,11 @@ const playerCharacters = [
 
 // Event listener for adding a new empty monster card
 document.getElementById('add-monster-button').addEventListener('click', function() {
-    createEmptyMonsterCard();
+    createEmptyMonsterCard(monsters);
 });
 
 
-function createEmptyMonsterCard() {
+function createEmptyMonsterCard(monstersJSON) {
     // Create the monster card container
     const card = document.createElement('div');
     card.classList.add('monster-card');
@@ -185,12 +489,12 @@ function createEmptyMonsterCard() {
     monsterList.classList.add('monster-list');
 
     // Populate the dropdown list with monster names
-    monsters.forEach(monster => {
+    monstersJSON.forEach(monster => {
         const listItem = document.createElement('li');
         listItem.textContent = monster.name;
         listItem.addEventListener('click', () => {
             // Find the selected monster
-            const selectedMonster = monsters.find(m => m.name === listItem.textContent);
+            const selectedMonster = monstersJSON.find(m => m.name === listItem.textContent);
 
             // Update the monster card with selected monster's details
             updateMonsterCard(card, selectedMonster);
@@ -235,6 +539,9 @@ function createEmptyMonsterCard() {
         console.error('Initiative tracker container not found.');
     }
 }
+
+
+
 
 function updateMonsterCard(card, monster) {
     // Clear previous content
@@ -351,21 +658,20 @@ function showMonsterCardDetails(monsterName) {
         const populateField = (elementId, label, value, isRollable = false) => {
             const element = document.getElementById(elementId);
             if (value || value === 0) {
-                const labelText = label ? `<strong>${label}:</strong> ` : ''; // Add colon only if label exists
-
+                const labelText = label ? `<strong>${label}:</strong><br>` : ''; // Add colon and break only if label exists
+        
                 if (isRollable) {
                     // Use parseAndReplaceDice to handle rollable text
                     element.innerHTML = ''; // Clear the element content
                     const parsedContent = parseAndReplaceDice({ name: label }, value);
                     const labelNode = document.createElement('span');
                     labelNode.innerHTML = labelText;
-                    console.log(parsedContent)
                     element.appendChild(labelNode);
                     element.appendChild(parsedContent);
                 } else {
                     element.innerHTML = `${labelText}${value}`;
                 }
-
+        
                 element.style.display = 'block';
             } else {
                 element.style.display = 'none';

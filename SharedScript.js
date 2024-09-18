@@ -140,38 +140,51 @@ async function onInit() {
     
 }
 
-// Function for parsing text and creating a rollable button and its label.
 function parseAndReplaceDice(action, text) {
     const diceRegex = /(\d+d\d+\s*(?:[+-]\s*\d+)?)|([+-]\s*\d+)/g;
-    const parts = text.split(diceRegex).filter(part => part); // Filter out empty or undefined parts
+    
+    // Create a temporary container to parse the HTML and text
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = text;
 
     const container = document.createElement('span');
 
-    for (const part of parts) {
-        if (diceRegex.test(part)) {
-            // Create the label
-            const label = document.createElement('label');
-            label.classList.add('actionButtonLabel');
-            const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
-            const diceRoll = part.replace(/[()\s]/g, '');
+    // Iterate over all child nodes in the tempDiv
+    Array.from(tempDiv.childNodes).forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            // Process text nodes
+            const parts = node.textContent.split(diceRegex).filter(part => part); // Split by dice regex
 
-            label.setAttribute('value', part); // Assuming `part` is the modifier value
-            label.setAttribute('data-dice-type', /^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll) ? diceRoll : `1d20${diceRoll}`);
-            label.setAttribute('data-name', diceName);
+            for (const part of parts) {
+                if (diceRegex.test(part)) {
+                    // Create the label
+                    const label = document.createElement('label');
+                    label.classList.add('actionButtonLabel');
+                    const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
+                    const diceRoll = part.replace(/[()\s]/g, '');
 
-            // Create the button
-            const button = document.createElement('button');
-            button.classList.add('actionButton');
-            button.textContent = part;
+                    label.setAttribute('value', part); // Assuming `part` is the modifier value
+                    label.setAttribute('data-dice-type', /^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll) ? diceRoll : `1d20${diceRoll}`);
+                    label.setAttribute('data-name', diceName);
 
-            // Append the label and button to the container
-            container.appendChild(label);
-            container.appendChild(button);
+                    // Create the button
+                    const button = document.createElement('button');
+                    button.classList.add('actionButton');
+                    button.textContent = part;
+
+                    // Append the label and button to the container
+                    container.appendChild(label);
+                    container.appendChild(button);
+                } else {
+                    // Append plain text parts
+                    container.appendChild(document.createTextNode(part));
+                }
+            }
         } else {
-            const textNode = document.createTextNode(part);
-            container.appendChild(textNode);
+            // If the node is an HTML element, clone it directly
+            container.appendChild(node.cloneNode(true));
         }
-    }
+    });
 
     return container;
 }
