@@ -68,7 +68,7 @@
                         <div id="monsterSpeed" class="monster-section-title">Speed</div>
                         <div>30 ft.</div>
                     </div>
-                    <hr>
+                    <hr id="monsterHealthHR"class="monsterStatsDivider">
             
                     <!-- Stats Block -->
                     <div  id="monsterStats" class="monster-stats">
@@ -79,7 +79,7 @@
                         <div class="monster-stat">WIS 8 (-1)</div>
                         <div class="monster-stat">CHA 8 (-1)</div>
                     </div>
-                    <hr id="monsterStatsDivider">
+                    <hr id="monsterStatHR" class="monsterStatsDivider">
             
                     <!-- Senses, Languages, Challenge -->
                     <div id="monsterSavingThrows" class="monster-section">
@@ -98,7 +98,7 @@
                         <div class="monster-section-title">Challenge</div>
                         <div>1/4 (50 XP)</div>
                     </div>
-                    <hr>
+                    <hr id="monsterSavesHR" class="monsterStatsDivider">
             
                     <!-- Special Abilities -->
                     <div id="monsterAbilities" class="monster-abilities">
@@ -107,7 +107,7 @@
                             <div class="description-text">The goblin can take the Disengage or Hide action as a bonus action on each of its turns.</div>
                         </div>
                     </div>
-                    <hr id="monsterAbilitiesDivider">
+                    <hr id="monsterAbilitiesHR"class="monsterAbilitiesDivider">
             
                     <!-- Actions -->
                     <div id="monsterActions" class="monster-actions">
@@ -121,11 +121,50 @@
                             <div class="description-text">Ranged Weapon Attack: +4 to hit, range 80/320 ft., one target. Hit: 5 (1d6 + 2) piercing damage.</div>
                         </div>
                     </div>
-                    <hr id="monsterActionsDivider">
+                    <hr id="monsterActionsHR" class="monsterActionsDivider">
                 </div>
             </div>
             <button id="add-monster-button">Add Monster</button>
             <button id="add-player-button">Add Player Character</button>
+            <div id="toggleContainer" class="toggle-container">
+                <div id="disadvButton" class="toggle-button">DisAdv</div>
+                <div id="normalButton" class="toggle-button active">Flat</div>
+                <div id="advButton" class="toggle-button">Adv</div>
+            </div>
+            <div>
+                <div id="conditionHeader">
+                    <label for="condition-select"></label>
+                    <select id="condition-select">
+                        <option value="Aid">Aid</option>
+                        <option value="Bane">Bane</option>
+                        <option value="Blinded">Blinded</option>
+                        <option value="Bless">Bless</option>
+                        <option value="Concentration">Concentration</option>
+                        <option value="Charmed">Charmed</option>
+                        <option value="Deafended">Deafended</option>
+                        <option value="EmboldeningBond">Emboldening Bond</option>
+                        <option value="Exhaustion">Exhaustion</option>
+                        <option value="Frightened">Frightened</option>
+                        <option value="Grappled">Grappled</option>
+                        <option value="Guidance">Guidance</option>
+                        <option value="Heroism">Heroism</option>
+                        <option value="Incapacitated">Incapacitated</option>
+                        <option value="Invisible">Invisible</option>
+                        <option value="Paralyzed">Paralyzed</option>
+                        <option value="Petrified">Petrified</option>
+                        <option value="Poisioned">Poisioned</option>
+                        <option value="Prone">Prone</option>
+                        <option value="Restrained">Restrained</option>
+                        <option value="Sanctuary">Sanctuary</option>
+                        <option value="ShieldofFaith">Shield of Faith</option>
+                        <option value="Stunned">Stunned</option>
+                        <option value="Unconscious">Unconscious</option>
+                    <!-- Add more condition options here -->
+                    </select>
+                    <button class="nonRollButton" onclick="monsterConditions()">Condition</button>
+                </div>
+                <div id="conditionTracker"></div>
+            </div>
             <div id="initiative-tracker">
                 <div id="monster-cards-container">
                     <!-- Monster cards will be added here dynamically -->

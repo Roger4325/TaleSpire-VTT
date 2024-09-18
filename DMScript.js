@@ -166,19 +166,10 @@ document.getElementById('add-monster-button').addEventListener('click', function
 });
 
 
-
 function createEmptyMonsterCard() {
     // Create the monster card container
     const card = document.createElement('div');
     card.classList.add('monster-card');
-
-
-    // Add event listener to show details on clicking the monster cards
-    card.addEventListener('click', function() {
-        const monsterName = card.querySelector('.monster-name').textContent.replace(/\s\([A-Z]\)$/, '');
-        showMonsterCardDetails(monsterName);
-    });
-    
 
     // Create the dropdown container
     const dropdownContainer = document.createElement('div');
@@ -192,7 +183,7 @@ function createEmptyMonsterCard() {
     // Create the dropdown list
     const monsterList = document.createElement('ul');
     monsterList.classList.add('monster-list');
-    
+
     // Populate the dropdown list with monster names
     monsters.forEach(monster => {
         const listItem = document.createElement('li');
@@ -245,10 +236,6 @@ function createEmptyMonsterCard() {
     }
 }
 
-
-
-
-
 function updateMonsterCard(card, monster) {
     // Clear previous content
     card.innerHTML = '';
@@ -274,12 +261,17 @@ function updateMonsterCard(card, monster) {
 
     const monsterName = document.createElement('div');
     monsterName.classList.add('monster-name');
-    
+
     // Add unique identifier to the monster name
-    const existingNames = Array.from(document.getElementsByClassName('monster-name'))
-                               .map(nameElem => nameElem.textContent.replace(/\s\([A-Z]\)$/, ''));
+    const existingNames = Array.from(document.getElementsByClassName('monster-name')).map(nameElem => nameElem.textContent.replace(/\s\([A-Z]\)$/, ''));
     const count = existingNames.filter(name => name === monster.name).length;
     monsterName.textContent = `${monster.name} (${String.fromCharCode(65 + count)})`;
+
+    // Add event listener to show details on clicking the monster name
+    monsterName.addEventListener('click', function() {
+        const monsterNameText = monsterName.textContent.replace(/\s\([A-Z]\)$/, '');
+        showMonsterCardDetails(monsterNameText);
+    });
 
     const statsDiv = document.createElement('div');
     statsDiv.classList.add('monster-stats');
@@ -300,6 +292,7 @@ function updateMonsterCard(card, monster) {
         card.appendChild(dropdownContainer);
     }
 }
+
 
 
 // Function to populate the monster card with selected monster data
@@ -355,10 +348,24 @@ function showMonsterCardDetails(monsterName) {
         currentSelectedMonsterName = monsterName;
 
         // Reusable function to populate data conditionally
-        const populateField = (elementId, label, value) => { //Really need to use parse and replace text here so that each action or anything that is rollable is added as a button.
+        const populateField = (elementId, label, value, isRollable = false) => {
             const element = document.getElementById(elementId);
             if (value || value === 0) {
-                element.innerHTML = `<strong>${label}:</strong> ${value}`;
+                const labelText = label ? `<strong>${label}:</strong> ` : ''; // Add colon only if label exists
+
+                if (isRollable) {
+                    // Use parseAndReplaceDice to handle rollable text
+                    element.innerHTML = ''; // Clear the element content
+                    const parsedContent = parseAndReplaceDice({ name: label }, value);
+                    const labelNode = document.createElement('span');
+                    labelNode.innerHTML = labelText;
+                    console.log(parsedContent)
+                    element.appendChild(labelNode);
+                    element.appendChild(parsedContent);
+                } else {
+                    element.innerHTML = `${labelText}${value}`;
+                }
+
                 element.style.display = 'block';
             } else {
                 element.style.display = 'none';
@@ -371,21 +378,21 @@ function showMonsterCardDetails(monsterName) {
         populateField('monsterAC', 'Armor Class', monster.ac);
         populateField('monsterHP', 'Hit Points', monster.hp ? `${monster.hp.current} / ${monster.hp.max}` : '');
         populateField('monsterSpeed', 'Speed', monster.speed);
-        
+
         // Check and display monster stats (STR, DEX, CON, INT, WIS, CHA)
         if (monster.stats) {
             const { str, dex, con, int, wis, cha } = monster.stats;
             const statsText = `STR ${str} | DEX ${dex} | CON ${con} | INT ${int} | WIS ${wis} | CHA ${cha}`;
             populateField('monsterStats', '', statsText);
-            document.getElementById('monsterStatsDivider').style.display = 'block';
+            document.getElementById('monsterStatHR').style.display = 'block';
         } else {
             document.getElementById('monsterStats').style.display = 'none';
-            document.getElementById('monsterStatsDivider').style.display = 'none';
+            document.getElementById('monsterStatHR').style.display = 'none';
         }
 
         // Other fields
-        populateField('monsterSavingThrows', 'Saving Throws', monster.savingThrows);
-        populateField('monsterSkills', 'Skills', monster.skills);
+        populateField('monsterSavingThrows', 'Saving Throws', monster.savingThrows, true);
+        populateField('monsterSkills', 'Skills', monster.skills, true);
         populateField('monsterDamageImmunities', 'Damage Immunities', monster.damageImmunities);
         populateField('monsterConditionImmunities', 'Condition Immunities', monster.conditionImmunities);
         populateField('monsterSenses', 'Senses', monster.senses);
@@ -395,21 +402,21 @@ function showMonsterCardDetails(monsterName) {
         // Special abilities (if any)
         if (monster.specialAbilities && monster.specialAbilities.length > 0) {
             const abilitiesText = monster.specialAbilities.map(ability => `<strong>${ability.name}:</strong> ${ability.desc}`).join('<br>');
-            populateField('monsterAbilities', '', abilitiesText);
-            document.getElementById('monsterAbilitiesDivider').style.display = 'block';
+            populateField('monsterAbilities', '', abilitiesText, true); // Mark as rollable
+            document.getElementById('monsterAbilitiesHR').style.display = 'block';
         } else {
             document.getElementById('monsterAbilities').style.display = 'none';
-            document.getElementById('monsterAbilitiesDivider').style.display = 'none';
+            document.getElementById('monsterAbilitiesHR').style.display = 'none';
         }
 
         // Actions (if any)
         if (monster.actions && monster.actions.length > 0) {
             const actionsText = monster.actions.map(action => `<strong>${action.name}:</strong> ${action.desc}`).join('<br>');
-            populateField('monsterActions', 'Actions', actionsText);
-            document.getElementById('monsterActionsDivider').style.display = 'block';
+            populateField('monsterActions', 'Actions', actionsText, true); // Mark as rollable
+            document.getElementById('monsterActionsHR').style.display = 'block';
         } else {
             document.getElementById('monsterActions').style.display = 'none';
-            document.getElementById('monsterActionsDivider').style.display = 'none';
+            document.getElementById('monsterActionsHR').style.display = 'none';
         }
 
         // Show the monster card with the slide-in animation
@@ -426,7 +433,9 @@ function showMonsterCardDetails(monsterName) {
         // Make sure the card is visible (in case it was previously hidden)
         monsterCardContainer.style.display = 'block';
     }
+    rollableButtons()
 }
+
 
 
 
@@ -632,4 +641,8 @@ function reorderCards() {
     });
 }
 
+function monsterConditions(){
+    console.log("Grab a monster and add a condition to it")
+}
 
+const conditionsMap = new Map();

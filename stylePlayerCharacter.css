@@ -425,31 +425,6 @@ select{
 
 /* Button Styling */
 
-.actionButton{
-        background-color: var(--ts-accent-background);
-        color: #FFFFFF;
-        border: none;
-        border-radius: 5px;
-        padding: 2px 5px;
-        cursor: pointer;
-        margin: 2px;
-}
-
-.actionButton:hover, .nonRollButton:hover, .remove-condition:hover{
-    background-color: var(--ts-button-hover);
-    transition: ease-in-out .15s;
-}
-
-.nonRollButton,.remove-condition,.dropbtn{
-    background-color: var(--ts-button-background);
-    color: #FFFFFF;
-    border: none;
-    border-radius: 5px;
-    padding: 2px 5px;
-    cursor: pointer;
-    margin: 2px;
-}
-
     /* Skill Buttons */
     .proficiencyButtons button {
         margin: 0px 10px;

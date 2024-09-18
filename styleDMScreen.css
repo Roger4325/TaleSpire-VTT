@@ -1,82 +1,61 @@
-.monster-init input{
-    width: 35px;
-    padding: 5px;
-    font-size: 16px;
+
+/*TESTING SECTION*/
+
+/* Styling for the toggle buttons */
+.toggle-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    margin-bottom: 8px;
+}
+
+.toggle-button {
+    flex: 1;
     text-align: center;
-    border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
-}
-
-.monster-hp input {
-    width: 40px;
-}
-
-.monster-card {
-    margin-left: 30px;
-    display: flex;
-    align-items: center;
-    background-color: var(--ts-background-secondary);
-    border: 2px solid var(--ts-button-background);
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
+    padding: 5px;
     cursor: pointer;
+    border: 1px solid var(--ts-button-background);
+    font-size: 12px;
+}
+.toggle-button:hover {
+    background-color: var(--ts-button-hover);
 }
 
-.monster-card:hover {
-    background-color: var(--ts-button-background);
-}
-
-.monster-init {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--ts-button-background);
+.toggle-button.active {
+    background-color: var(--ts-button-hover);
     color: white;
-    font-size: 20px;
-    font-weight: bold;
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
+}
+
+#disadvButton:hover{
+    background-color: rgb(190, 34, 34);
+}
+#advButton:hover{
+    background-color: green;
+}
+#disadvButton.active{
+    background-color: rgb(190, 34, 34);
+}
+#advButton.active{
+    background-color: green;
+}
+
+#conditionHeader{
+    font-size: 12px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+#condition-select{
     margin-right: 10px;
 }
 
-.monster-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
+#conditionTracker{
+    display:flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    font-size: 12px;
 }
-
-.monster-hp {
-    display: flex;
-    align-items: center;
-    background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-border-color);
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.monster-hp input {
-    margin: 0 5px;
-}
-
-#monster-detail-card {
-    display: none;
-    background-color: var(--ts-background-secondary);
-    border: 2px solid var(--ts-button-background);
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 10px;
-}
-
-
-
-
-
-
-
-
-/*TESTING SECTION*/
 
 
 /* Monster card styles */
@@ -89,10 +68,19 @@
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 8px;
-    cursor: pointer;
     position: relative; /* Ensure dropdown positioning is relative to card */
+    /* Remove cursor: pointer; here */
 }
 
+/* Make the monster name area clickable */
+.monster-name {
+    cursor: pointer; /* Set cursor pointer on the monster name */
+}
+
+/* Optional: Highlight the monster name on hover */
+.monster-name:hover {
+    text-decoration: underline; /* Adds visual feedback for interactivity */
+}
 .monster-init {
     display: flex;
     justify-content: center;
@@ -139,11 +127,11 @@
 /* Dropdown container */
 .dropdown-container {
     position: relative; /* To position the dropdown list */
-    width: 100%; /* Ensures the dropdown takes full width of the container */
+    width: 50%; /* Ensures the dropdown takes full width of the container */
 }
 
 .monster-name-input {
-    width: 100%; /* Full width input */
+    width: 50%; /* Full width input */
     padding: 5px;
     border-radius: 5px;
     border: 1px solid var(--ts-button-background);
@@ -184,7 +172,7 @@
     height: auto;
     background-color: var(--ts-background-secondary);
     box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
-    transition: right 0.5s ease;
+    transition: right 0.5s ease, opacity 0.5s ease; /* General transition without delay */
     z-index: 1000;
     font-size: 14px;
     padding: 15px;
@@ -197,12 +185,15 @@
 .monster-card-container.visible {
     right: -20px; /* Slides in from the right */
     opacity: 1;
+    transition: right 0.5s ease, opacity 0.1s ease; /* Reset to ensure no delay when visible */
 }
 
 .monster-card-container.hidden {
     right: -100%; /* Slides out to the right */
     opacity: 0;
+    transition: right 0.5s ease, opacity 0.5s ease 0.5s; /* Delay only when hiding */
 }
+
 
 /* Internal monster card content */
 .monster-block {
@@ -254,7 +245,7 @@
 .monster-block hr {
     border: 0;
     height: 1px;
-    background-color: var(--ts-accent-color);
+    background-color: var(--ts-button-background);
     margin: 10px 0;
 }
 

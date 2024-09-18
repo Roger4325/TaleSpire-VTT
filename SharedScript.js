@@ -140,7 +140,7 @@ async function onInit() {
     
 }
 
-//Function for parsing text and creating a rollable button.
+// Function for parsing text and creating a rollable button and its label.
 function parseAndReplaceDice(action, text) {
     const diceRegex = /(\d+d\d+\s*(?:[+-]\s*\d+)?)|([+-]\s*\d+)/g;
     const parts = text.split(diceRegex).filter(part => part); // Filter out empty or undefined parts
@@ -149,20 +149,23 @@ function parseAndReplaceDice(action, text) {
 
     for (const part of parts) {
         if (diceRegex.test(part)) {
-            const button = document.createElement('button');
-            button.classList.add('action-button');
+            // Create the label
+            const label = document.createElement('label');
+            label.classList.add('actionButtonLabel');
             const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
+            const diceRoll = part.replace(/[()\s]/g, '');
+
+            label.setAttribute('value', part); // Assuming `part` is the modifier value
+            label.setAttribute('data-dice-type', /^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll) ? diceRoll : `1d20${diceRoll}`);
+            label.setAttribute('data-name', diceName);
+
+            // Create the button
+            const button = document.createElement('button');
+            button.classList.add('actionButton');
             button.textContent = part;
-            let diceRoll = part.replace(/[()\s]/g, '');
 
-            if (!/^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll)) {
-                diceRoll = `1d20${diceRoll}`;
-            }
-
-            button.addEventListener('click', function () {
-                diceRoller(diceName, diceRoll);
-            });
-
+            // Append the label and button to the container
+            container.appendChild(label);
             container.appendChild(button);
         } else {
             const textNode = document.createTextNode(part);
@@ -172,6 +175,7 @@ function parseAndReplaceDice(action, text) {
 
     return container;
 }
+
 
 
 let trackedIds = {};
