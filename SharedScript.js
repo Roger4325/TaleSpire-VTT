@@ -131,10 +131,14 @@ async function onInit() {
 
     //Initialize spell List
     AppData.spellLookupInfo = await readSpellJson();
+    AppData.monsterLookupInfo = await readMonsterJsonList();
+    establishMonsterData()
+
     await playerSetUP();
     rollableButtons();
 
     loadAndDisplayCharacter("Tryn");
+
 
     
     
@@ -748,4 +752,35 @@ async function readSpellJson() {
         console.error('Error loading data:', error);
         return null;
     }
+}
+
+async function readMonsterJsonList() {
+    try {
+
+        // Fetch the data from the JSON file
+        const response = await fetch('Monster_Manual.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const monsterData = await response.json();
+        const allCreatureData = (await loadDataFromGlobalStorage("monsters"));
+
+        // Combine the data from global storage and the JSON file
+        const combinedData = {
+            ...allCreatureData,
+            ...monsterData
+        };
+
+        // Extract monster names from the combined data
+        const monsterNames = Object.keys(combinedData);
+
+        // Log and return the data
+        return {
+            monsterNames: monsterNames,
+            monsterData: combinedData
+        };
+    } catch (error) {
+        console.error('Error loading data:', error);
+        return null;
+    }     
 }

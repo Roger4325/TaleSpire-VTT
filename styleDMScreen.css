@@ -58,9 +58,15 @@
 }
 
 
+
+
+
+
+
+
+
 /* Monster card styles */
 .monster-card {
-    margin-left: 30px;
     display: flex;
     align-items: center;
     background-color: var(--ts-background-secondary);
@@ -69,19 +75,10 @@
     margin-bottom: 10px;
     border-radius: 8px;
     position: relative; /* Ensure dropdown positioning is relative to card */
-    /* Remove cursor: pointer; here */
 }
 
-/* Make the monster name area clickable */
-.monster-name {
-    cursor: pointer; /* Set cursor pointer on the monster name */
-}
-
-/* Optional: Highlight the monster name on hover */
-.monster-name:hover {
-    text-decoration: underline; /* Adds visual feedback for interactivity */
-}
-.monster-init {
+/* Initiative box */
+.init-input {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -92,37 +89,96 @@
     width: 50px;
     height: 50px;
     border-radius: 5px;
+    margin-right: 15px;
+}
+
+/* Monster information */
+.monster-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
     margin-right: 10px;
 }
 
-.monster-init input {
-    width: 35px;
-    padding: 5px;
-    font-size: 16px;
+.monster-name {
+    cursor: pointer; /* Set cursor pointer on the monster name */
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.monster-name:hover {
+    text-decoration: underline; /* Adds visual feedback for interactivity */
+}
+
+.monster-details {
+    font-size: 14px;
+    color: var(--ts-text-secondary);
+}
+
+/* HP and adjustments */
+.monster-hp {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: .5fr 1fr;
+    gap: 5px; /* Adjust spacing between elements */
+    margin-right: 20px;
+}
+
+/* Math input for healing/damage */
+.hp-adjust-input {
+    width: 60px;
+    padding: 3px;
+    font-size: 14px;
     text-align: center;
     border-radius: 5px;
     border: 1px solid var(--ts-button-background);
 }
 
-.monster-info {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
-.monster-hp {
-    display: flex;
-    align-items: center;
-    background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-border-color);
+/* HP display */
+.current-hp,
+.max-hp{
+    padding: 3px;
     border-radius: 5px;
-    padding: 5px;
+    background-color: var(--ts-background-secondary);
+    min-width: 40px;
+    text-align: center;
+    font-size: 20px;
 }
 
-.monster-hp input {
-    width: 40px;
+/* Temporary HP */
+
+.temp-hp-container{
+    font-size: 14px;
+}
+.temp-hp {
+    background-color: var(--ts-background-tertiary); /* Different background for temporary HP */
+    padding: 1px 8px;
+    border-radius: 5px;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-button-background);
+    min-width: 40px;
+    text-align: center;
+    font-size: 20px;
+}
+
+/* Adjust the margins for spacing */
+.monster-hp .hp-label {
     margin: 0 5px;
 }
+
+/* End of monster card styling */
+
+
+
+
+
+
+
+
+
+
 
 /* Dropdown container */
 .dropdown-container {
