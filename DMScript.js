@@ -148,6 +148,14 @@ function updateMonsterCard(card, monsterName) {
 
     initDiv.appendChild(initInput);
 
+
+    const monsterPictureDiv = document.createElement('div');
+    monsterPictureDiv.classList.add('monster-picture-div');
+    const monsterPicture = document.createElement('img');
+    monsterPicture.classList.add('monster-picture');
+
+   monsterPictureDiv.appendChild(monsterPicture);
+
     // Create the monster info container
     const monsterInfo = document.createElement('div');
     monsterInfo.classList.add('monster-info');
@@ -173,12 +181,18 @@ function updateMonsterCard(card, monsterName) {
 
     // Add AC, Speed, and Passive Perception
     statsDiv.innerHTML = `
-        <span>AC ${currentMonsterData.AC.Value} | Init Mod ${currentMonsterData.InitiativeModifier} <br> Speed ${currentMonsterData.Speed} ft <br> Pass. Perception ${currentMonsterData.PassivePerception}</span>
+        <span>AC : ${currentMonsterData.AC.Value} | Init Mod : ${currentMonsterData.InitiativeModifier} <br> Speed : ${currentMonsterData.Speed}</span>
     `;
+
+    console.log(currentMonsterData.InitiativeModifier)
 
     // Add monster name and stats to the monster info
     monsterInfo.appendChild(monsterNameDiv);
     monsterInfo.appendChild(statsDiv);
+
+
+    const conditionsDiv = document.createElement('div');
+    conditionsDiv.classList.add('conditions-trackers')
 
     // Create the HP and adjustments container
     const monsterHP = document.createElement('div');
@@ -272,7 +286,9 @@ function updateMonsterCard(card, monsterName) {
 
     // Add all components to the card in a consistent layout
     card.appendChild(initDiv);
+    card.appendChild(monsterPictureDiv);
     card.appendChild(monsterInfo);
+    card.appendChild(conditionsDiv);
     card.appendChild(monsterHP);
 
     // Re-append the dropdown container to the card
@@ -280,41 +296,16 @@ function updateMonsterCard(card, monsterName) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
+
+    reorderCards()
 }
 
 
 
-
-// Function to populate the monster card with selected monster data
-function populateMonsterCard(card, monster) {
-    // Clear the existing monster info
-    const monsterInfo = card.querySelector('.monster-info');
-    monsterInfo.innerHTML = '';
-
-    // Set the monster's initiative to the default or current value
-    const initInput = card.querySelector('.init-input');
-    initInput.value = monster.initiative || 0;
-
-    // Set up monster information
-    const monsterName = document.createElement('div');
-    monsterName.classList.add('monster-name');
-    monsterName.textContent = monster.name;
-
-    const statsDiv = document.createElement('div');
-    statsDiv.classList.add('monster-stats');
-    statsDiv.innerHTML = `
-        <span>AC ${monster.ac}</span>
-        <span>HP <input type="number" class="hp-input" value="${monster.hp.current}"> / ${monster.hp.max}</span>
-    `;
-
-    // Append the monster details to the card
-    monsterInfo.appendChild(monsterName);
-    monsterInfo.appendChild(statsDiv);
-
-    reorderCards(); // Reorder cards after adding the new monster
-}
-
-
+// Event listener for hdining the monster stat block
+document.getElementById('closeMonsterCard').addEventListener('click', function() {
+    toggleMonsterCardVisibility(false);
+});
 
 
 let currentSelectedMonsterName = '';
@@ -325,8 +316,7 @@ function showMonsterCardDetails(monsterName) {
 
     if (monsterCardContainer.classList.contains('visible') && currentSelectedMonsterName === monsterName) {
         // Hide the card if it's already open
-        monsterCardContainer.classList.remove('visible');
-        monsterCardContainer.classList.add('hidden');
+        toggleMonsterCardVisibility(false);
         return; // Exit the function early
     }
 
@@ -336,86 +326,147 @@ function showMonsterCardDetails(monsterName) {
     if (monster) {
         currentSelectedMonsterName = monsterName;
 
-        // Reusable function to populate data conditionally
-        const populateField = (elementId, label, value, isRollable = false) => {
-            const element = document.getElementById(elementId);
-            if (value || value === 0) {
-                const labelText = label ? `<strong>${label}:</strong><br>` : ''; // Add colon and break only if label exists
-
-                if (isRollable) {
-                    // Use parseAndReplaceDice to handle rollable text
-                    element.innerHTML = ''; // Clear the element content
-                    const parsedContent = parseAndReplaceDice({ name: label }, value);
-                    const labelNode = document.createElement('span');
-                    labelNode.innerHTML = labelText;
-                    element.appendChild(labelNode);
-                    element.appendChild(parsedContent);
-                } else {
-                    element.innerHTML = `${labelText}${value}`;
-                }
-
-                element.style.display = 'block';
-            } else {
-                element.style.display = 'none';
-            }
-        };
-
-        // Populate basic monster info
-        populateField('monsterName', 'Name', monster.Name);
-        populateField('monsterAC', 'Armor Class', monster.AC.Value);
-        populateField('monsterHP', 'Hit Points', `${monster.HP.Value} (${monster.HP.Dice})`, true);
-        populateField('monsterSpeed', 'Speed', monster.Speed);
-        populateField('monsterInitiativeModifier', 'Initiative Mod', monster.InitiativeModifier);
-        populateField('monsterPassivePerception', 'Passive Perception', monster.PassivePerception);
-
-        // Iterate through skills, saving throws, and abilities
-        populateField('monsterSkills', 'Skills', monster.Skills, true);
-        populateField('monsterSaves', 'Saving Throws', monster.Saves, true);
-
-        // Iterate through actions
-        const actionsContainer = document.getElementById('monsterActions');
-        actionsContainer.innerHTML = ''; // Clear previous content
-        if (monster.Actions && monster.Actions.length > 0) {
-            monster.Actions.forEach(action => {
-                const actionElement = parseAndReplaceDice({ name: action.Name }, `${action.Name}: ${action.Description}`);
-                actionsContainer.appendChild(actionElement);
-            });
-            actionsContainer.style.display = 'block';
-        } else {
-            actionsContainer.style.display = 'none';
-        }
-
-        // Iterate through special abilities
-        const abilitiesContainer = document.getElementById('monsterAbilities');
-        abilitiesContainer.innerHTML = ''; // Clear previous content
-        if (monster.Abilities && monster.Abilities.length > 0) {
-            monster.Abilities.forEach(ability => {
-                const abilityElement = parseAndReplaceDice({ name: ability.Name }, `${ability.Name}: ${ability.Description}`);
-                abilitiesContainer.appendChild(abilityElement);
-            });
-            abilitiesContainer.style.display = 'block';
-        } else {
-            abilitiesContainer.style.display = 'none';
-        }
-
-        // Iterate through legendary actions
-        const legendaryActionsContainer = document.getElementById('monsterLegendaryActions');
-        legendaryActionsContainer.innerHTML = ''; // Clear previous content
-        if (monster.LegendaryActions && monster.LegendaryActions.length > 0) {
-            monster.LegendaryActions.forEach(legendaryAction => {
-                const legendaryActionElement = parseAndReplaceDice({ name: legendaryAction.Name }, `${legendaryAction.Name}: ${legendaryAction.Description}`);
-                legendaryActionsContainer.appendChild(legendaryActionElement);
-            });
-            legendaryActionsContainer.style.display = 'block';
-        } else {
-            legendaryActionsContainer.style.display = 'none';
-        }
+        // Populate all fields
+        populateMonsterFields(monster);
 
         // Show the monster card container
+        toggleMonsterCardVisibility(true);
+    } else {
+        console.error(`Monster data not found for: ${monsterName}`);
+    }
+}
+
+
+// Toggles the visibility of the monster card
+function toggleMonsterCardVisibility(isVisible) {
+    const monsterCardContainer = document.getElementById('monsterCardContainer');
+    if (isVisible) {
         monsterCardContainer.classList.remove('hidden');
         monsterCardContainer.classList.add('visible');
     } else {
-        console.error(`Monster data not found for: ${monsterName}`);
+        monsterCardContainer.classList.remove('visible');
+        monsterCardContainer.classList.add('hidden');
+    }
+}
+
+// Reusable function to populate data conditionally
+function populateField(elementId, label, value, isRollable = false) {
+    const element = document.getElementById(elementId);
+    if (value || value === 0) {
+        const labelText = label ? `<strong>${label}:</strong><br>` : ''; // Add colon and break only if label exists
+
+        if (isRollable) {
+            // Use parseAndReplaceDice to handle rollable text
+            element.innerHTML = ''; // Clear the element content
+            const parsedContent = parseAndReplaceDice({ name: label }, value);
+            const labelNode = document.createElement('span');
+            labelNode.innerHTML = labelText;
+            element.appendChild(labelNode);
+            element.appendChild(parsedContent);
+        } else {
+            element.innerHTML = `${labelText}${value}`;
+        }
+
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
+}
+
+// Populates monster fields
+function populateMonsterFields(monster) {
+    // Populate basic monster info
+    populateField('monsterName', '', monster.Name);
+    populateField('monsterType', '', monster.Type, false);
+    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
+    populateField('monsterHP', 'Hit Points', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
+    populateField('monsterSpeed', 'Speed', monster.Speed);
+    populateField('monsterLanguages', 'Languages', monster.Languages, false);
+    populateField('monsterChallenge', 'CR', monster.Challenge, false);
+
+    populateMonsterListField('monsterAbilityScores', monster.Abilities, 'abilityScores');
+
+    if (monster.Skills.length > 0){
+        populateMonsterListField('monsterSkills', monster.Skills, 'savingThrow');
+    }
+
+    if (monster.Saves.length > 0){
+        populateMonsterListField('monsterSaves', monster.Saves, 'savingThrow');
+    }
+
+    // Populate actions
+    if (monster.Actions.length > 0){
+        populateMonsterListField('monsterActions', monster.Actions, 'action');
+    }
+
+    // Populate traits
+    if (monster.Traits.length > 0){
+        populateMonsterListField('monsterAbilities', monster.Traits,'traits');
+    }
+
+    // Populate legendary actions
+    if (monster.LegendaryActions.length > 0){
+        populateMonsterListField('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
+    }
+    
+    rollableButtons()
+}
+
+
+
+// Updated function to populate list fields with various item types
+function populateMonsterListField(elementId, items, type) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = ''; // Clear previous content
+
+    // Check if items exist and are not empty
+    if (items) {
+        // Handle if items is an array (Actions, Legendary Actions, Skills, Saving Throws)
+        if (Array.isArray(items) && items.length > 0) {
+            items.forEach(item => {
+                let itemContent;
+                // Determine the item content based on the type
+                switch (type) {
+                    case 'traits':
+                    case 'action':
+                    case 'legendaryAction':
+                        itemContent = parseAndReplaceDice({ name: item.Name }, `${item.Name}: ${item.Content}`);
+                        break;
+                    case 'savingThrow':
+                    case 'skill':
+                        itemContent = parseAndReplaceDice({ name: item.Name }, `${item.Name}: ${item.Modifier}`);
+                        break;
+                        // itemContent = document.createElement('div');
+                        // itemContent.textContent = `${item.Name}: ${item.Modifier}`;
+                        // break;
+                    default:
+                        itemContent = document.createElement('div');
+                        itemContent.textContent = item.Name || 'Unknown Item';
+                }
+                
+                if (itemContent) {
+                    container.appendChild(itemContent);
+
+                    // Create and append a <br> element after each item
+                    const lineBreak = document.createElement('br');
+                    container.appendChild(lineBreak);
+                }
+            });
+            container.style.display = 'block';
+        }
+        // Handle if items is an object (Ability Scores)
+        else if (typeof items === 'object' && !Array.isArray(items)) {
+            Object.keys(items).forEach(key => {
+                const scoreElement = document.createElement('div');
+                scoreElement.innerHTML = `<strong>${key}:</strong> ${items[key]}`;
+                container.appendChild(scoreElement);
+            });
+            container.style.display = 'block';
+        } else {
+            container.style.display = 'none';
+        }
+    } else {
+        container.style.display = 'none';
     }
 }
 
