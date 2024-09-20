@@ -460,7 +460,7 @@
         "Name": "Zombie",
         "Path": "",
         "Source": "",
-        "Type": "M undead, monster manual, neutral evil",
+        "Type": "Medium undead, neutral evil",
         "HP": {
             "Value": 22,
             "Notes": "(3d8+9)"

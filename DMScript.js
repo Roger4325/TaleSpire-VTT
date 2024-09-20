@@ -353,7 +353,7 @@ function toggleMonsterCardVisibility(isVisible) {
 function populateField(elementId, label, value, isRollable = false) {
     const element = document.getElementById(elementId);
     if (value || value === 0) {
-        const labelText = label ? `<strong>${label}:</strong><br>` : ''; // Add colon and break only if label exists
+        const labelText = label ? `<strong>${label}:</strong> ` : ''; // Add colon and break only if label exists
 
         if (isRollable) {
             // Use parseAndReplaceDice to handle rollable text
@@ -378,8 +378,8 @@ function populateMonsterFields(monster) {
     // Populate basic monster info
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
-    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
-    populateField('monsterHP', 'Hit Points', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
+    populateField('monsterAC', 'AC', monster.AC?.Value, false);
+    populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
     populateField('monsterSpeed', 'Speed', monster.Speed);
     populateField('monsterLanguages', 'Languages', monster.Languages, false);
     populateField('monsterChallenge', 'CR', monster.Challenge, false);
@@ -452,7 +452,7 @@ function populateMonsterListField(elementId, items, type) {
                     container.appendChild(lineBreak);
                 }
             });
-            container.style.display = 'block';
+            container.style.display = '';
         }
         // Handle if items is an object (Ability Scores)
         else if (typeof items === 'object' && !Array.isArray(items)) {
@@ -461,7 +461,7 @@ function populateMonsterListField(elementId, items, type) {
                 scoreElement.innerHTML = `<strong>${key}:</strong> ${items[key]}`;
                 container.appendChild(scoreElement);
             });
-            container.style.display = 'block';
+            container.style.display = '';
         } else {
             container.style.display = 'none';
         }

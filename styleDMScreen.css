@@ -245,6 +245,9 @@
 
 
 
+
+
+
 /* Main container for the monster card */
 .monster-card-container {
     position: fixed;
@@ -304,7 +307,6 @@
 
 /* Section titles */
 .monster-block .monster-section-title {
-    font-weight: bold;
     margin-bottom: 5px;
 }
 
