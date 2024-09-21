@@ -58,7 +58,10 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
-            "conditions": [],
+            "conditions": [
+                "Bless",
+                "Bane"
+            ],
             "actionTable": [
                 {
                     "1": {
@@ -109,7 +112,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Twilight",
                         "thirdColumn": "30 ft",
-                        "fourthColumn": "+8",
+                        "fourthColumn": "+9",
                         "fifthColumn": "1d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "WIS",
@@ -129,7 +132,7 @@
             ],
             "spellData": {
                 "spellcastingModifier": "WIS",
-                "spelllevelselected": "3",
+                "spelllevelselected": "9",
                 "spellmagicbonus": "1",
                 "Cantrip": {
                     "spells": [
@@ -490,5 +493,153 @@
             },
             "groupTraitData": []
         }
+    },
+    "Encounter Data": {
+        "Tester": [
+            {
+                "init": "0",
+                "name": "Merrow (A)",
+                "currentHp": "45",
+                "maxHp": "45",
+                "tempHp": "0",
+                "conditions": [
+                    "Aid",
+                    "Bane",
+                    "Bless"
+                ]
+            }
+        ],
+        "Tester 2": [
+            {
+                "init": "0",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": {}
+            }
+        ],
+        "Tester 3": [
+            {
+                "init": "31",
+                "name": "Zombie (A)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": {}
+            },
+            {
+                "init": "17",
+                "name": "Djinni (A)",
+                "currentHp": "161",
+                "maxHp": "161",
+                "tempHp": "0",
+                "conditions": {}
+            },
+            {
+                "init": "16",
+                "name": "Zombie (A)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": {}
+            },
+            {
+                "init": "15",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "500",
+                "tempHp": "50",
+                "conditions": {}
+            }
+        ],
+        "Zombie and Dragons": [
+            {
+                "init": "31",
+                "name": "Zombie (A)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": [
+                    "Aid"
+                ]
+            },
+            {
+                "init": "17",
+                "name": "Djinni (A)",
+                "currentHp": "161",
+                "maxHp": "161",
+                "tempHp": "0",
+                "conditions": [
+                    "Deafended"
+                ]
+            },
+            {
+                "init": "16",
+                "name": "Zombie (B)",
+                "currentHp": "22",
+                "maxHp": "75",
+                "tempHp": "55",
+                "conditions": [
+                    "Exhaustion 3",
+                    "Aid"
+                ]
+            },
+            {
+                "init": "15",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "500",
+                "tempHp": "50",
+                "conditions": [
+                    "Deafended"
+                ]
+            },
+            {
+                "init": "0",
+                "name": "Aboleth (A)",
+                "currentHp": "135",
+                "maxHp": "135",
+                "tempHp": "0",
+                "conditions": [
+                    "Bane",
+                    "Bless"
+                ]
+            }
+        ],
+        "bob": [
+            {
+                "init": "20",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "15",
+                "name": "Adult Green Dragon (B)",
+                "currentHp": "207",
+                "maxHp": "207",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "12",
+                "name": "Adult Green Dragon (A)",
+                "currentHp": "400",
+                "maxHp": "400",
+                "tempHp": "250",
+                "conditions": []
+            },
+            {
+                "init": "8",
+                "name": "Aboleth (A)",
+                "currentHp": "135",
+                "maxHp": "135",
+                "tempHp": "0",
+                "conditions": []
+            }
+        ]
     }
 }

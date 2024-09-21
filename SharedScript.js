@@ -33,6 +33,15 @@ function setupNav(){
 
 }
 
+    //Adding event listeners to the toggle buttons for Adv and Disadv
+    const toggleButtons = document.querySelectorAll('.toggle-button');
+    toggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        });
+    });
+
 
 
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
@@ -129,19 +138,25 @@ async function onInit() {
     }
 
 
+    
     //Initialize spell List
     AppData.spellLookupInfo = await readSpellJson();
     AppData.monsterLookupInfo = await readMonsterJsonList();
-    establishMonsterData()
 
-    await playerSetUP();
+    const owner = await TS.clients.whoAmI();  
+    const ownerInfoArray = await TS.clients.getMoreInfo([owner.id]);
+    const ownerInfo = ownerInfoArray[0];
+    
+    if (ownerInfo.clientMode === "gm") {
+        console.log("GMing is awesome");
+        establishMonsterData()
+    }
+    else{
+        await playerSetUP();
+        loadAndDisplayCharacter("Tryn");
+    }
     rollableButtons();
 
-    loadAndDisplayCharacter("Tryn");
-
-
-    
-    
 }
 
 function parseAndReplaceDice(action, text) {
@@ -196,6 +211,8 @@ function parseAndReplaceDice(action, text) {
 
 
 let trackedIds = {};
+// Global variable to keep track of the active monster card this is used in the DM screen
+let activeMonsterCard = null;
 
 function rollableButtons() {
     const actionButtons = document.getElementsByClassName("actionButton");
@@ -235,9 +252,32 @@ function rollableButtons() {
                         });
                     });
 
+                    let conditionTrackerDiv
+                    let conditionsSet
+
+                    // Get the condition map for the active monster
+                    if (activeMonsterCard) {
+                        // Find the condition tracker div inside the active monster card
+                        conditionTrackerDiv = activeMonsterCard.querySelector('.condition-tracker');
+
+                        // Retrieve the condition set from the conditions map for this specific monster
+                        conditionsSet = conditionsMap.get(activeMonsterCard);
+
+                        // If no conditions set exists for this monster, create an empty Set
+                        if (!conditionsSet) {
+                            console.log('No conditions set for this monster yet.');
+                        } else {
+                            console.log('Conditions for the active monster:', Array.from(conditionsSet));
+                        }
+                    } else {
+                        console.log('No active monster selected.');
+                        conditionTrackerDiv = document.getElementById('conditionTracker');
+                        conditionsSet = conditionsMap.get(conditionTrackerDiv);
+                    }
+
                     // Check for conditions in the conditionsMap
-                    const conditionTrackerDiv = document.getElementById('conditionTracker');
-                    const conditionsSet = conditionsMap.get(conditionTrackerDiv);
+                    // const conditionTrackerDiv = document.getElementById('conditionTracker');
+                    // const conditionsSet = conditionsMap.get(conditionTrackerDiv);
                     
                     if (diceGroups.some(group => group.includes('d20'))) {
                         if (isAdvantage) {
@@ -280,6 +320,8 @@ function dicePacker(diceType, diceModifier) {
     return diceRoll;
 }
 
+
+
 function roll(diceRolls, blessRoll, baneRoll, type) {
     let typeStr = type === "advantage" ? " (Adv)" : type === "disadvantage" ? " (Disadv)" : "";
     let rolls = [];
@@ -298,8 +340,15 @@ function roll(diceRolls, blessRoll, baneRoll, type) {
 
     // Add the suffix to the main roll names
     rolls.forEach(roll => {
-        roll.name += suffix;
+        if (roll.name == "Bless" || roll.name == "Bane"){
+        }
+        else{
+            roll.name += suffix;
+        }
+        
     });
+
+
 
     TS.dice.putDiceInTray(rolls, true).then((diceSetResponse) => {
         trackedIds[diceSetResponse] = type;
@@ -307,6 +356,10 @@ function roll(diceRolls, blessRoll, baneRoll, type) {
 }
 
 
+function onRollResults(rollResults){
+    console.log("rollResults")
+    console.log(rollResults)
+}
 
 async function handleRollResult(rollEvent) {
     if (trackedIds[rollEvent.payload.rollId] === undefined) {
@@ -346,15 +399,11 @@ async function handleRollResult(rollEvent) {
                 let finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
 
                 for (let group of resultGroups) {
-                    // Check if the group contains a d20 roll
-                    let containsD20 = group.result.operands && group.result.operands.some(operand => operand.kind === 'd20');
-                
-                    // Skip this group if it does not contain a d20 roll
-                    if (!containsD20) continue;
                 
                     let groupSum = await TS.dice.evaluateDiceResultsGroup(group);
                 
                     if (isAdvantage && groupSum > finalResult) {
+                        console.log("advantage")
                         finalResult = groupSum;
                         finalResultGroup = group;
                     } else if (isDisadvantage && groupSum < finalResult) {
@@ -363,41 +412,9 @@ async function handleRollResult(rollEvent) {
                         finalResultGroup = group;
                     }
                 }
-
-                 // Locate the "Bless" and "Bane" groups
-                let blessGroup = roll.resultsGroups.find(group => {
-                    return group.name.includes('Bless') && group.result.kind === 'd4';
-                });
-                let baneGroup = roll.resultsGroups.find(group => {
-                    return group.name.includes('Bane') && group.result.kind === 'd4';
-                });
-
-                if (finalResultGroup) {
-                    // Add the "Bless" result if it exists
-                    if (blessGroup) {
-                        finalResultGroup.result = {
-                            operator: '+',
-                            operands: [
-                                finalResultGroup.result,
-                                blessGroup.result // Add the Bless roll to the final result
-                            ]
-                        };
-                    }
-                    if (baneGroup) {
-                        finalResultGroup.result = {
-                            operator: '-',
-                            operands: [
-                                finalResultGroup.result,
-                                baneGroup.result // Add the Bless roll to the final result
-                            ]
-                        };
-                    }
-                }
-
+                
                 // Display the best/worst roll based on advantage/disadvantage
                 if (finalResultGroup) {
-                    console.log("here")
-                    console.log(finalResultGroup)
                     await displayResult([finalResultGroup], roll.rollId); // Send the group in an array
                 }
             } 
@@ -450,58 +467,15 @@ async function handleRollResult(rollEvent) {
                 
                 else {
                     // Normal roll
-                    let combinedGroup = null;
+                    console.log(resultGroups)
 
-                    let baneGroup = roll.resultsGroups.find(group => {
-                        return group.name.includes('Bane') && group.result.kind === 'd4';
-                    });
-                    let blessGroup = roll.resultsGroups.find(group => {
-                        return group.name.includes('Bless') && group.result.kind === 'd4';
-                    });
-                              
-                    // Iterate through all result groups
-                    for (let group of roll.resultsGroups) {
-                        // Skip "Bless" and "Bane" groups for now
-                        if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
-                        
-                        if (!combinedGroup) {
-                            // Initialize combinedGroup with the first non-Bless/Bane group
-                            combinedGroup = {
-                                name: group.name, // Preserve the original name
-                                result: group.result
-                            };
-                        }
-                    }
+                    let normalGroup = resultGroups[0]; // Assuming the first group is the main roll group
+                    let normalResult = await TS.dice.evaluateDiceResultsGroup(normalGroup); //This code give the total rolled value of the dice group. 
 
-                    
-                    if (blessGroup) {
-                        combinedGroup.result = {
-                            operator: '+',
-                            operands: [
-                                combinedGroup.result,
-                                blessGroup.result // Add the Bane roll to the final result
-                            ]
-                        };
-                    }
-
-                    if (baneGroup) {
-                        combinedGroup.result = {
-                            operator: '-',
-                            operands: [
-                                combinedGroup.result,
-                                baneGroup.result // Add the Bane roll to the final result
-                            ]
-                        };
-                    }
-                
-                    // If no valid groups were found, return early
-                    if (!combinedGroup) {
-                        console.log("No valid roll groups found");
-                        return;
-                    }
-                
-                    // Display the combined result
-                    await displayResult([combinedGroup], roll.rollId);
+                    console.log(normalResult)
+            
+                    // Display the normal roll result
+                    await displayResult([normalGroup], roll.rollId);
                 }
                 
                     
@@ -516,6 +490,7 @@ async function handleRollResult(rollEvent) {
 
 
 async function displayResult(resultGroups, rollId) {
+    console.log(resultGroups)
     try {
         // Send all result groups together in one call
         await TS.dice.sendDiceResult(resultGroups, rollId);

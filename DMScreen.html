@@ -50,44 +50,59 @@
         
         <section id="Init">
             <!-- Monster Card Container -->
+            <hr>
             <div id="monsterCardContainer" class="monster-card-container hidden">
                 <div class="monster-block">
-                    <button id="closeMonsterCard">Close</button>
-                    <div id="monsterName" class="monster-name"></div>
-                    <div id="monsterType" class="monster-subtitle"></div>
-                    <hr>
-                    <div class="monster-section">
-                        <div id="monsterAC" class="monster-section-title">Armor Class</div>
-                        <div id="monsterHP" class="monster-section-title">Hit Points</div>
+                    <button id="closeMonsterCard" class="nonRollButton">Close</button>
+                    <div class="monster-section-header">
                         <div id="monsterSpeed" class="monster-section-title">Speed</div>
+                        <div>
+                            <div id="monsterName" class="monster-name"></div>
+                            <div id="monsterType" class="monster-subtitle"></div>
+                        </div>
+                        <div class="monster-section monster-section-extra-stats">
+                            <div id="monsterAC" class="monster-section-title">Armor Class</div>
+                            <div id="monsterChallenge" class="monster-section-title"></div>
+                            <div id="monsterHP" class="monster-section-title full-width-columns">Hit Points</div>
+                        </div>
                     </div>
-                    <hr id="monsterHealthHR"class="monsterStatsDivider">
+                    
+                    <hr>
             
                     <!-- Stats Block -->
-                    <div  id="monsterAbilityScores" class="monster-stats">
-                        <div class="monster-stat">STR 8 (-1)</div>
-                        <div class="monster-stat">DEX 14 (+2)</div>
-                        <div class="monster-stat">CON 10 (+0)</div>
-                        <div class="monster-stat">INT 10 (+0)</div>
-                        <div class="monster-stat">WIS 8 (-1)</div>
-                        <div class="monster-stat">CHA 8 (-1)</div>
+                    <div class="rollable-monster-stats">
+                        <div  id="monsterAbilityScores" class="monster-stats">
+                            <div class="monster-stat">STR 8 (-1)</div>
+                            <div class="monster-stat">DEX 14 (+2)</div>
+                            <div class="monster-stat">CON 10 (+0)</div>
+                            <div class="monster-stat">INT 10 (+0)</div>
+                            <div class="monster-stat">WIS 8 (-1)</div>
+                            <div class="monster-stat">CHA 8 (-1)</div>
+                        </div>
+                        <hr id ="abilityScoreDivider01" class="monsterStatsDividerVert">
+                        <div><u><strong>Saves:</strong></u><div id="monsterSaves" class="monster-section"></div></div>
+                        <hr id ="abilityScoreDivider02" class="monsterStatsDividerVert">
+                        <div><u><strong>Skills:</strong></u><div id="monsterSkills" class="monster-section"></div></div>
+                        
+                        
                     </div>
                     <hr id="monsterStatHR" class="monsterStatsDivider">
+                    
             
                     <!-- Senses, Languages, Challenge -->
-                    <div><strong>Saves:</strong></div>
-                    <div id="monsterSaves" class="monster-section">
+                    
+                    
+                    
+                    
+                    <div class="monster-facts">
+                        <div id="monsterLanguages" class="monster-section"></div>
+                        <div id="monsterDamageVulnerabilities" class="monster-section"></div>
+                        <div id="monsterDamageResistances" class="monster-section"></div>
+                        <div id="monsterDamageImmunities" class="monster-section"></div>
+                        <div id="monsterConditionImmunities" class="monster-section"></div>
+                        <div id="monsterSenses" class="monster-section"></div>
                     </div>
-                    <div><strong>Skills:</strong></div>
-                    <div id="monsterSkills" class="monster-section"></div>
-                    <div id="monsterDamageImmunities" class="monster-section"></div>
-                    <div id="monsterConditionImmunities" class="monster-section"></div>
-                    <div id="monsterSenses" class="monster-section"></div>
-                    <div class="monster-section">
-                        <div id="monsterLanguages" class="monster-section-title">Languages</div>
-                    </div>
-                    <div id="monsterChallenge" class="monster-section">
-                    </div>
+                    
                     <hr id="monsterSavesHR" class="monsterStatsDivider">
             
                     <!-- Special Abilities -->
@@ -103,14 +118,19 @@
                     <div id="monsterLegendaryActions" class="monster-actions"></div>
                 </div>
             </div>
-            <button id="add-monster-button">Add Monster</button>
-            <button id="add-player-button">Add Player Character</button>
-            <div id="toggleContainer" class="toggle-container">
-                <div id="disadvButton" class="toggle-button">DisAdv</div>
-                <div id="normalButton" class="toggle-button active">Flat</div>
-                <div id="advButton" class="toggle-button">Adv</div>
+            <div class ="monster-group-header-01">
+                <button id="add-monster-button" class="nonRollButton">Add Monster</button>
+                <button id="add-player-button" class="nonRollButton">Add Player Character</button>
+                <button id="save-encounter" class="nonRollButton">Save Encounter</button>
+                <button id="load-encounter" class="nonRollButton">Load Encounter</button>                
             </div>
-            <div>
+            
+            <div class ="monster-group-header-02">
+                <div id="toggleContainer" class="toggle-container">
+                    <div id="disadvButton" class="toggle-button">DisAdv</div>
+                    <div id="normalButton" class="toggle-button active">Flat</div>
+                    <div id="advButton" class="toggle-button">Adv</div>
+                </div>
                 <div id="conditionHeader">
                     <label for="condition-select"></label>
                     <select id="condition-select">
@@ -121,7 +141,6 @@
                         <option value="Concentration">Concentration</option>
                         <option value="Charmed">Charmed</option>
                         <option value="Deafended">Deafended</option>
-                        <option value="EmboldeningBond">Emboldening Bond</option>
                         <option value="Exhaustion">Exhaustion</option>
                         <option value="Frightened">Frightened</option>
                         <option value="Grappled">Grappled</option>
@@ -135,18 +154,18 @@
                         <option value="Prone">Prone</option>
                         <option value="Restrained">Restrained</option>
                         <option value="Sanctuary">Sanctuary</option>
-                        <option value="ShieldofFaith">Shield of Faith</option>
                         <option value="Stunned">Stunned</option>
                         <option value="Unconscious">Unconscious</option>
                     <!-- Add more condition options here -->
                     </select>
-                    <button class="nonRollButton" onclick="monsterConditions()">Condition</button>
+                    <button class="nonRollButton" onclick="monsterConditions()">Add Condition</button>
                 </div>
-                <div id="conditionTracker"></div>
             </div>
+            <hr>
             <div id="initiative-tracker">
+                <!-- Monster cards will be added here dynamically -->
                 <div id="monster-cards-container">
-                    <!-- Monster cards will be added here dynamically -->
+                    
                 </div>
             </div>
         </section>

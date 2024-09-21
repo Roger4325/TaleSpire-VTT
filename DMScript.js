@@ -45,11 +45,39 @@ document.getElementById('add-monster-button').addEventListener('click', function
     createEmptyMonsterCard();
 });
 
+// Event listener for saving each encounter
+document.getElementById('save-encounter').addEventListener('click', function() {
+    showSavePopup();
+});
+
+// Event listener for saving each encounter
+document.getElementById('load-encounter').addEventListener('click', function() {
+    loadEncountersAndPopulateCards();
+});
+
+
+function activateMonsterCard(card){
+    if (activeMonsterCard) {
+        activeMonsterCard.style.borderColor = ''; // Reset to default border color
+    }
+
+    // Set this card as the active card
+    activeMonsterCard = card;
+
+    // Change the border color of the active card to red
+    card.style.borderColor = 'red';
+}
 
 function createEmptyMonsterCard() {
     // Create the monster card container
     const card = document.createElement('div');
     card.classList.add('monster-card');
+
+    // Add click event listener to the card to set it as active
+    card.addEventListener('click', () => {
+        // If there's an active card, reset its border to the default
+        activateMonsterCard(card)
+    });
 
     // Create the dropdown container
     const dropdownContainer = document.createElement('div');
@@ -108,197 +136,223 @@ function createEmptyMonsterCard() {
     card.appendChild(dropdownContainer);
 
     // Append the card to the container
-    const tracker = document.getElementById('monster-cards-container');
+    const tracker = document.getElementById('initiative-tracker');
     if (tracker) {
         tracker.appendChild(card);
     } else {
         console.error('Initiative tracker container not found.');
     }
+
+    return card
 }
 
 
 
-
-function updateMonsterCard(card, monsterName) {
+function updateMonsterCard(card, monster) {
     // Clear previous content
     card.innerHTML = '';
 
-    // Fetch the current monster data
-    const currentMonsterData = monsterData[monsterName];
+    // Check if the monster is a string (name) or an object (full monster data)
+    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap
+    
+    if (typeof monster === 'string') {
+        // If a string is provided, it's just the monster name, so we fetch the data
+        monsterName = monster;
+        selectedMonsterData = monsterData[monster]; // Look up monster data by name
 
-    if (!currentMonsterData) {
+        monsterCurrentHp = selectedMonsterData.HP.Value
+        monsterMaxHp = selectedMonsterData.HP.Value
+        monsterTempHP = 0;
+
+    } else if (typeof monster === 'object') {
+        // If an object is provided, use the data from the monster object
+        monsterName = monster.name;  // Name from the object
+        const rearrangedName = monsterName.replace(/\s\([A-Z]\)$/, ''); // Removes the letter in parentheses
+        selectedMonsterData = monsterData[rearrangedName]; // Get the stored monster data based on the name
+    
+        monsterCurrentHp = monster.currentHp;
+        monsterMaxHp = monster.maxHp;
+        monsterTempHP = monster.tempHp;
+        newConditionsMap = monster.conditions;
+
+        console.log(conditionsMap)
+    }
+    
+
+    // Handle missing monster data
+    if (!selectedMonsterData) {
         console.error(`Monster data not found for: ${monsterName}`);
         return;
     }
 
-    // Create and add the initiative box
+    // Create the monster initiative box
     const initDiv = document.createElement('div');
     initDiv.classList.add('monster-init');
-
-    // Input for the initiative roll
+    
     const initInput = document.createElement('input');
     initInput.type = 'number';
-    initInput.value = 0; // Default initiative roll value
+    initInput.value = monster.init || 0; // Use initiative from the object, if available
     initInput.classList.add('init-input');
-
-    // Event listener for initiative changes
-    initInput.addEventListener('change', () => {
-        reorderCards(); // Reorder cards when initiative is changed
-    });
-
+    initInput.addEventListener('change', () => reorderCards());
     initDiv.appendChild(initInput);
 
-
+    // Add monster picture
     const monsterPictureDiv = document.createElement('div');
     monsterPictureDiv.classList.add('monster-picture-div');
     const monsterPicture = document.createElement('img');
     monsterPicture.classList.add('monster-picture');
+    monsterPictureDiv.appendChild(monsterPicture);
 
-   monsterPictureDiv.appendChild(monsterPicture);
-
-    // Create the monster info container
+    // Monster info section
     const monsterInfo = document.createElement('div');
     monsterInfo.classList.add('monster-info');
-
-    // Create the monster name div
     const monsterNameDiv = document.createElement('div');
     monsterNameDiv.classList.add('monster-name');
 
-    // Add a unique identifier to the monster name
-    const existingNames = Array.from(document.getElementsByClassName('monster-name')).map(nameElem => nameElem.textContent.replace(/\s\([A-Z]\)$/, ''));
-    const count = existingNames.filter(name => name === monsterName).length;
-    monsterNameDiv.textContent = `${currentMonsterData.Name} (${String.fromCharCode(65 + count)})`;
+    // Determine the monster name to use
+    let monsterNameToUse 
+    if(monster.name){
+        monsterNameDiv.textContent = monster.name
+    }
+    else{
+        monsterNameToUse = selectedMonsterData.Name
+        const existingNames = Array.from(document.getElementsByClassName('monster-name')).map(nameElem => nameElem.textContent.replace(/\s\([A-Z]\)$/, ''));
+        const count = existingNames.filter(name => name === monsterNameToUse).length;
+        monsterNameDiv.textContent = `${monsterNameToUse} (${String.fromCharCode(65 + count)})`;
+    }
 
-    // Add event listener to show details on clicking the monster name
+    // Add a unique identifier to the monster name
+
+
+    
     monsterNameDiv.addEventListener('click', function () {
         const monsterNameText = monsterNameDiv.textContent.replace(/\s\([A-Z]\)$/, '');
+        console.log(monsterNameText)
         showMonsterCardDetails(monsterNameText);
     });
 
-    // Create the stats div
+    // Stats section (AC, Initiative, Speed)
     const statsDiv = document.createElement('div');
     statsDiv.classList.add('monster-details');
-
-    // Add AC, Speed, and Passive Perception
-    statsDiv.innerHTML = `
-        <span>AC : ${currentMonsterData.AC.Value} | Init Mod : ${currentMonsterData.InitiativeModifier} <br> Speed : ${currentMonsterData.Speed}</span>
-    `;
-
-    console.log(currentMonsterData.InitiativeModifier)
+    let monsterInitiative
+    if(selectedMonsterData.InitiativeModifier < 0){
+        monsterInitiative = selectedMonsterData.InitiativeModifier;
+    }
+    else{
+        monsterInitiative = "+" + selectedMonsterData.InitiativeModifier;
+    }
+    
+    const initiativeButton = parseAndReplaceDice({ name: 'Initiative' }, `Init Mod: ${monsterInitiative} <br>`);
+    
+    const statsSpan = document.createElement('span');
+    const acText = document.createTextNode(`AC: ${selectedMonsterData.AC.Value} | `);
+    const speedText = document.createTextNode(` Speed: ${selectedMonsterData.Speed}`);
+    statsSpan.appendChild(acText);
+    statsSpan.appendChild(initiativeButton);
+    statsSpan.appendChild(speedText);
+    statsDiv.appendChild(statsSpan);
 
     // Add monster name and stats to the monster info
     monsterInfo.appendChild(monsterNameDiv);
     monsterInfo.appendChild(statsDiv);
 
-
     const conditionsDiv = document.createElement('div');
-    conditionsDiv.classList.add('conditions-trackers')
+    conditionsDiv.classList.add('conditions-trackers');
 
-    // Create the HP and adjustments container
+    card.appendChild(initDiv);
+    card.appendChild(monsterPictureDiv);
+    card.appendChild(monsterInfo);
+    card.appendChild(conditionsDiv);
+
+    // Add conditions from the newConditionsMap back to the card
+    if (Array.isArray(newConditionsMap)) {
+        newConditionsMap.forEach(conditionName => {
+            // Call monsterConditions directly with the condition name
+            // This assumes monsterConditions has been modified to accept a condition name
+            if (conditionName) {
+                activeMonsterCard = card; // Set the active monster card to the current one
+                monsterConditions(conditionName); // Call with context and value
+            }
+        });
+    }
+
+
+    // HP section
     const monsterHP = document.createElement('div');
     monsterHP.classList.add('monster-hp');
 
-    // Current HP element
     const currentHPDiv = document.createElement('span');
     currentHPDiv.classList.add('current-hp');
     currentHPDiv.contentEditable = true;
-    currentHPDiv.textContent = currentMonsterData.HP.Value;
+    currentHPDiv.textContent = monsterCurrentHp
 
-    // Max HP element
     const maxHPDiv = document.createElement('span');
     maxHPDiv.classList.add('max-hp');
     maxHPDiv.contentEditable = true;
-    maxHPDiv.textContent = currentMonsterData.HP.Value;
+    maxHPDiv.textContent = monsterMaxHp  // Use maxHp from the object, if available
 
-    // HP display container
     const hpDisplay = document.createElement('div');
     hpDisplay.classList.add('hp-display');
     hpDisplay.appendChild(currentHPDiv);
     hpDisplay.appendChild(document.createTextNode(' / '));
     hpDisplay.appendChild(maxHPDiv);
 
-    // Heal/Damage input (Math)
     const hpAdjustInput = document.createElement('input');
     hpAdjustInput.type = 'number';
     hpAdjustInput.classList.add('hp-adjust-input');
     hpAdjustInput.placeholder = 'Math';
 
-    // Event listener for adjusting HP
     hpAdjustInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             const adjustment = parseInt(hpAdjustInput.value, 10);
             if (isNaN(adjustment)) return;
 
-            let tempHP = parseInt(tempHPDiv.textContent, 10) || 0;
             let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
-            const maxHP = parseInt(maxHPDiv.textContent, 10) || currentMonsterData.HP.Value;
+            const maxHP = parseInt(maxHPDiv.textContent, 10) || selectedMonsterData.HP.Value;
 
-            if (adjustment < 0) {
-                // Apply damage
-                const damage = Math.abs(adjustment);
-                if (tempHP > 0) {
-                    // Subtract from temp HP first
-                    if (damage <= tempHP) {
-                        tempHP -= damage;
-                    } else {
-                        // Subtract remaining damage from current HP
-                        currentHP -= (damage - tempHP);
-                        tempHP = 0;
-                    }
-                } else {
-                    // Subtract directly from current HP
-                    currentHP -= damage;
-                }
-            } else {
-                // Apply healing
-                currentHP += adjustment;
-                if (currentHP > maxHP) {
-                    currentHP = maxHP; // Cap healing at max HP
-                }
-            }
+            currentHP += adjustment;
+            currentHP = Math.max(0, Math.min(currentHP, maxHP));  // Ensure HP is between 0 and maxHP
 
-            // Update the displayed HP values
-            tempHPDiv.textContent = tempHP;
             currentHPDiv.textContent = currentHP;
-
-            // Clear the input
-            hpAdjustInput.value = '';
+            hpAdjustInput.value = '';  // Clear input
         }
     });
 
-    // Temporary HP element
     const tempHPDiv = document.createElement('span');
     tempHPDiv.classList.add('temp-hp');
     tempHPDiv.contentEditable = true;
-    tempHPDiv.textContent = 0; // Start with 0 temporary HP
+    tempHPDiv.textContent = monsterTempHP || 0;  // Use tempHp from the object, if available
 
-    // Temp HP display container
     const tempHPContainer = document.createElement('div');
     tempHPContainer.classList.add('temp-hp-container');
     tempHPContainer.appendChild(document.createTextNode('Temp: '));
     tempHPContainer.appendChild(tempHPDiv);
 
-    // Add elements to monsterHP container in order: HP display, Math input, Temp HP
     monsterHP.appendChild(hpDisplay);
     monsterHP.appendChild(tempHPContainer);
     monsterHP.appendChild(hpAdjustInput);
-    
+
+    // Delete button
+    const deleteButtonDiv = document.createElement('div');
+    deleteButtonDiv.classList.add('monster-card-delete-button');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('nonRollButton');
+    deleteButton.textContent = "X";
+    deleteButton.addEventListener('click', () => {
+        card.remove();
+        reorderCards();
+    });
+
+    deleteButtonDiv.appendChild(deleteButton);
 
     // Add all components to the card in a consistent layout
-    card.appendChild(initDiv);
-    card.appendChild(monsterPictureDiv);
-    card.appendChild(monsterInfo);
-    card.appendChild(conditionsDiv);
     card.appendChild(monsterHP);
-
-    // Re-append the dropdown container to the card
-    const dropdownContainer = card.querySelector('.dropdown-container');
-    if (dropdownContainer) {
-        card.appendChild(dropdownContainer);
-    }
-
-    reorderCards()
+    card.appendChild(deleteButtonDiv);
+    
+    reorderCards();
+    rollableButtons();  // Update rollable buttons after card updates
 }
+
 
 
 
@@ -320,8 +374,12 @@ function showMonsterCardDetails(monsterName) {
         return; // Exit the function early
     }
 
+    console.log(monsterName)
+
     // Find the monster in the new data source monsterData
     const monster = monsterData[monsterName];
+
+    console.log(monster)
 
     if (monster) {
         currentSelectedMonsterName = monsterName;
@@ -352,6 +410,7 @@ function toggleMonsterCardVisibility(isVisible) {
 // Reusable function to populate data conditionally
 function populateField(elementId, label, value, isRollable = false) {
     const element = document.getElementById(elementId);
+
     if (value || value === 0) {
         const labelText = label ? `<strong>${label}:</strong> ` : ''; // Add colon and break only if label exists
 
@@ -364,7 +423,23 @@ function populateField(elementId, label, value, isRollable = false) {
             element.appendChild(labelNode);
             element.appendChild(parsedContent);
         } else {
-            element.innerHTML = `${labelText}${value}`;
+            if (value.length > 0){
+                if (typeof value === 'string') {
+                    // Replace commas without spaces with commas followed by a space
+                    const formattedValue = value.replace(/,\s*/g, ', ');
+                    element.innerHTML = `${labelText}${formattedValue}`;
+                } else if (Array.isArray(value)) {
+                    // If value is an array, join it into a string separated by commas and spaces
+                    const formattedValue = value.join(', ');
+                    element.innerHTML = `${labelText}${formattedValue}`;
+                } else {
+                    // Convert other types to a string if necessary
+                    element.innerHTML = `${labelText}${String(value)}`;
+                }
+            }
+            else{
+
+            }
         }
 
         element.style.display = 'block';
@@ -373,21 +448,26 @@ function populateField(elementId, label, value, isRollable = false) {
     }
 }
 
+
 // Populates monster fields
 function populateMonsterFields(monster) {
     // Populate basic monster info
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
-    populateField('monsterAC', 'AC', monster.AC?.Value, false);
+    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
     populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
     populateField('monsterSpeed', 'Speed', monster.Speed);
     populateField('monsterLanguages', 'Languages', monster.Languages, false);
+    populateField('monsterDamageVulnerabilities', 'Vulnerabilities', monster.DamageVulnerabilities, false);
+    populateField('monsterDamageResistances', 'Resistances', monster.DamageResistances, false);
+    populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
+    populateField('monsterSenses', 'Senses', monster.Senses, false);
     populateField('monsterChallenge', 'CR', monster.Challenge, false);
 
     populateMonsterListField('monsterAbilityScores', monster.Abilities, 'abilityScores');
 
     if (monster.Skills.length > 0){
-        populateMonsterListField('monsterSkills', monster.Skills, 'savingThrow');
+        populateMonsterListField('monsterSkills', monster.Skills, 'skill');
     }
 
     if (monster.Saves.length > 0){
@@ -430,15 +510,16 @@ function populateMonsterListField(elementId, items, type) {
                     case 'traits':
                     case 'action':
                     case 'legendaryAction':
-                        itemContent = parseAndReplaceDice({ name: item.Name }, `${item.Name}: ${item.Content}`);
+                        itemContent = parseAndReplaceDice({ name: item.Name }, `<strong>${item.Name}: </strong>${item.Content}`);
                         break;
                     case 'savingThrow':
-                    case 'skill':
-                        itemContent = parseAndReplaceDice({ name: item.Name }, `${item.Name}: ${item.Modifier}`);
+                        const savemodifier = parseInt(item.Modifier) >= 0 ? `+${item.Modifier}` : item.Modifier;
+                        itemContent = parseAndReplaceDice({ name: item.Name + " Save"}, `<strong>${item.Name} : </strong> ${savemodifier}`);
                         break;
-                        // itemContent = document.createElement('div');
-                        // itemContent.textContent = `${item.Name}: ${item.Modifier}`;
-                        // break;
+                    case 'skill':
+                        const skillmodifier = parseInt(item.Modifier) >= 0 ? `+${item.Modifier}` : item.Modifier;
+                        itemContent = parseAndReplaceDice({ name: item.Name}, `<strong>${item.Name} : </strong> ${skillmodifier}`);
+                        break;
                     default:
                         itemContent = document.createElement('div');
                         itemContent.textContent = item.Name || 'Unknown Item';
@@ -457,14 +538,33 @@ function populateMonsterListField(elementId, items, type) {
         // Handle if items is an object (Ability Scores)
         else if (typeof items === 'object' && !Array.isArray(items)) {
             Object.keys(items).forEach(key => {
+                const abilityScore = items[key];
+                // Calculate the ability modifier
+                const modifier = Math.floor((abilityScore - 10) / 2);
+                const modifierText = modifier >= 0 ? `+${modifier}` : `${modifier}`; // Add "+" for positive numbers, no change for negative
+        
+                // Create a container for the ability score and rollable modifier
                 const scoreElement = document.createElement('div');
-                scoreElement.innerHTML = `<strong>${key}:</strong> ${items[key]}`;
-                container.appendChild(scoreElement);
+        
+                // Create the static part of the text (ability score)
+                const staticText = document.createElement('strong');
+                staticText.textContent = `${key} : `;
+                scoreElement.appendChild(staticText);
+                scoreElement.appendChild(document.createTextNode(`${abilityScore} `));
+        
+                // Use the parseAndReplaceDice function to make the modifier rollable, and append it
+                const rollableModifier = parseAndReplaceDice({ name: key }, modifierText);
+                scoreElement.appendChild(rollableModifier); // Appends the actual button or label returned by the function
+        
+                container.appendChild(scoreElement); // Append the entire scoreElement to the container
             });
-            container.style.display = '';
+            container.style.display = ''; // Ensure the container is displayed
         } else {
             container.style.display = 'none';
         }
+        
+
+
     } else {
         container.style.display = 'none';
     }
@@ -649,12 +749,6 @@ function reorderCards() {
         return;
     }
     
-    // Debugging: Log the initiative values before sorting
-    console.log('Before sorting:', cards.map(card => ({
-        name: card.querySelector('.monster-name') ? card.querySelector('.monster-name').innerText : 'No name',
-        initiative: card.querySelector('.init-input') ? card.querySelector('.init-input').value : 'No initiative'
-    })));
-    
     // Sort the cards based on initiative
     cards.sort((a, b) => {
         const aInit = parseInt(a.querySelector(".init-input").value, 10) || 0;
@@ -662,20 +756,314 @@ function reorderCards() {
         return bInit - aInit; // Higher initiative first
     });
     
-    // Debugging: Log the sorted initiative values
-    console.log('After sorting:', cards.map(card => ({
-        name: card.querySelector('.monster-name') ? card.querySelector('.monster-name').innerText : 'No name',
-        initiative: card.querySelector('.init-input') ? card.querySelector('.init-input').value : 'No initiative'
-    })));
-    
     // Remove existing cards and append them back in the correct order
     cards.forEach(card => {
         tracker.appendChild(card);
     });
 }
 
-function monsterConditions(){
-    console.log("Grab a monster and add a condition to it")
-}
+
+
+
+
+
+
+
 
 const conditionsMap = new Map();
+
+// Function to handle adding conditions to the active monster
+function monsterConditions(condition) {
+
+    console.log(condition)
+    let selectedCondition
+    if (condition){
+        selectedCondition = condition;
+    }
+    else{
+        const conditionSelect = document.getElementById('condition-select');
+        selectedCondition = conditionSelect.value;
+    }
+    
+
+    // Ensure a condition is selected and there's an active monster
+    if (selectedCondition && activeMonsterCard) {
+        // Each monster card has its own condition tracker div inside it
+        let conditionTrackerDiv = activeMonsterCard.querySelector('.conditions-trackers');
+
+        // Check if this monster's condition map exists, if not, create one
+        if (!conditionsMap.has(activeMonsterCard)) {
+            conditionsMap.set(activeMonsterCard, new Set());
+        }
+
+        // Get the Set of conditions for this monster card
+        const conditionsSet = conditionsMap.get(activeMonsterCard);
+
+        // Handle Exhaustion separately (same as your previous logic)
+        if (selectedCondition === 'Exhaustion') {
+            let exhaustionNumber = 1;
+            for (const condition of conditionsSet) {
+                if (condition.startsWith('Exhaustion ')) {
+                    const number = parseInt(condition.replace('Exhaustion ', ''));
+                    if (!isNaN(number) && number >= exhaustionNumber) {
+                        exhaustionNumber = number + 1;
+                    }
+                }
+            }
+            selectedCondition = `Exhaustion ${exhaustionNumber}`;
+
+            // Clear all previous exhaustion conditions
+            for (const condition of conditionsSet) {
+                if (condition.startsWith('Exhaustion ')) {
+                    conditionsSet.delete(condition);
+                    removeConditionPill(condition, conditionTrackerDiv);
+                }
+            }
+        } else if (conditionsSet.has(selectedCondition)) {
+            // If the selected condition is already applied, do nothing
+            return;
+        }
+
+        // Create a condition pill
+        const conditionPill = document.createElement('div');
+        conditionPill.classList.add('condition-pill');
+        conditionPill.innerHTML = `
+            <span>${selectedCondition}</span>
+            <button class="remove-condition">x</button>
+        `;
+
+        // Add a click event listener to the remove button
+        const removeButton = conditionPill.querySelector('.remove-condition');
+        removeButton.addEventListener('click', () => {
+            conditionsSet.delete(selectedCondition);
+            removeConditionPill(selectedCondition, conditionTrackerDiv);
+        });
+
+        // Add the condition to the Set and the condition pill to the container
+        conditionsSet.add(selectedCondition);
+        conditionTrackerDiv.appendChild(conditionPill);
+    }
+}
+
+// Function to remove a condition pill
+function removeConditionPill(condition, conditionTrackerDiv) {
+    const conditionPills = conditionTrackerDiv.querySelectorAll('.condition-pill');
+    for (const pill of conditionPills) {
+        if (pill.querySelector('span').textContent === condition) {
+            conditionTrackerDiv.removeChild(pill);
+            break;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Saving and loading encounters
+
+
+let allSavedEncounters = [];
+
+function saveMonsterCardsAsEncounter(encounterName) {
+    // Get all monster cards on the screen
+    const monsterCards = document.querySelectorAll('.monster-card');
+    const encounterData = [];
+
+    // Loop through each card to collect data
+    monsterCards.forEach(card => {
+        const init = card.querySelector('.init-input').value;
+        const name = card.querySelector('.monster-name').textContent;
+        const currentHp = card.querySelector('.current-hp').textContent;
+        const maxHp = card.querySelector('.max-hp').textContent;
+        const tempHp = card.querySelector('.temp-hp').textContent;
+        const conditions = []; // Changed from Map to array
+
+        const conditionPills = card.querySelectorAll('.condition-pill');
+        conditionPills.forEach(pill => {
+            const conditionName = pill.querySelector('span').textContent; // Get the condition name
+            conditions.push(conditionName); // Add the condition name to the array
+        });
+
+        // Push the gathered data for each monster into the encounterData array
+        encounterData.push({
+            init,
+            name,
+            currentHp,
+            maxHp,
+            tempHp,
+            conditions
+        });
+    });
+
+    saveToGlobalStorage("Encounter Data", encounterName, encounterData, false)
+}
+
+
+
+
+async function showSavePopup() {
+    await loadAndStoreMonsterData()
+    // Get saved encounters from passed-in allSavedEncounters object
+    const savedEncounters = allSavedEncounters;
+
+    // Create the popup element
+    const popup = document.createElement('div');
+    popup.classList.add('save-popup');
+
+    // Create title
+    const title = document.createElement('h2');
+    title.textContent = "Save Encounter";
+    popup.appendChild(title);
+
+    // Create input field for new encounter name
+    const newEncounterInput = document.createElement('input');
+    newEncounterInput.type = 'text';
+    newEncounterInput.placeholder = 'Enter new encounter name';
+    popup.appendChild(newEncounterInput);
+
+    // Create the dropdown or list for saved encounters
+    const encounterList = document.createElement('ul');
+    
+    // Iterate over the savedEncounters object keys (encounter names)
+    Object.keys(savedEncounters).forEach((encounterName) => {
+        const encounterItem = document.createElement('li');
+        encounterItem.textContent = encounterName;
+
+        // Add click event to overwrite the selected encounter
+        encounterItem.addEventListener('click', () => {
+            saveMonsterCardsAsEncounter(encounterName);
+            closePopup();
+        });
+        encounterList.appendChild(encounterItem);
+    });
+
+    // Button to save as a new encounter
+    const newEncounterButton = document.createElement('button');
+    newEncounterButton.textContent = 'Save as New Encounter';
+    newEncounterButton.addEventListener('click', () => {
+        const encounterName = newEncounterInput.value.trim();
+        if (encounterName) {
+            if (savedEncounters[encounterName]) {
+                // Confirm before overwriting if an encounter with this name exists
+                const confirmOverwrite = confirm(`An encounter named "${encounterName}" already exists. Do you want to overwrite it?`);
+                if (!confirmOverwrite) return;
+            }
+            saveMonsterCardsAsEncounter(encounterName);
+            closePopup();
+        } else {
+            alert('Please enter a name for the new encounter.');
+        }
+    });
+
+    // Append the list and button to the popup
+    popup.appendChild(encounterList);
+    popup.appendChild(newEncounterButton);
+
+    // Append popup to the body
+    document.body.appendChild(popup);
+}
+
+
+
+
+function closePopup() {
+    const savepopup = document.querySelector('.save-popup');
+    const loadpopup = document.querySelector('.load-popup');
+    if (savepopup) {
+        savepopup.remove();
+    }
+    if (loadpopup) {
+        loadpopup.remove();
+    }
+}
+
+
+// Load and update character data
+async function loadAndStoreMonsterData() {
+    const dataType = "Encounter Data"; // Adjust based on your data structure
+
+    try {
+        const allMonsterData = await loadDataFromGlobalStorage(dataType);
+
+        if (allMonsterData) {
+            allSavedEncounters = allMonsterData;
+        } else {
+            console.error("Encounter data not found.");
+            // Handle the case where data is not found, e.g., show a message to the user
+        }
+    } catch (error) {
+        console.error("Error loading encounter data:", error);
+        // Handle the error appropriately, e.g., show an error message to the user
+    }
+}
+
+
+
+
+
+
+
+
+//Loading the monsters cards into the page. 
+
+async function loadEncountersAndPopulateCards(){
+    await loadAndStoreMonsterData()
+    // Step 2: Retrieve the saved encounters from storage (assuming stored in localStorage or similar)
+    const savedEncounters = allSavedEncounters || {};
+
+    // Create the popup element
+    const popup = document.createElement('div');
+    popup.classList.add('load-popup');
+
+    // Create title
+    const title = document.createElement('h2');
+    title.textContent = "Load Encounter";
+    popup.appendChild(title);
+
+    // Step 3: Loop through saved encounters and display their titles
+    const encounterList = document.createElement('ul');
+    Object.keys(savedEncounters).forEach((encounterName) => {
+        const encounterItem = document.createElement('li');
+        encounterItem.textContent = encounterName;
+
+        // Add click event to overwrite the selected encounter
+        encounterItem.addEventListener('click', () => {
+            updateMonsterCardDataFromLoad(savedEncounters[encounterName]);
+            closePopup();
+        });
+        encounterList.appendChild(encounterItem);
+    });
+
+    // Append the list and button to the popup
+    popup.appendChild(encounterList);
+    // Append popup to the body
+    document.body.appendChild(popup);
+    
+}
+
+function updateMonsterCardDataFromLoad(encounterData) {
+    const monsterCardsContainer = document.getElementById('initiative-tracker');
+    monsterCardsContainer.innerHTML = ''; // Clear previous monster cards
+
+    // Loop through the monsters in the encounter data and create a new card for each
+    encounterData.forEach(monster => {
+        // Create an empty monster card
+        const newMonsterCard = createEmptyMonsterCard();
+
+        // Populate the monster card with the correct data
+        updateMonsterCard(newMonsterCard, monster);
+
+        // Append the new monster card to the container
+        monsterCardsContainer.appendChild(newMonsterCard);
+    });
+}
+

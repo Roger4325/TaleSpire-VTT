@@ -52,16 +52,6 @@ const conditionsMap = new Map();
 
 async function playerSetUP(){
 
-    //Adding event listeners to the toggle buttons for Adv and Disadv
-    const toggleButtons = document.querySelectorAll('.toggle-button');
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            toggleButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-        });
-    });
-
-
     // Adding eventlisteners to the level and xp inputs for character level. 
     const xpTracker = document.querySelectorAll('.levelStat'); 
     xpTracker.forEach(levelStat => {

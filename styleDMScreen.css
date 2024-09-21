@@ -2,6 +2,25 @@
 /*TESTING SECTION*/
 
 /* Styling for the toggle buttons */
+
+.monster-group-header-01{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 5px;
+    margin-bottom: 5px;
+}
+.monster-group-header-02{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+}
+
+#conditionHeader{
+    margin-bottom: 8px;
+}
+
+
 .toggle-container {
     display: flex;
     justify-content: space-between;
@@ -40,7 +59,7 @@
 }
 
 #conditionHeader{
-    font-size: 12px;
+    font-size: 8px;
     display: flex;
     justify-content: left;
     align-items: center;
@@ -50,11 +69,8 @@
     margin-right: 10px;
 }
 
-#conditionTracker{
-    display:flex;
-    justify-content: left;
-    flex-wrap: wrap;
-    font-size: 12px;
+.condition-pill, .condition-pill button{
+    font-size: 10px;
 }
 
 
@@ -75,19 +91,18 @@
     margin-bottom: 5px;
     border-radius: 8px;
     position: relative; /* Ensure dropdown positioning is relative to card */
+    transition: border-color 0.3s ease;
 }
 
 /* Initiative box */
 .init-input {
-    justify-content: center;
-    align-items: center;
     text-align: center;
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--ts-button-background);
     color: white;
     font-size: 14px;
     font-weight: bold;
-    width: 20px;
+    width: 15px;
     height: 40px;
     border-radius: 5px;
     margin-right: 5px;
@@ -102,26 +117,27 @@
 }
 
 .monster-picture{
-    width: 50px;
-    height: 50px;
-    margin-right: 5px;
+    width: 40px;
+    height: 40px;
+    margin-right: 3px;
 }
 
 
 /* Monster information */
 .monster-info {
-    flex-grow: 0;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 
 .monster-name {
     cursor: pointer; /* Set cursor pointer on the monster name */
     font-weight: bold;
-    font-size: 18px;
+    font-size: 15px;
     display: inline-block;
+    color: rgb(252, 222, 56);
 }
 
 .monster-name:hover {
@@ -133,11 +149,18 @@
     color: var(--ts-text-secondary);
 }
 
-.conditions-trackers{
-    display: flex;
-    flex-grow: 1;
-    min-width: 150px;
+.conditions-trackers {
+    display: grid; /* Change to grid layout */
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 2px; /* Optional: space between items */
+    align-items: flex-start; /* Align items at the start of each cell */
+    min-width: 200px;
+    height: auto; /* Allow height to adjust based on content */
+    align-self: flex-start; /* Align this element to the top of the card */
 }
+
+
+
 
 /* HP and adjustments */
 .monster-hp {
@@ -146,8 +169,8 @@
     justify-content: center;
     grid-template-rows: .5fr 1fr;
     gap: 2px; /* Adjust spacing between elements */
-    margin-right: 10px;
     max-height: 65px;
+    min-width: 85px;
 }
 
 /* Math input for healing/damage */
@@ -159,7 +182,15 @@
     text-align: center;
     border-radius: 5px;
     border: 1px solid var(--ts-button-background);
+    -moz-appearance: textfield;
 }
+
+.hp-adjust-input::-webkit-outer-spin-button,
+.hp-adjust-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 
 /* HP display */
 .current-hp,
@@ -189,10 +220,13 @@
     font-size: 16px;
 }
 
-/* Adjust the margins for spacing */
-.monster-hp .hp-label {
-    margin: 0 5px;
+.monster-card-delete-button{
+    margin-right: 10px;
 }
+.monster-card-delete-button button{
+    font-size: 8px;
+}
+
 
 /* End of monster card styling */
 
@@ -224,7 +258,7 @@
     top: 100%; /* Below the input field */
     left: 0;
     width: 100%;
-    max-height: 200px; /* Max height of the dropdown list */
+    max-height: 500px; /* Max height of the dropdown list */
     overflow-y: auto; /* Scroll if content is too long */
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--ts-border-color);
@@ -232,6 +266,7 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for better visibility */
     z-index: 1000; /* Ensure dropdown is above other elements */
     display: none; /* Initially hidden */
+    font-size: 16px;
 }
 
 .monster-list li {
@@ -251,7 +286,7 @@
 /* Main container for the monster card */
 .monster-card-container {
     position: fixed;
-    top: 0;
+    bottom: 0;
     right: -100%; /* Initially hidden off-screen */
     width: 100%; /* Max width of 600px */
     height: auto;
@@ -261,6 +296,7 @@
     z-index: 1000;
     font-size: 14px;
     padding: 15px;
+    padding-top: 2px;
     border: 1px solid var(--ts-accent-color);
     overflow-y: auto; /* Add scroll if content overflows */
     max-height: 90vh; /* Ensure it doesn't overflow viewport height */
@@ -286,6 +322,12 @@
     font-size: 14px;
 }
 
+.monster-block .monster-section-header{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    gap: 15px;
+}
+
 /* Monster name styling */
 .monster-block .monster-name {
     font-size: 20px;
@@ -297,12 +339,20 @@
 .monster-block .monster-subtitle {
     font-style: italic;
     text-align: center;
-    margin-bottom: 10px;
+}
+
+.monster-section-extra-stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.full-width-columns{
+    grid-column: 1 / -1; /* Make this item span across both columns */
 }
 
 /* Sections like 'Armor Class', 'Hit Points', etc. */
 .monster-block .monster-section {
-    margin-bottom: 10px;
+    margin-bottom: 0px;
 }
 
 /* Section titles */
@@ -310,19 +360,33 @@
     margin-bottom: 5px;
 }
 
+.monster-block .rollable-monster-stats{
+    display: grid;
+    grid-template-columns: 1fr .01fr 1fr .01fr 1fr;
+    gap: 5px;
+}
+
 /* Stats block styling */
 .monster-block .monster-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 5px;
+    gap: 3px;
     text-align: center;
 }
+
+.monster-block #monsterSaves {
+    display: grid;
+    grid-template-columns: 1fr .01fr 1fr .01fr;
+    gap: 3px;
+    text-align: center;
+}
+
+
 
 /* Each individual stat (e.g., STR, DEX, CON) */
 .monster-block .monster-stat {
     font-size: 12px;
-    padding: 5px;
-    border: 1px solid var(--ts-accent-color);
+    padding: 2px;
 }
 
 /* Divider between sections */
@@ -330,19 +394,26 @@
     border: 0;
     height: 1px;
     background-color: var(--ts-button-background);
-    margin: 10px 0;
+    margin: 2px 0;
 }
 
 /* Special abilities and actions */
 .monster-block .monster-abilities,
 .monster-block .monster-actions {
     margin-top: 10px;
+    margin-bottom: 5px;
 }
 
-/* Individual ability or action */
-.monster-block .monster-ability,
-.monster-block .monster-action {
-    margin-bottom: 5px;
+.monster-actions span, .monster-abilities span, .monster-facts{
+    font-size: 12px; 
+    font-family: Arial, sans-serif;
+    color: #FFFFFF;
+}
+
+.monster-actions strong, .monster-abilities strong, .monster-facts strong  {
+    font-size: 14px; 
+    font-family: 'OptimusPrinceps', sans-serif;
+    color: var(--ts-accent-primary);
 }
 
 /* Actions heading */
@@ -357,3 +428,11 @@
     font-size: 12px;
     margin-left: 10px;
 }
+
+#abilityScoreDivider01, #abilityScoreDivider02{
+    height: 100%; 
+    width: 1px; /* Thin width to simulate a vertical line */
+    background-color: var(--ts-button-background);
+    margin: 0;
+}
+
