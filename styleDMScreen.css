@@ -233,6 +233,61 @@
 
 
 
+.save-popup, .load-popup{
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--ts-button-background);
+}
+
+
+.encounter-save-input{
+    width: 50%; /* Full width input */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--ts-button-background);
+    position: relative; /* To position the dropdown list */
+}
+
+.encounter-save-list{
+    position: absolute; /* Position dropdown list below input */
+    width: 60%;
+    max-height: 500px; /* Max height of the dropdown list */
+    overflow-y: auto; /* Scroll if content is too long */
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-border-color);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for better visibility */
+    z-index: 1000; /* Ensure dropdown is above other elements */
+    display: none; /* Initially hidden */
+    font-size: 16px;
+    list-style-type: none; /* This removes the bullets or numbers from the list */
+    padding-left: 0;
+}
+
+.encounter-save-list li{
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    align-self: center;
+}
+
+.encounter-save-list li button{
+    margin: 7px;
+    align-self: center;
+    margin-right: 20px;
+}
+
+
+.encounter-load-text{
+    padding: 5px;
+    margin: 5px;
+    margin-right: 30px;
+    cursor: pointer;
+}
+
+.encounter-load-text:hover{
+    background-color: var(--ts-button-background); /* Highlight on hover */
+}
 
 
 
@@ -253,7 +308,7 @@
     border: 1px solid var(--ts-button-background);
 }
 
-.monster-list {
+.monster-list{
     position: absolute; /* Position dropdown list below input */
     top: 100%; /* Below the input field */
     left: 0;
@@ -269,12 +324,12 @@
     font-size: 16px;
 }
 
-.monster-list li {
+.monster-list li, .save-popup li {
     padding: 5px;
     cursor: pointer;
 }
 
-.monster-list li:hover {
+.monster-list li:hover, .save-popup li:hover {
     background-color: var(--ts-button-background); /* Highlight on hover */
 }
 

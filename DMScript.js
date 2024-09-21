@@ -43,18 +43,28 @@ const playerCharacters = [
 // Event listener for adding a new empty monster card
 document.getElementById('add-monster-button').addEventListener('click', function() {
     createEmptyMonsterCard();
+    closePopup()
 });
 
 // Event listener for saving each encounter
 document.getElementById('save-encounter').addEventListener('click', function() {
-    showSavePopup();
+    const savePopup = document.querySelector('.save-popup');
+    if (savePopup) {
+        closePopup(); // Close the popup if it's open
+    } else {
+        showSavePopup(); // Show the save popup if it's not open
+    }
 });
 
-// Event listener for saving each encounter
+// Event listener for loading each encounter
 document.getElementById('load-encounter').addEventListener('click', function() {
-    loadEncountersAndPopulateCards();
+    const loadPopup = document.querySelector('.load-popup');
+    if (loadPopup) {
+        closePopup(); // Close the popup if it's open
+    } else {
+        loadEncountersAndPopulateCards(); // Show the load popup if it's not open
+    }
 });
-
 
 function activateMonsterCard(card){
     if (activeMonsterCard) {
@@ -174,8 +184,6 @@ function updateMonsterCard(card, monster) {
         monsterMaxHp = monster.maxHp;
         monsterTempHP = monster.tempHp;
         newConditionsMap = monster.conditions;
-
-        console.log(conditionsMap)
     }
     
 
@@ -605,6 +613,7 @@ function populateMonsterListField(elementId, items, type) {
 // Event listener for adding a new empty player card
 document.getElementById('add-player-button').addEventListener('click', function() {
     createEmptyPlayerCard();
+    closePopup()
 });
 
 function createEmptyPlayerCard() {
@@ -722,6 +731,7 @@ function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
+    
 }
 
 
@@ -925,31 +935,65 @@ async function showSavePopup() {
     popup.appendChild(title);
 
     // Create input field for new encounter name
+    // Create input field for new encounter name
     const newEncounterInput = document.createElement('input');
     newEncounterInput.type = 'text';
+    newEncounterInput.classList.add('encounter-save-input');
     newEncounterInput.placeholder = 'Enter new encounter name';
     popup.appendChild(newEncounterInput);
 
     // Create the dropdown or list for saved encounters
     const encounterList = document.createElement('ul');
-    
-    // Iterate over the savedEncounters object keys (encounter names)
+    encounterList.style.display = 'none'; // Hide initially
+    encounterList.classList.add('encounter-save-list')
+    popup.appendChild(encounterList);
+
+    // Populate the list with saved encounter names
     Object.keys(savedEncounters).forEach((encounterName) => {
         const encounterItem = document.createElement('li');
         encounterItem.textContent = encounterName;
 
-        // Add click event to overwrite the selected encounter
+        // Add click event to select the encounter and fill the input field
         encounterItem.addEventListener('click', () => {
-            saveMonsterCardsAsEncounter(encounterName);
-            closePopup();
+            newEncounterInput.value = encounterName;
+            encounterList.style.display = 'none'; // Hide the list after selecting
         });
         encounterList.appendChild(encounterItem);
     });
 
-    // Button to save as a new encounter
-    const newEncounterButton = document.createElement('button');
-    newEncounterButton.textContent = 'Save as New Encounter';
-    newEncounterButton.addEventListener('click', () => {
+    // Show the list when the input is clicked
+    newEncounterInput.addEventListener('click', () => {
+        encounterList.style.display = 'block'; // Show the list
+    });
+    newEncounterInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            encounterList.style.display = 'none'; // Hide the list after a small delay
+        }, 20); // Delay of 20 milliseconds (adjust as needed)
+    });
+
+    // Filter the list based on user input
+    newEncounterInput.addEventListener('input', () => {
+        const filterText = newEncounterInput.value.toLowerCase();
+
+        // Loop through all the <li> items and hide those that don't match the input
+        Array.from(encounterList.getElementsByTagName('li')).forEach((item) => {
+            const text = item.textContent.toLowerCase();
+            if (text.includes(filterText)) {
+                item.style.display = ''; // Show the item
+            } else {
+                item.style.display = 'none'; // Hide the item
+            }
+        });
+    });
+
+    // Add a save button or logic to handle saving the encounter
+    const saveButton = document.createElement('button');
+    saveButton.classList.add('nonRollButton')
+    saveButton.textContent = 'Save';
+    popup.appendChild(saveButton);
+
+    // Save the content based on the input value
+    saveButton.addEventListener('click', () => {
         const encounterName = newEncounterInput.value.trim();
         if (encounterName) {
             if (savedEncounters[encounterName]) {
@@ -957,16 +1001,16 @@ async function showSavePopup() {
                 const confirmOverwrite = confirm(`An encounter named "${encounterName}" already exists. Do you want to overwrite it?`);
                 if (!confirmOverwrite) return;
             }
-            saveMonsterCardsAsEncounter(encounterName);
-            closePopup();
-        } else {
+            saveMonsterCardsAsEncounter(encounterName); // Call your save function
+            closePopup(); // Close the popup after saving
+        }
+        else {
             alert('Please enter a name for the new encounter.');
         }
     });
 
     // Append the list and button to the popup
     popup.appendChild(encounterList);
-    popup.appendChild(newEncounterButton);
 
     // Append popup to the body
     document.body.appendChild(popup);
@@ -1016,8 +1060,9 @@ async function loadAndStoreMonsterData() {
 //Loading the monsters cards into the page. 
 
 async function loadEncountersAndPopulateCards(){
-    await loadAndStoreMonsterData()
-    // Step 2: Retrieve the saved encounters from storage (assuming stored in localStorage or similar)
+    await loadAndStoreMonsterData();
+    
+    // Retrieve the saved encounters from storage
     const savedEncounters = allSavedEncounters || {};
 
     // Create the popup element
@@ -1029,26 +1074,78 @@ async function loadEncountersAndPopulateCards(){
     title.textContent = "Load Encounter";
     popup.appendChild(title);
 
-    // Step 3: Loop through saved encounters and display their titles
-    const encounterList = document.createElement('ul');
-    Object.keys(savedEncounters).forEach((encounterName) => {
-        const encounterItem = document.createElement('li');
-        encounterItem.textContent = encounterName;
+    // Create input field for filtering encounter names
+    const filterInput = document.createElement('input');
+    filterInput.type = 'text';
+    filterInput.placeholder = 'Filter encounters...';
+    filterInput.classList.add('encounter-save-input');
+    popup.appendChild(filterInput);
 
-        // Add click event to overwrite the selected encounter
-        encounterItem.addEventListener('click', () => {
-            updateMonsterCardDataFromLoad(savedEncounters[encounterName]);
-            closePopup();
-        });
-        encounterList.appendChild(encounterItem);
+    filterInput.addEventListener('click', () => {
+        encounterList.style.display = 'block'; // Show the list
+    });
+    filterInput.addEventListener('blur', () => {
+        setTimeout(() => {
+            encounterList.style.display = 'none'; // Hide the list after a small delay
+        }, 20); // Delay of 20 milliseconds (adjust as needed)
     });
 
-    // Append the list and button to the popup
+    // Create the dropdown or list for saved encounters
+    const encounterList = document.createElement('ul');
+    encounterList.classList.add('encounter-save-list')
     popup.appendChild(encounterList);
+
+    // Function to populate the encounter list
+    function populateEncounterList(filter = '') {
+        encounterList.innerHTML = ''; // Clear previous list
+
+        // Loop through saved encounters and display their titles
+        Object.keys(savedEncounters).forEach((encounterName) => {
+            if (encounterName.toLowerCase().includes(filter.toLowerCase())) {
+                const encounterItem = document.createElement('li');
+                const encounterText = document.createElement('span');
+                encounterText.classList.add('encounter-load-text')
+                encounterText.textContent = encounterName;
+                encounterItem.appendChild(encounterText);
+
+                // Add click event to overwrite the selected encounter
+                encounterItem.addEventListener('click', () => {
+                    updateMonsterCardDataFromLoad(savedEncounters[encounterName]);
+                    closePopup();
+                });
+                encounterList.appendChild(encounterItem);
+
+                // Add delete button next to each encounter
+                const deleteButton = document.createElement('button');
+                deleteButton.classList.add('delete-encounter', 'nonRollButton');
+                deleteButton.textContent = 'Delete';
+                
+
+                // Add event listener for deleting encounter
+                deleteButton.addEventListener('click', (event) => {
+                    event.stopPropagation(); // Prevent triggering the click event on the list item
+                    console.log("delete storage");
+                    removeFromGlobalStorage("Encounter Data", encounterName);
+                    closePopup()
+                });
+                encounterItem.appendChild(deleteButton);
+            }
+        });
+    }
+
+    // Initially populate the list with all encounters
+    populateEncounterList();
+
+    // Add event listener to filter encounters based on input
+    filterInput.addEventListener('input', () => {
+        const filterText = filterInput.value;
+        populateEncounterList(filterText);
+    });
+
     // Append popup to the body
     document.body.appendChild(popup);
-    
 }
+
 
 function updateMonsterCardDataFromLoad(encounterData) {
     const monsterCardsContainer = document.getElementById('initiative-tracker');

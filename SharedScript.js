@@ -650,6 +650,8 @@ function showErrorModal(errorMessage) {
 // Delete data from global storage
 function removeFromGlobalStorage(dataType, dataId) {
     // Load the existing data from global storage
+
+    console.log(dataType, dataId)
     TS.localStorage.global.getBlob()
         .then((existingData) => {
             let allData = {};
@@ -682,6 +684,36 @@ function removeFromGlobalStorage(dataType, dataId) {
             // Handle any errors that occur during the process
             errorModal('Failed to delete data from global storage: ' + error);
         });
+}
+
+
+
+
+let exists = false
+function errorModal(modalText){
+    const errorModal = document.getElementById('errorModal');
+    const closeModal = errorModal.querySelector('.close');
+    const modalContent = errorModal.querySelector('.modal-content p')
+
+    modalContent.textContent = modalText;
+
+    errorModal.style.display = 'block';
+
+    // Close the error modal
+    closeModal.addEventListener('click', function() {
+        errorModal.style.display = 'none';
+    });
+    
+    if(exists === true){
+        // Show the "Remove Monster" button
+        const removeButton = errorModal.querySelector('#removeButton');
+        removeButton.style.display = 'block';
+    }
+    else{
+        removeButton.style.display = 'none';
+    }
+
+    exists = false; // Reset the global variable
 }
 
 
