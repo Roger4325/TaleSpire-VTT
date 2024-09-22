@@ -51,7 +51,6 @@ const AppData = {
 
 
 document.getElementById('settings-toggle').addEventListener('click', function() {
-    console.log("click")
     const settingsContainer = document.getElementById('settings-container');
     settingsContainer.classList.toggle('active');
 });
@@ -153,7 +152,8 @@ async function onInit() {
     }
     else{
         await playerSetUP();
-        loadAndDisplayCharacter("Tryn");
+        // loadAndDisplayCharacter("Tryn");
+        loadAndPickaCharacter()
     }
     rollableButtons();
 
@@ -649,39 +649,40 @@ function showErrorModal(errorMessage) {
 
 // Delete data from global storage
 function removeFromGlobalStorage(dataType, dataId) {
-    // Load the existing data from global storage
-
-    console.log(dataType, dataId)
-    TS.localStorage.global.getBlob()
+    return TS.localStorage.global.getBlob()
         .then((existingData) => {
             let allData = {};
             if (existingData) {
                 allData = JSON.parse(existingData);
             }
 
-            // Check if the dataType property exists
+            console.log("Current characters before deletion:", allData[dataType]);
+
             if (allData[dataType]) {
-                // Check if the dataId exists for this dataType
                 if (allData[dataType][dataId]) {
-                    // Data exists, so remove it
-                    delete allData[dataType][dataId];
+                    console.time('Deletion Time');
+                    console.log("Deleting character:", dataId);
+                    delete allData[dataType][dataId]; // Attempt to delete
+                    console.timeEnd('Deletion Time');
+                    console.log("Characters after deletion attempt:", allData[dataType]); // Log after attempt
 
                     // Save the updated data back to global storage
-                    TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
-
-                    // Show a success message
-                    errorModal('Data deleted from global storage');
+                    return TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4))
+                        .then(() => {
+                            console.log("Updated data saved to global storage:", allData);
+                            errorModal('Data deleted from global storage');
+                        })
+                        .catch((error) => {
+                            errorModal('Failed to save data to global storage: ' + error);
+                        });
                 } else {
-                    // DataId doesn't exist, show an error message
-                    errorModal('DataId not found in global storage');
+                    errorModal('DataId not found in global storage: ' + dataId);
                 }
             } else {
-                // DataType doesn't exist, show an error message
                 errorModal('DataType not found in global storage');
             }
         })
         .catch((error) => {
-            // Handle any errors that occur during the process
             errorModal('Failed to delete data from global storage: ' + error);
         });
 }
@@ -689,9 +690,13 @@ function removeFromGlobalStorage(dataType, dataId) {
 
 
 
+
+
+
 let exists = false
 function errorModal(modalText){
     const errorModal = document.getElementById('errorModal');
+    console.log(errorModal)
     const closeModal = errorModal.querySelector('.close');
     const modalContent = errorModal.querySelector('.modal-content p')
 

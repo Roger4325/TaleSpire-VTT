@@ -1,5 +1,27 @@
 [
     {
+        "name": "Absorb Elements*",
+        "desc": "The spell captures some of the incoming energy, lessening its effect on you and storing it for your next melee attack. You have resistance to the triggering damage type until the start of your next turn. Also, the first time you hit with a melee attack on your next turn, the target takes an extra 1d6 damage of the triggering type, and the spell ends.",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the extra damage increases by 1d6 for each slot level above 1st.",
+        "page": "phb 211",
+        "range": "self",
+        "components": "S",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1R",
+        "level": "1st-level",
+        "school": "Abjuration",
+        "class": "Druid, Ranger, Artificer, Sorcerer, Wizard",
+        "toHitOrDC": "",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": "1d6",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no",
+        "damage_type_01": "Choice"
+        
+    },
+    {
         "name": "Acid Arrow",
         "desc": "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn.",
         "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd.",
@@ -43,7 +65,7 @@
         
     },
     {
-        "name": "Agnazzars Scorcher",
+        "name": "Agnazzars Scorcher*",
         "desc": "A line of roaring flame 30 feet long and 5 feet wide emanates from you in a direction you choose. Each creature in the line must make a Dexterity saving throw. A creature takes 3d8 fire damage on a failed save, or half as much damage on a successful one.",
         "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd.",
         "page": "",
@@ -770,6 +792,28 @@
         "damage_type_01": "Necrotic"
     },
     {
+        "name": "Chromatic Orb*",
+        "desc": "You hurl a 4-inch-diameter sphere of energy at a creature that you can see within range. You choose acid, cold, fire, lightning, poison, or thunder for the type of orb you create, and then make a ranged spell attack against the target. If the attack hits, the creature takes 3d8 damage of the type you chose.",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d8 for each slot level above 1st.",
+        "page": "phb 221",
+        "range": "90 feet",
+        "components": "V, S, M",
+        "material": "a diamond worth at least 50 gp",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1A",
+        "level": "1st-level",
+        "school": "Evocation",
+        "class": "Sorcerer, Wizard",
+        "toHitOrDC": "toHit",
+        "damage_dice": "3d8",
+        "damage_dice_upcast": "1d8",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no",
+        "damage_type_01": "Choice"
+    },
+    {
         "name": "Circle of Death",
         "desc": "A sphere of negative energy ripples out in a 60-foot radius sphere from a point within range. Each creature in that area must make a constitution saving throw. A target takes 8d6 necrotic damage on a failed save, or half as much damage on a successful one.",
         "higher_level": "When you cast this spell using a spell slot of 7th level or higher, the damage increases by 2d6 for each slot level above 6th.",
@@ -849,6 +893,27 @@
         "spell_save_dc_type": "con",
         "ability_modifier": "no",
         "damage_type_01": "Posion"
+    },
+    {
+        "name": "Cloud of Daggers*",
+        "desc": "You fill the air with spinning daggers in a cube 5 feet on each side, centered on a point you choose within range. A creature takes 4d4 slashing damage when it enters the spell’s area for the first time on a turn or starts its turn there.",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 2d4 for each slot level above 2nd.",
+        "page": "phb 222",
+        "range": "60ft./5ft. Cube",
+        "components": "V, S, M",
+        "material": "A sliver of glass",
+        "ritual": "",
+        "duration": "1m",
+        "concentration": "yes",
+        "casting_time": "1A",
+        "level": "2nd-level",
+        "school": "Conjuration",
+        "class": "Sorcerer, Wizard, Bard",
+        "damage_dice": "4d4",
+        "damage_dice_upcast": "2d4",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no",
+        "damage_type_01": "Slashing"
     },
     {
         "name": "Color Spray",
@@ -1785,6 +1850,28 @@
         "damage_type_01": "Blundgeoning"
     },
     {
+        "name": "Earth Tremor*",
+        "desc": "You cause a tremor in the ground within range. Each creature other than you in that area must make a Dexterity saving throw. On a failed save, a creature takes 1d6 bludgeoning damage and is knocked prone. If the ground in that area is loose earth or stone, it becomes difficult terrain until cleared, with each 5-foot-diameter portion requiring at least 1 minute to clear by hand.",
+        "page": "phb 236",
+        "range": "10 feet",
+        "components": "V, S",
+        "material": "",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "",
+        "casting_time": "1A",
+        "level": "1st-level",
+        "school": "Evocation",
+        "class": "Bard, Druid, Sorcerer, Wizard",
+        "higher_level": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d6 for each slot level above 1st.",
+        "toHitOrDC": "DC",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": "1d6",
+        "spell_save_dc_type": "dex",
+        "ability_modifier": "no",
+        "damage_type_01": "Blundgeoning"
+    },
+    {
         "name": "Eldritch Blast",
         "desc": "A beam of crackling energy streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, the target takes 1d10 force damage.The spell creates more than one beam when you reach higher levels: two beams at 5th level, three beams at 11th level, and four beams at 17th level. You can direct the beams at the same target or at different ones. Make a separate attack roll for each beam.",
         "page": "phb 237",
@@ -2430,7 +2517,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Galder's Tower",
+        "name": "Galder's Tower*",
         "desc": "You conjure a two-story tower made of stone, wood, or similar suitably sturdy materials. The tower can be round or square in shape. Each level of the tower is 10 feet tall and has an area of up to 100 square feet. Access between levels consists of a simple ladder and hatch.<br><br>Each level takes one of the following forms, chosen by you when you cast the spell:<br>- A bedroom with a bed, chairs, chest, and magical fireplace<br>- A study with desks, books, bookshelves, parchments, ink, and ink pens<br>- A dining space with a table, chairs, magical fireplace, containers, and cooking utensils<br>- A lounge with couches, armchairs, side tables and footstools<br>- A washroom with toilets, washtubs, a magical brazier, and sauna benches<br>- An observatory with a telescope and maps of the night sky<br>- An unfurnished, empty room<br><br>The interior of the tower is warm and dry, regardless of conditions outside. Any equipment or furnishings conjured with the tower dissipate into smoke if removed from it.<br><br>At the end of the spell’s duration, all creatures and objects within the tower that were not created by the spell appear safely outside on the ground, and all traces of the tower and its furnishings disappear.<br><br>You can cast this spell again while it is active to maintain the tower’s existence for another 24 hours. You can create a permanent tower by casting this spell in the same location and with the same configuration every day for one year.",
         "page": "phb 244",
         "range": "60 feet",
@@ -2844,6 +2931,26 @@
         "class": "Cleric, Druid",
         "spell_save_dc_type": "",
         "ability_modifier": "no"
+    },
+    {
+        "name": "Healing Spirit*",
+        "desc": "You call forth a nature spirit to soothe the wounded. The intangible spirit appears in a space that is a 5-foot cube you can see within range. The spirit looks like a transparent beast or fey (your choice). Until the spell ends, whenever you or a creature you can see moves into the spirit’s space for the first time on a turn or starts its turn there, you can cause the spirit to restore 1d6 hit points to that creature (no action required). The spirit can’t heal constructs or undead. The spirit can heal a number of times equal to 1 + your spellcasting ability modifier (minimum of twice). After healing that number of times, the spirit disappears. As a bonus action on your turn, you can move the spirit up to 30 feet to a space you can see.",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the healing increases by 1d6 for each slot level above 2nd.",
+        "page": "phb 250",
+        "range": "60 feet",
+        "components": "V, S",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "yes",
+        "casting_time": "1BA",
+        "level": "2nd-level",
+        "school": "Conjuration",
+        "class": "Ranger, Druid",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": "1d6",
+        "spell_save_dc_type": "",
+        "ability_modifier": "yes",
+        "damage_type_01": "Healing"
     },
     {
         "name": "Healing Word",
@@ -3269,6 +3376,25 @@
         "ability_modifier": "no"
     },
     {
+        "name": "Leomund's Tiny Hut*",
+        "desc": "A 10-foot-radius immobile dome of force springs into existence around and above you and remains stationary for the duration. The spell ends if you leave its area. Nine creatures of Medium size or smaller can fit inside the dome with you. The spell fails if its area includes a larger creature or more than nine creatures. Creatures and objects within the dome when you cast this spell can move through it freely. All other creatures and objects are barred from passing through it. Spells and other magical effects can’t extend through the dome or be cast through it. The atmosphere inside the space is comfortable and dry, regardless of the weather outside. Until the spell ends, you can command the interior to become dimly lit or dark. The dome is opaque from the outside, of any color you choose, but it is transparent from the inside.",
+        "page": "phb 254",
+        "range": "10 feet",
+        "components": "V, S, M",
+        "material": "(a small crystal bead",
+        "ritual": "yes",
+        "duration": "8 hours",
+        "concentration": "no",
+        "casting_time": "1m",
+        "level": "3rd-level",
+        "school": "Evocation",
+        "class": "Bard, Cleric, Wizard",
+        "domains": "Twilight Domain",
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
+    },
+    {
         "name": "Lesser Restoration",
         "desc": "You touch a creature and can end either one disease or one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.",
         "page": "phb 255",
@@ -3304,6 +3430,27 @@
         "higher_level": "",
         "spell_save_dc_type": "",
         "ability_modifier": "no"
+    },
+    {
+        "name": "Life Transference*",
+        "desc": "You sacrifice some of your health to mend another creature’s injuries. You take 4d8 necrotic damage, which can’t be reduced in any way, and one creature of your choice that you can see within range regains a number of hit points equal to twice the necrotic damage you take.",
+        "page": "phb 255",
+        "range": "30 feet",
+        "components": "V, S",
+        "material": "",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1A",
+        "level": "3rd-level",
+        "school": "Necromancy",
+        "class": "Bard, Cleric, Sorcerer, Wizard",
+        "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d8 for each slot level above 3rd.",
+        "toHitOrDC": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no",
+        "damage_dice": "4d8",
+        "damage_type_01": "Necrotic"
     },
     {
         "name": "Light",
@@ -3755,6 +3902,27 @@
         "higher_level": "",
         "spell_save_dc_type": "",
         "ability_modifier": "no"
+    },
+    {
+        "name": "Mind Sliver*",
+        "desc": "You drive a disorienting spike of psychic energy into the mind of one creature you can see within range. The target must succeed on an Intelligence saving throw or take 1d6 psychic damage and subtract 1d4 from the next saving throw it makes before the end of your next turn.",
+        "page": "phb 259",
+        "range": "60 feet",
+        "components": "V",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1A",
+        "level": "Cantrip",
+        "school": "Enchantment",
+        "class": "Sorcerer, Wizard,Warlock",
+        "higher_level": "This spell’s damage increases by 1d6 when you reach certain levels: 5th level (2d6), 11th level (3d6), and 17th level (4d6).",
+        "toHitOrDC": "DC",
+        "damage_dice": "1d6",
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "int",
+        "ability_modifier": "no",
+        "damage_type_01": "Psychic"
     },
     {
         "name": "Minor Illusion",
@@ -4374,7 +4542,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Pyrotechnics",
+        "name": "Pyrotechnics*",
         "desc": "Choose an area of nonmagical flame that you can see and that fits within a 5-foot cube within range. You can extinguish the fire in that area, and you create either fireworks or smoke when you do so.<br>Fireworks. The target explodes with a dazzling display of colors. Each creature within 10 feet of the target must succeed on a Constitution saving throw or become blinded until the end of your next turn.<br>Smoke. Thick black smoke spreads out from the target in a 20-foot radius, moving around corners. The area of the smoke is heavily obscured. The smoke persists for 1 minute or until a strong wind disperses it.",
         "page": "",
         "range": "60 ft (5 ft cube*)",
@@ -4578,7 +4746,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Rime's Binding Ice",
+        "name": "Rime's Binding Ice*",
         "desc": "A burst of cold energy emanates from you in a 30-foot cone. Each creature in that area must make a Constitution saving throw. On a failed save, a creature takes 3d8 cold damage and is hindered by ice formations for 1 minute, or until it or another creature within reach of it uses an action to break away the ice. A creature hindered by ice has its speed reduced to 0. On a successful save, a creature takes half as much damage and isn’t hindered by ice.",
         "page": "",
         "range": "30 foot Cone",
@@ -4953,6 +5121,24 @@
         "level": "7th-level",
         "school": "Illusion",
         "class": "Wizard",
+        "higher_level": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no"
+    },
+    {
+        "name": "Silvery Barbs*",
+        "desc": "You magically distract the triggering creature and turn its momentary uncertainty into encouragement for another creature. The triggering creature must reroll the d20 and use the lower roll. You can then choose a different creature you can see within range (you can choose yourself). The chosen creature has advantage on the next attack roll, ability check, or saving throw it makes within 1 minute. A creature can be empowered by only one use of this spell at a time.",
+        "page": "phb 276",
+        "range": "60 feet",
+        "components": "V",
+        "material": "",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1R",
+        "level": "1st-level",
+        "school": "Enchantment",
+        "class": "Sorcerer, Wizard, Bard",
         "higher_level": "",
         "spell_save_dc_type": "",
         "ability_modifier": "no"
@@ -5426,7 +5612,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Thunder Step",
+        "name": "Thunder Step*",
         "desc": "You teleport yourself to an unoccupied space you can see within range. Immediately after you disappear, a thunderous boom sounds, and each creature within 10 feet of the space you left must make a Constitution saving throw, taking 3d10 thunder damage on a failed save, or half as much damage on a successful one. The thunder can be heard from up to 300 feet away.\n\nYou can bring along objects as long as their weight doesn’t exceed what you can carry. You can also teleport one willing creature of your size or smaller who is carrying gear up to its carrying capacity. The creature must be within 5 feet of you when you cast this spell, and there must be an unoccupied space within 5 feet of your destination space for the creature to appear in; otherwise, the creature is left behind.",
         "higher_level": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d10 for each slot level above 3rd.",
         "page": "Xanathar's Guide to Everything",
@@ -5697,6 +5883,27 @@
         "spell_save_dc_type": "wis",
         "ability_modifier": "no",
         "damage_type_01": "Psychic"
+    },
+    {
+        "name": "Vortex Warp*",
+        "desc": "You magically twist space around another creature you can see within range. The target must succeed on a Constitution saving throw (the target can choose to fail), or the target is teleported to an unoccupied space of your choice that you can see within range. The chosen space must be on a surface or in a liquid that can support the target without the target having to squeeze.",
+        "page": "phb 285",
+        "range": "90 feet",
+        "components": "V, S",
+        "ritual": "",
+        "duration": "Instantaneous",
+        "concentration": "no",
+        "casting_time": "1A",
+        "level": "2nd-level",
+        "school": "Conjuration",
+        "class": "Sorcerer, Wizard, Artificer",
+        "higher_level": "When you cast this spell using a spell slot of 3rd level or higher, the range of the spell increases by 30 feet for each slot level above 2nd.",
+        "toHitOrDC": "DC",
+        "damage_dice": "",
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "con",
+        "ability_modifier": "no",
+        "damage_type_01": ""
     },
     {
         "name": "Wall of Fire",
@@ -5992,6 +6199,25 @@
         "class": "Cleric",
         "higher_level": "",
         "spell_save_dc_type": "",
+        "ability_modifier": "no"
+    },
+    {
+        "name": "Zephyr Strike*",
+        "desc": "You move like the wind. Until the spell ends, your movement doesn’t provoke opportunity attacks. Once before the spell ends, you can give yourself advantage on one weapon attack roll on your turn. That attack deals an extra 1d8 force damage on a hit. Whether you hit or miss, your walking speed increases by 30 feet until the end of that turn.",
+        "page": "phb 289",
+        "range": "Self",
+        "components": "V",
+        "ritual": "",
+        "duration": "1m",
+        "concentration": "yes",
+        "casting_time": "1BA",
+        "level": "1st-level",
+        "school": "Transmutation",
+        "class": "Ranger",
+        "higher_level": "",
+        "toHitOrDC": "",
+        "spell_save_dc_type": "",
+        "damage_dice": "1d8",
         "ability_modifier": "no"
     },
     {

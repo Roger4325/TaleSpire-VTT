@@ -24,8 +24,12 @@
                             <button id="longRestButton">Long Rest</button>
                         </div>
                     </li>
-                    <li>Option 2</li>
-                    <li>Option 3</li>
+                    <li>
+                        Option 3
+                    </li>
+                    <li>
+                        <button id="deleteCharacter">Delete a Character</button>
+                    </li>
                     <!-- Add more options as needed -->
                 </ul>
             </div>
@@ -66,8 +70,7 @@
             </div>
             
             <div id="playerCharacterContainer">
-                <label for="playerCharacterInput"></label>
-                <input type="text" id="playerCharacterInput" class = "inputBox" placeholder="Character Name">
+                <div id="playerCharacterInput"></div>
                 <div id="playerAuxStats" class="abilityScores">
                     <div id ="character Init" class="abilitybox">Init
                         <hr>
@@ -832,19 +835,19 @@
                 <p id="spellDamageDice"></p>
             </div>
         </div>
-
-
-        <div id="errorModal" class="modal">
-            <div class="modal-content">
-                <span id="errorModalMessage"></span>
-            </div>
-        </div>
     </main>
     
 
         
        
 </body>
+<div id="errorModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <p>0</p>
+        <button id="removeButton" style="display: none;">Delete from Global</button>
+    </div>
+</div>
     <script>
     </script>
     <footer>

@@ -5,6 +5,18 @@
     min-height: 175px;
 }
 
+#playerCharacterInput{
+    font-size: 15px;
+    text-align: center;
+    display: block;
+    padding: 2px;
+    padding-top: 6px;
+    border: solid 1px var(--ts-button-background);
+    border-radius: 10px;
+    margin: 3px;
+}
+
+
 .characterPicture{
     min-height: 128px;
     min-width: 128px;
@@ -890,6 +902,10 @@ select{
     padding: 20px;
 }
 
+.spell-card p strong {
+    color: var(--ts-accent-primary);
+}
+
 .close-button {
     position: absolute;
     top: 10px;
@@ -1145,3 +1161,199 @@ select{
     background-color: #ff4d4d;
 }
 
+
+
+
+
+
+
+
+/*Styling for the character selection and creation process*/
+
+/* Full-screen overlay for character selection */
+.character-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Container for the character list and actions */
+.character-container {
+    background-color: #f9f9f9; /* Light background */
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Title for the character selection */
+.character-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333; /* Darker text color for visibility */
+}
+
+/* Buttons for existing characters */
+.character-button {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.character-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Button for creating a new character */
+.new-character-button {
+    width: 80%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #28a745; /* Green background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.new-character-button:hover {
+    background-color: #218838; /* Darker green on hover */
+}
+
+/* Input modal for character name entry */
+.input-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #ffffff; /* White background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow */
+    z-index: 1001; /* Above the overlay */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Input field for character name */
+.character-input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button for confirming character creation */
+.confirm-button {
+    width: 80%;
+    padding: 10px;
+    background-color: #007bff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.character-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.character-container {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.character-title {
+    margin-bottom: 15px;
+}
+
+.character-button {
+    margin: 5px;
+    padding: 10px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.character-button:hover {
+    background: #0056b3;
+}
+
+.confirm-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.confirm-button, .cancel-button {
+    margin-top: 10px;
+    padding: 10px;
+    background: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #dc3545;
+}
+
+.confirm-button:hover {
+    background: #218838;
+}
+
+.cancel-button:hover {
+    background: #c82333;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #007bff;
+}

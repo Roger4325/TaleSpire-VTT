@@ -460,6 +460,7 @@ function populateField(elementId, label, value, isRollable = false) {
 // Populates monster fields
 function populateMonsterFields(monster) {
     // Populate basic monster info
+
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
     populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
@@ -472,30 +473,23 @@ function populateMonsterFields(monster) {
     populateField('monsterSenses', 'Senses', monster.Senses, false);
     populateField('monsterChallenge', 'CR', monster.Challenge, false);
 
+    function checkAndPopulateSection(elementId, data, type) {
+        const container = document.getElementById(elementId);
+        container.innerHTML = ''; // Always clear previous content
+    
+        if (data && data.length > 0) {
+            populateMonsterListField(elementId, data, type);
+        }
+    }
+    
     populateMonsterListField('monsterAbilityScores', monster.Abilities, 'abilityScores');
 
-    if (monster.Skills.length > 0){
-        populateMonsterListField('monsterSkills', monster.Skills, 'skill');
-    }
 
-    if (monster.Saves.length > 0){
-        populateMonsterListField('monsterSaves', monster.Saves, 'savingThrow');
-    }
-
-    // Populate actions
-    if (monster.Actions.length > 0){
-        populateMonsterListField('monsterActions', monster.Actions, 'action');
-    }
-
-    // Populate traits
-    if (monster.Traits.length > 0){
-        populateMonsterListField('monsterAbilities', monster.Traits,'traits');
-    }
-
-    // Populate legendary actions
-    if (monster.LegendaryActions.length > 0){
-        populateMonsterListField('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
-    }
+    checkAndPopulateSection('monsterSkills', monster.Skills, 'skill');
+    checkAndPopulateSection('monsterSaves', monster.Saves, 'savingThrow');
+    checkAndPopulateSection('monsterActions', monster.Actions, 'action');
+    checkAndPopulateSection('monsterAbilities', monster.Traits, 'traits');
+    checkAndPopulateSection('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
     
     rollableButtons()
 }

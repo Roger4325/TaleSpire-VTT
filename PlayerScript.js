@@ -134,8 +134,8 @@ async function playerSetUP(){
 
             // Update displayed rows based on selected categories
             updateDisplayedRows();
+            updateContent();
         }
-        updateContent();
     });
 
 
@@ -225,6 +225,7 @@ async function playerSetUP(){
                 spellGroup.style.display = 'none';
             }
         });
+        updateContent()
     });
 
     document.querySelectorAll('.deathSavesButton').forEach(button => {
@@ -1206,7 +1207,7 @@ function getAllEditableContent() {
     
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
-    saveToGlobalStorage("characters", characterName.value, content, true);
+    saveToGlobalStorage("characters", characterName.textContent, content, true);
 
     return content;
 }
@@ -1343,7 +1344,7 @@ function updateCharacterUI(characterData, characterName) {
     const characterTempHpElement = document.getElementById("tempHP");
 
     // Update UI elements
-    characterNameElement.value = characterName; // Adjust based on your actual property names
+    characterNameElement.textContent = characterName; // Adjust based on your actual property names
     characterTempHpElement.value = characterData.characterTempHp;
 
     const characterInit = document.getElementById("initiativeButton");
@@ -1444,26 +1445,203 @@ function updateConditionsUI(conditionsSet) {
     });
 }
 
-// Load and update character data
-function loadAndDisplayCharacter(characterName) {
-    const dataType = "characters"; // Adjust based on your data structure
+async function loadAndPickaCharacter() {
+    // Step 1: Load all characters from global storage
+    const dataType = "characters";
+    const allCharactersData = await loadDataFromGlobalStorage(dataType);
 
-    console.log(characterName)
-    loadDataFromGlobalStorage(dataType)
-        .then((allCharactersData) => {
-            const tyrnData = allCharactersData[characterName];
+    // Step 2: Create a full-screen overlay element
+    const overlay = document.createElement('div');
+    overlay.classList.add('character-overlay');
+    document.body.appendChild(overlay);
 
-            if (tyrnData) {
-                updateCharacterUI(tyrnData, characterName);
-            } else {
-                console.error("Tyrn's data not found.");
-                // Handle the case where Tyrn's data is not found, e.g., show a message to the user
-            }
-        })
-        .catch((error) => {
-            console.error("Error loading character data:", error);
-            // Handle the error appropriately, e.g., show an error message to the user
+    // Step 3: Create a container for the character list and new character button
+    const container = document.createElement('div');
+    container.classList.add('character-container');
+
+    // Step 4: Add a title
+    const title = document.createElement('h2');
+    title.classList.add('character-title');
+    title.textContent = 'Select or Create a Character';
+    container.appendChild(title);
+
+    const closeButton = document.createElement('button');
+    closeButton.textContent = 'X';
+    closeButton.classList.add('close-button');
+    closeButton.addEventListener('click', () => {
+        overlay.removeChild(inputModal); // Close the input modal
+    });
+    container.appendChild(closeButton);
+
+    // Step 5: List existing characters
+    Object.keys(allCharactersData).forEach(characterName => {
+        const characterButton = document.createElement('button');
+        characterButton.classList.add('character-button');
+        characterButton.textContent = characterName;
+
+        // Add click event to load the selected character's data
+        characterButton.addEventListener('click', () => {
+            console.log(allCharactersData[characterName]); // Access the character data
+            loadAndDisplayCharacter(characterName, allCharactersData)
+            // Do something with the selected character's data (e.g., load it)
+            document.body.removeChild(overlay); // Close the overlay after selection
         });
+        container.appendChild(characterButton);
+    });
+
+    // Step 6: Add a button to create a new character
+    const newCharacterButton = document.createElement('button');
+    newCharacterButton.classList.add('new-character-button');
+    newCharacterButton.textContent = 'Create New Character';
+
+    newCharacterButton.addEventListener('click', () => {
+        // Create a new character name input modal
+        const inputModal = document.createElement('div');
+        inputModal.classList.add('input-modal');
+
+        const inputTitle = document.createElement('h3');
+        inputTitle.textContent = 'Enter Character Name:';
+        inputModal.appendChild(inputTitle);
+
+        const characterInput = document.createElement('input');
+        characterInput.type = 'text';
+        characterInput.classList.add('character-input');
+        inputModal.appendChild(characterInput);
+
+        const closeInputModalButton = document.createElement('button');
+        closeInputModalButton.textContent = 'X';
+        closeInputModalButton.classList.add('close-button');
+        closeInputModalButton.addEventListener('click', () => {
+            document.body.removeChild(inputModal); // Close the input modal
+        });
+        inputModal.appendChild(closeInputModalButton);
+
+        const confirmButton = document.createElement('button');
+        confirmButton.textContent = 'Create Character';
+        confirmButton.classList.add('confirm-button');
+
+        confirmButton.addEventListener('click', () => {
+            const newCharacterName = characterInput.value.trim();
+            if (newCharacterName) {
+                console.log(`Creating new character: ${newCharacterName}`);
+                // Add logic to save new character data
+                const characterName = document.getElementById("playerCharacterInput");
+                characterName.textContent = newCharacterName
+                document.body.removeChild(overlay);
+                updateContent();
+            }
+        });
+        inputModal.appendChild(confirmButton);
+
+        // Remove any existing input modal
+        const existingModal = document.querySelector('.input-modal');
+        if (existingModal) {
+            document.body.removeChild(existingModal);
+        }
+
+        overlay.appendChild(inputModal);
+    });
+
+    container.appendChild(newCharacterButton);
+
+    // Step 7: Append the container to the overlay
+    overlay.appendChild(container);
+}
+
+
+// Load and update character data
+function loadAndDisplayCharacter(characterName, allCharactersData) {
+            const characterData = allCharactersData[characterName];
+
+            if (characterData) {
+                updateCharacterUI(characterData, characterName);
+            } else {
+                console.error("Character data not found.");
+                // Handle the case where data is not found, e.g., show a message to the user
+            }
+}
+
+
+
+document.getElementById('deleteCharacter').addEventListener('click', () => {
+    loadAndDeleteCharacter();
+});
+
+async function loadAndDeleteCharacter() {
+    const dataType = "characters";
+    const allCharactersData = await loadDataFromGlobalStorage(dataType);
+
+    const overlay = document.createElement('div');
+    overlay.classList.add('character-overlay');
+    document.body.appendChild(overlay);
+
+    const container = document.createElement('div');
+    container.classList.add('character-container');
+
+    const title = document.createElement('h2');
+    title.classList.add('character-title');
+    title.textContent = 'Select a Character to Delete';
+    container.appendChild(title);
+
+    Object.keys(allCharactersData).forEach(characterName => {
+        const characterButton = document.createElement('button');
+        characterButton.classList.add('character-button');
+        characterButton.textContent = characterName;
+
+        characterButton.addEventListener('click', () => {
+            confirmDeleteCharacter(characterName, overlay);
+        });
+        container.appendChild(characterButton);
+    });
+
+    overlay.appendChild(container);
+}
+
+function confirmDeleteCharacter(characterName, overlay) {
+    // Remove existing confirmation modal if it exists
+    const existingConfirmModal = document.querySelector('.confirm-modal');
+    if (existingConfirmModal) {
+        existingConfirmModal.parentNode.removeChild(existingConfirmModal);
+    }
+
+    const confirmModal = document.createElement('div');
+    confirmModal.classList.add('confirm-modal');
+
+    // Close button for confirm modal
+    const closeConfirmModalButton = document.createElement('button');
+    closeConfirmModalButton.textContent = 'X';
+    closeConfirmModalButton.classList.add('close-button');
+    closeConfirmModalButton.addEventListener('click', () => {
+        document.body.removeChild(overlay); // Close overlay
+    });
+    confirmModal.appendChild(closeConfirmModalButton);
+
+    const message = document.createElement('p');
+    message.textContent = `Are you sure you want to delete "${characterName}"? This action cannot be undone.`;
+    confirmModal.appendChild(message);
+
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = 'Yes, Delete';
+    confirmButton.classList.add('confirm-button');
+
+    confirmButton.addEventListener('click', () => {
+        console.log(`Deleting character: ${characterName}`);
+        removeFromGlobalStorage("characters", characterName); // Add your removal logic here
+        // document.body.removeChild(confirmModal);
+        document.body.removeChild(overlay); // Close overlay after deletion
+    });
+
+    const cancelButton = document.createElement('button');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.classList.add('cancel-button');
+
+    cancelButton.addEventListener('click', () => {
+        document.body.removeChild(confirmModal);
+    });
+
+    confirmModal.appendChild(confirmButton);
+    confirmModal.appendChild(cancelButton);
+    overlay.appendChild(confirmModal);
 }
 
 
@@ -1804,6 +1982,7 @@ function updateAllDamageButtonDataNames() {
             }
         }
     });
+    updateContent()
 }
 
 
@@ -1924,6 +2103,7 @@ function addDamageDiceInputListener(inputElement, rowElement) {
 
             damageLabel.setAttribute('data-dice-type', newValue);
         }
+        updateContent()
     };
 
     // Trigger the process when input loses focus (blur)
@@ -1975,6 +2155,7 @@ function addDeleteButtonListener(deleteButton) {
         const row = deleteButton.closest('tr');
         if (row) {
             row.remove();
+            updateContent()
         }
     });
 }
@@ -2006,6 +2187,7 @@ function createSpellSlot() {
             slot.textContent = '';
             slot.classList.remove('used');
         }
+        updateContent()
     });
     return slot;
 }
@@ -2018,6 +2200,7 @@ function addSpellSlot(levelContainer) {
     } else {
         console.error("Level container not found!"); // Error log if container is not found
     }
+    updateContent()
 }
 
 // Function to remove the last spell slot
@@ -2033,6 +2216,7 @@ function removeSpellSlot(levelContainer) {
     } else {
         console.error("Level container not found!"); // Error log if container is not found
     }
+    updateContent()
 }
 
 document.querySelectorAll('.add-spell-slot').forEach(button => {
@@ -2255,6 +2439,7 @@ document.querySelectorAll('.add-spell-button').forEach(button => {
 
         if (spellContainer && spellContainer.classList.contains('spell-container')) {
             addSpellToContainer(spellContainer);
+            updateContent()
         } else {
             console.error("Spell container not found!");
         }
@@ -2331,6 +2516,7 @@ function loadSpell(spell,row) {
             updateSpelltoHitDice(spellmodifier);
             updateSpellSaveDC(spellmodifier)
             updateSpellsDC(spellmodifier, spellDetails.spell_save_dc_type, row)
+            updateContent()
         }
 
     }
@@ -2356,6 +2542,7 @@ function loadSpell(spell,row) {
 
 
     rollableButtons()
+    updateContent()
 }
 
 function updateSpelltoHitorDC(spellDetails) {
@@ -2586,6 +2773,7 @@ function updateAllSpellDamageDice() {
             // console.log("Spell Name Input not found in this row.");
         }
     });
+    updateContent()
 }
 
 
@@ -2630,6 +2818,7 @@ function updateAllSpellDCs() {
             console.log("Spell Name Input not found in this row.");
         }
     });
+    updateContent()
 }
 
 function updateSpellDCHeader(){
@@ -2684,8 +2873,6 @@ function updateSpelltoHitDice(ability) {
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
     
     const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus;
-
-    console.log(spellAttackBonus)
 
     // Loop through each spell attack button
     spellAttackButtons.forEach((button, index) => {
@@ -3026,6 +3213,7 @@ function createNewGroup(groupData = null) {
     featuresSection.style.display = 'block';
 
     // Return the created groupContainer for use in other functions
+    updateContent()
     return groupContainer;
 }
 
@@ -3042,6 +3230,9 @@ function addNewTrait(groupContainer, traitData = null) {
     const traitName = document.createElement('input');
     traitName.classList.add('trait-name');
     traitName.placeholder = 'Trait Name (e.g., Channel Divinity)';
+    traitName.addEventListener('blur', function (){
+        updateContent()
+    });
 
     // If traitData is provided, populate the trait name
     if (traitData && traitData.traitName) {
@@ -3052,6 +3243,10 @@ function addNewTrait(groupContainer, traitData = null) {
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
     traitDescription.placeholder = 'Describe the trait here...';
+
+    traitDescription.addEventListener('blur', function (){
+        updateContent()
+    });
 
     // If traitData is provided, populate the description
     if (traitData && traitData.traitDescription) {
@@ -3071,6 +3266,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add event listener to toggle the submenu display
     infoButton.addEventListener('click', function () {
         traitSettings.style.display = traitSettings.style.display === 'none' ? 'block' : 'none';
+        updateContent()
     });
 
     // Trait Usage Section (number input and checkboxes)
@@ -3106,6 +3302,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
             checkboxesContainerMain.appendChild(checkboxMain);
         }
+        updateContent()
     }
 
     // Update checkboxes when the input changes
@@ -3180,6 +3377,7 @@ function addNewTrait(groupContainer, traitData = null) {
         if (traitsList.children.length === 0) {
             groupContainer.remove();
         }
+        updateContent()
     });
 
     // Append the delete button to the submenu
@@ -3198,6 +3396,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Automatically show the trait list if hidden
     traitsList.style.display = 'block';
+    updateContent()
 }
 
 
@@ -3281,5 +3480,6 @@ function loadGroupTraitData(groupTraitData) {
         // Append the group container to the parent container
         groupContainerElement.appendChild(groupContainer);
     });
+
 }
 
