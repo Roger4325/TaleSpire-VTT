@@ -287,7 +287,9 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "1",
-            "conditions": [],
+            "conditions": [
+                "Concentration"
+            ],
             "actionTable": [
                 {
                     "1": {
@@ -459,7 +461,7 @@
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false,
                         false,
                         false
@@ -487,7 +489,7 @@
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false,
                         false
                     ]
@@ -514,7 +516,7 @@
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false,
                         false
                     ]
@@ -559,8 +561,8 @@
                             "traitName": "Bardic Inspiration: 1 Bonus Action",
                             "traitDescription": "As a bonus action, a creature (other than you) within 60 ft. that can hear you gains an inspiration die (1d8). For 10 minutes, the creature can add it to one ability check, attack roll, or saving throw. This can be added after seeing the roll, but before knowing the outcome.",
                             "checkboxStates": [
-                                false,
-                                false,
+                                true,
+                                true,
                                 false,
                                 false,
                                 false
@@ -582,15 +584,11 @@
                         {
                             "traitName": "Cutting Words: 1 Reaction",
                             "traitDescription": "As a reaction when a creature (that's not immune to being charmed) you can see within 60 ft. makes an attack roll, ability check, or damage roll, you can expend one use of Bardic Inspiration, roll the die, and subtract the number from the creature's roll. You can do so after the roll but before knowing the result.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
                             "adjustmentCondition": "",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Font of Inspiration",
@@ -673,6 +671,24 @@
                 "name": "Wraith (B)",
                 "currentHp": "67",
                 "maxHp": "67",
+                "tempHp": "0",
+                "conditions": []
+            }
+        ],
+        "Frank": [
+            {
+                "init": "0",
+                "name": "Aboleth (A)",
+                "currentHp": "135",
+                "maxHp": "135",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Vampire (A)",
+                "currentHp": "144",
+                "maxHp": "144",
                 "tempHp": "0",
                 "conditions": []
             }

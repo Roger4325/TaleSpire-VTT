@@ -33,8 +33,13 @@ function establishMonsterData(){
 
 
 const playerCharacters = [
-    { name: 'Mira', hp: { current: 30, max: 30 }, ac: 14, initiative: 0 },
-    { name: 'Sterling', hp: { current: 40, max: 40 }, ac: 17, initiative: 0 }
+    { name: 'Mira', hp: { current: 56, max: 56 }, ac: 19, initiative: 0 },
+    { name: 'Sterling', hp: { current: 74, max: 74 }, ac: 19, initiative: 0 },
+    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0 },
+    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0 },
+    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0 },
+    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 }
+    
     // Add more player characters as needed
 ];
 
@@ -304,42 +309,67 @@ function updateMonsterCard(card, monster) {
     hpDisplay.appendChild(currentHPDiv);
     hpDisplay.appendChild(document.createTextNode(' / '));
     hpDisplay.appendChild(maxHPDiv);
-
+    
     const hpAdjustInput = document.createElement('input');
     hpAdjustInput.type = 'number';
     hpAdjustInput.classList.add('hp-adjust-input');
     hpAdjustInput.placeholder = 'Math';
-
-    hpAdjustInput.addEventListener('keypress', (event) => {
-        if (event.key === 'Enter') {
-            const adjustment = parseInt(hpAdjustInput.value, 10);
-            if (isNaN(adjustment)) return;
-
-            let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
-            const maxHP = parseInt(maxHPDiv.textContent, 10) || selectedMonsterData.HP.Value;
-
-            currentHP += adjustment;
-            currentHP = Math.max(0, Math.min(currentHP, maxHP));  // Ensure HP is between 0 and maxHP
-
-            currentHPDiv.textContent = currentHP;
-            hpAdjustInput.value = '';  // Clear input
-        }
-    });
-
+    
     const tempHPDiv = document.createElement('span');
     tempHPDiv.classList.add('temp-hp');
     tempHPDiv.contentEditable = true;
     tempHPDiv.textContent = monsterTempHP || 0;  // Use tempHp from the object, if available
-
+    
     const tempHPContainer = document.createElement('div');
     tempHPContainer.classList.add('temp-hp-container');
     tempHPContainer.appendChild(document.createTextNode('Temp: '));
     tempHPContainer.appendChild(tempHPDiv);
-
+    
+    // Add event listener for HP adjustment
+    hpAdjustInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const adjustment = parseInt(hpAdjustInput.value, 10);
+            if (isNaN(adjustment)) return;
+    
+            let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
+            const maxHP = parseInt(maxHPDiv.textContent, 10) || selectedMonsterData.HP.Value;
+            let tempHP = parseInt(tempHPDiv.textContent, 10) || 0;  // Get current temp HP
+    
+            // Subtract from temp HP first, then from current HP if temp HP is depleted
+            if (adjustment < 0) { // Damage case
+                let damage = Math.abs(adjustment);
+    
+                // Subtract damage from temp HP first
+                if (tempHP > 0) {
+                    const tempHPRemainder = tempHP - damage;
+                    if (tempHPRemainder >= 0) {
+                        tempHP = tempHPRemainder;
+                        damage = 0;
+                    } else {
+                        damage -= tempHP; // Subtract remaining damage after temp HP is depleted
+                        tempHP = 0;
+                    }
+                }
+    
+                // If there's still damage left, subtract from current HP
+                if (damage > 0) {
+                    currentHP = Math.max(0, currentHP - damage);
+                }
+            } else if (adjustment > 0) { // Healing case
+                currentHP = Math.min(maxHP, currentHP + adjustment); // Heal current HP, but no effect on temp HP
+            }
+    
+            // Update HP and temp HP displays
+            currentHPDiv.textContent = currentHP;
+            tempHPDiv.textContent = tempHP;
+    
+            hpAdjustInput.value = '';  // Clear input
+        }
+    });
+    
     monsterHP.appendChild(hpDisplay);
     monsterHP.appendChild(tempHPContainer);
     monsterHP.appendChild(hpAdjustInput);
-
     // Delete button
     const deleteButtonDiv = document.createElement('div');
     deleteButtonDiv.classList.add('monster-card-delete-button');
@@ -669,6 +699,9 @@ function createEmptyPlayerCard() {
     // Append elements to the card
     dropdownContainer.appendChild(nameInput);
     dropdownContainer.appendChild(playerList);
+
+    
+
     card.appendChild(dropdownContainer);
 
     // Append the card to the container
@@ -717,8 +750,21 @@ function updatePlayerCard(card, player) {
     playerInfo.appendChild(playerName);
     playerInfo.appendChild(statsDiv);
 
+    const deleteButtonDiv = document.createElement('div');
+    deleteButtonDiv.classList.add('monster-card-delete-button');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('nonRollButton');
+    deleteButton.textContent = "X";
+    deleteButton.addEventListener('click', () => {
+        card.remove();
+        reorderCards();
+    });
+
+    deleteButtonDiv.appendChild(deleteButton);
+
     card.appendChild(initDiv);
     card.appendChild(playerInfo);
+    card.appendChild(deleteButtonDiv);
 
     // Re-append the dropdown container to the card
     const dropdownContainer = card.querySelector('.dropdown-container');
