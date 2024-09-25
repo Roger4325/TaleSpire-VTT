@@ -3382,7 +3382,7 @@
         "range": "10 feet",
         "components": "V, S, M",
         "material": "(a small crystal bead",
-        "ritual": "yes",
+        "ritual": "R",
         "duration": "8 hours",
         "concentration": "no",
         "casting_time": "1m",

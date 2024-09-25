@@ -640,6 +640,7 @@ document.getElementById('add-player-button').addEventListener('click', function(
     closePopup()
 });
 
+// Function to create player cards
 function createEmptyPlayerCard() {
     // Create the player card container
     const card = document.createElement('div');
@@ -700,8 +701,6 @@ function createEmptyPlayerCard() {
     dropdownContainer.appendChild(nameInput);
     dropdownContainer.appendChild(playerList);
 
-    
-
     card.appendChild(dropdownContainer);
 
     // Append the card to the container
@@ -717,6 +716,9 @@ function updatePlayerCard(card, player) {
     // Clear previous content
     card.innerHTML = '';
 
+    console.log(player)
+
+    selectedPlayer = player.talespireId
     // Create and add player details
     const initDiv = document.createElement('div');
     initDiv.classList.add('monster-init');
@@ -762,6 +764,14 @@ function updatePlayerCard(card, player) {
 
     deleteButtonDiv.appendChild(deleteButton);
 
+    const requestInfoButton = document.createElement('button');
+    requestInfoButton.textContent = 'Request Info';
+    requestInfoButton.addEventListener('click', () => {
+        requestPlayerInfo(selectedPlayer); // Send request to selected player
+    });
+
+    card.appendChild(requestInfoButton);
+
     card.appendChild(initDiv);
     card.appendChild(playerInfo);
     card.appendChild(deleteButtonDiv);
@@ -774,6 +784,115 @@ function updatePlayerCard(card, player) {
     
 }
 
+
+// TS.players.onMessage((message, sender) => {
+//     const parsedMessage = JSON.parse(message);
+
+//     // Check if it's a response with character info
+//     if (parsedMessage.type === 'character-info') {
+//         const characterInfo = parsedMessage.data;
+
+//         // Update the player card with the character's info
+//         const playerCard = document.querySelector(`.monster-card[data-player-id="${sender.id}"]`);
+
+//         if (playerCard) {
+//             // Update the card with the character's name, hp, ac, and passive perception
+//             playerCard.querySelector('.monster-name-input').value = characterInfo.characterName;
+//             playerCard.querySelector('.hp').textContent = `HP: ${characterInfo.hp.current}/${characterInfo.hp.max}`;
+//             playerCard.querySelector('.ac').textContent = `AC: ${characterInfo.ac}`;
+//             playerCard.querySelector('.passive-perception').textContent = `Passive Perception: ${characterInfo.passivePerception}`;
+//         }
+//     }
+// });
+
+
+
+// Fetch players on the board and populate the dropdown
+async function fetchAndCreatePlayerCards() {
+    try {
+        const myFragment = await TS.players.whoAmI();
+        const allPlayers = await TS.players.getPlayersInThisBoard();
+        
+        // Filter out the current player (yourself)
+        const otherPlayers = allPlayers.filter(player => player.id !== myFragment.id);
+
+        // Merge other players into playerCharacters array
+        mergeOtherPlayers(otherPlayers);
+
+        // Create a player card for each player
+    } catch (error) {
+        console.error("Error getting players:", error);
+    }
+}
+
+
+// Function to merge other players into the playerCharacters array
+function mergeOtherPlayers(otherPlayers) {
+    otherPlayers.forEach(player => {
+        // Check if the player already exists in the playerCharacters array
+        const playerExists = playerCharacters.some(p => p.name === player.name);
+
+        console.log(player.id)
+
+        // If the player doesn't exist, add them with default stats
+        if (!playerExists) {
+            playerCharacters.push({
+                name: player.name,
+                hp: { current: 50, max: 50 }, // Default HP values (you can adjust these)
+                ac: 10, // Default AC (can be adjusted)
+                initiative: 0,
+                talespireId: player.id
+            });
+        }
+    });
+}
+
+function requestPlayerInfo(player) {
+    const message = {
+        type: 'request-info',
+        data: {
+            request: ['characterName', 'hp', 'ac', 'passivePerception'] // Requesting specific info
+        }
+    };
+
+    // Send the message to the selected player
+    TS.chat.send(JSON.stringify(message),player);
+}
+
+
+// Wait until the document is fully loaded before adding the event listener
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the button by its ID
+    const button = document.getElementById('getPlayersBtn');
+
+    // Add a click event listener to the button
+    button.addEventListener('click', async () => {
+        try {
+            // Get the current player's fragment (yourself)
+            const myFragment = await TS.players.whoAmI();
+            console.log("Current Player:", myFragment);
+            
+            // Get all players currently on the board
+            const allPlayers = await TS.players.getPlayersInThisBoard();
+            console.log("All Players:", allPlayers);
+            
+            // Filter out the current player (yourself) by comparing IDs directly
+            const otherPlayers = allPlayers.filter(player => player.id !== myFragment.id);
+            console.log("Other Players:", otherPlayers);
+
+            // Do something with the other players (e.g., send a message)
+            otherPlayers.forEach(player => {
+                const message = `Hello player ${player.id}, from player ${myFragment.id}`;
+                console.log(message);
+                // Example of sending message (uncomment when needed)
+                // sync.send(message, player.id);
+            });
+        } catch (error) {
+            console.error("Error getting players or sending message:", error);
+        }
+        fetchAndCreatePlayerCards()
+    });
+});
 
 
 
