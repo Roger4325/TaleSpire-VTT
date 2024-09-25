@@ -857,6 +857,7 @@ function requestPlayerInfo(player) {
 
     // Send the message to the selected player
     TS.chat.send(JSON.stringify(message),player);
+    console.log("message sent")
 }
 
 

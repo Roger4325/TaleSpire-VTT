@@ -3519,3 +3519,8 @@ async function handleSyncEvents(event) {
 
     });
 }
+
+
+async function onChatMessage(event){
+    console.log("Getting message")
+}
