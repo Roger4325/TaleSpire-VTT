@@ -3494,11 +3494,12 @@ async function handleSyncEvents(event) {
     let fromClient = event.payload.fromClient.id;
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
-        const parsedMessage = JSON.parse(message);
+        const parsedMessage = JSON.parse(event.payload.str);
 
         // Check if it's a request for character info
             if (parsedMessage.type === 'request-info') {
                 // Gather the character's info
+                console.log("player recieving message")
                 const characterInfo = {
                     characterName: 'Mira', // Example: replace this with actual dynamic character name
                     hp: { current: 56, max: 56 },
@@ -3513,7 +3514,7 @@ async function handleSyncEvents(event) {
                 };
 
                 // Send the response back to the DM
-                TS.players.sendMessage(sender.id, JSON.stringify(responseMessage));
+                TS.sync.send(JSON.stringify(responseMessage),fromClient).catch(console.error);
             }
         }
 

@@ -785,37 +785,20 @@ function updatePlayerCard(card, player) {
 }
 
 
-// TS.players.onMessage((message, sender) => {
-//     const parsedMessage = JSON.parse(message);
-
-//     // Check if it's a response with character info
-//     if (parsedMessage.type === 'character-info') {
-//         const characterInfo = parsedMessage.data;
-
-//         // Update the player card with the character's info
-//         const playerCard = document.querySelector(`.monster-card[data-player-id="${sender.id}"]`);
-
-//         if (playerCard) {
-//             // Update the card with the character's name, hp, ac, and passive perception
-//             playerCard.querySelector('.monster-name-input').value = characterInfo.characterName;
-//             playerCard.querySelector('.hp').textContent = `HP: ${characterInfo.hp.current}/${characterInfo.hp.max}`;
-//             playerCard.querySelector('.ac').textContent = `AC: ${characterInfo.ac}`;
-//             playerCard.querySelector('.passive-perception').textContent = `Passive Perception: ${characterInfo.passivePerception}`;
-//         }
-//     }
-// });
-
 
 
 // Fetch players on the board and populate the dropdown
 async function fetchAndCreatePlayerCards() {
     try {
-        const myFragment = await TS.players.whoAmI();
-        const allPlayers = await TS.players.getPlayersInThisBoard();
+        const myFragment = await TS.clients.whoAmI();
+        const allPlayers = await TS.clients.getClientsInThisBoard();
         
+        console.log(allPlayers)
+
         // Filter out the current player (yourself)
         const otherPlayers = allPlayers.filter(player => player.id !== myFragment.id);
 
+        console.log(otherPlayers)
         // Merge other players into playerCharacters array
         mergeOtherPlayers(otherPlayers);
 
@@ -828,11 +811,13 @@ async function fetchAndCreatePlayerCards() {
 
 // Function to merge other players into the playerCharacters array
 function mergeOtherPlayers(otherPlayers) {
-    otherPlayers.forEach(player => {
+    otherPlayers.forEach(entry => {
+        const player = entry.player; // Access the player object inside each entry
+        
         // Check if the player already exists in the playerCharacters array
         const playerExists = playerCharacters.some(p => p.name === player.name);
 
-        console.log(player.id)
+        console.log(playerCharacters);
 
         // If the player doesn't exist, add them with default stats
         if (!playerExists) {
@@ -841,11 +826,34 @@ function mergeOtherPlayers(otherPlayers) {
                 hp: { current: 50, max: 50 }, // Default HP values (you can adjust these)
                 ac: 10, // Default AC (can be adjusted)
                 initiative: 0,
-                talespireId: player.id
+                talespireId: entry.id // Use entry.id for talespireId
             });
         }
     });
 }
+
+
+async function handleSyncEvents(event) {
+    //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
+    //but for others it might be necessary to filter out your own messages (or have different behavior)
+    //by checking if the sender is the own client.
+    console.log("Getting message")
+    let fromClient = event.payload.fromClient.id;
+    TS.clients.isMe(fromClient).then((isMe) => {
+        if (!isMe) {
+        const parsedMessage = JSON.parse(event.payload.str);
+
+        // Check if it's a request for character info
+            if (parsedMessage.type === 'request-info') {
+                
+                console.log("gm recieving message")
+                
+            }
+        }
+
+    });
+}
+
 
 function requestPlayerInfo(player) {
     const message = {
@@ -856,7 +864,7 @@ function requestPlayerInfo(player) {
     };
 
     // Send the message to the selected player
-    TS.chat.send(JSON.stringify(message),player);
+    TS.sync.send(JSON.stringify(message),player).catch(console.error);
     console.log("message sent")
 }
 
