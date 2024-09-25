@@ -3521,6 +3521,6 @@ async function handleSyncEvents(event) {
 }
 
 
-async function onChatMessage(event){
+async function handleChatMessage(event){
     console.log("Getting message")
 }
