@@ -3490,6 +3490,7 @@ async function handleSyncEvents(event) {
     //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
     //but for others it might be necessary to filter out your own messages (or have different behavior)
     //by checking if the sender is the own client.
+    console.log("Getting message")
     let fromClient = event.payload.fromClient.id;
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
