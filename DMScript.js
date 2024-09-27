@@ -657,9 +657,11 @@ function populateMonsterListField(elementId, items, type) {
 
 
 // Event listener for adding a new empty player card
-document.getElementById('add-player-button').addEventListener('click', function() {
+document.getElementById('add-player-button').addEventListener('click', async function() {
+    await fetchAndCreatePlayerCards()
     createEmptyPlayerCard();
     closePopup()
+    
 });
 
 // Function to create player cards
@@ -811,6 +813,7 @@ function updatePlayerCard(card, player) {
 
 // Fetch players on the board and populate the dropdown
 async function fetchAndCreatePlayerCards() {
+
     try {
         const myFragment = await TS.clients.whoAmI();
         const allPlayers = await TS.clients.getClientsInThisBoard();
@@ -853,81 +856,6 @@ function mergeOtherPlayers(otherPlayers) {
         }
     });
 }
-
-
-async function handleSyncEvents(event) {
-    //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
-    //but for others it might be necessary to filter out your own messages (or have different behavior)
-    //by checking if the sender is the own client.
-    console.log("Getting message")
-    let fromClient = event.payload.fromClient.id;
-    TS.clients.isMe(fromClient).then((isMe) => {
-        if (!isMe) {
-        const parsedMessage = JSON.parse(event.payload.str);
-
-        // Check if it's a request for character info
-            if (parsedMessage.type === 'request-info') {
-                
-                console.log("gm recieving message")
-                
-            }
-        }
-
-    });
-}
-
-
-function requestPlayerInfo(player) {
-    const message = {
-        type: 'request-info',
-        data: {
-            request: ['characterName', 'hp', 'ac', 'passivePerception'] // Requesting specific info
-        }
-    };
-
-    // Send the message to the selected player
-    TS.sync.send(JSON.stringify(message),player).catch(console.error);
-    console.log("message sent")
-}
-
-
-// Wait until the document is fully loaded before adding the event listener
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the button by its ID
-    const button = document.getElementById('getPlayersBtn');
-
-    // Add a click event listener to the button
-    button.addEventListener('click', async () => {
-        try {
-            // Get the current player's fragment (yourself)
-            const myFragment = await TS.players.whoAmI();
-            console.log("Current Player:", myFragment);
-            
-            // Get all players currently on the board
-            const allPlayers = await TS.players.getPlayersInThisBoard();
-            console.log("All Players:", allPlayers);
-            
-            // Filter out the current player (yourself) by comparing IDs directly
-            const otherPlayers = allPlayers.filter(player => player.id !== myFragment.id);
-            console.log("Other Players:", otherPlayers);
-
-            // Do something with the other players (e.g., send a message)
-            otherPlayers.forEach(player => {
-                const message = `Hello player ${player.id}, from player ${myFragment.id}`;
-                console.log(message);
-                // Example of sending message (uncomment when needed)
-                // sync.send(message, player.id);
-            });
-        } catch (error) {
-            console.error("Error getting players or sending message:", error);
-        }
-        fetchAndCreatePlayerCards()
-    });
-});
-
-
-
-
 
 
 
@@ -1365,12 +1293,49 @@ function updateMonsterCardDataFromLoad(encounterData) {
 
 
 
+// Requestion and recieving information from other connected clients. 
 
 
 
 
 
+async function handleSyncEvents(event) {
+    //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
+    //but for others it might be necessary to filter out your own messages (or have different behavior)
+    //by checking if the sender is the own client.
+    console.log("Getting message")
+    let fromClient = event.payload.fromClient.id;
+    TS.clients.isMe(fromClient).then((isMe) => {
+        if (!isMe) {
+        const parsedMessage = JSON.parse(event.payload.str);
 
+        // Check if it's a request for character info
+            if (parsedMessage.type === 'request-info') {
+                
+                console.log("gm recieving message")
+                
+            }
+        }
+
+    });
+}
+
+
+function requestPlayerInfo(player) {
+    const requestId = generateUUID(); // Generate unique ID for the request
+    
+    const message = {
+        type: 'request-info',
+        requestId, // Include the request ID to track the response
+        data: {
+            request: ['characterName', 'hp', 'ac', 'passivePerception'] // Requesting specific info
+        }
+    };
+
+    // Send the message to the selected player
+    TS.sync.send(JSON.stringify(message), player).catch(console.error);
+    console.log("Request for info sent with requestId:", requestId);
+}
 
 
 

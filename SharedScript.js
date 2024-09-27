@@ -59,12 +59,17 @@ const AppData = {
 };
 
 
+
 document.getElementById('settings-toggle').addEventListener('click', function() {
     const settingsContainer = document.getElementById('settings-container');
     settingsContainer.classList.toggle('active');
 });
 
+let clients = [];
 
+function testerforclients(){
+    return clients
+}
 
 
 function handleClientEvents(eventResponse) {
@@ -80,7 +85,7 @@ function handleClientEvents(eventResponse) {
                 break;
             case "clientLeftBoard":
                 if (!isMe) {
-                    clients.splice(clients.indexOf({ id: client.id, name: name }), 1);
+                    removeClient(client.id);
                 }
                 break;
             case "clientModeChanged":
@@ -106,25 +111,25 @@ function handleClientEvents(eventResponse) {
 }
 
 function addClient(client) {
-    console.log(client)
     TS.clients.isMe(client.id).then((isMe) => {
         if (!isMe) {
-            let newPlayerSelect = document.createElement("option");
-            newPlayerSelect.value = client.id;
-            newPlayerSelect.innerText = client.player.name;
-            console.log(newPlayerSelect)
-            document.getElementById("recipient-select").appendChild(newPlayerSelect);
-
-            clients.push({ id: client.id, name: client.name });
+            clients.push({ id: client.id, name: client.player.name });
+            console.log(clients);
         }
     });
+}
+
+function removeClient(clientId) {
+    const index = clients.findIndex(c => c.id === clientId);
+    if (index !== -1) {
+        clients.splice(index, 1);
+        console.log(`Removed client with id: ${clientId}`);
+    }
 }
 
 async function onStateChangeEvent(msg) {
     if (msg.kind === "hasInitialized") {
         console.log("hasIntitialized")
-        let clients = await TS.clients.getClientsInThisBoard();
-        console.log(clients)
         //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
         onInit()
     }
@@ -132,7 +137,6 @@ async function onStateChangeEvent(msg) {
 
 function handleSyncClientEvents(event){
     console.log(event)
-    console.log("weee")
 }
 
 let contentPacks = null;

@@ -47,6 +47,16 @@ const savesProficiencyLevels = [
 ];
 
 
+//Define all message Types and the functions they should call this should be expanded as I need different types of messages. 
+const messageHandlers = {
+    'request-info': handleRequestInfo,
+    'update-health': handleUpdateHealth,
+    'roll-dice': handleRollDice,
+    'target-selection': handleTargetSelection,
+    // Add more message types as needed
+};
+
+
 //ConditionsMap is the map of conditions that can be set onto the player. This is used for tracking conditions.
 const conditionsMap = new Map();
 
@@ -3494,61 +3504,103 @@ async function handleSyncEvents(event) {
     let fromClient = event.payload.fromClient.id;
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
-        const parsedMessage = JSON.parse(event.payload.str);
+            const parsedMessage = JSON.parse(event.payload.message); // Parse the message payload
 
-        // Check if it's a request for character info
-            if (parsedMessage.type === 'request-info') {
-                // Gather the character's info
-                console.log("player recieving message")
-                const characterInfo = {
-                    characterName: 'Mira', // Example: replace this with actual dynamic character name
-                    hp: { current: 56, max: 56 },
-                    ac: 19,
-                    passivePerception: 15
-                };
-
-                // Create a response message with the character info
-                const responseMessage = {
-                    type: 'character-info',
-                    data: characterInfo
-                };
-
-                // Send the response back to the DM
-                TS.sync.send(JSON.stringify(responseMessage),fromClient).catch(console.error);
-            }
+            // Route the parsed message to the appropriate handler
+            handleIncomingMessage(parsedMessage);
         }
 
     });
 }
 
 
-async function handleChatMessage(event){
-    console.log("Getting message", event);
-    let fromClient = event.payload.fromClient.id;
-    TS.clients.isMe(fromClient).then((isMe) => {
-        if (!isMe) {
-        const parsedMessage = JSON.parse(message);
 
-        // Check if it's a request for character info
-            if (parsedMessage.type === 'request-info') {
-                // Gather the character's info
-                const characterInfo = {
-                    characterName: 'Mira', // Example: replace this with actual dynamic character name
-                    hp: { current: 56, max: 56 },
-                    ac: 19,
-                    passivePerception: 15
-                };
 
-                // Create a response message with the character info
-                const responseMessage = {
-                    type: 'character-info',
-                    data: characterInfo
-                };
 
-                // Send the response back to the DM
-                TS.players.sendMessage(sender.id, JSON.stringify(responseMessage));
-            }
-        }
 
+function getPlayerData() {
+    return {
+        characterName: 'Mira Ley Eshobbud', // Random character name
+        hp: { current: Math.floor(Math.random() * 100), max: 100 }, // Random HP
+        ac: Math.floor(Math.random() * 10) + 10, // Random AC
+        passivePerception: Math.floor(Math.random() * 5) + 12 // Random passive perception
+    };
+}
+
+
+// Default handler for unknown message types
+function defaultHandler(message) {
+    console.warn("Unknown message type received:", message.type);
+}
+
+// Master function to route incoming messages based on type
+function handleIncomingMessage(parsedMessage) {
+    const handler = messageHandlers[parsedMessage.type] || defaultHandler;
+    handler(parsedMessage);
+}
+
+
+
+// Handle a request for player info (e.g., name, HP, AC, etc.)
+function handleRequestInfo(message) {
+    const requestId = message.requestId; // Unique ID to correlate responses
+    const requestedFields = message.data.request;
+
+    const playerData = getPlayerData(); // Assume getPlayerData returns player info
+
+    // Build the response data based on requested fields
+    const responseData = {};
+    requestedFields.forEach(field => {
+        responseData[field] = playerData[field];
     });
+
+    // Send the response message back
+    const responseMessage = {
+        type: 'response-info',
+        requestId,
+        data: responseData
+    };
+
+    TS.sync.send(JSON.stringify(responseMessage), message.sender).catch(console.error);
+    console.log("Responded to request for player info:", responseData);
+}
+
+// Handle a request to update health (e.g., from dice roll or effect)
+function handleUpdateHealth(message) {
+    const { change, hpType } = message.data; // hpType could be 'current', 'max', etc.
+
+    // Assume playerData is a globally accessible object representing the player
+    if (hpType === 'current') {
+        playerData.hp.current = Math.max(0, playerData.hp.current + change);
+    } else if (hpType === 'max') {
+        playerData.hp.max = Math.max(0, playerData.hp.max + change);
+    }
+
+    console.log("Health updated. Current HP:", playerData.hp.current, "Max HP:", playerData.hp.max);
+}
+
+// Handle a dice roll request (e.g., to roll for an attack or check)
+function handleRollDice(message) {
+    const { numDice, diceSides } = message.data;
+    const diceResults = rollDice(numDice, diceSides); // Assume rollDice is defined elsewhere
+
+    // Send the result back
+    const responseMessage = {
+        type: 'roll-result',
+        requestId: message.requestId,
+        data: { diceResults }
+    };
+
+    TS.sync.send(JSON.stringify(responseMessage), message.sender).catch(console.error);
+    console.log("Rolled dice:", diceResults);
+}
+
+// Handle a target selection request (e.g., for combat)
+function handleTargetSelection(message) {
+    const { targetId } = message.data;
+
+    // Set the player's target
+    playerData.targetId = targetId;
+
+    console.log("Target set to:", targetId);
 }
