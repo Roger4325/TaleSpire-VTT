@@ -27,7 +27,8 @@
         "onCreatureStateChange": "onCreatureStateChange"
       },
       "sync": {
-        "onSyncMessage": "handleSyncEvents"
+        "onSyncMessage": "handleSyncEvents",
+        "onClientEvent": "handleSyncClientEvents"
       },
       "clients": {
         "onClientEvent": "handleClientEvents"

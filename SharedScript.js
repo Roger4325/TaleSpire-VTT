@@ -123,12 +123,15 @@ function addClient(client) {
 async function onStateChangeEvent(msg) {
     if (msg.kind === "hasInitialized") {
         console.log("hasIntitialized")
+        let clients = await TS.clients.getClientsInThisBoard();
+        console.log(clients)
         //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
         onInit()
     }
 }
 
-async function logSymbioteEvent(){
+function handleSyncClientEvents(event){
+    console.log(event)
     console.log("weee")
 }
 
