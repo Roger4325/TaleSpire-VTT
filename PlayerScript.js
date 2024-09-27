@@ -3504,6 +3504,7 @@ async function handleSyncEvents(event) {
     let fromClient = event.payload.fromClient.id;
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
+            console.log(event)
             const parsedMessage = JSON.parse(event.payload.message); // Parse the message payload
 
             // Route the parsed message to the appropriate handler

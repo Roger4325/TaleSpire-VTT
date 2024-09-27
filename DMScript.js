@@ -1295,32 +1295,6 @@ function updateMonsterCardDataFromLoad(encounterData) {
 
 // Requestion and recieving information from other connected clients. 
 
-
-
-
-
-async function handleSyncEvents(event) {
-    //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
-    //but for others it might be necessary to filter out your own messages (or have different behavior)
-    //by checking if the sender is the own client.
-    console.log("Getting message")
-    let fromClient = event.payload.fromClient.id;
-    TS.clients.isMe(fromClient).then((isMe) => {
-        if (!isMe) {
-        const parsedMessage = JSON.parse(event.payload.str);
-
-        // Check if it's a request for character info
-            if (parsedMessage.type === 'request-info') {
-                
-                console.log("gm recieving message")
-                
-            }
-        }
-
-    });
-}
-
-
 function requestPlayerInfo(player) {
     const requestId = generateUUID(); // Generate unique ID for the request
     
@@ -1340,21 +1314,62 @@ function requestPlayerInfo(player) {
 
 
 
+async function handleSyncEvents(event) {
+    console.log("Getting message");
 
+    let fromClient = event.payload.fromClient.id;
+    TS.clients.isMe(fromClient).then((isMe) => {
+        if (!isMe) {
+            const parsedMessage = JSON.parse(event.payload.str);
 
-
-
-
-function handleRequestStats (){
-    console.log("handling stats")
-
+            // Route the message based on its type using the messageHandlers library
+            if (parsedMessage.type && messageHandlers[parsedMessage.type]) {
+                messageHandlers[parsedMessage.type](parsedMessage, fromClient);
+            } else {
+                console.warn("Unhandled message type:", parsedMessage.type);
+            }
+        }
+    });
 }
 
-function handleUpdatePlayerHealth (){
-    console.log("handling stats")
 
+
+
+
+
+function handlePlayerResponse(parsedMessage, fromClient) {
+    const { requestId, data } = parsedMessage;
+
+    // Process the response data (update UI, log, etc.)
+    console.log(`Received response for requestId: ${requestId} from player ${fromClient}`, data);
+
+    // Here you can update the GM screen with player data, e.g., show their HP, AC, etc.
+    updateGMUIWithPlayerData(data);  // Placeholder function to handle UI updates
 }
 
-function handleApplyMonsterDamage(){
-    console.log("handling stats")
+
+
+
+function handleRequestStats(parsedMessage, fromClient) {
+    console.log("Handling player stats request from:", fromClient);
+
+    // Process any logic to retrieve the necessary stats
+    // Example: Could send a response with detailed stats to the GM or player.
+}
+
+function handleUpdatePlayerHealth(parsedMessage, fromClient) {
+    console.log("Handling player health update from:", fromClient);
+
+    const { change, hpType } = parsedMessage.data;
+
+    // Update the player's health here based on the received data
+    // Example: If hpType is 'current', adjust the current health accordingly
+}
+
+function handleApplyMonsterDamage(parsedMessage, fromClient) {
+    console.log("Applying monster damage to player from:", fromClient);
+
+    const { damage } = parsedMessage.data;
+
+    // Apply damage to the player's character sheet, or whatever logic you need
 }
