@@ -3505,10 +3505,9 @@ async function handleSyncEvents(event) {
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
             console.log(event)
-            const parsedMessage = JSON.parse(event.payload.message); // Parse the message payload
-
+            const parsedMessage = JSON.parse(event.payload.str); // Parse the message payload
             // Route the parsed message to the appropriate handler
-            handleIncomingMessage(parsedMessage);
+            handleIncomingMessage(parsedMessage, FromClient);
         }
 
     });
@@ -3535,15 +3534,16 @@ function defaultHandler(message) {
 }
 
 // Master function to route incoming messages based on type
-function handleIncomingMessage(parsedMessage) {
+function handleIncomingMessage(parsedMessage, FromClient) {
     const handler = messageHandlers[parsedMessage.type] || defaultHandler;
-    handler(parsedMessage);
+    handler(parsedMessage, FromClient);
 }
 
 
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
-function handleRequestInfo(message) {
+function handleRequestInfo(message, FromClient) {
+    console.log(message)
     const requestId = message.requestId; // Unique ID to correlate responses
     const requestedFields = message.data.request;
 
@@ -3562,12 +3562,14 @@ function handleRequestInfo(message) {
         data: responseData
     };
 
-    TS.sync.send(JSON.stringify(responseMessage), message.sender).catch(console.error);
+    TS.sync.send(JSON.stringify(responseMessage), FromClient).catch(console.error);
     console.log("Responded to request for player info:", responseData);
 }
 
+
+
 // Handle a request to update health (e.g., from dice roll or effect)
-function handleUpdateHealth(message) {
+function handleUpdateHealth(message, FromClient) {
     const { change, hpType } = message.data; // hpType could be 'current', 'max', etc.
 
     // Assume playerData is a globally accessible object representing the player
@@ -3580,8 +3582,11 @@ function handleUpdateHealth(message) {
     console.log("Health updated. Current HP:", playerData.hp.current, "Max HP:", playerData.hp.max);
 }
 
+
+
+
 // Handle a dice roll request (e.g., to roll for an attack or check)
-function handleRollDice(message) {
+function handleRollDice(message, FromClient) {
     const { numDice, diceSides } = message.data;
     const diceResults = rollDice(numDice, diceSides); // Assume rollDice is defined elsewhere
 
@@ -3592,12 +3597,15 @@ function handleRollDice(message) {
         data: { diceResults }
     };
 
-    TS.sync.send(JSON.stringify(responseMessage), message.sender).catch(console.error);
+    TS.sync.send(JSON.stringify(responseMessage), FromClient).catch(console.error);
     console.log("Rolled dice:", diceResults);
 }
 
+
+
+
 // Handle a target selection request (e.g., for combat)
-function handleTargetSelection(message) {
+function handleTargetSelection(message, FromClient) {
     const { targetId } = message.data;
 
     // Set the player's target
