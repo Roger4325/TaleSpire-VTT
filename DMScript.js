@@ -27,6 +27,28 @@ function establishMonsterData(){
 }
 
 
+const messageHandlers = {
+    'request-stats': handleRequestStats,
+    'update-health': handleUpdatePlayerHealth,
+    'apply-damage': handleApplyMonsterDamage,
+    // Add more as needed
+};
+
+
+
+
+function handleMessage(message) {
+    const parsedMessage = JSON.parse(message);
+    const { type, uuid, data, from } = parsedMessage;
+
+    // Check if there's a handler for the message type
+    if (messageHandlers[type]) {
+        messageHandlers[type](parsedMessage);
+    } else {
+        console.error(`Unhandled message type: ${type}`);
+    }
+}
+
 
 
 
@@ -1332,3 +1354,42 @@ function updateMonsterCardDataFromLoad(encounterData) {
     });
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function handleRequestStats (){
+    console.log("handling stats")
+
+}
+
+function handleUpdatePlayerHealth (){
+    console.log("handling stats")
+
+}
+
+function handleApplyMonsterDamage(){
+    console.log("handling stats")
+}

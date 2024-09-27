@@ -43,10 +43,19 @@ function setupNav(){
     });
 
 
+function generateUUID() {
+    return 'xxx-xx-4xxx-yxxx-xx'.replace(/[xy]/g, function(c) {
+        const r = Math.random() * 16 | 0;
+        const v = c === 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
+}
+
 
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
     spellLookupInfo: null,
+    monsterLookupInfo:null,
 };
 
 
@@ -117,6 +126,10 @@ async function onStateChangeEvent(msg) {
         //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
         onInit()
     }
+}
+
+async function logSymbioteEvent(){
+    console.log("weee")
 }
 
 let contentPacks = null;
