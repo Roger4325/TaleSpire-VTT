@@ -3520,12 +3520,14 @@ async function handleSyncEvents(event) {
 
 
 function getPlayerData() {
+    console.log(document.getElementById('spellSaveDc').textContent)
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
         hp: { current: document.getElementById('currentCharacterHP').textContent, max: document.getElementById('maxCharacterHP').textContent },
         ac: document.getElementById('AC').textContent,
         passivePerception: document.getElementById('passivePerception').textContent,
         spellSave: document.getElementById('spellSaveDc').textContent
+        
     };
 
     
