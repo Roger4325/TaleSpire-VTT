@@ -3520,8 +3520,7 @@ async function handleSyncEvents(event) {
 
 
 function getPlayerData() {
-    const spellSaveDcElement = document.getElementById('spellSaveDc');
-    const spellSaveValue = spellSaveDcElement ? spellSaveDcElement.textContent : '0'; // Default to '0' if not found
+    console.log(document.getElementById('spellSaveDc').textContent)
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
         hp: {
@@ -3530,7 +3529,7 @@ function getPlayerData() {
         },
         ac: document.getElementById('AC').textContent,
         passivePerception: document.getElementById('passivePerception').textContent,
-        spellSave: Number(spellSaveValue) 
+        spellSave: document.getElementById('spellSaveDc').textContent
     };
 }
 

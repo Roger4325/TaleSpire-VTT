@@ -1308,7 +1308,7 @@ function requestPlayerInfo(player) {
         type: 'request-info',
         requestId, // Include the request ID to track the response
         data: {
-            request: ['characterName', 'hp', 'ac', 'passivePerception'] // Requesting specific info
+            request: ['characterName', 'hp', 'ac', 'passivePerception','spellSave'] // Requesting specific info
         }
     };
 
