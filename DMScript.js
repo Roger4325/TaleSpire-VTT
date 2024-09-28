@@ -28,7 +28,7 @@ function establishMonsterData(){
 
 
 const messageHandlers = {
-    'request-stats': handleRequestStats,
+    'request-stats': handleRequestedStats,
     'update-health': handleUpdatePlayerHealth,
     'apply-damage': handleApplyMonsterDamage,
     // Add more as needed
@@ -742,6 +742,10 @@ function updatePlayerCard(card, player) {
 
     console.log(player)
 
+    if (player.talespireId) {
+        card.dataset.playerId = player.talespireId; // Store player ID in dataset
+    }
+
     selectedPlayer = player.talespireId
     // Create and add player details
     const initDiv = document.createElement('div');
@@ -764,7 +768,7 @@ function updatePlayerCard(card, player) {
 
     const playerName = document.createElement('div');
     playerName.classList.add('monster-name'); // Reuse monster-name class
-    playerName.innerText = player.name;
+    playerName.innerText = player.name || player.characterName;
 
     const statsDiv = document.createElement('div');
     statsDiv.classList.add('monster-stats');
@@ -1344,18 +1348,36 @@ function handlePlayerResponse(parsedMessage, fromClient) {
     console.log(`Received response for requestId: ${requestId} from player ${fromClient}`, data);
 
     // Here you can update the GM screen with player data, e.g., show their HP, AC, etc.
-    updateGMUIWithPlayerData(data);  // Placeholder function to handle UI updates
+
 }
 
 
 
 
-function handleRequestStats(parsedMessage, fromClient) {
-    console.log("Handling player stats request from:", fromClient);
+function handleRequestedStats(parsedMessage, fromClient) {
+    console.log("Handling player stats update from:", fromClient);
 
-    // Process any logic to retrieve the necessary stats
-    // Example: Could send a response with detailed stats to the GM or player.
+    // Extract player data from the parsedMessage
+    const playerData = parsedMessage.data; // Assuming data contains stats like HP, AC, etc.
+    const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
+
+    // Get all the player cards from the DOM
+    const playerCards = document.querySelectorAll('.monster-card');
+
+    // Loop through all the player cards and update the matching one
+    playerCards.forEach(card => {
+        // Assuming you've stored the player's ID in the card's dataset
+        const cardPlayerId = card.dataset.playerId; 
+
+        // If the card's player ID matches the fromClient ID, update the card
+        if (cardPlayerId === playerId) {
+            updatePlayerCard(card, playerData); // Reuse your existing updatePlayerCard function
+        }
+    });
 }
+
+
+
 
 function handleUpdatePlayerHealth(parsedMessage, fromClient) {
     console.log("Handling player health update from:", fromClient);

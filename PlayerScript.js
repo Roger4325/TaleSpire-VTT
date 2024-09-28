@@ -3502,12 +3502,13 @@ async function handleSyncEvents(event) {
     //by checking if the sender is the own client.
     console.log("Getting message")
     let fromClient = event.payload.fromClient.id;
+    console.log(fromClient)
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
             console.log(event)
             const parsedMessage = JSON.parse(event.payload.str); // Parse the message payload
             // Route the parsed message to the appropriate handler
-            handleIncomingMessage(parsedMessage, FromClient);
+            handleIncomingMessage(parsedMessage, fromClient);
         }
 
     });
@@ -3520,11 +3521,13 @@ async function handleSyncEvents(event) {
 
 function getPlayerData() {
     return {
-        characterName: 'Mira Ley Eshobbud', // Random character name
-        hp: { current: Math.floor(Math.random() * 100), max: 100 }, // Random HP
-        ac: Math.floor(Math.random() * 10) + 10, // Random AC
-        passivePerception: Math.floor(Math.random() * 5) + 12 // Random passive perception
+        characterName: document.getElementById('playerCharacterInput'),
+        hp: { current: document.getElementById('currentCharacterHP'), max: document.getElementById('maxCharacterHP') },
+        ac: document.getElementById('AC'),
+        passivePerception: document.getElementById('passivePerception') 
     };
+
+    
 }
 
 
@@ -3557,7 +3560,7 @@ function handleRequestInfo(message, FromClient) {
 
     // Send the response message back
     const responseMessage = {
-        type: 'response-info',
+        type: 'request-stats',
         requestId,
         data: responseData
     };
