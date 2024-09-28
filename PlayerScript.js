@@ -249,6 +249,9 @@ async function playerSetUP(){
     document.getElementById("inspirationBox").addEventListener("click", toggleInspiration);
 
 
+    
+
+
 }  
     
 function toggleInspiration() {
@@ -263,6 +266,7 @@ function toggleInspiration() {
         starContainer.classList.remove("inactive");
         starContainer.classList.add("active");
     }
+    sendDMUpdatedStats()
 }
 
 
@@ -3549,7 +3553,6 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
 function handleRequestInfo(message, FromClient) {
-    console.log(message)
     const requestId = message.requestId; // Unique ID to correlate responses
     const requestedFields = message.data.request;
 
@@ -3619,3 +3622,48 @@ function handleTargetSelection(message, FromClient) {
 
     console.log("Target set to:", targetId);
 }
+
+
+async function sendDMUpdatedStats() {
+    // Construct the message object with player stats
+
+    const myFragment = await TS.clients.whoAmI();
+    const allClients = await TS.clients.getClientsInThisBoard();
+
+    const otherClients = allClients.filter(player => player.id !== myFragment.id);
+
+    otherClients.forEach(client => {
+
+        const myGM = TS.clients.getMoreInfo(client)
+
+        console.log(myGM)
+
+
+    });
+
+
+    console.log(otherClients.entry.id)
+
+
+
+    const playerStats = getPlayerData();
+
+    // Construct the message object with player stats
+    const message = {
+        type: 'request-stats', // Message type
+        data: {
+            characterName: playerStats.characterName || playerStats.name, // Use characterName or name
+            hp: {
+                current: playerStats.hp.current.toString(), // Ensure current HP is a string
+                max: playerStats.hp.max.toString() // Ensure max HP is a string
+            },
+            ac: playerStats.ac.toString(), // Ensure AC is a string
+            passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
+            spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
+        }
+    };
+
+    // Send the message
+    TS.sync.send(JSON.stringify(Message), GMClient).catch(console.error);
+}
+

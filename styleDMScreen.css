@@ -232,6 +232,62 @@
 
 
 
+/*Playe Card Syling*/
+
+.player-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid green;
+    padding: 3px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    position: relative; /* Ensure dropdown positioning is relative to card */
+    transition: border-color 0.3s ease;
+}
+
+.player-info {
+    display: flex; /* Use flexbox for layout */
+    flex-direction: column; /* Stack stats vertically */
+    width: 100%; /* Full width */
+}
+
+.player-header {
+    display: flex; /* Use flexbox for header */
+    justify-content: space-between; /* Space between name and health */
+    align-items: center; /* Center items vertically */
+    width: 100%; /* Full width */
+}
+
+
+.player-health {
+    text-align: right; /* Align health text to the right */
+    flex: 1; /* Prevent it from growing */
+    margin-right: 15px;
+}
+
+.player-stats {
+    display: flex; /* Use flexbox for player stats */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Center items vertically */
+    width: 100%; /* Full width */
+}
+
+.player-stats span {
+    margin-right: 20px; /* Space between stats */
+}
+
+/* Optional: Style for player-stats-filler */
+.player-stats-filler {
+    flex-grow: 1; /* Fill available space */
+}
+
+
+
+/*End of player  Card Styling */ 
+
+
+
 
 .save-popup, .load-popup{
     padding: 10px;

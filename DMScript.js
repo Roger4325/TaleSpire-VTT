@@ -55,12 +55,13 @@ function handleMessage(message) {
 
 
 const playerCharacters = [
-    { name: 'Mira', hp: { current: 56, max: 56 }, ac: 19, initiative: 0 },
-    { name: 'Sterling', hp: { current: 74, max: 74 }, ac: 19, initiative: 0 },
-    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0 },
-    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0 },
-    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0 },
-    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 }
+    { name: 'Mira', hp: { current: 56, max: 56 }, ac: 19, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Sterling', hp: { current: 74, max: 74 }, ac: 19, initiative: 0,passivePerception: 11, spellSave: 15 },
+    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
     
     // Add more player characters as needed
 ];
@@ -668,7 +669,7 @@ document.getElementById('add-player-button').addEventListener('click', async fun
 function createEmptyPlayerCard() {
     // Create the player card container
     const card = document.createElement('div');
-    card.classList.add('monster-card'); // Reuse monster-card class for styling
+    card.classList.add('player-card'); // Reuse monster-card class for styling
 
     // Create the dropdown container
     const dropdownContainer = document.createElement('div');
@@ -736,7 +737,7 @@ function createEmptyPlayerCard() {
     }
 }
 
-function updatePlayerCard(card, player) {
+async function updatePlayerCard(card, player) {
     // Clear previous content
     card.innerHTML = '';
 
@@ -746,7 +747,11 @@ function updatePlayerCard(card, player) {
         card.dataset.playerId = player.talespireId; // Store player ID in dataset
     }
 
-    selectedPlayer = player.talespireId
+    const selectedPlayer = player.talespireId;
+    if (selectedPlayer) {
+        await requestPlayerInfo(selectedPlayer);
+    }
+
     // Create and add player details
     const initDiv = document.createElement('div');
     initDiv.classList.add('monster-init');
@@ -764,23 +769,99 @@ function updatePlayerCard(card, player) {
     initDiv.appendChild(initInput);
 
     const playerInfo = document.createElement('div');
-    playerInfo.classList.add('monster-info'); // Reuse monster-info class
+    playerInfo.classList.add('player-info'); // Reuse monster-info class
 
-    const playerName = document.createElement('div');
-    playerName.classList.add('monster-name'); // Reuse monster-name class
-    playerName.innerText = player.name || player.characterName;
+    // Check if the player name is "Custom"
+    if (player.name === "Custom") {
+        // Create label and input for Character Name
+        const nameLabel = document.createElement('label');
+        nameLabel.textContent = 'Character Name:';
+        const nameInput = document.createElement('input');
+        nameInput.type = 'text';
+        nameInput.id = 'customCharacterName'; // Unique ID for styling
+        nameInput.placeholder = 'Character Name';
+        nameInput.value = player.characterName || '';
 
-    const statsDiv = document.createElement('div');
-    statsDiv.classList.add('monster-stats');
-    statsDiv.innerHTML = `
-        <span>AC: ${player.ac}</span>
-        <span>HP: ${player.hp.current} / ${player.hp.max}</span>
-        <span>Passive Perception: ${player.passivePerception}</span>
-        <span>Spell Save: ${player.spellSave}</span>
-    `;
+        // Create label and input for HP
+        const hpLabel = document.createElement('label');
+        hpLabel.textContent = 'HP:';
+        const hpInput = document.createElement('input');
+        hpInput.type = 'number';
+        hpInput.id = 'customHP'; // Unique ID for styling
+        hpInput.placeholder = 'HP';
 
-    playerInfo.appendChild(playerName);
-    playerInfo.appendChild(statsDiv);
+        // Create label and input for AC
+        const acLabel = document.createElement('label');
+        acLabel.textContent = 'AC:';
+        const acInput = document.createElement('input');
+        acInput.type = 'number';
+        acInput.id = 'customAC'; // Unique ID for styling
+        acInput.placeholder = 'AC';
+
+        // Create label and input for Passive Perception
+        const passivePerceptionLabel = document.createElement('label');
+        passivePerceptionLabel.textContent = 'Passive Perception:';
+        const passivePerceptionInput = document.createElement('input');
+        passivePerceptionInput.type = 'number';
+        passivePerceptionInput.id = 'customPassivePerception'; // Unique ID for styling
+        passivePerceptionInput.placeholder = 'Passive Perception';
+
+        // Create label and input for Spell Save DC
+        const spellSaveDcLabel = document.createElement('label');
+        spellSaveDcLabel.textContent = 'Spell Save DC:';
+        const spellSaveDcInput = document.createElement('input');
+        spellSaveDcInput.type = 'number';
+        spellSaveDcInput.id = 'customSpellSaveDC'; // Unique ID for styling
+        spellSaveDcInput.placeholder = 'Spell Save DC';
+
+        // Append labels and inputs to playerInfo
+        playerInfo.appendChild(nameLabel);
+        playerInfo.appendChild(nameInput);
+        playerInfo.appendChild(hpLabel);
+        playerInfo.appendChild(hpInput);
+        playerInfo.appendChild(acLabel);
+        playerInfo.appendChild(acInput);
+        playerInfo.appendChild(passivePerceptionLabel);
+        playerInfo.appendChild(passivePerceptionInput);
+        playerInfo.appendChild(spellSaveDcLabel);
+        playerInfo.appendChild(spellSaveDcInput);
+
+    } else {
+        // Display existing player details
+        const playerName = document.createElement('div');
+        playerName.classList.add('monster-name'); // Reuse monster-name class
+        playerName.innerText = player.name || player.characterName;
+
+        // Create a new div to hold the player header (name and health)
+        const playerHeader = document.createElement('div');
+        playerHeader.classList.add('player-header'); // New class for header
+
+        // Append player name to the header
+        playerHeader.appendChild(playerName);
+
+        // Create the player health div
+        const playerHealthDiv = document.createElement('div');
+        playerHealthDiv.classList.add('player-health');
+        playerHealthDiv.innerHTML = `<span>HP: ${player.hp.current} / ${player.hp.max}</span>`;
+
+        // Append player health to the header
+        playerHeader.appendChild(playerHealthDiv);
+
+        // Create stats div
+        const statsDiv = document.createElement('div');
+        statsDiv.classList.add('player-stats');
+        statsDiv.innerHTML = `
+            <span>AC: ${player.ac}</span>
+            <span>Passive Per: ${player.passivePerception}</span>
+            <span>Spell Save: ${player.spellSave}</span>
+            <div class="player-stats-filler"></div>
+        `;
+
+        // Append header and stats div to playerInfo
+        playerInfo.appendChild(playerHeader);
+        playerInfo.appendChild(statsDiv);
+
+    }
 
     const deleteButtonDiv = document.createElement('div');
     deleteButtonDiv.classList.add('monster-card-delete-button');
@@ -794,14 +875,6 @@ function updatePlayerCard(card, player) {
 
     deleteButtonDiv.appendChild(deleteButton);
 
-    const requestInfoButton = document.createElement('button');
-    requestInfoButton.textContent = 'Request Info';
-    requestInfoButton.addEventListener('click', () => {
-        requestPlayerInfo(selectedPlayer); // Send request to selected player
-    });
-
-    card.appendChild(requestInfoButton);
-
     card.appendChild(initDiv);
     card.appendChild(playerInfo);
     card.appendChild(deleteButtonDiv);
@@ -811,8 +884,8 @@ function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
-    
 }
+
 
 
 
@@ -875,7 +948,7 @@ function reorderCards() {
     }
     
     // Retrieve all cards
-    const cards = Array.from(tracker.getElementsByClassName("monster-card"));
+    const cards = Array.from(tracker.querySelectorAll(".monster-card, .player-card"));;
     
     // Check if cards array is empty
     if (cards.length === 0) {
@@ -1301,7 +1374,7 @@ function updateMonsterCardDataFromLoad(encounterData) {
 
 // Requestion and recieving information from other connected clients. 
 
-function requestPlayerInfo(player) {
+async function requestPlayerInfo(player) {
     const requestId = generateUUID(); // Generate unique ID for the request
     
     const message = {
@@ -1360,11 +1433,12 @@ function handleRequestedStats(parsedMessage, fromClient) {
     console.log("Handling player stats update from:", fromClient);
 
     // Extract player data from the parsedMessage
+    console.log(parsedMessage)
     const playerData = parsedMessage.data; // Assuming data contains stats like HP, AC, etc.
     const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
 
     // Get all the player cards from the DOM
-    const playerCards = document.querySelectorAll('.monster-card');
+    const playerCards = document.querySelectorAll('.player-card');
 
     // Loop through all the player cards and update the matching one
     playerCards.forEach(card => {
