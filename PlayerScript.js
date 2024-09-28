@@ -3522,9 +3522,9 @@ async function handleSyncEvents(event) {
 function getPlayerData() {
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
-        hp: { current: document.getElementById('currentCharacterHP').value, max: document.getElementById('maxCharacterHP').value },
+        hp: { current: document.getElementById('currentCharacterHP').textContent, max: document.getElementById('maxCharacterHP').textContent },
         ac: document.getElementById('AC').textContent,
-        passivePerception: document.getElementById('passivePerception').value
+        passivePerception: document.getElementById('passivePerception').textContent
     };
 
     

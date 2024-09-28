@@ -773,8 +773,9 @@ function updatePlayerCard(card, player) {
     const statsDiv = document.createElement('div');
     statsDiv.classList.add('monster-stats');
     statsDiv.innerHTML = `
-        <span>AC ${player.ac}</span>
-        <span>HP <input type="number" class="hp-input" value="${player.hp.current}"> / ${player.hp.max}</span>
+        <span>AC: ${player.ac}</span>
+        <span>HP: ${player.hp.current} / ${player.hp.max}</span>
+        <span>Passive Perception: ${player.passivePerception}</span>
     `;
 
     playerInfo.appendChild(playerName);
