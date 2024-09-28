@@ -776,6 +776,7 @@ function updatePlayerCard(card, player) {
         <span>AC: ${player.ac}</span>
         <span>HP: ${player.hp.current} / ${player.hp.max}</span>
         <span>Passive Perception: ${player.passivePerception}</span>
+        <span>Spell Save: ${player.spellSave}</span>
     `;
 
     playerInfo.appendChild(playerName);
