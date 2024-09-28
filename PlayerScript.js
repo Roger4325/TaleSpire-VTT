@@ -3519,15 +3519,18 @@ async function handleSyncEvents(event) {
 
 
 
-async function getPlayerData() {
-    console.log(document.getElementById('spellSaveDc').textContent)
+function getPlayerData() {
+    const spellSaveDcElement = document.getElementById('spellSaveDc');
+    const spellSaveValue = spellSaveDcElement ? spellSaveDcElement.textContent : '0'; // Default to '0' if not found
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
-        hp: { current: document.getElementById('currentCharacterHP').textContent, max: document.getElementById('maxCharacterHP').textContent },
+        hp: {
+            current: document.getElementById('currentCharacterHP').textContent,
+            max: document.getElementById('maxCharacterHP').textContent
+        },
         ac: document.getElementById('AC').textContent,
         passivePerception: document.getElementById('passivePerception').textContent,
-        spellSave: document.getElementById('spellSaveDc').textContent
-        
+        spellSave: Number(spellSaveValue) 
     };
 }
 
@@ -3546,12 +3549,12 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
-async function handleRequestInfo(message, FromClient) {
+function handleRequestInfo(message, FromClient) {
     console.log(message)
     const requestId = message.requestId; // Unique ID to correlate responses
     const requestedFields = message.data.request;
 
-    const playerData = await getPlayerData(); // Assume getPlayerData returns player info
+    const playerData = getPlayerData(); // Assume getPlayerData returns player info
 
     // Build the response data based on requested fields
     const responseData = {};
