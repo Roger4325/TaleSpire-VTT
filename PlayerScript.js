@@ -3519,7 +3519,7 @@ async function handleSyncEvents(event) {
 
 
 
-function getPlayerData() {
+async function getPlayerData() {
     console.log(document.getElementById('spellSaveDc').textContent)
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
@@ -3529,8 +3529,6 @@ function getPlayerData() {
         spellSave: document.getElementById('spellSaveDc').textContent
         
     };
-
-    
 }
 
 
@@ -3548,12 +3546,12 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
-function handleRequestInfo(message, FromClient) {
+async function handleRequestInfo(message, FromClient) {
     console.log(message)
     const requestId = message.requestId; // Unique ID to correlate responses
     const requestedFields = message.data.request;
 
-    const playerData = getPlayerData(); // Assume getPlayerData returns player info
+    const playerData = await getPlayerData(); // Assume getPlayerData returns player info
 
     // Build the response data based on requested fields
     const responseData = {};
