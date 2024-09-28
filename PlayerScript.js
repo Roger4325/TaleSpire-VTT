@@ -249,7 +249,7 @@ async function playerSetUP(){
     document.getElementById("inspirationBox").addEventListener("click", toggleInspiration);
 
 
-    
+    sendDMUpdatedStats()
 
 
 }  
@@ -420,6 +420,7 @@ function handleAbilityScoreChange(event) {
         updateAllSpellDCs();
         updateAllSpellDamageDice();
         updateSpellDCHeader()
+        sendDMUpdatedStats()
 
 
         const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -593,6 +594,7 @@ function healCreature(healingAmount) {
         
     }
     updateContent()
+    sendDMUpdatedStats()
 }
 
 // Function to damage the creature by a specific amount
@@ -615,6 +617,7 @@ function damageCreature() {
         }
     }
     updateContent()
+    sendDMUpdatedStats()
 }
 
 
@@ -2857,6 +2860,7 @@ function updateSpellDCHeader(){
     spellAttackLabel.setAttribute('value', spellAttackBonus);
     spellAttackButton.textContent = `+${spellAttackBonus}`;
 
+    sendDMUpdatedStats()
 
 }
 
@@ -3639,10 +3643,11 @@ async function sendDMUpdatedStats() {
         // Get more info for the current client
         const clientInfo = await TS.clients.getMoreInfo([client]);
         
-        // Assuming clientInfo contains GM identification
-        if (clientInfo && clientInfo.isGM) { // Change this condition based on your structure
-            myGM = clientInfo; // Store the GM info
-            break; // Exit the loop once we find the GM
+        console.log(clientInfo)
+        
+        if (clientInfo && clientInfo[0].clientMode === "gm") { 
+            myGM = clientInfo; 
+            break; 
         }
     }
 
@@ -3651,9 +3656,6 @@ async function sendDMUpdatedStats() {
         return; // Exit if GM is not found
     }
 
-
-
-    console.log(otherClients.entry.id)
 
 
 
@@ -3675,6 +3677,6 @@ async function sendDMUpdatedStats() {
     };
 
     // Send the message
-    TS.sync.send(JSON.stringify(Message), GMClient).catch(console.error);
+    TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
 }
 
