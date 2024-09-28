@@ -3632,14 +3632,25 @@ async function sendDMUpdatedStats() {
 
     const otherClients = allClients.filter(player => player.id !== myFragment.id);
 
-    otherClients.forEach(client => {
+    let myGM; // Variable to hold the GM's information
 
-        const myGM = TS.clients.getMoreInfo(client)
+    // Loop through other clients and find the GM
+    for (const client of otherClients) {
+        // Get more info for the current client
+        const clientInfo = await TS.clients.getMoreInfo([client]);
+        
+        // Assuming clientInfo contains GM identification
+        if (clientInfo && clientInfo.isGM) { // Change this condition based on your structure
+            myGM = clientInfo; // Store the GM info
+            break; // Exit the loop once we find the GM
+        }
+    }
 
-        console.log(myGM)
+    if (!myGM) {
+        console.error("GM not found.");
+        return; // Exit if GM is not found
+    }
 
-
-    });
 
 
     console.log(otherClients.entry.id)
