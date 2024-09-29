@@ -1400,6 +1400,40 @@ function updateMonsterCardDataFromLoad(encounterData) {
 
 
 
+// Handle the rolled initiative for active monster
+function handleInitiativeResult(resultGroup) {
+    // Extract the results from the initiative result group
+    const operands = resultGroup.result.operands;
+    console.log(resultGroup);
+
+    let totalInitiative = 0;
+
+    // Loop through each operand to compute the total initiative value
+    for (const operand of operands) {
+        if (operand.kind === "d20" && operand.results) {
+            // Sum up the d20 results
+            totalInitiative += operand.results.reduce((sum, roll) => sum + roll, 0);
+        } else if (operand.value) {
+            // Adjust total based on the operator
+            totalInitiative += (resultGroup.result.operator === "+") ? operand.value : -operand.value;
+        }
+    }
+
+    if (activeMonsterCard) {
+        const initInput = activeMonsterCard.querySelector('.init-input');
+
+        if (initInput) {
+            console.log(resultGroup);
+            initInput.value = totalInitiative; 
+            reorderCards();
+        } else {
+            console.error('Initiative input not found in the active monster card.');
+        }
+    } else {
+        console.warn('No active monster card to update initiative for.');
+    }
+}
+
 
 
 

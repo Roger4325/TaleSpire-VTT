@@ -3715,8 +3715,8 @@ function handleInitiativeResult(resultGroup) {
             // Sum up the d20 results
             totalInitiative += operand.results.reduce((sum, roll) => sum + roll, 0);
         } else if (operand.value) {
-            // Add static values
-            totalInitiative += operand.value;
+            // Adjust total based on the operator
+            totalInitiative += (resultGroup.result.operator === "+") ? operand.value : -operand.value;
         }
     }
 
