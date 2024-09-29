@@ -770,35 +770,40 @@ function createEmptyPlayerCard() {
 }
 
 async function updatePlayerCard(card, player) {
-    // Clear previous content
-    card.innerHTML = '';
-
-    console.log(player)
-
-    if (player.talespireId) {
-        card.dataset.playerId = player.talespireId; // Store player ID in dataset
-    }
-
-    const selectedPlayer = player.talespireId;
-    if (selectedPlayer) {
-        await requestPlayerInfo(selectedPlayer);
-    }
-
-    // Create and add player details
-    const initDiv = document.createElement('div');
-    initDiv.classList.add('monster-init');
-
-    const initInput = document.createElement('input');
-    initInput.type = 'number';
-    initInput.value = player.initiative || 0; // Default initiative value
-    initInput.classList.add('init-input');
-
-    // Event listener for initiative changes
-    initInput.addEventListener('change', () => {
-        reorderCards(); // Reorder cards when initiative is changed
-    });
-
-    initDiv.appendChild(initInput);
+     // Get current initiative value before clearing
+     const currentInitInput = card.querySelector('.init-input');
+     const currentInitiative = currentInitInput ? parseInt(currentInitInput.value) : 0;
+ 
+     // Clear previous content
+     card.innerHTML = '';
+ 
+     console.log(player);
+ 
+     if (player.talespireId) {
+         card.dataset.playerId = player.talespireId; // Store player ID in dataset
+     }
+ 
+     const selectedPlayer = player.talespireId;
+     if (selectedPlayer) {
+         await requestPlayerInfo(selectedPlayer);
+     }
+ 
+     // Create and add player details
+     const initDiv = document.createElement('div');
+     initDiv.classList.add('monster-init');
+ 
+     const initInput = document.createElement('input');
+     initInput.type = 'number';
+     // Set the initiative input value to the stored value or player data
+     initInput.value = player.initiative !== undefined ? player.initiative : currentInitiative; 
+     initInput.classList.add('init-input');
+ 
+     // Event listener for initiative changes
+     initInput.addEventListener('change', () => {
+         reorderCards(); // Reorder cards when initiative is changed
+     });
+ 
+     initDiv.appendChild(initInput);
 
     const playerInfo = document.createElement('div');
     playerInfo.classList.add('player-info'); // Reuse monster-info class
