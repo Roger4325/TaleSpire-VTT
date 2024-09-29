@@ -94,6 +94,36 @@ document.getElementById('load-encounter').addEventListener('click', function() {
     }
 });
 
+
+document.getElementById('rollInitiative').addEventListener('click', () => {
+    const monsterCards = document.querySelectorAll('.monster-card');
+
+    monsterCards.forEach(card => {
+        // Find the element with the data-name="Initiative"
+        const initiativeElement = card.querySelector('[data-name="Initiative"]');
+        if (initiativeElement) {
+            const diceType = initiativeElement.getAttribute('data-dice-type');
+            
+            // Use regex to extract the modifier part, which could be positive or negative
+            const match = diceType.match(/1d20([+-]\d+)/);
+
+            // Default initMod to 0 if no modifier is found
+            const initMod = match ? parseInt(match[1], 10) : 0;
+            const randomRoll = Math.floor(Math.random() * 20) + 1;
+            const totalInitiative = randomRoll + initMod;
+            const initInput = card.querySelector('.init-input');
+
+            if (initInput) {
+                initInput.value = totalInitiative;
+            } else {
+                console.log(`Initiative for ${card.id}: ${totalInitiative}`);
+            }
+        }
+    });
+});
+
+
+
 function activateMonsterCard(card){
     if (activeMonsterCard) {
         activeMonsterCard.style.borderColor = ''; // Reset to default border color
@@ -1237,9 +1267,9 @@ async function loadAndStoreMonsterData() {
 
 //Loading the monsters cards into the page. 
 
-async function loadEncountersAndPopulateCards(){
+async function loadEncountersAndPopulateCards() {
     await loadAndStoreMonsterData();
-    
+
     // Retrieve the saved encounters from storage
     const savedEncounters = allSavedEncounters || {};
 
@@ -1259,19 +1289,22 @@ async function loadEncountersAndPopulateCards(){
     filterInput.classList.add('encounter-save-input');
     popup.appendChild(filterInput);
 
+    // Create the dropdown or list for saved encounters
+    const encounterList = document.createElement('ul');
+    encounterList.classList.add('encounter-save-list');
+    popup.appendChild(encounterList);
+
+    // Show the encounter list on filter input click
     filterInput.addEventListener('click', () => {
         encounterList.style.display = 'block'; // Show the list
+        // Attach event listeners after the list is populated
+        attachLoadEventListeners(encounterList, savedEncounters);
     });
     filterInput.addEventListener('blur', () => {
         setTimeout(() => {
             encounterList.style.display = 'none'; // Hide the list after a small delay
-        }, 20); // Delay of 20 milliseconds (adjust as needed)
+        }, 200); // Delay of 20 milliseconds (adjust as needed)
     });
-
-    // Create the dropdown or list for saved encounters
-    const encounterList = document.createElement('ul');
-    encounterList.classList.add('encounter-save-list')
-    popup.appendChild(encounterList);
 
     // Function to populate the encounter list
     function populateEncounterList(filter = '') {
@@ -1281,34 +1314,25 @@ async function loadEncountersAndPopulateCards(){
         Object.keys(savedEncounters).forEach((encounterName) => {
             if (encounterName.toLowerCase().includes(filter.toLowerCase())) {
                 const encounterItem = document.createElement('li');
+                encounterItem.classList.add('encounter-item');
+
                 const encounterText = document.createElement('span');
-                encounterText.classList.add('encounter-load-text')
+                encounterText.classList.add('encounter-load-text');
                 encounterText.textContent = encounterName;
                 encounterItem.appendChild(encounterText);
-
-                // Add click event to overwrite the selected encounter
-                encounterItem.addEventListener('click', () => {
-                    updateMonsterCardDataFromLoad(savedEncounters[encounterName]);
-                    closePopup();
-                });
-                encounterList.appendChild(encounterItem);
 
                 // Add delete button next to each encounter
                 const deleteButton = document.createElement('button');
                 deleteButton.classList.add('delete-encounter', 'nonRollButton');
                 deleteButton.textContent = 'Delete';
-                
-
-                // Add event listener for deleting encounter
-                deleteButton.addEventListener('click', (event) => {
-                    event.stopPropagation(); // Prevent triggering the click event on the list item
-                    console.log("delete storage");
-                    removeFromGlobalStorage("Encounter Data", encounterName);
-                    closePopup()
-                });
                 encounterItem.appendChild(deleteButton);
+
+                encounterList.appendChild(encounterItem);
             }
         });
+
+        // Force reflow
+        encounterList.getBoundingClientRect(); // Forces reflow to make sure DOM is updated
     }
 
     // Initially populate the list with all encounters
@@ -1320,8 +1344,32 @@ async function loadEncountersAndPopulateCards(){
         populateEncounterList(filterText);
     });
 
+    
+
     // Append popup to the body
     document.body.appendChild(popup);
+}
+
+
+
+// Function to attach event listeners
+function attachLoadEventListeners(encounterList, savedEncounters) {
+    // Event delegation for clicking encounters or delete buttons
+    encounterList.addEventListener('click', (event) => {
+        const target = event.target;
+
+        if (target.classList.contains('encounter-load-text')) {
+            console.log("click");
+            const encounterName = target.textContent;
+            updateMonsterCardDataFromLoad(savedEncounters[encounterName]);
+            closePopup();
+        } else if (target.classList.contains('delete-encounter')) {
+            event.stopPropagation(); // Prevent triggering the click event on the encounter
+            const encounterName = target.closest('li').querySelector('.encounter-load-text').textContent;
+            removeFromGlobalStorage("Encounter Data", encounterName);
+            closePopup();
+        }
+    });
 }
 
 

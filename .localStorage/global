@@ -692,6 +692,34 @@
                 "tempHp": "0",
                 "conditions": []
             }
+        ],
+        "Tester": [
+            {
+                "init": "0",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": []
+            }
+        ],
+        "Tester2": [
+            {
+                "init": "0",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Gibbering Mouther (A)",
+                "currentHp": "67",
+                "maxHp": "67",
+                "tempHp": "0",
+                "conditions": []
+            }
         ]
     }
 }
