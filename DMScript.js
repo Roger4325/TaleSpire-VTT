@@ -120,6 +120,7 @@ document.getElementById('rollInitiative').addEventListener('click', () => {
             }
         }
     });
+    reorderCards()
 });
 
 
