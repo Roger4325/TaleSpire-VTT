@@ -29,7 +29,7 @@
             "perceptionAbilityMod": "WIS",
             "performanceAbilityMod": "CHA",
             "persuasionAbilityMod": "CHA",
-            "religionAbilityMod": "INT",
+            "religionAbilityMod": "WIS",
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
@@ -69,10 +69,10 @@
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
-                        "eighthColumn": "0",
+                        "eighthColumn": "",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "0",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": true,
                             "actions": true,
@@ -126,6 +126,9 @@
                         },
                         {
                             "name": "Sleep"
+                        },
+                        {
+                            "name": "Ice Knife*"
                         }
                     ],
                     "slots": [
@@ -717,6 +720,128 @@
                 "name": "Gibbering Mouther (A)",
                 "currentHp": "67",
                 "maxHp": "67",
+                "tempHp": "0",
+                "conditions": []
+            }
+        ],
+        "Larger": [
+            {
+                "init": "0",
+                "name": "Zombie (A)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (B)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (C)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (D)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (E)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (G)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (H)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (I)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (J)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (K)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (L)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (M)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (N)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (O)",
+                "currentHp": "22",
+                "maxHp": "22",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Zombie (P)",
+                "currentHp": "22",
+                "maxHp": "22",
                 "tempHp": "0",
                 "conditions": []
             }
