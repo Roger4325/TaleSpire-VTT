@@ -284,6 +284,56 @@
 
 
 
+/*Custom Player Cards*/
+
+.player-custom-info{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+#customCharacterName{
+    font-weight: bold;
+    font-size: 15px;
+    min-width: 150px;
+}
+
+#customHP, #customAC, #customPassivePerception, #customSpellSaveDC{
+    max-width: 40px;
+}
+
+
+
+.player-info label {
+    font-weight: bold;
+    font-size: 14px;
+    color: rgb(252, 222, 56);
+    margin-right: 5px;
+}
+
+.player-info input {
+    font-size: 12px;
+    padding: 5px;
+    width: auto;
+}
+
+/* Remove arrows from number inputs */
+.player-info input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.player-info input[type="number"]::-webkit-outer-spin-button,
+.player-info input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Chrome, Safari, Edge */
+    margin: 0; /* Remove margin */
+}
+
+.label-input-group {
+    width: auto;
+}
+
+
 /*End of player  Card Styling */ 
 
 

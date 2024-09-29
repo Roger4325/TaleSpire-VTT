@@ -773,60 +773,41 @@ async function updatePlayerCard(card, player) {
 
     // Check if the player name is "Custom"
     if (player.name === "Custom") {
-        // Create label and input for Character Name
-        const nameLabel = document.createElement('label');
-        nameLabel.textContent = 'Character Name:';
-        const nameInput = document.createElement('input');
-        nameInput.type = 'text';
-        nameInput.id = 'customCharacterName'; // Unique ID for styling
-        nameInput.placeholder = 'Character Name';
-        nameInput.value = player.characterName || '';
+        // Create a container for the player info
+        const playerInfoContainer = document.createElement('div');
+        playerInfoContainer.classList.add('player-custom-info'); // Add player-info class for styling
 
-        // Create label and input for HP
-        const hpLabel = document.createElement('label');
-        hpLabel.textContent = 'HP:';
-        const hpInput = document.createElement('input');
-        hpInput.type = 'number';
-        hpInput.id = 'customHP'; // Unique ID for styling
-        hpInput.placeholder = 'HP';
+        // Helper function to create label-input pairs
+        function createLabelInputPair(labelText, inputType, inputId, placeholder) {
+            const labelInputGroup = document.createElement('div');
+            labelInputGroup.classList.add('label-input-group'); // Class to style the group
 
-        // Create label and input for AC
-        const acLabel = document.createElement('label');
-        acLabel.textContent = 'AC:';
-        const acInput = document.createElement('input');
-        acInput.type = 'number';
-        acInput.id = 'customAC'; // Unique ID for styling
-        acInput.placeholder = 'AC';
+            const label = document.createElement('label');
+            label.textContent = labelText;
 
-        // Create label and input for Passive Perception
-        const passivePerceptionLabel = document.createElement('label');
-        passivePerceptionLabel.textContent = 'Passive Perception:';
-        const passivePerceptionInput = document.createElement('input');
-        passivePerceptionInput.type = 'number';
-        passivePerceptionInput.id = 'customPassivePerception'; // Unique ID for styling
-        passivePerceptionInput.placeholder = 'Passive Perception';
+            const input = document.createElement('input');
+            input.type = inputType;
+            input.id = inputId;
+            input.placeholder = placeholder;
 
-        // Create label and input for Spell Save DC
-        const spellSaveDcLabel = document.createElement('label');
-        spellSaveDcLabel.textContent = 'Spell Save DC:';
-        const spellSaveDcInput = document.createElement('input');
-        spellSaveDcInput.type = 'number';
-        spellSaveDcInput.id = 'customSpellSaveDC'; // Unique ID for styling
-        spellSaveDcInput.placeholder = 'Spell Save DC';
+            // Append label and input to the group
+            labelInputGroup.appendChild(label);
+            labelInputGroup.appendChild(input);
 
-        // Append labels and inputs to playerInfo
-        playerInfo.appendChild(nameLabel);
-        playerInfo.appendChild(nameInput);
-        playerInfo.appendChild(hpLabel);
-        playerInfo.appendChild(hpInput);
-        playerInfo.appendChild(acLabel);
-        playerInfo.appendChild(acInput);
-        playerInfo.appendChild(passivePerceptionLabel);
-        playerInfo.appendChild(passivePerceptionInput);
-        playerInfo.appendChild(spellSaveDcLabel);
-        playerInfo.appendChild(spellSaveDcInput);
+            return labelInputGroup;
+        }
 
-    } else {
+        // Create and append all label-input pairs
+        playerInfoContainer.appendChild(createLabelInputPair('Name:', 'text', 'customCharacterName', 'Character Name'));
+        playerInfoContainer.appendChild(createLabelInputPair('HP:', 'number', 'customHP', 'HP'));
+        playerInfoContainer.appendChild(createLabelInputPair('AC:', 'number', 'customAC', 'AC'));
+        playerInfoContainer.appendChild(createLabelInputPair('Passive Per:', 'number', 'customPassivePerception', 'Per'));
+        playerInfoContainer.appendChild(createLabelInputPair('Spell Save:', 'number', 'customSpellSaveDC', 'DC'));
+
+        // Append the container to the playerInfo element
+        playerInfo.appendChild(playerInfoContainer);
+    }
+ else {
         // Display existing player details
         const playerName = document.createElement('div');
         playerName.classList.add('monster-name'); // Reuse monster-name class
