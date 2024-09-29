@@ -3660,6 +3660,8 @@ async function getGMClient(){
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
     myGM = getGMClient()
+
+    console.log(myGM)
     const playerStats = getPlayerData();
 
     // Construct the message object with player stats
