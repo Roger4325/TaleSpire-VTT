@@ -181,12 +181,19 @@ async function onInit() {
 
 function parseAndReplaceDice(action, text) {
     const diceRegex = /(\d+d\d+\s*(?:[+-]\s*\d+)?)|([+-]\s*\d+)/g;
-    
+
     // Create a temporary container to parse the HTML and text
     const tempDiv = document.createElement('div');
     tempDiv.innerHTML = text;
 
     const container = document.createElement('span');
+
+    // Function to find spell details by name
+    function findSpellByName(spellName) {
+        const spellDataArray = AppData.spellLookupInfo?.spellsData;
+        if (!spellDataArray) return null;  // Handle cases where spell data is not loaded
+        return spellDataArray.find(spell => spell.name.toLowerCase() === spellName.toLowerCase());
+    }
 
     // Iterate over all child nodes in the tempDiv
     Array.from(tempDiv.childNodes).forEach(node => {
@@ -195,28 +202,76 @@ function parseAndReplaceDice(action, text) {
             const parts = node.textContent.split(diceRegex).filter(part => part); // Split by dice regex
 
             for (const part of parts) {
+                console.log(part)
                 if (diceRegex.test(part)) {
-                    // Create the label
+                    // Handle dice replacement
                     const label = document.createElement('label');
                     label.classList.add('actionButtonLabel');
                     const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
                     const diceRoll = part.replace(/[()\s]/g, '');
 
-                    label.setAttribute('value', part); // Assuming `part` is the modifier value
+                    label.setAttribute('value', part);
                     label.setAttribute('data-dice-type', /^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll) ? diceRoll : `1d20${diceRoll}`);
                     label.setAttribute('data-name', diceName);
 
-                    // Create the button
+                    // Underline dice
                     const button = document.createElement('button');
                     button.classList.add('actionButton');
                     button.textContent = part;
 
-                    // Append the label and button to the container
                     container.appendChild(label);
                     container.appendChild(button);
                 } else {
-                    // Append plain text parts
-                    container.appendChild(document.createTextNode(part));
+                    // Check for spell names within the part
+                    let remainingText = part;
+
+                    AppData.spellLookupInfo?.spellsData.forEach(spell => {
+                        const spellName = spell.name;
+                        const spellIndex = remainingText.toLowerCase().indexOf(spellName.toLowerCase());
+
+                        if (spellIndex !== -1) {
+                            // If a spell name is found, split the text and insert the hoverable element for the spell
+                            const beforeSpell = remainingText.slice(0, spellIndex);
+                            const afterSpell = remainingText.slice(spellIndex + spellName.length);
+
+                            // Add the text before the spell name
+                            if (beforeSpell) container.appendChild(document.createTextNode(beforeSpell));
+
+                            // Create and append the spell element
+                            const spellElement = document.createElement('span');
+                            spellElement.classList.add('spell-hover');
+                            spellElement.style.textDecoration = 'underline';
+                            spellElement.textContent = spellName;
+
+                            // Store the description in a data attribute for the custom tooltip
+                            spellElement.setAttribute('data-desc', spell.desc);
+
+                            // Timer to delay showing the tooltip
+                            let hoverTimer;
+
+                            // Add event listeners for hover
+                            spellElement.addEventListener('mouseenter', () => {
+                                hoverTimer = setTimeout(() => {
+                                    spellElement.classList.add('show-tooltip');
+                                }, 250); // Adjust the delay time (in milliseconds) as needed
+                            });
+
+                            spellElement.addEventListener('mouseleave', () => {
+                                clearTimeout(hoverTimer); // Clear the timer when leaving hover
+                                spellElement.classList.remove('show-tooltip');
+                            });
+
+                            container.appendChild(spellElement);
+
+                            // Update the remaining text to process
+                            remainingText = afterSpell;
+                        }
+                    });
+
+                    // Add the remaining text after the spell name (if any)
+                    if (remainingText) {
+                        container.appendChild(document.createTextNode(remainingText));
+                    }
                 }
             }
         } else {
@@ -227,6 +282,7 @@ function parseAndReplaceDice(action, text) {
 
     return container;
 }
+
 
 
 

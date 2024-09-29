@@ -699,7 +699,7 @@
             },
             {
                 "Name": "Spellcasting",
-                "Content": "The lich is an 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). The lich has the following wizard spells prepared: \n\n\u2022 Cantrips (at will): mage hand, prestidigitation, ray of frost\n\u2022 1st level (4 slots): detect magic, magic missile, shield, thunderwave\n\u2022 2nd level (3 slots): detect thoughts, invisibility, Melf's acid arrow, mirror image\n\u2022 3rd level (3 slots): animate dead, counterspell, dispel magic, fireball\n\u2022 4th level (3 slots): blight, dimension door\n\u2022 5th level (3 slots): cloudkill, scrying\n\u2022 6th level (1 slot): disintegrate, globe of invulnerability\n\u2022 7th level (1 slot): finger of death, plane shift\n\u2022 8th level (1 slot): dominate monster, power word stun\n\u2022 9th level (1 slot): power word kill",
+                "Content": "The lich is an 18th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 20, +12 to hit with spell attacks). The lich has the following wizard spells prepared: <br> Cantrips (at will): mage hand, prestidigitation, ray of frost <br> 1st level (4 slots): detect magic, magic missile, shield, thunderwave <br> 2nd level (3 slots): Detect Thoughts, invisibility, Melf's acid arrow, mirror image <br> 3rd level (3 slots): animate dead, counterspell, dispel magic, fireball <br> 4th level (3 slots): blight, dimension door <br> 5th level (3 slots): cloudkill, scrying <br> 6th level (1 slot): disintegrate, globe of invulnerability<br>7th level (1 slot): finger of death, plane shift<br>8th level (1 slot): dominate monster, power word stun<br>9th level (1 slot): power word kill",
                 "Usage": ""
             },
             {
@@ -2909,7 +2909,7 @@
             },
             {
                 "Name": "Shared Spellcasting (Coven Only)",
-                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n\n\u2022 1st level (4 slots): identify, ray of sickness\n\u2022 2nd level (3 slots): hold person, locate object\n\u2022 3rd level (3 slots): bestow curse, counterspell, lightning bolt\n\u2022 4th level (3 slots): phantasmal killer, polymorph\n\u2022 5th level (2 slots): contact other plane, scrying\n\u2022 6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
+                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n<br>1st level (4 slots): identify, ray of sickness<br>2nd level (3 slots): hold person, locate object<br>3rd level (3 slots): bestow curse, counterspell, lightning bolt<br>4th level (3 slots): phantasmal killer, polymorph<br>5th level (2 slots): contact other plane, scrying<br>6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
                 "Usage": ""
             },
             {
@@ -5337,7 +5337,7 @@
             },
             {
                 "Name": "Spellcasting",
-                "Content": "The mummy lord is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 17, +9 to hit with spell attacks). The mummy lord has the following cleric spells prepared: \n\n\u2022 Cantrips (at will): sacred flame, thaumaturgy\n\u2022 1st level (4 slots): command, guiding bolt, shield of faith\n\u2022 2nd level (3 slots): hold person, silence, spiritual weapon\n\u2022 3rd level (3 slots): animate dead, dispel magic\n\u2022 4th level (3 slots): divination, guardian of faith\n\u2022 5th level (2 slots): contagion, insect plague\n\u2022 6th level (1 slot): harm",
+                "Content": "The mummy lord is a 10th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 17, +9 to hit with spell attacks). The mummy lord has the following cleric spells prepared: \n<br>Cantrips (at will): sacred flame, thaumaturgy<br>1st level (4 slots): command, guiding bolt, shield of faith<br>2nd level (3 slots): hold person, silence, spiritual weapon<br>3rd level (3 slots): animate dead, dispel magic<br>4th level (3 slots): divination, guardian of faith<br>5th level (2 slots): contagion, insect plague<br>6th level (1 slot): harm",
                 "Usage": ""
             }
         ],
@@ -6231,7 +6231,7 @@
             },
             {
                 "Name": "Spellcasting",
-                "Content": "The sphinx is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following wizard spells prepared: \n\n\u2022 Cantrips (at will): mage hand, minor illusion, prestidigitation\n\u2022 1st level (4 slots): detect magic, identify, shield\n\u2022 2nd level (3 slots): darkness, locate object, suggestion\n\u2022 3rd level (3 slots): dispel magic, remove curse, tongues\n\u2022 4th level (3 slots): banishment, greater invisibility\n\u2022 5th level (1 slot): legend lore",
+                "Content": "The sphinx is a 9th-level spellcaster. Its spellcasting ability is Intelligence (spell save DC 16, +8 to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following wizard spells prepared: \n<br>Cantrips (at will): mage hand, minor illusion, prestidigitation<br>1st level (4 slots): detect magic, identify, shield<br>2nd level (3 slots): darkness, locate object, suggestion<br>3rd level (3 slots): dispel magic, remove curse, tongues<br>4th level (3 slots): banishment, greater invisibility<br>5th level (1 slot): legend lore",
                 "Usage": ""
             }
         ],
@@ -7370,7 +7370,7 @@
             },
             {
                 "Name": "Shared Spellcasting (Coven Only)",
-                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n\n\u2022 1st level (4 slots): identify, ray of sickness\n\u2022 2nd level (3 slots): hold person, locate object\n\u2022 3rd level (3 slots): bestow curse, counterspell, lightning bolt\n\u2022 4th level (3 slots): phantasmal killer, polymorph\n\u2022 5th level (2 slots): contact other plane, scrying\n\u2022 6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
+                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n<br>1st level (4 slots): identify, ray of sickness<br>2nd level (3 slots): hold person, locate object<br>3rd level (3 slots): bestow curse, counterspell, lightning bolt<br>4th level (3 slots): phantasmal killer, polymorph<br>5th level (2 slots): contact other plane, scrying<br>6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
                 "Usage": ""
             },
             {
@@ -9337,7 +9337,7 @@
             },
             {
                 "Name": "Shared Spellcasting (Coven Only)",
-                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n\n\u2022 1st level (4 slots): identify, ray of sickness\n\u2022 2nd level (3 slots): hold person, locate object\n\u2022 3rd level (3 slots): bestow curse, counterspell, lightning bolt\n\u2022 4th level (3 slots): phantasmal killer, polymorph\n\u2022 5th level (2 slots): contact other plane, scrying\n\u2022 6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
+                "Content": "While all three members of a hag coven are within 30 feet of one another, they can each cast the following spells from the wizard's spell list but must share the spell slots among themselves: \n<br>1st level (4 slots): identify, ray of sickness<br>2nd level (3 slots): hold person, locate object<br>3rd level (3 slots): bestow curse, counterspell, lightning bolt<br>4th level (3 slots): phantasmal killer, polymorph<br>5th level (2 slots): contact other plane, scrying<br>6th level (1 slot): eye bite\n\nFor casting these spells, each hag is a 12th-level spellcaster that uses Intelligence as her spellcasting ability. The spell save DC is 12+the hag's Intelligence modifier, and the spell attack bonus is 4+the hag's Intelligence modifier.",
                 "Usage": ""
             },
             {
@@ -11966,7 +11966,7 @@
             },
             {
                 "Name": "Spellcasting",
-                "Content": "The naga is an 11th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks), and it needs only verbal components to cast its spells. It has the following cleric spells prepared: \n\n\u2022 Cantrips (at will): mending, sacred flame, thaumaturgy\n\u2022 1st level (4 slots): command, cure wounds, shield of faith\n\u2022 2nd level (3 slots): calm emotions, hold person\n\u2022 3rd level (3 slots): bestow curse, clairvoyance\n\u2022 4th level (3 slots): banishment, freedom of movement\n\u2022 5th level (2 slots): flame strike, geas\n\u2022 6th level (1 slot): true seeing",
+                "Content": "The naga is an 11th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 16, +8 to hit with spell attacks), and it needs only verbal components to cast its spells. It has the following cleric spells prepared: \n<br>Cantrips (at will): mending, sacred flame, thaumaturgy<br>1st level (4 slots): command, cure wounds, shield of faith<br>2nd level (3 slots): calm emotions, hold person<br>3rd level (3 slots): bestow curse, clairvoyance<br>4th level (3 slots): banishment, freedom of movement<br>5th level (2 slots): flame strike, geas<br>6th level (1 slot): true seeing",
                 "Usage": ""
             }
         ],
@@ -12161,7 +12161,7 @@
             },
             {
                 "Name": "Spellcasting",
-                "Content": "The sphinx is a 12th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following cleric spells prepared: \n\n\u2022 Cantrips (at will): sacred flame, spare the dying, thaumaturgy\n\u2022 1st level (4 slots): command, detect evil and good, detect magic\n\u2022 2nd level (3 slots): lesser restoration, zone of truth\n\u2022 3rd level (3 slots): dispel magic, tongues\n\u2022 4th level (3 slots): banishment, freedom of movement\n\u2022 5th level (2 slots): flame strike, greater restoration\n\u2022 6th level (1 slot): heroes' feast",
+                "Content": "The sphinx is a 12th-level spellcaster. Its spellcasting ability is Wisdom (spell save DC 18, +10 to hit with spell attacks). It requires no material components to cast its spells. The sphinx has the following cleric spells prepared: \n<br>Cantrips (at will): sacred flame, spare the dying, thaumaturgy<br>1st level (4 slots): command, detect evil and good, detect magic<br>2nd level (3 slots): lesser restoration, zone of truth<br>3rd level (3 slots): dispel magic, tongues<br>4th level (3 slots): banishment, freedom of movement<br>5th level (2 slots): flame strike, greater restoration<br>6th level (1 slot): heroes' feast",
                 "Usage": ""
             }
         ],

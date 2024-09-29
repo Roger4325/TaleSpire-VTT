@@ -56,12 +56,11 @@ function handleMessage(message) {
 
 
 const playerCharacters = [
-    { name: 'Mira', hp: { current: 56, max: 56 }, ac: 19, initiative: 0,passivePerception: 0, spellSave: 12 },
     { name: 'Sterling', hp: { current: 74, max: 74 }, ac: 19, initiative: 0,passivePerception: 11, spellSave: 15 },
-    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0,passivePerception: 0, spellSave: 12 },
-    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0,passivePerception: 0, spellSave: 12 },
-    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0,passivePerception: 0, spellSave: 12 },
-    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0,passivePerception: 0, spellSave: 12 },
+    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0,passivePerception: 12, spellSave: 13 },
+    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0,passivePerception: 15, spellSave: 16 },
+    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0,passivePerception: 15, spellSave: 16 },
+    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0,passivePerception: 14, spellSave: 16 },
     { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
     
     // Add more player characters as needed

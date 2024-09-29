@@ -171,8 +171,7 @@
                             <option value="Bless">Bless</option>
                             <option value="Concentration">Concentration</option>
                             <option value="Charmed">Charmed</option>
-                            <option value="Deafended">Deafended</option>
-                            <option value="EmboldeningBond">Emboldening Bond</option>
+                            <option value="Deafened">Deafened</option> 
                             <option value="Exhaustion">Exhaustion</option>
                             <option value="Frightened">Frightened</option>
                             <option value="Grappled">Grappled</option>
@@ -182,11 +181,10 @@
                             <option value="Invisible">Invisible</option>
                             <option value="Paralyzed">Paralyzed</option>
                             <option value="Petrified">Petrified</option>
-                            <option value="Poisioned">Poisioned</option>
+                            <option value="Poisoned">Poisoned</option> 
                             <option value="Prone">Prone</option>
                             <option value="Restrained">Restrained</option>
                             <option value="Sanctuary">Sanctuary</option>
-                            <option value="ShieldofFaith">Shield of Faith</option>
                             <option value="Stunned">Stunned</option>
                             <option value="Unconscious">Unconscious</option>
                         <!-- Add more condition options here -->
@@ -810,6 +808,45 @@
             </div>
             
             <!-- Repeat for other spell levels -->
+        </section>
+
+        <section id="inventory"></section>
+            <div id="inventory-container">
+                <div id="inventory-header">
+                <h2>Inventory</h2>
+                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>
+                </div>
+            
+                <div class="inventory-group" id="equipment">
+                <h3>Equipment</h3>
+                <div id="equipment-list"></div>
+                </div>
+            
+                <div class="inventory-group" id="backpack">
+                <h3>Backpack</h3>
+                <div id="backpack-list"></div>
+                </div>
+            
+                <div class="inventory-group" id="attunement">
+                <h3>Attunement</h3>
+                <div id="attunement-list"></div>
+                </div>
+            
+                <div class="inventory-group" id="other-possessions">
+                <h3>Other Possessions</h3>
+                <div id="other-list"></div>
+                </div>
+            </div>
+
+            <div class="inventory-item">
+                <input type="checkbox" class="equip-toggle" /> 
+                <span class="item-name">Item Name</span>
+                <span class="item-weight">1.5 lbs.</span>
+                <input type="number" class="item-quantity" value="1" min="1" />
+                <span class="item-cost">10 gp</span>
+                <span class="item-notes">Notes...</span>
+              </div>
+          
         </section>
 
         <section id="features">

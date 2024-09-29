@@ -3173,6 +3173,125 @@ function filterSpellsByLevel(selectedLevel) {
 
 
 
+
+
+
+
+
+
+
+
+//Player character inventory section start
+
+let inventory = [
+    {
+      name: "Potion of Healing",
+      weight: 0.5,
+      quantity: 2,
+      cost: 50,
+      type: "consumable",
+      notes: "Heals 2d4+2"
+    },
+    {
+      name: "Crossbow, Light",
+      weight: 5,
+      quantity: 1,
+      cost: 25,
+      type: "weapon",
+      notes: "Range 80/320"
+    }
+  ];
+  
+  function updateWeight() {
+    let totalWeight = 0;
+    inventory.forEach(item => {
+      totalWeight += item.weight * item.quantity;
+    });
+    document.getElementById('weight-carried').innerText = totalWeight;
+    // Update weight status based on carried weight logic
+  }
+  
+  function addItemToInventory(item, group) {
+    const list = document.getElementById(`${group}-list`);
+    
+    let itemDiv = document.createElement('div');
+    itemDiv.classList.add('inventory-item');
+  
+    itemDiv.innerHTML = `
+      <input type="checkbox" class="equip-toggle">
+      <span class="item-name">${item.name}</span>
+      <span class="item-weight">${item.weight} lbs.</span>
+      <input type="number" class="item-quantity" value="${item.quantity}" min="1">
+      <span class="item-cost">${item.cost} gp</span>
+      <span class="item-notes">${item.notes}</span>
+    `;
+  
+    list.appendChild(itemDiv);
+  
+    // Add event listener for quantity change
+    itemDiv.querySelector('.item-quantity').addEventListener('input', (e) => {
+      item.quantity = parseInt(e.target.value, 10);
+      updateWeight();
+    });
+  
+    updateWeight();
+  }
+  
+  // Load inventory items
+  inventory.forEach(item => {
+    addItemToInventory(item, 'equipment');
+  });
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Working on the feature and traits section
 const featuresSection = document.getElementById('features');
 const addGroupButton = document.querySelector('.add-group-button');

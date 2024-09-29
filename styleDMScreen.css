@@ -597,3 +597,37 @@
     margin: 0;
 }
 
+
+
+
+
+.spell-hover {
+    position: relative;
+    cursor: pointer; /* Show pointer cursor to indicate it's hoverable */
+}
+
+.spell-hover::after {
+    content: attr(data-desc); /* Show the description */
+    display: none; /* Initially hide the tooltip */
+    position: absolute;
+    background-color: rgb(0, 0, 0);
+    color: #ffffff;
+    padding: 7px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 350px;
+    white-space: pre-wrap;
+    z-index: 1000;
+    top: 100%; /* Position below the hovered element */
+    left: 100%;
+    transform: translateX(-40%);
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    line-height: 20px;transition: opacity 0.2s ease-in-out; /* For smooth fade-in */
+    opacity: 0; /* Start hidden */
+}
+
+/* Only show the tooltip when the class is added */
+.spell-hover.show-tooltip::after {
+    display: block;
+    opacity: 1;
+}
