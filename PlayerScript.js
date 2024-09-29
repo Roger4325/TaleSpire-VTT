@@ -3659,7 +3659,7 @@ async function getGMClient(){
 
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
-    myGM = getGMClient()
+    myGM = await getGMClient()
 
     console.log(myGM)
     const playerStats = getPlayerData();
@@ -3686,7 +3686,7 @@ async function sendDMUpdatedStats() {
 
 async function sendDMInitiativeResults(totalInitiative){
 
-    myGM = getGMClient()
+    myGM = await getGMClient()
 
     const message = {
         type: 'update-init', // Message type

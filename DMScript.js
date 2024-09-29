@@ -1506,7 +1506,7 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
 function handleUpdatePlayerInitiative (parsedMessage, fromClient){
 
     console.log(parsedMessage)
-    const playerInit = parsedMessage.data.Initiative; 
+    const playerInit = parseInt(parsedMessage.data.Initiative); 
     const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
 
     // Get all the player cards from the DOM
@@ -1521,8 +1521,9 @@ function handleUpdatePlayerInitiative (parsedMessage, fromClient){
 
         // If the card's player ID matches the fromClient ID, update the card
         if (cardPlayerId === playerId) {
-            const playerInit = card.querySelector('.monster-init') // Reuse your existing updatePlayerCard function
-            playerInit.input.textContent = 10
+            const initInput = card.querySelector('.init-input')
+            console.log(playerInit)
+            initInput.value = playerInit
         }
     });
 }
