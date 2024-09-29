@@ -3628,8 +3628,7 @@ function handleTargetSelection(message, FromClient) {
 }
 
 
-async function sendDMUpdatedStats() {
-    // Construct the message object with player stats
+async function getGMClient(){
 
     const myFragment = await TS.clients.whoAmI();
     const allClients = await TS.clients.getClientsInThisBoard();
@@ -3646,8 +3645,8 @@ async function sendDMUpdatedStats() {
         console.log(clientInfo)
         
         if (clientInfo && clientInfo[0].clientMode === "gm") { 
-            myGM = clientInfo; 
-            break; 
+            myGM = clientInfo;
+            return  myGM
         }
     }
 
@@ -3656,9 +3655,11 @@ async function sendDMUpdatedStats() {
         return; // Exit if GM is not found
     }
 
+}
 
-
-
+async function sendDMUpdatedStats() {
+    // Construct the message object with player stats
+    myGM = getGMClient()
     const playerStats = getPlayerData();
 
     // Construct the message object with player stats
@@ -3680,3 +3681,45 @@ async function sendDMUpdatedStats() {
     TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
 }
 
+
+async function sendDMInitiativeResults(totalInitiative){
+
+    myGM = getGMClient()
+
+    const message = {
+        type: 'update-init', // Message type
+        data: {
+            Initiative: totalInitiative
+        }
+    };
+
+    TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+}
+
+
+
+
+function handleInitiativeResult(resultGroup) {
+    console.log("Handling initiative result:", resultGroup);
+
+    // Extract the results from the initiative result group
+    const operands = resultGroup.result.operands;
+
+    let totalInitiative = 0;
+    
+    // Loop through each operand to compute the total initiative value
+    for (const operand of operands) {
+        if (operand.kind === "d20" && operand.results) {
+            // Sum up the d20 results
+            totalInitiative += operand.results.reduce((sum, roll) => sum + roll, 0);
+        } else if (operand.value) {
+            // Add static values
+            totalInitiative += operand.value;
+        }
+    }
+
+    // Output or process the total initiative value
+    console.log("Total Initiative Value:", totalInitiative);
+
+    sendDMInitiativeResults(totalInitiative)
+}

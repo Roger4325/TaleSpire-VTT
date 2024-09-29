@@ -511,6 +511,12 @@ async function handleRollResult(rollEvent) {
 
 async function displayResult(resultGroups, rollId) {
     console.log(resultGroups)
+
+    for (const resultGroup of resultGroups) {
+        if (resultGroup.name.trim().toLowerCase() === "initiative") {
+            handleInitiativeResult(resultGroup); // Call the function for initiative results
+        }
+    }
     try {
         // Send all result groups together in one call
         await TS.dice.sendDiceResult(resultGroups, rollId);

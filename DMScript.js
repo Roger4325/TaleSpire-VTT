@@ -31,6 +31,7 @@ const messageHandlers = {
     'request-stats': handleRequestedStats,
     'update-health': handleUpdatePlayerHealth,
     'apply-damage': handleApplyMonsterDamage,
+    'update-init' : handleUpdatePlayerInitiative,
     // Add more as needed
 };
 
@@ -1500,4 +1501,28 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
     const { damage } = parsedMessage.data;
 
     // Apply damage to the player's character sheet, or whatever logic you need
+}
+
+function handleUpdatePlayerInitiative (parsedMessage, fromClient){
+
+    console.log(parsedMessage)
+    const playerInit = parsedMessage.data.Initiative; 
+    const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
+
+    // Get all the player cards from the DOM
+    const playerCards = document.querySelectorAll('.player-card');
+
+    console.log(playerInit)
+
+    // Loop through all the player cards and update the matching one
+    playerCards.forEach(card => {
+        // Assuming you've stored the player's ID in the card's dataset
+        const cardPlayerId = card.dataset.playerId; 
+
+        // If the card's player ID matches the fromClient ID, update the card
+        if (cardPlayerId === playerId) {
+            const playerInit = card.querySelector('.monster-init') // Reuse your existing updatePlayerCard function
+            playerInit.input.textContent = 10
+        }
+    });
 }
