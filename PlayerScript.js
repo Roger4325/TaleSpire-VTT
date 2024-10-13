@@ -3182,6 +3182,13 @@ function filterSpellsByLevel(selectedLevel) {
 
 
 //Player character inventory section start
+let itemList = [
+    { name: "Potion of Healing", weight: 0.5, cost: 50, notes: "Heals 2d4+2", type: "consumable" },
+    { name: "Crossbow, Light", weight: 5, cost: 25, notes: "Range 80/320", type: "weapon" },
+    { name: "Rapier", weight: 2, cost: 25, notes: "Finesse", type: "weapon" },
+    { name: "Arrows", weight: 0.1, cost: 1, notes: "Ammunition", type: "ammo" }
+    // Add more items as needed
+  ];
 
 let inventory = [
     {
@@ -3202,40 +3209,40 @@ let inventory = [
     }
   ];
   
-  function updateWeight() {
+function updateWeight() {
     let totalWeight = 0;
     inventory.forEach(item => {
-      totalWeight += item.weight * item.quantity;
+        totalWeight += item.weight * item.quantity;
     });
     document.getElementById('weight-carried').innerText = totalWeight;
-    // Update weight status based on carried weight logic
-  }
+}
   
-  function addItemToInventory(item, group) {
+// Function to add item to the correct inventory group
+function addItemToInventory(item, group) {
     const list = document.getElementById(`${group}-list`);
-    
+
     let itemDiv = document.createElement('div');
     itemDiv.classList.add('inventory-item');
-  
+
     itemDiv.innerHTML = `
-      <input type="checkbox" class="equip-toggle">
-      <span class="item-name">${item.name}</span>
-      <span class="item-weight">${item.weight} lbs.</span>
-      <input type="number" class="item-quantity" value="${item.quantity}" min="1">
-      <span class="item-cost">${item.cost} gp</span>
-      <span class="item-notes">${item.notes}</span>
+    <input type="checkbox" class="equip-toggle">
+    <span class="item-name">${item.name}</span>
+    <span class="item-weight">${item.weight} lbs.</span>
+    <input type="number" class="item-quantity" value="1" min="1">
+    <span class="item-cost">${item.cost} gp</span>
+    <span class="item-notes">${item.notes}</span>
     `;
-  
+
     list.appendChild(itemDiv);
-  
+
     // Add event listener for quantity change
     itemDiv.querySelector('.item-quantity').addEventListener('input', (e) => {
-      item.quantity = parseInt(e.target.value, 10);
-      updateWeight();
-    });
-  
+    item.quantity = parseInt(e.target.value, 10);
     updateWeight();
-  }
+    });
+
+    updateWeight();
+}
   
   // Load inventory items
   inventory.forEach(item => {
@@ -3243,8 +3250,72 @@ let inventory = [
   });
   
   
+  function populateItemDropdown(filter = "") {
+    let itemSelect = document.getElementById('item-select');
+    itemSelect.innerHTML = ""; // Clear existing items
+  
+    // Filter items based on the search
+    let filteredItems = itemList.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
+  
+    // Populate dropdown with filtered items
+    filteredItems.forEach(item => {
+      let option = document.createElement('option');
+      option.value = item.name;
+      option.textContent = item.name;
+      itemSelect.appendChild(option);
+    });
+  }
+  
+  // Open modal to add item
+  document.getElementById('add-item-button').addEventListener('click', function() {
+    populateItemDropdown(); // Populate the item list when the modal opens
+    document.getElementById('add-item-modal').style.display = 'block';
+  });
+  
+  // Close modal
+  document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('add-item-modal').style.display = 'none';
+  });
+  
+  // Filter items as the user types
+  document.getElementById('item-search').addEventListener('input', function() {
+    let filter = document.getElementById('item-search').value;
+    populateItemDropdown(filter); // Update dropdown based on the search
+  });
+  
+  // Confirm adding the item to inventory
+  document.getElementById('confirm-add-item').addEventListener('click', function() {
+    let selectedItemName = document.getElementById('item-select').value;
+    let selectedBag = document.getElementById('bag-select').value;
+
+    console.log(selectedBag)
+  
+    let selectedItem = itemList.find(item => item.name === selectedItemName);
+  
+    if (selectedItem) {
+      addItemToInventory(selectedItem, selectedBag);
+      document.getElementById('add-item-modal').style.display = 'none'; // Close modal after adding
+    }
+  });
 
 
+  
+
+const inventoryHeaders = document.querySelectorAll('.inventory-group h3');
+
+// Loop through each header and add a click event listener
+inventoryHeaders.forEach(header => {
+  header.addEventListener('click', () => {
+    // Toggle visibility of the next sibling (the inventory list)
+    const content = header.nextElementSibling;
+    
+    // Toggle hidden class on the content
+    content.classList.toggle('hidden');
+    
+    // Toggle active class on the header itself for styling
+    header.classList.toggle('active');
+  });
+});
 
 
 

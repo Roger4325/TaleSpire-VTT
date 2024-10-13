@@ -1,7 +1,8 @@
 
-/*TESTING SECTION*/
-
-/* Styling for the toggle buttons */
+#Init > hr{
+    margin-top: 0px;
+    margin-bottom: 8px;
+}
 
 .monster-group-header-01{
     display: grid;
@@ -9,6 +10,7 @@
     gap: 5px;
     margin-bottom: 5px;
 }
+
 .monster-group-header-02{
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -72,7 +74,6 @@
 .condition-pill, .condition-pill button{
     font-size: 10px;
 }
-
 
 
 
@@ -402,6 +403,12 @@
 
 
 
+
+
+.current-turn {
+    border: 3px solid rgb(252, 222, 56); /* Golden border */
+    background-color: rgba(252, 222, 56, 0.2); /* Soft golden background */
+}
 
 
 

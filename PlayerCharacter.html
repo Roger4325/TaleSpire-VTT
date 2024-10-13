@@ -187,6 +187,7 @@
                             <option value="Sanctuary">Sanctuary</option>
                             <option value="Stunned">Stunned</option>
                             <option value="Unconscious">Unconscious</option>
+                            <option value="Slow">Slow</option>
                         <!-- Add more condition options here -->
                         </select>
                         <button class="nonRollButton" onclick="playerConditions()">Condition</button>
@@ -810,7 +811,12 @@
             <!-- Repeat for other spell levels -->
         </section>
 
+
+
+
+        
         <section id="inventory">
+            <button id="add-item-button" class="nonRollButton">Add New Item</button>
             <div id="inventory-container">
                 <div id="inventory-header">
                 <h2>Inventory</h2>
@@ -818,34 +824,50 @@
                 </div>
             
                 <div class="inventory-group" id="equipment">
-                <h3>Equipment</h3>
+                <h3>Equipment<i class="fa fa-chevron-down"></i></h3>
                 <div id="equipment-list"></div>
                 </div>
             
                 <div class="inventory-group" id="backpack">
-                <h3>Backpack</h3>
+                <h3>Backpack<i class="fa fa-chevron-down"></i></h3>
                 <div id="backpack-list"></div>
                 </div>
             
                 <div class="inventory-group" id="attunement">
-                <h3>Attunement</h3>
+                <h3>Attunement<i class="fa fa-chevron-down"></i></h3>
                 <div id="attunement-list"></div>
                 </div>
             
                 <div class="inventory-group" id="other-possessions">
-                <h3>Other Possessions</h3>
-                <div id="other-list"></div>
+                <h3>Other Possessions<i class="fa fa-chevron-down"></i></h3>
+                <div id="other-possessions-list"></div>
                 </div>
             </div>
 
-            <div class="inventory-item">
-                <input type="checkbox" class="equip-toggle" /> 
-                <span class="item-name">Item Name</span>
-                <span class="item-weight">1.5 lbs.</span>
-                <input type="number" class="item-quantity" value="1" min="1" />
-                <span class="item-cost">10 gp</span>
-                <span class="item-notes">Notes...</span>
-              </div>
+            <!-- Modal for Adding Items -->
+            <div id="add-item-modal" class="inventory-modal" style="display:none;">
+                <div class="inventory-modal-content">
+                    <h3>Add New Inventory Item</h3>
+                
+                    <!-- Searchable Dropdown for Items -->
+                    <label for="item-select">Select Item:</label>
+                    <input type="text" id="item-search" placeholder="Search for an item..." />
+                    <select id="item-select" size="5"></select>
+                
+                    <!-- Bag Selection -->
+                    <label for="bag-select">Select Bag:</label>
+                    <select id="bag-select">
+                        <option value="equipment">Equipment</option>
+                        <option value="backpack">Backpack</option>
+                        <option value="attunement">Attunement</option>
+                        <option value="other-possessions">Other Possessions</option>
+                    </select>
+                
+                    <!-- Confirm Button -->
+                    <button id="confirm-add-item">Add Item</button>
+                    <button id="close-modal">Cancel</button>
+                </div>
+            </div>
           
         </section>
 

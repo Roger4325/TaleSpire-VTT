@@ -1,14 +1,14 @@
 {
     "characters": {
         "Mira": {
-            "characterTempHp": "",
+            "characterTempHp": "0",
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
             "characterLevel": "6",
             "playerXP": "14000",
-            "currentCharacterHP": "56",
-            "maxCharacterHP": "56",
+            "currentCharacterHP": "66",
+            "maxCharacterHP": "66",
             "strengthScore": "8",
             "dexterityScore": "14",
             "constitutionScore": "16",
@@ -81,11 +81,33 @@
                             "other": false
                         }
                     }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Twilight Sanctuary",
+                        "thirdColumn": "New Text",
+                        "fourthColumn": "+10",
+                        "fifthColumn": "1d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Temp Hp",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
                 }
             ],
             "spellData": {
                 "spellcastingModifier": "WIS",
-                "spelllevelselected": "3",
+                "spelllevelselected": "4",
                 "spellmagicbonus": "1",
                 "Cantrip": {
                     "spells": [
@@ -126,9 +148,6 @@
                         },
                         {
                             "name": "Sleep"
-                        },
-                        {
-                            "name": "Ice Knife*"
                         }
                     ],
                     "slots": [
@@ -157,10 +176,13 @@
                         },
                         {
                             "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false,
                         false
                     ]
@@ -171,24 +193,39 @@
                             "name": "Beacon of Hope"
                         },
                         {
-                            "name": "Create Food and Water"
-                        },
-                        {
-                            "name": "Sending"
-                        },
-                        {
                             "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
                         }
                     ],
                     "slots": [
-                        true,
+                        false,
                         false,
                         false
                     ]
                 },
                 "4th-level": {
-                    "spells": [],
-                    "slots": []
+                    "spells": [
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        }
+                    ],
+                    "slots": [
+                        false
+                    ]
                 },
                 "5th-level": {
                     "spells": [],
@@ -844,6 +881,38 @@
                 "maxHp": "22",
                 "tempHp": "0",
                 "conditions": []
+            }
+        ],
+        "Testing": [
+            {
+                "init": "0",
+                "name": "Wraith (A)",
+                "currentHp": "67",
+                "maxHp": "67",
+                "tempHp": "0",
+                "conditions": [
+                    "Blinded"
+                ]
+            },
+            {
+                "init": "0",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": [
+                    "Charmed"
+                ]
+            },
+            {
+                "init": "0",
+                "name": "Wraith (B)",
+                "currentHp": "67",
+                "maxHp": "67",
+                "tempHp": "0",
+                "conditions": [
+                    "Deafened"
+                ]
             }
         ]
     }

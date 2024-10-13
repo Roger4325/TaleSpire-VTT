@@ -125,6 +125,13 @@ document.getElementById('rollInitiative').addEventListener('click', () => {
 
 
 
+let currentTurnIndex = 0; // Track the current turn
+let roundCounter = 1; // Track rounds
+document.getElementById('next-turn-btn').addEventListener('click', nextTurn);
+document.getElementById('previous-turn-btn').addEventListener('click', previousTurn);
+makeRoundEditable() //Adding an event listener to the round counter to allow editing the round. 
+
+
 function activateMonsterCard(card){
     if (activeMonsterCard) {
         activeMonsterCard.style.borderColor = ''; // Reset to default border color
@@ -665,29 +672,6 @@ function populateMonsterListField(elementId, items, type) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Event listener for adding a new empty player card
 document.getElementById('add-player-button').addEventListener('click', async function() {
     await fetchAndCreatePlayerCards()
@@ -984,11 +968,104 @@ function reorderCards() {
     cards.forEach(card => {
         tracker.appendChild(card);
     });
+
+    currentTurnIndex = 0;
+    highlightCurrentTurn();
 }
 
 
 
 
+
+// Function to highlight the current card
+function highlightCurrentTurn() {
+    const tracker = document.getElementById("initiative-tracker");
+
+    // Remove 'current-turn' from all cards
+    const allCards = tracker.querySelectorAll(".monster-card, .player-card");
+    allCards.forEach(card => {
+        card.classList.remove('current-turn');
+    });
+
+    // Add 'current-turn' to the active card
+    const currentCard = tracker.querySelectorAll(".monster-card, .player-card")[currentTurnIndex];
+    if (currentCard) {
+        currentCard.classList.add('current-turn');
+    }
+}
+
+// Function to update the round display
+function updateRoundDisplay() {
+    const roundDisplay = document.getElementById('round-counter');
+    roundDisplay.textContent = `Round: ${roundCounter}`;
+}
+
+
+// Function to advance to the next turn
+function nextTurn() {
+    const tracker = document.getElementById("initiative-tracker");
+    const cards = tracker.querySelectorAll(".monster-card, .player-card");
+
+    // Increment the turn index
+    currentTurnIndex++;
+
+    // If the index goes beyond the last card, reset to the first card and increment the round counter
+    if (currentTurnIndex >= cards.length) {
+        currentTurnIndex = 0; // Reset to the first card
+        roundCounter++; // Increment the round
+        updateRoundDisplay(); // Update the round counter
+    }
+
+    highlightCurrentTurn(); // Highlight the current card
+}
+
+function previousTurn() {
+    const tracker = document.getElementById("initiative-tracker");
+    const cards = tracker.querySelectorAll(".monster-card, .player-card");
+
+    // Increment the turn index
+    currentTurnIndex--;
+
+    if (currentTurnIndex < 0) {
+        currentTurnIndex = 0; // Reset to the first card
+    }
+    else{
+        highlightCurrentTurn(); // Highlight the current card
+    }
+
+    
+}
+
+function makeRoundEditable() {
+    const roundElement = document.getElementById('round-counter');
+
+    roundElement.addEventListener('blur', function (event) {
+        let currentText = roundElement.textContent;
+
+        // Remove non-numeric characters (except for the "Round: " text)
+        const numericValue = currentText.replace(/[^0-9]/g, '');
+
+        // Only update if the value is a valid positive number or empty (to avoid invalid input)
+        if (numericValue !== '' && !isNaN(numericValue)) {
+            roundElement.textContent = `Round: ${numericValue}`;
+            roundCounter = parseInt(numericValue, 10); // Update the round counter variable
+        } else {
+            // Restore the last valid round number if invalid input
+            roundElement.textContent = `Round: ${roundCounter}`;
+        }
+    });
+
+    
+
+    // Ensure the round starts with a valid value
+    roundElement.textContent = `Round: ${roundCounter}`;
+
+    roundElement.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            roundElement.blur(); // Blur the element when Enter is pressed
+        }
+    });
+}
 
 
 
@@ -1565,3 +1642,5 @@ function handleUpdatePlayerInitiative (parsedMessage, fromClient){
         }
     });
 }
+
+

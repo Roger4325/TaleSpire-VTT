@@ -1417,4 +1417,57 @@ select{
   input[type="checkbox"] {
     cursor: pointer;
   }
+
   
+  .inventory-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    background-color: #1a1a1a;
+    color: white;
+    border-radius: 8px;
+    padding: 20px;
+    z-index: 1000;
+    display: none;
+  }
+  
+  .inventory-modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #item-search, #item-select, #bag-select {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 5px;
+    font-size: 14px;
+  }
+  
+  #confirm-add-item, #close-modal {
+    margin-top: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+
+
+  .inventory-group h3 {
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .inventory-group h3 i {
+    font-size: 14px;
+    transition: transform 0.2s ease;
+  }
+  
+  .inventory-group h3.active i {
+    transform: rotate(-90deg);
+  }
+
+  .inventory-group .hidden {
+    display: none;
+  }

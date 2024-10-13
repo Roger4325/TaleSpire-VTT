@@ -120,7 +120,7 @@
             </div>
             <div class ="monster-group-header-01">
                 <button id="add-monster-button" class="nonRollButton">Add Monster</button>
-                <button id="add-player-button" class="nonRollButton">Add Player Character</button>
+                <button id="add-player-button" class="nonRollButton">Add Player</button>
                 <button id="save-encounter" class="nonRollButton">Save Encounter</button>
                 <button id="load-encounter" class="nonRollButton">Load Encounter</button>                
             </div>
@@ -156,6 +156,7 @@
                         <option value="Sanctuary">Sanctuary</option>
                         <option value="Stunned">Stunned</option>
                         <option value="Unconscious">Unconscious</option>
+                        <option value="Slow">Slow</option>
                     <!-- Add more condition options here -->
                     </select>
                     <button class="nonRollButton" onclick="monsterConditions()">Add Condition</button>
@@ -164,6 +165,9 @@
             </div>
             <hr>
             <button class="nonRollButton" id="rollInitiative">Auto Roll</button>
+            <button class="nonRollButton" id="previous-turn-btn">Previous Turn</button>
+            <button class="nonRollButton" id="next-turn-btn">Next Turn</button>
+            <h2 id="round-counter" contenteditable="true">Round: 1</h2>
             <div id="initiative-tracker">
                 
                 <!-- Monster cards will be added here dynamically -->
