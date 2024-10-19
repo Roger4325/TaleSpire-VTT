@@ -516,7 +516,7 @@ function populateField(elementId, label, value, isRollable = false) {
         if (isRollable) {
             // Use parseAndReplaceDice to handle rollable text
             element.innerHTML = ''; // Clear the element content
-            const parsedContent = parseAndReplaceDice({ name: label }, value);
+            const parsedContent = parseAndReplaceDice({ name: label }, value, true);
             const labelNode = document.createElement('span');
             labelNode.innerHTML = labelText;
             element.appendChild(labelNode);
@@ -603,7 +603,7 @@ function populateMonsterListField(elementId, items, type) {
                     case 'traits':
                     case 'action':
                     case 'legendaryAction':
-                        itemContent = parseAndReplaceDice({ name: item.Name }, `<strong>${item.Name}: </strong>${item.Content}`);
+                        itemContent = parseAndReplaceDice({ name: item.Name }, `<strong>${item.Name}: </strong>${item.Content}`, true);
                         break;
                     case 'savingThrow':
                         const savemodifier = parseInt(item.Modifier) >= 0 ? `+${item.Modifier}` : item.Modifier;
@@ -646,7 +646,7 @@ function populateMonsterListField(elementId, items, type) {
                 scoreElement.appendChild(document.createTextNode(`${abilityScore} `));
         
                 // Use the parseAndReplaceDice function to make the modifier rollable, and append it
-                const rollableModifier = parseAndReplaceDice({ name: key }, modifierText);
+                const rollableModifier = parseAndReplaceDice({ name: key }, modifierText, true);
                 scoreElement.appendChild(rollableModifier); // Appends the actual button or label returned by the function
         
                 container.appendChild(scoreElement); // Append the entire scoreElement to the container

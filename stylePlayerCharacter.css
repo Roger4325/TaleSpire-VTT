@@ -1377,97 +1377,102 @@ select{
     padding: 20px;
     border-radius: 10px;
     font-family: Arial, sans-serif;
-  }
-  
-  .inventory-group {
+}
+
+.inventory-group {
     margin-top: 20px;
-  }
-  
-  .inventory-item {
+}
+
+.inventory-item {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr 1fr 1fr 2fr;
+    grid-template-columns: .2fr 2fr 1.2fr .7fr .9fr 2.2fr .05fr;
     align-items: center;
-    padding: 10px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #333;
-  }
-  
-  .inventory-item span,
-  .inventory-item input {
-    margin: 0 10px;
-    font-size: 14px;
-  }
-  
-  .equip-toggle {
-    margin-right: 10px;
-  }
-  
-  h3 {
-    border-bottom: 1px solid #666;
-    padding-bottom: 5px;
-  }
-  
-  input[type="number"] {
-    width: 50px;
-    background: #333;
-    color: white;
-    border: none;
-    text-align: center;
-  }
-  
-  input[type="checkbox"] {
-    cursor: pointer;
-  }
+}
 
-  
-  .inventory-modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 400px;
-    background-color: #1a1a1a;
-    color: white;
-    border-radius: 8px;
-    padding: 20px;
-    z-index: 1000;
-    display: none;
-  }
-  
-  .inventory-modal-content {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #item-search, #item-select, #bag-select {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    padding: 5px;
-    font-size: 14px;
-  }
-  
-  #confirm-add-item, #close-modal {
-    margin-top: 20px;
-    padding: 8px 12px;
-    cursor: pointer;
-  }
+.inventory-item span,
+.inventory-item input {
+margin: 0 5px;
+font-size: 14px;
+}
+
+.item-weight {
+    display: inline-block; /* or inline-block if you need some control over spacing */
+    margin-left: 5px; /* Optional: Add some spacing between weight and other elements */
+}
+
+.equip-toggle {
+margin-right: 5px;
+}
+
+h3 {
+border-bottom: 1px solid #666;
+padding-bottom: 5px;
+}
+
+input[type="number"] {
+width: 35px;
+background: #333;
+color: white;
+border: none;
+text-align: center;
+}
+
+input[type="checkbox"] {
+cursor: pointer;
+}
 
 
-  .inventory-group h3 {
-    cursor: pointer;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .inventory-group h3 i {
-    font-size: 14px;
-    transition: transform 0.2s ease;
-  }
-  
-  .inventory-group h3.active i {
-    transform: rotate(-90deg);
-  }
+.inventory-modal {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 400px;
+background-color: #1a1a1a;
+color: white;
+border-radius: 8px;
+padding: 20px;
+z-index: 1000;
+display: none;
+}
 
-  .inventory-group .hidden {
-    display: none;
-  }
+.inventory-modal-content {
+display: flex;
+flex-direction: column;
+}
+
+#item-search, #item-select, #bag-select {
+margin-top: 10px;
+margin-bottom: 10px;
+padding: 5px;
+font-size: 14px;
+}
+
+#confirm-add-item, #close-modal {
+margin-top: 20px;
+padding: 8px 12px;
+cursor: pointer;
+}
+
+
+.inventory-group h3 {
+cursor: pointer;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.inventory-group h3 i {
+font-size: 14px;
+transition: transform 0.2s ease;
+}
+
+.inventory-group h3.active i {
+transform: rotate(-90deg);
+}
+
+.inventory-group .hidden {
+display: none;
+}

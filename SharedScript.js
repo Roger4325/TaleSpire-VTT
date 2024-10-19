@@ -56,6 +56,7 @@ function generateUUID() {
 const AppData = {
     spellLookupInfo: null,
     monsterLookupInfo:null,
+    equipmentLookupInfo:null,
 };
 
 
@@ -161,6 +162,9 @@ async function onInit() {
     //Initialize spell List
     AppData.spellLookupInfo = await readSpellJson();
     AppData.monsterLookupInfo = await readMonsterJsonList();
+    AppData.equipmentLookupInfo = await readEquipmentJson();
+
+    console.log(AppData.equipmentLookupInfo)
 
     const owner = await TS.clients.whoAmI();  
     const ownerInfoArray = await TS.clients.getMoreInfo([owner.id]);
@@ -179,7 +183,7 @@ async function onInit() {
 
 }
 
-function parseAndReplaceDice(action, text) {
+function parseAndReplaceDice(action, text, spell) {
     const diceRegex = /(\d+d\d+\s*(?:[+-]\s*\d+)?)|([+-]\s*\d+)/g;
 
     // Create a temporary container to parse the HTML and text
@@ -224,54 +228,58 @@ function parseAndReplaceDice(action, text) {
                 } else {
                     // Check for spell names within the part
                     let remainingText = part;
+                    if(spell){
+                        AppData.spellLookupInfo?.spellsData.forEach(spell => {
+                            const spellName = spell.name;
+                            const spellIndex = remainingText.toLowerCase().indexOf(spellName.toLowerCase());
+    
+                            if (spellIndex !== -1) {
+                                // If a spell name is found, split the text and insert the hoverable element for the spell
+                                const beforeSpell = remainingText.slice(0, spellIndex);
+                                const afterSpell = remainingText.slice(spellIndex + spellName.length);
+    
+                                // Add the text before the spell name
+                                if (beforeSpell) container.appendChild(document.createTextNode(beforeSpell));
+    
+                                // Create and append the spell element
+                                const spellElement = document.createElement('span');
+                                spellElement.classList.add('spell-hover');
+                                spellElement.style.textDecoration = 'underline';
+                                spellElement.textContent = spellName;
+    
+                                // Store the description in a data attribute for the custom tooltip
+                                spellElement.setAttribute('data-desc', spell.desc);
+    
+                                // Timer to delay showing the tooltip
+                                let hoverTimer;
+    
+                                // Add event listeners for hover
+                                spellElement.addEventListener('mouseenter', () => {
+                                    hoverTimer = setTimeout(() => {
+                                        spellElement.classList.add('show-tooltip');
+                                    }, 250); // Adjust the delay time (in milliseconds) as needed
+                                });
+    
+                                spellElement.addEventListener('mouseleave', () => {
+                                    clearTimeout(hoverTimer); // Clear the timer when leaving hover
+                                    spellElement.classList.remove('show-tooltip');
+                                });
+    
+                                container.appendChild(spellElement);
+    
+                                // Update the remaining text to process
+                                remainingText = afterSpell;
+                            }
+                        });
+    
+                        
 
-                    AppData.spellLookupInfo?.spellsData.forEach(spell => {
-                        const spellName = spell.name;
-                        const spellIndex = remainingText.toLowerCase().indexOf(spellName.toLowerCase());
-
-                        if (spellIndex !== -1) {
-                            // If a spell name is found, split the text and insert the hoverable element for the spell
-                            const beforeSpell = remainingText.slice(0, spellIndex);
-                            const afterSpell = remainingText.slice(spellIndex + spellName.length);
-
-                            // Add the text before the spell name
-                            if (beforeSpell) container.appendChild(document.createTextNode(beforeSpell));
-
-                            // Create and append the spell element
-                            const spellElement = document.createElement('span');
-                            spellElement.classList.add('spell-hover');
-                            spellElement.style.textDecoration = 'underline';
-                            spellElement.textContent = spellName;
-
-                            // Store the description in a data attribute for the custom tooltip
-                            spellElement.setAttribute('data-desc', spell.desc);
-
-                            // Timer to delay showing the tooltip
-                            let hoverTimer;
-
-                            // Add event listeners for hover
-                            spellElement.addEventListener('mouseenter', () => {
-                                hoverTimer = setTimeout(() => {
-                                    spellElement.classList.add('show-tooltip');
-                                }, 250); // Adjust the delay time (in milliseconds) as needed
-                            });
-
-                            spellElement.addEventListener('mouseleave', () => {
-                                clearTimeout(hoverTimer); // Clear the timer when leaving hover
-                                spellElement.classList.remove('show-tooltip');
-                            });
-
-                            container.appendChild(spellElement);
-
-                            // Update the remaining text to process
-                            remainingText = afterSpell;
-                        }
-                    });
-
+                    }
                     // Add the remaining text after the spell name (if any)
                     if (remainingText) {
                         container.appendChild(document.createTextNode(remainingText));
                     }
+                   
                 }
             }
         } else {
@@ -877,4 +885,53 @@ async function readMonsterJsonList() {
         console.error('Error loading data:', error);
         return null;
     }     
+}
+
+
+// read the JSON file equipment.json and save the data and names to variables
+// this function also get's all equipment saved to the global storage and creates one object out of both set's of information. 
+// this is done to allow the system to quickly access all the data in one place rather than fetching it everytime. 
+// any time new equipment is called this will need to be updated to include all the new items. 
+async function readEquipmentJson() {
+    try {
+        // Load data from global storage
+        const allequipmentData = await loadDataFromGlobalStorage("equipment"); 
+        const isGlobalDataAnObject = typeof allequipmentData === 'object';
+
+        // Fetch the data from the JSON file
+        const response = await fetch('equipment.json');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const equipmentData = await response.json();
+
+        let combinedData;
+
+        // If global data is an object, convert it into an array
+        if (isGlobalDataAnObject) {
+            combinedData = Object.values(allequipmentData);
+        } else {
+            combinedData = allequipmentData || [];
+        }
+
+        // Combine the data from global storage and the JSON file
+        combinedData = [...combinedData, ...equipmentData];
+
+        // Set the combined data to AppData.equipmentLookupInfo
+        AppData.equipmentLookupInfo = combinedData;
+
+        // Extract equipment names (if needed)
+        const equipmentNames = combinedData.map(item => item.name);
+        console.log('Equipment data loaded successfully:', AppData.equipmentLookupInfo);
+
+        // Optionally return combined data and equipment names
+        return {
+            equipmentNames: equipmentNames,
+            equipmentData: combinedData
+        };
+
+    } catch (error) {
+        console.error('Error loading equipment data:', error);
+        return null;
+    }
 }

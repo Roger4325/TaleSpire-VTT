@@ -1218,6 +1218,9 @@ function getAllEditableContent() {
     const spellData = processSpellData();
     content['spellData'] = spellData;
 
+    const inventoryData = saveInventory()
+    content['inventoryData'] = inventoryData
+
     // Save group and trait data
     const groupTraitData = processGroupTraitData();
     content['groupTraitData'] = groupTraitData;
@@ -1355,7 +1358,6 @@ inputElements.forEach((element) => {
 });
 
 
-
 function updateCharacterUI(characterData, characterName) {
     const characterNameElement = document.getElementById("playerCharacterInput");
     const characterTempHpElement = document.getElementById("tempHP");
@@ -1395,6 +1397,7 @@ function updateCharacterUI(characterData, characterName) {
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
     loadSpellData(characterData.spellData);
+    loadInventoryData(characterData.inventoryData);
     loadGroupTraitData(characterData.groupTraitData)
 
 }
@@ -3188,115 +3191,151 @@ let itemList = [
     { name: "Rapier", weight: 2, cost: 25, notes: "Finesse", type: "weapon" },
     { name: "Arrows", weight: 0.1, cost: 1, notes: "Ammunition", type: "ammo" }
     // Add more items as needed
-  ];
-
-let inventory = [
-    {
-      name: "Potion of Healing",
-      weight: 0.5,
-      quantity: 2,
-      cost: 50,
-      type: "consumable",
-      notes: "Heals 2d4+2"
-    },
-    {
-      name: "Crossbow, Light",
-      weight: 5,
-      quantity: 1,
-      cost: 25,
-      type: "weapon",
-      notes: "Range 80/320"
-    }
-  ];
+];
   
-function updateWeight() {
+  function updateWeight() {
     let totalWeight = 0;
-    inventory.forEach(item => {
-        totalWeight += item.weight * item.quantity;
+
+    // Select all inventory groups
+    const inventoryGroups = document.querySelectorAll('.inventory-group');
+
+    // Loop through each group
+    inventoryGroups.forEach(group => {
+        // Select all items within the current group
+        const items = group.querySelectorAll('.inventory-item');
+
+        // Loop through each item in the group
+        items.forEach(item => {
+            // Get the weight and quantity of the item
+            const weight = parseFloat(item.querySelector('.item-weight').innerText); // Convert weight from string to float
+
+            // Update total weight
+            totalWeight += weight;
+        });
     });
-    document.getElementById('weight-carried').innerText = totalWeight;
+
+    // Update the weight displayed on the page
+    document.getElementById('weight-carried').innerText = totalWeight.toFixed(2); // Display to 2 decimal places
 }
   
-// Function to add item to the correct inventory group
 function addItemToInventory(item, group) {
     const list = document.getElementById(`${group}-list`);
 
     let itemDiv = document.createElement('div');
     itemDiv.classList.add('inventory-item');
 
+    // Set quantity to the provided value or default to 1
+    const itemQuantity = item.quantity > 0 ? item.quantity : 1; // Use provided quantity or default to 1
+
+    // Check for notes and format appropriately
+    const notes = item.damage ? `Damage: ${item.damage.damage_dice}, ${item.damage.damage_type.name}` : (item.properties ? item.properties.map(p => p.name).join(', ') : ''); 
+
     itemDiv.innerHTML = `
-    <input type="checkbox" class="equip-toggle">
+    <input type="checkbox" class="equip-toggle" ${item.equipped ? 'checked' : ''}>
     <span class="item-name">${item.name}</span>
-    <span class="item-weight">${item.weight} lbs.</span>
-    <input type="number" class="item-quantity" value="1" min="1">
-    <span class="item-cost">${item.cost} gp</span>
-    <span class="item-notes">${item.notes}</span>
+    <span class="item-weight">${item.weight || 0} lbs.</span>
+    <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
+    <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>
+    <span class="item-notes"></span> <!-- Placeholder for notes -->
+    <span><button class="delete-item-button nonRollButton">X</button></span>
     `;
 
+    // Append the itemDiv to the list
     list.appendChild(itemDiv);
+
+    // Call parseAndReplaceDice for item notes
+    const notesContainer = itemDiv.querySelector('.item-notes');
+    notesContainer.appendChild(parseAndReplaceDice(item, notes)); // Update this line
+
+    function updateItemWeight() {
+        const quantity = parseInt(itemDiv.querySelector('.item-quantity').value, 10);
+        const totalWeight = (item.weight * quantity).toFixed(1); // Calculate total weight
+        const weightDisplay = itemDiv.querySelector('.item-weight');
+
+        if (weightDisplay) { // Ensure the element exists before updating
+            weightDisplay.innerText = `${totalWeight} lbs.`; // Update weight display based on quantity
+        }
+    }
 
     // Add event listener for quantity change
     itemDiv.querySelector('.item-quantity').addEventListener('input', (e) => {
-    item.quantity = parseInt(e.target.value, 10);
-    updateWeight();
+        item.quantity = parseInt(e.target.value, 10);
+        updateItemWeight();
+        updateWeight();
+        updateContent(); // Save inventory changes
     });
 
+    // Add event listener for equip toggle
+    itemDiv.querySelector('.equip-toggle').addEventListener('change', (e) => {
+        item.equipped = e.target.checked;
+        updateContent(); // Save inventory changes
+    });
+
+    // Add event listener for delete button
+    itemDiv.querySelector('.delete-item-button').addEventListener('click', () => {
+        list.removeChild(itemDiv); // Remove the item from the list
+        updateWeight(); // Update the total weight
+        updateContent(); // Save inventory changes
+    });
+
+    rollableButtons(); // Add Event Listeners to all buttons
+    updateContent(); // Save inventory changes
+    updateItemWeight(); // Initial weight calculation
     updateWeight();
 }
+
+
   
-  // Load inventory items
-  inventory.forEach(item => {
-    addItemToInventory(item, 'equipment');
-  });
-  
-  
-  function populateItemDropdown(filter = "") {
+function populateItemDropdown(filter = "") {
     let itemSelect = document.getElementById('item-select');
     itemSelect.innerHTML = ""; // Clear existing items
-  
+
     // Filter items based on the search
-    let filteredItems = itemList.filter(item => item.name.toLowerCase().includes(filter.toLowerCase()));
-  
-    // Populate dropdown with filtered items
-    filteredItems.forEach(item => {
-      let option = document.createElement('option');
-      option.value = item.name;
-      option.textContent = item.name;
-      itemSelect.appendChild(option);
+    let filteredItems = AppData.equipmentLookupInfo.equipmentNames
+        .filter(name => name.toLowerCase().includes(filter.toLowerCase()))
+        .sort((a, b) => a.localeCompare(b)); // Sort alphabetically
+
+
+    // Populate dropdown with filtered item names
+    filteredItems.forEach(name => {
+        let option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        itemSelect.appendChild(option);
     });
-  }
+}
+
   
-  // Open modal to add item
-  document.getElementById('add-item-button').addEventListener('click', function() {
+// Open modal to add item
+document.getElementById('add-item-button').addEventListener('click', function() {
     populateItemDropdown(); // Populate the item list when the modal opens
     document.getElementById('add-item-modal').style.display = 'block';
-  });
-  
-  // Close modal
-  document.getElementById('close-modal').addEventListener('click', function() {
+});
+
+// Close modal
+document.getElementById('close-modal').addEventListener('click', function() {
     document.getElementById('add-item-modal').style.display = 'none';
-  });
-  
-  // Filter items as the user types
-  document.getElementById('item-search').addEventListener('input', function() {
+});
+
+// Filter items as the user types
+document.getElementById('item-search').addEventListener('input', function() {
     let filter = document.getElementById('item-search').value;
     populateItemDropdown(filter); // Update dropdown based on the search
-  });
-  
-  // Confirm adding the item to inventory
-  document.getElementById('confirm-add-item').addEventListener('click', function() {
+});
+
+// Confirm adding the item to inventory
+document.getElementById('confirm-add-item').addEventListener('click', function() {
     let selectedItemName = document.getElementById('item-select').value;
     let selectedBag = document.getElementById('bag-select').value;
 
-    console.log(selectedBag)
-  
-    let selectedItem = itemList.find(item => item.name === selectedItemName);
-  
+    // Find the selected item in the equipment lookup info
+    let selectedItem = AppData.equipmentLookupInfo.equipmentData.find(item => item.name === selectedItemName);
+
     if (selectedItem) {
-      addItemToInventory(selectedItem, selectedBag);
-      document.getElementById('add-item-modal').style.display = 'none'; // Close modal after adding
+        addItemToInventory(selectedItem, selectedBag);
+        document.getElementById('add-item-modal').style.display = 'none'; // Close modal after adding
     }
-  });
+});
 
 
   
@@ -3305,22 +3344,78 @@ const inventoryHeaders = document.querySelectorAll('.inventory-group h3');
 
 // Loop through each header and add a click event listener
 inventoryHeaders.forEach(header => {
-  header.addEventListener('click', () => {
+    header.addEventListener('click', () => {
     // Toggle visibility of the next sibling (the inventory list)
     const content = header.nextElementSibling;
-    
+
     // Toggle hidden class on the content
     content.classList.toggle('hidden');
-    
+
     // Toggle active class on the header itself for styling
     header.classList.toggle('active');
-  });
+    });
 });
 
 
 
 
 
+
+function saveInventory() {
+    const inventoryData = {}; // Initialize an object to hold inventory groups
+    const inventoryGroups = document.querySelectorAll('.inventory-group'); // Select all inventory groups
+
+    inventoryGroups.forEach(group => {
+        const groupId = group.id; // Get the ID of the current group (e.g., "equipment", "backpack")
+        inventoryData[groupId] = []; // Initialize an array for this group
+
+        const items = group.querySelectorAll('.inventory-item'); // Select all items within the current group
+
+        items.forEach(itemDiv => {
+            const itemName = itemDiv.querySelector('.item-name').innerText;
+            const itemQuantity = parseInt(itemDiv.querySelector('.item-quantity').value, 10);
+            const itemEquipped = itemDiv.querySelector('.equip-toggle').checked;
+
+            // Push the item details into the respective group's array
+            inventoryData[groupId].push({
+                name: itemName,
+                quantity: itemQuantity,
+                equipped: itemEquipped
+            });
+        });
+    });
+
+    return inventoryData; // Return the structured inventory data
+}
+
+
+
+function loadInventoryData(characterInventoryData) {
+    // Iterate through each inventory group in the characterInventoryData
+    for (const group in characterInventoryData) {
+        const items = characterInventoryData[group]; // Get items for the current group
+
+        // Check if the group exists and has items
+        if (Array.isArray(items) && items.length > 0) {
+            items.forEach(item => {
+                // Find the item details in the new equipment data
+                const foundItem = AppData.equipmentLookupInfo.equipmentData.find(i => i.name === item.name);
+
+                if (foundItem) {
+                    // Create a new item object by spreading foundItem and adding quantity and equipped
+                    const newItem = {
+                        ...foundItem, // Spread the foundItem properties
+                        quantity: item.quantity, // Add the quantity from characterInventoryData
+                        equipped: item.equipped // Add the equipped status from characterInventoryData
+                    };
+
+                    // Add each item to the corresponding inventory group
+                    addItemToInventory(newItem, group);
+                }
+            });
+        }
+    }
+}
 
 
 
@@ -3852,25 +3947,29 @@ async function sendDMUpdatedStats() {
     myGM = await getGMClient()
 
     console.log(myGM)
-    const playerStats = getPlayerData();
 
-    // Construct the message object with player stats
-    const message = {
-        type: 'request-stats', // Message type
-        data: {
-            characterName: playerStats.characterName || playerStats.name, // Use characterName or name
-            hp: {
-                current: playerStats.hp.current.toString(), // Ensure current HP is a string
-                max: playerStats.hp.max.toString() // Ensure max HP is a string
-            },
-            ac: playerStats.ac.toString(), // Ensure AC is a string
-            passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
-            spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
-        }
-    };
+    if(myGM) {
+        const playerStats = getPlayerData();
 
-    // Send the message
-    TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+        // Construct the message object with player stats
+        const message = {
+            type: 'request-stats', // Message type
+            data: {
+                characterName: playerStats.characterName || playerStats.name, // Use characterName or name
+                hp: {
+                    current: playerStats.hp.current.toString(), // Ensure current HP is a string
+                    max: playerStats.hp.max.toString() // Ensure max HP is a string
+                },
+                ac: playerStats.ac.toString(), // Ensure AC is a string
+                passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
+                spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
+            }
+        };
+
+        // Send the message
+        TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+    }
+    
 }
 
 
@@ -3915,3 +4014,70 @@ function handleInitiativeResult(resultGroup) {
 
     sendDMInitiativeResults(totalInitiative)
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Function to export character data
+async function exportCharacterData() {
+    const characterKey = document.getElementById("playerCharacterInput").textContent;
+
+    // Retrieve character data from global storage
+    const allCharacterData = await loadDataFromGlobalStorage("characters");
+
+    console.log(characterKey);
+
+    // Access the character's data from the global storage
+    const characterData = allCharacterData[characterKey];
+
+    // Convert the data to a JSON string (this is the format that would be shared)
+    const characterJsonString = JSON.stringify(characterData, null, 2);
+
+    // Base64 encode the JSON string for easy sharing
+    const encodedData = btoa(characterJsonString);
+
+    // Output the Base64 encoded string to the console (to simulate sharing)
+    console.log("Exported (Base64 Encoded) String:", encodedData);
+
+    // Wait for 2 seconds, then re-import and simulate saving to global storage
+    setTimeout(() => {
+        // Simulate receiving and decoding the Base64 string
+        const decodedData = atob(encodedData);
+
+        // Parse the JSON string back into an object
+        const reImportedData = JSON.parse(decodedData);
+
+        // Output the re-imported data to the console to see its format
+        console.log("Re-imported Data (to be saved):", reImportedData);
+
+        // Simulate saving back to global storage
+        saveDataToGlobalStorage("characters", {
+            ...allCharacterData,  // Preserve other characters
+            [characterKey]: reImportedData  // Update the current character data
+        });
+
+    }, 2000); // 2-second delay
+}
+
+// Add event listener to the export button
+document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
+
+
+
+

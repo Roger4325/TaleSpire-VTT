@@ -1,14 +1,14 @@
 {
     "characters": {
         "Mira": {
-            "characterTempHp": "0",
+            "characterTempHp": "10",
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
             "characterLevel": "6",
             "playerXP": "14000",
-            "currentCharacterHP": "66",
-            "maxCharacterHP": "66",
+            "currentCharacterHP": "70",
+            "maxCharacterHP": "71",
             "strengthScore": "8",
             "dexterityScore": "14",
             "constitutionScore": "16",
@@ -125,6 +125,111 @@
                         },
                         {
                             "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
+                        },
+                        {
+                            "name": "Blade Ward"
+                        },
+                        {
+                            "name": "Guidance"
+                        },
+                        {
+                            "name": "Light"
+                        },
+                        {
+                            "name": "Toll the Dead"
+                        },
+                        {
+                            "name": "Word of Radiance"
                         }
                     ],
                     "slots": []
@@ -148,11 +253,137 @@
                         },
                         {
                             "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
+                        },
+                        {
+                            "name": "Bless"
+                        },
+                        {
+                            "name": "Cure Wounds"
+                        },
+                        {
+                            "name": "Faerie Fire"
+                        },
+                        {
+                            "name": "Guiding Bolt"
+                        },
+                        {
+                            "name": "Healing Word"
+                        },
+                        {
+                            "name": "Sleep"
                         }
                     ],
                     "slots": [
-                        false,
-                        false,
+                        true,
+                        true,
                         false,
                         false
                     ]
@@ -179,12 +410,159 @@
                         },
                         {
                             "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
+                        },
+                        {
+                            "name": "Aid"
+                        },
+                        {
+                            "name": "Calm Emotions"
+                        },
+                        {
+                            "name": "Moonbeam"
+                        },
+                        {
+                            "name": "Pass without Trace"
+                        },
+                        {
+                            "name": "See Invisibility"
+                        },
+                        {
+                            "name": "Spiritual Weapon"
+                        },
+                        {
+                            "name": "Lesser Restoration"
                         }
                     ],
                     "slots": [
                         true,
-                        false,
-                        false
+                        true,
+                        true
                     ]
                 },
                 "3rd-level": {
@@ -203,12 +581,117 @@
                         },
                         {
                             "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
+                        },
+                        {
+                            "name": "Beacon of Hope"
+                        },
+                        {
+                            "name": "Spirit Guardians"
+                        },
+                        {
+                            "name": "Leomund's Tiny Hut*"
+                        },
+                        {
+                            "name": "Protection from Energy"
+                        },
+                        {
+                            "name": "Daylight"
                         }
                     ],
                     "slots": [
-                        false,
-                        false,
-                        false
+                        true,
+                        true,
+                        true
                     ]
                 },
                 "4th-level": {
@@ -221,10 +704,73 @@
                         },
                         {
                             "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
+                        },
+                        {
+                            "name": "Banishment"
+                        },
+                        {
+                            "name": "Greater Invisibility"
+                        },
+                        {
+                            "name": "Aura of Life*"
                         }
                     ],
                     "slots": [
-                        false
+                        true
                     ]
                 },
                 "5th-level": {
@@ -248,26 +794,90 @@
                     "slots": []
                 }
             },
-            "groupTraitData": [
-                {
-                    "group-title": "",
-                    "traits": [
-                        {
-                            "traitName": "",
-                            "traitDescription": "",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "3"
-                        }
-                    ]
-                }
-            ]
+            "inventoryData": {
+                "equipment": [
+                    {
+                        "name": "Clothes, fine",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Crossbow bolt",
+                        "quantity": 20,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Crossbow, light",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Half Plate Armor",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Rapier",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shield",
+                        "quantity": 1,
+                        "equipped": true
+                    }
+                ],
+                "backpack": [
+                    {
+                        "name": "Potion of Superior Healing",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Potion of Healing",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Bedroll",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Mess Kit",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rations (1 day)",
+                        "quantity": 10,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rope, hempen (50 feet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinderbox",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Torch",
+                        "quantity": 10,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Waterskin",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
+                "attunement": [],
+                "other-possessions": []
+            },
+            "groupTraitData": []
         },
         "Golrin Balnaar": {
             "characterTempHp": "",
@@ -592,6 +1202,12 @@
                     "spells": [],
                     "slots": []
                 }
+            },
+            "inventoryData": {
+                "equipment": [],
+                "backpack": [],
+                "attunement": [],
+                "other-possessions": []
             },
             "groupTraitData": [
                 {
