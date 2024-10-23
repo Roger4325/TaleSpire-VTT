@@ -1,13 +1,14 @@
 {
     "characters": {
         "Mira": {
-            "characterTempHp": "10",
+            "characterTempHp": "0",
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
             "characterLevel": "6",
             "playerXP": "14000",
-            "currentCharacterHP": "70",
+            "playerClass": "",
+            "currentCharacterHP": "20",
             "maxCharacterHP": "71",
             "strengthScore": "8",
             "dexterityScore": "14",
@@ -125,111 +126,6 @@
                         },
                         {
                             "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
-                        },
-                        {
-                            "name": "Blade Ward"
-                        },
-                        {
-                            "name": "Guidance"
-                        },
-                        {
-                            "name": "Light"
-                        },
-                        {
-                            "name": "Toll the Dead"
-                        },
-                        {
-                            "name": "Word of Radiance"
                         }
                     ],
                     "slots": []
@@ -255,288 +151,21 @@
                             "name": "Sleep"
                         },
                         {
-                            "name": "Bless"
+                            "name": "Inflict Wounds"
                         },
                         {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
-                        },
-                        {
-                            "name": "Bless"
-                        },
-                        {
-                            "name": "Cure Wounds"
-                        },
-                        {
-                            "name": "Faerie Fire"
-                        },
-                        {
-                            "name": "Guiding Bolt"
-                        },
-                        {
-                            "name": "Healing Word"
-                        },
-                        {
-                            "name": "Sleep"
+                            "name": "Sanctuary"
                         }
                     ],
                     "slots": [
                         true,
                         true,
-                        false,
-                        false
+                        true,
+                        true
                     ]
                 },
                 "2nd-level": {
                     "spells": [
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
-                        {
-                            "name": "Aid"
-                        },
-                        {
-                            "name": "Calm Emotions"
-                        },
-                        {
-                            "name": "Moonbeam"
-                        },
-                        {
-                            "name": "Pass without Trace"
-                        },
-                        {
-                            "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
-                        },
                         {
                             "name": "Aid"
                         },
@@ -581,111 +210,6 @@
                         },
                         {
                             "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
-                        },
-                        {
-                            "name": "Beacon of Hope"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Leomund's Tiny Hut*"
-                        },
-                        {
-                            "name": "Protection from Energy"
-                        },
-                        {
-                            "name": "Daylight"
                         }
                     ],
                     "slots": [
@@ -696,69 +220,6 @@
                 },
                 "4th-level": {
                     "spells": [
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
-                        {
-                            "name": "Banishment"
-                        },
-                        {
-                            "name": "Greater Invisibility"
-                        },
-                        {
-                            "name": "Aura of Life*"
-                        },
                         {
                             "name": "Banishment"
                         },
@@ -829,16 +290,6 @@
                 ],
                 "backpack": [
                     {
-                        "name": "Potion of Superior Healing",
-                        "quantity": 1,
-                        "equipped": false
-                    },
-                    {
-                        "name": "Potion of Healing",
-                        "quantity": 1,
-                        "equipped": false
-                    },
-                    {
                         "name": "Bedroll",
                         "quantity": 1,
                         "equipped": false
@@ -877,15 +328,129 @@
                 "attunement": [],
                 "other-possessions": []
             },
-            "groupTraitData": []
+            "groupTraitData": [
+                {
+                    "group-title": "Channel Divinity",
+                    "traits": [
+                        {
+                            "traitName": "Channel Divinity: Twilight Sanctuary",
+                            "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 15-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. When you use this feature the first time all creatures in the range get one of the features below. You may use a bonus action on your following turns to do one of the following to all creatures in range. \n\n- You grant it 1d6+7 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
+                            "checkboxStates": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Channel Divinity: Turn Undead",
+                            "traitDescription": "As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Destroy Undead: CR 1/2 or Lower",
+                            "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Class Features",
+                    "traits": [
+                        {
+                            "traitName": "Steps of Night",
+                            "traitDescription": "You can draw on the mystical power of night to dash from shadow to shadow. As a bonus action when you are in dim light or darkness, you can magically teleport to dim light or darkness that you can see withing 60ft. of you. You can use this bonus action a number of time equal to your proficiency bonus, and you regain all expended used when you finish a short or long rest. ",
+                            "checkboxStates": [
+                                true,
+                                true,
+                                true
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Eyes of Night",
+                            "traitDescription": "You have darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Vigilant Blessing",
+                            "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Race Features",
+                    "traits": [
+                        {
+                            "traitName": "Earth Walk",
+                            "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Merge with Stone (Blade Ward)",
+                            "traitDescription": "You learn blade ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. \nYour spellcasting modifier is Wisdom",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Merge with Stone (Pass without Trace)",
+                            "traitDescription": "At 5th level, you can cast pass without trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\nYour spellcasting modifier is Wisdom",
+                            "checkboxStates": [
+                                true
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        }
+                    ]
+                }
+            ]
         },
         "Golrin Balnaar": {
             "characterTempHp": "",
             "initiativeButton": "+4",
             "AC": "15",
             "speed": "30ft.",
-            "characterLevel": "6",
-            "playerXP": "14000",
+            "characterLevel": "2",
+            "playerXP": "300",
+            "playerClass": "Bard (Valor Bard)",
             "currentCharacterHP": "52",
             "maxCharacterHP": "52",
             "strengthScore": "8",
@@ -937,16 +502,15 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "0",
             "proficiencyButton25": "1",
-            "conditions": [
-                "Concentration"
-            ],
+            "conditions": [],
+            "alignment": "CN",
             "actionTable": [
                 {
                     "1": {
                         "proficiencyButton": "1",
                         "secondColumn": "CrossBow Hand",
                         "thirdColumn": "30 (120)",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+5",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -968,7 +532,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Dagger",
                         "thirdColumn": "20 (60)",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+5",
                         "fifthColumn": "1d4",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -990,7 +554,7 @@
                         "proficiencyButton": "1",
                         "secondColumn": "Rapier",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
+                        "fourthColumn": "+5",
                         "fifthColumn": "1d4",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
@@ -1076,7 +640,7 @@
             ],
             "spellData": {
                 "spellcastingModifier": "CHA",
-                "spelllevelselected": "4",
+                "spelllevelselected": "1",
                 "spellmagicbonus": "2",
                 "Cantrip": {
                     "spells": [
@@ -1084,7 +648,7 @@
                             "name": "Mage Hand"
                         },
                         {
-                            "name": "Minor Illusion"
+                            "name": "Mending"
                         },
                         {
                             "name": "Vicious Mockery"
@@ -1102,12 +666,6 @@
                         },
                         {
                             "name": "Healing Word"
-                        },
-                        {
-                            "name": "Protection from Evil and Good"
-                        },
-                        {
-                            "name": "Thunderwave"
                         }
                     ],
                     "slots": [
@@ -1118,68 +676,15 @@
                     ]
                 },
                 "2nd-level": {
-                    "spells": [
-                        {
-                            "name": "Hold Person"
-                        },
-                        {
-                            "name": "Invisibility"
-                        },
-                        {
-                            "name": "Levitate"
-                        },
-                        {
-                            "name": "Misty Step"
-                        },
-                        {
-                            "name": "Silence"
-                        },
-                        {
-                            "name": "Cloud of Daggers*"
-                        }
-                    ],
-                    "slots": [
-                        true,
-                        false,
-                        false
-                    ]
+                    "spells": [],
+                    "slots": []
                 },
                 "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Counterspell"
-                        },
-                        {
-                            "name": "Fly"
-                        },
-                        {
-                            "name": "Hypnotic Pattern"
-                        },
-                        {
-                            "name": "Major Image"
-                        },
-                        {
-                            "name": "Spirit Guardians"
-                        },
-                        {
-                            "name": "Wind Wall"
-                        }
-                    ],
-                    "slots": [
-                        true,
-                        false,
-                        false
-                    ]
+                    "spells": [],
+                    "slots": []
                 },
                 "4th-level": {
-                    "spells": [
-                        {
-                            "name": "Stone Shape"
-                        },
-                        {
-                            "name": "Wall of Fire"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "5th-level": {
@@ -1211,14 +716,12 @@
             },
             "groupTraitData": [
                 {
-                    "group-title": "Class Features",
+                    "group-title": "Tester",
                     "traits": [
                         {
-                            "traitName": "Bardic Inspiration: 1 Bonus Action",
-                            "traitDescription": "As a bonus action, a creature (other than you) within 60 ft. that can hear you gains an inspiration die (1d8). For 10 minutes, the creature can add it to one ability check, attack roll, or saving throw. This can be added after seeing the roll, but before knowing the outcome.",
+                            "traitName": "Testing",
+                            "traitDescription": "2d6+5",
                             "checkboxStates": [
-                                true,
-                                true,
                                 false,
                                 false,
                                 false
@@ -1226,68 +729,7 @@
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
                             "adjustmentCondition": "",
-                            "numberOfUses": "5"
-                        },
-                        {
-                            "traitName": "Song of Rest",
-                            "traitDescription": "If you or any friendly creatures who can hear your performance regain hit points at the end of the short rest by spending one or more Hit Dice, each of those creatures regains an extra 1d6 hit points.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Cutting Words: 1 Reaction",
-                            "traitDescription": "As a reaction when a creature (that's not immune to being charmed) you can see within 60 ft. makes an attack roll, ability check, or damage roll, you can expend one use of Bardic Inspiration, roll the die, and subtract the number from the creature's roll. You can do so after the roll but before knowing the result.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Font of Inspiration",
-                            "traitDescription": "You regain all of your expended uses of Bardic Inspiration when you finish a short or long rest.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "Countercharm: 1 Action",
-                            "traitDescription": "As an action, you can perform until the end of your next turn. During that time, you and any friendly creatures within 30 ft. that can hear you gain advantage on saving throws against being frightened or charmed.",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
-                        }
-                    ]
-                },
-                {
-                    "group-title": "Race Traits",
-                    "traits": [
-                        {
-                            "traitName": "Breath Weapon: 1 Action",
-                            "traitDescription": "Once per short rest as an action, exhale destructive energy based on your Draconic Ancestry. Each creature in the area must make a DC 13 saving throw (type determined by your ancestry), taking 2d6 ([6th] 3d6, [11th] 4d6, [16th] 5d6) on a failed save, and half damage on a successful one.",
-                            "checkboxStates": [
-                                false
-                            ],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "1"
-                        },
-                        {
-                            "traitName": "Damage Resistance (Cold Damage)",
-                            "traitDescription": "You have resistance to the damage type associated with your draconic ancestry.\n\nCold Damage",
-                            "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
-                            "adjustmentValue": "",
-                            "adjustmentCondition": "",
-                            "numberOfUses": "0"
+                            "numberOfUses": "3"
                         }
                     ]
                 }

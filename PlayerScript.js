@@ -101,6 +101,13 @@ async function playerSetUP(){
         }
     });
 
+    // Event listener for the select box for the character alignment. 
+    const alignmentSelect = document.getElementById('alignment-select');
+
+    alignmentSelect.addEventListener('change', function() {
+        updateContent()
+    });
+
 
     // Add event listeners for keyup and blur on editable ability scores
     const abilityScores = document.querySelectorAll('.abilityScore');
@@ -1211,6 +1218,9 @@ function getAllEditableContent() {
         content['conditions'] = [];
     }
 
+    const characterAlignment = document.getElementById('alignment-select');
+    content['alignment'] = characterAlignment.value; // Save the selected alignment
+
     // Call the function to process action table rows and update the content object
     const actionTableData = processActionTableRow();
     content['actionTable'] = actionTableData;
@@ -1360,10 +1370,12 @@ inputElements.forEach((element) => {
 
 function updateCharacterUI(characterData, characterName) {
     const characterNameElement = document.getElementById("playerCharacterInput");
+    const characterAlignment = document.getElementById('alignment-select');
     const characterTempHpElement = document.getElementById("tempHP");
 
     // Update UI elements
-    characterNameElement.textContent = characterName; // Adjust based on your actual property names
+    characterNameElement.textContent = characterName; 
+    characterAlignment.value = characterData.alignment; 
     characterTempHpElement.value = characterData.characterTempHp;
 
     const characterInit = document.getElementById("initiativeButton");
@@ -2422,6 +2434,7 @@ function createSpellRow(spell,spellLevel) {
 
 function removeSpellRow(row) {
     row.parentElement.removeChild(row);
+    updateContent()
 }
 
 function addSpellToContainer(spellContainer, spellData = null) {
@@ -3512,8 +3525,6 @@ function createNewGroup(groupData = null) {
     // Add the group to the features section
     featuresSection.insertBefore(groupContainer, addGroupButton);
 
-    // Automatically show the group if it was hidden
-    featuresSection.style.display = 'block';
 
     // Return the created groupContainer for use in other functions
     updateContent()
@@ -3534,7 +3545,7 @@ function addNewTrait(groupContainer, traitData = null) {
     traitName.classList.add('trait-name');
     traitName.placeholder = 'Trait Name (e.g., Channel Divinity)';
     traitName.addEventListener('blur', function (){
-        updateContent()
+        updateContent();
     });
 
     // If traitData is provided, populate the trait name
@@ -3547,8 +3558,21 @@ function addNewTrait(groupContainer, traitData = null) {
     traitDescription.classList.add('trait-description');
     traitDescription.placeholder = 'Describe the trait here...';
 
+    // Add blur event listener to parse and replace dice
     traitDescription.addEventListener('blur', function (){
-        updateContent()
+        // Call the parse and replace dice function
+        const parsedDescription = parseAndReplaceDice(traitName.textContent, traitDescription.value, true); // Adjust parameters as needed
+    
+        // Create a temporary div to extract the text content without HTML
+        const tempDiv = document.createElement('div');
+        tempDiv.appendChild(parsedDescription);
+        
+        // Set the textarea value to the plain text from the parsed description
+        traitDescription.value = tempDiv.innerText;
+    
+        // Log the output for demonstration
+        console.log(tempDiv.innerHTML); // If you want to see the HTML, log this
+        updateContent(); // Call your function to update content as needed
     });
 
     // If traitData is provided, populate the description
@@ -3569,7 +3593,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add event listener to toggle the submenu display
     infoButton.addEventListener('click', function () {
         traitSettings.style.display = traitSettings.style.display === 'none' ? 'block' : 'none';
-        updateContent()
+        updateContent();
     });
 
     // Trait Usage Section (number input and checkboxes)
@@ -3605,7 +3629,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
             checkboxesContainerMain.appendChild(checkboxMain);
         }
-        updateContent()
+        updateContent();
     }
 
     // Update checkboxes when the input changes
@@ -3680,7 +3704,7 @@ function addNewTrait(groupContainer, traitData = null) {
         if (traitsList.children.length === 0) {
             groupContainer.remove();
         }
-        updateContent()
+        updateContent();
     });
 
     // Append the delete button to the submenu
@@ -3699,7 +3723,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Automatically show the trait list if hidden
     traitsList.style.display = 'block';
-    updateContent()
+    updateContent();
 }
 
 

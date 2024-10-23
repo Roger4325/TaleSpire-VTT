@@ -12,7 +12,7 @@
     padding: 2px;
     padding-top: 6px;
     border: solid 1px var(--ts-button-background);
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 3px;
 }
 
@@ -32,7 +32,7 @@
     display: flex;
     justify-content: space-between;
     margin: 0;
-    margin-bottom: 8px;
+    margin-top: 7px;
 }
 
 .toggle-button {
@@ -52,6 +52,14 @@
     color: white;
 }
 
+#disadvButton {
+    border-radius: 5px 0 0 5px; 
+}
+
+#advButton{
+    border-radius: 0 5px 5px 0;
+}
+
 #disadvButton:hover{
     background-color: rgb(190, 34, 34);
 }
@@ -66,7 +74,7 @@
 }
 
 #playerCharacterContainer{
-    min-height:175px;
+    min-height: 175px;
     max-width: 200px;
 }
 
@@ -86,13 +94,6 @@ select{
     font-family: 'OptimusPrinceps', sans-serif;
 }
 
-/* select option{
-    margin: 40px;
-    background: rgba(0, 0, 0, 0.3);
-    color: #fff;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
-} */
-
 .abilityScores{
     display:grid;
     gap: 10px;
@@ -104,6 +105,7 @@ select{
     font-size: 16px;
     text-align: center;
     margin: 0;
+    margin-top: 7px;
     width: 125px; /* Fixed size for the box */
     height: 70px; /* Fixed size for the box */
 }
@@ -254,6 +256,19 @@ select{
     padding: 3px;
 }
 
+#playerClass{
+    font-size: 15px;
+    text-align: center;
+    display: block;
+    padding: 2px;
+    padding-top: 6px;
+    border: solid 1px var(--ts-button-background);
+    border-radius: 5px;
+    width: 97%;
+    margin-bottom: 2px;
+    margin-top: 3px;
+}
+
 .abilitybox{
     font-size: 15px;
     text-align: center;
@@ -261,7 +276,7 @@ select{
     padding: 2px;
     padding-top: 6px;
     border: solid 1px var(--ts-button-background);
-    border-radius: 10px;
+    border-radius: 5px;
     margin: 3px;
 }
 
@@ -274,7 +289,9 @@ select{
     grid-template-columns: 1fr 3fr 1fr;
     border: solid 1px var(--ts-button-background);
     min-width: 220px;
-    min-height: 90px;
+    height: 90px;
+    border-radius: 5px;
+    max-width: 98%;
 }
 
 .playerHealth{
@@ -324,15 +341,31 @@ select{
     background-color: rgb(190, 34, 34);
 }
 
+#alignmentHeader{
+    font-size: 12px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    border-radius: 5px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+#alignment-select{
+    margin-right: 10px;
+}
+
 #conditionHeader{
     font-size: 12px;
     display: flex;
     justify-content: left;
     align-items: center;
+    border-radius: 5px;
 }
 
 #condition-select{
     margin-right: 10px;
+    width: 132px;
 }
 
 #conditionTracker{

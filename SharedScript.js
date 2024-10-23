@@ -206,7 +206,6 @@ function parseAndReplaceDice(action, text, spell) {
             const parts = node.textContent.split(diceRegex).filter(part => part); // Split by dice regex
 
             for (const part of parts) {
-                console.log(part)
                 if (diceRegex.test(part)) {
                     // Handle dice replacement
                     const label = document.createElement('label');
@@ -231,7 +230,10 @@ function parseAndReplaceDice(action, text, spell) {
                     if(spell){
                         AppData.spellLookupInfo?.spellsData.forEach(spell => {
                             const spellName = spell.name;
-                            const spellIndex = remainingText.toLowerCase().indexOf(spellName.toLowerCase());
+
+                            // Create a regex for the spell name with word boundaries
+                            const spellRegex = new RegExp(`\\b${spellName}\\b`, 'i');
+                            const spellIndex = remainingText.search(spellRegex);
     
                             if (spellIndex !== -1) {
                                 // If a spell name is found, split the text and insert the hoverable element for the spell
@@ -271,15 +273,11 @@ function parseAndReplaceDice(action, text, spell) {
                                 remainingText = afterSpell;
                             }
                         });
-    
-                        
-
                     }
                     // Add the remaining text after the spell name (if any)
                     if (remainingText) {
                         container.appendChild(document.createTextNode(remainingText));
                     }
-                   
                 }
             }
         } else {
