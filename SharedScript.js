@@ -212,16 +212,21 @@ function parseAndReplaceDice(action, text, spell) {
                     label.classList.add('actionButtonLabel');
                     const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
                     const diceRoll = part.replace(/[()\s]/g, '');
-
-                    label.setAttribute('value', part);
+            
+                    // Extract the modifier part (+ or - with number)
+                    const modifierMatch = part.match(/([+-]\s*\d+)$/);
+                    const modifier = modifierMatch ? modifierMatch[0].replace(/\s+/g, '') : ''; // Remove any spaces
+            
+                    // Set the label value to the modifier part
+                    label.setAttribute('value', modifier);
                     label.setAttribute('data-dice-type', /^\d+d\d+(\s*[+-]\s*\d+)?$/.test(diceRoll) ? diceRoll : `1d20${diceRoll}`);
                     label.setAttribute('data-name', diceName);
-
+            
                     // Underline dice
                     const button = document.createElement('button');
                     button.classList.add('actionButton');
                     button.textContent = part;
-
+            
                     container.appendChild(label);
                     container.appendChild(button);
                 } else {

@@ -522,22 +522,23 @@ function populateField(elementId, label, value, isRollable = false) {
             element.appendChild(labelNode);
             element.appendChild(parsedContent);
         } else {
-            if (value.length > 0){
-                if (typeof value === 'string') {
-                    // Replace commas without spaces with commas followed by a space
-                    const formattedValue = value.replace(/,\s*/g, ', ');
-                    element.innerHTML = `${labelText}${formattedValue}`;
-                } else if (Array.isArray(value)) {
-                    // If value is an array, join it into a string separated by commas and spaces
-                    const formattedValue = value.join(', ');
-                    element.innerHTML = `${labelText}${formattedValue}`;
+            if (value || value === 0) {
+                // Only add colon if label is non-empty
+                const labelText = label ? `<strong>${label}:</strong> ` : '';
+                if (isRollable) {
+                    element.innerHTML = ''; // Clear content
+                    const parsedContent = parseAndReplaceDice({ name: label }, value, true);
+                    element.appendChild(document.createTextNode(labelText));
+                    element.appendChild(parsedContent);
                 } else {
-                    // Convert other types to a string if necessary
-                    element.innerHTML = `${labelText}${String(value)}`;
+                    const formattedValue = typeof value === 'string'
+                        ? value.replace(/,\s*/g, ', ')
+                        : Array.isArray(value) ? value.join(', ') : String(value);
+                    element.innerHTML = `${labelText}${formattedValue}`;
                 }
-            }
-            else{
-
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
             }
         }
 
@@ -555,12 +556,14 @@ function populateMonsterFields(monster) {
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
     populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
+    console.log(monster.AC?.Value)
     populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
     populateField('monsterSpeed', 'Speed', monster.Speed);
     populateField('monsterLanguages', 'Languages', monster.Languages, false);
     populateField('monsterDamageVulnerabilities', 'Vulnerabilities', monster.DamageVulnerabilities, false);
     populateField('monsterDamageResistances', 'Resistances', monster.DamageResistances, false);
     populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
+    populateField('monsterConditionImmunities', 'Condition Immunities', monster.ConditionImmunities, false);
     populateField('monsterSenses', 'Senses', monster.Senses, false);
     populateField('monsterChallenge', 'CR', monster.Challenge, false);
 

@@ -60,6 +60,7 @@
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
             "conditions": [],
+            "alignment": "",
             "actionTable": [
                 {
                     "1": {
@@ -96,6 +97,28 @@
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "Temp Hp",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Adding different types",
+                        "thirdColumn": "tester",
+                        "fourthColumn": "+4",
+                        "fifthColumn": "1d6/2d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "0",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "slashing/fire",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -334,7 +357,6 @@
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
-                            "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 15-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. When you use this feature the first time all creatures in the range get one of the features below. You may use a bonus action on your following turns to do one of the following to all creatures in range. \n\n- You grant it 1d6+7 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
                             "checkboxStates": [
                                 true,
                                 true,
@@ -347,7 +369,6 @@
                         },
                         {
                             "traitName": "Channel Divinity: Turn Undead",
-                            "traitDescription": "As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -356,7 +377,6 @@
                         },
                         {
                             "traitName": "Destroy Undead: CR 1/2 or Lower",
-                            "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -370,7 +390,6 @@
                     "traits": [
                         {
                             "traitName": "Steps of Night",
-                            "traitDescription": "You can draw on the mystical power of night to dash from shadow to shadow. As a bonus action when you are in dim light or darkness, you can magically teleport to dim light or darkness that you can see withing 60ft. of you. You can use this bonus action a number of time equal to your proficiency bonus, and you regain all expended used when you finish a short or long rest. ",
                             "checkboxStates": [
                                 true,
                                 true,
@@ -383,7 +402,6 @@
                         },
                         {
                             "traitName": "Eyes of Night",
-                            "traitDescription": "You have darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
                             "checkboxStates": [
                                 false
                             ],
@@ -394,7 +412,6 @@
                         },
                         {
                             "traitName": "Vigilant Blessing",
-                            "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -408,7 +425,6 @@
                     "traits": [
                         {
                             "traitName": "Earth Walk",
-                            "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -417,7 +433,6 @@
                         },
                         {
                             "traitName": "Merge with Stone (Blade Ward)",
-                            "traitDescription": "You learn blade ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. \nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
                                 false,
                                 false,
@@ -430,7 +445,6 @@
                         },
                         {
                             "traitName": "Merge with Stone (Pass without Trace)",
-                            "traitDescription": "At 5th level, you can cast pass without trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
                                 true
                             ],
@@ -720,7 +734,6 @@
                     "traits": [
                         {
                             "traitName": "Testing",
-                            "traitDescription": "2d6+5",
                             "checkboxStates": [
                                 false,
                                 false,
@@ -737,240 +750,72 @@
         }
     },
     "Encounter Data": {
-        "david": [
+        "Vampire Gate Guards": [
             {
                 "init": "0",
-                "name": "Wraith (A)",
-                "currentHp": "67",
-                "maxHp": "67",
+                "name": "Draven, Guard Commander (A)",
+                "currentHp": "60",
+                "maxHp": "60",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Vampire Spawn (A)",
+                "currentHp": "35",
+                "maxHp": "35",
+                "tempHp": "0",
+                "conditions": []
+            },
+            {
+                "init": "0",
+                "name": "Vampire Spawn (B)",
+                "currentHp": "35",
+                "maxHp": "35",
                 "tempHp": "0",
                 "conditions": []
             }
         ],
-        "Wes": [
+        "Dorian de Nocte": [
             {
                 "init": "0",
-                "name": "Wraith (A)",
-                "currentHp": "67",
-                "maxHp": "67",
+                "name": "Dorian de Nocte (A)",
+                "currentHp": "230",
+                "maxHp": "230",
                 "tempHp": "0",
                 "conditions": []
             },
             {
                 "init": "0",
-                "name": "Ancient Black Dragon (A)",
-                "currentHp": "367",
-                "maxHp": "367",
+                "name": "Dorian de Nocte - Lair (A)",
+                "currentHp": "230",
+                "maxHp": "230",
                 "tempHp": "0",
                 "conditions": []
             },
             {
                 "init": "0",
-                "name": "Wraith (B)",
-                "currentHp": "67",
-                "maxHp": "67",
-                "tempHp": "0",
-                "conditions": []
-            }
-        ],
-        "Frank": [
-            {
-                "init": "0",
-                "name": "Aboleth (A)",
-                "currentHp": "135",
-                "maxHp": "135",
+                "name": "Mannequin Minion (A)",
+                "currentHp": "20",
+                "maxHp": "20",
                 "tempHp": "0",
                 "conditions": []
             },
             {
                 "init": "0",
-                "name": "Vampire (A)",
-                "currentHp": "144",
-                "maxHp": "144",
-                "tempHp": "0",
-                "conditions": []
-            }
-        ],
-        "Tester": [
-            {
-                "init": "0",
-                "name": "Ancient Black Dragon (A)",
-                "currentHp": "367",
-                "maxHp": "367",
-                "tempHp": "0",
-                "conditions": []
-            }
-        ],
-        "Tester2": [
-            {
-                "init": "0",
-                "name": "Ancient Black Dragon (A)",
-                "currentHp": "367",
-                "maxHp": "367",
+                "name": "Mannequin Minion (B)",
+                "currentHp": "20",
+                "maxHp": "20",
                 "tempHp": "0",
                 "conditions": []
             },
             {
                 "init": "0",
-                "name": "Gibbering Mouther (A)",
-                "currentHp": "67",
-                "maxHp": "67",
+                "name": "Mannequin Minion (C)",
+                "currentHp": "20",
+                "maxHp": "20",
                 "tempHp": "0",
                 "conditions": []
-            }
-        ],
-        "Larger": [
-            {
-                "init": "0",
-                "name": "Zombie (A)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (B)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (C)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (D)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (E)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (G)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (H)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (I)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (J)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (K)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (L)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (M)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (N)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (O)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            },
-            {
-                "init": "0",
-                "name": "Zombie (P)",
-                "currentHp": "22",
-                "maxHp": "22",
-                "tempHp": "0",
-                "conditions": []
-            }
-        ],
-        "Testing": [
-            {
-                "init": "0",
-                "name": "Wraith (A)",
-                "currentHp": "67",
-                "maxHp": "67",
-                "tempHp": "0",
-                "conditions": [
-                    "Blinded"
-                ]
-            },
-            {
-                "init": "0",
-                "name": "Ancient Black Dragon (A)",
-                "currentHp": "367",
-                "maxHp": "367",
-                "tempHp": "0",
-                "conditions": [
-                    "Charmed"
-                ]
-            },
-            {
-                "init": "0",
-                "name": "Wraith (B)",
-                "currentHp": "67",
-                "maxHp": "67",
-                "tempHp": "0",
-                "conditions": [
-                    "Deafened"
-                ]
             }
         ]
     }
