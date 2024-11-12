@@ -1,15 +1,15 @@
 {
     "characters": {
         "Mira": {
-            "characterTempHp": "0",
+            "characterTempHp": "8",
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
-            "characterLevel": "6",
-            "playerXP": "14000",
-            "playerClass": "",
-            "currentCharacterHP": "20",
-            "maxCharacterHP": "71",
+            "characterLevel": "8",
+            "playerXP": "34000",
+            "playerClass": "Cleric (Twilight)",
+            "currentCharacterHP": "53",
+            "maxCharacterHP": "59",
             "strengthScore": "8",
             "dexterityScore": "14",
             "constitutionScore": "16",
@@ -59,19 +59,21 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
-            "conditions": [],
-            "alignment": "",
+            "conditions": [
+                "Concentration"
+            ],
+            "alignment": "NG",
             "actionTable": [
                 {
                     "1": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Rapier",
-                        "thirdColumn": "5ft Reach",
-                        "fourthColumn": "+5",
-                        "fifthColumn": "1d8",
+                        "secondColumn": "CrossBow Hand",
+                        "thirdColumn": "30 (120)",
+                        "fourthColumn": "+7",
+                        "fifthColumn": "1d10/2d4",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
-                        "eighthColumn": "",
+                        "eighthColumn": "2",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "Piercing",
@@ -87,38 +89,16 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Twilight Sanctuary",
-                        "thirdColumn": "New Text",
-                        "fourthColumn": "+10",
-                        "fifthColumn": "1d6",
+                        "secondColumn": "Maul of Fire",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "2d6/1d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "5",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Temp Hp",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Adding different types",
-                        "thirdColumn": "tester",
-                        "fourthColumn": "+4",
-                        "fifthColumn": "1d6/2d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "INT",
-                        "eighthColumn": "0",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "slashing/fire",
+                        "twelvethColumn": "",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -136,7 +116,7 @@
                 "Cantrip": {
                     "spells": [
                         {
-                            "name": "Blade Ward"
+                            "name": "Acid Splash"
                         },
                         {
                             "name": "Guidance"
@@ -171,21 +151,13 @@
                             "name": "Healing Word"
                         },
                         {
-                            "name": "Sleep"
-                        },
-                        {
                             "name": "Inflict Wounds"
                         },
                         {
-                            "name": "Sanctuary"
+                            "name": "Sleep"
                         }
                     ],
-                    "slots": [
-                        true,
-                        true,
-                        true,
-                        true
-                    ]
+                    "slots": []
                 },
                 "2nd-level": {
                     "spells": [
@@ -203,19 +175,9 @@
                         },
                         {
                             "name": "See Invisibility"
-                        },
-                        {
-                            "name": "Spiritual Weapon"
-                        },
-                        {
-                            "name": "Lesser Restoration"
                         }
                     ],
-                    "slots": [
-                        true,
-                        true,
-                        true
-                    ]
+                    "slots": []
                 },
                 "3rd-level": {
                     "spells": [
@@ -229,17 +191,16 @@
                             "name": "Leomund's Tiny Hut*"
                         },
                         {
-                            "name": "Protection from Energy"
+                            "name": "Daylight"
                         },
                         {
-                            "name": "Daylight"
+                            "name": "Remove Curse"
+                        },
+                        {
+                            "name": "Mass Healing Word"
                         }
                     ],
-                    "slots": [
-                        true,
-                        true,
-                        true
-                    ]
+                    "slots": []
                 },
                 "4th-level": {
                     "spells": [
@@ -253,9 +214,7 @@
                             "name": "Aura of Life*"
                         }
                     ],
-                    "slots": [
-                        true
-                    ]
+                    "slots": []
                 },
                 "5th-level": {
                     "spells": [],
@@ -357,9 +316,10 @@
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
+                            "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 15-ft. radius, and is filled with dim Light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. When you use this feature the first time all creatures in the range get one of the features below. You may use a bonus action on your following turns to do one of the following to all creatures in range. \n\n- You grant it 1d6+7 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
                             "checkboxStates": [
                                 true,
-                                true,
+                                false,
                                 false
                             ],
                             "adjustmentType": "Saving Throws",
@@ -369,6 +329,7 @@
                         },
                         {
                             "traitName": "Channel Divinity: Turn Undead",
+                            "traitDescription": "As an action, you present your holy Symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -377,6 +338,7 @@
                         },
                         {
                             "traitName": "Destroy Undead: CR 1/2 or Lower",
+                            "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -390,10 +352,11 @@
                     "traits": [
                         {
                             "traitName": "Steps of Night",
+                            "traitDescription": "You can draw on the mystical power of night to dash from shadow to shadow. As a bonus action when you are in dim light or Darkness, you can magically teleport to dim Light or darkness that you can see withing 60ft. of you. You can use this bonus action a number of time equal to your proficiency bonus, and you regain all expended used when you finish a short or long rest. ",
                             "checkboxStates": [
-                                true,
-                                true,
-                                true
+                                false,
+                                false,
+                                false
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -402,8 +365,9 @@
                         },
                         {
                             "traitName": "Eyes of Night",
+                            "traitDescription": "You have Darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
                             "checkboxStates": [
-                                false
+                                true
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -412,6 +376,7 @@
                         },
                         {
                             "traitName": "Vigilant Blessing",
+                            "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -425,6 +390,7 @@
                     "traits": [
                         {
                             "traitName": "Earth Walk",
+                            "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -433,6 +399,7 @@
                         },
                         {
                             "traitName": "Merge with Stone (Blade Ward)",
+                            "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
                                 false,
                                 false,
@@ -445,6 +412,7 @@
                         },
                         {
                             "traitName": "Merge with Stone (Pass without Trace)",
+                            "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
                                 true
                             ],

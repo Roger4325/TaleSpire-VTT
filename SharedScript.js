@@ -52,6 +52,151 @@ function generateUUID() {
 }
 
 
+const translations = {
+    eng: {
+        //Spell Section
+        spellModLabel: "Spell Mod:",
+        toHitLabel: "To Hit:",
+        saveDcLabel: "Save DC:",
+        spellLevelLabel: "Spell Level",
+        bonusLabel: "Bonus",
+        cantripsLabel: "Cantrips",
+        level1Label: "Level 1",
+        level2Label: "Level 2",
+        level3Label: "Level 3",
+        level4Label: "Level 4",
+        level5Label: "Level 5",
+        level6Label: "Level 6",
+        level7Label: "Level 7",
+        level8Label: "Level 8",
+        level9Label: "Level 9",
+        CantripSpellNameHeader: "Spell Name",
+        CantripTimeHeader: "Time",
+        CantripHitDCHeader: "Hit/DC",
+        CantripDiceHeader: "Dice",
+        CantripConcentrationHeader: "Con",
+        CantripNotesHeader: "Notes",
+        CantripDeleteHeader: "Del",
+
+        // Level 1 headers
+        '1st-levelSpellNameHeader': "Spell Name",
+        '1st-levelTimeHeader': "Time",
+        '1st-levelHitDCHeader': "Hit/DC",
+        '1st-levelDiceHeader': "Dice",
+        '1st-levelConcentrationHeader': "Con",
+        '1st-levelNotesHeader': "Notes",
+        '1st-levelDeleteHeader': "Del",
+
+        '2nd-levelSpellNameHeader': "Spell Name",
+        '2nd-levelTimeHeader': "Time",
+        '2nd-levelHitDCHeader': "Hit/DC",
+        '2nd-levelDiceHeader': "Dice",
+        '2nd-levelConcentrationHeader': "Con",
+        '2nd-levelNotesHeader': "Notes",
+        '2nd-levelDeleteHeader': "Del",
+
+        // Level 3 headers
+        '3rd-levelSpellNameHeader': "Spell Name",
+        '3rd-levelTimeHeader': "Time",
+        '3rd-levelHitDCHeader': "Hit/DC",
+        '3rd-levelDiceHeader': "Dice",
+        '3rd-levelConcentrationHeader': "Con",
+        '3rd-levelNotesHeader': "Notes",
+        '3rd-levelDeleteHeader': "Del",
+
+        // Levels 4 through 9 headers
+        ...Array.from({ length: 6 }, (_, i) => i + 4).reduce((acc, level) => {
+            acc[`${level}th-levelSpellNameHeader`] = "Spell Name";
+            acc[`${level}th-levelTimeHeader`] = "Time";
+            acc[`${level}th-levelHitDCHeader`] = "Hit/DC";
+            acc[`${level}th-levelDiceHeader`] = "Dice";
+            acc[`${level}th-levelConcentrationHeader`] = "Con";
+            acc[`${level}th-levelNotesHeader`] = "Notes";
+            acc[`${level}th-levelDeleteHeader`] = "Del";
+            return acc;
+        }, {})
+
+    },
+    es: {
+        //Spell Section
+        spellModLabel: "Modificador:",
+        toHitLabel: "Para Golpear:",
+        saveDcLabel: "CD:",
+        spellLevelLabel: "Nivel",
+        bonusLabel: "Bono",
+        cantripsLabel: "Trucos",
+        level1Label: "Nivel 1",
+        level2Label: "Nivel 2",
+        level3Label: "Nivel 3",
+        level4Label: "Nivel 4",
+        level5Label: "Nivel 5",
+        level6Label: "Nivel 6",
+        level7Label: "Nivel 7",
+        level8Label: "Nivel 8",
+        level9Label: "Nivel 9",
+        CantripSpellNameHeader: "Nombre",
+        CantripTimeHeader: "Tiempo",
+        CantripHitDCHeader: "Golpe/CD",
+        CantripDiceHeader: "Dados",
+        CantripConcentrationHeader: "Conc",
+        CantripNotesHeader: "Notas",
+        CantripDeleteHeader: "Elim",
+
+        '1st-levelSpellNameHeader': "Nombre",
+        '1st-levelTimeHeader': "Tiempo",
+        '1st-levelHitDCHeader': "Golpe/CD",
+        '1st-levelDiceHeader': "Dados",
+        '1st-levelConcentrationHeader': "Conc",
+        '1st-levelNotesHeader': "Notas",
+        '1st-levelDeleteHeader': "Elim",
+
+        '2nd-levelSpellNameHeader': "Nombre",
+        '2nd-levelTimeHeader': "Tiempo",
+        '2nd-levelHitDCHeader': "Golpe/CD",
+        '2nd-levelDiceHeader': "Dados",
+        '2nd-levelConcentrationHeader': "Conc",
+        '2nd-levelNotesHeader': "Notas",
+        '2nd-levelDeleteHeader': "Elim",
+
+        '3rd-levelSpellNameHeader': "Nombre",
+        '3rd-levelTimeHeader': "Tiempo",
+        '3rd-levelHitDCHeader': "Golpe/CD",
+        '3rd-levelDiceHeader': "Dados",
+        '3rd-levelConcentrationHeader': "Conc",
+        '3rd-levelNotesHeader': "Notas",
+        '3rd-levelDeleteHeader': "Elim",
+
+        ...Array.from({ length: 6 }, (_, i) => i + 4).reduce((acc, level) => {
+            acc[`${level}th-levelSpellNameHeader`] = "Nombre";
+            acc[`${level}th-levelTimeHeader`] = "Tiempo";
+            acc[`${level}th-levelHitDCHeader`] = "Golpe/CD";
+            acc[`${level}th-levelDiceHeader`] = "Dados";
+            acc[`${level}th-levelConcentrationHeader`] = "Conc";
+            acc[`${level}th-levelNotesHeader`] = "Notas";
+            acc[`${level}th-levelDeleteHeader`] = "Elim";
+            return acc;
+        }, {})
+    }
+};
+
+
+
+function setLanguage(language) {
+    for (const id in translations[language]) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.textContent = translations[language][id];
+        }
+    }
+}
+
+// Event listeners for language buttons
+document.getElementById('languageEngButton').addEventListener('click', () => setLanguage('eng'));
+document.getElementById('languageEspButton').addEventListener('click', () => setLanguage('es'));
+
+// Default language on load
+setLanguage('eng');
+
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
     spellLookupInfo: null,

@@ -25,7 +25,10 @@
                         </div>
                     </li>
                     <li>
-                        Option 3
+                        <div id="languageButtons">
+                            <button id="languageEngButton">English</button>
+                            <button id="languageEspButton">Espanol</button>
+                        </div>
                     </li>
                     <li>
                         <button id="deleteCharacter">Delete a Character</button>
@@ -644,7 +647,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                    <div class="add-action-button" onclick="newTableRow()">
+                    <div class="add-action-button" onclick="updateActionTableUI()">
                         <span>+</span>
                     </div>
                     <!-- Add more default actions as needed -->
@@ -659,7 +662,7 @@
             <div class = "spell-casting-info">
                 <div class="spellcastingDropdown">
                     <div>
-                        <label for="spellcastingDropdown">Spell Mod:</label>
+                        <label id="spellModLabel" for="spellcastingDropdown">Spell Mod:</label>
                         <select class="spellcasting-dropdown">
                             <option value="STR">STR</option>
                             <option value="DEX">DEX</option>
@@ -671,17 +674,17 @@
                     </div>
                 </div>
                 <div>
-                    <span class="spellcasting-toHit">To Hit :</span>
+                    <span id="toHitLabel" class="spellcasting-toHit">To Hit :</span>
                     <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Spell Attack"></label>
                     <button class="actionButton skillbuttonstyler spell-attack-button">+5</button>
                 </div>
                 <div>
-                    <label>Save DC:</label>
+                    <label id="saveDcLabel">Save DC:</label>
                     <span class="spell-save-dc spell-dc" id="spellSaveDc">__</span>
                 </div>
                 <div class="spelllevelDropdown">
                     <div>
-                        <label for="spelllevelDropdown">Spell Level</label>
+                        <label id="spellLevelLabel" for="spelllevelDropdown">Spell Level</label>
                         <select class="spell-level-dropdown">
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -698,7 +701,7 @@
                 </div>
                 <div class="magicBonusDropdown">
                     <div>
-                        <label for="magic-bonus-dropdown">Bonus</label>
+                        <label id="bonusLabel" for="magic-bonus-dropdown">Bonus</label>
                         <select class="magic-bonus-dropdown">
                             <option value="0">0</option>
                             <option value="1">1</option>
@@ -711,13 +714,13 @@
             
             <hr>
             <div class="spell-group" spellLevel="Cantrip">
-                <h2>Cantrips</h2>
+                <h2 id="cantripsLabel">Cantrips</h2>
                 <button class="add-spell-button">+</button>
                 <div class="spell-container" spellLevel="Cantrip" id="cantrip-container"></div>
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="1st-level">
-                <h2>Level 1 
+                <h2 id="level1Label">Level 1 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level1-slots"></div>
@@ -729,7 +732,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="2nd-level">
-                <h2>Level 2 
+                <h2 id="level2Label">Level 2 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level2-slots"></div>
@@ -741,7 +744,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="3rd-level">
-                <h2>Level 3 
+                <h2 id="level3Label">Level 3 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level3-slots"></div>
@@ -753,7 +756,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="4th-level">
-                <h2>Level 4 
+                <h2 id="level4Label">Level 4 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level4-slots"></div>
@@ -765,7 +768,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="5th-level">
-                <h2>Level 5 
+                <h2 id="level5Label">Level 5 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level5-slots"></div>
@@ -777,7 +780,7 @@
                 <hr class="minihr">
             </div>            
             <div class="spell-group" spellLevel="6th-level">
-                <h2>Level 6 
+                <h2 id="level6Label">Level 6 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level6-slots"></div>
@@ -789,7 +792,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="7th-level">
-                <h2>Level 7 
+                <h2 id="level7Label">Level 7 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level7-slots"></div>
@@ -801,7 +804,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="8th-level">
-                <h2>Level 8 
+                <h2 id="level8Label">Level 8 
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level8-slots"></div>
@@ -813,7 +816,7 @@
                 <hr class="minihr">
             </div>
             <div class="spell-group" spellLevel="9th-level">
-                <h2>Level 9
+                <h2 id="level9Label">Level 9
                     <span class="spell-slot-controls">
                         <button class="remove-spell-slot">-</button>
                         <div class="spell-slots" id="level9-slots"></div>
@@ -824,8 +827,6 @@
                 <div class="spell-container" spellLevel="9th-level" id="level9-container"></div>
                 <hr class="minihr">
             </div>
-            
-            <!-- Repeat for other spell levels -->
         </section>
 
 

@@ -1061,123 +1061,6 @@ function toggleCategory(categoryList, category) {
 
 
 
-function newTableRow() {
-    // Get the table body
-
-    const tableBody = document.querySelector('.actionTable tbody');
-
-    // Create a new row element by cloning the last row
-    const lastRow = tableBody.querySelector('tr:last-child');
-    const newRow = lastRow.cloneNode(true);
-
-    const rowIndex = tableBody.children.length + 1; // Current number of rows
-
-    // Update IDs for the new row
-    const additionalInfoContainer = newRow.querySelector('.additional-info-container');
-    const newContainerId = 'additionalInfoContainer' + rowIndex;
-    additionalInfoContainer.id = newContainerId;
-
-    // Update the Action Setting button's onclick attribute
-    const actionSettingButton = newRow.querySelector('.rowSetting');
-    actionSettingButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`)
-
-    // Update the Close button's onclick attribute
-    const closeButton = newRow.querySelector('.close-button');
-    closeButton.setAttribute('onclick', `toggleAdditionalInfo('${newContainerId}')`);
-
-    // Set the default data-category attribute for the new row (you can adjust this as needed)
-    newRow.setAttribute('data-category', '');
-
-    // Set default text for each cell in the new row
-    newRow.querySelectorAll('td[contenteditable="true"]').forEach(cell => {
-        cell.textContent = 'New Text';
-    });
-
-    // Create a new select element for the new row
-    const newSelect = document.createElement('select');
-    newSelect.classList.add('ability-dropdown');
-    const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
-
-    // Populate options for the select element
-    abilities.forEach(ability => {
-        const option = document.createElement('option');
-        option.value = ability;
-        option.text = ability;
-        newSelect.appendChild(option);
-    });
-
-    // Get the cell where the select element should be placed and append the new select element
-    const selectCell = newRow.querySelector('.abilityStatDropdown');
-    selectCell.innerHTML = ''; // Clear existing content
-    selectCell.appendChild(newSelect);
-
-   // Update the id of the proficiency button in the new row based on the row index
-
-   const proficiencyButtons = newRow.querySelectorAll('.actionProficiencyButton');
-   proficiencyButtons.forEach(button => {
-       const newProficiencyId = 'proficiencyActionButton' + rowIndex;
-       button.id = newProficiencyId;
-   });
-
-    // Reset checkboxes to unchecked state
-    const checkboxes = newRow.querySelectorAll('.category-checkbox');
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = false;
-    });
-
-    // Append the new row to the table body
-    tableBody.appendChild(newRow);
-
-    // Get the dropdown button and content for the new row
-    const dropdownBtn = newRow.querySelector('.dropbtn');
-    const dropdownContent = newRow.querySelector('.dropdown-content');
-    dropdownContent.setAttribute('id','checkboxContainer'+ rowIndex)
-
-    console.log(dropdownContent);
-
-    addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
-
-    // Add blur event listener
-    const inputElement = newRow.querySelector('.actionDamageDice');
-    addDamageDiceInputListener(inputElement, newRow);
-
-    // Create the delete button and append it
-    const deleteButtonDiv = newRow.querySelector('.removeButton')
-    console.log(deleteButtonDiv)
-    addDeleteButtonListener(deleteButtonDiv)
-    
-
-    // Add the event listener only if it hasn't been added before
-    newRow.addEventListener('blur', getAllEditableContent());
-    
-    attachAbilityDropdownListeners();
-    addProficiencyButtonListener()
-    rollableButtons()
-    addBlurAndEnterListenersToDamageTypes();
-    updateAllDamageButtonDataNames()
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1753,18 +1636,60 @@ function actionTableEventListenerSetup() {
 
 
 
-// Testing Code
+
+
+
+
+
+
 function updateActionTableUI(actionTableData) {
     const tableBody = document.getElementById('actionTableBody');
 
     // Clear existing rows
-    tableBody.innerHTML = '';
+    
+
+
+    if (!actionTableData || actionTableData.length === 0) {
+        actionTableData = [
+            {
+                "1": {
+                    "proficiencyButton": "1",
+                    "secondColumn": "Maul of Fire",
+                    "thirdColumn": "5ft",
+                    "fourthColumn": "+5",
+                    "fifthColumn": "2d6/1d4",
+                    "sixthColumn": "ActionSettings",
+                    "seventhColumn": "STR",
+                    "eighthColumn": "",
+                    "tenthColumn": "Heavy, Two-Handed",
+                    "elventhColumn": "A brightly Colored Maul",
+                    "twelvethColumn": "",
+                    "ninthColumn": {
+                        "attacks": true,
+                        "actions": true,
+                        "bonus-actions": false,
+                        "reactions": false,
+                        "other": false
+                    }
+                }
+            }
+        ];
+    }
+    else{
+        tableBody.innerHTML = '';
+    }
+
+    console.log(actionTableData)
 
     // Loop through the action table data and create rows
     actionTableData.forEach((rowData) => {
         for (const rowIndex in rowData) {
             const row = rowData[rowIndex];
             const newRow = document.createElement('tr');
+
+            const currentRowIndex = tableBody.children.length + 1; // Current number of rows + 1
+
+            console.log(currentRowIndex)
 
             // Set up proficiency button
             const profCell = document.createElement('td');
@@ -1806,6 +1731,7 @@ function updateActionTableUI(actionTableData) {
             const damageCell = document.createElement('td');
             const damageLabel = document.createElement('label');
             damageLabel.className = "actionButtonLabel damageDiceButton";
+            console.log(row.seventhColumn)
             damageLabel.setAttribute('value', findAbilityScoreLabel(row.seventhColumn).getAttribute('value') || "0");
             damageLabel.setAttribute('data-dice-type', row.fifthColumn);
             damageLabel.setAttribute('data-name', "Piercing default" || "default"); //HardCoded example this needs to be updated once Damage Type is implemented. 
@@ -1817,7 +1743,7 @@ function updateActionTableUI(actionTableData) {
             newRow.appendChild(damageCell);
             
             // Create and append the content for the sixth column
-            const columnSixCell = createColumnSixContent(row, rowIndex, newRow);
+            const columnSixCell = createColumnSixContent(row, currentRowIndex, newRow);
             newRow.appendChild(columnSixCell);
 
             // Set the data-category attribute based on the selected checkboxes
@@ -2195,6 +2121,14 @@ function addDeleteButtonListener(deleteButton) {
 
 
 
+
+
+
+
+
+
+//Spell Section
+
 function resetSpellSlots(){
     const spellSlots = document.querySelectorAll('.spell-slot');
 
@@ -2277,26 +2211,39 @@ document.querySelectorAll('.remove-spell-slot').forEach(button => {
     });
 });
 
-function createSpellTable() {
-    // Create the table element
+function createSpellTable(spellLevel) {
     const table = document.createElement('table');
     table.classList.add('spell-table');
 
-    // Create the header row
     const headerRow = document.createElement('tr');
     headerRow.classList.add('spell-row', 'spell-header');
+    headerRow.id = `${spellLevel}-spell-header`;
 
-    const headers = ['Spell Name', 'Time', 'Hit/DC', 'Dice', 'Con', 'Notes','Del'];
-    headers.forEach(headerText => {
+    // Define the headers and assign IDs with the spell level prefix
+    const headers = [
+        { text: 'Spell Name', id: `${spellLevel}SpellNameHeader` },
+        { text: 'Time', id: `${spellLevel}TimeHeader` },
+        { text: 'Hit/DC', id: `${spellLevel}HitDCHeader` },
+        { text: 'Dice', id: `${spellLevel}DiceHeader` },
+        { text: 'Con', id: `${spellLevel}ConcentrationHeader` },
+        { text: 'Notes', id: `${spellLevel}NotesHeader` },
+        { text: 'Del', id: `${spellLevel}DeleteHeader` }
+    ];
+
+    headers.forEach(({ text, id }) => {
         const headerCell = document.createElement('th');
         headerCell.classList.add('spell-header-cell');
-        headerCell.textContent = headerText;
+        headerCell.textContent = text;
+        headerCell.id = id;  // Unique ID with spell level prefix
         headerRow.appendChild(headerCell);
     });
 
     table.appendChild(headerRow);
     return table;
 }
+
+
+
 
 function createSpellRow(spell,spellLevel) {
     const row = document.createElement('tr');
@@ -2456,7 +2403,7 @@ function addSpellToContainer(spellContainer, spellData = null) {
 
     // If table doesn't exist, create it
     if (!table) {
-        table = createSpellTable();
+        table = createSpellTable(spellLevel);
         spellContainer.appendChild(table);
     }
 
@@ -3054,7 +3001,7 @@ function processSpellData() {
                 const slots = spellSlotsContainer.querySelectorAll('.spell-slot');
                 spellData[spellLevel].slots = Array.from(slots).map(slot => slot.classList.contains('used'));
             } else {
-                console.warn(`No spell slots container found for level: ${spellLevel}`);
+                
             }
         }
 
@@ -3127,7 +3074,7 @@ function loadSpellData(spellData) {
             // Check for existing spell table or create one if it doesn't exist
             let spellTable = spellContainer.querySelector('.spell-table');
             if (!spellTable) {
-                spellTable = createSpellTable();  // Assumes this function creates a table element
+                spellTable = createSpellTable(spellLevel);
                 spellContainer.appendChild(spellTable);
             }
 

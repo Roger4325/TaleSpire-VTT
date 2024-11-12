@@ -826,6 +826,7 @@ select{
     padding-bottom: 2px;
     padding-left: 2px;
     padding-right: 0px;
+    font-size: 16px;
 }
 
 .spell-table td {
