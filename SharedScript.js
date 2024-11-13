@@ -195,7 +195,7 @@ document.getElementById('languageEngButton').addEventListener('click', () => set
 document.getElementById('languageEspButton').addEventListener('click', () => setLanguage('es'));
 
 // Default language on load
-setLanguage('eng');
+// setLanguage('eng');
 
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
