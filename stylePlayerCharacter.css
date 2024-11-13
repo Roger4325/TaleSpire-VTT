@@ -1019,6 +1019,28 @@ select{
     font-weight: bold;
 }
 
+/* Style the chevron icon specifically for feature group collapse buttons */
+.collapse-feature-group-button {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth rotation */
+    color: var(--ts-button-background);
+
+    /* Hide button appearance */
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 2px;
+    
+    /* Adjust dimensions to fit just the icon */
+    width: auto;
+    height: auto;
+}
+
+/* Rotate the chevron when collapsed */
+.collapse-feature-group-button.collapsed {
+    transform: rotate(-90deg);
+}
+
 .add-trait-button, .add-group-button {
     background-color: var(--ts-button-background);
     color: white;
@@ -1048,6 +1070,32 @@ select{
     border-radius: 5px;
     border: 1px solid var(--ts-button-background);
     margin-top: 10px;
+}
+
+.trait-header, .trait-controls{
+    display:flex;
+    align-items: center;
+}
+
+.collapse-feature-trait-button {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Smooth rotation */
+    color: var(--ts-button-background);
+
+    /* Hide button appearance */
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 2px;
+    
+    /* Adjust dimensions to fit just the icon */
+    width: auto;
+    height: auto;
+}
+
+/* Rotate the chevron when collapsed */
+.collapse-feature-trait-button.rotated {
+    transform: rotate(-90deg);
 }
 
 .trait-name {

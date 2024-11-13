@@ -185,7 +185,15 @@ function setLanguage(language) {
     for (const id in translations[language]) {
         const element = document.getElementById(id);
         if (element) {
-            element.textContent = translations[language][id];
+            const translationText = translations[language][id];
+
+            // Check if the first child is a text node
+            if (element.firstChild.nodeType === Node.TEXT_NODE) {
+                element.firstChild.textContent = translationText; // Update only the text content
+            } else {
+                // If no text node, add a new text node at the beginning
+                element.insertBefore(document.createTextNode(translationText), element.firstChild);
+            }
         }
     }
 }

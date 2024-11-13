@@ -3435,6 +3435,22 @@ function createNewGroup(groupData = null) {
     // Create group header
     const groupHeader = document.createElement('div');
     groupHeader.classList.add('group-header');
+
+    const collapseButton = document.createElement('button');
+    collapseButton.classList.add('collapse-feature-group-button','fa', 'fa-chevron-down', 'chevron-icon');
+
+     // Event listener for collapsing and expanding
+     collapseButton.addEventListener('click', function () {
+        // Toggle the visibility of the traitsList
+        if (traitsList.style.display === 'none') {
+            traitsList.style.display = 'block';
+            collapseButton.classList.remove('collapsed');
+        } else {
+            traitsList.style.display = 'none';
+            collapseButton.classList.add('collapsed');
+        }
+    });
+
     const groupTitle = document.createElement('input');
     groupTitle.classList.add('group-title');
     groupTitle.placeholder = `Feature Group ${groupCounter}`;
@@ -3453,6 +3469,7 @@ function createNewGroup(groupData = null) {
         addNewTrait(groupContainer);
     });
 
+    groupHeader.appendChild(collapseButton);
     groupHeader.appendChild(groupTitle);
     groupHeader.appendChild(addTraitButton);
     groupContainer.appendChild(groupHeader);
@@ -3485,7 +3502,20 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Create the trait item
     const traitItem = document.createElement('div');
-    traitItem.classList.add('trait-item');    
+    traitItem.classList.add('trait-item');
+
+    const traitHeader = document.createElement('div');
+    traitHeader.classList.add('trait-header');
+    
+    const chevronIcon = document.createElement('i');
+    chevronIcon.classList.add('collapse-feature-trait-button','fa', 'fa-chevron-down', 'chevron-icon');
+
+    // Create event listener for toggling trait details
+    chevronIcon.addEventListener('click', function () {
+        const isCollapsed = traitDescription.style.display === 'none';
+        traitDescription.style.display = isCollapsed ? 'block' : 'none';
+        chevronIcon.classList.toggle('rotated');  // Toggle rotation class
+    });
 
     // Trait Name Input
     const traitName = document.createElement('input');
@@ -3499,6 +3529,9 @@ function addNewTrait(groupContainer, traitData = null) {
     if (traitData && traitData.traitName) {
         traitName.value = traitData.traitName;
     }
+
+    traitHeader.appendChild(chevronIcon);
+    traitHeader.appendChild(traitName);
 
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
@@ -3526,6 +3559,10 @@ function addNewTrait(groupContainer, traitData = null) {
     if (traitData && traitData.traitDescription) {
         traitDescription.value = traitData.traitDescription;
     }
+
+    // Flex container for the info button and uses section
+    const traitControls = document.createElement('div');
+    traitControls.classList.add('trait-controls');
 
     // Create the "i" button for displaying the submenu
     const infoButton = document.createElement('button');
@@ -3658,11 +3695,14 @@ function addNewTrait(groupContainer, traitData = null) {
     traitSettings.appendChild(traitUses);
     traitSettings.appendChild(deleteTraitButton);
 
+    traitControls.appendChild(checkboxesContainerMain);
+    traitControls.appendChild(infoButton);
+    
+
     // Append trait parts to trait item
-    traitItem.appendChild(traitName);
+    traitItem.appendChild(traitHeader);
     traitItem.appendChild(traitDescription);
-    traitItem.appendChild(checkboxesContainerMain); // Checkboxes for uses (main view)
-    traitItem.appendChild(infoButton); // The "i" button for the submenu
+    traitItem.appendChild(traitControls);
     traitItem.appendChild(traitSettings); // Submenu with uses and adjustments
 
     // Add the trait item to the list of traits in the group

@@ -622,7 +622,7 @@
             ],
             "spellData": {
                 "spellcastingModifier": "CHA",
-                "spelllevelselected": "1",
+                "spelllevelselected": "3",
                 "spellmagicbonus": "2",
                 "Cantrip": {
                     "spells": [
@@ -702,6 +702,51 @@
                     "traits": [
                         {
                             "traitName": "Testing",
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "testing two",
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Tester Group 2",
+                    "traits": [
+                        {
+                            "traitName": "Not Visable",
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Is visable",
+                            "traitDescription": "",
                             "checkboxStates": [
                                 false,
                                 false,
