@@ -1563,6 +1563,7 @@ async function sendInitiativeListToPlayer() {
 
     // Prepare the initiative list
     const initiativeList = cards.map(card => {
+        console.log(card)
         const name = card.querySelector(".name").textContent.trim();
         const isPlayer = card.classList.contains("player-card");
         const isVisible = !card.classList.contains("hidden");
