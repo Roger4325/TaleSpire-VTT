@@ -4138,7 +4138,7 @@ function createInitiativeCard(name, isPlayer, isVisible) {
     initCardHolder.appendChild(card);
 }
 
-reateInitiativeCard('Mira Ley Eshobbud', true, true);  // Player, visible
+createInitiativeCard('Mira Ley Eshobbud', true, true);  // Player, visible
 createInitiativeCard('Goblin Raider', false, true);     // Enemy, visible
 createInitiativeCard('Shadow Assassin', false, false); // Enemy, not visible
 

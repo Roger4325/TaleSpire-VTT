@@ -975,10 +975,19 @@ function reorderCards() {
     currentTurnIndex = 0;
     highlightCurrentTurn();
 
-    sendInitiativeListToPlayer();
+    debouncedSendInitiativeListToPlayer();
 }
 
+const debouncedSendInitiativeListToPlayer = debounce(sendInitiativeListToPlayer, 1000);
 
+
+function debounce(func, delay) {
+    let timeoutId;
+    return (...args) => {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+}
 
 
 
@@ -1563,14 +1572,14 @@ async function sendInitiativeListToPlayer() {
 
     // Prepare the initiative list
     const initiativeList = cards.map(card => {
-        console.log(card)
-        const name = card.querySelector(".name").textContent.trim();
+        const name = card.querySelector(".monster-name").textContent.trim();
         const isPlayer = card.classList.contains("player-card");
         const isVisible = !card.classList.contains("hidden");
-        const initiative = parseInt(card.querySelector(".init-input").value, 10) || 0;
 
-        return { name, isPlayer, isVisible, initiative };
+        return { name, isPlayer, isVisible};
     });
+
+
 
     // Send the initiative list to each client
     const message = {
@@ -1578,7 +1587,10 @@ async function sendInitiativeListToPlayer() {
         data: initiativeList
     };
 
+    const clients = await getAllOtherClients()
+
     for (const client of clients) {
+        console.log(client)
         try {
             await TS.sync.send(JSON.stringify(message), client);
         } catch (error) {
@@ -1586,6 +1598,24 @@ async function sendInitiativeListToPlayer() {
         }
     }
 }
+
+
+
+
+
+
+
+async function getAllOtherClients(){
+
+    const myFragment = await TS.clients.whoAmI();
+    const allClients = await TS.clients.getClientsInThisBoard();
+
+    const otherClients = allClients.filter(player => player.id !== myFragment.id);
+
+    return otherClients
+
+}
+
 
 
 
