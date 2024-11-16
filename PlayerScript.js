@@ -53,7 +53,7 @@ const messageHandlers = {
     'update-health': handleUpdateHealth,
     'roll-dice': handleRollDice,
     'target-selection': handleTargetSelection,
-    // Add more message types as needed
+    'player-init-list': createPlayerInit
 };
 
 
@@ -4107,6 +4107,52 @@ function loadGroupTraitData(groupTraitData) {
 
 
 
+
+//Player Init list start.
+
+function createInitiativeCard(name, isPlayer, isVisible) {
+    // Get the initiative container
+    const initCardHolder = document.querySelector('.initCardHolder');
+
+    // Create the card element
+    const card = document.createElement('div');
+    card.className = 'initCard';
+    card.style.display = isVisible ? 'block' : 'none'; // Hide if not visible
+
+    // Add content to the card
+    const nameElement = document.createElement('div');
+    nameElement.textContent = name;
+    nameElement.className = isPlayer ? 'playerName' : 'enemyName';
+
+    // Style based on player or enemy
+    card.style.backgroundColor = isPlayer ? '#a8dadc' : '#e63946'; // Light blue for players, red for enemies
+    card.style.color = 'white';
+    card.style.padding = '10px';
+    card.style.marginBottom = '5px';
+    card.style.borderRadius = '5px';
+
+    // Append name element to the card
+    card.appendChild(nameElement);
+
+    // Add the card to the container
+    initCardHolder.appendChild(card);
+}
+
+reateInitiativeCard('Mira Ley Eshobbud', true, true);  // Player, visible
+createInitiativeCard('Goblin Raider', false, true);     // Enemy, visible
+createInitiativeCard('Shadow Assassin', false, false); // Enemy, not visible
+
+
+
+
+
+
+
+
+
+
+
+
 async function handleSyncEvents(event) {
     //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
     //but for others it might be necessary to filter out your own messages (or have different behavior)
@@ -4333,7 +4379,15 @@ function handleInitiativeResult(resultGroup) {
 
 
 
+function createPlayerInit(initList) {
+    const initCardHolder = document.querySelector('.initCardHolder');
+    initCardHolder.innerHTML = ''; // Clear existing cards
 
+    // Loop through the initiative list and create cards
+    initList.forEach(entry => {
+        createInitiativeCard(entry.name, entry.isPlayer, entry.isVisible);
+    });
+}
 
 
 

@@ -974,6 +974,8 @@ function reorderCards() {
 
     currentTurnIndex = 0;
     highlightCurrentTurn();
+
+    sendInitiativeListToPlayer();
 }
 
 
@@ -1539,6 +1541,50 @@ async function requestPlayerInfo(player) {
     console.log("Request for info sent with requestId:", requestId);
 }
 
+
+//Gathering and sending the player the information in the Init List that they need. 
+async function sendInitiativeListToPlayer() {
+    const tracker = document.getElementById("initiative-tracker");
+
+    // Ensure tracker exists
+    if (!tracker) {
+        console.error("Initiative tracker element not found.");
+        return;
+    }
+
+    // Retrieve all cards
+    const cards = Array.from(tracker.querySelectorAll(".monster-card, .player-card"));
+
+    // Check if cards array is empty
+    if (cards.length === 0) {
+        console.warn("No cards to send.");
+        return;
+    }
+
+    // Prepare the initiative list
+    const initiativeList = cards.map(card => {
+        const name = card.querySelector(".name").textContent.trim();
+        const isPlayer = card.classList.contains("player-card");
+        const isVisible = !card.classList.contains("hidden");
+        const initiative = parseInt(card.querySelector(".init-input").value, 10) || 0;
+
+        return { name, isPlayer, isVisible, initiative };
+    });
+
+    // Send the initiative list to each client
+    const message = {
+        type: 'player-init-list',
+        data: initiativeList
+    };
+
+    for (const client of clients) {
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
+}
 
 
 
