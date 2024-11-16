@@ -296,7 +296,7 @@ select{
 
 .playerHealth{
     display:grid;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr ;
     gap:0;
     justify-content: center;
     align-items: center;
@@ -353,6 +353,27 @@ select{
 
 #alignment-select{
     margin-right: 10px;
+}
+
+.random-container {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 2px; 
+    align-items: center;
+}
+
+.hitDiceCompact{
+    font-size: 10px;
+    margin: 0;
+    padding: 0;
+}
+
+#hitDiceLabel{
+    font-size: 18px;
+}
+
+.conditions-container{
+    display: block;
 }
 
 #conditionHeader{
@@ -716,7 +737,21 @@ select{
 
 
 
+.spell-prepared-button{
+    margin: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 1px solid white;
+    padding: 2px;
+}
 
+.spell-prepared-button[value="1"] {
+    background-color: var(--ts-button-background); /* Adjust color as needed */
+    border-color: white; /* Optional: matches the filled color */
+}
 
 /*Spell Section*/
 .spell-section {
@@ -810,7 +845,7 @@ select{
     border-radius: 5px;
     border-collapse: collapse; 
     text-align: center;
-    width: 100%
+    width: 100%;
 }
 
 .spell-table tbody {
@@ -836,12 +871,17 @@ select{
     padding-left: 0px;
     padding-right: 0px;
     margin: 0;
+    text-align: center;
+    vertical-align: middle; 
+}
+
+.spell-name{
+    padding: 0;
 }
 
 
 
 .spell-name-input{
-    position: relative;
     width: 190px;
     color: white;
     background-color: var(--ts-background-secondary);
@@ -849,27 +889,26 @@ select{
     margin: 0;
     padding: 2px;
     text-align: center;
-    
 }
 
 .dropdown-container{
+    position: absolute;
+    width: 190px; /* Match input width */
     font-size: 15px;
 }
 
 .dropdown-list{
-    color:white;
+    color: white;
     background-color: var(--ts-background-secondary);
-    position:absolute;
-    width: 35%;
+    position: relative; /* Position within the absolute container */
+    left: 25%; /* Align left with the input */
+    width: 100%; /* Match container width */
     border: 1px solid var(--ts-button-background);
     cursor: pointer;
     max-height: 450px;
-    overflow: hidden;
-    overflow-y:auto;
-    z-index: 1;
-    padding-left: 10px;
-    padding-top: 2px;
-    padding-bottom: 2px;
+    overflow-y: auto;
+    padding: 0;
+    z-index: 100; 
 }
 
 .dropdown-list li{
@@ -1021,7 +1060,6 @@ select{
 
 /* Style the chevron icon specifically for feature group collapse buttons */
 .collapse-feature-group-button {
-    cursor: pointer;
     transition: transform 0.3s ease; /* Smooth rotation */
     color: var(--ts-button-background);
 
@@ -1034,6 +1072,12 @@ select{
     /* Adjust dimensions to fit just the icon */
     width: auto;
     height: auto;
+}
+
+.collapse-feature-group-button:hover, .collapse-feature-trait-button:hover{
+    cursor: pointer;
+    color: var(--ts-button-hover);
+    transform: scale(1.1);
 }
 
 /* Rotate the chevron when collapsed */
@@ -1056,11 +1100,33 @@ select{
     background-color: var(--ts-button-hover);
 }
 
+.trait-checkboxes-main{
+    display: flex;
+    flex-grow: 1;
+}
+
+/* Individual checkbox style */
+.trait-checkbox-main {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    accent-color: var(--ts-button-background);
+    border: 2px solid var(--ts-button-background);
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+/* Hover effect for better user interaction */
+.trait-checkbox-main:hover {
+    transform: scale(1.1); /* Slightly increase the size on hover */
+    accent-color: var(--ts-button-hover);
+}
+
+
+
 /* Trait item styles */
 .traits-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
     margin-left: 10px;
 }
 
@@ -1117,9 +1183,11 @@ select{
     border-radius: 5px;
     padding: 8px;
     font-size: 14px;
-    resize: none;
-    height: 60px;
+    min-height: 40px; /* Set a minimum height */
+    resize: none; /* Disable manual resizing */
+    overflow: hidden; /* Hide the scrollbar */
     margin-bottom: 8px;
+    box-sizing: border-box; /* Ensure padding is included in the width */
 }
 
 /* Uses tracker */

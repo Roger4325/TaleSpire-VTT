@@ -259,6 +259,25 @@ async function playerSetUP(){
     sendDMUpdatedStats()
 
 
+
+    // Event listener for the hit dice section
+    const hitDiceButton = document.getElementById("hitDiceButton");
+    hitDiceButton.addEventListener("focus", () => {
+        initialHitDiceValue = hitDiceButton.innerText.trim();
+    });
+
+    // Add an event listener to update the label when the button content is edited
+    hitDiceButton.addEventListener("blur", updateHitDiceLabel);
+
+    // Select the anchor element
+    const featuresLink = document.querySelector('a[href="#features"]');
+
+    // Add an event listener for the 'click' event
+    featuresLink.addEventListener('click', function() {
+        resizeAllTextareas()
+    });
+
+
 }  
     
 function toggleInspiration() {
@@ -274,6 +293,145 @@ function toggleInspiration() {
         starContainer.classList.add("active");
     }
     sendDMUpdatedStats()
+}
+
+function updateHitDiceLabel() {
+    // Get the content from the button and split it to separate the dice count and type
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+    const hitDiceText = hitDiceButton.innerText.trim();
+    
+    // Update regex to match a valid dice pattern with only valid dice types
+    const dicePattern = /^(\d+)d(4|6|8|10|12|20)$/;
+    const match = hitDiceText.match(dicePattern);
+
+    if (match) {
+        const diceCount = parseInt(match[1], 10);  // Extract the number before "d" and convert to integer
+        const maxDiceCount = parseInt(hitDiceLabel.getAttribute("max"), 10);  // Retrieve the max attribute from the label
+        const currentHitDice = parseInt(hitDiceLabel.textContent.trim(), 10);
+
+        // Check if the dice count exceeds the max allowed
+        if (diceCount > maxDiceCount) {
+            showErrorModal(`Invalid input: Dice count cannot exceed ${maxDiceCount} (current level).`);
+            hitDiceButton.innerText = initialHitDiceValue;  // Restore previous value
+        } 
+        else if (diceCount > currentHitDice) {
+            showErrorModal(`Invalid input: Dice count cannot exceed ${currentHitDice} (remaining hit dice).`);
+            hitDiceButton.innerText = initialHitDiceValue;  // Restore previous value
+        }
+        else {
+            // Update label with the valid dice count and type
+            hitDiceLabel.setAttribute("data-dice-type", hitDiceText);
+        }
+    } else {
+        // Show error modal and revert to initial value
+        showErrorModal("Invalid input: Please enter a valid dice format like '5d6'.");
+        hitDiceButton.innerText = initialHitDiceValue;  // Restore previous value
+    }
+    updateHitDiceValue()
+    updateHitDiceMax()
+}
+
+function removeRolledHitDice() {
+    console.log("remove hit dice")
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+    const hitDiceButton = document.getElementById("hitDiceButton");
+
+    // Get the current number of available hit dice from the text content
+    let currentHitDice = parseInt(hitDiceLabel.textContent.trim(), 10);
+
+    const diceType = hitDiceLabel.getAttribute("data-dice-type");
+    const diceCountMatch = diceType.match(/^(\d+)d/);
+    const diceCount = parseInt(diceCountMatch[1], 10);
+    console.log(diceCountMatch)
+
+    // Check if currentHitDice is a valid number and greater than 0
+    if (!isNaN(currentHitDice) && currentHitDice > 0) {
+
+        currentHitDice -= diceCount;
+
+        // Update the label text content
+        hitDiceLabel.textContent = currentHitDice > 0 ? currentHitDice : 0; // Avoid negative numbers
+
+        const diceSuffix = diceType.match(/d\d+/)[0];  // This matches "d8", "d10", etc.
+
+        if (currentHitDice < diceCount) {
+            console.log("update button text.")
+            hitDiceButton.textContent = `${currentHitDice}${diceSuffix}`;
+        }
+    }
+    updateContent()
+}
+
+function addHalfHitDiceOnRest() {
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+
+    // Get the current number of available hit dice from the text content
+    let currentHitDice = parseInt(hitDiceLabel.textContent.trim(), 10);
+    let maxHitDice = parseInt(hitDiceLabel.getAttribute('max'))
+    
+    console.log(maxHitDice)
+
+    // Check if currentHitDice is a valid number
+    if (!isNaN(currentHitDice)) {
+        console.log("here")
+        // Add back half of the used hit dice (rounded down) but no less than 1
+        let hitDiceToAdd = Math.max(Math.floor(maxHitDice / 2), 1);
+
+        let newHitDice = currentHitDice + hitDiceToAdd
+
+        if (newHitDice > maxHitDice) {
+            hitDiceLabel.textContent = maxHitDice
+        }
+        else{
+            hitDiceLabel.textContent = newHitDice
+        }
+    }
+    updateContent()
+}
+
+// Function to update max hit dice based on character level
+function updateHitDiceMax() {
+    console.log("updating hit dice max.")
+    const characterLevel = document.getElementById("characterLevel");
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+    // Parse the level value from the character level element
+    const level = parseInt(characterLevel.innerText.trim(), 10);
+
+    // Check if level is a valid number greater than zero
+    if (!isNaN(level) && level > 0) {
+        // Set the max attribute on hitDiceLabel to the character level
+        hitDiceLabel.setAttribute("max", level);
+    } else {
+        showErrorModal("Invalid level: Please enter a valid level number.");
+    }
+}
+
+// Function to update the hit dice value with the Constitution modifier
+function updateHitDiceValue() {
+    const constitutionScore = document.getElementById("constitutionScore");
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+
+    // Parse the Constitution score and calculate modifier
+    const conScore = parseInt(constitutionScore.innerText.trim(), 10);
+    if (!isNaN(conScore)) {
+        const conModifier = calculateAbilityModifier(conScore);
+
+        // Extract the number of dice (x in xdy) from the data-dice-type attribute
+        const diceType = hitDiceLabel.getAttribute("data-dice-type");
+        const diceCountMatch = diceType.match(/^(\d+)d/);
+
+        if (diceCountMatch) {
+            const diceCount = parseInt(diceCountMatch[1], 10);
+            const totalModifier = conModifier * diceCount;
+
+            // Update the value attribute and label text with the calculated modifier
+            hitDiceLabel.setAttribute("value", totalModifier);
+        } else {
+            showErrorModal("Invalid dice format in data-dice-type.");
+        }
+    } else {
+        showErrorModal("Invalid Constitution score: Please enter a valid number.");
+    }
 }
 
 
@@ -302,6 +460,7 @@ function handleXPChange(event){
     updateAllSpellDCs();
     updateAllSpellDamageDice();
     updateSpellDCHeader()
+    updateHitDiceMax()
 
 
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -428,6 +587,7 @@ function handleAbilityScoreChange(event) {
         updateAllSpellDamageDice();
         updateSpellDCHeader()
         sendDMUpdatedStats()
+        updateHitDiceValue()
 
 
         const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -569,6 +729,7 @@ function longRest() {
     // Call the healCreature function with the max HP as the healing amount
     healCreature(maxHPValue);
     resetSpellSlots()
+    addHalfHitDiceOnRest()
 }
 
 
@@ -1074,11 +1235,13 @@ function getAllEditableContent() {
     const characterName = document.getElementById("playerCharacterInput");
     const characterTempHp = document.getElementById("tempHP");
     const proficiencyButtons = document.querySelectorAll(".proficiencyButtons button");
+    const currentHitDice = document.getElementById("hitDiceLabel");
 
     const content = {};
 
     // Add specific elements to the content object
     content['characterTempHp'] = characterTempHp.value;
+    content['currentHitDice'] = currentHitDice.textContent;
 
     // Add other content-editable elements to the content object
     editableElements.forEach((element) => {
@@ -1157,6 +1320,7 @@ function processActionTableRow(){
         const sixthColumnCell = row.querySelector('td:nth-child(6)');
         const seventhColumnCell = row.querySelector('.ability-dropdown');
         const eighthColumnCell = row.querySelector('.magic-bonus-weapon');
+        const damageBonusCell = row.querySelector('.damage-bonus-weapon');
         const tenthColumnCell = row.querySelector('.actionDescriptiveText01');
         const elventhColumnCell = row.querySelector('.actionDescriptiveText02');
         const twelvethColumnCell = row.querySelector('.damage-type');
@@ -1187,6 +1351,9 @@ function processActionTableRow(){
         }
         if (eighthColumnCell) {
             rowData['eighthColumn'] = eighthColumnCell.value;
+        }
+        if (damageBonusCell) {
+            rowData['damageBonus'] = damageBonusCell.value;
         }
         if (tenthColumnCell) {
             rowData['tenthColumn'] = tenthColumnCell.textContent;
@@ -1255,11 +1422,13 @@ function updateCharacterUI(characterData, characterName) {
     const characterNameElement = document.getElementById("playerCharacterInput");
     const characterAlignment = document.getElementById('alignment-select');
     const characterTempHpElement = document.getElementById("tempHP");
+    const currentHitDice = document.getElementById("hitDiceLabel");
 
     // Update UI elements
     characterNameElement.textContent = characterName; 
     characterAlignment.value = characterData.alignment; 
     characterTempHpElement.value = characterData.characterTempHp;
+    currentHitDice.textContent = characterData.currentHitDice;
 
     const characterInit = document.getElementById("initiativeButton");
     const characterInitLabel = document.querySelector(`.playerStats label[for="initiativeButton"]`);
@@ -1268,7 +1437,7 @@ function updateCharacterUI(characterData, characterName) {
 
     // Update other content-editable elements
     for (const property in characterData) {
-        if (characterData.hasOwnProperty(property) && property !== "characterName" && property !== "characterTempHp" && property !== "conditions" && property !== "initiativeButton") {
+        if (characterData.hasOwnProperty(property) && property !== "characterName" && property !== "characterTempHp"  && property !== "currentHitDice" && property !== "conditions" && property !== "initiativeButton") {
             const element = document.getElementById(property);
             if (element) {
                 element.innerText = characterData[property];
@@ -1294,6 +1463,8 @@ function updateCharacterUI(characterData, characterName) {
     loadSpellData(characterData.spellData);
     loadInventoryData(characterData.inventoryData);
     loadGroupTraitData(characterData.groupTraitData)
+
+    updateHitDiceLabel()
 
 }
 
@@ -1569,6 +1740,50 @@ function confirmDeleteCharacter(characterName, overlay) {
 function magicBonusInputListeners() {
     const magicBonusListeners = document.querySelectorAll('.magic-bonus-weapon');
 
+    const damageBonusListeners = document.querySelectorAll('.damage-bonus-weapon');
+
+    magicBonusListeners.forEach((listener) => {
+        // Listen for blur and keydown events
+        listener.addEventListener('blur', handletoHitBlur);
+        listener.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default behavior of Enter key
+                listener.blur(); // Trigger blur event manually
+            }
+        });
+    });
+
+    // Handle the blur event
+    function handletoHitBlur(event) {
+        console.log("Event triggered");
+        calculateActionDamageDice();
+        updateAllToHitDice();
+        updateContent()
+    }
+
+    damageBonusListeners.forEach((listener) => {
+        // Listen for blur and keydown events
+        listener.addEventListener('blur', handleDamageBlur);
+        listener.addEventListener('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent the default behavior of Enter key
+                listener.blur(); // Trigger blur event manually
+            }
+        });
+    });
+
+    
+    function handleDamageBlur(event) {
+        console.log("Event triggered");
+        calculateActionDamageDice();
+        updateAllToHitDice();
+        updateContent()
+    }
+}
+
+function damageBonusInputListeners() {
+    const magicBonusListeners = document.querySelectorAll('.damage-bonus-weapon');
+
     magicBonusListeners.forEach((listener) => {
         // Listen for blur and keydown events
         listener.addEventListener('blur', handleBlur);
@@ -1689,8 +1904,6 @@ function updateActionTableUI(actionTableData) {
 
             const currentRowIndex = tableBody.children.length + 1; // Current number of rows + 1
 
-            console.log(currentRowIndex)
-
             // Set up proficiency button
             const profCell = document.createElement('td');
             const profButtonDiv = createProficiencyButton(row.proficiencyButton);
@@ -1731,10 +1944,10 @@ function updateActionTableUI(actionTableData) {
             const damageCell = document.createElement('td');
             const damageLabel = document.createElement('label');
             damageLabel.className = "actionButtonLabel damageDiceButton";
-            console.log(row.seventhColumn)
             damageLabel.setAttribute('value', findAbilityScoreLabel(row.seventhColumn).getAttribute('value') || "0");
             damageLabel.setAttribute('data-dice-type', row.fifthColumn);
             damageLabel.setAttribute('data-name', "Piercing default" || "default"); //HardCoded example this needs to be updated once Damage Type is implemented. 
+            
             const damageButton = document.createElement('button');
             damageButton.className = "actionButton damageDiceButton skillbuttonstyler";
             damageButton.textContent = row.fifthColumn & findAbilityScoreLabel(row.seventhColumn).getAttribute('value')|| "2d6+4d4+5"; // Default value if empty
@@ -1770,6 +1983,7 @@ function updateActionTableUI(actionTableData) {
 
     calculateActionDamageDice()
     magicBonusInputListeners()
+    damageBonusInputListeners()
     actionTableEventListenerSetup()
     attachAbilityDropdownListeners()
     addProficiencyButtonListener()
@@ -1864,11 +2078,21 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Magic Bonus input
     const magicBonusDiv = document.createElement('div');
     const magicBonusInput = document.createElement('input');
-    magicBonusInput.placeholder = "Magic Bonus";
+    magicBonusInput.placeholder = "To Hit Bonus";
+    magicBonusDiv.textContent = "ToHitBonus : ";
     magicBonusInput.classList.add('magic-bonus-weapon')
     magicBonusInput.value = rowData["eighthColumn"]
     magicBonusDiv.appendChild(magicBonusInput);
     additionalInfoContainer.appendChild(magicBonusDiv);
+
+    const damageBonusDiv = document.createElement('div');
+    const damageBonusInput = document.createElement('input');
+    damageBonusInput.placeholder = "Damage Bonus";
+    damageBonusDiv.textContent = "Damage Mod: ";
+    damageBonusInput.classList.add('damage-bonus-weapon')
+    damageBonusInput.value = rowData["damageBonus"]
+    damageBonusDiv.appendChild(damageBonusInput);
+    additionalInfoContainer.appendChild(damageBonusDiv);
 
     // Create the damage dice input field
     const damageDiceInput = createDamageDiceInput(rowIndex);
@@ -1877,6 +2101,7 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     const damageTypeDiv = document.createElement('div');
     const damageTypeInput = document.createElement('input');
     damageTypeInput.placeholder = "Damage Type";
+    damageTypeDiv.textContent = "Damage Type : ";
     damageTypeInput.classList.add('damage-type')
     damageTypeInput.value = rowData["twelvethColumn"]
     damageTypeDiv.appendChild(damageTypeInput);
@@ -1987,8 +2212,10 @@ function calculateActionDamageDice() {
         const abilityDropdown = row.querySelector('.ability-dropdown');
 
         const magicBonusInput = row.querySelector('.magic-bonus-weapon');
+        const damageBonusInput = row.querySelector('.damage-bonus-weapon');
 
         const magicBonus = parseInt(magicBonusInput.value) || 0;
+        const damageBonus = parseInt(damageBonusInput.value) || 0;
 
 
         if (damageLabel && damageButton && abilityDropdown) {
@@ -1996,7 +2223,7 @@ function calculateActionDamageDice() {
             const selectedAbility = abilityDropdown.value;
 
             // Find the corresponding ability modifier using the provided function
-            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + magicBonus;
+            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + damageBonus;
 
             damageLabel.setAttribute ('value', abilityScoreLabel)
 
@@ -2084,6 +2311,7 @@ function createDamageDiceInput(rowIndex) {
     input.id = `damageDiceActions${rowIndex}`;
     input.className = 'actionDamageDice';
     input.placeholder = 'Enter damage dice';
+    div.textContent ="Damage Dice : "
 
     const label = document.createElement('span');
     label.textContent = '';
@@ -2255,6 +2483,23 @@ function createSpellRow(spell,spellLevel) {
     const spellNameContainer = document.createElement('td');
     spellNameContainer.classList.add('spell-name');
 
+    console.log(spell)
+
+    let spellPreparedButton
+
+    if (parseInt(spellLevel.charAt(0)) >= 1){
+        spellPreparedButton = document.createElement('button');
+        spellPreparedButton.classList.add('spell-prepared-button')
+        const preparedValue = spell.prepared ? spell.prepared : '0';
+        spellPreparedButton.setAttribute('value', preparedValue);
+    }
+    else{
+        console.log("no")
+        console.log(spellLevel)
+    }
+    
+
+
     const spellNameInput = document.createElement('input');
     spellNameInput.classList.add('spell-name-input');
     spellNameInput.type = 'text';
@@ -2329,6 +2574,17 @@ function createSpellRow(spell,spellLevel) {
             dropdownContainer.style.display = 'none'; // Hide dropdown
         }
     });
+
+    if(spellPreparedButton){
+        spellPreparedButton.addEventListener('click', () => {
+            // Get the current value and toggle between '0' and '1'
+            const currentValue = spellPreparedButton.getAttribute('value');
+            const newValue = currentValue === '0' ? '1' : '0';
+            spellPreparedButton.setAttribute('value', newValue);
+            updateContent()
+        });
+        spellNameContainer.appendChild(spellPreparedButton);
+    }
 
     spellNameContainer.appendChild(spellNameInput);
     spellNameContainer.appendChild(dropdownContainer);
@@ -2981,10 +3237,14 @@ function processSpellData() {
             // Get spell details
             const spellNameInput = row.querySelector('.spell-name-input');
             const spellName = spellNameInput ? spellNameInput.value.trim() : '';
+            const spellPreparedButton = row.querySelector('.spell-prepared-button');
+            const spellPrepared = spellPreparedButton ? spellPreparedButton.getAttribute('value') || 'false' : 'false';
+
             
             // Only add spell if the name is not empty
             if (spellName) {
                 spellDetails['name'] = spellName;
+                spellDetails['prepared'] = spellPrepared;
                 spellData[spellLevel].spells.push(spellDetails);
             }
         });
@@ -3436,20 +3696,7 @@ function createNewGroup(groupData = null) {
     const groupHeader = document.createElement('div');
     groupHeader.classList.add('group-header');
 
-    const collapseButton = document.createElement('button');
-    collapseButton.classList.add('collapse-feature-group-button','fa', 'fa-chevron-down', 'chevron-icon');
 
-     // Event listener for collapsing and expanding
-     collapseButton.addEventListener('click', function () {
-        // Toggle the visibility of the traitsList
-        if (traitsList.style.display === 'none') {
-            traitsList.style.display = 'block';
-            collapseButton.classList.remove('collapsed');
-        } else {
-            traitsList.style.display = 'none';
-            collapseButton.classList.add('collapsed');
-        }
-    });
 
     const groupTitle = document.createElement('input');
     groupTitle.classList.add('group-title');
@@ -3469,14 +3716,46 @@ function createNewGroup(groupData = null) {
         addNewTrait(groupContainer);
     });
 
+
+
+    // Create the trait list (initially empty)
+    const traitsList = document.createElement('div');
+    traitsList.classList.add('traits-list');
+   
+
+    let collapseButton
+
+    if (groupData && groupData['group-chevron']) {
+        collapseButton = document.createElement('button');
+        collapseButton.classList.add('collapse-feature-group-button','fa', 'fa-chevron-down', 'chevron-icon', 'collapsed');
+        traitsList.style.display = 'none';
+    }
+    else{
+        collapseButton = document.createElement('button');
+        collapseButton.classList.add('collapse-feature-group-button','fa', 'fa-chevron-down', 'chevron-icon');
+        traitsList.style.display = 'block';
+    }
+
+    
+
+     // Event listener for collapsing and expanding
+     collapseButton.addEventListener('click', function () {
+        // Toggle the visibility of the traitsList
+        if (traitsList.style.display === 'none') {
+            traitsList.style.display = 'block';
+            collapseButton.classList.remove('collapsed');
+        } else {
+            traitsList.style.display = 'none';
+            collapseButton.classList.add('collapsed');
+        }
+        updateContent()
+    });
+
     groupHeader.appendChild(collapseButton);
     groupHeader.appendChild(groupTitle);
     groupHeader.appendChild(addTraitButton);
     groupContainer.appendChild(groupHeader);
 
-    // Create the trait list (initially empty)
-    const traitsList = document.createElement('div');
-    traitsList.classList.add('traits-list');
     groupContainer.appendChild(traitsList);
 
     // If groupData is provided, load its traits
@@ -3507,15 +3786,6 @@ function addNewTrait(groupContainer, traitData = null) {
     const traitHeader = document.createElement('div');
     traitHeader.classList.add('trait-header');
     
-    const chevronIcon = document.createElement('i');
-    chevronIcon.classList.add('collapse-feature-trait-button','fa', 'fa-chevron-down', 'chevron-icon');
-
-    // Create event listener for toggling trait details
-    chevronIcon.addEventListener('click', function () {
-        const isCollapsed = traitDescription.style.display === 'none';
-        traitDescription.style.display = isCollapsed ? 'block' : 'none';
-        chevronIcon.classList.toggle('rotated');  // Toggle rotation class
-    });
 
     // Trait Name Input
     const traitName = document.createElement('input');
@@ -3530,28 +3800,21 @@ function addNewTrait(groupContainer, traitData = null) {
         traitName.value = traitData.traitName;
     }
 
-    traitHeader.appendChild(chevronIcon);
-    traitHeader.appendChild(traitName);
+
+
 
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
     traitDescription.placeholder = 'Describe the trait here...';
 
+    // Auto-resize the text area as the user types
+    traitDescription.addEventListener('input', function () {
+        resizeTextarea(this)
+    });
+
     // Add blur event listener to parse and replace dice
     traitDescription.addEventListener('blur', function (){
-        // Call the parse and replace dice function
-        const parsedDescription = parseAndReplaceDice(traitName.textContent, traitDescription.value, true); // Adjust parameters as needed
-    
-        // Create a temporary div to extract the text content without HTML
-        const tempDiv = document.createElement('div');
-        tempDiv.appendChild(parsedDescription);
-        
-        // Set the textarea value to the plain text from the parsed description
-        traitDescription.value = tempDiv.innerText;
-    
-        // Log the output for demonstration
-        console.log(tempDiv.innerHTML); // If you want to see the HTML, log this
         updateContent(); // Call your function to update content as needed
     });
 
@@ -3560,6 +3823,31 @@ function addNewTrait(groupContainer, traitData = null) {
         traitDescription.value = traitData.traitDescription;
     }
 
+    let chevronIcon;
+
+    if (traitData && traitData.cheveron){
+        chevronIcon = document.createElement('i');
+        chevronIcon.classList.add('collapse-feature-trait-button','fa', 'fa-chevron-down', 'chevron-icon' , 'rotated');
+            // If the chevron is rotated, collapse the description
+        traitDescription.style.display = 'none';
+    }else{
+        chevronIcon = document.createElement('i');
+        chevronIcon.classList.add('collapse-feature-trait-button','fa', 'fa-chevron-down', 'chevron-icon');
+        traitDescription.style.display = 'block';
+    }
+    
+    // Create event listener for toggling trait details
+    chevronIcon.addEventListener('click', function () {
+        const isCollapsed = traitDescription.style.display === 'none';
+        traitDescription.style.display = isCollapsed ? 'block' : 'none';
+        chevronIcon.classList.toggle('rotated');  // Toggle rotation class
+        updateContent();
+        resizeAllTextareas()
+    });
+
+    traitHeader.appendChild(chevronIcon);
+    traitHeader.appendChild(traitName);
+
     // Flex container for the info button and uses section
     const traitControls = document.createElement('div');
     traitControls.classList.add('trait-controls');
@@ -3567,7 +3855,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Create the "i" button for displaying the submenu
     const infoButton = document.createElement('button');
     infoButton.innerHTML = '<i>i</i>';
-    infoButton.classList.add('info-button');
+    infoButton.classList.add('info-button', 'nonRollButton');
 
     // Submenu container (initially hidden)
     const traitSettings = document.createElement('div');
@@ -3708,9 +3996,22 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
 
-    // Automatically show the trait list if hidden
-    traitsList.style.display = 'block';
     updateContent();
+}
+
+
+function resizeTextarea(textarea) {
+    textarea.style.height = 'auto'; // Reset the height
+    textarea.style.height = `${textarea.scrollHeight}px`; // Set to the scroll height
+}
+
+// Function to resize all trait-description textareas after they've been appended
+function resizeAllTextareas() {
+    // Using requestAnimationFrame to ensure elements are in the DOM
+        const textareas = document.querySelectorAll('.trait-description');
+        textareas.forEach(textarea => {
+            resizeTextarea(textarea);
+        });
 }
 
 
@@ -3731,7 +4032,10 @@ function processGroupTraitData() {
     groupContainers.forEach((group, index) => {
         const groupData = {};
         const groupName = group.querySelector('.group-title').value;
+        const chevronGroup = group.querySelector('.collapse-feature-group-button');
+        const isChevronGroupRotated = chevronGroup.classList.contains('collapsed');
         groupData['group-title'] = groupName;
+        groupData['group-chevron'] = isChevronGroupRotated;
 
         // Select all traits within this group
         const traits = group.querySelectorAll('.trait-item');
@@ -3740,10 +4044,13 @@ function processGroupTraitData() {
         traits.forEach((trait) => {
             const traitDataObject = {};
             const traitName = trait.querySelector('.trait-name').value;
+            const chevron = trait.querySelector('.collapse-feature-trait-button')
+            const isRotated = chevron.classList.contains('rotated');
             const traitDescription = trait.querySelector('.trait-description').value;
 
             // Save the trait name and value
             traitDataObject['traitName'] = traitName;
+            traitDataObject['cheveron'] = isRotated;
             traitDataObject['traitDescription'] = traitDescription;
 
             // Save the trait checkbox state if available
@@ -3956,8 +4263,6 @@ async function getGMClient(){
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
     myGM = await getGMClient()
-
-    console.log(myGM)
 
     if(myGM) {
         const playerStats = getPlayerData();

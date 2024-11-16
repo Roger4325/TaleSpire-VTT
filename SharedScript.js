@@ -730,11 +730,21 @@ async function handleRollResult(rollEvent) {
 
 
 async function displayResult(resultGroups, rollId) {
-    console.log(resultGroups)
 
     for (const resultGroup of resultGroups) {
+        console.log(resultGroup.name)
         if (resultGroup.name.trim().toLowerCase() === "initiative") {
             handleInitiativeResult(resultGroup); // Call the function for initiative results
+        }
+        if (resultGroup.name.trim().toLowerCase() === "hit dice") {
+            
+            let normalGroup = resultGroups[0]; // Assuming the first group is the main roll group
+            let totalRolled = await TS.dice.evaluateDiceResultsGroup(normalGroup); //This code give the total rolled value of the dice group. 
+
+            console.log("Total rolled amount:", totalRolled);
+
+            removeRolledHitDice();
+            healCreature(totalRolled);
         }
     }
     try {

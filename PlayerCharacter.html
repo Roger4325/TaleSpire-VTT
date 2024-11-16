@@ -167,21 +167,31 @@
                         </div>
                     </div>
                 </div>
-                <div id="alignmentHeader">
-                    <label for="alignment-select"></label>
-                    <select id="alignment-select">
-                        <option value="LG">Lawful Good</option>
-                        <option value="NG">Neutral Good</option>
-                        <option value="CG">Chaotic Good</option>
-                        <option value="LN">Lawful Neutral</option>
-                        <option value="TN">True Neutral</option>
-                        <option value="CN">Chaotic Neutral</option>
-                        <option value="LE">Lawful Evil</option>
-                        <option value="NE">Neutral Evil</option>
-                        <option value="CE">Chaotic Evil</option>
-                    </select>
+                <div class="random-container">
+                    <div id="alignmentHeader">
+                        <label for="alignment-select"></label>
+                        <select id="alignment-select">
+                            <option value="LG">Lawful Good</option>
+                            <option value="NG">Neutral Good</option>
+                            <option value="CG">Chaotic Good</option>
+                            <option value="LN">Lawful Neutral</option>
+                            <option value="TN">True Neutral</option>
+                            <option value="CN">Chaotic Neutral</option>
+                            <option value="LE">Lawful Evil</option>
+                            <option value="NE">Neutral Evil</option>
+                            <option value="CE">Chaotic Evil</option>
+                        </select>
+                    </div>
+
+                    <div class="hitDiceContainer">
+                        <div class="hitDiceCompact"> Hit Die: 
+                            <label id="hitDiceLabel" class="actionButtonLabel" max="1" data-name="Hit Dice" data-dice-type="1d8" value="1">1</label>
+                            <button id="hitDiceButton" class="actionButton" title="Roll Hit Dice" contenteditable="true">1d8</button>
+                        </div>
+                    </div>
                 </div>
-                <div>
+                
+                <div class ="conditions-container">
                     <div id="conditionHeader">
                         <label for="condition-select"></label>
                         <select id="condition-select">
@@ -925,7 +935,7 @@
 <div id="errorModal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <p>0</p>
+        <p id="errorModalMessage"></p>
         <button id="removeButton" style="display: none;">Delete from Global</button>
     </div>
 </div>
