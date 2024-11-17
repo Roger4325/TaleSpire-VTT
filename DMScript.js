@@ -1601,7 +1601,8 @@ async function sendInitiativeListToPlayer() {
     const initiativeList = cards.map(card => {
         const nameElement = card.querySelector(".monster-name");
         const isPlayer = card.classList.contains("player-card") ? 1 : 0;
-        const isVisible = !card.classList.contains("fa-eye-slash") ? 1 : 0;
+        const eyeButton = card.querySelector(".eye-button"); // Assuming the eye button has the class '.eye-button'
+        const isVisible = eyeButton && eyeButton.querySelector('i') && eyeButton.querySelector('i').classList.contains('fa-eye-slash') ? 0 : 1;
 
         return {
             n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
