@@ -1603,6 +1603,7 @@ async function sendInitiativeListToPlayer() {
         }
     }
     highlightCurrentTurn()
+    sendInitiativeRound()
 }
 
 async function sendInitiativeTurn(initiativeIndex) {
