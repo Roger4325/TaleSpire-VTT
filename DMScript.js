@@ -617,6 +617,7 @@ function populateMonsterFields(monster) {
     checkAndPopulateSection('monsterSkills', monster.Skills, 'skill');
     checkAndPopulateSection('monsterSaves', monster.Saves, 'savingThrow');
     checkAndPopulateSection('monsterActions', monster.Actions, 'action');
+    checkAndPopulateSection('monsterReactions', monster.Reactions, 'action');
     checkAndPopulateSection('monsterAbilities', monster.Traits, 'traits');
     checkAndPopulateSection('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
     
@@ -640,6 +641,7 @@ function populateMonsterListField(elementId, items, type) {
                 switch (type) {
                     case 'traits':
                     case 'action':
+                    case 'reaction':
                     case 'legendaryAction':
                         itemContent = parseAndReplaceDice({ name: item.Name }, `<strong>${item.Name}: </strong>${item.Content}`, true);
                         break;
