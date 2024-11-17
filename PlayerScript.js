@@ -53,7 +53,8 @@ const messageHandlers = {
     'update-health': handleUpdateHealth,
     'roll-dice': handleRollDice,
     'target-selection': handleTargetSelection,
-    'player-init-list': createPlayerInit
+    'player-init-list': createPlayerInit,
+    'player-init-turn': handleInitTurn
 };
 
 
@@ -4412,6 +4413,29 @@ function createPlayerInit(initList) {
     initList.data.forEach(entry => {
         createInitiativeCard(entry.n, entry.p, entry.v);
     });
+}
+
+function handleInitTurn(message) {
+    const tracker = document.querySelector('.initCardHolder');
+    
+    // Ensure the message has the correct structure
+    if (message && message.data !== undefined) {
+        const currentTurnIndex = message.data;
+
+        // Remove 'current-turn' from all cards
+        const allCards = tracker.querySelectorAll(".initCard");
+        allCards.forEach(card => {
+            card.classList.remove('current-turn');
+        });
+
+        // Add 'current-turn' to the active card
+        const currentCard = allCards[currentTurnIndex];
+        if (currentCard) {
+            currentCard.classList.add('current-turn');
+        }
+    } else {
+        console.error("Invalid message structure:", message);
+    }
 }
 
 

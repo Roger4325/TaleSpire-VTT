@@ -1007,6 +1007,8 @@ function highlightCurrentTurn() {
     if (currentCard) {
         currentCard.classList.add('current-turn');
     }
+
+    debounce(sendInitiativeTurn(currentTurnIndex), 1000);
 }
 
 // Function to update the round display
@@ -1599,6 +1601,31 @@ async function sendInitiativeListToPlayer() {
             console.error(`Error sending initiative list to client ${client}:`, error);
         }
     }
+    highlightCurrentTurn()
+}
+
+async function sendInitiativeTurn(initiativeIndex) {
+    // Send the initiative list to each client
+    const message = {
+        type: 'player-init-turn',
+        data: initiativeIndex
+    };
+
+    const clients = await getAllOtherClients();
+
+    for (const client of clients) {
+        console.log(client);
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
+
+}
+
+async function sendInitiativeRound() {
+
 }
 
 

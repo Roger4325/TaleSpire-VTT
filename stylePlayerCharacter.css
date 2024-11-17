@@ -1652,3 +1652,8 @@ display: none;
     font-weight: bold;
     font-size: 18px;
 }
+
+.current-turn {
+    background-color: #ffeb3b; /* Highlight color for the active turn */
+    border: 2px solid #f57c00; /* Optional: Add border for better visibility */
+}
