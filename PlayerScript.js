@@ -54,7 +54,8 @@ const messageHandlers = {
     'roll-dice': handleRollDice,
     'target-selection': handleTargetSelection,
     'player-init-list': createPlayerInit,
-    'player-init-turn': handleInitTurn
+    'player-init-turn': handleInitTurn,
+    'player-init-round': handleInitRound
 };
 
 
@@ -4433,6 +4434,21 @@ function handleInitTurn(message) {
         if (currentCard) {
             currentCard.classList.add('current-turn');
         }
+    } else {
+        console.error("Invalid message structure:", message);
+    }
+}
+
+function handleInitRound(message) {
+    const roundCounter = document.querySelector('.round-counter');
+    
+    // Ensure the message has the correct structure
+    if (message && message.data !== undefined) {
+        const currentRound = message.data;
+
+        // Use template literals for string interpolation
+        roundCounter.textContent = `Round: ${currentRound}`;
+        
     } else {
         console.error("Invalid message structure:", message);
     }

@@ -456,7 +456,7 @@ function updateMonsterCard(card, monster) {
 
 
 
-// Event listener for hdining the monster stat block
+// Event listener for hiding the monster stat block
 document.getElementById('closeMonsterCard').addEventListener('click', function() {
     toggleMonsterCardVisibility(false);
 });
@@ -1015,6 +1015,7 @@ function highlightCurrentTurn() {
 function updateRoundDisplay() {
     const roundDisplay = document.getElementById('round-counter');
     roundDisplay.textContent = `Round: ${roundCounter}`;
+    sendInitiativeRound()
 }
 
 
@@ -1626,6 +1627,21 @@ async function sendInitiativeTurn(initiativeIndex) {
 
 async function sendInitiativeRound() {
 
+    const message = {
+        type: 'player-init-round',
+        data: roundCounter
+    };
+
+    const clients = await getAllOtherClients();
+
+    for (const client of clients) {
+        console.log(client);
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
 }
 
 

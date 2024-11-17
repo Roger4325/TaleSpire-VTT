@@ -1654,6 +1654,5 @@ display: none;
 }
 
 .current-turn {
-    background-color: #ffeb3b; /* Highlight color for the active turn */
-    border: 2px solid #f57c00; /* Optional: Add border for better visibility */
+    border: 3px solid rgb(252, 222, 56);
 }
