@@ -1680,7 +1680,8 @@
                 "currentHp": "230",
                 "maxHp": "230",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             },
             {
                 "init": "0",
@@ -1688,7 +1689,8 @@
                 "currentHp": "230",
                 "maxHp": "230",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             },
             {
                 "init": "0",
@@ -1696,7 +1698,8 @@
                 "currentHp": "20",
                 "maxHp": "20",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             },
             {
                 "init": "0",
@@ -1704,15 +1707,73 @@
                 "currentHp": "20",
                 "maxHp": "20",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
+            }
+        ],
+        "TESTER": [
+            {
+                "init": "0",
+                "name": "Dorian de Nocte (A)",
+                "currentHp": "230",
+                "maxHp": "230",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
             },
             {
                 "init": "0",
-                "name": "Mannequin Minion (C)",
+                "name": "Dorian de Nocte - Lair (A)",
+                "currentHp": "230",
+                "maxHp": "230",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "init": "0",
+                "name": "Mannequin Minion (A)",
                 "currentHp": "20",
                 "maxHp": "20",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "init": "0",
+                "name": "Mannequin Minion (B)",
+                "currentHp": "20",
+                "maxHp": "20",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "init": "0",
+                "name": "Ancient Black Dragon (A)",
+                "currentHp": "367",
+                "maxHp": "367",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 0
+            },
+            {
+                "init": "0",
+                "name": "Aboleth (A)",
+                "currentHp": "135",
+                "maxHp": "135",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 0
+            },
+            {
+                "init": "0",
+                "name": "Merrow (A)",
+                "currentHp": "45",
+                "maxHp": "45",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 0
             }
         ]
     }

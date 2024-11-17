@@ -230,7 +230,7 @@ function updateMonsterCard(card, monster) {
     card.innerHTML = '';
 
     // Check if the monster is a string (name) or an object (full monster data)
-    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap
+    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap, monsterVisable
     
     if (typeof monster === 'string') {
         // If a string is provided, it's just the monster name, so we fetch the data
@@ -240,9 +240,10 @@ function updateMonsterCard(card, monster) {
         monsterCurrentHp = selectedMonsterData.HP.Value
         monsterMaxHp = selectedMonsterData.HP.Value
         monsterTempHP = 0;
+        monsterVisable = 0;
 
     } else if (typeof monster === 'object') {
-        // If an object is provided, use the data from the monster object
+        // If an object is provided, use the data from the monster object that we loaded
         monsterName = monster.name;  // Name from the object
         const rearrangedName = monsterName.replace(/\s\([A-Z]\)$/, ''); // Removes the letter in parentheses
         selectedMonsterData = monsterData[rearrangedName]; // Get the stored monster data based on the name
@@ -251,6 +252,7 @@ function updateMonsterCard(card, monster) {
         monsterMaxHp = monster.maxHp;
         monsterTempHP = monster.tempHp;
         newConditionsMap = monster.conditions;
+        monsterVisable = monster.isClosed;
     }
     
 
@@ -440,7 +442,14 @@ function updateMonsterCard(card, monster) {
     const openEyeButton = document.createElement('button');
     openEyeButton.classList.add('eye-button');
     openEyeButton.classList.add('nonRollButton');
-    openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+    if (monsterVisable === 0){
+        openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+    }
+    else{
+        openEyeButton.innerHTML = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+    }
+
+    
     
     openEyeButton.addEventListener('click', () => {
         // Toggle between open and closed eye
@@ -449,6 +458,7 @@ function updateMonsterCard(card, monster) {
         } else {
             openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
         }
+        debouncedSendInitiativeListToPlayer();
     });
 
 
@@ -1217,6 +1227,8 @@ function removeConditionPill(condition, conditionTrackerDiv) {
 let allSavedEncounters = [];
 
 function saveMonsterCardsAsEncounter(encounterName) {
+
+    console.log("Trying to Save Encounter: ", encounterName)
     // Get all monster cards on the screen
     const monsterCards = document.querySelectorAll('.monster-card');
     const encounterData = [];
@@ -1229,6 +1241,7 @@ function saveMonsterCardsAsEncounter(encounterName) {
         const maxHp = card.querySelector('.max-hp').textContent;
         const tempHp = card.querySelector('.temp-hp').textContent;
         const conditions = []; // Changed from Map to array
+        const isClosed = card.querySelector('.eye-button i').classList.contains('fa-eye-slash') ? 1 : 0;
 
         const conditionPills = card.querySelectorAll('.condition-pill');
         conditionPills.forEach(pill => {
@@ -1243,7 +1256,8 @@ function saveMonsterCardsAsEncounter(encounterName) {
             currentHp,
             maxHp,
             tempHp,
-            conditions
+            conditions,
+            isClosed // Save the state (0 for open, 1 for closed)
         });
     });
 
@@ -1268,7 +1282,6 @@ async function showSavePopup() {
     popup.appendChild(title);
 
     // Create input field for new encounter name
-    // Create input field for new encounter name
     const newEncounterInput = document.createElement('input');
     newEncounterInput.type = 'text';
     newEncounterInput.classList.add('encounter-save-input');
@@ -1288,8 +1301,10 @@ async function showSavePopup() {
 
         // Add click event to select the encounter and fill the input field
         encounterItem.addEventListener('click', () => {
-            newEncounterInput.value = encounterName;
             encounterList.style.display = 'none'; // Hide the list after selecting
+            saveMonsterCardsAsEncounter(encounterName)
+            closePopup();
+            
         });
         encounterList.appendChild(encounterItem);
     });
@@ -1329,11 +1344,6 @@ async function showSavePopup() {
     saveButton.addEventListener('click', () => {
         const encounterName = newEncounterInput.value.trim();
         if (encounterName) {
-            if (savedEncounters[encounterName]) {
-                // Confirm before overwriting if an encounter with this name exists
-                const confirmOverwrite = confirm(`An encounter named "${encounterName}" already exists. Do you want to overwrite it?`);
-                if (!confirmOverwrite) return;
-            }
             saveMonsterCardsAsEncounter(encounterName); // Call your save function
             closePopup(); // Close the popup after saving
         }
@@ -1620,7 +1630,6 @@ async function sendInitiativeListToPlayer() {
     const clients = await getAllOtherClients();
 
     for (const client of clients) {
-        console.log(client);
         try {
             await TS.sync.send(JSON.stringify(message), client);
         } catch (error) {
@@ -1641,7 +1650,6 @@ async function sendInitiativeTurn(initiativeIndex) {
     const clients = await getAllOtherClients();
 
     for (const client of clients) {
-        console.log(client);
         try {
             await TS.sync.send(JSON.stringify(message), client);
         } catch (error) {
@@ -1661,7 +1669,6 @@ async function sendInitiativeRound() {
     const clients = await getAllOtherClients();
 
     for (const client of clients) {
-        console.log(client);
         try {
             await TS.sync.send(JSON.stringify(message), client);
         } catch (error) {
