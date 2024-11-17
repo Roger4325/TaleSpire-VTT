@@ -4421,10 +4421,19 @@ function handleInitTurn(message) {
     
     // Ensure the message has the correct structure
     if (message && message.data !== undefined) {
-        const currentTurnIndex = message.data;
+        let currentTurnIndex = message.data;
+
+        // Get all the visible cards
+        const allCards = tracker.querySelectorAll(".initCard");
+        const visibleCards = Array.from(allCards).filter(card => card.style.display !== 'none');
+        
+        // If currentTurnIndex is marked as 'none', use the last visible card's index
+        if (currentTurnIndex === 'none' || currentTurnIndex < 0 || currentTurnIndex >= allCards.length) {
+            // Use the last visible card
+            currentTurnIndex = visibleCards.length > 0 ? allCards.indexOf(visibleCards[visibleCards.length - 1]) : 0;
+        }
 
         // Remove 'current-turn' from all cards
-        const allCards = tracker.querySelectorAll(".initCard");
         allCards.forEach(card => {
             card.classList.remove('current-turn');
         });
