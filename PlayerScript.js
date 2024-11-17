@@ -53,7 +53,9 @@ const messageHandlers = {
     'update-health': handleUpdateHealth,
     'roll-dice': handleRollDice,
     'target-selection': handleTargetSelection,
-    // Add more message types as needed
+    'player-init-list': createPlayerInit,
+    'player-init-turn': handleInitTurn,
+    'player-init-round': handleInitRound
 };
 
 
@@ -274,6 +276,14 @@ async function playerSetUP(){
 
     // Add an event listener for the 'click' event
     featuresLink.addEventListener('click', function() {
+        resizeAllTextareas()
+    });
+
+
+    const initLink = document.querySelector('a[href="#Init"]');
+
+    // Add an event listener for the 'click' event
+    initLink.addEventListener('click', function() {
         resizeAllTextareas()
     });
 
@@ -4107,6 +4117,41 @@ function loadGroupTraitData(groupTraitData) {
 
 
 
+
+//Player Init list start.
+
+function createInitiativeCard(name, isPlayer, isVisible) {
+    // Get the initiative container
+    const initCardHolder = document.querySelector('.initCardHolder');
+
+    // Create the card element
+    const card = document.createElement('div');
+    card.className = `initCard ${isPlayer === 1 ? 'playerCard' : 'enemyCard'}`;
+    card.style.display = isVisible === 1 ? 'block' : 'none'; // Hide if not visible
+
+    // Determine the displayed name
+    const displayedName = isPlayer === 1 ? name : "Enemy";
+
+    // Add content to the card
+    const nameElement = document.createElement('div');
+    nameElement.textContent = displayedName;
+    nameElement.className = 'nameLabel';
+
+    // Append name element to the card
+    card.appendChild(nameElement);
+
+    // Add the card to the container
+    initCardHolder.appendChild(card);
+}
+
+
+
+
+
+
+
+
+
 async function handleSyncEvents(event) {
     //broadcasted sync events go to all clients, also the sender. for this example it's mostly irrelevant,
     //but for others it might be necessary to filter out your own messages (or have different behavior)
@@ -4201,6 +4246,7 @@ function handleUpdateHealth(message, FromClient) {
 
 
 
+
 // Handle a dice roll request (e.g., to roll for an attack or check)
 function handleRollDice(message, FromClient) {
     const { numDice, diceSides } = message.data;
@@ -4288,6 +4334,25 @@ async function sendDMUpdatedStats() {
     
 }
 
+async function sendDMUpdatedStats() {
+    // Construct the message object with player stats
+    myGM = await getGMClient()
+
+    if(myGM) {
+
+        // Construct the message object with player stats
+        const message = {
+            type: 'request-init-list', // Message type
+            data: {
+            }
+        };
+
+        // Send the message
+        TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+    }
+    
+}
+
 
 async function sendDMInitiativeResults(totalInitiative){
 
@@ -4333,7 +4398,61 @@ function handleInitiativeResult(resultGroup) {
 
 
 
+function createPlayerInit(initList) {
+    console.log(initList);
 
+    // Ensure initList has the expected structure
+    if (!initList || !Array.isArray(initList.data)) {
+        console.error("Invalid initiative list format:", initList);
+        return;
+    }
+
+    const initCardHolder = document.querySelector('.initCardHolder');
+    initCardHolder.innerHTML = ''; // Clear existing cards
+
+    // Loop through the initiative list's data array and create cards
+    initList.data.forEach(entry => {
+        createInitiativeCard(entry.n, entry.p, entry.v);
+    });
+}
+
+function handleInitTurn(message) {
+    const tracker = document.querySelector('.initCardHolder');
+    
+    // Ensure the message has the correct structure
+    if (message && message.data !== undefined) {
+        const currentTurnIndex = message.data;
+
+        // Remove 'current-turn' from all cards
+        const allCards = tracker.querySelectorAll(".initCard");
+        allCards.forEach(card => {
+            card.classList.remove('current-turn');
+        });
+
+        // Add 'current-turn' to the active card
+        const currentCard = allCards[currentTurnIndex];
+        if (currentCard) {
+            currentCard.classList.add('current-turn');
+        }
+    } else {
+        console.error("Invalid message structure:", message);
+    }
+}
+
+function handleInitRound(message) {
+    const roundCounter = document.querySelector('.round-counter');
+    
+    // Ensure the message has the correct structure
+    if (message && message.data !== undefined) {
+        const currentRound = message.data;
+
+        // Use template literals for string interpolation
+        roundCounter.textContent = `Round: ${currentRound}`;
+        
+    } else {
+        console.error("Invalid message structure:", message);
+    }
+}
 
 
 

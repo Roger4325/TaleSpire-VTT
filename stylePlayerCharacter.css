@@ -1626,3 +1626,33 @@ transform: rotate(-90deg);
 .inventory-group .hidden {
 display: none;
 }
+
+
+
+/* Shared styles for all initiative cards */
+.initCard {
+    color: white;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+/* Player-specific styles */
+.playerCard {
+    background-color: green; /* Light blue */
+}
+
+/* Enemy-specific styles */
+.enemyCard {
+    background-color: rgb(190, 34, 34)
+}
+
+/* Name label styles */
+.nameLabel {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.current-turn {
+    border: 3px solid rgb(252, 222, 56);
+}

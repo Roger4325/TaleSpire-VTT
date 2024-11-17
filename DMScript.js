@@ -32,6 +32,7 @@ const messageHandlers = {
     'update-health': handleUpdatePlayerHealth,
     'apply-damage': handleApplyMonsterDamage,
     'update-init' : handleUpdatePlayerInitiative,
+    'request-init-list' : handleRequestInitList,
     // Add more as needed
 };
 
@@ -229,7 +230,7 @@ function updateMonsterCard(card, monster) {
     card.innerHTML = '';
 
     // Check if the monster is a string (name) or an object (full monster data)
-    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap
+    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap, monsterVisable
     
     if (typeof monster === 'string') {
         // If a string is provided, it's just the monster name, so we fetch the data
@@ -239,9 +240,10 @@ function updateMonsterCard(card, monster) {
         monsterCurrentHp = selectedMonsterData.HP.Value
         monsterMaxHp = selectedMonsterData.HP.Value
         monsterTempHP = 0;
+        monsterVisable = 0;
 
     } else if (typeof monster === 'object') {
-        // If an object is provided, use the data from the monster object
+        // If an object is provided, use the data from the monster object that we loaded
         monsterName = monster.name;  // Name from the object
         const rearrangedName = monsterName.replace(/\s\([A-Z]\)$/, ''); // Removes the letter in parentheses
         selectedMonsterData = monsterData[rearrangedName]; // Get the stored monster data based on the name
@@ -250,6 +252,7 @@ function updateMonsterCard(card, monster) {
         monsterMaxHp = monster.maxHp;
         monsterTempHP = monster.tempHp;
         newConditionsMap = monster.conditions;
+        monsterVisable = monster.isClosed;
     }
     
 
@@ -431,6 +434,35 @@ function updateMonsterCard(card, monster) {
     monsterHP.appendChild(hpDisplay);
     monsterHP.appendChild(tempHPContainer);
     monsterHP.appendChild(hpAdjustInput);
+
+    const eyeAndCloseDiv = document.createElement('div');
+    eyeAndCloseDiv.classList.add('eye-and-close-buttons');
+
+    // Open Eye Button
+    const openEyeButton = document.createElement('button');
+    openEyeButton.classList.add('eye-button');
+    openEyeButton.classList.add('nonRollButton');
+    if (monsterVisable === 0){
+        openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+    }
+    else{
+        openEyeButton.innerHTML = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+    }
+
+    
+    
+    openEyeButton.addEventListener('click', () => {
+        // Toggle between open and closed eye
+        if (openEyeButton.querySelector('i').classList.contains('fa-eye')) {
+            openEyeButton.innerHTML = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+        } else {
+            openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+        }
+        debouncedSendInitiativeListToPlayer();
+    });
+
+
+
     // Delete button
     const deleteButtonDiv = document.createElement('div');
     deleteButtonDiv.classList.add('monster-card-delete-button');
@@ -444,9 +476,12 @@ function updateMonsterCard(card, monster) {
 
     deleteButtonDiv.appendChild(deleteButton);
 
+    eyeAndCloseDiv.appendChild(openEyeButton);
+    eyeAndCloseDiv.appendChild(deleteButtonDiv);
+
     // Add all components to the card in a consistent layout
     card.appendChild(monsterHP);
-    card.appendChild(deleteButtonDiv);
+    card.appendChild(eyeAndCloseDiv);
     
     reorderCards();
     rollableButtons();  // Update rollable buttons after card updates
@@ -455,7 +490,7 @@ function updateMonsterCard(card, monster) {
 
 
 
-// Event listener for hdining the monster stat block
+// Event listener for hiding the monster stat block
 document.getElementById('closeMonsterCard').addEventListener('click', function() {
     toggleMonsterCardVisibility(false);
 });
@@ -974,9 +1009,20 @@ function reorderCards() {
 
     currentTurnIndex = 0;
     highlightCurrentTurn();
+
+    debouncedSendInitiativeListToPlayer();
 }
 
+const debouncedSendInitiativeListToPlayer = debounce(sendInitiativeListToPlayer, 1000);
 
+
+function debounce(func, delay) {
+    let timeoutId;
+    return (...args) => {
+        if (timeoutId) clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => func(...args), delay);
+    };
+}
 
 
 
@@ -995,12 +1041,15 @@ function highlightCurrentTurn() {
     if (currentCard) {
         currentCard.classList.add('current-turn');
     }
+
+    debounce(sendInitiativeTurn(currentTurnIndex), 1000);
 }
 
 // Function to update the round display
 function updateRoundDisplay() {
     const roundDisplay = document.getElementById('round-counter');
     roundDisplay.textContent = `Round: ${roundCounter}`;
+    sendInitiativeRound()
 }
 
 
@@ -1178,6 +1227,8 @@ function removeConditionPill(condition, conditionTrackerDiv) {
 let allSavedEncounters = [];
 
 function saveMonsterCardsAsEncounter(encounterName) {
+
+    console.log("Trying to Save Encounter: ", encounterName)
     // Get all monster cards on the screen
     const monsterCards = document.querySelectorAll('.monster-card');
     const encounterData = [];
@@ -1190,6 +1241,7 @@ function saveMonsterCardsAsEncounter(encounterName) {
         const maxHp = card.querySelector('.max-hp').textContent;
         const tempHp = card.querySelector('.temp-hp').textContent;
         const conditions = []; // Changed from Map to array
+        const isClosed = card.querySelector('.eye-button i').classList.contains('fa-eye-slash') ? 1 : 0;
 
         const conditionPills = card.querySelectorAll('.condition-pill');
         conditionPills.forEach(pill => {
@@ -1204,7 +1256,8 @@ function saveMonsterCardsAsEncounter(encounterName) {
             currentHp,
             maxHp,
             tempHp,
-            conditions
+            conditions,
+            isClosed // Save the state (0 for open, 1 for closed)
         });
     });
 
@@ -1229,7 +1282,6 @@ async function showSavePopup() {
     popup.appendChild(title);
 
     // Create input field for new encounter name
-    // Create input field for new encounter name
     const newEncounterInput = document.createElement('input');
     newEncounterInput.type = 'text';
     newEncounterInput.classList.add('encounter-save-input');
@@ -1249,8 +1301,10 @@ async function showSavePopup() {
 
         // Add click event to select the encounter and fill the input field
         encounterItem.addEventListener('click', () => {
-            newEncounterInput.value = encounterName;
             encounterList.style.display = 'none'; // Hide the list after selecting
+            saveMonsterCardsAsEncounter(encounterName)
+            closePopup();
+            
         });
         encounterList.appendChild(encounterItem);
     });
@@ -1290,11 +1344,6 @@ async function showSavePopup() {
     saveButton.addEventListener('click', () => {
         const encounterName = newEncounterInput.value.trim();
         if (encounterName) {
-            if (savedEncounters[encounterName]) {
-                // Confirm before overwriting if an encounter with this name exists
-                const confirmOverwrite = confirm(`An encounter named "${encounterName}" already exists. Do you want to overwrite it?`);
-                if (!confirmOverwrite) return;
-            }
             saveMonsterCardsAsEncounter(encounterName); // Call your save function
             closePopup(); // Close the popup after saving
         }
@@ -1540,6 +1589,113 @@ async function requestPlayerInfo(player) {
 }
 
 
+async function sendInitiativeListToPlayer() {
+    const tracker = document.getElementById("initiative-tracker");
+
+    // Ensure tracker exists
+    if (!tracker) {
+        console.error("Initiative tracker element not found.");
+        return;
+    }
+
+    // Retrieve all cards
+    const cards = Array.from(tracker.querySelectorAll(".monster-card, .player-card"));
+
+    // Check if cards array is empty
+    if (cards.length === 0) {
+        console.warn("No cards to send.");
+        return;
+    }
+
+    // Prepare the initiative list with compact data
+    const initiativeList = cards.map(card => {
+        const nameElement = card.querySelector(".monster-name");
+        const isPlayer = card.classList.contains("player-card") ? 1 : 0;
+        const eyeButton = card.querySelector(".eye-button"); // Assuming the eye button has the class '.eye-button'
+        const isVisible = eyeButton && eyeButton.querySelector('i') && eyeButton.querySelector('i').classList.contains('fa-eye-slash') ? 0 : 1;
+
+        return {
+            n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
+            p: isPlayer, // 1 for player, 0 for enemy
+            v: isVisible // 1 for visible, 0 for hidden
+        };
+    });
+
+    // Send the initiative list to each client
+    const message = {
+        type: 'player-init-list',
+        data: initiativeList
+    };
+
+    const clients = await getAllOtherClients();
+
+    for (const client of clients) {
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
+    highlightCurrentTurn()
+    sendInitiativeRound()
+}
+
+async function sendInitiativeTurn(initiativeIndex) {
+    // Send the initiative list to each client
+    const message = {
+        type: 'player-init-turn',
+        data: initiativeIndex
+    };
+
+    const clients = await getAllOtherClients();
+
+    for (const client of clients) {
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
+
+}
+
+async function sendInitiativeRound() {
+
+    const message = {
+        type: 'player-init-round',
+        data: roundCounter
+    };
+
+    const clients = await getAllOtherClients();
+
+    for (const client of clients) {
+        try {
+            await TS.sync.send(JSON.stringify(message), client);
+        } catch (error) {
+            console.error(`Error sending initiative list to client ${client}:`, error);
+        }
+    }
+}
+
+
+
+
+
+
+
+
+async function getAllOtherClients(){
+
+    const myFragment = await TS.clients.whoAmI();
+    const allClients = await TS.clients.getClientsInThisBoard();
+
+    const otherClients = allClients.filter(player => player.id !== myFragment.id);
+
+    return otherClients
+
+}
+
+
 
 
 async function handleSyncEvents(event) {
@@ -1621,7 +1777,7 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
     // Apply damage to the player's character sheet, or whatever logic you need
 }
 
-function handleUpdatePlayerInitiative (parsedMessage, fromClient){
+function handleUpdatePlayerInitiative(parsedMessage, fromClient){
 
     console.log(parsedMessage)
     const playerInit = parseInt(parsedMessage.data.Initiative); 
@@ -1644,6 +1800,11 @@ function handleUpdatePlayerInitiative (parsedMessage, fromClient){
             initInput.value = playerInit
         }
     });
+}
+
+
+function handleRequestInitList(){
+    debouncedSendInitiativeListToPlayer()
 }
 
 
