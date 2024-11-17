@@ -32,6 +32,7 @@ const messageHandlers = {
     'update-health': handleUpdatePlayerHealth,
     'apply-damage': handleApplyMonsterDamage,
     'update-init' : handleUpdatePlayerInitiative,
+    'request-init-list' : handleRequestInitList,
     // Add more as needed
 };
 
@@ -1723,6 +1724,11 @@ function handleUpdatePlayerInitiative (parsedMessage, fromClient){
             initInput.value = playerInit
         }
     });
+}
+
+
+function handleRequestInitList(){
+    debouncedSendInitiativeListToPlayer()
 }
 
 

@@ -278,6 +278,14 @@ async function playerSetUP(){
     });
 
 
+    const initLink = document.querySelector('a[href="#Init"]');
+
+    // Add an event listener for the 'click' event
+    initLink.addEventListener('click', function() {
+        resizeAllTextareas()
+    });
+
+
 }  
     
 function toggleInspiration() {
@@ -4236,6 +4244,7 @@ function handleUpdateHealth(message, FromClient) {
 
 
 
+
 // Handle a dice roll request (e.g., to roll for an attack or check)
 function handleRollDice(message, FromClient) {
     const { numDice, diceSides } = message.data;
@@ -4314,6 +4323,25 @@ async function sendDMUpdatedStats() {
                 ac: playerStats.ac.toString(), // Ensure AC is a string
                 passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
                 spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
+            }
+        };
+
+        // Send the message
+        TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+    }
+    
+}
+
+async function sendDMUpdatedStats() {
+    // Construct the message object with player stats
+    myGM = await getGMClient()
+
+    if(myGM) {
+
+        // Construct the message object with player stats
+        const message = {
+            type: 'request-init-list', // Message type
+            data: {
             }
         };
 
