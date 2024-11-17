@@ -4116,20 +4116,16 @@ function createInitiativeCard(name, isPlayer, isVisible) {
 
     // Create the card element
     const card = document.createElement('div');
-    card.className = 'initCard';
-    card.style.display = isVisible ? 'block' : 'none'; // Hide if not visible
+    card.className = `initCard ${isPlayer === 1 ? 'playerCard' : 'enemyCard'}`;
+    card.style.display = isVisible === 1 ? 'block' : 'none'; // Hide if not visible
+
+    // Determine the displayed name
+    const displayedName = isPlayer === 1 ? name : "Enemy";
 
     // Add content to the card
     const nameElement = document.createElement('div');
-    nameElement.textContent = name;
-    nameElement.className = isPlayer ? 'playerName' : 'enemyName';
-
-    // Style based on player or enemy
-    card.style.backgroundColor = isPlayer ? '#a8dadc' : '#e63946'; // Light blue for players, red for enemies
-    card.style.color = 'white';
-    card.style.padding = '10px';
-    card.style.marginBottom = '5px';
-    card.style.borderRadius = '5px';
+    nameElement.textContent = displayedName;
+    nameElement.className = 'nameLabel';
 
     // Append name element to the card
     card.appendChild(nameElement);
@@ -4137,13 +4133,6 @@ function createInitiativeCard(name, isPlayer, isVisible) {
     // Add the card to the container
     initCardHolder.appendChild(card);
 }
-
-createInitiativeCard('Mira Ley Eshobbud', true, true);  // Player, visible
-createInitiativeCard('Goblin Raider', false, true);     // Enemy, visible
-createInitiativeCard('Shadow Assassin', false, false); // Enemy, not visible
-
-
-
 
 
 
@@ -4380,12 +4369,20 @@ function handleInitiativeResult(resultGroup) {
 
 
 function createPlayerInit(initList) {
+    console.log(initList);
+
+    // Ensure initList has the expected structure
+    if (!initList || !Array.isArray(initList.data)) {
+        console.error("Invalid initiative list format:", initList);
+        return;
+    }
+
     const initCardHolder = document.querySelector('.initCardHolder');
     initCardHolder.innerHTML = ''; // Clear existing cards
 
-    // Loop through the initiative list and create cards
-    initList.forEach(entry => {
-        createInitiativeCard(entry.name, entry.isPlayer, entry.isVisible);
+    // Loop through the initiative list's data array and create cards
+    initList.data.forEach(entry => {
+        createInitiativeCard(entry.n, entry.p, entry.v);
     });
 }
 

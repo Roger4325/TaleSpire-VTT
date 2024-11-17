@@ -1551,7 +1551,6 @@ async function requestPlayerInfo(player) {
 }
 
 
-//Gathering and sending the player the information in the Init List that they need. 
 async function sendInitiativeListToPlayer() {
     const tracker = document.getElementById("initiative-tracker");
 
@@ -1570,16 +1569,18 @@ async function sendInitiativeListToPlayer() {
         return;
     }
 
-    // Prepare the initiative list
+    // Prepare the initiative list with compact data
     const initiativeList = cards.map(card => {
-        const name = card.querySelector(".monster-name").textContent.trim();
-        const isPlayer = card.classList.contains("player-card");
-        const isVisible = !card.classList.contains("hidden");
+        const nameElement = card.querySelector(".monster-name");
+        const isPlayer = card.classList.contains("player-card") ? 1 : 0;
+        const isVisible = !card.classList.contains("hidden") ? 1 : 0;
 
-        return { name, isPlayer, isVisible};
+        return {
+            n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
+            p: isPlayer, // 1 for player, 0 for enemy
+            v: isVisible // 1 for visible, 0 for hidden
+        };
     });
-
-
 
     // Send the initiative list to each client
     const message = {
@@ -1587,10 +1588,10 @@ async function sendInitiativeListToPlayer() {
         data: initiativeList
     };
 
-    const clients = await getAllOtherClients()
+    const clients = await getAllOtherClients();
 
     for (const client of clients) {
-        console.log(client)
+        console.log(client);
         try {
             await TS.sync.send(JSON.stringify(message), client);
         } catch (error) {
@@ -1598,6 +1599,7 @@ async function sendInitiativeListToPlayer() {
         }
     }
 }
+
 
 
 
