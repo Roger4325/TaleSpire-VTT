@@ -120,19 +120,24 @@
                 "Cantrip": {
                     "spells": [
                         {
-                            "name": "Acid Splash"
+                            "name": "Acid Splash",
+                            "prepared": "false"
                         },
                         {
-                            "name": "Guidance"
+                            "name": "Guidance",
+                            "prepared": "false"
                         },
                         {
-                            "name": "Light"
+                            "name": "Light",
+                            "prepared": "false"
                         },
                         {
-                            "name": "Toll the Dead"
+                            "name": "Toll the Dead",
+                            "prepared": "false"
                         },
                         {
-                            "name": "Word of Radiance"
+                            "name": "Word of Radiance",
+                            "prepared": "false"
                         }
                     ],
                     "slots": []
@@ -140,25 +145,32 @@
                 "1st-level": {
                     "spells": [
                         {
-                            "name": "Bless"
+                            "name": "Bless",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Cure Wounds"
+                            "name": "Cure Wounds",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Faerie Fire"
+                            "name": "Faerie Fire",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Guiding Bolt"
+                            "name": "Guiding Bolt",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Healing Word"
+                            "name": "Healing Word",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Inflict Wounds"
+                            "name": "Inflict Wounds",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Sleep"
+                            "name": "Sleep",
+                            "prepared": "0"
                         }
                     ],
                     "slots": [
@@ -171,19 +183,24 @@
                 "2nd-level": {
                     "spells": [
                         {
-                            "name": "Aid"
+                            "name": "Aid",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Calm Emotions"
+                            "name": "Calm Emotions",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Moonbeam"
+                            "name": "Moonbeam",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Pass without Trace"
+                            "name": "Pass without Trace",
+                            "prepared": "0"
                         },
                         {
-                            "name": "See Invisibility"
+                            "name": "See Invisibility",
+                            "prepared": "0"
                         }
                     ],
                     "slots": [
@@ -195,22 +212,28 @@
                 "3rd-level": {
                     "spells": [
                         {
-                            "name": "Beacon of Hope"
+                            "name": "Beacon of Hope",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Spirit Guardians"
+                            "name": "Spirit Guardians",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Leomund's Tiny Hut*"
+                            "name": "Leomund's Tiny Hut*",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Daylight"
+                            "name": "Daylight",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Remove Curse"
+                            "name": "Remove Curse",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Mass Healing Word"
+                            "name": "Mass Healing Word",
+                            "prepared": "0"
                         }
                     ],
                     "slots": [
@@ -222,13 +245,16 @@
                 "4th-level": {
                     "spells": [
                         {
-                            "name": "Banishment"
+                            "name": "Banishment",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Greater Invisibility"
+                            "name": "Greater Invisibility",
+                            "prepared": "0"
                         },
                         {
-                            "name": "Aura of Life*"
+                            "name": "Aura of Life*",
+                            "prepared": "0"
                         }
                     ],
                     "slots": [
@@ -333,7 +359,7 @@
             "groupTraitData": [
                 {
                     "group-title": "Channel Divinity",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
@@ -457,318 +483,6 @@
                 }
             ]
         },
-        "Golrin Balnaar": {
-            "characterTempHp": "",
-            "currentHitDice": "2",
-            "initiativeButton": "+4",
-            "AC": "15",
-            "speed": "30ft.",
-            "characterLevel": "5",
-            "playerXP": "6500",
-            "playerClass": "Bard (Valor Bard)",
-            "currentCharacterHP": "37",
-            "maxCharacterHP": "52",
-            "hitDiceButton": "1d8",
-            "strengthScore": "8",
-            "dexterityScore": "16",
-            "constitutionScore": "14",
-            "intelligenceScore": "9",
-            "wisdomScore": "13",
-            "charismaScore": "20",
-            "acrobaticsAbilityMod": "DEX",
-            "animalHandlingAbilityMod": "WIS",
-            "arcanaAbilityMod": "INT",
-            "athleticsAbilityMod": "STR",
-            "deceptionAbilityMod": "CHA",
-            "historyAbilityMod": "INT",
-            "insightAbilityMod": "WIS",
-            "intimidationAbilityMod": "CHA",
-            "investigationAbilityMod": "INT",
-            "medicineAbilityMod": "WIS",
-            "natureAbilityMod": "INT",
-            "perceptionAbilityMod": "WIS",
-            "performanceAbilityMod": "CHA",
-            "persuasionAbilityMod": "CHA",
-            "religionAbilityMod": "INT",
-            "sleightofHandAbilityMod": "DEX",
-            "stealthAbilityMod": "DEX",
-            "survivalAbilityMod": "WIS",
-            "": "0",
-            "proficiencyButton1": ".5",
-            "proficiencyButton2": ".5",
-            "proficiencyButton3": ".5",
-            "proficiencyButton4": ".5",
-            "proficiencyButton6": ".5",
-            "proficiencyButton7": ".5",
-            "proficiencyButton8": "1",
-            "proficiencyButton9": "1",
-            "proficiencyButton10": ".5",
-            "proficiencyButton11": "1",
-            "proficiencyButton12": ".5",
-            "proficiencyButton13": "1",
-            "proficiencyButton14": "1",
-            "proficiencyButton15": "2",
-            "proficiencyButton16": ".5",
-            "proficiencyButton17": "2",
-            "proficiencyButton18": "1",
-            "proficiencyButton19": ".5",
-            "proficiencyButton20": "0",
-            "proficiencyButton21": "1",
-            "proficiencyButton22": "0",
-            "proficiencyButton23": "0",
-            "proficiencyButton24": "0",
-            "proficiencyButton25": "1",
-            "conditions": [],
-            "alignment": "CN",
-            "actionTable": [
-                {
-                    "1": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "CrossBow Hand",
-                        "thirdColumn": "30 (120)",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "1d20",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "2",
-                        "damageBonus": "3",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Dagger",
-                        "thirdColumn": "20 (60)",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Rapier",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "4": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Bardic Inspiration",
-                        "thirdColumn": "60ft",
-                        "fourthColumn": "+0",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "1",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": true,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "5": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Cutting Words",
-                        "thirdColumn": "60ft",
-                        "fourthColumn": "+0",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "1",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": true,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "6": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Breath Weapon",
-                        "thirdColumn": "15ft Cone",
-                        "fourthColumn": "+0",
-                        "fifthColumn": "3d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "1",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Cold",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                }
-            ],
-            "spellData": {
-                "spellcastingModifier": "STR",
-                "spelllevelselected": "3",
-                "spellmagicbonus": "0",
-                "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Dancing Lights",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Fire Bolt",
-                            "prepared": "false"
-                        }
-                    ],
-                    "slots": []
-                },
-                "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Absorb Elements*",
-                            "prepared": "1"
-                        },
-                        {
-                            "name": "Alarm",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Chromatic Orb*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Detect Magic",
-                            "prepared": "1"
-                        },
-                        {
-                            "name": "Expeditious Retreat",
-                            "prepared": "0"
-                        }
-                    ],
-                    "slots": [
-                        true,
-                        false,
-                        false,
-                        false
-                    ]
-                },
-                "2nd-level": {
-                    "spells": [
-                        {
-                            "name": "Alter Self",
-                            "prepared": "1"
-                        },
-                        {
-                            "name": "Agnazzars Scorcher*",
-                            "prepared": "0"
-                        }
-                    ],
-                    "slots": [
-                        true,
-                        false,
-                        false
-                    ]
-                },
-                "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Animate Dead",
-                            "prepared": "0"
-                        }
-                    ],
-                    "slots": [
-                        false,
-                        false
-                    ]
-                },
-                "4th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "5th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "6th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "7th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "8th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "9th-level": {
-                    "spells": [],
-                    "slots": []
-                }
-            },
-            "inventoryData": {
-                "equipment": [],
-                "backpack": [],
-                "attunement": [],
-                "other-possessions": []
-            },
-            "groupTraitData": []
-        },
         "Alduin Ley Eshobbud": {
             "characterTempHp": "1",
             "currentHitDice": "8",
@@ -780,7 +494,7 @@
             "playerClass": "Ranger / Rouge",
             "currentCharacterHP": "45",
             "maxCharacterHP": "65",
-            "hitDiceButton": "1d8",
+            "hitDiceButton": "8d8",
             "strengthScore": "9",
             "dexterityScore": "18",
             "constitutionScore": "14",
@@ -836,29 +550,6 @@
                 {
                     "1": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Longbow of Warning",
-                        "thirdColumn": "150(600)",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "2",
-                        "damageBonus": "0",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
                         "secondColumn": "ShortSword",
                         "thirdColumn": "5ft",
                         "fourthColumn": "+7",
@@ -880,7 +571,7 @@
                     }
                 },
                 {
-                    "3": {
+                    "2": {
                         "proficiencyButton": "1",
                         "secondColumn": "Sneak Attack",
                         "thirdColumn": "5ft",
@@ -903,65 +594,19 @@
                     }
                 },
                 {
-                    "4": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "LongBow (Sneak Attack)",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d8+2d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "2",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "5": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "LongBow (Hunter's Mark)",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d8+1d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "2",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "6": {
+                    "3": {
                         "proficiencyButton": "1",
                         "secondColumn": "LongBow (Hunt & Sneak)",
                         "thirdColumn": "5ft",
                         "fourthColumn": "+9",
-                        "fifthColumn": "1d8+2d6+1d6",
+                        "fifthColumn": "1d8/2d6/1d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
                         "eighthColumn": "2",
                         "damageBonus": "",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Piercing",
+                        "twelvethColumn": "Piercing/Sneak Attack/Hunter's Mark",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -981,12 +626,28 @@
                         {
                             "name": "Blade Ward",
                             "prepared": "false"
+                        },
+                        {
+                            "name": "Blade Ward",
+                            "prepared": "false"
                         }
                     ],
                     "slots": []
                 },
                 "1st-level": {
                     "spells": [
+                        {
+                            "name": "Disguise Self",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Goodberry",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Hunter's Mark",
+                            "prepared": "0"
+                        },
                         {
                             "name": "Disguise Self",
                             "prepared": "0"
@@ -1009,6 +670,22 @@
                 },
                 "2nd-level": {
                     "spells": [
+                        {
+                            "name": "Pass without Trace",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Rope Trick",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Lesser Restoration",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Silence",
+                            "prepared": "0"
+                        },
                         {
                             "name": "Pass without Trace",
                             "prepared": "0"
@@ -1066,16 +743,182 @@
                         "name": "Arrow",
                         "quantity": 80,
                         "equipped": false
+                    },
+                    {
+                        "name": "Longbow",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Blanket",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Clothes, common",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Lantern, bullseye",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Herbalism Kit",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Leather Armor",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shortsword",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shortsword",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Arrow",
+                        "quantity": 80,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Longbow",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Blanket",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Clothes, common",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Lantern, bullseye",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Herbalism Kit",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Leather Armor",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shortsword",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shortsword",
+                        "quantity": 1,
+                        "equipped": true
                     }
                 ],
-                "backpack": [],
+                "backpack": [
+                    {
+                        "name": "Crowbar",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Hammer",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Piton",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rations (1 day)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rope, hempen (50 feet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinderbox",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Torch",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Waterskin",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Crowbar",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Hammer",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Piton",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rations (1 day)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rope, hempen (50 feet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinderbox",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Torch",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Waterskin",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
                 "attunement": [],
                 "other-possessions": []
             },
             "groupTraitData": [
                 {
                     "group-title": "Class Features",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "Favored Enemy",
@@ -1191,7 +1034,7 @@
                 },
                 {
                     "group-title": "Race Features",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "Earth Walk",
@@ -1259,14 +1102,14 @@
         },
         "Barnibus": {
             "characterTempHp": "13",
-            "currentHitDice": "1",
+            "currentHitDice": "8",
             "initiativeButton": "+4",
             "AC": "14",
             "speed": "35ft.",
             "characterLevel": "8",
             "playerXP": "34000",
-            "playerClass": "Class (SubClass)",
-            "currentCharacterHP": "36",
+            "playerClass": "Bard",
+            "currentCharacterHP": "31",
             "maxCharacterHP": "36",
             "hitDiceButton": "1d8",
             "strengthScore": "12",
@@ -1479,9 +1322,9 @@
                         }
                     ],
                     "slots": [
-                        true,
-                        true,
-                        true
+                        false,
+                        false,
+                        false
                     ]
                 },
                 "4th-level": {
@@ -1543,26 +1386,87 @@
                         "name": "Rapier",
                         "quantity": 1,
                         "equipped": false
+                    },
+                    {
+                        "name": "Clothes, common",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Signal whistle",
+                        "quantity": 1,
+                        "equipped": false
                     }
                 ],
-                "backpack": [],
+                "backpack": [
+                    {
+                        "name": "Case, map or scroll",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Clothes, fine",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink (1 ounce bottle)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink pen",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Lamp",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Oil (flask)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Paper (one sheet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Perfume (vial)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Sealing wax",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Soap",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
                 "attunement": [],
                 "other-possessions": []
             },
             "groupTraitData": [
                 {
                     "group-title": "Class Features",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "Bardic Inspiration",
                             "cheveron": false,
                             "traitDescription": "As a bonus action, a creature (other than you) within 60 ft. that can hear you gains an inspiration die (1d8). For 10 minutes, the creature can add it to one ability check, attack roll, or saving throw. This can be added after seeing the roll, but before knowing the outcome.",
                             "checkboxStates": [
-                                false,
-                                false,
-                                false,
-                                false
+                                true,
+                                true,
+                                true,
+                                true
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -1631,6 +1535,1782 @@
                             "traitName": "Eldritch Adept",
                             "cheveron": false,
                             "traitDescription": "You learn one Eldritch Invocation option of your choice from the warlock class. If the invocation has a prerequisite, you can choose that invocation only if you’re a warlock and only if you meet the prerequisite.\n\nWhenever you gain a level, you can replace the invocation with another one from the warlock class.\n\nDevil’s Sight \n\nYou can see normally in darkness, both magical and nonmagical, to a distance of 120 ft.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Race Traits",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Darkvision",
+                            "cheveron": true,
+                            "traitDescription": "You can see in darkness (shades of gray) up to 60 ft.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Fey Ancestry",
+                            "cheveron": false,
+                            "traitDescription": "You have advantage on saving throws against being charmed, and magic can’t put you to sleep.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Cralamin": {
+            "characterTempHp": "",
+            "currentHitDice": "8",
+            "initiativeButton": "+0",
+            "AC": "10",
+            "speed": "30ft.",
+            "characterLevel": "8",
+            "playerXP": "34000",
+            "playerClass": "Wizard",
+            "currentCharacterHP": "51",
+            "maxCharacterHP": "51",
+            "hitDiceButton": "1d8",
+            "strengthScore": "8",
+            "dexterityScore": "10",
+            "constitutionScore": "14",
+            "intelligenceScore": "20",
+            "wisdomScore": "20",
+            "charismaScore": "8",
+            "acrobaticsAbilityMod": "DEX",
+            "animalHandlingAbilityMod": "WIS",
+            "arcanaAbilityMod": "INT",
+            "athleticsAbilityMod": "STR",
+            "deceptionAbilityMod": "CHA",
+            "historyAbilityMod": "INT",
+            "insightAbilityMod": "WIS",
+            "intimidationAbilityMod": "CHA",
+            "investigationAbilityMod": "INT",
+            "medicineAbilityMod": "WIS",
+            "natureAbilityMod": "INT",
+            "perceptionAbilityMod": "WIS",
+            "performanceAbilityMod": "CHA",
+            "persuasionAbilityMod": "CHA",
+            "religionAbilityMod": "INT",
+            "sleightofHandAbilityMod": "DEX",
+            "stealthAbilityMod": "DEX",
+            "survivalAbilityMod": "WIS",
+            "": "1",
+            "proficiencyButton1": "0",
+            "proficiencyButton2": "0",
+            "proficiencyButton3": "2",
+            "proficiencyButton4": "0",
+            "proficiencyButton6": "0",
+            "proficiencyButton7": "1",
+            "proficiencyButton8": "1",
+            "proficiencyButton9": "0",
+            "proficiencyButton10": "1",
+            "proficiencyButton11": "0",
+            "proficiencyButton12": "1",
+            "proficiencyButton13": "1",
+            "proficiencyButton14": "0",
+            "proficiencyButton15": "0",
+            "proficiencyButton16": "1",
+            "proficiencyButton17": "0",
+            "proficiencyButton18": "0",
+            "proficiencyButton19": "1",
+            "proficiencyButton20": "0",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "0",
+            "proficiencyButton23": "1",
+            "proficiencyButton24": "1",
+            "proficiencyButton25": "0",
+            "conditions": [
+                "Exhaustion 3"
+            ],
+            "alignment": "LG",
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Dagger",
+                        "thirdColumn": "20(60)",
+                        "fourthColumn": "+3",
+                        "fifthColumn": "1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "0",
+                        "damageBonus": "0",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Fire Bolt",
+                        "thirdColumn": "120ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "2d10",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Fire",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Shocking Grasp",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "2d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Lightning",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "INT",
+                "spelllevelselected": "4",
+                "spellmagicbonus": "0",
+                "Cantrip": {
+                    "spells": [
+                        {
+                            "name": "Fire Bolt",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Mage Hand",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Message",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Shocking Grasp",
+                            "prepared": "false"
+                        }
+                    ],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [
+                        {
+                            "name": "Find Familiar",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Ice Knife*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Mage Armor",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Shield",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Chromatic Orb*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Feather Fall",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Command",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Detect Magic",
+                            "prepared": "1"
+                        },
+                        {
+                            "name": "Disguise Self",
+                            "prepared": "1"
+                        }
+                    ],
+                    "slots": [
+                        true,
+                        true,
+                        false,
+                        false
+                    ]
+                },
+                "2nd-level": {
+                    "spells": [
+                        {
+                            "name": "Agnazzars Scorcher*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Augury",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Locate Object",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Rime's Binding Ice*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Dragon's Breath*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Misty Step",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Tasha's Mind Whip",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        true,
+                        true,
+                        true
+                    ]
+                },
+                "3rd-level": {
+                    "spells": [
+                        {
+                            "name": "Counterspell",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Fireball",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Slow",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Galder's Tower*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Thunder Step*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Lightning Bolt",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Haste",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Fly",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        true,
+                        true,
+                        false
+                    ]
+                },
+                "4th-level": {
+                    "spells": [
+                        {
+                            "name": "Ice Storm",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Polymorph",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Raulothim's Psychic Lance*",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        false,
+                        false
+                    ]
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            },
+            "inventoryData": {
+                "equipment": [
+                    {
+                        "name": "Potion of Healing",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Dagger",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Crystal",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Clothes, common",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Spellbook",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Book",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink (1 ounce bottle)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink pen",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Parchment (one sheet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Little bag of sand",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
+                "backpack": [
+                    {
+                        "name": "Small knife",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Crowbar",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Hammer",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Holy water (flask)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Manacles",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Mirror, steel",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Oil (flask)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinderbox",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Torch",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
+                "attunement": [],
+                "other-possessions": []
+            },
+            "groupTraitData": [
+                {
+                    "group-title": "Class Features",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Arcane Recovery",
+                            "cheveron": false,
+                            "traitDescription": "Once per day when you finish a short rest, you can\nchoose expended spell slots to recover - up to a\ncombined level of 4, and none of the slots can be 6th\nlevel or higher.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Portent (Die 1:    - Die 2: ",
+                            "cheveron": true,
+                            "traitDescription": "When you finish a long rest, roll two d20s and record\nthe numbers rolled. You can replace any attack roll,\nsaving throw, or ability check made by you or a\ncreature that you can see with one of these foretelling\nrolls. You must choose to do so before the roll, and\nyou can replace a roll in this way only once per turn.\nEach roll can only be used once.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Cantrip Formulas",
+                            "cheveron": true,
+                            "traitDescription": "You have scribed a set of arcane formulas in your\nspellbook that you can use to formulate a cantrip in\nyour mind. Whenever you finish a long rest and consult\nthose formulas in your spellbook, you can replace one\nwizard cantrip you know with another cantrip from the\nwizard spell list.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Expert Divination",
+                            "cheveron": false,
+                            "traitDescription": "When you cast a divination spell of 2nd level or higher\nusing a spell slot, you regain one expended spell slot.\nThe slot you regain must be of a level lower than the\nspell you cast and can’t be higher than 5th level.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Race Features",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Firbolg Magic (Detect Magic)",
+                            "cheveron": false,
+                            "traitDescription": "Once per long rest, you can cast detect magic You can\nalso cast these spells using any spell slots you have.\nYour spellcasting modifier is either Intelligence,\nWisdom, or Charisma (choose when you select this race)",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Firbolg Magic (Disguise Self)",
+                            "cheveron": true,
+                            "traitDescription": "Once per long rest, you can cast disguise self. When you use this version of disguise self, you can seem up to 3 ft. shorter or taller. You can also cast these spells using any spell slots you have. Your spellcasting modifier is either Intelligence, Wisdom, or Charisma (choose when you select this race)",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Hidden Step",
+                            "cheveron": true,
+                            "traitDescription": "As a bonus action, you can magically turn invisible 3\ntimes per long rest. This lasts until the start of your\nnext turn or until you attack, make a damage roll, or\nforce someone to make a saving throw.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Powerful Build",
+                            "cheveron": true,
+                            "traitDescription": "You count as one size larger when determining your\ncarrying capacity and the weight you can push, drag,\nor lift.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": " Speech of Beast and Leaf",
+                            "cheveron": true,
+                            "traitDescription": "You can communicate in a limited manner with Beasts,\nPlants, and vegetation. They can understand your\nwords but you cannot understand them in return. You\nhave advantage on all CHA checks to influence them.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Feats",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": " Fey Touched",
+                            "cheveron": true,
+                            "traitDescription": "Increase your Intelligence, Wisdom, or Charisma score\nby 1, to a maximum of 20.\n\nYou learn the misty step spell and one 1st-level spell\nof your choice from the divination or enchantment school of magic. Once per long rest you can cast each of these spells without expending a spell slot. You can also cast these spells using spell slots you have of the appropriate level. The spells’ spellcasting ability is the ability increased by this feat.\n   | Intelligence •\nIncrease your Intelligence score by 1, to a maximum of\n20. The spells’ spellcasting ability is Intelligence.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Skilled",
+                            "cheveron": true,
+                            "traitDescription": "You gain proficiency in any combination of three skills\nor tools of your choice.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Wallace": {
+            "characterTempHp": "8",
+            "currentHitDice": "8",
+            "initiativeButton": "+7",
+            "AC": "20",
+            "speed": "30ft.",
+            "characterLevel": "8",
+            "playerXP": "34000",
+            "playerClass": "Class (SubClass)",
+            "currentCharacterHP": "62",
+            "maxCharacterHP": "62",
+            "hitDiceButton": "1d8",
+            "strengthScore": "7",
+            "dexterityScore": "14",
+            "constitutionScore": "16",
+            "intelligenceScore": "20",
+            "wisdomScore": "15",
+            "charismaScore": "10",
+            "acrobaticsAbilityMod": "DEX",
+            "animalHandlingAbilityMod": "WIS",
+            "arcanaAbilityMod": "INT",
+            "athleticsAbilityMod": "STR",
+            "deceptionAbilityMod": "CHA",
+            "historyAbilityMod": "INT",
+            "insightAbilityMod": "WIS",
+            "intimidationAbilityMod": "CHA",
+            "investigationAbilityMod": "INT",
+            "medicineAbilityMod": "WIS",
+            "natureAbilityMod": "INT",
+            "perceptionAbilityMod": "WIS",
+            "performanceAbilityMod": "CHA",
+            "persuasionAbilityMod": "CHA",
+            "religionAbilityMod": "INT",
+            "sleightofHandAbilityMod": "DEX",
+            "stealthAbilityMod": "DEX",
+            "survivalAbilityMod": "WIS",
+            "": "1",
+            "proficiencyButton1": "0",
+            "proficiencyButton2": "0",
+            "proficiencyButton3": "2",
+            "proficiencyButton4": "0",
+            "proficiencyButton6": "0",
+            "proficiencyButton7": "1",
+            "proficiencyButton8": "0",
+            "proficiencyButton9": "0",
+            "proficiencyButton10": "1",
+            "proficiencyButton11": "0",
+            "proficiencyButton12": "0",
+            "proficiencyButton13": "1",
+            "proficiencyButton14": "0",
+            "proficiencyButton15": "0",
+            "proficiencyButton16": "1",
+            "proficiencyButton17": "0",
+            "proficiencyButton18": "0",
+            "proficiencyButton19": "0",
+            "proficiencyButton20": "0",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "1",
+            "proficiencyButton23": "1",
+            "proficiencyButton24": "0",
+            "proficiencyButton25": "0",
+            "conditions": [],
+            "alignment": "LG",
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Staff",
+                        "thirdColumn": "5ft. Reach",
+                        "fourthColumn": "+1",
+                        "fifthColumn": "1d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "0",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Bludgeoning",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Ray of Frost",
+                        "thirdColumn": "60ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "2d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "1",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Cold",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Shocking Grasp",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "2d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "1",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Lightning",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "4": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Fire Bolt",
+                        "thirdColumn": "120ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "2d10",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "1",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Fire",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Chill Touch",
+                        "thirdColumn": "120ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "2d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "INT",
+                        "eighthColumn": "1",
+                        "damageBonus": "-5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Necrotic",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Claws",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+1",
+                        "fifthColumn": "1d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "4",
+                "spellmagicbonus": "1",
+                "Cantrip": {
+                    "spells": [
+                        {
+                            "name": "Chill Touch",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Fire Bolt",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Message",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Mind Sliver*",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Ray of Frost",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Shocking Grasp",
+                            "prepared": "false"
+                        }
+                    ],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [
+                        {
+                            "name": "Comprehend Languages",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Cure Wounds",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Faerie Fire",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Feather Fall",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Find Familiar",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Sanctuary",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Shield",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        false,
+                        false,
+                        false,
+                        false
+                    ]
+                },
+                "2nd-level": {
+                    "spells": [
+                        {
+                            "name": "Dragon's Breath*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Enlarge/Reduce",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Gust of Wind",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Misty Step",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        false,
+                        false,
+                        false
+                    ]
+                },
+                "3rd-level": {
+                    "spells": [
+                        {
+                            "name": "Counterspell",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Dispel Magic",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Haste",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Slow",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Thunder Step*",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        false,
+                        false,
+                        false
+                    ]
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": [
+                        false
+                    ]
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            },
+            "inventoryData": {
+                "equipment": [
+                    {
+                        "name": "Amulet",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Spellbook",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Potion of Healing",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Robes",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shield",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Staff",
+                        "quantity": 1,
+                        "equipped": true
+                    }
+                ],
+                "backpack": [
+                    {
+                        "name": "Block and tackle",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Book",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Carpenter's Tools",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Dagger",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Grappling hook",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink (1 ounce bottle)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Ink pen",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Little bag of sand",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Parchment (one sheet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rope, hempen (50 feet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Small knife",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Thieves' Tools",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinker's Tools",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
+                "attunement": [],
+                "other-possessions": []
+            },
+            "groupTraitData": [
+                {
+                    "group-title": "Class Features",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Magical Tinkering",
+                            "cheveron": true,
+                            "traitDescription": "Imbue a Tiny nonmagical object with a magical property of your choice: 5ft. radius light, up to 6 second long recorded message, emits odor or nonverbal sound, static visual effect including up to 25 words of text. You can affect a maximum of 5 objects at a time.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "5"
+                        },
+                        {
+                            "traitName": "Infuse Item",
+                            "cheveron": true,
+                            "traitDescription": "Whenever you finish a long rest, you can touch up to 2 nonmagical objects, imbuing each of them with one of your artificer infusions, turning it into a magic item. You can attune yourself to the item the instant you infuse it, or you can forgo attunement so that someone else can attune to the item.\n\nYour infusion remains in an item indefinitely, but when you die, the infusion vanishes after 5 days. The infusion also vanishes if you give up your knowledge of the infusion or you exceed your maximum number of infusions. ",
+                            "checkboxStates": [
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "2"
+                        },
+                        {
+                            "traitName": "Arcane Recovery",
+                            "cheveron": true,
+                            "traitDescription": "Once per day when you finish a short rest, you can choose expended spell slots to recover - up to a combined level of 3, and none of the slots can be 6th level or higher.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Arcane Deflection",
+                            "cheveron": true,
+                            "traitDescription": "When you are hit by an attack or you fail a saving throw, you can use your reaction to gain a +2 bonus to your AC against that attack or a +4 bonus to that saving throw. When you use this feature, you can’t cast spells other than cantrips until the end of your next turn.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Tactical Wit",
+                            "cheveron": true,
+                            "traitDescription": "You gain a bonus to your initiative rolls equal to your INT modifier (+5).",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Cantrip Formulas",
+                            "cheveron": true,
+                            "traitDescription": "You have scribed a set of arcane formulas in your spellbook that you can use to formulate a cantrip in your mind. Whenever you finish a long rest and consult those formulas in your spellbook, you can replace one wizard cantrip you know with another cantrip from the wizard spell list.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Power Surge",
+                            "cheveron": true,
+                            "traitDescription": "You can store magical power surges within yourself up to a maximum of 5. Whenever you finish a long rest, your number of power surges resets to one. Whenever you successfully end a spell with dispel magic or counterspell, you gain one power surge. If you end a short rest with no power surges, you gain one power surge.\n\nOnce per turn when you deal damage to a creature or object with a wizard spell, you can spend one power surge to deal an extra +3 force damage.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "5"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Race Feature",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Hold Breath",
+                            "cheveron": false,
+                            "traitDescription": "You can hold your breath for up to 1 hour.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Natural Armor",
+                            "cheveron": false,
+                            "traitDescription": "Your shell provides you a base AC of 17 (your DEX modifier doesn't affect this number). You can’t wear light, medium, or heavy armor, but can continue using and applying a shield’s bonus as normal.",
+                            "checkboxStates": [],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Shell Defense",
+                            "cheveron": true,
+                            "traitDescription": "You can withdraw into your shell as an action and until you emerge, you gain a +4 bonus to AC and you have advantage on STR and CON saving throws.\n\nWhile in your shell, you are prone, your speed is 0 and can't increase, you have disadvantage on DEX saving throws, and you can’t take reactions. The only action you can take is to use a bonus action to emerge.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Feats",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "War Caster",
+                            "cheveron": true,
+                            "traitDescription": "You have advantage on CON saving throws that you make to maintain your concentration on a spell when you take damage. You can perform the somatic components of spells even when you have weapons or a shield in one or both hands. You can use your reaction to make an opportunity attack to cast a spell that has a casting time of 1 action and targets only that creature.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ]
+        },
+        "Sterling": {
+            "characterTempHp": "",
+            "currentHitDice": "8",
+            "initiativeButton": "+2",
+            "AC": "19",
+            "speed": "30ft.",
+            "characterLevel": "8",
+            "playerXP": "34000",
+            "playerClass": "Fighter ",
+            "currentCharacterHP": "89",
+            "maxCharacterHP": "89",
+            "hitDiceButton": "1d8",
+            "strengthScore": "18",
+            "dexterityScore": "14",
+            "constitutionScore": "19",
+            "intelligenceScore": "11",
+            "wisdomScore": "6",
+            "charismaScore": "15",
+            "acrobaticsAbilityMod": "DEX",
+            "animalHandlingAbilityMod": "WIS",
+            "arcanaAbilityMod": "INT",
+            "athleticsAbilityMod": "STR",
+            "deceptionAbilityMod": "CHA",
+            "historyAbilityMod": "INT",
+            "insightAbilityMod": "WIS",
+            "intimidationAbilityMod": "CHA",
+            "investigationAbilityMod": "INT",
+            "medicineAbilityMod": "WIS",
+            "natureAbilityMod": "INT",
+            "perceptionAbilityMod": "WIS",
+            "performanceAbilityMod": "CHA",
+            "persuasionAbilityMod": "CHA",
+            "religionAbilityMod": "INT",
+            "sleightofHandAbilityMod": "DEX",
+            "stealthAbilityMod": "DEX",
+            "survivalAbilityMod": "WIS",
+            "": "1",
+            "proficiencyButton1": "0",
+            "proficiencyButton2": "0",
+            "proficiencyButton3": "0",
+            "proficiencyButton4": "1",
+            "proficiencyButton6": "0",
+            "proficiencyButton7": "0",
+            "proficiencyButton8": "1",
+            "proficiencyButton9": "0",
+            "proficiencyButton10": "0",
+            "proficiencyButton11": "0",
+            "proficiencyButton12": "0",
+            "proficiencyButton13": "1",
+            "proficiencyButton14": "0",
+            "proficiencyButton15": "1",
+            "proficiencyButton16": "0",
+            "proficiencyButton17": "0",
+            "proficiencyButton18": "0",
+            "proficiencyButton19": "1",
+            "proficiencyButton20": "1",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "1",
+            "proficiencyButton23": "0",
+            "proficiencyButton24": "0",
+            "proficiencyButton25": "0",
+            "conditions": [],
+            "alignment": "LG",
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Crooked Dealer",
+                        "thirdColumn": "5ft.",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "This weapon will land a critical hit on a dice roll of 7 or 20 or critically miss on a 1 or 13. ",
+                        "elventhColumn": "On a critical hit add one additional d10 to the damage roll.  On a critical miss roll damage and the target is healed for half of the damage value.",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Crooked Dealer",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "1d10",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "This weapon will land a critical hit on a dice roll of 7 or 20 or critically miss on a 1 or 13. ",
+                        "elventhColumn": "On a critical hit add one additional d10 to the damage roll.  On a critical miss roll damage and the target is healed for half of the damage value.",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "LongBow",
+                        "thirdColumn": "150(600)",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "4": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Longsword +1",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "LongSword +1",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "1d10",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "0",
+                "spellmagicbonus": "0",
+                "Cantrip": {
+                    "spells": [],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "2nd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "3rd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            },
+            "inventoryData": {
+                "equipment": [
+                    {
+                        "name": "Longsword",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Longbow",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Arrow",
+                        "quantity": 20,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Clothes, common",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Handaxe",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Leather Armor",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Playing Card Set",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Shield",
+                        "quantity": 1,
+                        "equipped": true
+                    },
+                    {
+                        "name": "Splint Armor",
+                        "quantity": 1,
+                        "equipped": true
+                    }
+                ],
+                "backpack": [
+                    {
+                        "name": "Bedroll",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Mess Kit",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rations (1 day)",
+                        "quantity": 10,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Rope, hempen (50 feet)",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tinderbox",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Torch",
+                        "quantity": 1,
+                        "equipped": false
+                    },
+                    {
+                        "name": "Waterskin",
+                        "quantity": 1,
+                        "equipped": false
+                    }
+                ],
+                "attunement": [],
+                "other-possessions": []
+            },
+            "groupTraitData": [
+                {
+                    "group-title": "Class Features",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Fighting Style (Great Weapon Fighting)",
+                            "cheveron": false,
+                            "traitDescription": "You can reroll a 1 or 2 on damage dice with melee weapons wielded with two hands.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Second Wind",
+                            "cheveron": false,
+                            "traitDescription": "Once per short rest, you can use a bonus action to regain 1d10 + 8 HP.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Action Surge",
+                            "cheveron": false,
+                            "traitDescription": "You can take one additional action on your turn. This can be used 1 times per short rest.",
+                            "checkboxStates": [
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "1"
+                        },
+                        {
+                            "traitName": "Know Your Enemy",
+                            "cheveron": false,
+                            "traitDescription": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn information about its capabilities compared to your own: Strength score, Dexterity score, Constitution score, Armor Class, current HP, total class levels (if any), fighter class levels (if any)",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Extra Attack",
+                            "cheveron": false,
+                            "traitDescription": "You can attack twice whenever you take the Attack action on your turn.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Maneuvers",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Combat Superiority",
+                            "cheveron": true,
+                            "traitDescription": "You learn maneuvers that are fueled by superiority dice. Maneuvers enhance an attack in some way. You have 5d8 superiority dice per short rest.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "5"
+                        },
+                        {
+                            "traitName": "Goading Attack",
+                            "cheveron": true,
+                            "traitDescription": "When you hit with a weapon attack, you can expend one superiority die to add the total to the damage roll and the target must make a WIS saving throw (DC 15). On failure, the target has disadvantage on all attack rolls against targets other than you until the end of your next turn.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Bait and Switch",
+                            "cheveron": true,
+                            "traitDescription": "When you’re within 5 ft. of a creature on your turn, you can expend one superiority die and switch places with that creature, provided you spend at least 5 ft. of movement and the creature is willing and isn’t incapacitated. This movement doesn’t provoke opportunity attacks.\n\nRoll the superiority die. Until the start of your next turn, you or the other creature (your choice) gains a bonus to AC equal to the number rolled.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Pushing Attack",
+                            "cheveron": true,
+                            "traitDescription": "When you hit with a weapon attack, you can expend one superiority die to add the total to the damage roll, and if the target is Large or smaller, it must make a STR saving throw (DC 15). On failure, you push the target up to 15 ft. away from you.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Evasive Footwork",
+                            "cheveron": true,
+                            "traitDescription": "When you move, you can expend one superiority die, rolling the die and adding the number rolled to your AC until you stop moving.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Parry",
+                            "cheveron": true,
+                            "traitDescription": "When another creature damages you with a melee attack, you can use your reaction and expend one superiority die to reduce the damage by the number you roll on your superiority die + 2.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Feats",
+                    "group-chevron": true,
+                    "traits": [
+                        {
+                            "traitName": "Tough",
+                            "cheveron": true,
+                            "traitDescription": "Your HP maximum increases by 16.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Sentinel",
+                            "cheveron": true,
+                            "traitDescription": "When you hit a creature with an opportunity attack, the creature's speed becomes 0 for the rest of the turn. Creatures provoke opportunity attacks from you even if they take the Disengage action. When a creature within 5 ft. of you makes an attack against a target other than you, you can use your reaction to make a melee weapon attack against the attacking creature.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentType": "Saving Throws",
+                            "adjustmentValue": "",
+                            "adjustmentCondition": "",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Athlete",
+                            "cheveron": true,
+                            "traitDescription": "Increase your STR or DEX score by 1, and when you are prone, standing up uses only 5 feet of your movement. Climbing doesn't cost you extra movement, and you can make a running long jump or a running high jump after moving only 5 ft. on foot, rather than 10 ft.",
                             "checkboxStates": [
                                 false,
                                 false,

@@ -304,6 +304,7 @@ function toggleInspiration() {
     }
     sendDMUpdatedStats()
 }
+let initialHitDiceValue = "1d8"; // Default value, adjust as needed
 
 function updateHitDiceLabel() {
     // Get the content from the button and split it to separate the dice count and type

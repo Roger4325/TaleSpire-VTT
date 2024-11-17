@@ -896,7 +896,7 @@ function showErrorModal(errorMessage) {
 
     setTimeout(() => {
         modal.style.display = 'none';
-    }, 4000);
+    }, 2000);
 }
 
 
