@@ -432,6 +432,27 @@ function updateMonsterCard(card, monster) {
     monsterHP.appendChild(hpDisplay);
     monsterHP.appendChild(tempHPContainer);
     monsterHP.appendChild(hpAdjustInput);
+
+    const eyeAndCloseDiv = document.createElement('div');
+    eyeAndCloseDiv.classList.add('eye-and-close-buttons');
+
+    // Open Eye Button
+    const openEyeButton = document.createElement('button');
+    openEyeButton.classList.add('eye-button');
+    openEyeButton.classList.add('nonRollButton');
+    openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+    
+    openEyeButton.addEventListener('click', () => {
+        // Toggle between open and closed eye
+        if (openEyeButton.querySelector('i').classList.contains('fa-eye')) {
+            openEyeButton.innerHTML = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+        } else {
+            openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+        }
+    });
+
+
+
     // Delete button
     const deleteButtonDiv = document.createElement('div');
     deleteButtonDiv.classList.add('monster-card-delete-button');
@@ -445,9 +466,12 @@ function updateMonsterCard(card, monster) {
 
     deleteButtonDiv.appendChild(deleteButton);
 
+    eyeAndCloseDiv.appendChild(openEyeButton);
+    eyeAndCloseDiv.appendChild(deleteButtonDiv);
+
     // Add all components to the card in a consistent layout
     card.appendChild(monsterHP);
-    card.appendChild(deleteButtonDiv);
+    card.appendChild(eyeAndCloseDiv);
     
     reorderCards();
     rollableButtons();  // Update rollable buttons after card updates
@@ -1577,7 +1601,7 @@ async function sendInitiativeListToPlayer() {
     const initiativeList = cards.map(card => {
         const nameElement = card.querySelector(".monster-name");
         const isPlayer = card.classList.contains("player-card") ? 1 : 0;
-        const isVisible = !card.classList.contains("hidden") ? 1 : 0;
+        const isVisible = !card.classList.contains("fa-eye-slash") ? 1 : 0;
 
         return {
             n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
@@ -1745,7 +1769,7 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
     // Apply damage to the player's character sheet, or whatever logic you need
 }
 
-function handleUpdatePlayerInitiative (parsedMessage, fromClient){
+function handleUpdatePlayerInitiative(parsedMessage, fromClient){
 
     console.log(parsedMessage)
     const playerInit = parseInt(parsedMessage.data.Initiative); 
