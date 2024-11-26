@@ -16,6 +16,17 @@
     margin: 3px;
 }
 
+#settings-container {
+    position: fixed;
+    top: 65px;
+    left: 5px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 5px;
+    z-index: 999; /* Ensure it's above other content */
+}
+
 
 .characterPicture{
     min-height: 128px;
@@ -408,10 +419,21 @@ select{
 .bottom-player-stats-container{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
     gap: 0px 30px;
     font-size: 13px;
+    margin-bottom: 30px;
 }
+
+.rightBottomStatsContainer{
+    display: grid;
+    grid-column: 2;
+    margin-top: 25px;
+    grid-row-start: 1;
+    grid-row-end : 4;
+    gap: 4px;
+}
+
 
 
 /* Skills Div */
@@ -426,7 +448,7 @@ select{
     margin-left: 18px;
     grid-column-end: 2;
     grid-row-start: 1;
-    grid-row-end : 3;
+    grid-row-end : 4;
 }
 
 
@@ -476,17 +498,82 @@ select{
     align-self: center;
 }
 
-/* saves div */
-.saves-container, .passives-container {
+.saves-container, .passives-container, #proficiency-container {
     height: fit-content;
     width: 200px;
-    margin-top: 25px;
     padding: 5px 2px;
     display: grid;
-    gap: 4px;
     border: solid 1px var(--ts-button-background);
     border-radius: 5px;
-    grid-column: 2;
+}
+
+.saves-container {
+    grid-row: 1; /* First row of the right column */
+}
+
+.passives-container {
+    grid-row: 2; /* First row of the right column */
+}
+
+#proficiency-container {
+    grid-row: 3; /* First row of the right column */
+    padding-bottom: 0;
+    gap: 0;
+}
+
+.proficiency-group {
+    margin-bottom: 4px;
+}
+
+.proficiency-group h3 {
+    margin: 2px 0;
+}
+
+.proficiency-dropdown {
+    display: none; /* Initially hide the dropdown */
+    padding: 2px 10px;
+    background-color: var(--ts-background-secondary);
+    position: absolute;
+    z-index: 10;
+    border: solid 1px var(--ts-button-background);
+}
+
+.proficiency-dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.proficiency-dropdown ul li {
+    margin: 0px 0;
+}
+
+.proficiency-headings {
+    display: flex;
+    justify-content: space-between; /* Space out elements evenly */
+    align-items: center; /* Vertically align the items */
+    width: 100%; /* Make sure it stretches to fill the available width */
+}
+
+.proficiency-headings span {
+    margin-left: 5px;
+    text-align: left; /* Align the text to the left */
+}
+
+.proficiency-settings {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.proficiency-containers{
+    margin: 0;
+    padding: 0;
+    margin-left: 2px;
+    margin-top: 1px;
+    font-size: 12px;
+    min-height: 20px;
 }
 
 /* Button Styling */
@@ -1535,10 +1622,14 @@ select{
 
 .inventory-item {
     display: grid;
-    grid-template-columns: .2fr 2fr 1.2fr .7fr .9fr 2.2fr .05fr;
+    grid-template-columns: .6fr 1.8fr .05fr 1.2fr .2fr 1fr 2.2fr .05fr;
     align-items: center;
     padding: 5px 0;
     border-bottom: 1px solid #333;
+}
+
+.inventory-type{
+    justify-self: center;
 }
 
 .inventory-item span,
@@ -1550,6 +1641,18 @@ font-size: 14px;
 .item-weight {
     display: inline-block; /* or inline-block if you need some control over spacing */
     margin-left: 5px; /* Optional: Add some spacing between weight and other elements */
+}
+
+.item-quantity input{
+    font-size: 4px;
+}
+
+/* Style the arrows */
+.item-quantity::-webkit-outer-spin-button,
+.item-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: inner-spin-button; /* Keeps the default arrows */
+    margin: 0;
+    padding: 5;
 }
 
 .equip-toggle {
@@ -1572,7 +1675,6 @@ text-align: center;
 input[type="checkbox"] {
 cursor: pointer;
 }
-
 
 .inventory-modal {
 position: fixed;
@@ -1628,6 +1730,61 @@ display: none;
 }
 
 
+.item-card-container {
+    position: fixed;
+    top: 0;
+    right: -100%; /* Initially hidden off-screen */
+    width: 100%;
+    height: auto;
+    background-color: var(--ts-background-secondary);
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    transition: right 0.5s ease;
+    z-index: 1000;
+    font-size: 14px;
+    padding: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.item-card-container p {
+    padding: 0px;
+}
+
+.item-card-container p:not(:empty) {
+    padding: 1px;
+}
+
+.item-card-container.visible {
+    right: 0; /* Slides in from the right */
+}
+
+.item-card-container.hidden {
+    right: -100%; /* Slides out to the right */
+}
+
+.item-card {
+    padding: 20px;
+}
+
+.item-card p strong {
+    color: var(--ts-accent-primary);
+    font-family: 'OptimusPrinceps', sans-serif;  
+}
+
+.close-item-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+}
+
+.close-item-button:hover {
+    color: var(--ts-button-hover);
+    font-size: 20px;
+}
 
 /* Shared styles for all initiative cards */
 .initCard {
@@ -1639,12 +1796,12 @@ display: none;
 
 /* Player-specific styles */
 .playerCard {
-    background-color: green; /* Light blue */
+    background-color: rgb(4, 48, 4); 
 }
 
 /* Enemy-specific styles */
 .enemyCard {
-    background-color: rgb(190, 34, 34)
+    background-color: rgb(78, 5, 5)
 }
 
 /* Name label styles */

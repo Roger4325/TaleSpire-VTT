@@ -8,6 +8,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A club is a simple melee weapon, typically a short, sturdy piece of wood used for bludgeoning.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -49,6 +50,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A dagger is a small, versatile melee weapon with a pointed blade, ideal for stabbing or throwing.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -104,6 +106,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A massive, two-handed wooden club, simple yet powerful, capable of delivering heavy blows.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -140,6 +143,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A versatile, one-handed axe designed for close combat and throwing, often favored for its balance and utility.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -190,6 +194,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A lightweight throwing spear, designed for ranged attacks, with a simple design for easy handling and effective piercing strikes.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -235,6 +240,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A small, one-handed weapon, often used for quick, precise strikes. It can be thrown or used in close combat.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -285,6 +291,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A blunt, one-handed weapon with a heavy head, designed for crushing blows. It’s effective against armored opponents.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -321,6 +328,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A long, wooden staff often used as a versatile melee weapon. It can be wielded with one or two hands for either striking or blocking.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -370,6 +378,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A curved, bladed tool primarily used for harvesting, but in combat, it serves as a short, slashing weapon effective in close quarters.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -411,6 +420,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A long pole weapon with a pointed tip, designed for thrusting or throwing, making it versatile in both melee and ranged combat.",
     "weapon_range": "Melee",
     "category_range": "Simple Melee",
     "cost": {
@@ -469,6 +479,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A small, one-handed ranged weapon that fires bolts with high accuracy, often favored for its ease of use and portability.",
     "weapon_range": "Ranged",
     "category_range": "Simple Ranged",
     "cost": {
@@ -516,6 +527,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A small, thrown projectile that is lightweight and quick, typically used for ranged attacks in close quarters. It is often favored for its speed and ease of concealment.",
     "weapon_range": "Ranged",
     "category_range": "Simple Ranged",
     "cost": {
@@ -562,6 +574,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A compact and lightweight ranged weapon, ideal for quick shots at medium distances. It is favored for its ease of use and portability, often carried by hunters or scouts.",
     "weapon_range": "Ranged",
     "category_range": "Simple Ranged",
     "cost": {
@@ -604,6 +617,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Simple",
+    "description": "A simple ranged weapon that uses a small pouch to hurl stones or other projectiles. It is lightweight, easy to use, and effective at medium range, making it popular for hunting or as a low-tech weapon in combat.",
     "weapon_range": "Ranged",
     "category_range": "Simple Ranged",
     "cost": {
@@ -641,6 +655,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A versatile melee weapon with a broad, heavy blade designed for powerful strikes. It can be used for slashing or cleaving, making it a popular choice for warriors seeking a balance of damage and practicality.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -685,6 +700,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A melee weapon consisting of a spiked ball attached to a handle by a chain or hinge. It is designed for delivering powerful, crushing blows, often bypassing shields or armor due to its unpredictable swinging motion.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -715,6 +731,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A polearm with a long shaft and a single-edged blade at the end, often resembling a large spear with a sword-like blade. It is used for sweeping, slashing attacks, making it effective at both close and medium range.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -761,6 +778,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A large, two-handed weapon with a heavy, broad blade, designed for powerful, cleaving strikes.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -802,6 +820,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A large, two-handed sword known for its broad blade and high damage output, ideal for sweeping attacks.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -843,6 +862,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A polearm with an axe blade, spear tip, and hook, used for both slashing and thrusting in combat.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -889,6 +909,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A long polearm designed for mounted combat, featuring a pointed tip for thrusting.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -933,6 +954,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -977,6 +999,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A heavy two-handed weapon with a large, blunt head designed for smashing, often used to deliver powerful, crushing blows.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1018,6 +1041,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A spiked club with a metal head, often mounted on a shaft, designed for striking with both impact and piercing damage.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1048,6 +1072,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A long, spear-like polearm designed for thrusting, with a sharp point ideal for keeping enemies at a distance.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1094,6 +1119,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A slender, sharply pointed sword designed for thrusting, often used in quick, precise attacks.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1130,6 +1156,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A curved, single-edged sword known for its slashing ability, often used in close combat.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1171,6 +1198,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A small, versatile blade ideal for quick, close combat, often used for thrusting and slashing.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1217,6 +1245,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A three-pronged spear, often used for thrusting, and is favored for its reach and versatility in both combat and hunting.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1270,6 +1299,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A weapon with a sharp, pointed head, designed for piercing armor, commonly used in close combat to penetrate tough defenses.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1300,6 +1330,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A heavy, blunt weapon with a thick, hammer-like head, used for smashing through armor and dealing powerful blows.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1344,6 +1375,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A flexible, lash-like weapon used for striking from a distance, often causing pain or entangling foes.",
     "weapon_range": "Melee",
     "category_range": "Martial Melee",
     "cost": {
@@ -1385,6 +1417,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A ranged weapon that uses a long tube to propel darts or needles through air by blowing with force, often used for stealth or hunting.",
     "weapon_range": "Ranged",
     "category_range": "Martial Ranged",
     "cost": {
@@ -1427,6 +1460,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A small, one-handed ranged weapon that fires bolts with great precision, ideal for close-quarters combat or stealth attacks.",
     "weapon_range": "Ranged",
     "category_range": "Martial Ranged",
     "cost": {
@@ -1474,6 +1508,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A powerful, two-handed ranged weapon that delivers strong bolts at long distances, often requiring more strength to wield effectively.",
     "weapon_range": "Ranged",
     "category_range": "Martial Ranged",
     "cost": {
@@ -1526,6 +1561,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A large, two-handed ranged weapon known for its long range and high damage.",
     "weapon_range": "Ranged",
     "category_range": "Martial Ranged",
     "cost": {
@@ -1573,6 +1609,7 @@
       "url": "/api/equipment-categories/weapon"
     },
     "weapon_category": "Martial",
+    "description": "A thrown weapon used to entangle and restrain targets, reducing their movement and ability to act.",
     "weapon_range": "Ranged",
     "category_range": "Martial Ranged",
     "cost": {
@@ -1878,8 +1915,8 @@
     "index": "shield",
     "name": "Shield",
     "equipment_category": {
-      "index": "armor",
-      "name": "Armor",
+      "index": "shield",
+      "name": "shield",
       "url": "/api/equipment-categories/armor"
     },
     "armor_category": "Shield",
@@ -1990,7 +2027,7 @@
     "index": "arrow",
     "name": "Arrow",
     "equipment_category": {
-      "index": "adventuring-gear",
+      "index": "equipment",
       "name": "Adventuring Gear",
       "url": "/api/equipment-categories/adventuring-gear"
     },
@@ -2074,7 +2111,7 @@
     "index": "crossbow-bolt",
     "name": "Crossbow bolt",
     "equipment_category": {
-      "index": "adventuring-gear",
+      "index": "equipment",
       "name": "Adventuring Gear",
       "url": "/api/equipment-categories/adventuring-gear"
     },
@@ -6384,5 +6421,399 @@
       }
     ],
     "url": "/api/equipment/potion-of-supreme-healing"
+  },
+  {
+    "index": "battleaxe+1",
+    "name": "Battleaxe +1",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d8",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 4,
+    "properties": [
+      {
+        "index": "versatile",
+        "name": "Versatile",
+        "url": "/api/weapon-properties/versatile"
+      }
+    ],
+    "two_handed_damage": {
+      "damage_dice": "1d10",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "toHitBonus": 1,
+    "damageBonus": 1,
+    "url": "/api/equipment/battleaxe+1"
+  },
+  {
+    "index": "flail+2",
+    "name": "Flail +2",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 1000,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d8",
+      "damage_type": {
+        "index": "bludgeoning",
+        "name": "Bludgeoning",
+        "url": "/api/damage-types/bludgeoning"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 2,
+    "properties": [],
+    "toHitBonus": 2,
+    "damageBonus": 2,
+    "url": "/api/equipment/flail+2"
+  },
+  {
+    "index": "glaive+3",
+    "name": "Glaive +3",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d10",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 6,
+    "properties": [
+      {
+        "index": "heavy",
+        "name": "Heavy",
+        "url": "/api/weapon-properties/heavy"
+      },
+      {
+        "index": "reach",
+        "name": "Reach",
+        "url": "/api/weapon-properties/reach"
+      },
+      {
+        "index": "two-handed",
+        "name": "Two-Handed",
+        "url": "/api/weapon-properties/two-handed"
+      }
+    ],
+    "toHitBonus": 3,
+    "damageBonus": 3,
+    "url": "/api/equipment/glaive+3"
+  },
+  {
+    "index": "greataxe",
+    "name": "Greataxe +1",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d12",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 7,
+    "properties": [
+      {
+        "index": "heavy",
+        "name": "Heavy",
+        "url": "/api/weapon-properties/heavy"
+      },
+      {
+        "index": "two-handed",
+        "name": "Two-Handed",
+        "url": "/api/weapon-properties/two-handed"
+      }
+    ],
+    "toHitBonus": 1,
+    "damageBonus": 1,
+    "url": "/api/equipment/greataxe+1"
+  },
+  {
+    "index": "greatsword+2",
+    "name": "Greatsword +2",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 1000,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "2d6",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 6,
+    "properties": [
+      {
+        "index": "heavy",
+        "name": "Heavy",
+        "url": "/api/weapon-properties/heavy"
+      },
+      {
+        "index": "two-handed",
+        "name": "Two-Handed",
+        "url": "/api/weapon-properties/two-handed"
+      }
+    ],
+    "toHitBonus": 2,
+    "damageBonus": 2,
+    "url": "/api/equipment/greatsword+2"
+  },
+  {
+    "index": "halberd+3",
+    "name": "Halberd +3",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d10",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 6,
+    "properties": [
+      {
+        "index": "heavy",
+        "name": "Heavy",
+        "url": "/api/weapon-properties/heavy"
+      },
+      {
+        "index": "reach",
+        "name": "Reach",
+        "url": "/api/weapon-properties/reach"
+      },
+      {
+        "index": "two-handed",
+        "name": "Two-Handed",
+        "url": "/api/weapon-properties/two-handed"
+      }
+    ],
+    "toHitBonus": 3,
+    "damageBonus": 3,
+    "url": "/api/equipment/halberd+3"
+  },
+  {
+    "index": "returning-dagger",
+    "name": "Returning Dagger",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Simple",
+    "description": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
+    "weapon_range": "Melee",
+    "category_range": "Simple Melee",
+    "toHitBonus": 1,
+    "damageBonus": 2,
+    "rarity": "Rare",
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d4",
+      "damage_type": {
+        "index": "piercing",
+        "name": "Piercing",
+        "url": "/api/damage-types/piercing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 1,
+    "properties": [
+      {
+        "index": "finesse",
+        "name": "Finesse",
+        "url": "/api/weapon-properties/finesse"
+      },
+      {
+        "index": "light",
+        "name": "Light",
+        "url": "/api/weapon-properties/light"
+      },
+      {
+        "index": "thrown",
+        "name": "Thrown",
+        "url": "/api/weapon-properties/thrown"
+      },
+      {
+        "index": "monk",
+        "name": "Monk",
+        "url": "/api/weapon-properties/monk"
+      }
+    ],
+    "throw_range": {
+      "normal": 20,
+      "long": 60
+    },
+    "url": "/api/equipment/dagger"
+  },
+  {
+    "index": "scouts-amulet",
+    "name": "Scout's Amulet",
+    "equipment_category": {
+      "index": "jewelry",
+      "name": "Jewelry",
+      "url": "/api/equipment-categories/jewelry"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "Worn by the scouts of the Graven Guard, this amulet is said to increase one's awareness of their surroundings.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus_effects": [
+      {
+        "type": "passive_perception",
+        "bonus": 3,
+        "description": "Grants a +3 bonus to Passive Perception while worn and attuned."
+      }
+    ],
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/scouts-amulet"
+  },{
+    "index": "mortis-armour",
+    "name": "Mortis Armour",
+    "equipment_category": {
+      "index": "armor",
+      "name": "Armor",
+      "url": "/api/equipment-categories/armor"
+    },
+    "armor_category": "Heavy",
+    "armor_class": {
+      "base": 19,
+      "dex_bonus": false
+    },
+    "str_minimum": 16,
+    "stealth_disadvantage": false,
+    "weight": 65,
+    "cost": {
+      "quantity": 5000,
+      "unit": "gp"
+    },
+    "description": [
+      "The Mortis Armour is a set of blackened plate armour fabricated during the Second Age by a blacksmith who also happened to dabble in Necromancy. It has the symbol of the Order Of The Black Rose emblazoned on its chest, and intricate floral patterns are strewn across it's surface, however the metal itself is scorched and ashy, as if it was recently pulled from a burning building. It emanates an aura of dark magic and is ice cold to the touch.<br>(Requires Attunement, Min Strength 16)<br>When worn, the Mortis Armour gives an AC of 19, and does NOT give disadvantage on stealth checks. Additionally, as a bonus action it allows the wearer to step into shadows that are close by and emerge from shadows within a 60 foot radius.<br>When the Mortis Armour is identified, the person casting the spell must also roll an arcana check with a DC of 20. On a success, the following information is available:<br>When worn, the Mortis Armour binds itself to the person wearing it, meaning that if they ever take the armour off and then proceed to sleep (Long Rest) they will wake up having donned the armour once again.<br>When in combat, every time the wearer takes damage, roll an extra d6 necrotic damage. If the wearer dips below 25% health, stop telling them the amount of damage they take. If the wearer dies while wearing this armour, they will keep fighting as if they were perfectly healthy. They will continue to survive in this state for a period of time equivalent to their constitution score multiplied by a d4 roll when they die. Healing spells and potions will not affect the wearer. Resurrection spells will only work once the armour is removed and will take into account the amount of time since their actual death.<br>The armour cannot be removed naturally and cannot be unattuned from naturally. To remove the armour, the wearer must roll a wisdom saving throw with a DC of 30, or use a wish spell. If the wearer died while wearing the armour, once it is removed they will drop dead.<br>Once the wearer dies, the armour can be removed, but it will take the period of a short rest to unattune itself from its wearer.",
+      "<br>Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "url": "/api/equipment/mortis-armour"
   }
 ]

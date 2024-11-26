@@ -4,6 +4,17 @@
     margin-bottom: 8px;
 }
 
+#settings-container {
+    position: fixed;
+    top: 24px;
+    left: 0px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    padding: 5px;
+    z-index: 999; /* Ensure it's above other content */
+}
+
 .monster-group-header-01{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;

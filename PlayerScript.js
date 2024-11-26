@@ -59,6 +59,31 @@ const messageHandlers = {
 };
 
 
+
+//The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
+const characterStatBonuses = {
+    skills: {
+        Perception: {bonuses: [] },
+        Investigation: {bonuses: [] },
+        Insight: {bonuses: [] },
+    },
+    senses: {
+        PassivePerception: { bonuses: [] },
+        PassiveInsight: {bonuses: [] },
+        PassiveInvestigation: {bonuses: [] },
+    },
+
+}
+
+let baseAC = 10; // Default base AC
+let equippedArmor = null; // No armor equipped by default
+let equippedShield = null; // No shield equipped by default
+
+let playerWeaponProficiency = [];
+let playerArmorProficiency = [];
+let playerLanguageProficiency = [];
+let playerToolsProficiency = [];
+
 //ConditionsMap is the map of conditions that can be set onto the player. This is used for tracking conditions.
 const conditionsMap = new Map();
 
@@ -288,7 +313,110 @@ async function playerSetUP(){
     });
 
 
+
+
+    //adding event listener to the different proficiency types so that we can select different types of proficiency. 
+    const proficiencySettings = document.querySelectorAll('.proficiency-settings');
+
+    proficiencySettings.forEach(function(icon) {
+        icon.addEventListener('click', function(event) {
+            console.log("click");
+    
+            // Find the corresponding dropdown by navigating from the clicked icon
+            const parentGroup = event.target.closest('.proficiency-group'); // Get the closest proficiency group
+            const dropdown = parentGroup.querySelector('.proficiency-dropdown'); // Find the dropdown inside the same group
+    
+            // Close any open dropdowns
+            const openDropdowns = document.querySelectorAll('.proficiency-dropdown[style="display: block;"]');
+            openDropdowns.forEach(function(openDropdown) {
+                // Close the dropdowns except the one we're about to toggle
+                if (openDropdown !== dropdown) {
+                    openDropdown.style.display = 'none';
+                }
+            });
+    
+            // Toggle visibility of the clicked dropdown
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+    
+    // Add an event listener to the document to close the dropdown if clicked outside
+    document.addEventListener('click', function(event) {
+        const openDropdown = document.querySelector('.proficiency-dropdown[style="display: block;"]'); // Find the dropdown that's open
+    
+        // If there's an open dropdown and the click is outside the dropdown or its cog icon, close it
+        if (openDropdown && !openDropdown.contains(event.target) && !event.target.closest('.proficiency-settings')) {
+            openDropdown.style.display = 'none';
+        }
+    });
+
+    const allCheckboxes = document.querySelectorAll('.proficiency-dropdown input[type="checkbox"]');
+    allCheckboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            const parentGroup = checkbox.closest('.proficiency-group'); // Find the closest group to determine the category
+
+            if (parentGroup.querySelector('h3 span').textContent === 'Weapons') {
+                updateProficiencyArray(checkbox, playerWeaponProficiency);
+            } else if (parentGroup.querySelector('h3 span').textContent === 'Armor') {
+                updateProficiencyArray(checkbox, playerArmorProficiency);
+            } else if (parentGroup.querySelector('h3 span').textContent === 'Languages') {
+                updateProficiencyArray(checkbox, playerLanguageProficiency);
+                console.log('Languages Proficiency:', playerLanguageProficiency);
+            } else if (parentGroup.querySelector('h3 span').textContent === 'Tools') {
+                updateProficiencyArray(checkbox, playerToolsProficiency);
+            }
+            updateProficiencyContainers();
+        });
+    });
+
+
+    document.getElementById('closeItemCard').addEventListener('click', () => {
+        hideNotesPanel()
+    });
+
 }  
+
+
+function updateProficiencyArray(checkbox, proficiencyArray) {
+    const itemLabel = checkbox.parentNode.textContent.trim(); // Get the label text
+
+    if (checkbox.checked) {
+        // Add the item if it's checked and not already in the array
+        if (!proficiencyArray.includes(itemLabel)) {
+            proficiencyArray.push(itemLabel);
+        }
+    } else {
+        // Remove the item if it's unchecked
+        const index = proficiencyArray.indexOf(itemLabel);
+        if (index > -1) {
+            proficiencyArray.splice(index, 1);
+        }
+    }
+}
+
+function updateProficiencyContainers() {
+    // Select the containers
+    const weaponsContainer = document.querySelector('#weaponsContainer');
+    const armorContainer = document.querySelector('#armorContainer');
+    const languageContainer = document.querySelector('#languageContainer');
+    const toolsContainer = document.querySelector('#toolsContainer');
+
+    // Helper function to update container content
+    function updateContainer(container, array) {
+        if (array.length > 0) {
+            container.textContent = array.join(', ');
+        } else {
+            container.textContent = '';
+        }
+    }
+
+    // Update each container with its respective proficiency array
+    updateContainer(weaponsContainer, playerWeaponProficiency);
+    updateContainer(armorContainer, playerArmorProficiency);
+    updateContainer(languageContainer, playerLanguageProficiency);
+    updateContainer(toolsContainer, playerToolsProficiency);
+}
+
     
 function toggleInspiration() {
     const inspirationButton = document.getElementById("inspirationBox");
@@ -304,6 +432,7 @@ function toggleInspiration() {
     }
     sendDMUpdatedStats()
 }
+
 let initialHitDiceValue = "1d8"; // Default value, adjust as needed
 
 function updateHitDiceLabel() {
@@ -443,6 +572,36 @@ function updateHitDiceValue() {
     } else {
         showErrorModal("Invalid Constitution score: Please enter a valid number.");
     }
+}
+
+
+
+
+// Function to update AC
+function updateAC() {
+    let finalAC;
+
+    const AcDiv = document.getElementById('AC')
+
+    const dexLabel = findAbilityScoreLabel("DEX");
+    const dexScore = parseInt(dexLabel.getAttribute("value"), 10);
+    let shieldMod = equippedShield ? equippedShield.armor_class.base || 0 : 0;
+
+    if (equippedArmor) {
+        // Use equipped armor's base AC and apply Dex mod up to the limit
+        let effectiveDexMod = 0;
+        if (equippedArmor.armor_class.dex_bonus === true){
+            effectiveDexMod = equippedArmor.armor_class.max_bonus || dexScore;
+        }
+        else{
+        }
+        finalAC = equippedArmor.armor_class.base + effectiveDexMod + shieldMod;
+    } else {
+        // Use base AC and full Dex modifier if no armor is equipped
+        finalAC = baseAC + dexScore + shieldMod ;
+    }
+
+    AcDiv.textContent = finalAC
 }
 
 
@@ -599,6 +758,7 @@ function handleAbilityScoreChange(event) {
         updateSpellDCHeader()
         sendDMUpdatedStats()
         updateHitDiceValue()
+        updateAC(); // Recalculate AC
 
 
         const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -606,6 +766,31 @@ function handleAbilityScoreChange(event) {
         
     }
 }
+
+
+
+function addBonus(sense, value) {
+    if (characterStatBonuses.senses[sense]) {
+        characterStatBonuses.senses[sense].bonuses.push(value);
+        updatePassives(); // Recalculate and update UI
+    } else {
+        console.error(`Invalid sense: ${sense}`);
+    }
+}
+
+
+function removeBonus(sense, value) {
+    if (characterStatBonuses.senses[sense]) {
+        const index = characterStatBonuses.senses[sense].bonuses.indexOf(value);
+        if (index !== -1) {
+            characterStatBonuses.senses[sense].bonuses.splice(index, 1);
+            updatePassives(); // Recalculate and update UI
+        }
+    } else {
+        console.error(`Invalid sense: ${sense}`);
+    }
+}
+
 
 
 //This function is updated on init for the currrent character. This allows their ability scores to be updated. 
@@ -889,7 +1074,7 @@ function updateSkillModifier() {
         skillButton.textContent = skillModifier > 0 ? `+${skillModifier}` : `${skillModifier}`;
         skillLabel.setAttribute('value', skillModifier);
     });
-    passives()
+    updatePassives()
 }
 
 function updateSaveModifier() {
@@ -979,11 +1164,28 @@ function getSkillValue(skillName) {
 }
 
 
-function passives(){
-    document.getElementById("passivePerception").textContent = parseInt(getSkillValue('Perception')) + 10;
-    document.getElementById("passiveInvestigation").textContent = parseInt(getSkillValue('Investigation')) + 10;
-    document.getElementById("passiveInsight").textContent = parseInt(getSkillValue('Insight')) +10;
+// function passives(){
+//     document.getElementById("passivePerception").textContent = parseInt(getSkillValue('Perception')) + 10;
+//     document.getElementById("passiveInvestigation").textContent = parseInt(getSkillValue('Investigation')) + 10;
+//     document.getElementById("passiveInsight").textContent = parseInt(getSkillValue('Insight')) +10;
 
+// }
+
+function updatePassives() {
+    const passivePerceptionBase = parseInt(getSkillValue('Perception')) + 10;
+    const passivePerceptionBonus = characterStatBonuses.senses.PassivePerception.bonuses
+        .reduce((total, bonus) => total + bonus.value, 0);
+    document.getElementById("passivePerception").textContent = passivePerceptionBase + passivePerceptionBonus;
+
+    const passiveInvestigationBase = parseInt(getSkillValue('Investigation')) + 10;
+    const passiveInvestigationBonus = characterStatBonuses.senses.PassiveInvestigation.bonuses
+        .reduce((total, bonus) => total + bonus.value, 0);
+    document.getElementById("passiveInvestigation").textContent = passiveInvestigationBase + passiveInvestigationBonus;
+
+    const passiveInsightBase = parseInt(getSkillValue('Insight')) + 10;
+    const passiveInsightBonus = characterStatBonuses.senses.PassiveInsight.bonuses
+        .reduce((total, bonus) => total + bonus.value, 0);
+    document.getElementById("passiveInsight").textContent = passiveInsightBase + passiveInsightBonus;
 }
 
 
@@ -1254,6 +1456,11 @@ function getAllEditableContent() {
     content['characterTempHp'] = characterTempHp.value;
     content['currentHitDice'] = currentHitDice.textContent;
 
+    content['playerWeaponProficiency'] = [...playerWeaponProficiency];
+    content['playerArmorProficiency'] = [...playerArmorProficiency];
+    content['playerLanguageProficiency'] = [...playerLanguageProficiency];
+    content['playerToolsProficiency'] = [...playerToolsProficiency];
+
     // Add other content-editable elements to the content object
     editableElements.forEach((element) => {
         const id = element.id;
@@ -1335,9 +1542,14 @@ function processActionTableRow(){
         const tenthColumnCell = row.querySelector('.actionDescriptiveText01');
         const elventhColumnCell = row.querySelector('.actionDescriptiveText02');
         const twelvethColumnCell = row.querySelector('.damage-type');
+        const inventoryId = row.getAttribute('data-item-id')
 
         if (secondColumnCell) {
             rowData['secondColumn'] = secondColumnCell.textContent.trim();
+        }
+
+        if(inventoryId){
+            rowData['itemId'] = inventoryId;
         }
 
         if (thirdColumnCell) {
@@ -1456,6 +1668,31 @@ function updateCharacterUI(characterData, characterName) {
         }
     }
 
+    function loadProficiencies(proficiencyArray, containerSelector, dropdownSelector, characterDataKey) {
+        if (characterData[characterDataKey]) {
+            const checkboxes = document.querySelectorAll(`${dropdownSelector} input[type="checkbox"]`);
+            
+            checkboxes.forEach((checkbox) => {
+                // Check if the checkbox ID is in the saved data
+                checkbox.checked = characterData[characterDataKey].includes(checkbox.id);
+                
+                if (checkbox.checked) {
+                    // Add the checked checkbox's label text to the array
+                    const itemLabel = checkbox.parentNode.textContent.trim();
+                    if (!proficiencyArray.includes(itemLabel)) {
+                        proficiencyArray.push(itemLabel);
+                    }
+                }
+            });
+    
+            // Update the corresponding container with the loaded proficiencies
+            const container = document.querySelector(containerSelector);
+            container.textContent = proficiencyArray.join(', ');
+        }
+    }
+    
+    
+
     updateProficiencyButtons(characterData, skillProficiencyLevels, savesProficiencyLevels);
     const characterLevel = parseInt(characterData.characterLevel);
     document.getElementById('characterLevel').textContent = characterLevel;
@@ -1469,6 +1706,12 @@ function updateCharacterUI(characterData, characterName) {
     const conditionsSet = new Set(characterData.conditions);
     conditionsMap.set(conditionTrackerDiv, conditionsSet);
     updateConditionsUI(conditionsSet);
+
+    loadProficiencies(playerWeaponProficiency, '#weaponsContainer', '#weapons-dropdown', 'playerWeaponProficiency');
+    loadProficiencies(playerArmorProficiency, '#armorContainer', '#armor-dropdown', 'playerArmorProficiency');
+    loadProficiencies(playerLanguageProficiency, '#languageContainer', '#languages-dropdown', 'playerLanguageProficiency');
+    loadProficiencies(playerToolsProficiency, '#toolsContainer', '#tools-dropdown', 'playerToolsProficiency');
+    
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
     loadSpellData(characterData.spellData);
@@ -1477,6 +1720,7 @@ function updateCharacterUI(characterData, characterName) {
 
     updateHitDiceLabel()
 
+    console.log(characterStatBonuses)
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -1500,6 +1744,7 @@ function updateProficiencyButtons(characterData, skillProficiencyLevels, savesPr
         }
     });
 }
+
 
 function findCurrentLevel(proficiencyLevel, skillProficiencyLevels, savesProficiencyLevels, isSkillRow) {
     const skillLevelIndex = skillProficiencyLevels.findIndex((level) => parseFloat(level.value) === parseFloat(proficiencyLevel));
@@ -1868,50 +2113,54 @@ function actionTableEventListenerSetup() {
 
 
 
-function updateActionTableUI(actionTableData) {
+function updateActionTableUI(actionTableData, newActionTableData) {
     const tableBody = document.getElementById('actionTableBody');
 
     // Clear existing rows
-    
-
 
     if (!actionTableData || actionTableData.length === 0) {
-        actionTableData = [
-            {
-                "1": {
-                    "proficiencyButton": "1",
-                    "secondColumn": "Maul of Fire",
-                    "thirdColumn": "5ft",
-                    "fourthColumn": "+5",
-                    "fifthColumn": "2d6/1d4",
-                    "sixthColumn": "ActionSettings",
-                    "seventhColumn": "STR",
-                    "eighthColumn": "",
-                    "tenthColumn": "Heavy, Two-Handed",
-                    "elventhColumn": "A brightly Colored Maul",
-                    "twelvethColumn": "",
-                    "ninthColumn": {
-                        "attacks": true,
-                        "actions": true,
-                        "bonus-actions": false,
-                        "reactions": false,
-                        "other": false
+        if (!newActionTableData || newActionTableData.length === 0){
+            actionTableData = [
+                {
+                    "1": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Maul of Fire",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "2d6/1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
                     }
                 }
-            }
-        ];
+            ];
+        }
+        else{
+            actionTableData = newActionTableData
+        }
+        
     }
     else{
         tableBody.innerHTML = '';
     }
-
-    console.log(actionTableData)
 
     // Loop through the action table data and create rows
     actionTableData.forEach((rowData) => {
         for (const rowIndex in rowData) {
             const row = rowData[rowIndex];
             const newRow = document.createElement('tr');
+
+            newRow.setAttribute('data-item-id', row.itemId || ''); // Add item identifier
 
             const currentRowIndex = tableBody.children.length + 1; // Current number of rows + 1
 
@@ -1959,6 +2208,7 @@ function updateActionTableUI(actionTableData) {
             damageLabel.setAttribute('data-dice-type', row.fifthColumn);
             damageLabel.setAttribute('data-name', "Piercing default" || "default"); //HardCoded example this needs to be updated once Damage Type is implemented. 
             
+            
             const damageButton = document.createElement('button');
             damageButton.className = "actionButton damageDiceButton skillbuttonstyler";
             damageButton.textContent = row.fifthColumn & findAbilityScoreLabel(row.seventhColumn).getAttribute('value')|| "2d6+4d4+5"; // Default value if empty
@@ -1979,11 +2229,11 @@ function updateActionTableUI(actionTableData) {
             tableBody.appendChild(newRow);
 
 
-             // Add the toggle dropdown listener to the dropdown button
-             const dropdownBtn = newRow.querySelector('.dropbtn');
-             const dropdownContent = newRow.querySelector('.dropdown-content');
-             dropdownContent.setAttribute('id', 'checkboxContainer' + (rowIndex-1));
-             addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
+            // Add the toggle dropdown listener to the dropdown button
+            const dropdownBtn = newRow.querySelector('.dropbtn');
+            const dropdownContent = newRow.querySelector('.dropdown-content');
+            dropdownContent.setAttribute('id', 'checkboxContainer' + (currentRowIndex-1));
+            addToggleDropdownListener(dropdownBtn, dropdownContent, newRow);
 
             generateCheckboxes(checkboxes, newRow);
 
@@ -2001,6 +2251,7 @@ function updateActionTableUI(actionTableData) {
     rollableButtons()
     addBlurAndEnterListenersToDamageTypes();
     updateAllDamageButtonDataNames()
+    updateAllToHitDice()
 }
 
 // Helper function to create column six. The settings menu on the Action table.
@@ -2091,8 +2342,8 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     const magicBonusInput = document.createElement('input');
     magicBonusInput.placeholder = "To Hit Bonus";
     magicBonusDiv.textContent = "ToHitBonus : ";
-    magicBonusInput.classList.add('magic-bonus-weapon')
-    magicBonusInput.value = rowData["eighthColumn"]
+    magicBonusInput.classList.add('magic-bonus-weapon');
+    magicBonusInput.value = rowData["eighthColumn"];
     magicBonusDiv.appendChild(magicBonusInput);
     additionalInfoContainer.appendChild(magicBonusDiv);
 
@@ -2100,8 +2351,8 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     const damageBonusInput = document.createElement('input');
     damageBonusInput.placeholder = "Damage Bonus";
     damageBonusDiv.textContent = "Damage Mod: ";
-    damageBonusInput.classList.add('damage-bonus-weapon')
-    damageBonusInput.value = rowData["damageBonus"]
+    damageBonusInput.classList.add('damage-bonus-weapon');
+    damageBonusInput.value = rowData["damageBonus"] ?? "";
     damageBonusDiv.appendChild(damageBonusInput);
     additionalInfoContainer.appendChild(damageBonusDiv);
 
@@ -2129,8 +2380,6 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     // Append the button and the additional info container to the td
     td.appendChild(button);
     td.appendChild(additionalInfoContainer);
-
-    
 
     return td;
 }
@@ -2215,18 +2464,19 @@ function createProficiencyButton(value) {
 // Helper function to calculate action damage dice based on ability modifier
 function calculateActionDamageDice() {
     const allRows = document.querySelectorAll('.actionTable tbody tr');
-
+    
     allRows.forEach(row => {
         // Select the label with class 'damageDiceButton'
         const damageLabel = row.querySelector('label.damageDiceButton');
         const damageButton = row.querySelector('button.damageDiceButton');
         const abilityDropdown = row.querySelector('.ability-dropdown');
-
-        const magicBonusInput = row.querySelector('.magic-bonus-weapon');
         const damageBonusInput = row.querySelector('.damage-bonus-weapon');
 
-        const magicBonus = parseInt(magicBonusInput.value) || 0;
-        const damageBonus = parseInt(damageBonusInput.value) || 0;
+        let damageBonus
+        if(damageBonusInput){
+            damageBonus = parseInt(damageBonusInput.value) || 0;
+        }
+        
 
 
         if (damageLabel && damageButton && abilityDropdown) {
@@ -3412,19 +3662,13 @@ function filterSpellsByLevel(selectedLevel) {
 
 
 
-
+// Define item type libraries
+const equipableItems = new Set(['weapon', 'armor', 'equipment','shield', 'jewelry']); // Can be expanded in the future. This will be used to create checkbox that allow equipping of an item. 
+const useableItems = new Set(['potion']); // Can be expanded in the future. This will be used to create use buttons next to the item
 
 
 //Player character inventory section start
-let itemList = [
-    { name: "Potion of Healing", weight: 0.5, cost: 50, notes: "Heals 2d4+2", type: "consumable" },
-    { name: "Crossbow, Light", weight: 5, cost: 25, notes: "Range 80/320", type: "weapon" },
-    { name: "Rapier", weight: 2, cost: 25, notes: "Finesse", type: "weapon" },
-    { name: "Arrows", weight: 0.1, cost: 1, notes: "Ammunition", type: "ammo" }
-    // Add more items as needed
-];
-  
-  function updateWeight() {
+function updateWeight() {
     let totalWeight = 0;
 
     // Select all inventory groups
@@ -3452,18 +3696,51 @@ let itemList = [
 function addItemToInventory(item, group) {
     const list = document.getElementById(`${group}-list`);
 
+    if (!item.uniqueId) {
+        item.uniqueId = generateUniqueId();
+    }
+
     let itemDiv = document.createElement('div');
     itemDiv.classList.add('inventory-item');
+    itemDiv.setAttribute('data-unique-id', item.uniqueId); // Attach the unique ID to the DOM
+    
+    
 
     // Set quantity to the provided value or default to 1
     const itemQuantity = item.quantity > 0 ? item.quantity : 1; // Use provided quantity or default to 1
 
+     // Create the info button
+
     // Check for notes and format appropriately
-    const notes = item.damage ? `Damage: ${item.damage.damage_dice}, ${item.damage.damage_type.name}` : (item.properties ? item.properties.map(p => p.name).join(', ') : ''); 
+    let notes = item.properties ? item.properties.map(p => p.name).join(', ') : '';
+
+    // Add Armor Class (AC) to notes if it exists
+    if (item.armor_class && item.armor_class.base) {
+        notes += (notes ? ', ' : '') + `AC: ${item.armor_class.base}`;
+    }
+
+    // Add Stealth disadvantage if applicable
+    if (item.stealth_disadvantage) {
+        notes += (notes ? ', ' : '') + `Stealth: D`;
+    }
+
+
+    // Determine the interactive element based on item type
+    let interactiveElement = '';
+    const categoryIndex = item.equipment_category.index; // Access the `equipment_category.index`
+
+    if (equipableItems.has(categoryIndex)) {
+        interactiveElement = `<input type="checkbox" class="equip-toggle inventory-type" ${item.equipped ? 'checked' : ''}>`;
+    } else if (useableItems.has(categoryIndex)) {
+        interactiveElement = `<button class="use-item-button nonRollButton inventory-type">Use</button>`;
+    } else {
+        interactiveElement = `<span class="non-interactive inventory-type">-</span>`;
+    }
 
     itemDiv.innerHTML = `
-    <input type="checkbox" class="equip-toggle" ${item.equipped ? 'checked' : ''}>
+    ${interactiveElement}
     <span class="item-name">${item.name}</span>
+    <span> <button class="item-info-button nonRollButton">i</button></span>
     <span class="item-weight">${item.weight || 0} lbs.</span>
     <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
     <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>
@@ -3474,9 +3751,30 @@ function addItemToInventory(item, group) {
     // Append the itemDiv to the list
     list.appendChild(itemDiv);
 
+
+
+   
+
+
     // Call parseAndReplaceDice for item notes
     const notesContainer = itemDiv.querySelector('.item-notes');
     notesContainer.appendChild(parseAndReplaceDice(item, notes)); // Update this line
+
+    const infoButton = itemDiv.querySelector('.item-info-button');
+
+    // Event listener for info button to toggle notes panel
+    infoButton.addEventListener('click', () => {
+        // Check if the clicked button is already active
+        if (activeInfoButton === infoButton) {
+            // If it's active, close the panel and reset the active button
+            hideNotesPanel();
+            activeInfoButton = null;
+        } else {
+            // If it's a new button, show the panel and set the active button
+            showNotesPanel(item);
+            activeInfoButton = infoButton;
+        }
+    });
 
     function updateItemWeight() {
         const quantity = parseInt(itemDiv.querySelector('.item-quantity').value, 10);
@@ -3497,22 +3795,433 @@ function addItemToInventory(item, group) {
     });
 
     // Add event listener for equip toggle
-    itemDiv.querySelector('.equip-toggle').addEventListener('change', (e) => {
-        item.equipped = e.target.checked;
-        updateContent(); // Save inventory changes
-    });
+    if (equipableItems.has(item.equipment_category.index)) {
+        itemDiv.querySelector('.equip-toggle').addEventListener('change', (e) => {
+            item.equipped = e.target.checked;
+    
+            if (e.target.checked) {
+                if (item.equipment_category.index === "armor") {
+                    equipArmor(item);
+                } else if (item.equipment_category.index === "shield") {
+                    equipShield(item);
+                } else if (item.equipment_category.index === "weapon") {
+                    addActionItemToTable(item);
+                } else if (item.equipment_category.index === "jewelry") {
+                    equipJewelry(item);
+                } else {
+                    console.log("other item equipped");
+                }
+            } else {
+                if (item.equipment_category.index === "armor") {
+                    unequipArmor(item);
+                } else if (item.equipment_category.index === "shield") {
+                    unequipShield(item);
+                }else if (item.equipment_category.index === "jewelry") {
+                    unequipJewelry(item);
+                }
+                // Remove associated row from action table for other items
+                const actionTableRow = document.querySelector(
+                    `#actionTableBody tr[data-item-id="${item.uniqueId}"]`
+                );
+                if (actionTableRow) {
+                    actionTableRow.remove();
+                }
+            }
+    
+            updateContent();
+        });
+    }    
+
+    // Add event listener for usable items
+    if (useableItems.has(item.equipment_category.index)) {
+        itemDiv.querySelector('.use-item-button').addEventListener('click', () => {
+            console.log("here")
+            const actionButton = itemDiv.querySelector('.actionButton'); // Locate the actionButton in the same row
+            
+            // Simulate clicking the actionButton if it exists
+            if (actionButton) {
+                actionButton.click();
+            }
+
+            // Reduce the quantity of the item by 1
+            const quantityInput = itemDiv.querySelector('.item-quantity');
+            let currentQuantity = parseInt(quantityInput.value, 10);
+
+            if (currentQuantity > 1) {
+                quantityInput.value = currentQuantity - 1; // Decrement the quantity
+            } else {
+                // Remove the row entirely if quantity is 0
+                const list = itemDiv.parentElement; // Get the parent list container
+                list.removeChild(itemDiv); // Remove the current item row
+            }
+
+            // Update the total weight and save the updated inventory state
+            updateWeight();
+            updateContent();
+        });
+    }
+
+
 
     // Add event listener for delete button
     itemDiv.querySelector('.delete-item-button').addEventListener('click', () => {
         list.removeChild(itemDiv); // Remove the item from the list
+        const actionTableRow = document.querySelector(
+            `#actionTableBody tr[data-item-id="${item.uniqueId}"]`
+        )
+        if (actionTableRow) {
+            actionTableRow.remove();
+        }
+
+        if (item.equipment_category.index === "armor") {
+            unequipArmor(item);
+        } else if (item.equipment_category.index === "shield") {
+            unequipShield(item);
+        }else if (item.equipment_category.index === "jewelry") {
+            unequipJewelry(item);
+        } 
+        
         updateWeight(); // Update the total weight
         updateContent(); // Save inventory changes
     });
+
+    if (item.equipped) {
+        if (item.equipment_category.index === "armor") {
+            equipArmor(item);
+        } else if (item.equipment_category.index === "shield") {
+            equipShield(item);
+        } else if (item.equipment_category.index === "jewelry") {
+            equipJewelry(item);
+        } else {
+            console.log("other item equipped automatically on load");
+        }
+    }
 
     rollableButtons(); // Add Event Listeners to all buttons
     updateContent(); // Save inventory changes
     updateItemWeight(); // Initial weight calculation
     updateWeight();
+}
+
+function generateUniqueId() {
+    return `item-${Date.now()}-${Math.random().toString(16).substr(2, 8)}`;
+}
+
+
+
+function getHigherStat(){
+    const strengthLabel = findAbilityScoreLabel("STR");
+    const dexLabel = findAbilityScoreLabel("DEX");
+
+    // Extract the 'value' attribute and convert to a number
+    const strengthScore = parseInt(strengthLabel.getAttribute("value"), 10);
+    const dexScore = parseInt(dexLabel.getAttribute("value"), 10);
+    if (strengthScore >= dexScore){
+        return "STR"
+    }
+    else{
+        return "DEX"
+    }
+}   
+
+
+function addActionItemToTable(item) {
+
+    const calculateStat = (item) => {
+        const isFinesse = item.properties.some(p => p.index === "finesse");
+        const isRanged = item.weapon_range === "Ranged";
+        
+        if (isFinesse) {
+            // Use the higher of STR or DEX if the weapon has the finesse property
+            return getHigherStat("STR", "DEX"); // Assume getHigherStat is a pre-existing function
+        } else if (isRanged) {
+            // Use DEX for ranged weapons
+            return "DEX";
+        } else {
+            // Default to STR for melee weapons without finesse
+            return "STR";
+        }
+    };
+
+    const primaryStat = calculateStat(item);
+
+    const newActionTableData = [
+        {
+            [item.index]: {
+                itemId: item.uniqueId, // Add a unique identifier to track the item
+                
+                proficiencyButton: (() => {
+                    // Normalize strings: remove spaces and convert to lowercase
+                    const normalize = (str) => str.replace(/\s+/g, "").toLowerCase();
+                
+                    // Default to "0" (not proficient)
+                    let proficient = "0";
+                
+                    // Create a normalized array of proficiencies
+                    const normalizedProficiencies = playerWeaponProficiency.map(normalize);
+                
+                    // Check if the normalized weapon or category exists in the normalized proficiencies
+                    if (normalizedProficiencies.includes(normalize(item.index)) || 
+                        (normalizedProficiencies.includes("simpleweapons") && normalize(item.weapon_category) === "simple") || 
+                        (normalizedProficiencies.includes("martialweapons") && normalize(item.weapon_category) === "martial")) {
+                        proficient = "1";
+                    }
+                
+                    return proficient;
+                })(),
+                secondColumn: item.name,
+                thirdColumn: (() => {
+                    // Base range (normal range with "ft" or default to "5ft")
+                    let range = `${item.range?.normal ? `${item.range.normal}ft` : "5ft"}`;
+                    
+                    // Add thrown range if applicable
+                    if (item.throw_range) {
+                        const thrownNormal = item.throw_range.normal;
+                        const thrownLong = item.throw_range.long;
+                        range += ` (${thrownNormal}/${thrownLong})`;
+                    }
+                    
+                    return range;
+                })(),
+                fourthColumn: "+5", // Default or calculated To Hit
+                fifthColumn: `${item.damage?.damage_dice || "1d8"}`, // Damage dice
+                sixthColumn: "ActionSettings", //name of the button. Needs to be this name so it works correctly
+                seventhColumn: primaryStat, //Which stat is used by the weapon eg STR
+                eighthColumn: item.toHitBonus || "", //Magic bonus to hit
+                damageBonus: item.damageBonus || "", //magic bonus to damage
+                tenthColumn: item.properties.map(p => p.name).join(", "), 
+                elventhColumn: item.description || "",
+                twelvethColumn: item.damage.damage_type.name || "", //Weapon damage types
+                ninthColumn: {
+                    attacks: true,
+                    actions: true,
+                    bonusActions: false,
+                    reactions: false,
+                    other: false,
+                },
+            },
+        },
+    ];
+
+    updateActionTableUI(null, newActionTableData);
+}
+
+
+const normalize = (str) => str.replace(/\s+/g, "").toLowerCase();
+
+function equipArmor(item) {
+    // Unequip currently equipped armor if any
+    if (equippedArmor) {
+        unequipArmor(equippedArmor);
+    }
+
+    // Check proficiency
+    const normalizedProficiencies = playerArmorProficiency.map(normalize);
+    if (!normalizedProficiencies.includes(normalize(item.armor_category))) {
+        showErrorModal(`Warning: Not proficient with ${item.armor_category} Armor`);
+    }
+
+    // Ensure the item gets the uniqueId from the row
+    const itemDiv = document.querySelector(`[data-unique-id="${item.uniqueId}"]`);
+    if (itemDiv) {
+        item.uniqueId = itemDiv.getAttribute('data-unique-id');
+    }
+
+    // Equip the armor
+    equippedArmor = item;
+    updateAC(); // Recalculate AC
+}
+
+function unequipArmor(item) {
+    if (equippedArmor && equippedArmor.index === item.index) {
+        equippedArmor = null;
+        updateCheckboxState(item, false); // Uncheck the checkbox when armor is unequipped
+        updateAC(); // Recalculate AC
+    }
+}
+
+// Equip Shield Function
+function equipShield(item) {
+    // Unequip currently equipped shield if any
+    if (equippedShield) {
+        unequipShield(equippedShield);
+    }
+
+    // Check proficiency
+    const normalizedProficiencies = playerArmorProficiency.map(normalize);
+    if (!normalizedProficiencies.includes("shield")) {
+        showErrorModal(`Warning: Not proficient with shields`);
+    }
+
+    // Ensure the item gets the uniqueId from the row
+    const itemDiv = document.querySelector(`[data-unique-id="${item.uniqueId}"]`);
+    if (itemDiv) {
+        item.uniqueId = itemDiv.getAttribute('data-unique-id');
+    }
+
+    // Equip the shield
+    equippedShield = item;
+    updateAC(); // Recalculate AC
+}
+
+function unequipShield(item) {
+    if (equippedShield && equippedShield.index === item.index) {
+        equippedShield = null;
+        updateCheckboxState(item, false); // Uncheck the checkbox when shield is unequipped
+        updateAC(); // Recalculate AC
+    }
+}
+
+function updateCheckboxState(item, isChecked) {
+    console.log(item);
+    const itemDiv = document.querySelector(`[data-unique-id="${item.uniqueId}"]`);
+    const checkbox = itemDiv ? itemDiv.querySelector('.equip-toggle') : null;
+
+    console.log(checkbox);
+
+    if (checkbox) {
+        checkbox.checked = isChecked;
+    }
+}
+
+
+
+let activeInfoButton = null; // Keeps track of the currently active button for the inventory notes panel. 
+
+function showNotesPanel(item) {
+    // Get the item card container
+    const notesPanel = document.querySelector('.item-card-container');
+    notesPanel.classList.remove('hidden');
+    notesPanel.classList.add('visible');
+    
+    // Populate the item details with HTML for names
+    notesPanel.querySelector('#itemName').innerHTML = item.name 
+        ? `<strong>${item.name}</strong>` 
+        : '<strong>Unknown Item</strong>';
+
+    notesPanel.querySelector('#itemDesc').innerHTML = item.description || 'No description available.';
+
+    notesPanel.querySelector('#itemProperties').innerHTML = 
+    item.properties && item.properties.length > 0
+        ? `<strong>Properties:</strong> ${item.properties.map(prop => prop.name).join(', ')}`
+        : ``;
+
+    notesPanel.querySelector('#itemEquipmentCategory').innerHTML = 
+    item.equipment_category 
+        ? `<strong>Equipment Type:</strong> ${item.equipment_category.name}` 
+        : ``;
+
+    notesPanel.querySelector('#itemArmorCategory').innerHTML = 
+    item.armor_category
+        ? `<strong>Armor Type:</strong> ${item.armor_category} Armor` 
+        : ``;
+
+    notesPanel.querySelector('#itemArmorAC').innerHTML = 
+    item.armor_class
+        ? `<strong>Armor Class:</strong> ${item.armor_class.base}` 
+        : ``;
+
+    notesPanel.querySelector('#itemArmorStealth').innerHTML = 
+    item.stealth_disadvantage
+        ? `<strong>Stealth Disadvantage:</strong> ${item.stealth_disadvantage}` 
+        : ``;
+
+    notesPanel.querySelector('#itemAttackType').innerHTML = 
+    item.weapon_range 
+        ? `<strong>Attack Type:</strong> ${item.weapon_range}` 
+        : ``;
+
+    notesPanel.querySelector('#itemWeight').innerHTML = 
+        `<strong>Weight:</strong> ${item.weight || 0} lbs.`;
+
+    notesPanel.querySelector('#itemCost').innerHTML = 
+        item.cost 
+        ? `<strong>Cost:</strong> ${item.cost.quantity} ${item.cost.unit}` 
+        : '<strong>Cost:</strong> Unknown';
+
+    notesPanel.querySelector('#itemDamage').innerHTML = (() => {
+        if (item.damage) {
+            const damageText = `<strong>Damage:</strong> ${item.damage.damage_dice} ${item.damage.damage_type.name}`;
+            
+            // Check if the weapon has the versatile property
+            const hasVersatile = item.properties && item.properties.some(prop => prop.index === 'versatile');
+            
+            if (hasVersatile && item.two_handed_damage) {
+                const oneHandedDamage = `${item.damage.damage_dice} ${item.damage.damage_type.name}`;
+                const twoHandedDamage = `${item.two_handed_damage.damage_dice} ${item.two_handed_damage.damage_type.name}`;
+                return `<strong>Damage:</strong> One-Handed: ${oneHandedDamage} <br> Two-Handed: ${twoHandedDamage}`;
+            }
+            
+            return damageText; // Return normal damage if not versatile
+        }
+        return ''; // Return empty string if no damage information
+    })();
+
+    notesPanel.querySelector('#itemRange').innerHTML = (() => {
+        if (item.range && item.throw_range) {
+            const meleeRange = item.range.normal || 0;
+            const normalThrowRange = item.throw_range.normal || 0;
+            const longThrowRange = item.throw_range.long || null;
+            return longThrowRange
+                ? `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
+                : `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
+        } else if (item.range) {
+            const normalRange = item.range.normal || 0;
+            const longRange = item.range.long || null;
+            return longRange
+                ? `<strong>Range:</strong> ${normalRange} / ${longRange} ft.`
+                : `<strong>Range:</strong> ${normalRange} ft.`;
+        } else if (item.throw_range) {
+            const normalThrowRange = item.throw_range.normal || 0;
+            const longThrowRange = item.throw_range.long || null;
+            return longThrowRange
+                ? `<strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
+                : `<strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
+        } else {
+            return ``;
+        }
+    })();
+}
+
+
+function hideNotesPanel() {
+    const notesPanel = document.querySelector('.item-card-container');
+    notesPanel.classList.add('hidden');
+    notesPanel.classList.remove('visible');
+
+    activeInfoButton = null;
+}
+
+
+
+
+function equipJewelry(item) {
+    if (item.name === "Scout's Amulet") {
+        // Apply bonus to Passive Perception
+        characterStatBonuses.senses.PassivePerception.bonuses.push({
+            source: item.name,
+            value: 3
+        });
+        console.log(`${item.name} equipped: +3 Passive Perception`);
+    }
+
+    // Add other jewelry-specific logic here as needed
+    updatePassives(); // Update passive values after equipping
+    console.log(characterStatBonuses)
+}
+
+function unequipJewelry(item) {
+    if (item.name === "Scout's Amulet") {
+        // Remove bonus from Passive Perception
+        characterStatBonuses.senses.PassivePerception.bonuses = 
+            characterStatBonuses.senses.PassivePerception.bonuses.filter(
+                (bonus) => bonus.source !== item.name
+            );
+        console.log(`${item.name} unequipped: +3 Passive Perception removed`);
+    }
+
+    // Add other jewelry-specific logic here as needed
+    updatePassives(); // Update passive values after unequipping
 }
 
 
@@ -3604,20 +4313,39 @@ function saveInventory() {
 
         items.forEach(itemDiv => {
             const itemName = itemDiv.querySelector('.item-name').innerText;
+            const itemId = itemDiv.getAttribute('data-unique-id')
             const itemQuantity = parseInt(itemDiv.querySelector('.item-quantity').value, 10);
-            const itemEquipped = itemDiv.querySelector('.equip-toggle').checked;
+            const itemWeight = parseFloat(itemDiv.querySelector('.item-weight').innerText) || 0;
+            const itemCost = itemDiv.querySelector('.item-cost').innerText;
 
-            // Push the item details into the respective group's array
-            inventoryData[groupId].push({
+            let itemData = {
                 name: itemName,
+                uniqueId: itemId,
                 quantity: itemQuantity,
-                equipped: itemEquipped
-            });
+                weight: itemWeight,
+                cost: itemCost,
+            };
+
+            // Check if the item is equipable (has a checkbox)
+            const equipToggle = itemDiv.querySelector('.equip-toggle');
+            if (equipToggle) {
+                itemData.equipped = equipToggle.checked;
+            }
+
+            // Check if the item is useable (has a button)
+            const useButton = itemDiv.querySelector('.use-item-button');
+            if (useButton) {
+                itemData.useable = true; // Mark the item as useable
+            }
+
+            // Add the item data to the group
+            inventoryData[groupId].push(itemData);
         });
     });
 
     return inventoryData; // Return the structured inventory data
 }
+
 
 
 
@@ -3637,7 +4365,8 @@ function loadInventoryData(characterInventoryData) {
                     const newItem = {
                         ...foundItem, // Spread the foundItem properties
                         quantity: item.quantity, // Add the quantity from characterInventoryData
-                        equipped: item.equipped // Add the equipped status from characterInventoryData
+                        equipped: item.equipped, // Add the equipped status from characterInventoryData
+                        uniqueId: item.uniqueId // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
                     };
 
                     // Add each item to the corresponding inventory group
@@ -4522,6 +5251,19 @@ async function exportCharacterData() {
 
 // Add event listener to the export button
 document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -139,16 +139,7 @@ footer {
 
 /* Settings menu styling */
 /* Styling for the settings menu and icon */
-#settings-container {
-    position: fixed;
-    top: 23px;
-    left: 10px;
-    display: flex;
-    align-items: center;
-    color: #fff;
-    padding: 5px;
-    z-index: 999; /* Ensure it's above other content */
-}
+
 #settings-container:hover {
     cursor: pointer;
 }

@@ -1,16 +1,311 @@
 {
     "characters": {
+        "Tester Mc-Testy": {
+            "characterTempHp": "",
+            "currentHitDice": "9",
+            "playerWeaponProficiency": [
+                "Simple Weapons",
+                "Greataxe",
+                "Longbow"
+            ],
+            "playerArmorProficiency": [
+                "Light",
+                "Heavy"
+            ],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
+            "initiativeButton": "+5",
+            "AC": "19",
+            "speed": "30ft.",
+            "characterLevel": "10",
+            "playerXP": "64000",
+            "playerClass": "Class (SubClass)",
+            "currentCharacterHP": "50",
+            "maxCharacterHP": "50",
+            "hitDiceButton": "1d8",
+            "strengthScore": "12",
+            "dexterityScore": "18",
+            "constitutionScore": "20",
+            "intelligenceScore": "20",
+            "wisdomScore": "20",
+            "charismaScore": "20",
+            "acrobaticsAbilityMod": "DEX",
+            "animalHandlingAbilityMod": "WIS",
+            "arcanaAbilityMod": "INT",
+            "athleticsAbilityMod": "STR",
+            "deceptionAbilityMod": "CHA",
+            "historyAbilityMod": "INT",
+            "insightAbilityMod": "WIS",
+            "intimidationAbilityMod": "CHA",
+            "investigationAbilityMod": "INT",
+            "medicineAbilityMod": "WIS",
+            "natureAbilityMod": "INT",
+            "perceptionAbilityMod": "WIS",
+            "performanceAbilityMod": "CHA",
+            "persuasionAbilityMod": "CHA",
+            "religionAbilityMod": "INT",
+            "sleightofHandAbilityMod": "DEX",
+            "stealthAbilityMod": "DEX",
+            "survivalAbilityMod": "WIS",
+            "": "1",
+            "proficiencyButton1": "0",
+            "proficiencyButton2": "0",
+            "proficiencyButton3": "0",
+            "proficiencyButton4": "0",
+            "proficiencyButton6": "0",
+            "proficiencyButton7": "0",
+            "proficiencyButton8": "1",
+            "proficiencyButton9": "0",
+            "proficiencyButton10": "0",
+            "proficiencyButton11": "0",
+            "proficiencyButton12": "0",
+            "proficiencyButton13": "2",
+            "proficiencyButton14": "0",
+            "proficiencyButton15": "0",
+            "proficiencyButton16": "0",
+            "proficiencyButton17": "0",
+            "proficiencyButton18": "0",
+            "proficiencyButton19": "0",
+            "proficiencyButton20": "0",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "0",
+            "proficiencyButton23": "0",
+            "proficiencyButton24": "0",
+            "proficiencyButton25": "0",
+            "conditions": [],
+            "alignment": "LG",
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Longsword",
+                        "itemId": "item-1732494408397-1388bd98",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+1",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Versatile",
+                        "elventhColumn": "a versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Returning Dagger",
+                        "itemId": "item-1732573266882-bb6d21eb",
+                        "thirdColumn": "5ft (20/60)",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "1",
+                        "damageBonus": "2",
+                        "tenthColumn": "Finesse, Light, Thrown, Monk",
+                        "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "4",
+                "spellmagicbonus": "0",
+                "Cantrip": {
+                    "spells": [
+                        {
+                            "name": "Dancing Lights",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Fire Bolt",
+                            "prepared": "false"
+                        }
+                    ],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [
+                        {
+                            "name": "Bane",
+                            "prepared": "0"
+                        }
+                    ],
+                    "slots": [
+                        true,
+                        false,
+                        false,
+                        false
+                    ]
+                },
+                "2nd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "3rd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            },
+            "inventoryData": {
+                "equipment": [
+                    {
+                        "name": "Abacus",
+                        "uniqueId": "item-1732494358827-3e5ad563",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "2 gp"
+                    },
+                    {
+                        "name": "Longsword",
+                        "uniqueId": "item-1732494408397-1388bd98",
+                        "quantity": 1,
+                        "weight": 3,
+                        "cost": "15 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Alchemist's fire (flask)",
+                        "uniqueId": "item-1732494412894-45b82974",
+                        "quantity": 1,
+                        "weight": 1,
+                        "cost": "50 gp"
+                    },
+                    {
+                        "name": "Half Plate Armor",
+                        "uniqueId": "item-1732494461059-892497be",
+                        "quantity": 1,
+                        "weight": 40,
+                        "cost": "750 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Studded Leather Armor",
+                        "uniqueId": "item-1732494472429-85dc0292",
+                        "quantity": 1,
+                        "weight": 13,
+                        "cost": "45 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Longbow",
+                        "uniqueId": "item-1732494584321-987f7d29",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "50 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Potion of Greater Healing",
+                        "uniqueId": "item-1732494624594-3b13fed2",
+                        "quantity": 1,
+                        "weight": 0.5,
+                        "cost": "100 gp",
+                        "useable": true
+                    },
+                    {
+                        "name": "Sling",
+                        "uniqueId": "item-1732502036729-4b042e8d",
+                        "quantity": 1,
+                        "weight": 0,
+                        "cost": "1 sp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Returning Dagger",
+                        "uniqueId": "item-1732573266882-bb6d21eb",
+                        "quantity": 1,
+                        "weight": 1,
+                        "cost": "1500 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Scout's Amulet",
+                        "uniqueId": "item-1732586695974-a39eddc4",
+                        "quantity": 1,
+                        "weight": 0.5,
+                        "cost": "500 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Mortis Armour",
+                        "uniqueId": "item-1732588279219-c49d5670",
+                        "quantity": 1,
+                        "weight": 65,
+                        "cost": "5000 gp",
+                        "equipped": true
+                    }
+                ],
+                "backpack": [],
+                "attunement": [],
+                "other-possessions": []
+            },
+            "groupTraitData": []
+        },
         "Mira": {
-            "characterTempHp": "8",
+            "characterTempHp": "2",
             "currentHitDice": "8",
+            "playerWeaponProficiency": [
+                "Martial Weapons",
+                "Simple Weapons"
+            ],
+            "playerArmorProficiency": [
+                "Light",
+                "Medium",
+                "Heavy",
+                "Shield"
+            ],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
             "characterLevel": "8",
             "playerXP": "34000",
             "playerClass": "Cleric (Twilight)",
-            "currentCharacterHP": "59",
-            "maxCharacterHP": "59",
+            "currentCharacterHP": "82",
+            "maxCharacterHP": "82",
             "hitDiceButton": "1d8",
             "strengthScore": "8",
             "dexterityScore": "14",
@@ -92,17 +387,17 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
+                        "secondColumn": "Twilight Sanctuary",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+5",
-                        "fifthColumn": "2d6/1d4",
+                        "fourthColumn": "+0",
+                        "fifthColumn": "1d6",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "",
-                        "damageBonus": "undefined",
+                        "seventhColumn": "WIS",
+                        "eighthColumn": "-8",
+                        "damageBonus": "3",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
+                        "twelvethColumn": "Temp Hp",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -120,10 +415,6 @@
                 "Cantrip": {
                     "spells": [
                         {
-                            "name": "Acid Splash",
-                            "prepared": "false"
-                        },
-                        {
                             "name": "Guidance",
                             "prepared": "false"
                         },
@@ -137,6 +428,10 @@
                         },
                         {
                             "name": "Word of Radiance",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Blade Ward",
                             "prepared": "false"
                         }
                     ],
@@ -175,7 +470,7 @@
                     ],
                     "slots": [
                         true,
-                        true,
+                        false,
                         false,
                         false
                     ]
@@ -205,8 +500,8 @@
                     ],
                     "slots": [
                         true,
-                        true,
-                        true
+                        false,
+                        false
                     ]
                 },
                 "3rd-level": {
@@ -239,7 +534,7 @@
                     "slots": [
                         true,
                         true,
-                        true
+                        false
                     ]
                 },
                 "4th-level": {
@@ -258,7 +553,7 @@
                         }
                     ],
                     "slots": [
-                        true,
+                        false,
                         false
                     ]
                 },
@@ -287,70 +582,109 @@
                 "equipment": [
                     {
                         "name": "Clothes, fine",
+                        "uniqueId": "item-1732491686132-7c6c857d",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 6,
+                        "cost": "15 gp"
                     },
                     {
                         "name": "Crossbow bolt",
+                        "uniqueId": "item-1732491686132-682e3346",
                         "quantity": 20,
+                        "weight": 1.6,
+                        "cost": "1 gp",
                         "equipped": false
                     },
                     {
                         "name": "Crossbow, light",
+                        "uniqueId": "item-1732491686133-9291dd0d",
                         "quantity": 1,
+                        "weight": 5,
+                        "cost": "25 gp",
                         "equipped": true
                     },
                     {
                         "name": "Half Plate Armor",
+                        "uniqueId": "item-1732491686134-f37ece13",
                         "quantity": 1,
+                        "weight": 40,
+                        "cost": "750 gp",
                         "equipped": true
                     },
                     {
                         "name": "Rapier",
+                        "uniqueId": "item-1732491686135-d0403363",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "25 gp",
                         "equipped": true
                     },
                     {
                         "name": "Shield",
+                        "uniqueId": "item-1732491686136-c56b11cc",
                         "quantity": 1,
+                        "weight": 6,
+                        "cost": "10 gp",
                         "equipped": true
+                    },
+                    {
+                        "name": "Potion of Healing",
+                        "uniqueId": "item-1732491686137-bb8de55d",
+                        "quantity": 2,
+                        "weight": 1,
+                        "cost": "50 gp",
+                        "useable": true
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Bedroll",
+                        "uniqueId": "item-1732491686138-61ae743e",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 7,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Mess Kit",
+                        "uniqueId": "item-1732491686139-b7845adb",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "2 sp"
                     },
                     {
                         "name": "Rations (1 day)",
-                        "quantity": 10,
-                        "equipped": false
+                        "uniqueId": "item-1732491686141-9752e082",
+                        "quantity": 5,
+                        "weight": 10,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
+                        "uniqueId": "item-1732491686142-33e5b026",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Tinderbox",
+                        "uniqueId": "item-1732491686142-15913762",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
+                        "uniqueId": "item-1732491686143-dd2ac3f6",
                         "quantity": 10,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 cp"
                     },
                     {
                         "name": "Waterskin",
+                        "uniqueId": "item-1732491686143-48a5d500",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 sp"
                     }
                 ],
                 "attunement": [],
@@ -359,7 +693,7 @@
             "groupTraitData": [
                 {
                     "group-title": "Channel Divinity",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
@@ -377,7 +711,7 @@
                         },
                         {
                             "traitName": "Channel Divinity: Turn Undead",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "As an action, you present your holy Symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
@@ -399,7 +733,7 @@
                 },
                 {
                     "group-title": "Class Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Steps of Night",
@@ -420,7 +754,7 @@
                             "cheveron": true,
                             "traitDescription": "You have Darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
                             "checkboxStates": [
-                                true
+                                false
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -441,7 +775,7 @@
                 },
                 {
                     "group-title": "Race Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Earth Walk",
@@ -458,7 +792,7 @@
                             "cheveron": true,
                             "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
-                                false,
+                                true,
                                 false,
                                 false
                             ],
@@ -472,7 +806,7 @@
                             "cheveron": true,
                             "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
-                                true
+                                false
                             ],
                             "adjustmentType": "Saving Throws",
                             "adjustmentValue": "",
@@ -2254,8 +2588,8 @@
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "Bludgeoning",
                         "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
+                            "attacks": true,
+                            "actions": true,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -2636,7 +2970,7 @@
             "groupTraitData": [
                 {
                     "group-title": "Class Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Magical Tinkering",
@@ -2737,11 +3071,11 @@
                 },
                 {
                     "group-title": "Race Feature",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Hold Breath",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "You can hold your breath for up to 1 hour.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
@@ -2751,7 +3085,7 @@
                         },
                         {
                             "traitName": "Natural Armor",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "Your shell provides you a base AC of 17 (your DEX modifier doesn't affect this number). You can’t wear light, medium, or heavy armor, but can continue using and applying a shield’s bonus as normal.",
                             "checkboxStates": [],
                             "adjustmentType": "Saving Throws",
