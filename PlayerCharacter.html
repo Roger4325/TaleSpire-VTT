@@ -768,11 +768,7 @@
                                     <th>Reach</th>
                                     <th>ToHit</th>
                                     <th>Damage</th>
-                                    <th>Settings</th>
-                                    <!-- <th>Modifier</th>
-                                    <th>Properties</th>
-                                    <th>Details</th>
-                                    <th>Cat</th> -->
+                                    <th>Info</th>
                                 </tr>
                             </thead>
                             <tbody id="actionTableBody">
@@ -968,12 +964,34 @@
         
         <section id="inventory">
             <button id="add-item-button" class="nonRollButton">Add New Item</button>
+            <div id="currency-container">
+                <div class="currency-row">
+                    <div class="currency-item">
+                        <label for="platinum">Platinum (pp):</label>
+                        <input type="text" id="pp-input" class="currency-input" value="0" min="0">
+                    </div>
+                    <div class="currency-item">
+                        <label for="gold">Gold (gp):</label>
+                        <input type="text" id="gp-input" class="currency-input" value="0" min="0">
+                    </div>
+                    <div class="currency-item">
+                        <label for="electrum">Electrum (ep):</label>
+                        <input type="text" id="ep-input" class="currency-input" value="0" min="0">
+                    </div>
+                    <div class="currency-item">
+                        <label for="silver">Silver (sp):</label>
+                        <input type="text" id="sp-input" class="currency-input" value="0" min="0">
+                    </div>
+                    <div class="currency-item">
+                        <label for="copper">Copper (cp):</label>
+                        <input type="text" id="cp-input" class="currency-input" value="0" min="0">
+                    </div>
+                </div>
+            </div>
             <div id="inventory-container">
                 <div id="inventory-header">
                 <h2>Inventory</h2>
-                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>
-                </div>
-            
+                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>        
                 <div class="inventory-group" id="equipment">
                 <h3>Equipment<i class="fa fa-chevron-down"></i></h3>
                 <div id="equipment-list"></div>

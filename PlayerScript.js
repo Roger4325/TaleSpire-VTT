@@ -374,7 +374,27 @@ async function playerSetUP(){
         hideNotesPanel()
     });
 
+
+    const currencyInputs = document.querySelectorAll('.currency-input');
+
+    currencyInputs.forEach(input => {
+        // Ensure the value is formatted on blur
+        input.addEventListener('blur', () => {
+            const value = input.value.replace(/,/g, '');
+            if (!isNaN(value) && value !== '') {
+                input.value = formatWithCommas(value); // Format and update input
+                updateContent()
+            }
+        });
+    });
+
 }  
+
+// Function to format numbers with commas
+function formatWithCommas(number) {
+    console.log(number)
+    return Number(number).toLocaleString('en-US');
+}
 
 
 function updateProficiencyArray(checkbox, proficiencyArray) {
@@ -393,6 +413,8 @@ function updateProficiencyArray(checkbox, proficiencyArray) {
         }
     }
 }
+
+
 
 function updateProficiencyContainers() {
     // Select the containers
@@ -416,6 +438,7 @@ function updateProficiencyContainers() {
     updateContainer(languageContainer, playerLanguageProficiency);
     updateContainer(toolsContainer, playerToolsProficiency);
 }
+
 
     
 function toggleInspiration() {
@@ -1482,6 +1505,19 @@ function getAllEditableContent() {
         content['conditions'] = [];
     }
 
+    // Add coins to the content object
+    const coinTypes = ['cp', 'sp', 'ep', 'gp', 'pp']; // Define coin types
+    const coins = {};
+
+    coinTypes.forEach(coin => {
+        const coinInput = document.getElementById(`${coin}-input`);
+        if (coinInput) {
+            coins[coin] = parseInt(coinInput.value.replace(/,/g, ''), 10) || 0; // Save as a number
+        }
+    });
+
+    content['coins'] = coins; // Add coins object to content
+
     const characterAlignment = document.getElementById('alignment-select');
     content['alignment'] = characterAlignment.value; // Save the selected alignment
 
@@ -1508,7 +1544,17 @@ function getAllEditableContent() {
 
 
 
+function updateCoinsInFields(coins) {
+    const coinTypes = ['cp', 'sp', 'ep', 'gp', 'pp']; // Define coin types
 
+    coinTypes.forEach(coin => {
+        const coinInput = document.getElementById(`${coin}-input`);
+        if (coinInput) {
+            const value = coins[coin] || 0; // Get the value for the coin, default to 0
+            coinInput.value = formatWithCommas(value); // Format with commas before displaying
+        }
+    });
+}
 
 
 
@@ -1711,12 +1757,14 @@ function updateCharacterUI(characterData, characterName) {
     loadProficiencies(playerArmorProficiency, '#armorContainer', '#armor-dropdown', 'playerArmorProficiency');
     loadProficiencies(playerLanguageProficiency, '#languageContainer', '#languages-dropdown', 'playerLanguageProficiency');
     loadProficiencies(playerToolsProficiency, '#toolsContainer', '#tools-dropdown', 'playerToolsProficiency');
+    updateCoinsInFields(characterData.coins);
     
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
     loadSpellData(characterData.spellData);
     loadInventoryData(characterData.inventoryData);
-    loadGroupTraitData(characterData.groupTraitData)
+    loadGroupTraitData(characterData.groupTraitData);
+    
 
     updateHitDiceLabel()
 
@@ -2268,7 +2316,7 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
     const button = document.createElement('button');
     button.className = "nonRollButton rowSetting";
     button.setAttribute("onclick", `toggleAdditionalInfo('additionalInfoContainer${rowIndex}')`);
-    button.innerText = "Action Setting";
+    button.innerText = "i";
 
     // Create the additional info container
     const additionalInfoContainer = document.createElement('div');
@@ -3739,8 +3787,7 @@ function addItemToInventory(item, group) {
 
     itemDiv.innerHTML = `
     ${interactiveElement}
-    <span class="item-name">${item.name}</span>
-    <span> <button class="item-info-button nonRollButton">i</button></span>
+    <span class="item-name "><button class="item-info-button">${item.name}</button></span>
     <span class="item-weight">${item.weight || 0} lbs.</span>
     <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
     <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>

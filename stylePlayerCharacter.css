@@ -1622,10 +1622,22 @@ select{
 
 .inventory-item {
     display: grid;
-    grid-template-columns: .6fr 1.8fr .05fr 1.2fr .2fr 1fr 2.2fr .05fr;
+    grid-template-columns: .6fr 1.8fr 1.2fr .2fr 1fr 2.2fr .05fr;
     align-items: center;
     padding: 5px 0;
     border-bottom: 1px solid #333;
+}
+
+.item-info-button {
+    all: unset; /* Resets all default button styles */
+    cursor: pointer; /* Ensures it still looks clickable */
+    color: inherit; /* Matches the text color of its parent */
+    font: inherit; /* Matches the font style of its parent */
+    text-decoration: none; /* Prevents any underlines */
+}
+
+.item-info-button:hover {
+    text-decoration: underline;
 }
 
 .inventory-type{
@@ -1719,6 +1731,44 @@ align-items: center;
 .inventory-group h3 i {
 font-size: 14px;
 transition: transform 0.2s ease;
+}
+
+#currency-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.currency-row {
+    display: flex;
+    justify-content: space-between; /* Ensures even spacing between items */
+    width: 100%; /* Occupies full available width */
+}
+
+.currency-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1; /* Allows each item to expand proportionally */
+    margin: 0 2px; /* Adds space around items */
+}
+
+.currency-item label {
+    font-size: 0.9rem;
+    margin-bottom: 2px;
+    text-align: center;
+}
+
+.currency-row .currency-item input.currency-input {
+    width: 60%; /* Ensures the width is applied */
+    padding: 2px;
+    font-size: 0.9rem;
+    text-align: center;
+    background: #333;
+    color: white;
+    border: none;
 }
 
 .inventory-group h3.active i {

@@ -15,7 +15,7 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+5",
-            "AC": "19",
+            "AC": "16",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
@@ -73,6 +73,13 @@
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
             "conditions": [],
+            "coins": {
+                "cp": 5500,
+                "sp": 4000,
+                "ep": 3000,
+                "gp": 2000,
+                "pp": 1500
+            },
             "alignment": "LG",
             "actionTable": [
                 {
@@ -226,7 +233,7 @@
                         "quantity": 1,
                         "weight": 13,
                         "cost": "45 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Longbow",
@@ -239,8 +246,8 @@
                     {
                         "name": "Potion of Greater Healing",
                         "uniqueId": "item-1732494624594-3b13fed2",
-                        "quantity": 1,
-                        "weight": 0.5,
+                        "quantity": 5,
+                        "weight": 2.5,
                         "cost": "100 gp",
                         "useable": true
                     },
@@ -274,7 +281,7 @@
                         "quantity": 1,
                         "weight": 65,
                         "cost": "5000 gp",
-                        "equipped": true
+                        "equipped": false
                     }
                 ],
                 "backpack": [],
