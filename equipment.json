@@ -6765,10 +6765,11 @@
         "url": "/api/item-properties/attunement"
       }
     ],
-    "bonus_effects": [
+    "bonus": [
       {
-        "type": "passive_perception",
-        "bonus": 3,
+        "category": "senses",
+        "key": "PassivePerception",
+        "value": 3,
         "description": "Grants a +3 bonus to Passive Perception while worn and attuned."
       }
     ],
@@ -6783,7 +6784,8 @@
       "url": "/api/item-rarity/uncommon"
     },
     "url": "/api/equipment/scouts-amulet"
-  },{
+  },
+  {
     "index": "mortis-armour",
     "name": "Mortis Armour",
     "equipment_category": {
@@ -6815,5 +6817,105 @@
       }
     ],
     "url": "/api/equipment/mortis-armour"
+  },
+  {
+    "index": "cloak-of-protection",
+    "name": "Cloak of Protection",
+    "equipment_category": {
+      "index": "jewelry",
+      "name": "Jewelry",
+      "url": "/api/equipment-categories/jewelry"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "This fine cloak is imbued with protective magic. It grants the wearer a bonus to AC and saving throws while worn and attuned.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "saves",
+        "key": "All",
+        "value": 1,
+        "description": "Grants a +1 bonus to all saving throws."
+      },
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "cost": {
+      "quantity": 750,
+      "unit": "gp"
+    },
+    "weight": 1,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/cloak-of-protection"
+  },
+  {
+    "index": "ring-of-protection",
+    "name": "Ring of Protection",
+    "equipment_category": {
+      "index": "jewelry",
+      "name": "Jewelry",
+      "url": "/api/equipment-categories/jewelry"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "A simple but powerful ring that provides extra protection against harm.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "saves",
+        "key": "All",
+        "value": 1,
+        "description": "Grants a +1 bonus to all saving throws."
+      },
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "cost": {
+      "quantity": 750,
+      "unit": "gp"
+    },
+    "weight": 1,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/cloak-of-protection"
   }
 ]

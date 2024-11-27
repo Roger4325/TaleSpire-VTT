@@ -63,17 +63,66 @@ const messageHandlers = {
 //The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
 const characterStatBonuses = {
     skills: {
-        Perception: {bonuses: [] },
-        Investigation: {bonuses: [] },
-        Insight: {bonuses: [] },
+        Acrobatics: { bonuses: [] },
+        AnimalHandling: { bonuses: [] },
+        Arcana: { bonuses: [] },
+        Athletics: { bonuses: [] },
+        Deception: { bonuses: [] },
+        History: { bonuses: [] },
+        Insight: { bonuses: [] },
+        Intimidation: { bonuses: [] },
+        Investigation: { bonuses: [] },
+        Medicine: { bonuses: [] },
+        Nature: { bonuses: [] },
+        Perception: { bonuses: [] },
+        Performance: { bonuses: [] },
+        Persuasion: { bonuses: [] },
+        Religion: { bonuses: [] },
+        SleightOfHand: { bonuses: [] },
+        Stealth: { bonuses: [] },
+        Survival: { bonuses: [] },
+    },
+    saves: {
+        Strength: { bonuses: [] },
+        Dexterity: { bonuses: [] },
+        Constitution: { bonuses: [] },
+        Intelligence: { bonuses: [] },
+        Wisdom: { bonuses: [] },
+        Charisma: { bonuses: [] },
+        All: { bonuses: [] },
+    },
+    attributes: {
+        Strength: { bonuses: [] },
+        Dexterity: { bonuses: [] },
+        Constitution: { bonuses: [] },
+        Intelligence: { bonuses: [] },
+        Wisdom: { bonuses: [] },
+        Charisma: { bonuses: [] },
+    },
+    combatStats: {
+        AC: { bonuses: [] },
+        Initiative: { bonuses: [] },
+        AttackRolls: { bonuses: [] },
+        DamageRolls: { bonuses: [] },
+        SavingThrowDCs: { bonuses: [] }, // e.g., for spells or features.
+        HitPoints: { bonuses: [] },
+        Speed: { bonuses: [] },
     },
     senses: {
         PassivePerception: { bonuses: [] },
-        PassiveInsight: {bonuses: [] },
-        PassiveInvestigation: {bonuses: [] },
+        PassiveInsight: { bonuses: [] },
+        PassiveInvestigation: { bonuses: [] },
+        Darkvision: { bonuses: [] }, // Include any vision-based senses.
+        Tremorsense: { bonuses: [] },
+        Blindsight: { bonuses: [] },
+        Truesight: { bonuses: [] },
     },
-
-}
+    otherTraits: {
+        SpellAttackModifier: { bonuses: [] },
+        SpellSaveDC: { bonuses: [] },
+        HitDice: { bonuses: [] },
+    },
+};
 
 let baseAC = 10; // Default base AC
 let equippedArmor = null; // No armor equipped by default
@@ -624,6 +673,14 @@ function updateAC() {
         finalAC = baseAC + dexScore + shieldMod ;
     }
 
+    // Add AC bonuses from characterStatBonuses
+    const acBonuses = characterStatBonuses.combatStats.AC.bonuses || [];
+    const acBonusTotal = acBonuses.reduce((total, bonus) => total + bonus.value, 0);
+
+    finalAC += acBonusTotal;
+
+    // Update the AC display
+
     AcDiv.textContent = finalAC
 }
 
@@ -781,7 +838,7 @@ function handleAbilityScoreChange(event) {
         updateSpellDCHeader()
         sendDMUpdatedStats()
         updateHitDiceValue()
-        updateAC(); // Recalculate AC
+        updateAC();
 
 
         const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -792,26 +849,63 @@ function handleAbilityScoreChange(event) {
 
 
 
-function addBonus(sense, value) {
-    if (characterStatBonuses.senses[sense]) {
-        characterStatBonuses.senses[sense].bonuses.push(value);
-        updatePassives(); // Recalculate and update UI
+function addBonus(category, key, value) {
+    if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
+        characterStatBonuses[category][key].bonuses.push(value);
+        updateDerivedStats(category); // Call a category-specific update function
     } else {
-        console.error(`Invalid sense: ${sense}`);
+        console.error(`Invalid category or key: ${category} -> ${key}`);
     }
 }
 
+function removeBonus(category, key, value) {
+    if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
+        const bonuses = characterStatBonuses[category][key].bonuses;
 
-function removeBonus(sense, value) {
-    if (characterStatBonuses.senses[sense]) {
-        const index = characterStatBonuses.senses[sense].bonuses.indexOf(value);
+        // Find the index of the bonus object by matching its properties
+        const index = bonuses.findIndex(
+            (bonus) => bonus.source === value.source && bonus.value === value.value
+        );
+
         if (index !== -1) {
-            characterStatBonuses.senses[sense].bonuses.splice(index, 1);
-            updatePassives(); // Recalculate and update UI
+            bonuses.splice(index, 1);
+            updateDerivedStats(category); // Call a category-specific update function
+        } else {
+            console.warn(`Bonus not found for removal:`, value);
         }
     } else {
-        console.error(`Invalid sense: ${sense}`);
+        console.error(`Invalid category or key: ${category} -> ${key}`);
     }
+}
+
+// Helper function to update stats for specific categories
+function updateDerivedStats(category) {
+    switch (category) {
+        case "senses":
+            updatePassives(); // Recalculate senses-related stats
+            break;
+        case "skills":
+            // updateSkillModifiers(); 
+            break;
+        case "saves":
+            updateSaveModifier();
+            break;
+        case "attributes":
+            // updateAttributes();
+            break;
+        case "combatStats":
+            updateCombatStats();
+            break;
+        case "otherTraits":
+            updateTraits(); // Custom function for miscellaneous traits
+            break;
+        default:
+            console.error(`Unknown category: ${category}`);
+    }
+}
+
+function updateCombatStats(){
+    updateAC()
 }
 
 
@@ -1103,6 +1197,9 @@ function updateSkillModifier() {
 function updateSaveModifier() {
     const saveRows = document.querySelectorAll('.saves-row');
 
+    // Get the "All" saving throw bonus (if any)
+    const allSavesBonus = characterStatBonuses.saves.All?.bonuses.reduce((total, bonus) => total + bonus.value, 0) || 0;
+
     saveRows.forEach(saveRow => {
         const saveNameElement = saveRow.querySelector('.saveName');
         const proficiencyButton = saveRow.querySelector('.proficiencyButtons button');
@@ -1115,14 +1212,25 @@ function updateSaveModifier() {
         const abilityScoreLabel = findAbilityScoreLabel(abilityMod);
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
 
-        const saveModifier = Math.floor(abilityScoreValue + (proficiencyBonus * parseFloat(proficiencyButton.value)));
+        // Get magical bonuses for this specific saving throw (if any)
+        const saveBonuses = characterStatBonuses.saves[saveName]?.bonuses || [];
+        const magicalBonusTotal = saveBonuses.reduce((total, bonus) => total + bonus.value, 0);
+
+        // Calculate total save modifier, including the global "All" saves bonus
+        const saveModifier = Math.floor(
+            abilityScoreValue + (proficiencyBonus * parseFloat(proficiencyButton.value)) + magicalBonusTotal + allSavesBonus
+        );
+
         const saveButton = saveNameElement.parentElement.querySelector('.actionButton.skillbuttonstyler');
         const saveLabel = saveNameElement.parentElement.querySelector('.actionButtonLabel');
 
+        // Update the UI
         saveButton.textContent = saveModifier > 0 ? `+${saveModifier}` : `${saveModifier}`;
         saveLabel.setAttribute('value', saveModifier);
     });
+    console.log("testing here")
 }
+
 
 // Helper function to map save names to corresponding ability modifiers
 function getAbilityModifierForSave(saveName) {
@@ -1550,8 +1658,10 @@ function updateCoinsInFields(coins) {
     coinTypes.forEach(coin => {
         const coinInput = document.getElementById(`${coin}-input`);
         if (coinInput) {
-            const value = coins[coin] || 0; // Get the value for the coin, default to 0
-            coinInput.value = formatWithCommas(value); // Format with commas before displaying
+            if(coins){
+                const value = coins[coin] || 0; // Get the value for the coin, default to 0
+                coinInput.value = formatWithCommas(value); // Format with commas before displaying
+            }
         }
     });
 }
@@ -4243,32 +4353,35 @@ function hideNotesPanel() {
 
 
 function equipJewelry(item) {
-    if (item.name === "Scout's Amulet") {
-        // Apply bonus to Passive Perception
-        characterStatBonuses.senses.PassivePerception.bonuses.push({
-            source: item.name,
-            value: 3
+    if (item.bonus) {
+        // Add each bonus from the item to the appropriate stat
+        item.bonus.forEach((bonus) => {
+            addBonus(bonus.category, bonus.key, {
+                source: item.name,
+                value: bonus.value,
+            });
         });
-        console.log(`${item.name} equipped: +3 Passive Perception`);
+        console.log(`${item.name} equipped: Bonuses applied.`);
+    } else {
+        console.warn(`Item ${item.name} has no bonuses to apply.`);
     }
-
-    // Add other jewelry-specific logic here as needed
-    updatePassives(); // Update passive values after equipping
-    console.log(characterStatBonuses)
+    console.log(characterStatBonuses);
 }
 
 function unequipJewelry(item) {
-    if (item.name === "Scout's Amulet") {
-        // Remove bonus from Passive Perception
-        characterStatBonuses.senses.PassivePerception.bonuses = 
-            characterStatBonuses.senses.PassivePerception.bonuses.filter(
-                (bonus) => bonus.source !== item.name
-            );
-        console.log(`${item.name} unequipped: +3 Passive Perception removed`);
+    if (item.bonus) {
+        // Remove each bonus from the item from the appropriate stat
+        item.bonus.forEach((bonus) => {
+            removeBonus(bonus.category, bonus.key, {
+                source: item.name,
+                value: bonus.value,
+            });
+        });
+        console.log(`${item.name} unequipped: Bonuses removed.`);
+    } else {
+        console.warn(`Item ${item.name} has no bonuses to remove.`);
     }
-
-    // Add other jewelry-specific logic here as needed
-    updatePassives(); // Update passive values after unequipping
+    console.log(characterStatBonuses);
 }
 
 

@@ -66,12 +66,12 @@
             "proficiencyButton17": "0",
             "proficiencyButton18": "0",
             "proficiencyButton19": "0",
-            "proficiencyButton20": "0",
-            "proficiencyButton21": "0",
-            "proficiencyButton22": "0",
-            "proficiencyButton23": "0",
-            "proficiencyButton24": "0",
-            "proficiencyButton25": "0",
+            "proficiencyButton20": "1",
+            "proficiencyButton21": "1",
+            "proficiencyButton22": "1",
+            "proficiencyButton23": "1",
+            "proficiencyButton24": "1",
+            "proficiencyButton25": "1",
             "conditions": [],
             "coins": {
                 "cp": 5500,
@@ -110,7 +110,7 @@
                     "2": {
                         "proficiencyButton": "1",
                         "secondColumn": "Returning Dagger",
-                        "itemId": "item-1732573266882-bb6d21eb",
+                        "itemId": "item-1732732580056-8cd6526d",
                         "thirdColumn": "5ft (20/60)",
                         "fourthColumn": "+9",
                         "fifthColumn": "1d4",
@@ -122,8 +122,8 @@
                         "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
                         "twelvethColumn": "Piercing",
                         "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
+                            "attacks": true,
+                            "actions": true,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -228,60 +228,28 @@
                         "equipped": false
                     },
                     {
-                        "name": "Studded Leather Armor",
-                        "uniqueId": "item-1732494472429-85dc0292",
-                        "quantity": 1,
-                        "weight": 13,
-                        "cost": "45 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Longbow",
-                        "uniqueId": "item-1732494584321-987f7d29",
-                        "quantity": 1,
-                        "weight": 2,
-                        "cost": "50 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Potion of Greater Healing",
-                        "uniqueId": "item-1732494624594-3b13fed2",
-                        "quantity": 5,
-                        "weight": 2.5,
-                        "cost": "100 gp",
-                        "useable": true
-                    },
-                    {
-                        "name": "Sling",
-                        "uniqueId": "item-1732502036729-4b042e8d",
-                        "quantity": 1,
-                        "weight": 0,
-                        "cost": "1 sp",
-                        "equipped": false
-                    },
-                    {
                         "name": "Returning Dagger",
-                        "uniqueId": "item-1732573266882-bb6d21eb",
+                        "uniqueId": "item-1732732580056-8cd6526d",
                         "quantity": 1,
                         "weight": 1,
                         "cost": "1500 gp",
                         "equipped": true
                     },
                     {
-                        "name": "Scout's Amulet",
-                        "uniqueId": "item-1732586695974-a39eddc4",
+                        "name": "Cloak of Protection",
+                        "uniqueId": "item-1732732596147-1442fb74",
                         "quantity": 1,
-                        "weight": 0.5,
-                        "cost": "500 gp",
+                        "weight": 1,
+                        "cost": "750 gp",
                         "equipped": true
                     },
                     {
-                        "name": "Mortis Armour",
-                        "uniqueId": "item-1732588279219-c49d5670",
+                        "name": "Ring of Protection",
+                        "uniqueId": "item-1732734199413-02f4bf98",
                         "quantity": 1,
-                        "weight": 65,
-                        "cost": "5000 gp",
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "750 gp",
+                        "equipped": true
                     }
                 ],
                 "backpack": [],
@@ -366,6 +334,13 @@
             "conditions": [
                 "Concentration"
             ],
+            "coins": {
+                "cp": 5500,
+                "sp": 4000,
+                "ep": 3000,
+                "gp": 2000,
+                "pp": 1500
+            },
             "alignment": "NG",
             "actionTable": [
                 {
@@ -827,6 +802,10 @@
         "Alduin Ley Eshobbud": {
             "characterTempHp": "1",
             "currentHitDice": "8",
+            "playerWeaponProficiency": [],
+            "playerArmorProficiency": [],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
             "initiativeButton": "+6",
             "AC": "15",
             "speed": "30ft.",
@@ -886,6 +865,13 @@
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
             "conditions": [],
+            "coins": {
+                "cp": 0,
+                "sp": 0,
+                "ep": 0,
+                "gp": 0,
+                "pp": 0
+            },
             "alignment": "LG",
             "actionTable": [
                 {
@@ -1082,175 +1068,253 @@
                 "equipment": [
                     {
                         "name": "Arrow",
+                        "uniqueId": "item-1732734595249-287f3165",
                         "quantity": 80,
+                        "weight": 80,
+                        "cost": "1 gp",
                         "equipped": false
                     },
                     {
                         "name": "Longbow",
+                        "uniqueId": "item-1732734595250-095220fa",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "50 gp",
                         "equipped": true
                     },
                     {
                         "name": "Blanket",
+                        "uniqueId": "item-1732734595250-61405480",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Clothes, common",
+                        "uniqueId": "item-1732734595251-1b850ce7",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Lantern, bullseye",
+                        "uniqueId": "item-1732734595251-c2289d71",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 2,
+                        "cost": "10 gp"
                     },
                     {
                         "name": "Herbalism Kit",
+                        "uniqueId": "item-1732734595252-d9948600",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 gp"
                     },
                     {
                         "name": "Leather Armor",
+                        "uniqueId": "item-1732734595252-8ef2632a",
                         "quantity": 1,
+                        "weight": 10,
+                        "cost": "10 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Shortsword",
+                        "uniqueId": "item-1732734595253-1fbaa291",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Shortsword",
+                        "uniqueId": "item-1732734595254-e9bd82f1",
                         "quantity": 1,
-                        "equipped": true
-                    },
-                    {
-                        "name": "Shortsword",
-                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Arrow",
+                        "uniqueId": "item-1732734595254-a6a51aa1",
                         "quantity": 80,
+                        "weight": 80,
+                        "cost": "1 gp",
                         "equipped": false
                     },
                     {
                         "name": "Longbow",
+                        "uniqueId": "item-1732734595255-bc7dabe6",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "50 gp",
                         "equipped": true
                     },
                     {
                         "name": "Blanket",
+                        "uniqueId": "item-1732734595256-ca88dda0",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Clothes, common",
+                        "uniqueId": "item-1732734595256-3dfda096",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Lantern, bullseye",
+                        "uniqueId": "item-1732734595257-c81cde7e",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 2,
+                        "cost": "10 gp"
                     },
                     {
                         "name": "Herbalism Kit",
+                        "uniqueId": "item-1732734595257-fd362011",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 gp"
                     },
                     {
                         "name": "Leather Armor",
+                        "uniqueId": "item-1732734595258-9de8ad51",
                         "quantity": 1,
+                        "weight": 10,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Shortsword",
+                        "uniqueId": "item-1732734595259-e798870e",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Shortsword",
+                        "uniqueId": "item-1732734595260-b0652394",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "10 gp",
                         "equipped": true
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Crowbar",
+                        "uniqueId": "item-1732734595261-a3bbf7e8",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 gp"
                     },
                     {
                         "name": "Hammer",
+                        "uniqueId": "item-1732734595261-e10fc1e5",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Piton",
+                        "uniqueId": "item-1732734595262-78b4d074",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0.3,
+                        "cost": "5 cp"
                     },
                     {
                         "name": "Rations (1 day)",
+                        "uniqueId": "item-1732734595263-d11fc891",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 2,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
+                        "uniqueId": "item-1732734595263-dbc6e6e4",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Tinderbox",
+                        "uniqueId": "item-1732734595264-9c28032d",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
+                        "uniqueId": "item-1732734595265-22aac2ca",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "1 cp"
                     },
                     {
                         "name": "Waterskin",
+                        "uniqueId": "item-1732734595265-7c7c0185",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 sp"
                     },
                     {
                         "name": "Crowbar",
+                        "uniqueId": "item-1732734595266-c4d73934",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 gp"
                     },
                     {
                         "name": "Hammer",
+                        "uniqueId": "item-1732734595267-fc477c89",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Piton",
+                        "uniqueId": "item-1732734595267-e075c9b1",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0.3,
+                        "cost": "5 cp"
                     },
                     {
                         "name": "Rations (1 day)",
+                        "uniqueId": "item-1732734595268-323c4c5c",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 2,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
+                        "uniqueId": "item-1732734595268-5f99f31b",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Tinderbox",
+                        "uniqueId": "item-1732734595269-831d7fdd",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
+                        "uniqueId": "item-1732734595269-3f6b4dc7",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "1 cp"
                     },
                     {
                         "name": "Waterskin",
+                        "uniqueId": "item-1732734595270-214f573a",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 sp"
                     }
                 ],
                 "attunement": [],
@@ -1927,6 +1991,10 @@
         "Cralamin": {
             "characterTempHp": "",
             "currentHitDice": "8",
+            "playerWeaponProficiency": [],
+            "playerArmorProficiency": [],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
             "initiativeButton": "+0",
             "AC": "10",
             "speed": "30ft.",
@@ -1988,6 +2056,13 @@
             "conditions": [
                 "Exhaustion 3"
             ],
+            "coins": {
+                "cp": 0,
+                "sp": 0,
+                "ep": 0,
+                "gp": 0,
+                "pp": 0
+            },
             "alignment": "LG",
             "actionTable": [
                 {
@@ -2254,100 +2329,140 @@
                 "equipment": [
                     {
                         "name": "Potion of Healing",
+                        "uniqueId": "item-1732734602478-dd0d17a6",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0.5,
+                        "cost": "50 gp",
+                        "useable": true
                     },
                     {
                         "name": "Dagger",
+                        "uniqueId": "item-1732734602479-4b6ce99b",
                         "quantity": 1,
+                        "weight": 1,
+                        "cost": "2 gp",
                         "equipped": false
                     },
                     {
                         "name": "Crystal",
+                        "uniqueId": "item-1732734602479-6b17b9fa",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "10 gp"
                     },
                     {
                         "name": "Clothes, common",
+                        "uniqueId": "item-1732734602479-56c208ed",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Spellbook",
+                        "uniqueId": "item-1732734602480-7f7e1085",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "50 gp"
                     },
                     {
                         "name": "Book",
+                        "uniqueId": "item-1732734602480-a9c19300",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "25 gp"
                     },
                     {
                         "name": "Ink (1 ounce bottle)",
+                        "uniqueId": "item-1732734602481-f9fb065e",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "10 gp"
                     },
                     {
                         "name": "Ink pen",
+                        "uniqueId": "item-1732734602481-a2fbb3e5",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "2 cp"
                     },
                     {
                         "name": "Parchment (one sheet)",
+                        "uniqueId": "item-1732734602482-08b80aa7",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "1 sp"
                     },
                     {
                         "name": "Little bag of sand",
+                        "uniqueId": "item-1732734602482-03ec6953",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "0 cp"
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Small knife",
+                        "uniqueId": "item-1732734602483-aeafeb4b",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "0 cp"
                     },
                     {
                         "name": "Crowbar",
+                        "uniqueId": "item-1732734602483-1e0e8566",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 gp"
                     },
                     {
                         "name": "Hammer",
+                        "uniqueId": "item-1732734602483-e5e7a4aa",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Holy water (flask)",
+                        "uniqueId": "item-1732734602484-1be9ebc0",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "25 gp"
                     },
                     {
                         "name": "Manacles",
+                        "uniqueId": "item-1732734602484-92e532d9",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 6,
+                        "cost": "2 gp"
                     },
                     {
                         "name": "Mirror, steel",
+                        "uniqueId": "item-1732734602485-a4a2605b",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0.5,
+                        "cost": "5 gp"
                     },
                     {
                         "name": "Oil (flask)",
+                        "uniqueId": "item-1732734602485-5e6798d0",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "1 sp"
                     },
                     {
                         "name": "Tinderbox",
+                        "uniqueId": "item-1732734602486-1c17a5cd",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
+                        "uniqueId": "item-1732734602486-e7cc914b",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "1 cp"
                     }
                 ],
                 "attunement": [],
