@@ -69,6 +69,7 @@ const characterStatBonuses = {
         Athletics: { bonuses: [] },
         Deception: { bonuses: [] },
         History: { bonuses: [] },
+        Initiative: { bonuses: [] },
         Insight: { bonuses: [] },
         Intimidation: { bonuses: [] },
         Investigation: { bonuses: [] },
@@ -81,30 +82,35 @@ const characterStatBonuses = {
         SleightOfHand: { bonuses: [] },
         Stealth: { bonuses: [] },
         Survival: { bonuses: [] },
+        All: { bonuses: [] },
     },
     saves: {
-        Strength: { bonuses: [] },
-        Dexterity: { bonuses: [] },
-        Constitution: { bonuses: [] },
-        Intelligence: { bonuses: [] },
-        Wisdom: { bonuses: [] },
-        Charisma: { bonuses: [] },
+        STR: { bonuses: [] },
+        DEX: { bonuses: [] },
+        CON: { bonuses: [] },
+        INT: { bonuses: [] },
+        WIS: { bonuses: [] },
+        CHA: { bonuses: [] },
         All: { bonuses: [] },
     },
     attributes: {
-        Strength: { bonuses: [] },
-        Dexterity: { bonuses: [] },
-        Constitution: { bonuses: [] },
-        Intelligence: { bonuses: [] },
-        Wisdom: { bonuses: [] },
-        Charisma: { bonuses: [] },
+        STR: { bonuses: [] },
+        DEX: { bonuses: [] },
+        CON: { bonuses: [] },
+        INT: { bonuses: [] },
+        WIS: { bonuses: [] },
+        CHA: { bonuses: [] },
     },
     combatStats: {
         AC: { bonuses: [] },
-        Initiative: { bonuses: [] },
         AttackRolls: { bonuses: [] },
         DamageRolls: { bonuses: [] },
-        SavingThrowDCs: { bonuses: [] }, // e.g., for spells or features.
+        MeleeAttackRolls: { bonuses: [] },
+        MeleeDamageRolls: { bonuses: [] },
+        RangedAttackRolls: { bonuses: [] },
+        RangedDamageRolls: { bonuses: [] },
+        SpellAttackRolls: { bonuses: [] },
+        SpellDamageRolls: { bonuses: [] },
         HitPoints: { bonuses: [] },
         Speed: { bonuses: [] },
     },
@@ -885,7 +891,7 @@ function updateDerivedStats(category) {
             updatePassives(); // Recalculate senses-related stats
             break;
         case "skills":
-            // updateSkillModifiers(); 
+            updateSkillModifier(); 
             break;
         case "saves":
             updateSaveModifier();
@@ -1167,32 +1173,86 @@ function updateProficiency(button, currentLevel, isButtonClick) {
 }
 
 
-
-
-// calculate and update the skill modifier based on ability modifier and proficiency level
+// calculate and update the skill modifier based on ability modifier, proficiency level, and bonuses
 function updateSkillModifier() {
     const skillRows = document.querySelectorAll('.skill-row');
 
     skillRows.forEach(skillRow => {
         const abilityModElement = skillRow.querySelector('.abilityMod');
         const proficiencyButton = skillRow.querySelector('.proficiencyButtons button');
-        const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent)
+        const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
         const abilityMod = abilityModElement.textContent.trim();
 
         // Find the associated ability score label without using :is selector
         const abilityScoreLabel = findAbilityScoreLabel(abilityMod);
-
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
 
-        const skillModifier = Math.floor(abilityScoreValue + (proficiencyBonus * parseFloat(proficiencyButton.value)));
+        const skillNameElement = skillRow.querySelector('.skillName');
+        const skillName = skillNameElement.textContent.trim();
+
+        // Start with the base skill modifier (ability mod + proficiency)
+        let skillModifier = Math.floor(abilityScoreValue + (proficiencyBonus * parseFloat(proficiencyButton.value)));
+
+        // Check for individual skill bonuses
+        if (characterStatBonuses.skills && characterStatBonuses.skills[skillName]) {
+            characterStatBonuses.skills[skillName].bonuses.forEach(bonus => {
+                skillModifier += bonus.value;  // Apply each bonus to the skill modifier
+            });
+        }
+
+        // Check for global 'ALL' bonuses that apply to all skills
+        if (characterStatBonuses.skills && characterStatBonuses.skills.All) {
+            characterStatBonuses.skills.All.bonuses.forEach(bonus => {
+                skillModifier += bonus.value;  // Apply each global bonus to the skill modifier
+            });
+        }
+
+        // Update the skill button and label with the new skill modifier
         const skillButton = abilityModElement.parentElement.querySelector('.actionButton.skillbuttonstyler');
         const skillLabel = abilityModElement.parentElement.querySelector('.actionButtonLabel');
-
+        
         skillButton.textContent = skillModifier > 0 ? `+${skillModifier}` : `${skillModifier}`;
         skillLabel.setAttribute('value', skillModifier);
     });
-    updatePassives()
+
+    updatePassives();  // Call this function to update any passive abilities if needed
+    updateInitiative()
 }
+
+function updateInitiative() {
+    const initiativeButton = document.getElementById('initiativeButton');
+    const initiativeLabel = document.querySelector('.actionButtonLabel[for="initiativeButton"]');
+    
+    // Get Dexterity modifier
+    const dexLabel = findAbilityScoreLabel("DEX");
+    const dexScore = parseInt(dexLabel.getAttribute("value"), 10);
+
+    // Get any initiative bonuses (e.g., magical items or abilities)
+    let initiativeBonus = 0;
+
+    // Check for individual skill bonuses
+    if (characterStatBonuses.skills && characterStatBonuses.skills.Initiative) {
+        characterStatBonuses.skills.Initiative.bonuses.forEach(bonus => {
+            initiativeBonus += bonus.value;  // Apply each bonus to the skill modifier
+        });
+    }
+
+    // Check for global 'ALL' bonuses that apply to all skills
+    if (characterStatBonuses.skills && characterStatBonuses.skills.All) {
+        characterStatBonuses.skills.All.bonuses.forEach(bonus => {
+            initiativeBonus += bonus.value;  // Apply each global bonus to the skill modifier
+        });
+    }
+    
+    // Calculate total initiative modifier
+    const initiativeModifier = dexScore + initiativeBonus;
+
+    // Update the label and button text with the new initiative modifier
+    initiativeLabel.setAttribute('value', initiativeModifier);
+    initiativeButton.textContent = initiativeModifier > 0 ? `+${initiativeModifier}` : `${initiativeModifier}`;
+}
+
+
 
 function updateSaveModifier() {
     const saveRows = document.querySelectorAll('.saves-row');
@@ -1213,7 +1273,7 @@ function updateSaveModifier() {
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
 
         // Get magical bonuses for this specific saving throw (if any)
-        const saveBonuses = characterStatBonuses.saves[saveName]?.bonuses || [];
+        const saveBonuses = characterStatBonuses.saves[abilityMod]?.bonuses || [];
         const magicalBonusTotal = saveBonuses.reduce((total, bonus) => total + bonus.value, 0);
 
         // Calculate total save modifier, including the global "All" saves bonus
@@ -1293,14 +1353,6 @@ function getSkillValue(skillName) {
     // Return null or handle the case when the skill is not found
     return null;
 }
-
-
-// function passives(){
-//     document.getElementById("passivePerception").textContent = parseInt(getSkillValue('Perception')) + 10;
-//     document.getElementById("passiveInvestigation").textContent = parseInt(getSkillValue('Investigation')) + 10;
-//     document.getElementById("passiveInsight").textContent = parseInt(getSkillValue('Insight')) +10;
-
-// }
 
 function updatePassives() {
     const passivePerceptionBase = parseInt(getSkillValue('Perception')) + 10;
@@ -1657,11 +1709,10 @@ function updateCoinsInFields(coins) {
 
     coinTypes.forEach(coin => {
         const coinInput = document.getElementById(`${coin}-input`);
-        if (coinInput) {
-            if(coins){
+        if (coinInput && coins) {
+            
                 const value = coins[coin] || 0; // Get the value for the coin, default to 0
                 coinInput.value = formatWithCommas(value); // Format with commas before displaying
-            }
         }
     });
 }
@@ -1871,14 +1922,12 @@ function updateCharacterUI(characterData, characterName) {
     
     updateAbilityScoreModifiers(characterData);
     updateActionTableUI(characterData.actionTable);
-    loadSpellData(characterData.spellData);
     loadInventoryData(characterData.inventoryData);
+    loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
     
 
     updateHitDiceLabel()
-
-    console.log(characterStatBonuses)
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -3821,7 +3870,7 @@ function filterSpellsByLevel(selectedLevel) {
 
 
 // Define item type libraries
-const equipableItems = new Set(['weapon', 'armor', 'equipment','shield', 'jewelry']); // Can be expanded in the future. This will be used to create checkbox that allow equipping of an item. 
+const equipableItems = new Set(['weapon', 'armor', 'equipment','shield', 'wondrous-item']); // Can be expanded in the future. This will be used to create checkbox that allow equipping of an item. 
 const useableItems = new Set(['potion']); // Can be expanded in the future. This will be used to create use buttons next to the item
 
 
@@ -3963,7 +4012,7 @@ function addItemToInventory(item, group) {
                     equipShield(item);
                 } else if (item.equipment_category.index === "weapon") {
                     addActionItemToTable(item);
-                } else if (item.equipment_category.index === "jewelry") {
+                } else if (item.equipment_category.index === "wondrous-item") {
                     equipJewelry(item);
                 } else {
                     console.log("other item equipped");
@@ -3973,7 +4022,7 @@ function addItemToInventory(item, group) {
                     unequipArmor(item);
                 } else if (item.equipment_category.index === "shield") {
                     unequipShield(item);
-                }else if (item.equipment_category.index === "jewelry") {
+                }else if (item.equipment_category.index === "wondrous-item") {
                     unequipJewelry(item);
                 }
                 // Remove associated row from action table for other items
@@ -4034,7 +4083,7 @@ function addItemToInventory(item, group) {
             unequipArmor(item);
         } else if (item.equipment_category.index === "shield") {
             unequipShield(item);
-        }else if (item.equipment_category.index === "jewelry") {
+        }else if (item.equipment_category.index === "wondrous-item") {
             unequipJewelry(item);
         } 
         
@@ -4047,7 +4096,7 @@ function addItemToInventory(item, group) {
             equipArmor(item);
         } else if (item.equipment_category.index === "shield") {
             equipShield(item);
-        } else if (item.equipment_category.index === "jewelry") {
+        } else if (item.equipment_category.index === "wondrous-item") {
             equipJewelry(item);
         } else {
             console.log("other item equipped automatically on load");
@@ -4365,7 +4414,6 @@ function equipJewelry(item) {
     } else {
         console.warn(`Item ${item.name} has no bonuses to apply.`);
     }
-    console.log(characterStatBonuses);
 }
 
 function unequipJewelry(item) {
@@ -4381,7 +4429,6 @@ function unequipJewelry(item) {
     } else {
         console.warn(`Item ${item.name} has no bonuses to remove.`);
     }
-    console.log(characterStatBonuses);
 }
 
 
@@ -4700,9 +4747,6 @@ function addNewTrait(groupContainer, traitData = null) {
         traitName.value = traitData.traitName;
     }
 
-
-
-
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
@@ -4814,53 +4858,84 @@ function addNewTrait(groupContainer, traitData = null) {
     traitUses.appendChild(usesLabel);
     traitUses.appendChild(usesInput);
 
+
+    // Initialize and handle trait adjustment updates
+    const previousState = {
+        category: traitData?.adjustmentCategory || null,
+        subCategory: traitData?.adjustmentSubCategory || null,
+        value: traitData?.adjustmentValue ? parseInt(traitData.adjustmentValue, 10) : null,
+    };
+    
     // Ability Adjustment Section
-    const adjustmentTypeLabel = document.createElement('label');
-    adjustmentTypeLabel.textContent = 'Adjust Ability (e.g., add to saves or rolls):';
-    const adjustmentType = document.createElement('select');
-    adjustmentType.classList.add('adjustment-type');
-    const options = ['Saving Throws', 'Attack Rolls', 'Damage Rolls', 'Other'];
-    options.forEach(option => {
-        const opt = document.createElement('option');
-        opt.value = option;
-        opt.textContent = option;
-        adjustmentType.appendChild(opt);
+    const adjustmentContainer = document.createElement('div');
+
+    // Category Dropdown
+    const categoryLabel = document.createElement('label');
+    categoryLabel.textContent = 'Category:';
+    const categorySelect = document.createElement('select');
+    categorySelect.classList.add('category-select');
+    Object.keys(characterStatBonuses).forEach(category => {
+        const option = document.createElement('option');
+        option.value = category;
+        option.textContent = category;
+        if (traitData?.adjustmentCategory === category) option.selected = true;
+        categorySelect.appendChild(option);
     });
 
-    // If traitData is provided, populate the adjustment type
-    if (traitData && traitData.adjustmentType) {
-        adjustmentType.value = traitData.adjustmentType;
+    // Subcategory Dropdown
+    const subCategoryLabel = document.createElement('label');
+    subCategoryLabel.textContent = 'Subcategory:';
+    const subCategorySelect = document.createElement('select');
+    subCategorySelect.classList.add('subcategory-select');
+    if (traitData?.adjustmentCategory) {
+        const subCategories = characterStatBonuses[traitData.adjustmentCategory];
+        Object.keys(subCategories).forEach(subCategory => {
+            const option = document.createElement('option');
+            option.value = subCategory;
+            option.textContent = subCategory;
+            if (traitData?.adjustmentSubCategory === subCategory) option.selected = true;
+            subCategorySelect.appendChild(option);
+        });
     }
 
+    // Adjustment Value
     const adjustmentValueLabel = document.createElement('label');
-    adjustmentValueLabel.textContent = 'Adjustment Value (e.g., +5 or CHA modifier):';
-    const adjustmentValue = document.createElement('input');
-    adjustmentValue.classList.add('adjustment-value');
-    adjustmentValue.placeholder = 'Enter value or formula';
+    adjustmentValueLabel.textContent = 'Adjustment Value:';
+    const adjustmentValueInput = document.createElement('input');
+    adjustmentValueInput.classList.add('adjustment-value');
+    adjustmentValueInput.placeholder = 'Enter value or formula';
+    adjustmentValueInput.value = traitData?.adjustmentValue || '';
 
-    // If traitData is provided, populate the adjustment value
-    if (traitData && traitData.adjustmentValue) {
-        adjustmentValue.value = traitData.adjustmentValue;
-    }
+    categorySelect.addEventListener('change', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
+    subCategorySelect.addEventListener('change', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
+    adjustmentValueInput.addEventListener('blur', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
 
-    const adjustmentConditionLabel = document.createElement('label');
-    adjustmentConditionLabel.textContent = 'Condition (e.g., while raging):';
-    const adjustmentCondition = document.createElement('input');
-    adjustmentCondition.classList.add('adjustment-condition');
-    adjustmentCondition.placeholder = 'Enter condition (if any)';
 
-    // If traitData is provided, populate the adjustment condition
-    if (traitData && traitData.adjustmentCondition) {
-        adjustmentCondition.value = traitData.adjustmentCondition;
-    }
+    // Event listener to update subcategories when category changes
+    categorySelect.addEventListener('change', () => {
+        subCategorySelect.innerHTML = '';
+        const selectedCategory = categorySelect.value;
+        const subCategories = characterStatBonuses[selectedCategory];
+        Object.keys(subCategories).forEach(subCategory => {
+            const option = document.createElement('option');
+            option.value = subCategory;
+            option.textContent = subCategory;
+            subCategorySelect.appendChild(option);
+        });
+    });
+
+
+
+
+    adjustmentContainer.appendChild(categoryLabel);
+    adjustmentContainer.appendChild(categorySelect);
+    adjustmentContainer.appendChild(subCategoryLabel);
+    adjustmentContainer.appendChild(subCategorySelect);
+    adjustmentContainer.appendChild(adjustmentValueLabel);
+    adjustmentContainer.appendChild(adjustmentValueInput);
 
     // Append ability adjustment fields
-    traitSettings.appendChild(adjustmentTypeLabel);
-    traitSettings.appendChild(adjustmentType);
-    traitSettings.appendChild(adjustmentValueLabel);
-    traitSettings.appendChild(adjustmentValue);
-    traitSettings.appendChild(adjustmentConditionLabel);
-    traitSettings.appendChild(adjustmentCondition);
+    traitSettings.appendChild(adjustmentContainer);
 
     // Delete Trait Button
     const deleteTraitButton = document.createElement('button');
@@ -4869,6 +4944,18 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Event listener for deleting the trait
     deleteTraitButton.addEventListener('click', function () {
+        // Explicitly remove the bonus tied to this trait before handling adjustments
+        const category = categorySelect.value;
+        const subCategory = subCategorySelect.value;
+        const value = parseInt(adjustmentValueInput.value, 10); // Parse as integer
+
+        if (category && subCategory && !isNaN(value) && value !== 0) {
+            removeBonus(category, subCategory, {
+                source: "trait", // Add a unique identifier if needed
+                value: value,
+            });
+        }
+
         // Remove the trait item from the DOM
         traitItem.remove();
 
@@ -4920,6 +5007,50 @@ addGroupButton.addEventListener('click', createNewGroup);
 
 
 
+function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState) {
+    // Function to apply or update the bonus when a field changes
+    function applyBonus() {
+        const category = categorySelect.value;
+        const subCategory = subCategorySelect.value;
+        const value = parseInt(adjustmentValueInput.value, 10); // Parse as integer
+
+        // Remove the previous bonus if it exists
+        if (previousState.category && previousState.subCategory && previousState.value !== null) {
+            removeBonus(previousState.category, previousState.subCategory, {
+                source: "trait", // Add a unique identifier if needed
+                value: previousState.value,
+            });
+        }
+
+        // Only add the new bonus if value is valid and non-zero
+        if (category && subCategory && !isNaN(value) && value !== 0) {
+            addBonus(category, subCategory, {
+                source: "trait", // Add a unique identifier if needed
+                value: value,
+            });
+
+            // Update the previous state
+            previousState.category = category;
+            previousState.subCategory = subCategory;
+            previousState.value = value;
+        } else {
+            // Reset previous state if no valid bonus
+            previousState.category = null;
+            previousState.subCategory = null;
+            previousState.value = null;
+        }
+    }
+
+    // Add event listeners to call `applyBonus` on changes
+    categorySelect.addEventListener("change", applyBonus);
+    subCategorySelect.addEventListener("change", applyBonus);
+    adjustmentValueInput.addEventListener("input", applyBonus);
+
+    // Initialize the adjustment with the current state
+    applyBonus();
+}
+
+
 
 
 
@@ -4961,15 +5092,15 @@ function processGroupTraitData() {
             const traitSettings = trait.querySelector('.trait-settings');
 
             if (traitSettings) {
-                const adjustmentType = traitSettings.querySelector('.adjustment-type').value;
+                const adjustmentCategory = traitSettings.querySelector('.category-select').value;
+                const adjustmentSubCategory = traitSettings.querySelector('.subcategory-select').value;
                 const adjustmentValue = traitSettings.querySelector('.adjustment-value').value;
-                const adjustmentCondition = traitSettings.querySelector('.adjustment-condition').value;
                 const numberOfUses = traitSettings.querySelector('.trait-uses-input').value;
 
                 // Save the trait settings in the traitDataObject
-                traitDataObject['adjustmentType'] = adjustmentType;
+                traitDataObject['adjustmentCategory'] = adjustmentCategory;
+                traitDataObject['adjustmentSubCategory'] = adjustmentSubCategory;
                 traitDataObject['adjustmentValue'] = adjustmentValue;
-                traitDataObject['adjustmentCondition'] = adjustmentCondition;
                 traitDataObject['numberOfUses'] = numberOfUses;
             }
 

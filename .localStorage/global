@@ -14,8 +14,8 @@
             ],
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
-            "initiativeButton": "+5",
-            "AC": "16",
+            "initiativeButton": "+9",
+            "AC": "14",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
@@ -27,7 +27,7 @@
             "dexterityScore": "18",
             "constitutionScore": "20",
             "intelligenceScore": "20",
-            "wisdomScore": "20",
+            "wisdomScore": "14",
             "charismaScore": "20",
             "acrobaticsAbilityMod": "DEX",
             "animalHandlingAbilityMod": "WIS",
@@ -59,17 +59,17 @@
             "proficiencyButton10": "0",
             "proficiencyButton11": "0",
             "proficiencyButton12": "0",
-            "proficiencyButton13": "2",
+            "proficiencyButton13": "1",
             "proficiencyButton14": "0",
             "proficiencyButton15": "0",
             "proficiencyButton16": "0",
             "proficiencyButton17": "0",
             "proficiencyButton18": "0",
             "proficiencyButton19": "0",
-            "proficiencyButton20": "1",
-            "proficiencyButton21": "1",
-            "proficiencyButton22": "1",
-            "proficiencyButton23": "1",
+            "proficiencyButton20": "0",
+            "proficiencyButton21": "0",
+            "proficiencyButton22": "0",
+            "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
             "conditions": [],
@@ -84,19 +84,18 @@
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Longsword",
-                        "itemId": "item-1732494408397-1388bd98",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+1",
-                        "fifthColumn": "1d8",
+                        "proficiencyButton": "1",
+                        "secondColumn": "CrossBow Hand",
+                        "thirdColumn": "30 (120)",
+                        "fourthColumn": "+10",
+                        "fifthColumn": "1d10/2d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Versatile",
-                        "elventhColumn": "a versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
-                        "twelvethColumn": "Slashing",
+                        "seventhColumn": "DEX",
+                        "eighthColumn": "2",
+                        "damageBonus": "undefined",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": true,
                             "actions": true,
@@ -109,21 +108,20 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Returning Dagger",
-                        "itemId": "item-1732732580056-8cd6526d",
-                        "thirdColumn": "5ft (20/60)",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d4",
+                        "secondColumn": "Twilight Sanctuary",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "-2",
+                        "fifthColumn": "1d6",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "eighthColumn": "1",
-                        "damageBonus": "2",
-                        "tenthColumn": "Finesse, Light, Thrown, Monk",
-                        "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
-                        "twelvethColumn": "Piercing",
+                        "seventhColumn": "WIS",
+                        "eighthColumn": "-8",
+                        "damageBonus": "3",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Temp Hp",
                         "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
+                            "attacks": false,
+                            "actions": false,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -133,34 +131,15 @@
             ],
             "spellData": {
                 "spellcastingModifier": "STR",
-                "spelllevelselected": "4",
+                "spelllevelselected": "0",
                 "spellmagicbonus": "0",
                 "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Dancing Lights",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Fire Bolt",
-                            "prepared": "false"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Bane",
-                            "prepared": "0"
-                        }
-                    ],
-                    "slots": [
-                        true,
-                        false,
-                        false,
-                        false
-                    ]
+                    "spells": [],
+                    "slots": []
                 },
                 "2nd-level": {
                     "spells": [],
@@ -210,7 +189,7 @@
                         "quantity": 1,
                         "weight": 3,
                         "cost": "15 gp",
-                        "equipped": true
+                        "equipped": false
                     },
                     {
                         "name": "Alchemist's fire (flask)",
@@ -220,20 +199,12 @@
                         "cost": "50 gp"
                     },
                     {
-                        "name": "Half Plate Armor",
-                        "uniqueId": "item-1732494461059-892497be",
-                        "quantity": 1,
-                        "weight": 40,
-                        "cost": "750 gp",
-                        "equipped": false
-                    },
-                    {
                         "name": "Returning Dagger",
                         "uniqueId": "item-1732732580056-8cd6526d",
                         "quantity": 1,
                         "weight": 1,
                         "cost": "1500 gp",
-                        "equipped": true
+                        "equipped": false
                     },
                     {
                         "name": "Cloak of Protection",
@@ -241,7 +212,7 @@
                         "quantity": 1,
                         "weight": 1,
                         "cost": "750 gp",
-                        "equipped": true
+                        "equipped": false
                     },
                     {
                         "name": "Ring of Protection",
@@ -249,14 +220,75 @@
                         "quantity": 1,
                         "weight": 1,
                         "cost": "750 gp",
-                        "equipped": true
+                        "equipped": false
+                    },
+                    {
+                        "name": "Studded Leather Armor",
+                        "uniqueId": "item-1732735127583-9fc35ef0",
+                        "quantity": 1,
+                        "weight": 13,
+                        "cost": "45 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Amulet of Wisdom",
+                        "uniqueId": "item-1732735506905-fbd65102",
+                        "quantity": 1,
+                        "weight": 0.1,
+                        "cost": "1500 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Stone of Good Luck",
+                        "uniqueId": "item-1732737250730-d1b5d4e6",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Stone of Acrobatics",
+                        "uniqueId": "item-1732737742573-a873911e",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Stone of Initiative",
+                        "uniqueId": "item-1732740193766-81457b68",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": false
                     }
                 ],
                 "backpack": [],
                 "attunement": [],
                 "other-possessions": []
             },
-            "groupTraitData": []
+            "groupTraitData": [
+                {
+                    "group-title": "Class Features",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "Dread Ambusher",
+                            "cheveron": false,
+                            "traitDescription": "You add your WIS modifier (+2) to initiative rolls. At the start of your first turn of each combat, your walking speed increases by 10 ft., which lasts until the end of that turn. If you take the Attack action on that turn, you can make one additional weapon attack as part of that action, dealing an extra 1d8 damage of the weapon’s damage type on a hit.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "Initiative",
+                            "adjustmentValue": "5",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ]
         },
         "Mira": {
             "characterTempHp": "2",
@@ -2634,8 +2666,12 @@
         "Wallace": {
             "characterTempHp": "8",
             "currentHitDice": "8",
+            "playerWeaponProficiency": [],
+            "playerArmorProficiency": [],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
             "initiativeButton": "+7",
-            "AC": "20",
+            "AC": "14",
             "speed": "30ft.",
             "characterLevel": "8",
             "playerXP": "34000",
@@ -2693,6 +2729,13 @@
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
             "conditions": [],
+            "coins": {
+                "cp": 0,
+                "sp": 0,
+                "ep": 0,
+                "gp": 0,
+                "pp": 0
+            },
             "alignment": "LG",
             "actionTable": [
                 {
@@ -2990,100 +3033,141 @@
                 "equipment": [
                     {
                         "name": "Amulet",
+                        "uniqueId": "item-1732734671397-03cc1ebb",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 gp"
                     },
                     {
                         "name": "Spellbook",
+                        "uniqueId": "item-1732734671397-4ad4b6a8",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "50 gp"
                     },
                     {
                         "name": "Potion of Healing",
+                        "uniqueId": "item-1732734671398-2c717aca",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0.5,
+                        "cost": "50 gp",
+                        "useable": true
                     },
                     {
                         "name": "Robes",
+                        "uniqueId": "item-1732734671399-3c02e0b5",
                         "quantity": 1,
-                        "equipped": true
+                        "weight": 4,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Shield",
+                        "uniqueId": "item-1732734671399-f1c735c3",
                         "quantity": 1,
+                        "weight": 6,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Staff",
+                        "uniqueId": "item-1732734671401-56710737",
                         "quantity": 1,
-                        "equipped": true
+                        "weight": 4,
+                        "cost": "5 gp"
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Block and tackle",
+                        "uniqueId": "item-1732734671401-96e45c62",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Book",
+                        "uniqueId": "item-1732734671402-250ff7cb",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "25 gp"
                     },
                     {
                         "name": "Carpenter's Tools",
+                        "uniqueId": "item-1732734671402-9441e84f",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 6,
+                        "cost": "8 gp"
                     },
                     {
                         "name": "Dagger",
+                        "uniqueId": "item-1732734671403-09092d70",
                         "quantity": 1,
+                        "weight": 1,
+                        "cost": "2 gp",
                         "equipped": true
                     },
                     {
                         "name": "Grappling hook",
+                        "uniqueId": "item-1732734671403-8b53f82c",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 4,
+                        "cost": "2 gp"
                     },
                     {
                         "name": "Ink (1 ounce bottle)",
+                        "uniqueId": "item-1732734671404-ac4da65c",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "10 gp"
                     },
                     {
                         "name": "Ink pen",
+                        "uniqueId": "item-1732734671404-f01b8dae",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "2 cp"
                     },
                     {
                         "name": "Little bag of sand",
+                        "uniqueId": "item-1732734671405-ea8fff6d",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "0 cp"
                     },
                     {
                         "name": "Parchment (one sheet)",
+                        "uniqueId": "item-1732734671405-280d5665",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "1 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
+                        "uniqueId": "item-1732734671406-56bae128",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Small knife",
+                        "uniqueId": "item-1732734671406-56739451",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "0 cp"
                     },
                     {
                         "name": "Thieves' Tools",
+                        "uniqueId": "item-1732734671407-46e4b08c",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "25 gp"
                     },
                     {
                         "name": "Tinker's Tools",
+                        "uniqueId": "item-1732734671407-4f25c2bf",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "50 gp"
                     }
                 ],
                 "attunement": [],
@@ -3256,6 +3340,10 @@
         "Sterling": {
             "characterTempHp": "",
             "currentHitDice": "8",
+            "playerWeaponProficiency": [],
+            "playerArmorProficiency": [],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
             "initiativeButton": "+2",
             "AC": "19",
             "speed": "30ft.",
@@ -3315,6 +3403,13 @@
             "proficiencyButton24": "0",
             "proficiencyButton25": "0",
             "conditions": [],
+            "coins": {
+                "cp": 0,
+                "sp": 0,
+                "ep": 0,
+                "gp": 0,
+                "pp": 0
+            },
             "alignment": "LG",
             "actionTable": [
                 {
@@ -3482,85 +3577,124 @@
                 "equipment": [
                     {
                         "name": "Longsword",
+                        "uniqueId": "item-1732735051745-e71c50d0",
                         "quantity": 1,
+                        "weight": 3,
+                        "cost": "15 gp",
                         "equipped": true
                     },
                     {
                         "name": "Longbow",
+                        "uniqueId": "item-1732735051746-db836235",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "50 gp",
                         "equipped": true
                     },
                     {
                         "name": "Arrow",
+                        "uniqueId": "item-1732735051747-198a284a",
                         "quantity": 20,
+                        "weight": 20,
+                        "cost": "1 gp",
                         "equipped": false
                     },
                     {
                         "name": "Clothes, common",
+                        "uniqueId": "item-1732735051747-b6edeae9",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 3,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Handaxe",
+                        "uniqueId": "item-1732735051748-8c69e246",
                         "quantity": 1,
+                        "weight": 2,
+                        "cost": "5 gp",
                         "equipped": false
                     },
                     {
                         "name": "Leather Armor",
+                        "uniqueId": "item-1732735051748-5692acd8",
                         "quantity": 1,
+                        "weight": 10,
+                        "cost": "10 gp",
                         "equipped": false
                     },
                     {
                         "name": "Playing Card Set",
+                        "uniqueId": "item-1732735051749-1a510581",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 0,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Shield",
+                        "uniqueId": "item-1732735051749-fe43bf65",
                         "quantity": 1,
+                        "weight": 6,
+                        "cost": "10 gp",
                         "equipped": true
                     },
                     {
                         "name": "Splint Armor",
+                        "uniqueId": "item-1732735051751-393addba",
                         "quantity": 1,
+                        "weight": 60,
+                        "cost": "200 gp",
                         "equipped": true
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Bedroll",
+                        "uniqueId": "item-1732735051752-8037648e",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 7,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Mess Kit",
+                        "uniqueId": "item-1732735051752-3b7add04",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "2 sp"
                     },
                     {
                         "name": "Rations (1 day)",
+                        "uniqueId": "item-1732735051753-8b002a60",
                         "quantity": 10,
-                        "equipped": false
+                        "weight": 20,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
+                        "uniqueId": "item-1732735051753-bdc5421b",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 10,
+                        "cost": "1 gp"
                     },
                     {
                         "name": "Tinderbox",
+                        "uniqueId": "item-1732735051754-d8d975dc",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
+                        "uniqueId": "item-1732735051754-ac441f92",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 1,
+                        "cost": "1 cp"
                     },
                     {
                         "name": "Waterskin",
+                        "uniqueId": "item-1732735051755-fde04512",
                         "quantity": 1,
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "2 sp"
                     }
                 ],
                 "attunement": [],

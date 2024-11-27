@@ -6745,8 +6745,8 @@
     "index": "scouts-amulet",
     "name": "Scout's Amulet",
     "equipment_category": {
-      "index": "jewelry",
-      "name": "Jewelry",
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
       "url": "/api/equipment-categories/jewelry"
     },
     "gear_category": {
@@ -6822,8 +6822,8 @@
     "index": "cloak-of-protection",
     "name": "Cloak of Protection",
     "equipment_category": {
-      "index": "jewelry",
-      "name": "Jewelry",
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
       "url": "/api/equipment-categories/jewelry"
     },
     "gear_category": {
@@ -6872,8 +6872,8 @@
     "index": "ring-of-protection",
     "name": "Ring of Protection",
     "equipment_category": {
-      "index": "jewelry",
-      "name": "Jewelry",
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
       "url": "/api/equipment-categories/jewelry"
     },
     "gear_category": {
@@ -6917,5 +6917,187 @@
       "url": "/api/item-rarity/uncommon"
     },
     "url": "/api/equipment/cloak-of-protection"
+  },
+  {
+    "index": "amulet-of-wisdom",
+    "name": "Amulet of Wisdom",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/jewelry"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "A mystical amulet that enhances the wearer's connection to their inner wisdom.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "saves",
+        "key": "WIS",
+        "value": 1,
+        "description": "Grants a +1 bonus to all saving throws."
+      }
+    ],
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "weight": 0.1,
+    "rarity": {
+      "index": "rare",
+      "name": "Rare",
+      "url": "/api/item-rarity/rare"
+    },
+    "url": "/api/equipment/amulet-of-wisdom"
+  },
+  {
+    "index": "stone-of-good-luck",
+    "name": "Stone of Good Luck",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "This small, smooth stone brings good fortune to its wearer, improving their luck.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "saves",
+        "key": "All",
+        "value": 1,
+        "description": "Grants a +1 bonus to all saving throws."
+      },
+      {
+        "category": "skills",
+        "key": "All",
+        "value": 1,
+        "description": "Grants a +1 bonus to all ability checks."
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/stone-of-good-luck"
+  },
+  {
+    "index": "stone-of-acrobatics",
+    "name": "Stone of Acrobatics",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "This small, smooth stone brings good movement, improving their Acrobatics.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "skills",
+        "key": "Acrobatics",
+        "value": 13,
+        "description": "Grants a +1 bonus to all ability checks."
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/stone-of-good-luck"
+  },
+  {
+    "index": "stone-of-initiative",
+    "name": "Stone of Initiative",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "This small, smooth stone brings good movement, improving their Initiative.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "skills",
+        "key": "Initiative",
+        "value": 13,
+        "description": "Grants a +1 bonus to all ability checks."
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/stone-of-good-luck"
   }
 ]
