@@ -14,8 +14,8 @@
             ],
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
-            "initiativeButton": "+6",
-            "AC": "14",
+            "initiativeButton": "+12",
+            "AC": "18",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
@@ -47,7 +47,7 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "1",
+            "": "0",
             "proficiencyButton1": "0",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
@@ -72,7 +72,9 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
-            "conditions": [],
+            "conditions": [
+                "Raging"
+            ],
             "coins": {
                 "cp": 5500,
                 "sp": 4000,
@@ -85,16 +87,18 @@
                 {
                     "1": {
                         "proficiencyButton": "1",
-                        "secondColumn": "CrossBow Hand",
-                        "thirdColumn": "30 (120)",
+                        "secondColumn": "Crossbow, light",
+                        "itemId": "item-1732760288423-7a1bfd37",
+                        "thirdColumn": "80ft",
                         "fourthColumn": "+10",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
-                        "eighthColumn": "2",
+                        "weaponType": "Ranged",
+                        "eighthColumn": "",
                         "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
+                        "tenthColumn": "Ammunition, Loading, Two-Handed",
+                        "elventhColumn": "A small, one-handed ranged weapon that fires bolts with high accuracy, often favored for its ease of use and portability.",
                         "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": true,
@@ -108,20 +112,122 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Twilight Sanctuary",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "-2",
-                        "fifthColumn": "1d6",
+                        "secondColumn": "Longbow",
+                        "itemId": "item-1732761725338-6079ab8f",
+                        "thirdColumn": "150ft",
+                        "fourthColumn": "+10",
+                        "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "WIS",
-                        "eighthColumn": "-8",
-                        "damageBonus": "3",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Temp Hp",
+                        "seventhColumn": "DEX",
+                        "weaponType": "Ranged",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Ammunition, Heavy, Two-Handed",
+                        "elventhColumn": "A large, two-handed ranged weapon known for its long range and high damage.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Returning Dagger",
+                        "itemId": "item-1732732580056-8cd6526d",
+                        "thirdColumn": "5ft (20/60)",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "weaponType": "Melee",
+                        "eighthColumn": "1",
+                        "damageBonus": "2",
+                        "tenthColumn": "Finesse, Light, Thrown, Monk",
+                        "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "4": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Longsword",
+                        "itemId": "item-1732494408397-1388bd98",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+2",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Versatile",
+                        "elventhColumn": "A versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Greataxe +1",
+                        "itemId": "item-1732762666792-876eaa44",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+7",
+                        "fifthColumn": "1d12",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Greatsword +2",
+                        "itemId": "item-1732762674907-710d4e07",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+4",
+                        "fifthColumn": "2d6",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "2",
+                        "damageBonus": "2",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -203,7 +309,7 @@
                         "quantity": 1,
                         "weight": 3,
                         "cost": "15 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Alchemist's fire (flask)",
@@ -218,7 +324,7 @@
                         "quantity": 1,
                         "weight": 1,
                         "cost": "1500 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Cloak of Protection",
@@ -226,7 +332,7 @@
                         "quantity": 1,
                         "weight": 1,
                         "cost": "750 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Ring of Protection",
@@ -234,7 +340,7 @@
                         "quantity": 1,
                         "weight": 1,
                         "cost": "750 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Studded Leather Armor",
@@ -242,15 +348,7 @@
                         "quantity": 1,
                         "weight": 13,
                         "cost": "45 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Amulet of Wisdom",
-                        "uniqueId": "item-1732735506905-fbd65102",
-                        "quantity": 1,
-                        "weight": 0.1,
-                        "cost": "1500 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
                         "name": "Stone of Good Luck",
@@ -258,23 +356,39 @@
                         "quantity": 1,
                         "weight": 0.2,
                         "cost": "2000 gp",
-                        "equipped": false
+                        "equipped": true
                     },
                     {
-                        "name": "Stone of Acrobatics",
-                        "uniqueId": "item-1732737742573-a873911e",
+                        "name": "Crossbow, light",
+                        "uniqueId": "item-1732760288423-7a1bfd37",
                         "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": false
+                        "weight": 5,
+                        "cost": "25 gp",
+                        "equipped": true
                     },
                     {
-                        "name": "Stone of Initiative",
-                        "uniqueId": "item-1732740193766-81457b68",
+                        "name": "Longbow",
+                        "uniqueId": "item-1732761725338-6079ab8f",
                         "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": false
+                        "weight": 2,
+                        "cost": "50 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Greataxe +1",
+                        "uniqueId": "item-1732762666792-876eaa44",
+                        "quantity": 1,
+                        "weight": 7,
+                        "cost": "500 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Greatsword +2",
+                        "uniqueId": "item-1732762674907-710d4e07",
+                        "quantity": 1,
+                        "weight": 6,
+                        "cost": "1000 gp",
+                        "equipped": true
                     }
                 ],
                 "backpack": [],
@@ -288,18 +402,22 @@
                     "traits": [
                         {
                             "traitName": "Agonizing Blast",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "When you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.",
-                            "checkboxStates": [],
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
                             "adjustmentCategory": "combatStats",
                             "adjustmentSubCategory": "EldritchBlastDamage",
                             "adjustmentAbility": "CHA",
                             "adjustmentValue": "4",
-                            "numberOfUses": ""
+                            "numberOfUses": "3"
                         },
                         {
                             "traitName": "Dread Ambusher",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "You add your WIS modifier (+2) to initiative rolls. At the start of your first turn of each combat, your walking speed increases by 10 ft., which lasts until the end of that turn. If you take the Attack action on that turn, you can make one additional weapon attack as part of that action, dealing an extra 1d8 damage of the weapon’s damage type on a hit.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
@@ -307,6 +425,57 @@
                             "adjustmentAbility": "WIS",
                             "adjustmentValue": "2",
                             "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "Fighting Style (Archery)",
+                            "cheveron": true,
+                            "traitDescription": "You gain a +2 bonus to attack rolls you make with ranged weapons.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "combatStats",
+                            "adjustmentSubCategory": "RangedAttackRolls",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "2",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "Rage",
+                            "cheveron": true,
+                            "traitDescription": "In battle, you fight with primal ferocity. On your turn, you can enter a rage as a bonus action.\n\nWhile raging, you gain the following benefits if you aren’t wearing heavy armor:\n\n    You have advantage on Strength checks and Strength saving throws.\n    When you make a melee weapon attack using Strength, you gain a bonus to the damage roll that increases as you gain levels as a barbarian, as shown in the Rage Damage column of the Barbarian table.\n    You have resistance to bludgeoning, piercing, and slashing damage.\n\nIf you are able to cast spells, you can’t cast them or concentrate on them while raging.\n\nYour rage lasts for 1 minute. It ends early if you are knocked unconscious or if your turn ends and you haven’t attacked a hostile creature since your last turn or taken damage since then. You can also end your rage on your turn as a bonus action.\n\nOnce you have raged the number of times shown for your barbarian level in the Rages column of the Barbarian table, you must finish a long rest before you can rage again.",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "combatStats",
+                            "adjustmentSubCategory": "RageDamageBonus",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "2",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "Feats",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "Alert",
+                            "cheveron": false,
+                            "traitDescription": "Always on the lookout for danger, you gain the following benefits:\n\nYou can't be surprised while you are conscious.\n\nYou gain a +5 bonus to initiative.\n\nOther creatures don't gain advantage on attack rolls against you as a result of being unseen by you.\n",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "Initiative",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "5",
+                            "numberOfUses": "3"
                         }
                     ]
                 }

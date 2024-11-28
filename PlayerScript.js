@@ -107,7 +107,8 @@ const characterStatBonuses = {
         // DamageRolls: { bonuses: [] },
         // MeleeAttackRolls: { bonuses: [] },
         // MeleeDamageRolls: { bonuses: [] },
-        // RangedAttackRolls: { bonuses: [] },
+        RangedAttackRolls: { bonuses: [] },
+        RageDamageBonus: { bonuses: [] },
         // RangedDamageRolls: { bonuses: [] },
         // SpellAttackRolls: { bonuses: [] },
         // SpellDamageRolls: { bonuses: [] },
@@ -1020,6 +1021,7 @@ function playerConditions() {
         conditionsSet.add(selectedCondition);
         const conditionPillsContainer = document.getElementById('conditionTracker');
         conditionPillsContainer.appendChild(conditionPill);
+        calculateActionDamageDice()
         updateContent()
     }
 }
@@ -1034,6 +1036,7 @@ function removeConditionPill(condition) {
             break;
         }
     }
+    calculateActionDamageDice()
     updateContent();
 }
 
@@ -1483,6 +1486,17 @@ function updateToHitDice(proficiencyButton) {
         const abilityDropdown = row.querySelector('.ability-dropdown');
         const selectedAbility = abilityDropdown.value;
 
+        let rangedAttackRollsBonus = 0;
+
+        const weaponTypeSelect = row.querySelector('.weapon-type-dropdown-select');
+        const selectedWeaponType = weaponTypeSelect ? weaponTypeSelect.value : null;
+
+        if (selectedWeaponType === "Ranged"){
+            rangedAttackRollsBonus = characterStatBonuses.combatStats.RangedAttackRolls.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+            console.log(rangedAttackRollsBonus)
+            console.log(characterStatBonuses.combatStats.RangedAttackRolls)
+        }
+
         // Find the associated ability score label without using :is selector
         const abilityScoreLabel = findAbilityScoreLabel(selectedAbility);
 
@@ -1496,7 +1510,7 @@ function updateToHitDice(proficiencyButton) {
 
             // Add proficiency bonus to toHitDiceValue
             const proficiencyBonus = parseInt(document.getElementById('profBonus').textContent);
-            const toHitDiceValue = abilityScoreValue + (proficiencyBonus * proficiencyValue) + magicBonus;
+            const toHitDiceValue = abilityScoreValue + (proficiencyBonus * proficiencyValue) + magicBonus + rangedAttackRollsBonus;
 
             // Update the toHitDice button text content and value
             if(toHitDiceValue >= 0){
@@ -1507,7 +1521,7 @@ function updateToHitDice(proficiencyButton) {
             }
             
 
-            // Get the previous sibling label
+            // Get the previous sibling label 
             const previousLabel = toHitDiceButton.previousElementSibling;
 
             // Update the value of the previous label
@@ -1746,6 +1760,7 @@ function processActionTableRow(){
         const fifthColumnCell = row.querySelector('td:nth-child(5) label.actionButtonLabel').getAttribute('data-dice-type');
         const sixthColumnCell = row.querySelector('td:nth-child(6)');
         const seventhColumnCell = row.querySelector('.ability-dropdown');
+        const weaponTypeCell = row.querySelector('.weapon-type-dropdown-select');
         const eighthColumnCell = row.querySelector('.magic-bonus-weapon');
         const damageBonusCell = row.querySelector('.damage-bonus-weapon');
         const tenthColumnCell = row.querySelector('.actionDescriptiveText01');
@@ -1781,6 +1796,11 @@ function processActionTableRow(){
         if (seventhColumnCell) {
             rowData['seventhColumn'] = seventhColumnCell.value;
         }
+
+        if (weaponTypeCell){
+            rowData['weaponType'] = weaponTypeCell.value;
+        }
+
         if (eighthColumnCell) {
             rowData['eighthColumn'] = eighthColumnCell.value;
         }
@@ -1928,6 +1948,7 @@ function updateCharacterUI(characterData, characterName) {
     loadInventoryData(characterData.inventoryData);
     loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
+    
 
     updateAdjustmentValues()
     updateHitDiceLabel()
@@ -2465,10 +2486,11 @@ function updateActionTableUI(actionTableData, newActionTableData) {
 }
 
 // Helper function to create column six. The settings menu on the Action table.
-function createColumnSixContent(rowData,rowIndex, newRow) {
+function createColumnSixContent(rowData, rowIndex, newRow) {
 
     // Extract the required data
     const ability = rowData["seventhColumn"];  // For the ability dropdown
+    const weaponType = rowData["weaponType"];  // For the ability dropdown
 
 
     // Create the outer td element
@@ -2511,9 +2533,38 @@ function createColumnSixContent(rowData,rowIndex, newRow) {
         select.appendChild(option);
     });
 
+    // Ability dropdown
+    const weaponTypeContainer = document.createElement('div');
+    weaponTypeContainer.className = "weapon-type-container";
+    const weaponTypeDropdown = document.createElement('div');
+    weaponTypeDropdown.className = "weapon-type-dropdown";
+    const weaponTypeSelect = document.createElement('select');
+    weaponTypeSelect.className = "weapon-type-dropdown-select";
+    const weaponTypeSelectOptions = ["Melee", "Ranged", "Magic"];
+
+    weaponTypeSelectOptions.forEach(ab => {
+        const option = document.createElement('option');
+        option.value = ab;
+        option.innerText = ab;
+        if (ab === weaponType) {
+            option.selected = true;
+        }
+        weaponTypeSelect.appendChild(option);
+    });
+
     abilityStatDropdown.appendChild(select);
     abilityStatsContainer.appendChild(abilityStatDropdown);
     additionalInfoContainer.appendChild(abilityStatsContainer);
+
+    weaponTypeDropdown.appendChild(weaponTypeSelect);
+    weaponTypeContainer.appendChild(weaponTypeDropdown);
+    additionalInfoContainer.appendChild(weaponTypeContainer);
+
+
+    weaponTypeSelect.addEventListener('change', function () {
+        updateContent();
+        calculateActionDamageDice()
+    });
 
     // Add contenteditable divs for weapon properties and description
     const propertiesDiv = document.createElement('div');
@@ -2682,11 +2733,24 @@ function calculateActionDamageDice() {
         const abilityDropdown = row.querySelector('.ability-dropdown');
         const damageBonusInput = row.querySelector('.damage-bonus-weapon');
 
+        const weaponTypeSelect = row.querySelector('.weapon-type-dropdown-select');
+        const selectedWeaponType = weaponTypeSelect ? weaponTypeSelect.value : null;
+
         let damageBonus
         if(damageBonusInput){
             damageBonus = parseInt(damageBonusInput.value) || 0;
-        }
+        } 
+
+        let rageDamageBonus = 0
+
+        conditionTrackerDiv = document.getElementById('conditionTracker');
+        conditionsSet = conditionsMap.get(conditionTrackerDiv);
         
+        if (conditionsSet) {
+            if (conditionsSet.has('Raging') && selectedWeaponType === "Melee" && abilityDropdown.value ==="STR") {        
+                    rageDamageBonus = characterStatBonuses.combatStats.RageDamageBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+            }
+        }
 
 
         if (damageLabel && damageButton && abilityDropdown) {
@@ -2694,7 +2758,7 @@ function calculateActionDamageDice() {
             const selectedAbility = abilityDropdown.value;
 
             // Find the corresponding ability modifier using the provided function
-            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + damageBonus;
+            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + damageBonus + rageDamageBonus;
 
             damageLabel.setAttribute ('value', abilityScoreLabel)
 
@@ -4207,6 +4271,7 @@ function addActionItemToTable(item) {
                 sixthColumn: "ActionSettings", //name of the button. Needs to be this name so it works correctly
                 seventhColumn: primaryStat, //Which stat is used by the weapon eg STR
                 eighthColumn: item.toHitBonus || "", //Magic bonus to hit
+                weaponType: item.weapon_range || "", //Weapon Type
                 damageBonus: item.damageBonus || "", //magic bonus to damage
                 tenthColumn: item.properties.map(p => p.name).join(", "), 
                 elventhColumn: item.description || "",
@@ -4992,7 +5057,6 @@ function addNewTrait(groupContainer, traitData = null) {
             subCategorySelect.appendChild(option);
         });
         updateContent();
-        console.log("Tester")
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
     });
 
@@ -5016,7 +5080,6 @@ function addNewTrait(groupContainer, traitData = null) {
     traitSettings.appendChild(adjustmentContainer);
 
     adjustmentValueInput.addEventListener('blur', () => {
-        console.log("adjustment Value Blurred")
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
     });
     
@@ -5066,6 +5129,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
 
+    handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState)
     updateContent();
 }
 
@@ -5130,10 +5194,13 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
     adjustmentValueInput.addEventListener("input", applyBonus);
 
     // Initialize the adjustment with the current state
-    console.log("We are fucking here")
     applyBonus();
-    updateContent();
+    
     updateAllSpellDamageDice();
+    updateAllToHitDice();
+    calculateActionDamageDice();
+
+    updateContent();
 }
 
 
