@@ -93,41 +93,42 @@ const characterStatBonuses = {
         CHA: { bonuses: [] },
         All: { bonuses: [] },
     },
-    attributes: {
-        STR: { bonuses: [] },
-        DEX: { bonuses: [] },
-        CON: { bonuses: [] },
-        INT: { bonuses: [] },
-        WIS: { bonuses: [] },
-        CHA: { bonuses: [] },
-    },
+    // attributes: {
+    //     STR: { bonuses: [] },
+    //     DEX: { bonuses: [] },
+    //     CON: { bonuses: [] },
+    //     INT: { bonuses: [] },
+    //     WIS: { bonuses: [] },
+    //     CHA: { bonuses: [] },
+    // },
     combatStats: {
         AC: { bonuses: [] },
-        AttackRolls: { bonuses: [] },
-        DamageRolls: { bonuses: [] },
-        MeleeAttackRolls: { bonuses: [] },
-        MeleeDamageRolls: { bonuses: [] },
-        RangedAttackRolls: { bonuses: [] },
-        RangedDamageRolls: { bonuses: [] },
-        SpellAttackRolls: { bonuses: [] },
-        SpellDamageRolls: { bonuses: [] },
-        HitPoints: { bonuses: [] },
-        Speed: { bonuses: [] },
+        // AttackRolls: { bonuses: [] },
+        // DamageRolls: { bonuses: [] },
+        // MeleeAttackRolls: { bonuses: [] },
+        // MeleeDamageRolls: { bonuses: [] },
+        // RangedAttackRolls: { bonuses: [] },
+        // RangedDamageRolls: { bonuses: [] },
+        // SpellAttackRolls: { bonuses: [] },
+        // SpellDamageRolls: { bonuses: [] },
+        EldritchBlastDamage: { bonuses: [] },
+        // HitPoints: { bonuses: [] },
+        // Speed: { bonuses: [] },
     },
     senses: {
         PassivePerception: { bonuses: [] },
         PassiveInsight: { bonuses: [] },
         PassiveInvestigation: { bonuses: [] },
-        Darkvision: { bonuses: [] }, // Include any vision-based senses.
-        Tremorsense: { bonuses: [] },
-        Blindsight: { bonuses: [] },
-        Truesight: { bonuses: [] },
+        // Darkvision: { bonuses: [] }, 
+        // Tremorsense: { bonuses: [] },
+        // Blindsight: { bonuses: [] },
+        // Truesight: { bonuses: [] },
     },
-    otherTraits: {
-        SpellAttackModifier: { bonuses: [] },
-        SpellSaveDC: { bonuses: [] },
-        HitDice: { bonuses: [] },
-    },
+    // otherTraits: {
+    //     SpellAttackModifier: { bonuses: [] },
+    //     SpellSaveDC: { bonuses: [] },
+    //     HitDice: { bonuses: [] },
+    // },
 };
 
 let baseAC = 10; // Default base AC
@@ -836,6 +837,7 @@ function handleAbilityScoreChange(event) {
 
         // Update the ability score if the user entered a valid value
         scoreElement.textContent = newValue;
+        updateAdjustmentValues()
         updateSkillModifier();
         updateSaveModifier();
         updateAllToHitDice();
@@ -845,6 +847,7 @@ function handleAbilityScoreChange(event) {
         sendDMUpdatedStats()
         updateHitDiceValue()
         updateAC();
+        
 
 
         const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -1288,7 +1291,6 @@ function updateSaveModifier() {
         saveButton.textContent = saveModifier > 0 ? `+${saveModifier}` : `${saveModifier}`;
         saveLabel.setAttribute('value', saveModifier);
     });
-    console.log("testing here")
 }
 
 
@@ -1921,12 +1923,13 @@ function updateCharacterUI(characterData, characterName) {
     updateCoinsInFields(characterData.coins);
     
     updateAbilityScoreModifiers(characterData);
+    
     updateActionTableUI(characterData.actionTable);
     loadInventoryData(characterData.inventoryData);
     loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
-    
 
+    updateAdjustmentValues()
     updateHitDiceLabel()
 }
 
@@ -3428,18 +3431,25 @@ function updateAllSpellDamageDice() {
                         }
                     }
 
+                    // Check if the spell is Eldritch Blast
+                    let bonusDamage = 0;
+                    if (spellName.toLowerCase() === "eldritch blast") {
+                        // Add bonuses from EldritchBlastDamage
+                        bonusDamage = characterStatBonuses.combatStats.EldritchBlastDamage.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+                    }
+
                     // Check if the spell uses an ability modifier in its damage calculation
                     if (spellDetails.ability_modifier === "yes") {
                         const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
                         let newDamage = "";
 
                         if (spellAbilityScoreModifier >= 0) {
-                            newDamage = adjustedDamageDice + "+" + spellAbilityScoreModifier;
+                            newDamage = adjustedDamageDice + "+" + spellAbilityScoreModifier + (bonusDamage ? "+" + bonusDamage : "");
                             if (spellDetails.additonal_damage) {
                                 newDamage = newDamage + "+" + spellDetails.additonal_damage;
                             }
                         } else {
-                            newDamage = adjustedDamageDice + spellAbilityScoreModifier;
+                            newDamage = adjustedDamageDice + spellAbilityScoreModifier + (bonusDamage ? "+" + bonusDamage : "");
                         }
 
                         const labelElement = toHitContainer.querySelector('label.damageDiceButton');
@@ -3447,7 +3457,7 @@ function updateAllSpellDamageDice() {
 
                         // Only proceed if labelElement and buttonElement exist
                         if (labelElement && buttonElement) {
-                            labelElement.setAttribute('value', spellAbilityScoreModifier);
+                            labelElement.setAttribute('value', spellAbilityScoreModifier + (bonusDamage ? "+" + bonusDamage : ""));
                             labelElement.setAttribute('data-dice-type', adjustedDamageDice);
                             labelElement.setAttribute('data-name', spellDetails.damage_type_01);
 
@@ -3460,11 +3470,13 @@ function updateAllSpellDamageDice() {
 
                         // Only proceed if labelElement and buttonElement exist
                         if (labelElement && buttonElement) {
-                            labelElement.setAttribute('value', ""); // No ability modifier
+                            labelElement.setAttribute('value', ""+ (bonusDamage ? "+" + bonusDamage : "")); // No ability modifier
                             labelElement.setAttribute('data-dice-type', adjustedDamageDice);
                             labelElement.setAttribute('data-name', spellDetails.damage_type_01);
 
-                            buttonElement.textContent = adjustedDamageDice;
+                            // Add bonus damage if Eldritch Blast
+                            const totalDamage = bonusDamage ? `${adjustedDamageDice}+${bonusDamage}` : adjustedDamageDice;
+                            buttonElement.textContent = totalDamage;
                         }
                     }
                 } else {
@@ -3477,8 +3489,9 @@ function updateAllSpellDamageDice() {
             // console.log("Spell Name Input not found in this row.");
         }
     });
-    updateContent()
+    updateContent();
 }
+
 
 
 
@@ -4614,6 +4627,38 @@ function loadInventoryData(characterInventoryData) {
 
 
 
+function updateAdjustmentValues() {
+    // Get all group containers
+    const groups = document.querySelectorAll('.group-container');
+
+    groups.forEach(group => {
+        // Get all traits in the current group
+        const traits = group.querySelectorAll('.trait-item');
+
+        traits.forEach(trait => {
+            // Get the selected ability for this trait
+            const abilitySelect = trait.querySelector('.trait-ability-select');
+            const selectedAbility = abilitySelect?.value;
+
+            if (selectedAbility !== "NONE") {
+                const abilityScoreLabel = findAbilityScoreLabel(selectedAbility);
+                const abilityValue = parseInt(abilityScoreLabel.getAttribute("value"), 10);
+
+                const adjustmentValueInput = trait.querySelector('.adjustment-value');
+
+                if (abilityValue !== null) {
+                    adjustmentValueInput.value = abilityValue;
+                    // Manually dispatch the blur event
+                    const blurEvent = new Event('blur');
+                    adjustmentValueInput.dispatchEvent(blurEvent)
+                }
+            }
+        });
+    });
+
+    // Call your update function if needed to reflect changes elsewhere
+    updateContent();
+}
 
 
 
@@ -4898,6 +4943,19 @@ function addNewTrait(groupContainer, traitData = null) {
         });
     }
 
+    // Ability Selection Dropdown
+    const abilityLabel = document.createElement('label');
+    abilityLabel.textContent = 'Ability:';
+    const abilitySelect = document.createElement('select');
+    abilitySelect.classList.add('trait-ability-select');
+    const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'NONE'];
+    abilities.forEach(ability => {
+        const option = document.createElement('option');
+        option.textContent = ability;
+        if (traitData?.adjustmentAbility === ability) option.selected = true;
+        abilitySelect.appendChild(option);
+    });
+
     // Adjustment Value
     const adjustmentValueLabel = document.createElement('label');
     adjustmentValueLabel.textContent = 'Adjustment Value:';
@@ -4906,10 +4964,21 @@ function addNewTrait(groupContainer, traitData = null) {
     adjustmentValueInput.placeholder = 'Enter value or formula';
     adjustmentValueInput.value = traitData?.adjustmentValue || '';
 
-    categorySelect.addEventListener('change', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
-    subCategorySelect.addEventListener('change', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
-    adjustmentValueInput.addEventListener('blur', handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState));
 
+    // Event listener for ability selection
+    abilitySelect.addEventListener('change', () => {
+        const selectedAbility = abilitySelect.value;
+        if (selectedAbility !== "NONE"){
+            const abilityScoreLabel = findAbilityScoreLabel(selectedAbility);
+            const abilityValue = parseInt(abilityScoreLabel.getAttribute("value"), 10);
+
+            if (abilityValue !== null) {
+                adjustmentValueInput.value = abilityValue;
+            }
+        }
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        updateContent();
+    });
 
     // Event listener to update subcategories when category changes
     categorySelect.addEventListener('change', () => {
@@ -4922,6 +4991,14 @@ function addNewTrait(groupContainer, traitData = null) {
             option.textContent = subCategory;
             subCategorySelect.appendChild(option);
         });
+        updateContent();
+        console.log("Tester")
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+    });
+
+    subCategorySelect.addEventListener('change', () => {
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        updateContent();
     });
 
 
@@ -4931,12 +5008,18 @@ function addNewTrait(groupContainer, traitData = null) {
     adjustmentContainer.appendChild(categorySelect);
     adjustmentContainer.appendChild(subCategoryLabel);
     adjustmentContainer.appendChild(subCategorySelect);
+    adjustmentContainer.appendChild(abilitySelect);
     adjustmentContainer.appendChild(adjustmentValueLabel);
     adjustmentContainer.appendChild(adjustmentValueInput);
 
     // Append ability adjustment fields
     traitSettings.appendChild(adjustmentContainer);
 
+    adjustmentValueInput.addEventListener('blur', () => {
+        console.log("adjustment Value Blurred")
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+    });
+    
     // Delete Trait Button
     const deleteTraitButton = document.createElement('button');
     deleteTraitButton.textContent = 'Delete Trait';
@@ -5047,7 +5130,10 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
     adjustmentValueInput.addEventListener("input", applyBonus);
 
     // Initialize the adjustment with the current state
+    console.log("We are fucking here")
     applyBonus();
+    updateContent();
+    updateAllSpellDamageDice();
 }
 
 
@@ -5094,12 +5180,14 @@ function processGroupTraitData() {
             if (traitSettings) {
                 const adjustmentCategory = traitSettings.querySelector('.category-select').value;
                 const adjustmentSubCategory = traitSettings.querySelector('.subcategory-select').value;
+                const adjustmentAbility = traitSettings.querySelector('.trait-ability-select').value;
                 const adjustmentValue = traitSettings.querySelector('.adjustment-value').value;
                 const numberOfUses = traitSettings.querySelector('.trait-uses-input').value;
 
                 // Save the trait settings in the traitDataObject
                 traitDataObject['adjustmentCategory'] = adjustmentCategory;
                 traitDataObject['adjustmentSubCategory'] = adjustmentSubCategory;
+                traitDataObject['adjustmentAbility'] = adjustmentAbility;
                 traitDataObject['adjustmentValue'] = adjustmentValue;
                 traitDataObject['numberOfUses'] = numberOfUses;
             }

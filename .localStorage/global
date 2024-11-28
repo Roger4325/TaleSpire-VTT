@@ -14,7 +14,7 @@
             ],
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
-            "initiativeButton": "+9",
+            "initiativeButton": "+6",
             "AC": "14",
             "speed": "30ft.",
             "characterLevel": "10",
@@ -23,12 +23,12 @@
             "currentCharacterHP": "50",
             "maxCharacterHP": "50",
             "hitDiceButton": "1d8",
-            "strengthScore": "12",
+            "strengthScore": "14",
             "dexterityScore": "18",
             "constitutionScore": "20",
             "intelligenceScore": "20",
             "wisdomScore": "14",
-            "charismaScore": "20",
+            "charismaScore": "18",
             "acrobaticsAbilityMod": "DEX",
             "animalHandlingAbilityMod": "WIS",
             "arcanaAbilityMod": "INT",
@@ -88,11 +88,11 @@
                         "secondColumn": "CrossBow Hand",
                         "thirdColumn": "30 (120)",
                         "fourthColumn": "+10",
-                        "fifthColumn": "1d10/2d4",
+                        "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "DEX",
                         "eighthColumn": "2",
-                        "damageBonus": "undefined",
+                        "damageBonus": "",
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "Piercing",
@@ -130,15 +130,29 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "STR",
-                "spelllevelselected": "0",
+                "spellcastingModifier": "CHA",
+                "spelllevelselected": "5",
                 "spellmagicbonus": "0",
                 "Cantrip": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Eldritch Blast",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Fire Bolt",
+                            "prepared": "false"
+                        }
+                    ],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Burning Hands",
+                            "prepared": "0"
+                        }
+                    ],
                     "slots": []
                 },
                 "2nd-level": {
@@ -273,18 +287,26 @@
                     "group-chevron": false,
                     "traits": [
                         {
+                            "traitName": "Agonizing Blast",
+                            "cheveron": false,
+                            "traitDescription": "When you cast eldritch blast, add your Charisma modifier to the damage it deals on a hit.",
+                            "checkboxStates": [],
+                            "adjustmentCategory": "combatStats",
+                            "adjustmentSubCategory": "EldritchBlastDamage",
+                            "adjustmentAbility": "CHA",
+                            "adjustmentValue": "4",
+                            "numberOfUses": ""
+                        },
+                        {
                             "traitName": "Dread Ambusher",
                             "cheveron": false,
                             "traitDescription": "You add your WIS modifier (+2) to initiative rolls. At the start of your first turn of each combat, your walking speed increases by 10 ft., which lasts until the end of that turn. If you take the Attack action on that turn, you can make one additional weapon attack as part of that action, dealing an extra 1d8 damage of the weapon’s damage type on a hit.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Initiative",
-                            "adjustmentValue": "5",
-                            "numberOfUses": "3"
+                            "adjustmentAbility": "WIS",
+                            "adjustmentValue": "2",
+                            "numberOfUses": "0"
                         }
                     ]
                 }
@@ -718,9 +740,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -728,9 +750,9 @@
                             "cheveron": true,
                             "traitDescription": "As an action, you present your holy Symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw. If the creature fails its saving throw, it is turned for 1 minute or until it takes any damage.\n\nA turned creature must spend its turns trying to move as far away from you as it can, and it can’t willingly move to a space within 30 feet of you. It also can’t take reactions. For its action, it can use only the Dash action or try to escape from an effect that prevents it from moving. If there’s nowhere to move, the creature can use the Dodge action.",
                             "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "0"
                         },
                         {
@@ -738,9 +760,9 @@
                             "cheveron": true,
                             "traitDescription": "When an undead fails its saving throw against your Turn Undead feature, it is instantly destroyed if its CR is lower than the threshold for your level.",
                             "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "0"
                         }
                     ]
@@ -758,9 +780,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -770,9 +792,9 @@
                             "checkboxStates": [
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "1"
                         },
                         {
@@ -780,9 +802,9 @@
                             "cheveron": true,
                             "traitDescription": "As an action, you give one creature you touch (including possibly yourself) advantage on the next initiative roll the creature makes. This benefit ends immediately after the roll or if you use this feature again.",
                             "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "0"
                         }
                     ]
@@ -796,9 +818,9 @@
                             "cheveron": true,
                             "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
                             "checkboxStates": [],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "0"
                         },
                         {
@@ -810,9 +832,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -822,9 +844,9 @@
                             "checkboxStates": [
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "1"
                         }
                     ]
@@ -3340,8 +3362,16 @@
         "Sterling": {
             "characterTempHp": "",
             "currentHitDice": "8",
-            "playerWeaponProficiency": [],
-            "playerArmorProficiency": [],
+            "playerWeaponProficiency": [
+                "Martial Weapons",
+                "Simple Weapons"
+            ],
+            "playerArmorProficiency": [
+                "Light",
+                "Medium",
+                "Heavy",
+                "Shield"
+            ],
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+2",
@@ -3714,9 +3744,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3726,9 +3756,9 @@
                             "checkboxStates": [
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "1"
                         },
                         {
@@ -3738,9 +3768,9 @@
                             "checkboxStates": [
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "1"
                         },
                         {
@@ -3752,9 +3782,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3766,9 +3796,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         }
                     ]
@@ -3788,9 +3818,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "5"
                         },
                         {
@@ -3802,9 +3832,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3816,9 +3846,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3830,9 +3860,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3844,9 +3874,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3858,9 +3888,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         }
                     ]
@@ -3878,9 +3908,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3892,9 +3922,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         },
                         {
@@ -3906,9 +3936,9 @@
                                 false,
                                 false
                             ],
-                            "adjustmentType": "Saving Throws",
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "",
                             "adjustmentValue": "",
-                            "adjustmentCondition": "",
                             "numberOfUses": "3"
                         }
                     ]
