@@ -101,6 +101,7 @@ const characterStatBonuses = {
     //     WIS: { bonuses: [] },
     //     CHA: { bonuses: [] },
     // },
+
     combatStats: {
         AC: { bonuses: [] },
         // AttackRolls: { bonuses: [] },
@@ -110,9 +111,11 @@ const characterStatBonuses = {
         RangedAttackRolls: { bonuses: [] },
         RageDamageBonus: { bonuses: [] },
         // RangedDamageRolls: { bonuses: [] },
-        // SpellAttackRolls: { bonuses: [] },
         // SpellDamageRolls: { bonuses: [] },
         EldritchBlastDamage: { bonuses: [] },
+        SpellSaveDC: { bonuses: [] },
+        SpellAttackModifier: { bonuses: [] },
+        SpellAttackandSaveBonus: { bonuses: [] },
         // HitPoints: { bonuses: [] },
         // Speed: { bonuses: [] },
     },
@@ -126,8 +129,6 @@ const characterStatBonuses = {
         // Truesight: { bonuses: [] },
     },
     // otherTraits: {
-    //     SpellAttackModifier: { bonuses: [] },
-    //     SpellSaveDC: { bonuses: [] },
     //     HitDice: { bonuses: [] },
     // },
 };
@@ -916,6 +917,13 @@ function updateDerivedStats(category) {
 
 function updateCombatStats(){
     updateAC()
+    updateAllSpellDamageDice();
+    updateAllToHitDice();
+    calculateActionDamageDice();
+    updateAllSpellDCs();
+    updateSpellDCHeader();
+    const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+    updateSpelltoHitDice(spellCastingAbility)
 }
 
 
@@ -1757,7 +1765,10 @@ function processActionTableRow(){
         const secondColumnCell = row.querySelector('td:nth-child(2)');
         const thirdColumnCell = row.querySelector('td:nth-child(3)');
         const fourthColumnCell = row.querySelector('td:nth-child(4)');
-        const fifthColumnCell = row.querySelector('td:nth-child(5) label.actionButtonLabel').getAttribute('data-dice-type');
+        let fifthColumnCell = row.querySelector('td:nth-child(5) label.actionButtonLabel');
+        if (fifthColumnCell){
+            fifthColumnCell = fifthColumnCell.getAttribute('data-dice-type');
+        }
         const sixthColumnCell = row.querySelector('td:nth-child(6)');
         const seventhColumnCell = row.querySelector('.ability-dropdown');
         const weaponTypeCell = row.querySelector('.weapon-type-dropdown-select');
@@ -2101,6 +2112,7 @@ async function loadAndPickaCharacter() {
                 const characterName = document.getElementById("playerCharacterInput");
                 characterName.textContent = newCharacterName
                 document.body.removeChild(overlay);
+                updateActionTableUI()
                 updateContent();
             }
         });
@@ -2747,7 +2759,7 @@ function calculateActionDamageDice() {
         conditionsSet = conditionsMap.get(conditionTrackerDiv);
         
         if (conditionsSet) {
-            if (conditionsSet.has('Raging') && selectedWeaponType === "Melee" && abilityDropdown.value ==="STR") {        
+            if (conditionsSet.has('Raging') && selectedWeaponType === "Melee" && abilityDropdown.value === "STR") {        
                     rageDamageBonus = characterStatBonuses.combatStats.RageDamageBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
             }
         }
@@ -3586,9 +3598,19 @@ function updateAllSpellDCs() {
                 const spellAbilityScoreModifier = parseInt(findAbilityScoreLabel(spellModifier).getAttribute('value'));
                 const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + magicBonus;
+                let spellSaveDCBonus = 0;
+                if (characterStatBonuses.combatStats.SpellSaveDC) {        
+                    spellSaveDCBonus = characterStatBonuses.combatStats.SpellSaveDC.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+                }
 
+                let characterSpellBonus = 0;
+                if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
+                    characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+                }
 
+                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
+
+                
 
                 if (saveType) {
                     spellDCSelection.textContent = saveType + " " + spellSaveDC;
@@ -3612,7 +3634,17 @@ function updateSpellDCHeader(){
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(spellCastingAbility).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
+    let spellSaveDCBonus = 0;
+    if (characterStatBonuses.combatStats.SpellSaveDC) {        
+        spellSaveDCBonus = characterStatBonuses.combatStats.SpellSaveDC.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
+
+    let characterSpellBonus = 0;
+    if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
+        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
+
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
 
     spellDCSelection.textContent = spellSaveDc;
 
@@ -3653,8 +3685,18 @@ function updateSpelltoHitDice(ability) {
 
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
+
+    let characterSpellAttackBonus = 0;
+    if (characterStatBonuses.combatStats.SpellAttackModifier) {        
+        characterSpellAttackBonus = characterStatBonuses.combatStats.SpellAttackModifier.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
+
+    let characterSpellBonus = 0;
+    if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
+        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
     
-    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus;
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus + characterSpellAttackBonus + characterSpellBonus;
 
     // Loop through each spell attack button
     spellAttackButtons.forEach((button, index) => {
@@ -5141,7 +5183,6 @@ function resizeTextarea(textarea) {
 
 // Function to resize all trait-description textareas after they've been appended
 function resizeAllTextareas() {
-    // Using requestAnimationFrame to ensure elements are in the DOM
         const textareas = document.querySelectorAll('.trait-description');
         textareas.forEach(textarea => {
             resizeTextarea(textarea);
@@ -5199,6 +5240,10 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
     updateAllSpellDamageDice();
     updateAllToHitDice();
     calculateActionDamageDice();
+    updateAllSpellDCs();
+    updateSpellDCHeader();
+    const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+    updateSpelltoHitDice(spellCastingAbility)
 
     updateContent();
 }
@@ -5289,6 +5334,141 @@ function loadGroupTraitData(groupTraitData) {
     });
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+// Quick Notes Section
+
+
+//Quick Notes Event Listener
+const quickNotesSection = document.getElementById('Docs');
+const addNotesGroupButton = quickNotesSection.querySelector('.add-notes-group-button');
+// Event listener for adding new groups
+addNotesGroupButton.addEventListener('click', function () {
+    createNewNotesGroup();
+    console.log("click")
+});
+
+let notesGroupCounter = 0; // Track unique group IDs
+
+// Function to create a new notes group
+function createNewNotesGroup(groupData = null) {
+    notesGroupCounter++;
+
+    // Create group container
+    const groupContainer = document.createElement('div');
+    groupContainer.classList.add('notes-group-container');
+    groupContainer.id = `notesGroup${notesGroupCounter}`;
+
+    // Create group header
+    const groupHeader = document.createElement('div');
+    groupHeader.classList.add('notes-group-header');
+
+    const groupTitle = document.createElement('input');
+    groupTitle.classList.add('notes-group-title');
+    groupTitle.placeholder = `Notes Group ${notesGroupCounter}`;
+
+    // Populate group title if data is provided
+    if (groupData && groupData['group-title']) {
+        groupTitle.value = groupData['group-title'];
+    }
+
+    const addNoteButton = document.createElement('button');
+    addNoteButton.classList.add('add-note-button');
+    addNoteButton.textContent = '+ Add Note';
+
+    // Add event listener to create new notes
+    addNoteButton.addEventListener('click', function () {
+        addNewNote(groupContainer);
+    });
+
+    // Create the notes list container
+    const notesList = document.createElement('div');
+    notesList.classList.add('notes-list');
+
+    // Add collapse/expand functionality
+    const collapseButton = document.createElement('button');
+    collapseButton.classList.add('collapse-notes-group-button', 'fa', 'fa-chevron-down');
+    collapseButton.addEventListener('click', function () {
+        const isCollapsed = notesList.style.display === 'none';
+        notesList.style.display = isCollapsed ? 'block' : 'none';
+        collapseButton.classList.toggle('collapsed');
+    });
+
+    groupHeader.appendChild(collapseButton);
+    groupHeader.appendChild(groupTitle);
+    groupHeader.appendChild(addNoteButton);
+    groupContainer.appendChild(groupHeader);
+    groupContainer.appendChild(notesList);
+
+    // Load existing notes if groupData is provided
+    if (groupData && groupData.notes) {
+        groupData.notes.forEach(note => addNewNote(groupContainer, note));
+    }
+
+    // Add group to the Quick Notes section
+    quickNotesSection.insertBefore(groupContainer, addNotesGroupButton);
+    return groupContainer;
+}
+
+
+
+
+
+
+// Function to add a new note
+function addNewNote(groupContainer, noteData = null) {
+    const notesList = groupContainer.querySelector('.notes-list');
+
+    // Create note container
+    const noteItem = document.createElement('div');
+    noteItem.classList.add('note-item');
+
+    // Note title input
+    const noteTitle = document.createElement('input');
+    noteTitle.classList.add('note-title');
+    noteTitle.placeholder = 'Note Title';
+    if (noteData && noteData.title) {
+        noteTitle.value = noteData.title;
+    }
+
+    // Note description textarea
+    const noteDescription = document.createElement('textarea');
+    noteDescription.classList.add('note-description');
+    noteDescription.placeholder = 'Write your note here...';
+    if (noteData && noteData.description) {
+        noteDescription.value = noteData.description;
+    }
+
+    // Auto-resize description textarea
+    noteDescription.addEventListener('input', function () {
+        noteDescription.style.height = 'auto';
+        noteDescription.style.height = `${noteDescription.scrollHeight}px`;
+    });
+
+    // Add elements to the note item
+    noteItem.appendChild(noteTitle);
+    noteItem.appendChild(noteDescription);
+    notesList.appendChild(noteItem);
+}
+
+
+
+
+
+
+
+
+
 
 
 

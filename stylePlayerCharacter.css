@@ -1863,3 +1863,63 @@ display: none;
 .current-turn {
     border: 3px solid rgb(252, 222, 56);
 }
+
+
+
+
+
+
+
+/*Quick Notes Section*/
+#quickNotes {
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+.notes-group-container {
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.notes-group-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.notes-group-title {
+    flex: 1;
+    margin: 0 10px;
+}
+
+.add-note-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.note-item {
+    margin-top: 10px;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+.note-title {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.note-description {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border: 1px solid #ccc;
+    resize: none;
+}

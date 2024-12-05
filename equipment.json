@@ -7099,5 +7099,141 @@
       "url": "/api/item-rarity/uncommon"
     },
     "url": "/api/equipment/stone-of-good-luck"
+  },
+  {
+    "index": "amulet-of-the-devout-1",
+    "name": "Amulet of the Devout, +1",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "This amulet bears the symbol of a deity inlaid with precious stones or metals. While you wear the holy symbol, you gain a +1 bonus to spell attack rolls and the saving throw DCs of your spells.",
+      "While you wear this amulet, you can use your Channel Divinity feature without expending one of the feature’s uses. Once this property is used, it can’t be used again until the next dawn.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "SpellAttackandSaveBonus",
+        "value": 1,
+        "description": "You gain a +1 bonus to spell attack rolls and the saving throw DCs of your spells."
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/stone-of-good-luck"
+  },
+  {
+    "index": "rhythm-maker's-drum-1",
+    "name": "Rhythm-Maker's Drum, +1",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "While holding this drum, you gain a +1 bonus to spell attack rolls and to the saving throw DCs of your bard spells.",
+      "As an action, you can play the drum to regain one use of your Bardic Inspiration feature. This property of the drum can’t be used again until the next dawn.",
+      "Requires attunement."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "SpellAttackandSaveBonus",
+        "value": 1,
+        "description": "You gain a +1 bonus to spell attack rolls and the saving throw DCs of your spells."
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "url": "/api/equipment/stone-of-good-luck"
+  },  
+  {
+    "index": "longsword-1",
+    "name": "Longsword +1",
+    "equipment_category": {
+      "index": "weapon",
+      "name": "Weapon",
+      "url": "/api/equipment-categories/weapon"
+    },
+    "weapon_category": "Martial",
+    "weapon_range": "Melee",
+    "category_range": "Martial Melee",
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "damage": {
+      "damage_dice": "1d8",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "range": {
+      "normal": 5
+    },
+    "weight": 6,
+   "properties": [
+      {
+        "index": "versatile",
+        "name": "Versatile",
+        "url": "/api/weapon-properties/versatile"
+      }
+    ],
+    "two_handed_damage": {
+      "damage_dice": "1d10",
+      "damage_type": {
+        "index": "slashing",
+        "name": "Slashing",
+        "url": "/api/damage-types/slashing"
+      }
+    },
+    "toHitBonus": 1,
+    "damageBonus": 1,
+    "url": "/api/equipment/halberd+3"
   }
 ]

@@ -472,10 +472,9 @@
     position: fixed;
     bottom: 0;
     right: -100%; /* Initially hidden off-screen */
-    width: 100%; /* Max width of 600px */
-    height: auto;
+    width: 100%; /* Adjust width dynamically, or max at 600px */
+    max-height: 90vh; /* Ensures it doesn't exceed the viewport height */
     background-color: var(--ts-background-secondary);
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
     transition: right 0.5s ease, opacity 0.5s ease; /* General transition without delay */
     z-index: 1000;
     font-size: 14px;
@@ -483,6 +482,7 @@
     padding-top: 2px;
     border: 1px solid var(--ts-accent-color);
     overflow-y: auto; /* Add scroll if content overflows */
+    overflow-x: hidden; /* Prevent horizontal overflow */
 }
 
 /* Visibility controls for the container */
