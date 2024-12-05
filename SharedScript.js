@@ -214,10 +214,29 @@ const AppData = {
 
 
 
-document.getElementById('settings-toggle').addEventListener('click', function() {
-    const settingsContainer = document.getElementById('settings-container');
+const settingsToggle = document.getElementById('settings-toggle');
+const settingsContainer = document.getElementById('settings-container');
+
+// Function to toggle settings
+function toggleSettings() {
     settingsContainer.classList.toggle('active');
+}
+
+// Toggle settings on click
+settingsToggle.addEventListener('click', function (e) {
+    e.stopPropagation(); // Prevent click from propagating to the document
+    toggleSettings();
 });
+
+// Close settings if clicked outside
+document.addEventListener('click', function (e) {
+    if (!settingsContainer.contains(e.target) && e.target !== settingsToggle) {
+        settingsContainer.classList.remove('active');
+    }
+});
+
+
+
 
 let clients = [];
 

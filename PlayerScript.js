@@ -450,7 +450,6 @@ async function playerSetUP(){
 
 // Function to format numbers with commas
 function formatWithCommas(number) {
-    console.log(number)
     return Number(number).toLocaleString('en-US');
 }
 
@@ -1501,8 +1500,6 @@ function updateToHitDice(proficiencyButton) {
 
         if (selectedWeaponType === "Ranged"){
             rangedAttackRollsBonus = characterStatBonuses.combatStats.RangedAttackRolls.bonuses.reduce((total, bonus) => total + bonus.value, 0);
-            console.log(rangedAttackRollsBonus)
-            console.log(characterStatBonuses.combatStats.RangedAttackRolls)
         }
 
         // Find the associated ability score label without using :is selector
@@ -1718,6 +1715,9 @@ function getAllEditableContent() {
     // Save group and trait data
     const groupTraitData = processGroupTraitData();
     content['groupTraitData'] = groupTraitData;
+
+    const notesData = processNotesGroupData();
+    content['groupNotesData'] = notesData;
     
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
@@ -1959,6 +1959,7 @@ function updateCharacterUI(characterData, characterName) {
     loadInventoryData(characterData.inventoryData);
     loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
+    loadNotesGroupData(characterData.groupNotesData);
     
 
     updateAdjustmentValues()
@@ -2694,7 +2695,6 @@ function updateAllDamageButtonDataNames() {
             if (damageButtonLabel && damageButtonLabel.getAttribute('data-name') !== 'toHitButton') {
                 // Update the data-name attribute of the damage button label
                 damageButtonLabel.setAttribute('data-name', newDamageType);
-                console.log(`Updated damage button data-name to: ${newDamageType}`);
             }
         }
     });
@@ -5332,7 +5332,6 @@ function loadGroupTraitData(groupTraitData) {
         // Append the group container to the parent container
         groupContainerElement.appendChild(groupContainer);
     });
-
 }
 
 
@@ -5355,7 +5354,7 @@ const addNotesGroupButton = quickNotesSection.querySelector('.add-notes-group-bu
 // Event listener for adding new groups
 addNotesGroupButton.addEventListener('click', function () {
     createNewNotesGroup();
-    console.log("click")
+    updateContent()
 });
 
 let notesGroupCounter = 0; // Track unique group IDs
@@ -5384,11 +5383,13 @@ function createNewNotesGroup(groupData = null) {
 
     const addNoteButton = document.createElement('button');
     addNoteButton.classList.add('add-note-button');
+    addNoteButton.classList.add('nonRollButton');
     addNoteButton.textContent = '+ Add Note';
 
     // Add event listener to create new notes
     addNoteButton.addEventListener('click', function () {
         addNewNote(groupContainer);
+        updateContent()
     });
 
     // Create the notes list container
@@ -5402,6 +5403,7 @@ function createNewNotesGroup(groupData = null) {
         const isCollapsed = notesList.style.display === 'none';
         notesList.style.display = isCollapsed ? 'block' : 'none';
         collapseButton.classList.toggle('collapsed');
+        updateContent()
     });
 
     groupHeader.appendChild(collapseButton);
@@ -5428,25 +5430,46 @@ function createNewNotesGroup(groupData = null) {
 // Function to add a new note
 function addNewNote(groupContainer, noteData = null) {
     const notesList = groupContainer.querySelector('.notes-list');
-
+    
     // Create note container
     const noteItem = document.createElement('div');
     noteItem.classList.add('note-item');
+
+    // Create a container for the title and delete button
+    const noteHeader = document.createElement('div');
+    noteHeader.classList.add('note-header');
 
     // Note title input
     const noteTitle = document.createElement('input');
     noteTitle.classList.add('note-title');
     noteTitle.placeholder = 'Note Title';
-    if (noteData && noteData.title) {
-        noteTitle.value = noteData.title;
+    if (noteData && noteData.noteTitle) {
+        noteTitle.value = noteData.noteTitle;
     }
+
+    // Delete button
+    const deleteNoteButton = document.createElement('button');
+    deleteNoteButton.classList.add('delete-note-button');
+    deleteNoteButton.classList.add('nonRollButton');
+    deleteNoteButton.textContent = 'X';
+
+    // Delete note event
+    deleteNoteButton.addEventListener('click', function () {
+        noteItem.remove(); // Remove the note item
+        checkAndDeleteGroup(groupContainer); // Check if the group should be deleted
+        updateContent()
+    });
+
+    // Add title and delete button to the header
+    noteHeader.appendChild(noteTitle);
+    noteHeader.appendChild(deleteNoteButton);
 
     // Note description textarea
     const noteDescription = document.createElement('textarea');
     noteDescription.classList.add('note-description');
     noteDescription.placeholder = 'Write your note here...';
-    if (noteData && noteData.description) {
-        noteDescription.value = noteData.description;
+    if (noteData && noteData.noteContent) {
+        noteDescription.value = noteData.noteContent;
     }
 
     // Auto-resize description textarea
@@ -5455,12 +5478,95 @@ function addNewNote(groupContainer, noteData = null) {
         noteDescription.style.height = `${noteDescription.scrollHeight}px`;
     });
 
+    //Saving everything when a note has been changed. 
+    noteDescription.addEventListener('blur', function () {
+        updateContent()
+    });
+
+    noteTitle.addEventListener('blur', function () {
+        updateContent()
+    });
+
+
     // Add elements to the note item
-    noteItem.appendChild(noteTitle);
+    noteItem.appendChild(noteHeader);
     noteItem.appendChild(noteDescription);
     notesList.appendChild(noteItem);
 }
 
+
+function checkAndDeleteGroup(groupContainer) {
+    const notesList = groupContainer.querySelector('.notes-list');
+    if (notesList.children.length === 0) {
+        groupContainer.remove(); // Remove the group container
+    }
+    updateContent()
+}
+
+
+//Gathering information from the notes to save it in the local storage file. 
+function processNotesGroupData() {
+    // Select all notes group containers
+    const notesGroupContainers = document.querySelectorAll('.notes-group-container');
+    const notesGroupData = [];
+
+    notesGroupContainers.forEach((group, index) => {
+        const groupData = {};
+
+        // Get the group's title
+        const groupName = group.querySelector('.notes-group-title').value;
+        const chevronGroup = group.querySelector('.collapse-notes-group-button');
+        const isChevronGroupCollapsed = chevronGroup.classList.contains('collapsed');
+        groupData['group-title'] = groupName;
+        groupData['group-chevron'] = isChevronGroupCollapsed;
+
+        // Select all notes within this group
+        const notes = group.querySelectorAll('.note-item');
+        const notesData = [];
+
+        notes.forEach((note) => {
+            const noteDataObject = {};
+            
+            // Get the note title and content
+            const noteTitle = note.querySelector('.note-title').value;
+            const noteContent = note.querySelector('.note-description').value;
+
+            // Save the note title and content
+            noteDataObject['noteTitle'] = noteTitle;
+            noteDataObject['noteContent'] = noteContent;
+
+            // Save any additional fields related to the note
+            const tagsInput = note.querySelector('.note-tags');
+            if (tagsInput) {
+                noteDataObject['tags'] = tagsInput.value.split(',').map(tag => tag.trim());
+            }
+
+            // Add the note data to the list of notes for this group
+            notesData.push(noteDataObject);
+        });
+
+        // Save the notes for this group
+        groupData['notes'] = notesData;
+
+        // Add the group data to the overall notesGroupData array
+        notesGroupData.push(groupData);
+    });
+
+    return notesGroupData;
+}
+
+//Loading and updating the notes section with the saved notes. 
+function loadNotesGroupData(notesGroupData) {
+    
+    if (notesGroupData){
+        // Loop through each group in notesGroupData
+        notesGroupData.forEach(group => {
+            // Use createNewNotesGroup to create a group container with proper groupData
+            createNewNotesGroup(group);
+        });
+    }
+    
+}
 
 
 

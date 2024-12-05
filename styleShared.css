@@ -180,6 +180,12 @@ footer {
     font-size: 24px;
 }
 
+#settings-icon:hover {
+    transform: scale(1.2); /* Makes the icon 1.3 times its original size */
+    color: aliceblue;
+    transition: transform 0.1s ease, color 0.1s ease; /* Smooth transition */
+}
+
 #settings-container.active #settings-dropdown {
     display: block; /* Show the menu when active */
 }

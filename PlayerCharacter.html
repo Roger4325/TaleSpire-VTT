@@ -20,24 +20,24 @@
                 <ul>
                     <li>
                         <div id="restButtons">
-                            <button id="shortRestButton">Short Rest</button>
-                            <button id="longRestButton">Long Rest</button>
+                            <button id="shortRestButton" class="nonRollButton">Short Rest</button>
+                            <button id="longRestButton" class="nonRollButton">Long Rest</button>
                         </div>
                     </li>
                     <li>
                         <div id="languageButtons">
-                            <button id="languageEngButton">English</button>
-                            <button id="languageEspButton">Espanol</button>
+                            <button id="languageEngButton" class="nonRollButton">English</button>
+                            <button id="languageEspButton" class="nonRollButton">Espanol</button>
                         </div>
                     </li>
                     <li>
-                        <button id="deleteCharacter">Delete a Character</button>
+                        <button id="deleteCharacter" class="nonRollButton">Delete a Character</button>
                     </li>
                     <!-- Add more options as needed -->
                 </ul>
             </div>
             <div id="settings-toggle">
-                <i class="fa fa-cog" id="settings-icon"></i>
+                <i class="fa fa-bars" id="settings-icon"></i>
             </div>
         </div>
         <h1>Talespire Character Sheet</h1>
@@ -990,25 +990,26 @@
             <div id="inventory-container">
                 <div id="inventory-header">
                 <h2>Inventory</h2>
-                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>        
+                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>   
+
                 <div class="inventory-group" id="equipment">
-                <h3>Equipment<i class="fa fa-chevron-down"></i></h3>
-                <div id="equipment-list"></div>
+                    <h3>Equipment<i class="fa fa-chevron-down"></i></h3>
+                    <div id="equipment-list"></div>
                 </div>
             
                 <div class="inventory-group" id="backpack">
-                <h3>Backpack<i class="fa fa-chevron-down"></i></h3>
-                <div id="backpack-list"></div>
-                </div>
-            
-                <div class="inventory-group" id="attunement">
-                <h3>Attunement<i class="fa fa-chevron-down"></i></h3>
-                <div id="attunement-list"></div>
+                    <h3>Backpack<i class="fa fa-chevron-down"></i></h3>
+                    <div id="backpack-list"></div>
                 </div>
             
                 <div class="inventory-group" id="other-possessions">
-                <h3>Other Possessions<i class="fa fa-chevron-down"></i></h3>
-                <div id="other-possessions-list"></div>
+                    <h3>Other Possessions<i class="fa fa-chevron-down"></i></h3>
+                    <div id="other-possessions-list"></div>
+                </div>
+
+                <div class="inventory-group" id="attunement">
+                    <h3>Attunement<i class="fa fa-chevron-down"></i></h3>
+                    <div id="attunement-list"></div>
                 </div>
             </div>
 
@@ -1047,7 +1048,7 @@
         <section id="Docs">
             <button id="exportCharacterData">Export Character Data</button>
                 <h2>Quick Notes</h2>
-                <button class="add-notes-group-button">+ Add Group</button>
+                <button class="add-notes-group-button nonRollButton">+ Add Group</button>
         </section>
 
         <section id="Init">

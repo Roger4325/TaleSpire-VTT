@@ -17,7 +17,7 @@
 }
 
 #settings-container {
-    position: fixed;
+    position: absolute;
     top: 65px;
     left: 5px;
     display: flex;
@@ -95,6 +95,15 @@
 }
 
 #restButtons > button{
+    font-size: 11px;
+}
+
+#languageButtons{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#languageButtons > button{
     font-size: 11px;
 }
 
@@ -363,7 +372,7 @@ select{
 }
 
 #alignment-select{
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 .random-container {
@@ -380,7 +389,7 @@ select{
 }
 
 #hitDiceLabel{
-    font-size: 18px;
+    font-size: 14px;
 }
 
 .conditions-container{
@@ -1121,9 +1130,9 @@ select{
 
 /* Group container styles */
 .group-container {
-    background-color: var(--ts-background-secondary);
-    padding: 15px;
-    border-radius: 6px;
+    border: .5px solid var(--ts-button-background);
+    padding: 10px;
+    border-radius: 5px;
     margin-bottom: 20px;
 }
 
@@ -1218,10 +1227,9 @@ select{
 }
 
 .trait-item {
-    background-color: #2b2b2b; /* Slightly lighter dark gray */
-    padding: 10px;
+    padding: 5px;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px dotted var(--ts-button-background);
     margin-top: 10px;
 }
 
@@ -1263,7 +1271,7 @@ select{
 }
 
 .trait-description {
-    width: 97%;
+    width: 96%;
     background-color: #333;
     color: white;
     border: 1px solid var(--ts-button-background);
@@ -1275,6 +1283,7 @@ select{
     overflow: hidden; /* Hide the scrollbar */
     margin-bottom: 8px;
     box-sizing: border-box; /* Ensure padding is included in the width */
+    margin-left: 20px;
 }
 
 /* Uses tracker */
@@ -1874,12 +1883,11 @@ display: none;
 #quickNotes {
     margin: 20px;
     padding: 10px;
-    border: 1px solid #ccc;
 }
 
 .notes-group-container {
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--ts-button-background);;
     padding: 10px;
 }
 
@@ -1892,14 +1900,23 @@ display: none;
 .notes-group-title {
     flex: 1;
     margin: 0 10px;
+    padding: 2px 5px;
+    background-color: #2b2b2b; /* Slightly lighter dark gray */;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
+    color: white;
 }
 
-.add-note-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
+
+.note-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Space between title and delete button */
+    gap: 10px; /* Optional: space between elements */
+}
+
+.note-title {
+    flex-grow: 1; /* Make the title input expand to take available space */
 }
 
 .note-item {
@@ -1910,16 +1927,50 @@ display: none;
 
 .note-title {
     display: block;
-    width: 100%;
+    width: 98%;
     margin-bottom: 5px;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
+    background-color: #2b2b2b; /* Slightly lighter dark gray */;
+    color: white;
 }
 
 .note-description {
     display: block;
-    width: 100%;
+    width: 98%;
     padding: 5px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
     resize: none;
+    background-color: #2b2b2b; /* Slightly lighter dark gray */;
+    color: white;
+}
+
+
+/* Style the chevron icon specifically for feature group collapse buttons */
+.collapse-notes-group-button {
+    transition: transform 0.3s ease; /* Smooth rotation */
+    color: var(--ts-button-background);
+
+    /* Hide button appearance */
+    background: none;
+    border: none;
+    padding: 0;
+    margin-right: 2px;
+    
+    /* Adjust dimensions to fit just the icon */
+    width: auto;
+    height: auto;
+}
+
+.collapse-notes-group-button:hover, .collapse-notes-group-button:hover{
+    cursor: pointer;
+    color: var(--ts-button-hover);
+    transform: scale(1.1);
+}
+
+/* Rotate the chevron when collapsed */
+.collapse-notes-group-button.collapsed {
+    transform: rotate(-90deg);
 }

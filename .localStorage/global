@@ -2,7 +2,7 @@
     "characters": {
         "Tester Mc-Testy": {
             "characterTempHp": "",
-            "currentHitDice": "9",
+            "currentHitDice": "10",
             "playerWeaponProficiency": [
                 "Simple Weapons",
                 "Greataxe",
@@ -47,7 +47,7 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "1",
+            "": "0",
             "proficiencyButton1": "0",
             "proficiencyButton2": "0",
             "proficiencyButton3": "0",
@@ -86,31 +86,6 @@
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Longsword",
-                        "itemId": "item-1732494408397-1388bd98",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+4",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Versatile",
-                        "elventhColumn": "A versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
-                        "twelvethColumn": "Slashing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
                         "proficiencyButton": "1",
                         "secondColumn": "Crossbow, light",
                         "itemId": "item-1732760288423-7a1bfd37",
@@ -135,7 +110,7 @@
                     }
                 },
                 {
-                    "3": {
+                    "2": {
                         "proficiencyButton": "1",
                         "secondColumn": "Longbow",
                         "itemId": "item-1732761725338-6079ab8f",
@@ -160,7 +135,7 @@
                     }
                 },
                 {
-                    "4": {
+                    "3": {
                         "proficiencyButton": "1",
                         "secondColumn": "Greataxe +1",
                         "itemId": "item-1732762666792-876eaa44",
@@ -185,7 +160,7 @@
                     }
                 },
                 {
-                    "5": {
+                    "4": {
                         "proficiencyButton": "0",
                         "secondColumn": "Greatsword +2",
                         "itemId": "item-1732762674907-710d4e07",
@@ -210,7 +185,7 @@
                     }
                 },
                 {
-                    "6": {
+                    "5": {
                         "proficiencyButton": "1",
                         "secondColumn": "Returning Dagger",
                         "itemId": "item-1732732580056-8cd6526d",
@@ -225,6 +200,31 @@
                         "tenthColumn": "Finesse, Light, Thrown, Monk",
                         "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
                         "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "0",
+                        "secondColumn": "Longsword",
+                        "itemId": "item-1732494408397-1388bd98",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+4",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Versatile",
+                        "elventhColumn": "A versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
+                        "twelvethColumn": "Slashing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -260,7 +260,7 @@
                         }
                     ],
                     "slots": [
-                        true,
+                        false,
                         false,
                         false,
                         false
@@ -340,30 +340,6 @@
                         "equipped": true
                     },
                     {
-                        "name": "Ring of Protection",
-                        "uniqueId": "item-1732734199413-02f4bf98",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "750 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Studded Leather Armor",
-                        "uniqueId": "item-1732735127583-9fc35ef0",
-                        "quantity": 1,
-                        "weight": 13,
-                        "cost": "45 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Stone of Good Luck",
-                        "uniqueId": "item-1732737250730-d1b5d4e6",
-                        "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": false
-                    },
-                    {
                         "name": "Crossbow, light",
                         "uniqueId": "item-1732760288423-7a1bfd37",
                         "quantity": 1,
@@ -420,8 +396,8 @@
                         "cost": "25 gp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -442,8 +418,81 @@
                             "adjustmentAbility": "STR",
                             "adjustmentValue": "4",
                             "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "",
+                            "cheveron": false,
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "STR",
+                            "adjustmentValue": "4",
+                            "numberOfUses": "3"
                         }
                     ]
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "",
+                            "cheveron": true,
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "STR",
+                            "adjustmentValue": "4",
+                            "numberOfUses": "3"
+                        },
+                        {
+                            "traitName": "",
+                            "cheveron": false,
+                            "traitDescription": "",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "skills",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "STR",
+                            "adjustmentValue": "4",
+                            "numberOfUses": "3"
+                        }
+                    ]
+                }
+            ],
+            "groupNotesData": [
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "notes": []
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "notes": []
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "notes": []
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "notes": []
                 }
             ]
         },
@@ -530,7 +579,7 @@
                 "gp": 2000,
                 "pp": 1500
             },
-            "alignment": "NG",
+            "alignment": "LG",
             "actionTable": [
                 {
                     "1": {
@@ -900,11 +949,11 @@
             "groupTraitData": [
                 {
                     "group-title": "Channel Divinity",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
-                            "cheveron": true,
+                            "cheveron": false,
                             "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 15-ft. radius, and is filled with dim Light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. When you use this feature the first time all creatures in the range get one of the features below. You may use a bonus action on your following turns to do one of the following to all creatures in range. \n\n- You grant it 1d6+7 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
                             "checkboxStates": [
                                 true,
@@ -913,8 +962,8 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -924,8 +973,8 @@
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -935,8 +984,8 @@
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         }
                     ]
@@ -956,8 +1005,8 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -969,8 +1018,8 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "1"
                         },
                         {
@@ -980,25 +1029,25 @@
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         }
                     ]
                 },
                 {
                     "group-title": "Race Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Earth Walk",
-                            "cheveron": true,
+                            "cheveron": false,
                             "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -1012,8 +1061,8 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -1025,19 +1074,19 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "1"
                         }
                     ]
                 },
                 {
                     "group-title": "Background Features",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "Shelter of the Faithful",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "As an acolyte, you command the respect of those who share your faith, and you can perform the religious ceremonies of your deity. You and your adventuring companions can expect to receive free healing and care at a temple, shrine, or other established presence of your faith, though you must provide any material components needed for spells. Those who share your religion will support you (but only you) at a modest lifestyle.\n\nYou might also have ties to a specific temple dedicated to your chosen deity or pantheon, and you have a residence there. This could be the temple where you used to serve, if you remain on good terms with it, or a temple where you have found a new home. While near your temple, you can call upon the priests for assistance, provided the assistance you ask for is not hazardous and you remain in good standing with your temple.",
                             "checkboxStates": [
                                 false,
@@ -1046,13 +1095,14 @@
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-1",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         },
         "Alduin Ley Eshobbud": {
             "characterTempHp": "1",
