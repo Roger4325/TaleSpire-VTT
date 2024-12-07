@@ -5611,6 +5611,28 @@
         "ability_modifier": "no"
     },
     {
+        "name": "Suffocate*",
+        "desc": "You create a pair of grasping hands made from invisible forces. Make a spell attack against one creature that you can see within range. On a hit, the creature is restrained as the hands crush their throat or bodily equivalent. If the creature requires air to breathe, it begins to suffocate. A suffocating creature can survive for a number of rounds equal to 1 + its Constitution modifier (minimum of 1 round). At the start of its next turn after those rounds are over, it becomes unconscious, and it can’t regain hit points until it can breathe again. A conscious creature restrained by the hands can use its action to make a Strength or Dexterity check (its choice) against your spell save DC. On a success, the spell ends on the target.",
+        "page": "Lairs of Etharis",
+        "range": "60 feet",
+        "components": "V, S, M",
+        "material": "A leather glove",
+        "ritual": "",
+        "duration": "Up to 1m",
+        "concentration": "yes",
+        "casting_time": "1A",
+        "level": "3rd-level",
+        "school": "Conjuration",
+        "class": "Bard",
+        "higher_level": "",
+        "toHitOrDC": "toHit",
+        "damage_dice": "",
+        "damage_dice_upcast": "",
+        "spell_save_dc_type": "",
+        "ability_modifier": "no",
+        "damage_type_01": ""
+    },
+    {
         "name": "Suggestion",
         "desc": "You suggest a course of activity (limited to a sentence or two) and magically influence a creature you can see within range that can hear and understand you. Creatures that can’t be charmed are immune to this effect. The suggestion must be worded in such a manner as to make the course of action sound reasonable. Asking the creature to stab itself, throw itself onto a spear, immolate itself, or do some other obviously harmful act ends the spell.The target must make a wisdom saving throw. On a failed save, it pursues the course of action you described to the best of its ability. The suggested course of action can continue for the entire duration. If the suggested activity can be completed in a shorter time, the spell ends when the subject finishes what it was asked to do.You can also specify conditions that will trigger a special activity during the duration. For example, you might suggest that a knight give her warhorse to the first beggar she meets. If the condition isn’t met before the spell expires, the activity isn’t performed.If you or any of your companions damage the target, the spell ends.",
         "page": "phb 279",

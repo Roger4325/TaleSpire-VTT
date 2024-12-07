@@ -6959,8 +6959,7 @@
       "index": "rare",
       "name": "Rare",
       "url": "/api/item-rarity/rare"
-    },
-    "url": "/api/equipment/amulet-of-wisdom"
+    }
   },
   {
     "index": "stone-of-good-luck",
@@ -7009,8 +7008,7 @@
       "index": "uncommon",
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
-    },
-    "url": "/api/equipment/stone-of-good-luck"
+    }
   },
   {
     "index": "stone-of-acrobatics",
@@ -7053,8 +7051,7 @@
       "index": "uncommon",
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
-    },
-    "url": "/api/equipment/stone-of-good-luck"
+    }
   },
   {
     "index": "stone-of-initiative",
@@ -7097,8 +7094,7 @@
       "index": "uncommon",
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
-    },
-    "url": "/api/equipment/stone-of-good-luck"
+    }
   },
   {
     "index": "amulet-of-the-devout-1",
@@ -7142,8 +7138,7 @@
       "index": "uncommon",
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
-    },
-    "url": "/api/equipment/stone-of-good-luck"
+    }
   },
   {
     "index": "rhythm-maker's-drum-1",
@@ -7187,8 +7182,7 @@
       "index": "uncommon",
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
-    },
-    "url": "/api/equipment/stone-of-good-luck"
+    }
   },  
   {
     "index": "longsword-1",
@@ -7233,7 +7227,78 @@
       }
     },
     "toHitBonus": 1,
-    "damageBonus": 1,
-    "url": "/api/equipment/halberd+3"
+    "damageBonus": 1
+  },
+  {
+    "index": "robe-of-the-winterstep",
+    "name": "Robe of the Winterstep",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "While wearing this robe, you have resistance to cold damage",
+      "<br><br>In addition, you can use an reaction to cast Frigid Step. When you do, you teleport up to 30 feet to an unoccupied space you can see. Upon casting, you unleash a blast of icy energy in a 10-foot radius centered on both your starting and ending points. Each creature in these areas must make a DC 15 Dexterity saving throw, taking 4d10 cold damage on a failed save, or half as much damage on a successful one",
+      "<br><br>The affected areas become difficult terrain until the start of your next turn as frost clings to surfaces. Once you use this property, you can't do so again until the next dawn.<br>"
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "rare",
+      "name": "Rare",
+      "url": "/api/item-rarity/uncommon"
+    }
+  },
+  {
+    "index": "ring-of-mind-shielding",
+    "name": "Ring of Mind Shielding",
+    "equipment_category": {
+      "index": "wondrous-item",
+      "name": "Wondrous Item",
+      "url": "/api/equipment-categories/wondrous-item"
+    },
+    "gear_category": {
+      "index": "magical-accessory",
+      "name": "Magical Accessory",
+      "url": "/api/equipment-categories/magical-accessory"
+    },
+    "description": [
+      "While wearing this ring, you are immune to magic that allows other creatures to read your thoughts, determine whether you are lying, know your alignment, or know your creature type. Creatures can telepathically communicate with you only if you allow it",
+      "<br><br>You can use an action to cause the ring to become invisible until you use another action to make it visible, until you remove the ring, or until you die",
+      "<br><br>If you die while wearing the ring, your soul enters it, unless it already houses a soul. You can remain in the ring or depart for the afterlife. As long as your soul is in the ring, you can telepathically communicate with any creature wearing it. A wearer can't prevent this telepathic communication.<br>"
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ],
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.2,
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    }
   }
 ]

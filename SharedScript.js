@@ -909,10 +909,18 @@ function loadDataFromGlobalStorage(dataType) {
 function showErrorModal(errorMessage) {
     const modal = document.getElementById('errorModal');
     const modalMessage = document.getElementById('errorModalMessage');
-    
-    modalMessage.textContent = errorMessage;
+    const closeButton = document.querySelector('#errorModal .close');
+
+    // Set the error message
+    modalMessage.innerHTML = errorMessage;
     modal.style.display = 'block';
 
+    // Add click listener to close button
+    closeButton.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Automatically hide modal after 2 seconds
     setTimeout(() => {
         modal.style.display = 'none';
     }, 2000);
@@ -930,16 +938,9 @@ function removeFromGlobalStorage(dataType, dataId) {
             if (existingData) {
                 allData = JSON.parse(existingData);
             }
-
-            console.log("Current characters before deletion:", allData[dataType]);
-
             if (allData[dataType]) {
                 if (allData[dataType][dataId]) {
-                    console.time('Deletion Time');
-                    console.log("Deleting character:", dataId);
                     delete allData[dataType][dataId]; // Attempt to delete
-                    console.timeEnd('Deletion Time');
-                    console.log("Characters after deletion attempt:", allData[dataType]); // Log after attempt
 
                     // Save the updated data back to global storage
                     return TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4))

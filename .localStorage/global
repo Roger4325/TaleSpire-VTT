@@ -15,13 +15,13 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+4",
-            "AC": "15",
+            "AC": "19",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
             "playerClass": "Class (SubClass)",
-            "currentCharacterHP": "50",
-            "maxCharacterHP": "50",
+            "currentCharacterHP": "150",
+            "maxCharacterHP": "200",
             "hitDiceButton": "1d8",
             "strengthScore": "18",
             "dexterityScore": "18",
@@ -73,7 +73,8 @@
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
             "conditions": [
-                "Raging"
+                "Raging",
+                "Concentration"
             ],
             "coins": {
                 "cp": 5500,
@@ -86,131 +87,6 @@
             "actionTable": [
                 {
                     "1": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Crossbow, light",
-                        "itemId": "item-1732760288423-7a1bfd37",
-                        "thirdColumn": "80ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Ranged",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Ammunition, Loading, Two-Handed",
-                        "elventhColumn": "A small, one-handed ranged weapon that fires bolts with high accuracy, often favored for its ease of use and portability.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Longbow",
-                        "itemId": "item-1732761725338-6079ab8f",
-                        "thirdColumn": "150ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Ranged",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Ammunition, Heavy, Two-Handed",
-                        "elventhColumn": "A large, two-handed ranged weapon known for its long range and high damage.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Greataxe +1",
-                        "itemId": "item-1732762666792-876eaa44",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d12",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "1",
-                        "damageBonus": "1",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "",
-                        "twelvethColumn": "Slashing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "4": {
-                        "proficiencyButton": "0",
-                        "secondColumn": "Greatsword +2",
-                        "itemId": "item-1732762674907-710d4e07",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "2d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "2",
-                        "damageBonus": "2",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "",
-                        "twelvethColumn": "Slashing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "5": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Returning Dagger",
-                        "itemId": "item-1732732580056-8cd6526d",
-                        "thirdColumn": "5ft (20/60)",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Melee",
-                        "eighthColumn": "1",
-                        "damageBonus": "2",
-                        "tenthColumn": "Finesse, Light, Thrown, Monk",
-                        "elventhColumn": "A sharp elven stiletto blade measuring about ten inches with a small red crystal in its hilt. This exquisitely crafted blade, when focused on as a bonus action, can be summoned to the user from within 60 feet. When the blade is summoned, the user may enforce their will on it to cause it to take a slightly different path. If there is a creature within 5 feet of the line between the thrower and the dagger, the thrower may choose to attack the creature instead as a bonus action.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "6": {
                         "proficiencyButton": "0",
                         "secondColumn": "Longsword",
                         "itemId": "item-1732494408397-1388bd98",
@@ -226,45 +102,26 @@
                         "elventhColumn": "A versatile one-handed or two-handed weapon with a straight, double-edged blade, ideal for slashing and thrusting.",
                         "twelvethColumn": "Slashing",
                         "ninthColumn": {
-                            "attacks": false,
+                            "attacks": true,
                             "actions": false,
                             "bonus-actions": false,
-                            "reactions": false,
+                            "reactions": true,
                             "other": false
                         }
                     }
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "CHA",
-                "spelllevelselected": "5",
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "0",
                 "spellmagicbonus": "0",
                 "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Eldritch Blast",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Fire Bolt",
-                            "prepared": "false"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Burning Hands",
-                            "prepared": "1"
-                        }
-                    ],
-                    "slots": [
-                        false,
-                        false,
-                        false,
-                        false
-                    ]
+                    "spells": [],
+                    "slots": []
                 },
                 "2nd-level": {
                     "spells": [],
@@ -302,13 +159,6 @@
             "inventoryData": {
                 "equipment": [
                     {
-                        "name": "Abacus",
-                        "uniqueId": "item-1732494358827-3e5ad563",
-                        "quantity": 1,
-                        "weight": 2,
-                        "cost": "2 gp"
-                    },
-                    {
                         "name": "Longsword",
                         "uniqueId": "item-1732494408397-1388bd98",
                         "quantity": 1,
@@ -317,85 +167,43 @@
                         "equipped": true
                     },
                     {
-                        "name": "Alchemist's fire (flask)",
-                        "uniqueId": "item-1732494412894-45b82974",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "50 gp"
-                    },
-                    {
-                        "name": "Returning Dagger",
-                        "uniqueId": "item-1732732580056-8cd6526d",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "1500 gp",
-                        "equipped": true
-                    },
-                    {
                         "name": "Cloak of Protection",
-                        "uniqueId": "item-1732732596147-1442fb74",
+                        "uniqueId": "item-1733526763722-1b9fc7a9",
                         "quantity": 1,
                         "weight": 1,
                         "cost": "750 gp",
-                        "equipped": true
+                        "equipped": true,
+                        "attuned": true
                     },
                     {
-                        "name": "Crossbow, light",
-                        "uniqueId": "item-1732760288423-7a1bfd37",
+                        "name": "Mortis Armour",
+                        "uniqueId": "item-1733527133560-5f0a7c12",
                         "quantity": 1,
-                        "weight": 5,
-                        "cost": "25 gp",
-                        "equipped": true
+                        "weight": 65,
+                        "cost": "5000 gp",
+                        "equipped": true,
+                        "attuned": true
                     },
                     {
-                        "name": "Longbow",
-                        "uniqueId": "item-1732761725338-6079ab8f",
+                        "name": "Robe of the Winterstep",
+                        "uniqueId": "item-1733527163099-e483dfd8",
                         "quantity": 1,
-                        "weight": 2,
-                        "cost": "50 gp",
-                        "equipped": true
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": true,
+                        "attuned": true
                     },
                     {
-                        "name": "Greataxe +1",
-                        "uniqueId": "item-1732762666792-876eaa44",
+                        "name": "Ring of Mind Shielding",
+                        "uniqueId": "item-1733527175233-bb35cb62",
                         "quantity": 1,
-                        "weight": 7,
-                        "cost": "500 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Greatsword +2",
-                        "uniqueId": "item-1732762674907-710d4e07",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "1000 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Scale Mail",
-                        "uniqueId": "item-1733164171314-bce0d4cb",
-                        "quantity": 1,
-                        "weight": 45,
-                        "cost": "50 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Backpack",
-                        "uniqueId": "item-1733164703872-f56b4271",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "2 gp"
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": true,
+                        "attuned": false
                     }
                 ],
-                "backpack": [
-                    {
-                        "name": "Acid (vial)",
-                        "uniqueId": "item-1733164712939-a5da0fd8",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "25 gp"
-                    }
-                ],
+                "backpack": [],
                 "other-possessions": [],
                 "attunement": []
             },
@@ -405,96 +213,20 @@
                     "group-chevron": false,
                     "traits": [
                         {
-                            "traitName": "Physonic",
-                            "cheveron": false,
-                            "traitDescription": "",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentCategory": "saves",
-                            "adjustmentSubCategory": "STR",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "4",
-                            "numberOfUses": "3"
-                        },
-                        {
                             "traitName": "",
                             "cheveron": false,
                             "traitDescription": "",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "4",
-                            "numberOfUses": "3"
-                        }
-                    ]
-                },
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "traits": [
-                        {
-                            "traitName": "",
-                            "cheveron": true,
-                            "traitDescription": "",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "4",
-                            "numberOfUses": "3"
-                        },
-                        {
-                            "traitName": "",
-                            "cheveron": false,
-                            "traitDescription": "",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
-                            "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "Acrobatics",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "4",
-                            "numberOfUses": "3"
+                            "checkboxStates": [],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "0"
                         }
                     ]
                 }
             ],
-            "groupNotesData": [
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "notes": []
-                },
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "notes": []
-                },
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "notes": []
-                },
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "notes": []
-                }
-            ]
+            "groupNotesData": []
         },
         "Mira": {
             "characterTempHp": "2",
@@ -609,31 +341,6 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Rapier",
-                        "itemId": "item-1732491686135-d0403363",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+5",
-                        "fifthColumn": "1d8",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Finesse",
-                        "elventhColumn": "A slender, sharply pointed sword designed for thrusting, often used in quick, precise attacks.",
-                        "twelvethColumn": "Piercing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
                         "secondColumn": "Twilight Sanctuary",
                         "thirdColumn": "5ft",
                         "fourthColumn": "+3",
@@ -646,6 +353,31 @@
                         "tenthColumn": "Heavy, Two-Handed",
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "Temp Hp",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "3": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Rapier",
+                        "itemId": "item-1733528064997-f5664e56",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+5",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Finesse",
+                        "elventhColumn": "A slender, sharply pointed sword designed for thrusting, often used in quick, precise attacks.",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": true,
                             "actions": true,
@@ -771,12 +503,8 @@
                             "prepared": "1"
                         },
                         {
-                            "name": "Leomund's Tiny Hut*",
-                            "prepared": "1"
-                        },
-                        {
                             "name": "Remove Curse",
-                            "prepared": "0"
+                            "prepared": "1"
                         }
                     ],
                     "slots": [
@@ -853,7 +581,7 @@
                     },
                     {
                         "name": "Half Plate Armor",
-                        "uniqueId": "item-1732491686134-f37ece13",
+                        "uniqueId": "item-1733528056722-a9840134",
                         "quantity": 1,
                         "weight": 40,
                         "cost": "750 gp",
@@ -861,7 +589,7 @@
                     },
                     {
                         "name": "Rapier",
-                        "uniqueId": "item-1732491686135-d0403363",
+                        "uniqueId": "item-1733528064997-f5664e56",
                         "quantity": 1,
                         "weight": 2,
                         "cost": "25 gp",
@@ -869,7 +597,7 @@
                     },
                     {
                         "name": "Shield",
-                        "uniqueId": "item-1732491686136-c56b11cc",
+                        "uniqueId": "item-1733528083560-2bf694ee",
                         "quantity": 1,
                         "weight": 6,
                         "cost": "10 gp",
@@ -877,7 +605,7 @@
                     },
                     {
                         "name": "Potion of Healing",
-                        "uniqueId": "item-1732491686137-bb8de55d",
+                        "uniqueId": "item-1733528263219-0be93f0e",
                         "quantity": 2,
                         "weight": 1,
                         "cost": "50 gp",
@@ -885,66 +613,67 @@
                     },
                     {
                         "name": "Amulet of the Devout, +1",
-                        "uniqueId": "item-1733355670816-03ba9d93",
+                        "uniqueId": "item-1733528278985-453825d3",
                         "quantity": 1,
                         "weight": 0.2,
                         "cost": "2000 gp",
-                        "equipped": true
+                        "equipped": true,
+                        "attuned": true
                     }
                 ],
                 "backpack": [
                     {
                         "name": "Bedroll",
-                        "uniqueId": "item-1732491686138-61ae743e",
+                        "uniqueId": "item-1733528310031-d85e952d",
                         "quantity": 1,
                         "weight": 7,
                         "cost": "1 gp"
                     },
                     {
                         "name": "Mess Kit",
-                        "uniqueId": "item-1732491686139-b7845adb",
+                        "uniqueId": "item-1733528316956-47a1cfb5",
                         "quantity": 1,
                         "weight": 1,
                         "cost": "2 sp"
                     },
                     {
                         "name": "Rations (1 day)",
-                        "uniqueId": "item-1732491686141-9752e082",
-                        "quantity": 5,
-                        "weight": 10,
+                        "uniqueId": "item-1733528323612-a244a87b",
+                        "quantity": 1,
+                        "weight": 2,
                         "cost": "5 sp"
                     },
                     {
                         "name": "Rope, hempen (50 feet)",
-                        "uniqueId": "item-1732491686142-33e5b026",
+                        "uniqueId": "item-1733528330188-15a609e0",
                         "quantity": 1,
                         "weight": 10,
                         "cost": "1 gp"
                     },
                     {
                         "name": "Tinderbox",
-                        "uniqueId": "item-1732491686142-15913762",
+                        "uniqueId": "item-1733528338480-1e568153",
                         "quantity": 1,
                         "weight": 1,
                         "cost": "5 sp"
                     },
                     {
                         "name": "Torch",
-                        "uniqueId": "item-1732491686143-dd2ac3f6",
-                        "quantity": 10,
-                        "weight": 10,
+                        "uniqueId": "item-1733528344888-db1529a1",
+                        "quantity": 1,
+                        "weight": 1,
                         "cost": "1 cp"
                     },
                     {
                         "name": "Waterskin",
-                        "uniqueId": "item-1732491686143-48a5d500",
+                        "uniqueId": "item-1733528350126-355ba9e0",
                         "quantity": 1,
                         "weight": 5,
                         "cost": "2 sp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -1300,28 +1029,12 @@
                         {
                             "name": "Blade Ward",
                             "prepared": "false"
-                        },
-                        {
-                            "name": "Blade Ward",
-                            "prepared": "false"
                         }
                     ],
                     "slots": []
                 },
                 "1st-level": {
                     "spells": [
-                        {
-                            "name": "Disguise Self",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Goodberry",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Hunter's Mark",
-                            "prepared": "0"
-                        },
                         {
                             "name": "Disguise Self",
                             "prepared": "0"
@@ -1344,22 +1057,6 @@
                 },
                 "2nd-level": {
                     "spells": [
-                        {
-                            "name": "Pass without Trace",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Rope Trick",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Lesser Restoration",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Silence",
-                            "prepared": "0"
-                        },
                         {
                             "name": "Pass without Trace",
                             "prepared": "0"
@@ -1596,8 +1293,8 @@
                         "cost": "2 sp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -1627,7 +1324,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -1657,7 +1354,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -1668,7 +1365,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -1694,7 +1391,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "3"
                         },
                         {
@@ -1705,7 +1402,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -1716,7 +1413,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -1744,7 +1441,7 @@
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
-                            "adjustmentValue": "",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -1794,7 +1491,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         },
         "Barnibus": {
             "characterTempHp": "13",
@@ -2047,6 +1745,10 @@
                         {
                             "name": "Dispel Magic",
                             "prepared": "1"
+                        },
+                        {
+                            "name": "Suffocate*",
+                            "prepared": "1"
                         }
                     ],
                     "slots": [
@@ -2149,7 +1851,8 @@
                         "quantity": 1,
                         "weight": 0.2,
                         "cost": "2000 gp",
-                        "equipped": true
+                        "equipped": true,
+                        "attuned": false
                     }
                 ],
                 "backpack": [
@@ -2224,8 +1927,8 @@
                         "cost": "2 cp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -2374,22 +2077,21 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         },
         "Cralamin": {
             "characterTempHp": "",
             "currentHitDice": "8",
             "playerWeaponProficiency": [
-                "Light Crossbow",
                 "Dagger",
-                "Dart",
                 "Quarterstaff",
+                "Dart",
                 "Sling"
             ],
             "playerArmorProficiency": [],
             "playerLanguageProficiency": [
                 "Common",
-                "Deep Speech",
                 "Elvish",
                 "Sylvan"
             ],
@@ -2574,19 +2276,11 @@
                             "prepared": "0"
                         },
                         {
-                            "name": "Mage Armor",
-                            "prepared": "0"
-                        },
-                        {
                             "name": "Shield",
                             "prepared": "0"
                         },
                         {
                             "name": "Chromatic Orb*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Feather Fall",
                             "prepared": "0"
                         },
                         {
@@ -2600,6 +2294,10 @@
                         {
                             "name": "Disguise Self",
                             "prepared": "1"
+                        },
+                        {
+                            "name": "Mage Armor",
+                            "prepared": "0"
                         }
                     ],
                     "slots": [
@@ -2636,7 +2334,7 @@
                             "prepared": "1"
                         },
                         {
-                            "name": "Tasha's Mind Whip",
+                            "name": "Tasha's Mind Whip*",
                             "prepared": "0"
                         }
                     ],
@@ -2801,6 +2499,24 @@
                         "quantity": 1,
                         "weight": 0,
                         "cost": "0 cp"
+                    },
+                    {
+                        "name": "Robe of the Winterstep",
+                        "uniqueId": "item-1733439031491-fdd02aab",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": true,
+                        "attuned": false
+                    },
+                    {
+                        "name": "Ring of Mind Shielding",
+                        "uniqueId": "item-1733439276142-f78940fb",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": true,
+                        "attuned": false
                     }
                 ],
                 "backpack": [
@@ -2868,8 +2584,8 @@
                         "cost": "1 cp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -2884,7 +2600,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "1"
@@ -2898,7 +2614,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "2"
@@ -2909,7 +2625,7 @@
                             "traitDescription": "You have scribed a set of arcane formulas in your\nspellbook that you can use to formulate a cantrip in\nyour mind. Whenever you finish a long rest and consult\nthose formulas in your spellbook, you can replace one\nwizard cantrip you know with another cantrip from the\nwizard spell list.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "0"
@@ -2920,7 +2636,7 @@
                             "traitDescription": "When you cast a divination spell of 2nd level or higher\nusing a spell slot, you regain one expended spell slot.\nThe slot you regain must be of a level lower than the\nspell you cast and can’t be higher than 5th level.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "0"
@@ -2939,7 +2655,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "1"
@@ -2952,7 +2668,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "1"
@@ -2967,7 +2683,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "3"
@@ -2978,7 +2694,7 @@
                             "traitDescription": "You count as one size larger when determining your\ncarrying capacity and the weight you can push, drag,\nor lift.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "0"
@@ -2989,7 +2705,7 @@
                             "traitDescription": "You can communicate in a limited manner with Beasts,\nPlants, and vegetation. They can understand your\nwords but you cannot understand them in return. You\nhave advantage on all CHA checks to influence them.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "0"
@@ -2998,7 +2714,7 @@
                 },
                 {
                     "group-title": "Feats",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": " Fey Touched",
@@ -3008,7 +2724,7 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "1"
@@ -3019,24 +2735,40 @@
                             "traitDescription": "You gain proficiency in any combination of three skills\nor tools of your choice.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
+                            "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
                             "numberOfUses": "0"
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         },
         "Wallace": {
             "characterTempHp": "8",
             "currentHitDice": "8",
-            "playerWeaponProficiency": [],
-            "playerArmorProficiency": [],
-            "playerLanguageProficiency": [],
-            "playerToolsProficiency": [],
-            "initiativeButton": "+2",
-            "AC": "14",
+            "playerWeaponProficiency": [
+                "Simple Weapons"
+            ],
+            "playerArmorProficiency": [
+                "Light",
+                "Medium",
+                "Shield"
+            ],
+            "playerLanguageProficiency": [
+                "Common",
+                "Celestial",
+                "Infernal",
+                "Sylvan"
+            ],
+            "playerToolsProficiency": [
+                "Carpenter's Tools",
+                "Tinker's Tools",
+                "Thieves' Tools"
+            ],
+            "initiativeButton": "+7",
+            "AC": "20",
             "speed": "30ft.",
             "characterLevel": "8",
             "playerXP": "34000",
@@ -3249,9 +2981,9 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "STR",
+                "spellcastingModifier": "INT",
                 "spelllevelselected": "4",
-                "spellmagicbonus": "1",
+                "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
                         {
@@ -3445,6 +3177,15 @@
                         "quantity": 1,
                         "weight": 4,
                         "cost": "5 gp"
+                    },
+                    {
+                        "name": "Cloak of Protection",
+                        "uniqueId": "item-1733441864117-32dfa7e5",
+                        "quantity": 1,
+                        "weight": 1,
+                        "cost": "750 gp",
+                        "equipped": true,
+                        "attuned": true
                     }
                 ],
                 "backpack": [
@@ -3541,8 +3282,8 @@
                         "cost": "50 gp"
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -3561,9 +3302,9 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "5"
                         },
                         {
@@ -3574,10 +3315,10 @@
                                 false,
                                 false
                             ],
-                            "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentCategory": "combatStats",
+                            "adjustmentSubCategory": "SpellAttackModifier",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "1",
                             "numberOfUses": "2"
                         },
                         {
@@ -3588,9 +3329,9 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "1"
                         },
                         {
@@ -3599,40 +3340,32 @@
                             "traitDescription": "When you are hit by an attack or you fail a saving throw, you can use your reaction to gain a +2 bonus to your AC against that attack or a +4 bonus to that saving throw. When you use this feature, you can’t cast spells other than cantrips until the end of your next turn.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
                             "traitName": "Tactical Wit",
                             "cheveron": true,
                             "traitDescription": "You gain a bonus to your initiative rolls equal to your INT modifier (+5).",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
-                            "numberOfUses": "3"
+                            "adjustmentSubCategory": "Initiative",
+                            "adjustmentAbility": "INT",
+                            "adjustmentValue": "5",
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Cantrip Formulas",
                             "cheveron": true,
                             "traitDescription": "You have scribed a set of arcane formulas in your spellbook that you can use to formulate a cantrip in your mind. Whenever you finish a long rest and consult those formulas in your spellbook, you can replace one wizard cantrip you know with another cantrip from the wizard spell list.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
-                            "numberOfUses": "3"
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Power Surge",
@@ -3646,9 +3379,9 @@
                                 false
                             ],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "5"
                         }
                     ]
@@ -3663,9 +3396,9 @@
                             "traitDescription": "You can hold your breath for up to 1 hour.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         },
                         {
@@ -3673,51 +3406,44 @@
                             "cheveron": true,
                             "traitDescription": "Your shell provides you a base AC of 17 (your DEX modifier doesn't affect this number). You can’t wear light, medium, or heavy armor, but can continue using and applying a shield’s bonus as normal.",
                             "checkboxStates": [],
-                            "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
+                            "adjustmentCategory": "combatStats",
+                            "adjustmentSubCategory": "AC",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "5",
                             "numberOfUses": "0"
                         },
                         {
                             "traitName": "Shell Defense",
                             "cheveron": true,
                             "traitDescription": "You can withdraw into your shell as an action and until you emerge, you gain a +4 bonus to AC and you have advantage on STR and CON saving throws.\n\nWhile in your shell, you are prone, your speed is 0 and can't increase, you have disadvantage on DEX saving throws, and you can’t take reactions. The only action you can take is to use a bonus action to emerge.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
-                            "numberOfUses": "3"
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "0"
                         }
                     ]
                 },
                 {
                     "group-title": "Feats",
-                    "group-chevron": false,
+                    "group-chevron": true,
                     "traits": [
                         {
                             "traitName": "War Caster",
                             "cheveron": true,
                             "traitDescription": "You have advantage on CON saving throws that you make to maintain your concentration on a spell when you take damage. You can perform the somatic components of spells even when you have weapons or a shield in one or both hands. You can use your reaction to make an opportunity attack to cast a spell that has a casting time of 1 action and targets only that creature.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "STR",
-                            "adjustmentValue": "-2",
-                            "numberOfUses": "3"
+                            "adjustmentSubCategory": "Acrobatics",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "0"
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         },
         "Sterling": {
             "characterTempHp": "",
@@ -4108,8 +3834,8 @@
                         "useable": true
                     }
                 ],
-                "attunement": [],
-                "other-possessions": []
+                "other-possessions": [],
+                "attunement": []
             },
             "groupTraitData": [
                 {
@@ -4330,7 +4056,8 @@
                         }
                     ]
                 }
-            ]
+            ],
+            "groupNotesData": []
         }
     },
     "Encounter Data": {

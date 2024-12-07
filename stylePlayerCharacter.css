@@ -1371,10 +1371,22 @@ select{
     margin-bottom: 4px;
 }
 
+
+
 .trait-uses-input,
-.adjustment-type,
-.adjustment-value,
-.adjustment-condition {
+.adjustment-value{
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    color: #FFFFFF;
+    padding: 5px;
+    width: fit-content;
+}
+
+.subcategory-select,
+.category-select,
+.trait-ability-select {
     width: 98%;
     padding: 6px;
     font-size: 12px;
@@ -1383,35 +1395,6 @@ select{
     margin-bottom: 10px;
     box-sizing: border-box;
 }
-
-.trait-uses-input:focus,
-.adjustment-type:focus,
-.adjustment-value:focus,
-.adjustment-condition:focus {
-    border-color: red;
-}
-
-.delete-trait-button {
-    background-color: #ff6666;
-    color: white;
-    padding: 6px 12px;
-    border: none;
-    border-radius: 4px;
-    font-size: 12px;
-    cursor: pointer;
-    width: 20%;
-    text-align: center;
-}
-
-.delete-trait-button:hover {
-    background-color: #ff4d4d;
-}
-
-
-
-
-
-
 
 
 /*Styling for the character selection and creation process*/
@@ -1618,11 +1601,12 @@ select{
 /*Styling for the player character inventory section*/
 
 #inventory-container {
-    background-color: #1a1a1a;
+    background-color: rgb(2, 2, 2); 
     color: white;
     padding: 20px;
-    border-radius: 10px;
     font-family: Arial, sans-serif;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
 }
 
 .inventory-group {
@@ -1685,11 +1669,12 @@ border-bottom: 1px solid #666;
 padding-bottom: 5px;
 }
 
-input[type="number"] {
+.item-quantity{
 width: 35px;
-background: #333;
+background-color: rgb(2, 2, 2); 
 color: white;
-border: none;
+border: 1px solid var(--ts-button-background);
+border-radius: 5px;
 text-align: center;
 }
 
@@ -1742,6 +1727,25 @@ font-size: 14px;
 transition: transform 0.2s ease;
 }
 
+.attunement-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #333;
+}
+
+.attunement-toggle {
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.attunement-item span {
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
 #currency-container {
     display: flex;
     justify-content: space-between;
@@ -1775,9 +1779,10 @@ transition: transform 0.2s ease;
     padding: 2px;
     font-size: 0.9rem;
     text-align: center;
-    background: #333;
+    background-color: rgb(2, 2, 2); 
     color: white;
-    border: none;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
 }
 
 .inventory-group h3.active i {
@@ -1973,4 +1978,22 @@ display: none;
 /* Rotate the chevron when collapsed */
 .collapse-notes-group-button.collapsed {
     transform: rotate(-90deg);
+}
+
+.select-wrapper{
+    min-height: 60px;
+}
+
+vuplex-dropdown {
+    position: absolute;
+    background-color: rgb(2, 2, 2) !important;
+    border: 1px solid var(--ts-button-background) !important; 
+    box-shadow: none !important;
+    border-radius: 5px;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+}
+
+vuplex-dropdown-option {
+    color: #FFFFFF !important; /* Default text color */
 }

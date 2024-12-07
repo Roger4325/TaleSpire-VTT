@@ -62,6 +62,9 @@ const messageHandlers = {
 
 //The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
 const characterStatBonuses = {
+    None: { 
+
+    },
     skills: {
         Acrobatics: { bonuses: [] },
         AnimalHandling: { bonuses: [] },
@@ -127,10 +130,7 @@ const characterStatBonuses = {
         // Tremorsense: { bonuses: [] },
         // Blindsight: { bonuses: [] },
         // Truesight: { bonuses: [] },
-    },
-    // otherTraits: {
-    //     HitDice: { bonuses: [] },
-    // },
+    }
 };
 
 let baseAC = 10; // Default base AC
@@ -1105,6 +1105,15 @@ function damageCreature() {
     console.log(damageAmount)
 
     if (damageAmount > 0) {
+        conditionTrackerDiv = document.getElementById('conditionTracker');
+        conditionsSet = conditionsMap.get(conditionTrackerDiv);
+        
+        if (conditionsSet) {
+            if (conditionsSet.has('Concentration')) {
+                const dc = Math.max(10, Math.ceil(damageAmount / 2));
+                showErrorModal(`Roll a Con save. <br> DC: ${dc}`);
+            }
+        }
         if (tempHPValue > 0) {
             if (tempHPValue >= damageAmount) {
                 tempHP.value = tempHPValue - damageAmount;
@@ -2356,14 +2365,18 @@ function actionTableEventListenerSetup() {
 
 
 
-
+//This function creates rows for the action section. If no row data exists it creates a default one otherwise it takes the data and creats the row with that data.
+//This can be done when equipping items or when equipping spells. Specifically only cantrips. 
+//This is also where the data is converted from the save file on load to create all saved action rows. This will link with a Unique ID from the action list or the spell list. 
 function updateActionTableUI(actionTableData, newActionTableData) {
     const tableBody = document.getElementById('actionTableBody');
 
-    // Clear existing rows
-
     if (!actionTableData || actionTableData.length === 0) {
-        if (!newActionTableData || newActionTableData.length === 0){
+        if (!newActionTableData || newActionTableData.length === 0) {
+            // Find the active subtab
+            const activeSubtab = document.querySelector('.actionsubtab.active');
+            const selectedCategory = activeSubtab ? activeSubtab.getAttribute('data-category') : 'all';
+    
             actionTableData = [
                 {
                     "1": {
@@ -2379,19 +2392,29 @@ function updateActionTableUI(actionTableData, newActionTableData) {
                         "elventhColumn": "A brightly Colored Maul",
                         "twelvethColumn": "",
                         "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
+                            "attacks": selectedCategory === 'attacks',
+                            "actions": selectedCategory === 'actions',
+                            "bonus-actions": selectedCategory === 'bonus-actions',
+                            "reactions": selectedCategory === 'reactions',
+                            "other": selectedCategory === 'other'
                         }
                     }
                 }
             ];
-        }
-        else{
-            actionTableData = newActionTableData
-        }
+    
+            // Handle 'all' category: reset all flags to false
+            if (selectedCategory === 'all') {
+                actionTableData[0]["1"].ninthColumn = {
+                    "attacks": false,
+                    "actions": false,
+                    "bonus-actions": false,
+                    "reactions": false,
+                    "other": false
+                };
+            }
+        } else {
+            actionTableData = newActionTableData;
+        }   
         
     }
     else{
@@ -4222,6 +4245,16 @@ function addItemToInventory(item, group) {
         }
     }
 
+    console.log(item)
+
+    if (item.attuned) {
+        const attunementToggle = document.querySelector(`#attune-${item.uniqueId}`);
+        if (attunementToggle) {
+            attunementToggle.checked = true;
+        }
+        console.log(item.name)
+    }
+
     rollableButtons(); // Add Event Listeners to all buttons
     updateContent(); // Save inventory changes
     updateItemWeight(); // Initial weight calculation
@@ -4341,6 +4374,26 @@ function equipArmor(item) {
         unequipArmor(equippedArmor);
     }
 
+    if (item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            addToAttunementList(item); // Add to attunement UI
+        }
+        else{
+            if (item.bonus) {
+                // Add each bonus from the item to the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    addBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} equipped: Bonuses applied.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to apply.`);
+            }
+        }
+    }       
+
     // Check proficiency
     const normalizedProficiencies = playerArmorProficiency.map(normalize);
     if (!normalizedProficiencies.includes(normalize(item.armor_category))) {
@@ -4360,6 +4413,27 @@ function equipArmor(item) {
 
 function unequipArmor(item) {
     if (equippedArmor && equippedArmor.index === item.index) {
+
+        if(item.properties){
+            if (item.properties.some(property => property.index === "attunement")) {
+                removeFromAttunementList(item); // Remove the item from the attunement UI
+            }
+            else{
+                if (item.bonus) {
+                    // Remove each bonus from the item from the appropriate stat
+                    item.bonus.forEach((bonus) => {
+                        removeBonus(bonus.category, bonus.key, {
+                            source: item.name,
+                            value: bonus.value,
+                        });
+                    });
+                    console.log(`${item.name} unequipped: Bonuses removed.`);
+                } else {
+                    console.warn(`Item ${item.name} has no bonuses to remove.`);
+                }
+            }   
+        }
+
         equippedArmor = null;
         updateCheckboxState(item, false); // Uncheck the checkbox when armor is unequipped
         updateAC(); // Recalculate AC
@@ -4379,6 +4453,26 @@ function equipShield(item) {
         showErrorModal(`Warning: Not proficient with shields`);
     }
 
+    if (item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            addToAttunementList(item); // Add to attunement UI
+        }
+        else{
+            if (item.bonus) {
+                // Add each bonus from the item to the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    addBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} equipped: Bonuses applied.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to apply.`);
+            }
+        }
+    }     
+
     // Ensure the item gets the uniqueId from the row
     const itemDiv = document.querySelector(`[data-unique-id="${item.uniqueId}"]`);
     if (itemDiv) {
@@ -4392,6 +4486,27 @@ function equipShield(item) {
 
 function unequipShield(item) {
     if (equippedShield && equippedShield.index === item.index) {
+
+        if(item.properties){
+            if (item.properties.some(property => property.index === "attunement")) {
+                removeFromAttunementList(item); // Remove the item from the attunement UI
+            }
+            else{
+                if (item.bonus) {
+                    // Remove each bonus from the item from the appropriate stat
+                    item.bonus.forEach((bonus) => {
+                        removeBonus(bonus.category, bonus.key, {
+                            source: item.name,
+                            value: bonus.value,
+                        });
+                    });
+                    console.log(`${item.name} unequipped: Bonuses removed.`);
+                } else {
+                    console.warn(`Item ${item.name} has no bonuses to remove.`);
+                }
+            }   
+        }
+
         equippedShield = null;
         updateCheckboxState(item, false); // Uncheck the checkbox when shield is unequipped
         updateAC(); // Recalculate AC
@@ -4409,6 +4524,138 @@ function updateCheckboxState(item, isChecked) {
         checkbox.checked = isChecked;
     }
 }
+
+function equipJewelry(item) {
+
+    if (item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            addToAttunementList(item); // Add to attunement UI
+        }
+        else{
+            if (item.bonus) {
+                // Add each bonus from the item to the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    addBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} equipped: Bonuses applied.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to apply.`);
+            }
+        }
+    }         
+}
+
+function unequipJewelry(item) {
+    if(item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            removeFromAttunementList(item); // Remove the item from the attunement UI
+        }
+        else{
+            if (item.bonus) {
+                // Remove each bonus from the item from the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    removeBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} unequipped: Bonuses removed.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to remove.`);
+            }
+        }   
+    } 
+}
+
+
+let maxAttunements = 3;
+
+function addToAttunementList(item) {
+    const attunementList = document.getElementById('attunement-list');
+
+    // Create a container for the item
+    const itemDiv = document.createElement('div');
+    itemDiv.classList.add('attunement-item');
+    itemDiv.dataset.uniqueId = item.uniqueId;
+
+    // Item label
+    const itemLabel = document.createElement('span');
+    itemLabel.textContent = item.name;
+
+    // Attunement toggle
+    const toggle = document.createElement('input');
+    toggle.type = 'checkbox';
+    toggle.id = `attune-${item.uniqueId}`;
+    toggle.classList.add('attunement-toggle');
+
+    // Check the toggle state and apply bonuses
+    toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+            // Check the current number of attuned items
+            const currentAttuned = attunementList.querySelectorAll('.attunement-item input:checked').length;
+            if (currentAttuned > maxAttunements) {
+                showErrorModal("Can't attune to more than " + maxAttunements + " items.");
+                toggle.checked = false; // Revert the checkbox state
+                return; 
+            }
+            else{
+                item.attuned = true;
+                if (item.bonus) {
+                    // Add each bonus from the item to the appropriate stat
+                    item.bonus.forEach((bonus) => {
+                        addBonus(bonus.category, bonus.key, {
+                            source: item.name,
+                            value: bonus.value,
+                        });
+                    });
+                    console.log(`${item.name} equipped: Bonuses applied.`);
+                } else {
+                    console.warn(`Item ${item.name} has no bonuses to apply.`);
+                } 
+                updateContent()
+            }
+            
+        } else {
+            item.attuned = false;
+            if (item.bonus) {
+                // Remove each bonus from the item from the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    removeBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} unequipped: Bonuses removed.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to remove.`);
+            }
+            updateContent()
+        }
+    });
+
+    // Append elements to the itemDiv
+    itemDiv.appendChild(itemLabel);
+    itemDiv.appendChild(toggle);
+
+    // Add to attunement list
+    attunementList.appendChild(itemDiv);
+    
+}
+
+function removeFromAttunementList(item) {
+    const attunementList = document.getElementById("attunement-list");
+    
+    // Find the corresponding item in the attunement list by uniqueId
+    const itemDiv = attunementList.querySelector(`[data-unique-id="${item.uniqueId}"]`);
+    
+    if (itemDiv) {
+        attunementList.removeChild(itemDiv); // Remove the item from the list
+    }
+}
+
 
 
 
@@ -4518,40 +4765,6 @@ function hideNotesPanel() {
     activeInfoButton = null;
 }
 
-
-
-
-function equipJewelry(item) {
-    if (item.bonus) {
-        // Add each bonus from the item to the appropriate stat
-        item.bonus.forEach((bonus) => {
-            addBonus(bonus.category, bonus.key, {
-                source: item.name,
-                value: bonus.value,
-            });
-        });
-        console.log(`${item.name} equipped: Bonuses applied.`);
-    } else {
-        console.warn(`Item ${item.name} has no bonuses to apply.`);
-    }
-}
-
-function unequipJewelry(item) {
-    if (item.bonus) {
-        // Remove each bonus from the item from the appropriate stat
-        item.bonus.forEach((bonus) => {
-            removeBonus(bonus.category, bonus.key, {
-                source: item.name,
-                value: bonus.value,
-            });
-        });
-        console.log(`${item.name} unequipped: Bonuses removed.`);
-    } else {
-        console.warn(`Item ${item.name} has no bonuses to remove.`);
-    }
-}
-
-
   
 function populateItemDropdown(filter = "") {
     let itemSelect = document.getElementById('item-select');
@@ -4657,7 +4870,15 @@ function saveInventory() {
             const equipToggle = itemDiv.querySelector('.equip-toggle');
             if (equipToggle) {
                 itemData.equipped = equipToggle.checked;
+
+                // Check if the item is attuned (in the attunement list and checked)
+                const attunementToggle = document.querySelector(`#attune-${itemId}`);
+                if (attunementToggle) {
+                    itemData.attuned = attunementToggle.checked;
+                }
             }
+
+                        
 
             // Check if the item is useable (has a button)
             const useButton = itemDiv.querySelector('.use-item-button');
@@ -4693,7 +4914,8 @@ function loadInventoryData(characterInventoryData) {
                         ...foundItem, // Spread the foundItem properties
                         quantity: item.quantity, // Add the quantity from characterInventoryData
                         equipped: item.equipped, // Add the equipped status from characterInventoryData
-                        uniqueId: item.uniqueId // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
+                        uniqueId: item.uniqueId, // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
+                        attuned: item.attuned // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
                     };
 
                     // Add each item to the corresponding inventory group
@@ -4972,8 +5194,8 @@ function addNewTrait(groupContainer, traitData = null) {
     const usesInput = document.createElement('input');
     usesInput.type = 'number';
     usesInput.classList.add('trait-uses-input');
-    usesInput.value = traitData && traitData.numberOfUses ? traitData.numberOfUses : 3;
-    usesInput.min = 1;
+    usesInput.value = traitData && traitData.numberOfUses ? traitData.numberOfUses : 0;
+    usesInput.min = 0;
     usesInput.max = 10;
 
     // Container for dynamically generated checkboxes (on main page)
@@ -5022,6 +5244,8 @@ function addNewTrait(groupContainer, traitData = null) {
     const adjustmentContainer = document.createElement('div');
 
     // Category Dropdown
+    const categoryWrapper = document.createElement('div');
+    categoryWrapper.classList.add('select-wrapper')
     const categoryLabel = document.createElement('label');
     categoryLabel.textContent = 'Category:';
     const categorySelect = document.createElement('select');
@@ -5034,7 +5258,12 @@ function addNewTrait(groupContainer, traitData = null) {
         categorySelect.appendChild(option);
     });
 
+    categoryWrapper.appendChild(categoryLabel);
+    categoryWrapper.appendChild(categorySelect);
+
     // Subcategory Dropdown
+    const subcategoryWrapper = document.createElement('div');
+    subcategoryWrapper.classList.add('select-wrapper')
     const subCategoryLabel = document.createElement('label');
     subCategoryLabel.textContent = 'Subcategory:';
     const subCategorySelect = document.createElement('select');
@@ -5050,12 +5279,17 @@ function addNewTrait(groupContainer, traitData = null) {
         });
     }
 
+    subcategoryWrapper.appendChild(subCategoryLabel);
+    subcategoryWrapper.appendChild(subCategorySelect);
+
     // Ability Selection Dropdown
+    const abilityWrapper = document.createElement('div');
+    abilityWrapper.classList.add('select-wrapper')
     const abilityLabel = document.createElement('label');
-    abilityLabel.textContent = 'Ability:';
+    abilityLabel.textContent = 'Ability Score to use for adjustment value';
     const abilitySelect = document.createElement('select');
     abilitySelect.classList.add('trait-ability-select');
-    const abilities = ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'NONE'];
+    const abilities = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
     abilities.forEach(ability => {
         const option = document.createElement('option');
         option.textContent = ability;
@@ -5063,13 +5297,17 @@ function addNewTrait(groupContainer, traitData = null) {
         abilitySelect.appendChild(option);
     });
 
+    abilityWrapper.appendChild(abilityLabel);
+    abilityWrapper.appendChild(abilitySelect);
+
+
     // Adjustment Value
     const adjustmentValueLabel = document.createElement('label');
-    adjustmentValueLabel.textContent = 'Adjustment Value:';
+    adjustmentValueLabel.textContent = 'Adjustment Value: ';
     const adjustmentValueInput = document.createElement('input');
     adjustmentValueInput.classList.add('adjustment-value');
     adjustmentValueInput.placeholder = 'Enter value or formula';
-    adjustmentValueInput.value = traitData?.adjustmentValue || '';
+    adjustmentValueInput.value = traitData?.adjustmentValue || 0;
 
 
     // Event listener for ability selection
@@ -5110,11 +5348,9 @@ function addNewTrait(groupContainer, traitData = null) {
 
 
 
-    adjustmentContainer.appendChild(categoryLabel);
-    adjustmentContainer.appendChild(categorySelect);
-    adjustmentContainer.appendChild(subCategoryLabel);
-    adjustmentContainer.appendChild(subCategorySelect);
-    adjustmentContainer.appendChild(abilitySelect);
+    adjustmentContainer.appendChild(categoryWrapper);
+    adjustmentContainer.appendChild(subcategoryWrapper);
+    adjustmentContainer.appendChild(abilityWrapper);
     adjustmentContainer.appendChild(adjustmentValueLabel);
     adjustmentContainer.appendChild(adjustmentValueInput);
 
@@ -5122,6 +5358,17 @@ function addNewTrait(groupContainer, traitData = null) {
     traitSettings.appendChild(adjustmentContainer);
 
     adjustmentValueInput.addEventListener('blur', () => {
+
+        const value = adjustmentValueInput.value.trim();
+
+        // Check if the value is a valid number
+        if (isNaN(value) || value === "") {
+            // Reset to 0 if invalid
+            showErrorModal(`Invalid Input: "${value}". The value must be a number.`)
+            adjustmentValueInput.value = 0;
+            
+        }
+
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
     });
     
@@ -5129,6 +5376,7 @@ function addNewTrait(groupContainer, traitData = null) {
     const deleteTraitButton = document.createElement('button');
     deleteTraitButton.textContent = 'Delete Trait';
     deleteTraitButton.classList.add('delete-trait-button');
+    deleteTraitButton.classList.add('nonRollButton');
 
     // Event listener for deleting the trait
     deleteTraitButton.addEventListener('click', function () {
