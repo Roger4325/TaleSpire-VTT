@@ -63,8 +63,6 @@ const playerCharacters = [
     { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0,passivePerception: 15, spellSave: 16 },
     { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0,passivePerception: 14, spellSave: 16 },
     { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
-    
-    // Add more player characters as needed
 ];
 
 // Initialize the tracker (Removed initial call to renderMonsterCards())
@@ -935,17 +933,7 @@ async function updatePlayerCard(card, player) {
 async function fetchAndCreatePlayerCards() {
 
     try {
-        const myFragment = await TS.clients.whoAmI();
-        const allPlayers = await TS.clients.getClientsInThisBoard();
-        
-        console.log(allPlayers)
-
-        // Filter out the current player (yourself)
-        const otherPlayers = allPlayers.filter(player => player.id !== myFragment.id);
-
-        console.log(otherPlayers)
-        // Merge other players into playerCharacters array
-        mergeOtherPlayers(otherPlayers);
+        mergeOtherPlayers(clients);
 
         // Create a player card for each player
     } catch (error) {
@@ -956,25 +944,31 @@ async function fetchAndCreatePlayerCards() {
 
 // Function to merge other players into the playerCharacters array
 function mergeOtherPlayers(otherPlayers) {
-    otherPlayers.forEach(entry => {
-        const player = entry.player; // Access the player object inside each entry
-        
-        // Check if the player already exists in the playerCharacters array
-        const playerExists = playerCharacters.some(p => p.name === player.name);
+    try {
+        otherPlayers.forEach(entry => {
+            const player = entry; // Access the player object inside each entry
+            
+            // Check if the player already exists in the playerCharacters array
+            const playerExists = playerCharacters.some(p => p.name === player.name);
 
-        console.log(playerCharacters);
+            // If the player doesn't exist, add them with default stats
+            if (!playerExists) {
+                playerCharacters.push({
+                    name: player.name,
+                    hp: { current: 50, max: 50 }, // Default HP values (adjust as needed)
+                    ac: 10, // Default AC (adjust as needed)
+                    initiative: 0,
+                    talespireId: entry.id // Use entry.id for talespireId
+                });
+            }
+        });
+        console.log("Players merged successfully:", playerCharacters);
+    } catch (error) {
+        console.error("Error merging other players:", error);
 
-        // If the player doesn't exist, add them with default stats
-        if (!playerExists) {
-            playerCharacters.push({
-                name: player.name,
-                hp: { current: 50, max: 50 }, // Default HP values (you can adjust these)
-                ac: 10, // Default AC (can be adjusted)
-                initiative: 0,
-                talespireId: entry.id // Use entry.id for talespireId
-            });
-        }
-    });
+        // Fallback: Safely continue without adding players
+        console.warn("No players were merged due to an error.");
+    }
 }
 
 
@@ -1629,11 +1623,10 @@ async function sendInitiativeListToPlayer() {
         data: initiativeList
     };
 
-    const clients = await getAllOtherClients();
-
     for (const client of clients) {
         try {
-            await TS.sync.send(JSON.stringify(message), client);
+            console.log(client.id)
+            await TS.sync.send(JSON.stringify(message), client.id);
         } catch (error) {
             console.error(`Error sending initiative list to client ${client}:`, error);
         }
@@ -1649,16 +1642,13 @@ async function sendInitiativeTurn(initiativeIndex) {
         data: initiativeIndex
     };
 
-    const clients = await getAllOtherClients();
-
     for (const client of clients) {
         try {
-            await TS.sync.send(JSON.stringify(message), client);
+            await TS.sync.send(JSON.stringify(message), client.id);
         } catch (error) {
             console.error(`Error sending initiative list to client ${client}:`, error);
         }
     }
-
 }
 
 async function sendInitiativeRound() {
@@ -1668,11 +1658,9 @@ async function sendInitiativeRound() {
         data: roundCounter
     };
 
-    const clients = await getAllOtherClients();
-
     for (const client of clients) {
         try {
-            await TS.sync.send(JSON.stringify(message), client);
+            await TS.sync.send(JSON.stringify(message), client.id);
         } catch (error) {
             console.error(`Error sending initiative list to client ${client}:`, error);
         }
@@ -1728,8 +1716,6 @@ function handlePlayerResponse(parsedMessage, fromClient) {
 
     // Process the response data (update UI, log, etc.)
     console.log(`Received response for requestId: ${requestId} from player ${fromClient}`, data);
-
-    // Here you can update the GM screen with player data, e.g., show their HP, AC, etc.
 
 }
 

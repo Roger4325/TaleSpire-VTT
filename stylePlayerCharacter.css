@@ -594,9 +594,10 @@ select{
         height: 15px;
         border-radius: 50%;
         border: 1px solid white;
+        background: rgba(255, 255, 255, 0.089);
     }
 
-    .skillbuttonstyler {
+    .proficiencyButtons button > .skillbuttonstyler {
         min-width: 40px;
         border-radius: 50px;
         border: none;
@@ -604,17 +605,18 @@ select{
         align-self: center;
     }
 
-    .halfProficient {
-        background: linear-gradient(145deg, white 40%, var(--ts-button-background) 50%);
+    /* Increase specificity for the override */
+    .proficiencyButtons button.halfProficient {
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.089) 50%, var(--ts-button-background) 60%);
     }
 
-    .proficient {
+    .proficiencyButtons button.proficient {
         background: var(--ts-button-background);
     }
 
-    .expertise {
+    .proficiencyButtons button.expertise {
         background: var(--ts-button-background);
-        outline: 2px solid White;
+        outline: 1px solid White;
         outline-offset: 3px;
     }
 
@@ -842,6 +844,7 @@ select{
     border-radius: 50%;
     border: 1px solid white;
     padding: 2px;
+    background: rgba(255, 255, 255, 0.089);
 }
 
 .spell-prepared-button[value="1"] {

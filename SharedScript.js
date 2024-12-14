@@ -239,17 +239,62 @@ document.addEventListener('click', function (e) {
 
 
 let clients = [];
+let gmClient = null;
 
-function testerforclients(){
-    return clients
+// Fetch GM client and store it in a global variable
+async function getGMClient() {
+    try {
+        const myFragment = await TS.clients.whoAmI();
+        const allClients = await TS.clients.getClientsInThisBoard();
+
+        const otherClients = allClients.filter(player => player.id !== myFragment.id);
+
+        for (const client of otherClients) {
+            const clientInfo = await TS.clients.getMoreInfo([client]);
+
+            // Check if this client is in GM mode
+            if (clientInfo && clientInfo[0].clientMode === "gm") {
+                gmClient = clientInfo[0]; // Store GM client in the global variable
+                console.log("GM Client Found:", gmClient);
+                return gmClient;
+            }
+        }
+
+        // If no GM is found, reset `gmClient` to null
+        gmClient = null;
+        console.error("GM not found.");
+        return null;
+    } catch (error) {
+        console.error("Error getting GM client:", error);
+        gmClient = null;
+        return null;
+    }
 }
 
+// Fetch all clients on the board and populate the list, including GM
+async function initializeClients() {
+    try {
+        const myFragment = await TS.clients.whoAmI();
+        const allClients = await TS.clients.getClientsInThisBoard();
 
+        // Exclude the current client
+        const otherClients = allClients.filter(player => player.id !== myFragment.id);
+
+        // Add unique clients to the global list
+        otherClients.forEach(addClient);
+
+        // Fetch the GM client
+        await getGMClient();
+    } catch (error) {
+        console.error("Error initializing clients:", error);
+    }
+}
+
+// Handle events related to clients joining, leaving, or changing modes
 function handleClientEvents(eventResponse) {
     let client = eventResponse.payload.client;
-    let name = eventResponse.payload.client.player.name;
+
     TS.clients.isMe(client.id).then((isMe) => {
-        console.log("client event changed")
         switch (eventResponse.kind) {
             case "clientJoinedBoard":
                 if (!isMe) {
@@ -259,46 +304,82 @@ function handleClientEvents(eventResponse) {
             case "clientLeftBoard":
                 if (!isMe) {
                     removeClient(client.id);
+                    // If the GM client left, reset gmClient to null and re-fetch
+                    if (gmClient && gmClient.id === client.id) {
+                        gmClient = null;
+                        console.log("GM left the board. Resetting GM client.");
+                        getGMClient(); // Re-fetch GM
+                    }
                 }
                 break;
             case "clientModeChanged":
                 if (isMe) {
-                    if (eventResponse.payload.clientMode == "gm") {
-                        console.log("swtiched to GM mode")
-                        window.open("DMScreen.html")
-
+                    if (eventResponse.payload.clientMode === "gm") {
+                        console.log("Switched to GM mode");
+                        window.open("DMScreen.html");
                     } else {
-                        console.log("swtiched to player mode")
-                        window.open("PlayerCharacter.html")
+                        console.log("Switched to player mode");
+                        window.open("PlayerCharacter.html");
                     }
                 } else {
                     addClient(client);
+
+                    // If the GM client changed mode, reset and re-fetch
+                    if (gmClient && gmClient.id === client.id && eventResponse.payload.clientMode !== "gm") {
+                        gmClient = null;
+                        console.log("GM switched out of GM mode. Resetting GM client.");
+                        getGMClient(); // Re-fetch GM
+                    }
+                    else{
+                        getGMClient(); // Re-fetch GM
+                    }
                 }
                 break;
             default:
                 break;
         }
     }).catch((response) => {
-        console.error("error on trying to see whether client is own client", response);
+        console.error("Error checking client identity:", response);
     });
 }
 
-function addClient(client) {
-    TS.clients.isMe(client.id).then((isMe) => {
-        if (!isMe) {
-            clients.push({ id: client.id, name: client.player.name });
-            console.log(clients);
+// Add a client to the global list
+async function addClient(client) {
+    const clientExists = clients.some(existingClient => existingClient.id === client.id);
+    
+    if (!clientExists) {
+        clients.push({ id: client.id, name: client.player.name });
+        console.log(`Added client: ${client.player.name} (${client.id})`);
+        console.log("Current clients:", clients);
+
+        // Check if the new client is in GM mode
+        try {
+            const clientInfo = await TS.clients.getMoreInfo([client]);
+            if (clientInfo && clientInfo[0].clientMode === "gm") {
+                gmClient = client; // Set gmClient to the new GM
+                console.log(`GM client set: ${client.player.name} (${client.id})`);
+            }
+        } catch (error) {
+            console.error("Error checking client mode:", error);
         }
-    });
+    } else {
+        console.log(`Client ${client.player.name} (${client.id}) is already in the list.`);
+    }
 }
 
+
+// Remove a client from the global list by ID
 function removeClient(clientId) {
     const index = clients.findIndex(c => c.id === clientId);
     if (index !== -1) {
-        clients.splice(index, 1);
-        console.log(`Removed client with id: ${clientId}`);
+        const removedClient = clients.splice(index, 1);
+        console.log(`Removed client: ${removedClient[0].name} (${clientId})`);
+        console.log("Current clients:", clients);
+    } else {
+        console.log(`Client with id ${clientId} not found.`);
     }
 }
+
 
 async function onStateChangeEvent(msg) {
     if (msg.kind === "hasInitialized") {
@@ -335,6 +416,7 @@ async function onInit() {
     AppData.spellLookupInfo = await readSpellJson();
     AppData.monsterLookupInfo = await readMonsterJsonList();
     AppData.equipmentLookupInfo = await readEquipmentJson();
+    await initializeClients();
 
     console.log(AppData.equipmentLookupInfo)
 

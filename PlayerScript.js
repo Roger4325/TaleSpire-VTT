@@ -341,10 +341,6 @@ async function playerSetUP(){
     document.getElementById("inspirationBox").addEventListener("click", toggleInspiration);
 
 
-    sendDMUpdatedStats()
-
-
-
     // Event listener for the hit dice section
     const hitDiceButton = document.getElementById("hitDiceButton");
     hitDiceButton.addEventListener("focus", () => {
@@ -446,6 +442,9 @@ async function playerSetUP(){
         });
     });
 
+
+    sendDMUpdatedStatsDebounced()
+
 }  
 
 // Function to format numbers with commas
@@ -510,7 +509,6 @@ function toggleInspiration() {
         starContainer.classList.remove("inactive");
         starContainer.classList.add("active");
     }
-    sendDMUpdatedStats()
 }
 
 let initialHitDiceValue = "1d8"; // Default value, adjust as needed
@@ -690,6 +688,8 @@ function updateAC() {
     // Update the AC display
 
     AcDiv.textContent = finalAC
+
+    sendDMUpdatedStatsDebounced()
 }
 
 
@@ -845,7 +845,6 @@ function handleAbilityScoreChange(event) {
         updateAllSpellDCs();
         updateAllSpellDamageDice();
         updateSpellDCHeader()
-        sendDMUpdatedStats()
         updateHitDiceValue()
         updateAC();
         
@@ -1089,12 +1088,9 @@ function healCreature(healingAmount) {
             currentCharacterHP.textContent = maxHPValue;
         }
 
-
-
-        
     }
     updateContent()
-    sendDMUpdatedStats()
+    sendDMUpdatedStatsDebounced()
 }
 
 // Function to damage the creature by a specific amount
@@ -1126,7 +1122,7 @@ function damageCreature() {
         }
     }
     updateContent()
-    sendDMUpdatedStats()
+    sendDMUpdatedStatsDebounced()
 }
 
 
@@ -3679,7 +3675,7 @@ function updateSpellDCHeader(){
     spellAttackLabel.setAttribute('value', spellAttackBonus);
     spellAttackButton.textContent = `+${spellAttackBonus}`;
 
-    sendDMUpdatedStats()
+    sendDMUpdatedStatsDebounced()
 
 }
 
@@ -4251,8 +4247,33 @@ function addItemToInventory(item, group) {
         const attunementToggle = document.querySelector(`#attune-${item.uniqueId}`);
         if (attunementToggle) {
             attunementToggle.checked = true;
+            const attunementList = document.getElementById('attunement-list');
+
+            const currentAttuned = attunementList.querySelectorAll('.attunement-item input:checked').length;
+            if (currentAttuned > maxAttunements) {
+                showErrorModal("Can't attune to more than " + maxAttunements + " items.");
+                toggle.checked = false; // Revert the checkbox state
+                return; 
+            }
+            else{
+                item.attuned = true;
+                if (item.bonus) {
+                    // Add each bonus from the item to the appropriate stat
+                    item.bonus.forEach((bonus) => {
+                        addBonus(bonus.category, bonus.key, {
+                            source: item.name,
+                            value: bonus.value,
+                        });
+                    });
+                    console.log(`${item.name} equipped: Bonuses applied.`);
+                } else {
+                    console.warn(`Item ${item.name} has no bonuses to apply.`);
+                } 
+                updateContent()
+            }
+            
         }
-        console.log(item.name)
+        updateCombatStats()
     }
 
     rollableButtons(); // Add Event Listeners to all buttons
@@ -5987,40 +6008,26 @@ function handleTargetSelection(message, FromClient) {
 }
 
 
-async function getGMClient(){
+let sendDMUpdatedStatsTimeout = null;
 
-    const myFragment = await TS.clients.whoAmI();
-    const allClients = await TS.clients.getClientsInThisBoard();
-
-    const otherClients = allClients.filter(player => player.id !== myFragment.id);
-
-    let myGM; // Variable to hold the GM's information
-
-    // Loop through other clients and find the GM
-    for (const client of otherClients) {
-        // Get more info for the current client
-        const clientInfo = await TS.clients.getMoreInfo([client]);
-        
-        console.log(clientInfo)
-        
-        if (clientInfo && clientInfo[0].clientMode === "gm") { 
-            myGM = clientInfo;
-            return  myGM
-        }
+async function sendDMUpdatedStatsDebounced() {
+    if (sendDMUpdatedStatsTimeout) {
+        clearTimeout(sendDMUpdatedStatsTimeout); // Clear any previous timer
     }
 
-    if (!myGM) {
-        console.error("GM not found.");
-        return; // Exit if GM is not found
-    }
-
+    sendDMUpdatedStatsTimeout = setTimeout(async () => {
+        sendDMUpdatedStatsTimeout = null; // Reset the timeout reference
+        await sendDMUpdatedStats(); // Call the original function
+    }, 1000); // Set the debounce delay to 1 seconds
 }
+
 
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
-    myGM = await getGMClient()
 
-    if(myGM) {
+    console.log(gmClient)
+
+    if (gmClient !== null) {
         const playerStats = getPlayerData();
 
         // Construct the message object with player stats
@@ -6039,47 +6046,24 @@ async function sendDMUpdatedStats() {
         };
 
         // Send the message
-        TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+        TS.sync.send(JSON.stringify(message), gmClient.id).catch(console.error);
     }
     
 }
-
-async function sendDMUpdatedStats() {
-    // Construct the message object with player stats
-    myGM = await getGMClient()
-
-    if(myGM) {
-
-        // Construct the message object with player stats
-        const message = {
-            type: 'request-init-list', // Message type
-            data: {
-            }
-        };
-
-        // Send the message
-        TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
-    }
-    
-}
-
 
 async function sendDMInitiativeResults(totalInitiative){
 
-    myGM = await getGMClient()
-
-    const message = {
-        type: 'update-init', // Message type
-        data: {
-            Initiative: totalInitiative
-        }
-    };
-
-    TS.sync.send(JSON.stringify(message), myGM[0].id).catch(console.error);
+    if (gmClient !== null) {
+        const message = {
+            type: 'update-init', // Message type
+            data: {
+                Initiative: totalInitiative
+            }
+        };
+    
+        TS.sync.send(JSON.stringify(message), gmClient.id).catch(console.error);
+    }
 }
-
-
-
 
 function handleInitiativeResult(resultGroup) {
     console.log("Handling initiative result:", resultGroup);
@@ -6172,19 +6156,6 @@ function handleInitRound(message) {
         console.error("Invalid message structure:", message);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

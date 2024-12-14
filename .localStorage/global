@@ -4,6 +4,7 @@
             "characterTempHp": "",
             "currentHitDice": "10",
             "playerWeaponProficiency": [
+                "Martial Weapons",
                 "Simple Weapons",
                 "Greataxe",
                 "Longbow"
@@ -15,12 +16,12 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+4",
-            "AC": "19",
+            "AC": "15",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
             "playerClass": "Class (SubClass)",
-            "currentCharacterHP": "150",
+            "currentCharacterHP": "115",
             "maxCharacterHP": "200",
             "hitDiceButton": "1d8",
             "strengthScore": "18",
@@ -47,25 +48,25 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "0",
-            "proficiencyButton1": "0",
-            "proficiencyButton2": "0",
-            "proficiencyButton3": "0",
-            "proficiencyButton4": "0",
-            "proficiencyButton6": "0",
+            "": "1",
+            "proficiencyButton1": "2",
+            "proficiencyButton2": "1",
+            "proficiencyButton3": "2",
+            "proficiencyButton4": ".5",
+            "proficiencyButton6": "1",
             "proficiencyButton7": "0",
-            "proficiencyButton8": "1",
-            "proficiencyButton9": "0",
+            "proficiencyButton8": ".5",
+            "proficiencyButton9": "1",
             "proficiencyButton10": "0",
-            "proficiencyButton11": "0",
-            "proficiencyButton12": "0",
+            "proficiencyButton11": "2",
+            "proficiencyButton12": ".5",
             "proficiencyButton13": "1",
             "proficiencyButton14": "0",
-            "proficiencyButton15": "0",
+            "proficiencyButton15": "2",
             "proficiencyButton16": "0",
-            "proficiencyButton17": "0",
+            "proficiencyButton17": "1",
             "proficiencyButton18": "0",
-            "proficiencyButton19": "0",
+            "proficiencyButton19": "1",
             "proficiencyButton20": "0",
             "proficiencyButton21": "0",
             "proficiencyButton22": "0",
@@ -109,18 +110,48 @@
                             "other": false
                         }
                     }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Longsword +1",
+                        "itemId": "item-1733663221765-6fd86fe4",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Versatile",
+                        "elventhColumn": "",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
                 }
             ],
             "spellData": {
                 "spellcastingModifier": "STR",
-                "spelllevelselected": "0",
+                "spelllevelselected": "4",
                 "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [],
+                    "spells": [
+                        {
+                            "name": "Absorb Elements*",
+                            "prepared": "0"
+                        }
+                    ],
                     "slots": []
                 },
                 "2nd-level": {
@@ -176,61 +207,24 @@
                         "attuned": true
                     },
                     {
-                        "name": "Mortis Armour",
-                        "uniqueId": "item-1733527133560-5f0a7c12",
+                        "name": "Longsword",
+                        "uniqueId": "item-1732494408397-1388bd98",
                         "quantity": 1,
-                        "weight": 65,
-                        "cost": "5000 gp",
-                        "equipped": true,
-                        "attuned": true
-                    },
-                    {
-                        "name": "Robe of the Winterstep",
-                        "uniqueId": "item-1733527163099-e483dfd8",
-                        "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": true,
-                        "attuned": true
-                    },
-                    {
-                        "name": "Ring of Mind Shielding",
-                        "uniqueId": "item-1733527175233-bb35cb62",
-                        "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": true,
-                        "attuned": false
+                        "weight": 3,
+                        "cost": "15 gp",
+                        "equipped": true
                     }
                 ],
                 "backpack": [],
                 "other-possessions": [],
                 "attunement": []
             },
-            "groupTraitData": [
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "traits": [
-                        {
-                            "traitName": "",
-                            "cheveron": false,
-                            "traitDescription": "",
-                            "checkboxStates": [],
-                            "adjustmentCategory": "None",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "NONE",
-                            "adjustmentValue": "0",
-                            "numberOfUses": "0"
-                        }
-                    ]
-                }
-            ],
+            "groupTraitData": [],
             "groupNotesData": []
         },
         "Mira": {
-            "characterTempHp": "2",
-            "currentHitDice": "8",
+            "characterTempHp": "14",
+            "currentHitDice": "0",
             "playerWeaponProficiency": [
                 "Martial Weapons",
                 "Simple Weapons"
@@ -241,7 +235,13 @@
                 "Heavy",
                 "Shield"
             ],
-            "playerLanguageProficiency": [],
+            "playerLanguageProficiency": [
+                "Common",
+                "Dwarvish",
+                "Celestial",
+                "Infernal",
+                "Sylvan"
+            ],
             "playerToolsProficiency": [],
             "initiativeButton": "+2",
             "AC": "19",
@@ -251,7 +251,7 @@
             "playerClass": "Cleric (Twilight)",
             "currentCharacterHP": "82",
             "maxCharacterHP": "82",
-            "hitDiceButton": "1d8",
+            "hitDiceButton": "0d8",
             "strengthScore": "8",
             "dexterityScore": "14",
             "constitutionScore": "16",
@@ -301,9 +301,7 @@
             "proficiencyButton23": "0",
             "proficiencyButton24": "1",
             "proficiencyButton25": "1",
-            "conditions": [
-                "Concentration"
-            ],
+            "conditions": [],
             "coins": {
                 "cp": 5500,
                 "sp": 4000,
@@ -450,7 +448,7 @@
                     ],
                     "slots": [
                         true,
-                        false,
+                        true,
                         false,
                         false
                     ]
@@ -480,7 +478,7 @@
                     ],
                     "slots": [
                         true,
-                        false,
+                        true,
                         false
                     ]
                 },
@@ -517,19 +515,19 @@
                     "spells": [
                         {
                             "name": "Banishment",
-                            "prepared": "0"
+                            "prepared": "1"
                         },
                         {
                             "name": "Greater Invisibility",
-                            "prepared": "0"
+                            "prepared": "1"
                         },
                         {
                             "name": "Aura of Life*",
-                            "prepared": "0"
+                            "prepared": "1"
                         }
                     ],
                     "slots": [
-                        false,
+                        true,
                         false
                     ]
                 },
@@ -682,7 +680,7 @@
                     "traits": [
                         {
                             "traitName": "Channel Divinity: Twilight Sanctuary",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 15-ft. radius, and is filled with dim Light. The sphere moves with you, and it lasts for 1 minute or until you are incapacitated or die. When you use this feature the first time all creatures in the range get one of the features below. You may use a bonus action on your following turns to do one of the following to all creatures in range. \n\n- You grant it 1d6+7 temporary hit points.\n\n- You end one effect on it causing it to be charmed or frightened.",
                             "checkboxStates": [
                                 true,
@@ -721,7 +719,7 @@
                 },
                 {
                     "group-title": "Class Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Steps of Night",
@@ -743,7 +741,7 @@
                             "cheveron": true,
                             "traitDescription": "You have Darkvision out to a range of 300 feet. As an action, you can share this darkvision with up to 5 willing creatures you can see within 10 ft. of you, lasting for 1 hour. Once you share it, you can’t do so again until you finish a long rest, unless you expend a spell slot of any level to share it again.",
                             "checkboxStates": [
-                                false
+                                true
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
@@ -770,7 +768,7 @@
                     "traits": [
                         {
                             "traitName": "Earth Walk",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "You can move across difficult terrain on the ground or a floor without using extra movement if you’re using your walking speed.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
@@ -785,7 +783,7 @@
                             "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
                                 true,
-                                false,
+                                true,
                                 false
                             ],
                             "adjustmentCategory": "skills",
@@ -799,7 +797,7 @@
                             "cheveron": true,
                             "traitDescription": "You learn Blade Ward and can cast it normally. You can also cast it as a bonus action 3 per long rest. At 5th level, you can cast Pass without Trace once per long rest without requiring a material component. You can also cast it using any spell slots you have of 2nd level or higher.\n\nYour spellcasting modifier is Wisdom",
                             "checkboxStates": [
-                                false
+                                true
                             ],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
@@ -811,7 +809,7 @@
                 },
                 {
                     "group-title": "Background Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Shelter of the Faithful",
@@ -3840,26 +3838,22 @@
             "groupTraitData": [
                 {
                     "group-title": "Class Features",
-                    "group-chevron": true,
+                    "group-chevron": false,
                     "traits": [
                         {
                             "traitName": "Fighting Style (Great Weapon Fighting)",
                             "cheveron": false,
                             "traitDescription": "You can reroll a 1 or 2 on damage dice with melee weapons wielded with two hands.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Second Wind",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "Once per short rest, you can use a bonus action to regain 1d10 + 8 HP.",
                             "checkboxStates": [
                                 false
@@ -3872,7 +3866,7 @@
                         },
                         {
                             "traitName": "Action Surge",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "You can take one additional action on your turn. This can be used 1 times per short rest.",
                             "checkboxStates": [
                                 false
@@ -3885,33 +3879,25 @@
                         },
                         {
                             "traitName": "Know Your Enemy",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn information about its capabilities compared to your own: Strength score, Dexterity score, Constitution score, Armor Class, current HP, total class levels (if any), fighter class levels (if any)",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Extra Attack",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "You can attack twice whenever you take the Attack action on your turn.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         }
                     ]
                 },
@@ -3940,76 +3926,56 @@
                             "traitName": "Goading Attack",
                             "cheveron": true,
                             "traitDescription": "When you hit with a weapon attack, you can expend one superiority die to add the total to the damage roll and the target must make a WIS saving throw (DC 15). On failure, the target has disadvantage on all attack rolls against targets other than you until the end of your next turn.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Bait and Switch",
                             "cheveron": true,
                             "traitDescription": "When you’re within 5 ft. of a creature on your turn, you can expend one superiority die and switch places with that creature, provided you spend at least 5 ft. of movement and the creature is willing and isn’t incapacitated. This movement doesn’t provoke opportunity attacks.\n\nRoll the superiority die. Until the start of your next turn, you or the other creature (your choice) gains a bonus to AC equal to the number rolled.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Pushing Attack",
                             "cheveron": true,
                             "traitDescription": "When you hit with a weapon attack, you can expend one superiority die to add the total to the damage roll, and if the target is Large or smaller, it must make a STR saving throw (DC 15). On failure, you push the target up to 15 ft. away from you.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Evasive Footwork",
                             "cheveron": true,
                             "traitDescription": "When you move, you can expend one superiority die, rolling the die and adding the number rolled to your AC until you stop moving.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Parry",
                             "cheveron": true,
                             "traitDescription": "When another creature damages you with a melee attack, you can use your reaction and expend one superiority die to reduce the damage by the number you roll on your superiority die + 2.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         }
                     ]
                 },
@@ -4019,7 +3985,7 @@
                     "traits": [
                         {
                             "traitName": "Tough",
-                            "cheveron": false,
+                            "cheveron": true,
                             "traitDescription": "Your HP maximum increases by 16.",
                             "checkboxStates": [],
                             "adjustmentCategory": "skills",
@@ -4032,16 +3998,12 @@
                             "traitName": "Sentinel",
                             "cheveron": true,
                             "traitDescription": "When you hit a creature with an opportunity attack, the creature's speed becomes 0 for the rest of the turn. Creatures provoke opportunity attacks from you even if they take the Disengage action. When a creature within 5 ft. of you makes an attack against a target other than you, you can use your reaction to make a melee weapon attack against the attacking creature.",
-                            "checkboxStates": [
-                                false,
-                                false,
-                                false
-                            ],
+                            "checkboxStates": [],
                             "adjustmentCategory": "skills",
                             "adjustmentSubCategory": "Acrobatics",
                             "adjustmentAbility": "NONE",
                             "adjustmentValue": "0",
-                            "numberOfUses": "3"
+                            "numberOfUses": "0"
                         },
                         {
                             "traitName": "Athlete",
