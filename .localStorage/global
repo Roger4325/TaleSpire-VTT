@@ -276,31 +276,31 @@
             "sleightofHandAbilityMod": "DEX",
             "stealthAbilityMod": "DEX",
             "survivalAbilityMod": "WIS",
-            "": "1",
-            "proficiencyButton1": "0",
-            "proficiencyButton2": "0",
-            "proficiencyButton3": "0",
-            "proficiencyButton4": "0",
-            "proficiencyButton6": "0",
-            "proficiencyButton7": "0",
-            "proficiencyButton8": "1",
-            "proficiencyButton9": "0",
-            "proficiencyButton10": "0",
-            "proficiencyButton11": "0",
-            "proficiencyButton12": "0",
-            "proficiencyButton13": "1",
-            "proficiencyButton14": "0",
-            "proficiencyButton15": "0",
-            "proficiencyButton16": "1",
-            "proficiencyButton17": "0",
-            "proficiencyButton18": "0",
-            "proficiencyButton19": "1",
-            "proficiencyButton20": "0",
-            "proficiencyButton21": "0",
-            "proficiencyButton22": "0",
-            "proficiencyButton23": "0",
-            "proficiencyButton24": "1",
-            "proficiencyButton25": "1",
+            "": 1,
+            "pb-1": 0,
+            "pb-2": 0,
+            "pb-3": 0,
+            "pb-4": 0,
+            "pb-5": 0,
+            "pb-6": 0,
+            "pb-7": 1,
+            "pb-8": 0,
+            "pb-9": 0,
+            "pb-10": 0,
+            "pb-11": 0,
+            "pb-12": 1,
+            "pb-13": 0,
+            "pb-14": 0,
+            "pb-15": 1,
+            "pb-16": 0,
+            "pb-17": 0,
+            "pb-18": 1,
+            "pb-19": 0,
+            "pb-20": 0,
+            "pb-21": 0,
+            "pb-22": 0,
+            "pb-23": 1,
+            "pb-24": 1,
             "conditions": [],
             "coins": {
                 "cp": 5500,
@@ -4025,32 +4025,39 @@
     "Encounter Data": {
         "Vampire Gate Guards": [
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Draven, Guard Commander (A)",
                 "currentHp": "60",
                 "maxHp": "60",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Vampire Spawn (A)",
                 "currentHp": "35",
                 "maxHp": "35",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Vampire Spawn (B)",
                 "currentHp": "35",
                 "maxHp": "35",
                 "tempHp": "0",
-                "conditions": []
+                "conditions": [],
+                "isClosed": 1
             }
         ],
         "Dorian de Nocte": [
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Dorian de Nocte (A)",
                 "currentHp": "230",
@@ -4060,6 +4067,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Dorian de Nocte - Lair (A)",
                 "currentHp": "230",
@@ -4069,6 +4077,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Mannequin Minion (A)",
                 "currentHp": "20",
@@ -4078,6 +4087,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Mannequin Minion (B)",
                 "currentHp": "20",
@@ -4089,6 +4099,7 @@
         ],
         "TESTER": [
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Dorian de Nocte (A)",
                 "currentHp": "230",
@@ -4098,6 +4109,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Dorian de Nocte - Lair (A)",
                 "currentHp": "230",
@@ -4107,6 +4119,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Mannequin Minion (A)",
                 "currentHp": "20",
@@ -4116,6 +4129,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Mannequin Minion (B)",
                 "currentHp": "20",
@@ -4125,6 +4139,7 @@
                 "isClosed": 1
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Ancient Black Dragon (A)",
                 "currentHp": "367",
@@ -4134,6 +4149,7 @@
                 "isClosed": 0
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Aboleth (A)",
                 "currentHp": "135",
@@ -4143,6 +4159,7 @@
                 "isClosed": 0
             },
             {
+                "isMonster": 1,
                 "init": "0",
                 "name": "Merrow (A)",
                 "currentHp": "45",
@@ -4150,6 +4167,51 @@
                 "tempHp": "0",
                 "conditions": [],
                 "isClosed": 0
+            }
+        ],
+        "testing": [
+            {
+                "isMonster": 1,
+                "init": "0",
+                "name": "Draven, Guard Commander (A)",
+                "currentHp": "60",
+                "maxHp": "60",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "isMonster": 1,
+                "init": "0",
+                "name": "Vampire Spawn (A)",
+                "currentHp": "35",
+                "maxHp": "35",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "isMonster": 1,
+                "init": "0",
+                "name": "Vampire Spawn (B)",
+                "currentHp": "35",
+                "maxHp": "35",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 1
+            },
+            {
+                "isMonster": 0,
+                "name": "default",
+                "talespireId": "09112889-0c6c-4174-a11f-e0ebecbfe02f",
+                "hp": {
+                    "current": 40,
+                    "max": 40
+                },
+                "ac": 14,
+                "initiative": 10,
+                "passivePerception": 0,
+                "spellSave": 12
             }
         ]
     }

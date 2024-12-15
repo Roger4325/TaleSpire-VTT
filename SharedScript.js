@@ -239,7 +239,6 @@ document.addEventListener('click', function (e) {
 
 
 let clients = [];
-let playersInCampaign = [];
 let gmClient = null;
 
 // Fetch GM client and store it in a global variable
@@ -427,11 +426,11 @@ async function onInit() {
     
     if (ownerInfo.clientMode === "gm") {
         console.log("GMing is awesome");
+        await getPlayersInCampaign()
         establishMonsterData()
     }
     else{
         await playerSetUP();
-        // loadAndDisplayCharacter("Tryn");
         loadAndPickaCharacter()
     }
     rollableButtons();

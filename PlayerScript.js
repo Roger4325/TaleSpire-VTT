@@ -5954,26 +5954,8 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
-function handleRequestInfo(message, FromClient) {
-    const requestId = message.requestId; // Unique ID to correlate responses
-    const requestedFields = message.data.request;
-
-    const playerData = getPlayerData(); // Assume getPlayerData returns player info
-
-    // Build the response data based on requested fields
-    const responseData = {};
-    requestedFields.forEach(field => {
-        responseData[field] = playerData[field];
-    });
-
-    // Send the response message back
-    const responseMessage = {
-        type: 'request-stats',
-        data: responseData
-    };
-
-    TS.sync.send(JSON.stringify(responseMessage), FromClient).catch(console.error);
-    console.log("Responded to request for player info:", responseData);
+function handleRequestInfo() {
+    sendDMUpdatedStats()
 }
 
 

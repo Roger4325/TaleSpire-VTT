@@ -714,7 +714,7 @@ function populateMonsterListField(elementId, items, type) {
 // Event listener for adding a new empty player card
 document.getElementById('add-player-button').addEventListener('click', async function() {
     // await fetchAndCreatePlayerCards();
-    await getPlayersInCampaign();
+    mergeOtherPlayers(playersInCampaign) ;
     createEmptyPlayerCard();
     closePopup();
     
@@ -790,6 +790,8 @@ function createEmptyPlayerCard() {
     } else {
         console.error('Initiative tracker container not found.');
     }
+
+    return card
 }
 
 async function updatePlayerCard(card, player) {
@@ -925,6 +927,8 @@ async function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
+
+    reorderCards();
 }
 
 
@@ -932,17 +936,6 @@ async function updatePlayerCard(card, player) {
 
 
 // Fetch players on the board and populate the dropdown
-async function fetchAndCreatePlayerCards() {
-
-    try {
-        mergeOtherPlayers(clients);
-
-        // Create a player card for each player
-    } catch (error) {
-        console.error("Error getting players:", error);
-    }
-}
-
 
 // Function to merge other players into the playerCharacters array
 function mergeOtherPlayers(otherPlayers) {
@@ -1237,10 +1230,12 @@ function saveMonsterCardsAsEncounter(encounterName) {
     console.log("Trying to Save Encounter: ", encounterName)
     // Get all monster cards on the screen
     const monsterCards = document.querySelectorAll('.monster-card');
+    const playerCards = document.querySelectorAll('.player-card');
     const encounterData = [];
 
     // Loop through each card to collect data
     monsterCards.forEach(card => {
+        const isMonster = 1;
         const init = card.querySelector('.init-input').value;
         const name = card.querySelector('.monster-name').textContent;
         const currentHp = card.querySelector('.current-hp').textContent;
@@ -1257,6 +1252,7 @@ function saveMonsterCardsAsEncounter(encounterName) {
 
         // Push the gathered data for each monster into the encounterData array
         encounterData.push({
+            isMonster,
             init,
             name,
             currentHp,
@@ -1264,6 +1260,29 @@ function saveMonsterCardsAsEncounter(encounterName) {
             tempHp,
             conditions,
             isClosed // Save the state (0 for open, 1 for closed)
+        });
+    });
+    playerCards.forEach(card => {
+        const isMonster = 0;
+        const name = card.querySelector('.monster-name')?.value || "default"; 
+        const talespireId = card.getAttribute('data-player-id');
+        const hpCurrent = parseInt(card.querySelector('.hp-current-input')?.value) || 40; 
+        const hpMax = parseInt(card.querySelector('.hp-max-input')?.value) || 40; 
+        const ac = parseInt(card.querySelector('.ac-input')?.value) || 14; 
+        const initiative = parseInt(card.querySelector('.init-input')?.value) || 0; 
+        const passivePerception = parseInt(card.querySelector('.passive-perception-input')?.value) || 0; 
+        const spellSave = parseInt(card.querySelector('.spell-save-input')?.value) || 12; // Default to 12 if not available
+    
+        // Push the gathered data for each player character into the encounterData array
+        encounterData.push({
+            isMonster,
+            name,
+            talespireId,
+            hp: { current: hpCurrent, max: hpMax },
+            ac,
+            initiative,
+            passivePerception,
+            spellSave
         });
     });
 
@@ -1520,14 +1539,27 @@ function updateMonsterCardDataFromLoad(encounterData) {
 
     // Loop through the monsters in the encounter data and create a new card for each
     encounterData.forEach(monster => {
-        // Create an empty monster card
-        const newMonsterCard = createEmptyMonsterCard();
 
-        // Populate the monster card with the correct data
-        updateMonsterCard(newMonsterCard, monster);
+        console.log(monster)
 
-        // Append the new monster card to the container
-        monsterCardsContainer.appendChild(newMonsterCard);
+        if (monster.isMonster === 0){
+            mergeOtherPlayers(playersInCampaign) ;
+            const card = createEmptyPlayerCard();
+            updatePlayerCard(card, monster)
+            closePopup();
+        
+        }
+        else{
+            // Create an empty monster card
+            const newMonsterCard = createEmptyMonsterCard();
+
+            // Populate the monster card with the correct data
+            updateMonsterCard(newMonsterCard, monster);
+
+            // Append the new monster card to the container
+            monsterCardsContainer.appendChild(newMonsterCard);
+        }
+        
     });
 }
 
@@ -1569,8 +1601,7 @@ function handleInitiativeResult(resultGroup) {
 }
 
 
-
-
+let playersInCampaign;
 
 async function getPlayersInCampaign() {
     // Get the array of player fragments from the campaign
@@ -1604,30 +1635,35 @@ async function getPlayersInCampaign() {
 
     // Filter out null values (the ones that were skipped or had errors)
     const validPlayerInfos = playerInfos.filter(info => info !== null);
-    console.log("Valid Player Infos:", validPlayerInfos);
-
-    mergeOtherPlayers(validPlayerInfos) 
+    playersInCampaign = validPlayerInfos
 }
+
+
+// Subscribe to the event for player joining
+function handlePlayerPermissionEvents() {
+        getPlayersInCampaign();
+};
 
 
 
 
 // Requestion and recieving information from other connected clients. 
 
-async function requestPlayerInfo(player) {
-    const requestId = generateUUID(); // Generate unique ID for the request
-    
+async function requestPlayerInfo() {
+
     const message = {
         type: 'request-info',
-        requestId, // Include the request ID to track the response
         data: {
             request: ['characterName', 'hp', 'ac', 'passivePerception','spellSave'] // Requesting specific info
         }
     };
 
-    // Send the message to the selected player
-    TS.sync.send(JSON.stringify(message), player).catch(console.error);
-    console.log("Request for info sent with requestId:", requestId);
+    // Send the message to all players on the board
+     try {
+        await TS.sync.send(JSON.stringify(message), "board");
+    } catch (error) {
+        console.error(`Error sending initiative list to client :`, error);
+    }
 }
 
 
@@ -1711,11 +1747,11 @@ async function sendInitiativeRound() {
 
 
 async function handleSyncEvents(event) {
-    console.log("Getting message");
 
     let fromClient = event.payload.fromClient.id;
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
+            console.log("Getting message");
             const parsedMessage = JSON.parse(event.payload.str);
 
             // Route the message based on its type using the messageHandlers library
@@ -1747,7 +1783,7 @@ function handleRequestedStats(parsedMessage, fromClient) {
     // Extract player data from the parsedMessage
     console.log(parsedMessage)
     const playerData = parsedMessage.data; // Assuming data contains stats like HP, AC, etc.
-    const playerId = parsedMessage.playerId; // Assume fromClient is the unique player ID (client.id)
+    const playerId = parsedMessage.playerId.id; // Assume fromClient is the unique player ID (client.id)
  
     // Get all the player cards from the DOM
     const playerCards = document.querySelectorAll('.player-card');
@@ -1755,7 +1791,7 @@ function handleRequestedStats(parsedMessage, fromClient) {
     // Loop through all the player cards and update the matching one
     playerCards.forEach(card => {
         // Assuming you've stored the player's ID in the card's dataset
-        const cardPlayerId = card.dataset.playerId; 
+        const cardPlayerId = card.dataset.playerId;
 
         // If the card's player ID matches the fromClient ID, update the card
         if (cardPlayerId === playerId) {
@@ -1810,5 +1846,3 @@ function handleUpdatePlayerInitiative(parsedMessage, fromClient){
 function handleRequestInitList(){
     debouncedSendInitiativeListToPlayer()
 }
-
-
