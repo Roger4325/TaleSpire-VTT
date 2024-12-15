@@ -239,6 +239,7 @@ document.addEventListener('click', function (e) {
 
 
 let clients = [];
+let playersInCampaign = [];
 let gmClient = null;
 
 // Fetch GM client and store it in a global variable

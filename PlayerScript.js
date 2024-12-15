@@ -46,6 +46,7 @@ const savesProficiencyLevels = [
     { class: "proficient", title: "proficient", value: "1" }
 ];
 
+let isMe;
 
 //Define all message Types and the functions they should call this should be expanded as I need different types of messages. 
 const messageHandlers = {
@@ -442,9 +443,9 @@ async function playerSetUP(){
         });
     });
 
+    isMe = await TS.players.whoAmI()
 
     sendDMUpdatedStatsDebounced()
-
 }  
 
 // Function to format numbers with commas
@@ -1679,7 +1680,7 @@ function getAllEditableContent() {
 
     // Add proficiency levels to the content object
     proficiencyButtons.forEach((button) => {
-        content[button.id] = button.value;
+        content[button.id] = parseFloat(button.value);
     });
 
     // Add conditions into the content to be saved
@@ -1701,6 +1702,8 @@ function getAllEditableContent() {
             coins[coin] = parseInt(coinInput.value.replace(/,/g, ''), 10) || 0; // Save as a number
         }
     });
+
+
 
     content['coins'] = coins; // Add coins object to content
 
@@ -1867,11 +1870,26 @@ return actionTableData;
 
 
 
+// Debounce utility function
+function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+}
+
+// Original updateContent function with debounce
+const debouncedGetAllEditableContent = debounce(() => {
+    const allEditableContent = getAllEditableContent();
+    // You can handle `allEditableContent` here if needed
+    console.log(allEditableContent); // Example: log the content
+}, 1000); // Adjust the debounce delay as necessary (e.g., 300ms)
 
 
 // Function to update content whenever a change occurs
 function updateContent() {
-    const allEditableContent = getAllEditableContent();
+    debouncedGetAllEditableContent();
 }
 
 // Add input and content-editable event listeners
@@ -5934,6 +5952,7 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 
 
+
 // Handle a request for player info (e.g., name, HP, AC, etc.)
 function handleRequestInfo(message, FromClient) {
     const requestId = message.requestId; // Unique ID to correlate responses
@@ -5950,7 +5969,6 @@ function handleRequestInfo(message, FromClient) {
     // Send the response message back
     const responseMessage = {
         type: 'request-stats',
-        requestId,
         data: responseData
     };
 
@@ -6033,6 +6051,7 @@ async function sendDMUpdatedStats() {
         // Construct the message object with player stats
         const message = {
             type: 'request-stats', // Message type
+            playerId: isMe,
             data: {
                 characterName: playerStats.characterName || playerStats.name, // Use characterName or name
                 hp: {

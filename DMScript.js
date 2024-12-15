@@ -20,6 +20,7 @@ function extractRollResult(message) {
 let monsterNames
 let monsterData
 
+
 function establishMonsterData(){
     const monsterDataObject = AppData.monsterLookupInfo;
     monsterNames = monsterDataObject.monsterNames;
@@ -712,9 +713,10 @@ function populateMonsterListField(elementId, items, type) {
 
 // Event listener for adding a new empty player card
 document.getElementById('add-player-button').addEventListener('click', async function() {
-    await fetchAndCreatePlayerCards()
+    // await fetchAndCreatePlayerCards();
+    await getPlayersInCampaign();
     createEmptyPlayerCard();
-    closePopup()
+    closePopup();
     
 });
 
@@ -945,9 +947,15 @@ async function fetchAndCreatePlayerCards() {
 // Function to merge other players into the playerCharacters array
 function mergeOtherPlayers(otherPlayers) {
     try {
-        otherPlayers.forEach(entry => {
+        // Flatten the array of arrays into a single array of player objects
+        const flattenedPlayers = otherPlayers.flat();
+
+        // Iterate over each player object in the flattened array
+        flattenedPlayers.forEach(entry => {
             const player = entry; // Access the player object inside each entry
-            
+
+            console.log(player.id)
+
             // Check if the player already exists in the playerCharacters array
             const playerExists = playerCharacters.some(p => p.name === player.name);
 
@@ -958,7 +966,7 @@ function mergeOtherPlayers(otherPlayers) {
                     hp: { current: 50, max: 50 }, // Default HP values (adjust as needed)
                     ac: 10, // Default AC (adjust as needed)
                     initiative: 0,
-                    talespireId: entry.id // Use entry.id for talespireId
+                    talespireId: player.id // Use clientId for talespireId
                 });
             }
         });
@@ -970,6 +978,8 @@ function mergeOtherPlayers(otherPlayers) {
         console.warn("No players were merged due to an error.");
     }
 }
+
+
 
 
 
@@ -1562,6 +1572,42 @@ function handleInitiativeResult(resultGroup) {
 
 
 
+async function getPlayersInCampaign() {
+    // Get the array of player fragments from the campaign
+    let tester = await TS.players.getPlayersInThisCampaign();
+    console.log("Player Fragments:", tester);  // Log the player fragments array for reference
+
+    // Create an array of promises to process each player
+    const playerPromises = tester.map(async (playerFragment) => {
+        try {
+            // Check if this player is 'me' using the isMe function
+            const isPlayerMe = await TS.players.isMe(playerFragment);
+
+            if (isPlayerMe) {
+                console.log("Skipping player (it's you):", playerFragment);  // Log that it's you
+                return null;  // Skip this player by returning null
+            }
+
+            // Call getMoreInfo to get additional information about the player
+            const playerInfo = await TS.players.getMoreInfo([playerFragment]);
+            console.log("Player Info:", playerInfo);  // Log the player info to console
+            return playerInfo;  // Return the player info
+
+        } catch (error) {
+            console.error("Error fetching info for player:", playerFragment, error);
+            return null;  // In case of error, return null
+        }
+    });
+
+    // Wait for all the promises to resolve and handle them in parallel
+    const playerInfos = await Promise.all(playerPromises);
+
+    // Filter out null values (the ones that were skipped or had errors)
+    const validPlayerInfos = playerInfos.filter(info => info !== null);
+    console.log("Valid Player Infos:", validPlayerInfos);
+
+    mergeOtherPlayers(validPlayerInfos) 
+}
 
 
 
@@ -1623,14 +1669,12 @@ async function sendInitiativeListToPlayer() {
         data: initiativeList
     };
 
-    for (const client of clients) {
-        try {
-            console.log(client.id)
-            await TS.sync.send(JSON.stringify(message), client.id);
-        } catch (error) {
-            console.error(`Error sending initiative list to client ${client}:`, error);
-        }
+    try {
+        await TS.sync.send(JSON.stringify(message), "board");
+    } catch (error) {
+        console.error(`Error sending initiative list to client :`, error);
     }
+    
     highlightCurrentTurn()
     sendInitiativeRound()
 }
@@ -1642,48 +1686,26 @@ async function sendInitiativeTurn(initiativeIndex) {
         data: initiativeIndex
     };
 
-    for (const client of clients) {
-        try {
-            await TS.sync.send(JSON.stringify(message), client.id);
-        } catch (error) {
-            console.error(`Error sending initiative list to client ${client}:`, error);
-        }
+    try {
+        await TS.sync.send(JSON.stringify(message), "board");
+    } catch (error) {
+        console.error(`Error sending initiative list to client :`, error);
     }
 }
 
 async function sendInitiativeRound() {
-
     const message = {
         type: 'player-init-round',
         data: roundCounter
     };
 
-    for (const client of clients) {
-        try {
-            await TS.sync.send(JSON.stringify(message), client.id);
-        } catch (error) {
-            console.error(`Error sending initiative list to client ${client}:`, error);
-        }
+    try {
+        await TS.sync.send(JSON.stringify(message), "board");
+    } catch (error) {
+        console.error(`Error sending initiative list to client :`, error);
     }
 }
 
-
-
-
-
-
-
-
-async function getAllOtherClients(){
-
-    const myFragment = await TS.clients.whoAmI();
-    const allClients = await TS.clients.getClientsInThisBoard();
-
-    const otherClients = allClients.filter(player => player.id !== myFragment.id);
-
-    return otherClients
-
-}
 
 
 
@@ -1719,17 +1741,14 @@ function handlePlayerResponse(parsedMessage, fromClient) {
 
 }
 
-
-
-
 function handleRequestedStats(parsedMessage, fromClient) {
     console.log("Handling player stats update from:", fromClient);
 
     // Extract player data from the parsedMessage
     console.log(parsedMessage)
     const playerData = parsedMessage.data; // Assuming data contains stats like HP, AC, etc.
-    const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
-
+    const playerId = parsedMessage.playerId; // Assume fromClient is the unique player ID (client.id)
+ 
     // Get all the player cards from the DOM
     const playerCards = document.querySelectorAll('.player-card');
 
@@ -1744,9 +1763,6 @@ function handleRequestedStats(parsedMessage, fromClient) {
         }
     });
 }
-
-
-
 
 function handleUpdatePlayerHealth(parsedMessage, fromClient) {
     console.log("Handling player health update from:", fromClient);
