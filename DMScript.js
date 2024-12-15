@@ -58,11 +58,6 @@ function handleMessage(message) {
 
 
 const playerCharacters = [
-    { name: 'Sterling', hp: { current: 74, max: 74 }, ac: 19, initiative: 0,passivePerception: 11, spellSave: 15 },
-    { name: 'Alduin', hp: { current: 51, max: 51 }, ac: 15, initiative: 0,passivePerception: 12, spellSave: 13 },
-    { name: 'Cralamin', hp: { current: 41, max: 41 }, ac: 10, initiative: 0,passivePerception: 15, spellSave: 16 },
-    { name: 'Wallace', hp: { current: 50, max: 50 }, ac: 20, initiative: 0,passivePerception: 15, spellSave: 16 },
-    { name: 'Barnibus', hp: { current: 40, max: 40 }, ac: 14, initiative: 0,passivePerception: 14, spellSave: 16 },
     { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
 ];
 
@@ -417,6 +412,28 @@ function updateMonsterCard(card, monster) {
                 // If there's still damage left, subtract from current HP
                 if (damage > 0) {
                     currentHP = Math.max(0, currentHP - damage);
+                }
+                
+                if (activeMonsterCard) {
+                    // Find the condition tracker div inside the active monster card
+                    conditionTrackerDiv = activeMonsterCard.querySelector('.condition-tracker');
+                    console.log()
+
+                    // Retrieve the condition set from the conditions map for this specific monster
+                    conditionsSet = conditionsMap.get(activeMonsterCard);
+
+                    if (!conditionsSet) {
+                        console.log('No conditions set for this monster yet.');
+                    } else {
+                        if (conditionsSet.has('Concentration')) {
+                            const dc = Math.max(10, Math.ceil(damage / 2));
+                            showErrorModal(`Roll a Con save. <br> DC: ${dc}`,1000);
+                        }
+                    }
+                } else {
+                    console.log('No active monster selected.');
+                    conditionTrackerDiv = document.getElementById('conditionTracker');
+                    conditionsSet = conditionsMap.get(conditionTrackerDiv);
                 }
             } else if (adjustment > 0) { // Healing case
                 currentHP = Math.min(maxHP, currentHP + adjustment); // Heal current HP, but no effect on temp HP
@@ -1023,7 +1040,7 @@ function debounce(func, delay) {
     };
 }
 
-
+let currentMonsterCard
 
 // Function to highlight the current card
 function highlightCurrentTurn() {
@@ -1039,6 +1056,7 @@ function highlightCurrentTurn() {
     const currentCard = tracker.querySelectorAll(".monster-card, .player-card")[currentTurnIndex];
     if (currentCard) {
         currentCard.classList.add('current-turn');
+        currentMonsterCard = currentCard
     }
 
     debounce(sendInitiativeTurn(currentTurnIndex), 1000);
@@ -1056,6 +1074,30 @@ function updateRoundDisplay() {
 function nextTurn() {
     const tracker = document.getElementById("initiative-tracker");
     const cards = tracker.querySelectorAll(".monster-card, .player-card");
+
+ 
+
+    if (currentMonsterCard) {
+        // Find the condition tracker div inside the active monster card
+        conditionTrackerDiv = currentMonsterCard.querySelector('.condition-tracker');
+        console.log(conditionTrackerDiv)
+
+        // Retrieve the condition set from the conditions map for this specific monster
+        conditionsSet = conditionsMap.get(currentMonsterCard);
+        console.log(conditionsSet)
+
+        if (!conditionsSet) {
+            console.log('No conditions set for this monster yet.');
+        } else {
+            if (conditionsSet.has('Recharging')) {
+                showErrorModal(`Roll Recharge`,1000);
+            }
+        }
+    } else {
+        console.log('No active monster selected.');
+        conditionTrackerDiv = document.getElementById('conditionTracker');
+        conditionsSet = conditionsMap.get(conditionTrackerDiv);
+    }
 
     // Increment the turn index
     currentTurnIndex++;
@@ -1264,14 +1306,14 @@ function saveMonsterCardsAsEncounter(encounterName) {
     });
     playerCards.forEach(card => {
         const isMonster = 0;
-        const name = card.querySelector('.monster-name')?.value || "default"; 
+        const name = card.querySelector('.monster-name')?.textContent || "default"; 
         const talespireId = card.getAttribute('data-player-id');
-        const hpCurrent = parseInt(card.querySelector('.hp-current-input')?.value) || 40; 
-        const hpMax = parseInt(card.querySelector('.hp-max-input')?.value) || 40; 
-        const ac = parseInt(card.querySelector('.ac-input')?.value) || 14; 
+        const hpCurrent = 0; 
+        const hpMax = 0; 
+        const ac = 0; 
         const initiative = parseInt(card.querySelector('.init-input')?.value) || 0; 
-        const passivePerception = parseInt(card.querySelector('.passive-perception-input')?.value) || 0; 
-        const spellSave = parseInt(card.querySelector('.spell-save-input')?.value) || 12; // Default to 12 if not available
+        const passivePerception = 0; 
+        const spellSave = 0; 
     
         // Push the gathered data for each player character into the encounterData array
         encounterData.push({
@@ -1660,6 +1702,7 @@ async function requestPlayerInfo() {
 
     // Send the message to all players on the board
      try {
+        console.log("sending message request")
         await TS.sync.send(JSON.stringify(message), "board");
     } catch (error) {
         console.error(`Error sending initiative list to client :`, error);

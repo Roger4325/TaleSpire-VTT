@@ -166,6 +166,7 @@
                         <option value="Stunned">Stunned</option>
                         <option value="Unconscious">Unconscious</option>
                         <option value="Slow">Slow</option>
+                        <option value="Recharging">Recharging</option>
                     <!-- Add more condition options here -->
                     </select>
                     <button class="nonRollButton" onclick="monsterConditions()">Add Condition</button>
@@ -195,11 +196,9 @@
     <div id="errorModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            
+            <p id="errorModalMessage"></p>
             <button id="removeButton" style="display: none;">Delete from Global</button>
-            
         </div>
-        <span class="modal-text"></span>
     </div>
     <script>
         

@@ -4031,7 +4031,9 @@
                 "currentHp": "60",
                 "maxHp": "60",
                 "tempHp": "0",
-                "conditions": [],
+                "conditions": [
+                    "Recharging"
+                ],
                 "isClosed": 1
             },
             {
@@ -4202,16 +4204,16 @@
             },
             {
                 "isMonster": 0,
-                "name": "default",
+                "name": "Tester Mc-Testy",
                 "talespireId": "09112889-0c6c-4174-a11f-e0ebecbfe02f",
                 "hp": {
-                    "current": 40,
-                    "max": 40
+                    "current": 0,
+                    "max": 0
                 },
-                "ac": 14,
+                "ac": 0,
                 "initiative": 10,
                 "passivePerception": 0,
-                "spellSave": 12
+                "spellSave": 0
             }
         ]
     }

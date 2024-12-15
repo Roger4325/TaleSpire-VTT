@@ -988,7 +988,7 @@ function loadDataFromGlobalStorage(dataType) {
 }
 
 //Error Modal that will display any and all errors that happen when the user does something that they shouldn't like putting incorrect dice into a dice only input.
-function showErrorModal(errorMessage) {
+function showErrorModal(errorMessage, delayTimer = 2000) {
     const modal = document.getElementById('errorModal');
     const modalMessage = document.getElementById('errorModalMessage');
     const closeButton = document.querySelector('#errorModal .close');
@@ -1002,11 +1002,12 @@ function showErrorModal(errorMessage) {
         modal.style.display = 'none';
     });
 
-    // Automatically hide modal after 2 seconds
+    // Automatically hide modal after the specified delay
     setTimeout(() => {
         modal.style.display = 'none';
-    }, 2000);
+    }, delayTimer);
 }
+
 
 
 
