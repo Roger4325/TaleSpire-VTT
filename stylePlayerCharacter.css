@@ -24,7 +24,7 @@
     align-items: center;
     color: #fff;
     padding: 5px;
-    z-index: 999; /* Ensure it's above other content */
+    z-index: 8; /* Ensure it's above other content */
 }
 
 
@@ -52,7 +52,7 @@
     padding: 5px;
     cursor: pointer;
     border: 1px solid var(--ts-button-background);
-    font-size: 12px;
+    font-size: 10px;
 }
 .toggle-button:hover {
     background-color: var(--ts-button-hover);
@@ -109,6 +109,8 @@
 
 select{
     border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
+    padding: 2px;
     background: none;
     color:white;
     font-family: 'OptimusPrinceps', sans-serif;
@@ -372,7 +374,7 @@ select{
 }
 
 #alignment-select{
-    margin-right: 5px;
+    margin-right: 3px;
 }
 
 .random-container {
@@ -1991,12 +1993,112 @@ vuplex-dropdown {
     position: absolute;
     background-color: rgb(2, 2, 2) !important;
     border: 1px solid var(--ts-button-background) !important; 
+    border-radius: 5px !important;
     box-shadow: none !important;
     border-radius: 5px;
     overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow-y: auto !important;    
+    max-height: 200px !important;
 }
 
 vuplex-dropdown-option {
     color: #FFFFFF !important; /* Default text color */
+}
+
+#spellFormModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.spell-modal-background{
+    background-color: rgb(2, 2, 2);
+    margin: 5% auto; /* Center the modal */
+    padding: 10px;
+    border: 1px solid var(--ts-button-background);
+    width: 90%; /* Adjust the width as needed */
+    border-radius: 5px;
+    z-index: 10;
+    position: relative;
+}
+
+#spellForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-row > input, .form-row > textarea {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    flex: 2; 
+    min-width: 200px;
+}
+
+#spellFormModal button {
+    margin-top: 10px;
+}
+
+#spellFormComponents{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 5px; 
+    max-height: 40px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid var(--ts-button-background); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+#spellFormClass {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Three columns */
+    gap: 5px; 
+    height: fit-content;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 5px;
+    border: 1px solid var(--ts-button-background); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+#spellFormClass label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#spellFormClass input[type="checkbox"] {
+    margin-right: 5px; /* Add spacing between checkbox and label text */
+}
+
+.form-row {
+    display: flex; 
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    flex: 0; 
+    text-align: left; 
+    min-width: 22%;
+}
+
+.form-row select {
+    flex: 2; 
+    min-width: 200px;
 }

@@ -5,11 +5,11 @@ body, h1, h2, h3, p {
 }
 
 body {
-    font-family: 'OptimusPrinceps', sans-serif;    
+    font-family: Helvetica, sans-serif;    
     background-color: rgb(2, 2, 2); 
     color: #FFFFFF; 
     line-height: 1.2;
-    font-size: 18px;
+    font-size: 14px;
     margin: 0 auto 0 auto;
     padding: 2px;
 }
@@ -158,7 +158,7 @@ footer {
     border-radius: 5px;
     color: white;
     padding: 5px;
-    z-index: 1000;
+    z-index: 8;
 }
 
 #settings-dropdown ul {
@@ -232,7 +232,7 @@ margin: 2px;
 /* Styles for the modal */
 
 .modal {
-    z-index: 1;
+    z-index: 1000;
     width: 100%;
     height: 100%;
     background-color: rgba(121, 121, 121, 0.377);

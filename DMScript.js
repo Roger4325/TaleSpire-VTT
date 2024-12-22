@@ -1328,7 +1328,7 @@ function saveMonsterCardsAsEncounter(encounterName) {
         });
     });
 
-    saveToGlobalStorage("Encounter Data", encounterName, encounterData, false)
+    saveToCampaignStorage("Encounter Data", encounterName, encounterData, false)
 }
 
 
@@ -1446,7 +1446,7 @@ async function loadAndStoreMonsterData() {
     const dataType = "Encounter Data"; // Adjust based on your data structure
 
     try {
-        const allMonsterData = await loadDataFromGlobalStorage(dataType);
+        const allMonsterData = await loadDataFromCampaignStorage(dataType);
 
         if (allMonsterData) {
             allSavedEncounters = allMonsterData;

@@ -684,6 +684,8 @@ function updateAC() {
     const acBonuses = characterStatBonuses.combatStats.AC.bonuses || [];
     const acBonusTotal = acBonuses.reduce((total, bonus) => total + bonus.value, 0);
 
+    console.log(acBonuses)
+
     finalAC += acBonusTotal;
 
     // Update the AC display
@@ -1335,18 +1337,35 @@ function getAbilityModifierForSave(saveName) {
 
 
 function findAbilityScoreLabel(abilityMod) {
-    // Iterate over ability boxes and find the matching one based on the ability modifier
-    const abilityScores = document.getElementById("playerAbilityScores")
+
+    // Define a dictionary that maps language-specific abbreviations to the English abbreviation
+    const abbreviationMap = {
+        "fue": "STR", // Spanish strength
+        "des": "DEX", // Spanish dexterity
+        "con": "CON", // Spanish constitution
+        "int": "INT", // Spanish intelligence
+        "sab": "WIS", // Spanish wisdom
+        "car": "CHA", // Spanish charisma
+        // Add more language-specific abbreviations as necessary
+    };
+
+    // Normalize the input to lowercase and lookup in the map to get the English abbreviation
+    const englishAbilityMod = abbreviationMap[abilityMod.toLowerCase()] || abilityMod.toUpperCase();
+
+    // Iterate over ability boxes and find the matching one based on the English ability modifier
+    const abilityScores = document.getElementById("playerAbilityScores");
     const abilityBoxes = abilityScores.querySelectorAll('.abilitybox');
     for (const abilityBox of abilityBoxes) {
         const abilityScoreLabel = abilityBox.querySelector('.actionButtonLabel');
-        const abilityScoreLabelAttribute = abilityScoreLabel.getAttribute('data-ability')
-        if (abilityScoreLabelAttribute === abilityMod) {
-            return abilityScoreLabel
+        const abilityScoreLabelAttribute = abilityScoreLabel.getAttribute('data-ability');
+        if (abilityScoreLabelAttribute === englishAbilityMod) {
+            return abilityScoreLabel;
         }
     }
+
     return null; // Return null if no match is found
 }
+
 
 
 
@@ -1729,7 +1748,7 @@ function getAllEditableContent() {
     
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
-    saveToGlobalStorage("characters", characterName.textContent, content, true);
+    saveToCampaignStorage("characters", characterName.textContent, content, true);
 
     return content;
 }
@@ -1882,8 +1901,6 @@ function debounce(func, wait) {
 // Original updateContent function with debounce
 const debouncedGetAllEditableContent = debounce(() => {
     const allEditableContent = getAllEditableContent();
-    // You can handle `allEditableContent` here if needed
-    console.log(allEditableContent); // Example: log the content
 }, 1000); // Adjust the debounce delay as necessary (e.g., 300ms)
 
 
@@ -2056,7 +2073,7 @@ function updateConditionsUI(conditionsSet) {
 async function loadAndPickaCharacter() {
     // Step 1: Load all characters from global storage
     const dataType = "characters";
-    const allCharactersData = await loadDataFromGlobalStorage(dataType);
+    const allCharactersData = await loadDataFromCampaignStorage(dataType);
 
     // Step 2: Create a full-screen overlay element
     const overlay = document.createElement('div');
@@ -2178,7 +2195,7 @@ document.getElementById('deleteCharacter').addEventListener('click', () => {
 
 async function loadAndDeleteCharacter() {
     const dataType = "characters";
-    const allCharactersData = await loadDataFromGlobalStorage(dataType);
+    const allCharactersData = await loadDataFromCampaignStorage(dataType);
 
     const overlay = document.createElement('div');
     overlay.classList.add('character-overlay');
@@ -4227,13 +4244,13 @@ function addItemToInventory(item, group) {
 
     // Add event listener for delete button
     itemDiv.querySelector('.delete-item-button').addEventListener('click', () => {
-        list.removeChild(itemDiv); // Remove the item from the list
         const actionTableRow = document.querySelector(
             `#actionTableBody tr[data-item-id="${item.uniqueId}"]`
         )
         if (actionTableRow) {
             actionTableRow.remove();
         }
+        console.log(item.equipment_category.index)
 
         if (item.equipment_category.index === "armor") {
             unequipArmor(item);
@@ -4241,10 +4258,13 @@ function addItemToInventory(item, group) {
             unequipShield(item);
         }else if (item.equipment_category.index === "wondrous-item") {
             unequipJewelry(item);
+
+            console.log("testing")
         } 
         
         updateWeight(); // Update the total weight
         updateContent(); // Save inventory changes
+        list.removeChild(itemDiv); // Remove the item from the list
     });
 
     if (item.equipped) {
@@ -4457,20 +4477,18 @@ function unequipArmor(item) {
             if (item.properties.some(property => property.index === "attunement")) {
                 removeFromAttunementList(item); // Remove the item from the attunement UI
             }
-            else{
-                if (item.bonus) {
-                    // Remove each bonus from the item from the appropriate stat
-                    item.bonus.forEach((bonus) => {
-                        removeBonus(bonus.category, bonus.key, {
-                            source: item.name,
-                            value: bonus.value,
-                        });
+            if (item.bonus) {
+                // Remove each bonus from the item from the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    removeBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
                     });
-                    console.log(`${item.name} unequipped: Bonuses removed.`);
-                } else {
-                    console.warn(`Item ${item.name} has no bonuses to remove.`);
-                }
-            }   
+                });
+                console.log(`${item.name} unequipped: Bonuses removed.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to remove.`);
+            }
         }
 
         equippedArmor = null;
@@ -4530,20 +4548,18 @@ function unequipShield(item) {
             if (item.properties.some(property => property.index === "attunement")) {
                 removeFromAttunementList(item); // Remove the item from the attunement UI
             }
-            else{
-                if (item.bonus) {
-                    // Remove each bonus from the item from the appropriate stat
-                    item.bonus.forEach((bonus) => {
-                        removeBonus(bonus.category, bonus.key, {
-                            source: item.name,
-                            value: bonus.value,
-                        });
+            if (item.bonus) {
+                // Remove each bonus from the item from the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    removeBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
                     });
-                    console.log(`${item.name} unequipped: Bonuses removed.`);
-                } else {
-                    console.warn(`Item ${item.name} has no bonuses to remove.`);
-                }
-            }   
+                });
+                console.log(`${item.name} unequipped: Bonuses removed.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to remove.`);
+            }  
         }
 
         equippedShield = null;
@@ -4565,7 +4581,6 @@ function updateCheckboxState(item, isChecked) {
 }
 
 function equipJewelry(item) {
-
     if (item.properties){
         if (item.properties.some(property => property.index === "attunement")) {
             addToAttunementList(item); // Add to attunement UI
@@ -4588,24 +4603,24 @@ function equipJewelry(item) {
 }
 
 function unequipJewelry(item) {
+    console.log("WE ARE AFUIAODSJ ASJFD LASKDF:L KASDKF :ALSK")
     if(item.properties){
         if (item.properties.some(property => property.index === "attunement")) {
             removeFromAttunementList(item); // Remove the item from the attunement UI
         }
-        else{
-            if (item.bonus) {
-                // Remove each bonus from the item from the appropriate stat
-                item.bonus.forEach((bonus) => {
-                    removeBonus(bonus.category, bonus.key, {
-                        source: item.name,
-                        value: bonus.value,
-                    });
+        if (item.bonus) {
+            // Remove each bonus from the item from the appropriate stat
+            item.bonus.forEach((bonus) => {
+                removeBonus(bonus.category, bonus.key, {
+                    source: item.name,
+                    value: bonus.value,
                 });
-                console.log(`${item.name} unequipped: Bonuses removed.`);
-            } else {
-                console.warn(`Item ${item.name} has no bonuses to remove.`);
-            }
-        }   
+                
+            });
+            console.log(`${item.name} unequipped: Bonuses removed.`);
+        } else {
+            console.warn(`Item ${item.name} has no bonuses to remove.`);
+        }
     } 
 }
 
@@ -6165,7 +6180,7 @@ async function exportCharacterData() {
     const characterKey = document.getElementById("playerCharacterInput").textContent;
 
     // Retrieve character data from global storage
-    const allCharacterData = await loadDataFromGlobalStorage("characters");
+    const allCharacterData = await loadDataFromCampaignStorage("characters");
 
     console.log(characterKey);
 
@@ -6192,12 +6207,6 @@ async function exportCharacterData() {
         // Output the re-imported data to the console to see its format
         console.log("Re-imported Data (to be saved):", reImportedData);
 
-        // Simulate saving back to global storage
-        saveDataToGlobalStorage("characters", {
-            ...allCharacterData,  // Preserve other characters
-            [characterKey]: reImportedData  // Update the current character data
-        });
-
     }, 2000); // 2-second delay
 }
 
@@ -6220,3 +6229,81 @@ document.getElementById('exportCharacterData').addEventListener('click', exportC
 
 
 
+const customSpellsButton = document.getElementById('customSpells');
+const spellFormModal = document.getElementById('spellFormModal');
+const saveSpellButton = document.getElementById('saveSpell');
+const closeFormButton = document.getElementById('closeForm');
+let spells = []; // Store created spells
+
+// Open the form
+customSpellsButton.addEventListener('click', () => {
+    spellFormModal.style.display = 'block';
+});
+
+// Close the form
+closeFormButton.addEventListener('click', () => {
+    spellFormModal.style.display = 'none';
+});
+
+// Attach event listeners to specific elements
+document.getElementById('damageDiceForm').addEventListener('blur', validateDiceInput);
+document.getElementById('damageDiceUpcastForm').addEventListener('blur', validateDiceInput);
+
+// Save the spell
+saveSpellButton.addEventListener('click', async () => {
+    const spellForm = document.getElementById('spellForm');
+    const selectedClasses = Array.from(document.querySelectorAll('#spellFormClass input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value)
+        .join(', ');
+
+    const selectedComponents = Array.from(document.querySelectorAll('#spellFormComponents input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value)
+        .join(', ');
+
+    const spell = {
+        name: document.getElementById('spellFormName').value.trim() || 'Unnamed Spell',
+        desc: document.getElementById('spellFormDesc').value.trim() || 'No description provided.',
+        higher_level: document.getElementById('higherLevelForm').value.trim(),
+        range: document.getElementById('spellFormRange').value.trim(),
+        components: selectedComponents,
+        ritual: document.getElementById('ritualForm').checked ? ", R" : "",
+        duration: document.getElementById('spellFormDuration').value.trim(),
+        concentration: document.getElementById('concentrationForm').checked ? "yes" : "no",
+        casting_time: document.getElementById('castingTimeForm').value.trim(),
+        level: document.getElementById('spellFormLevel').value,
+        school: document.getElementById('schoolForm').value.trim(),
+        class: selectedClasses,
+        toHitOrDC: document.getElementById('toHitOrDC').value.trim(),
+        damage_dice: document.getElementById('damageDiceForm').value.trim(),
+        damage_dice_upcast: document.getElementById('damageDiceUpcastForm').value.trim(),
+        spell_save_dc_type: document.getElementById('saveDCType').value.trim(),
+        ability_modifier: document.getElementById('abilityModifier').value.trim(),
+        damage_type_01: document.getElementById('damageType01').value.trim()
+    };
+
+    spells.push(spell); // Add spell to the array
+    console.log(spells); // Log the spells for debugging
+
+    try {
+        // Save and wait for completion
+        await saveToGlobalStorage("Custom Spells", spell.name, spell, true);
+        console.log("Save completed.");
+        await loadSpellDataFiles(); // Ensure this runs after save completes
+    } catch (error) {
+        console.error("Error during save or load:", error);
+    }
+
+    spellFormModal.style.display = 'none'; // Close the form
+    spellForm.reset(); // Reset the form
+});
+
+function validateDiceInput(event) {
+    const newValue = event.target.value.trim();
+
+    const dicePattern = /^(\d+d(4|6|8|10|12|20))([+/]\d+d(4|6|8|10|12|20))*$/;
+
+    if (newValue && !dicePattern.test(newValue)) {
+        showErrorModal(`Invalid input: "${newValue}". Please enter a valid dice format like '4d4+5d6'.`);
+        event.target.value = ''; // Clear invalid input
+    }
+}

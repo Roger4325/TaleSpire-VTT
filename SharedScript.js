@@ -77,6 +77,138 @@ const translations = {
         CantripConcentrationHeader: "Con",
         CantripNotesHeader: "Notes",
         CantripDeleteHeader: "Del",
+        inspiration: "Inspiration",
+        shortRestButton: "Short Rest",
+        longRestButton: "Long Rest",
+        deleteCharacter: "Delete a Character",
+        customSpells: "Create Spell",
+        'get-selection-button': "Link mini",
+        disadvButton: "DisAdv",
+        normalButton: "Flat",
+        advButton: "Adv",
+        characterInit: "Init",
+        armorClass: "AC",
+        walkingSpeed: "Speed",
+        prof: "Prof",
+        levelTextSpan: "Level",
+        deathSaves: "Death Saves",
+        deathSavesSuccess: "Success :",
+        deathSavesFailures: "Failure :",
+        healButton: "Heal",
+        damageButton: "Damage",
+        currentHP: "Current",
+        maxHP: "Max",
+        hpButtomText: "Player HitPoints",
+        tempHPText: "Temp Health",
+        characterAbilityStr: "STR",
+        characterAbilityDex: "DEX",
+        characterAbilityCon: "CON",
+        characterAbilityInt: "INT",
+        characterAbilityWis: "WIS",
+        characterAbilityCha: "CHA",
+        acrobaticsMod: "DEX",
+        animalHandlingMod: "WIS",
+        arcanaMod: "INT",
+        athleticsMod: "STR",
+        deceptionMod: "CHA",
+        historyMod: "INT",
+        insightMod: "WIS",
+        intimidationMod: "CHA",
+        investigationMod: "INT",
+        medicineMod: "WIS",
+        natureMod: "INT",
+        perceptionMod: "WIS",
+        performanceMod: "CHA",
+        persuasionMod: "CHA",
+        religionMod: "INT",
+        sleightofHandMod: "DEX",
+        stealthMod: "DEX",
+        survivalMod: "WIS",
+        skillAcrobatics: "Acrobatics",
+        skillAnimalHandling: "Animal Handling",
+        skillArcana: "Arcana",
+        skillAthletics: "Athletics",
+        skillDeception: "Deception",
+        skillHistory: "History",
+        skillInsight: "Insight",
+        skillIntimidation: "Intimidation",
+        skillInvestigation: "Investigation",
+        skillMedicine: "Medicine",
+        skillNature: "Nature",
+        skillPerception: "Perception",
+        skillPerformance: "Performance",
+        skillPersuasion: "Persuasion",
+        skillReligion: "Religion",
+        skillSleightofHand: "Sleight of Hand",
+        skillStealth: "Stealth",
+        skillSurvival: "Survival",
+        strSave: "Str Save",
+        dexSave: "Dex Save",
+        conSave: "Con Save",
+        intSave: "Int Save",
+        wisSave: "Wis Save",
+        chaSave: "Cha Save",
+        passivePerceptionTitle: "Passive WIS (Perception)",
+        passiveInvestigationTitle: "Passive INT (Investigation)",
+        passiveInsightTitle: "Passive WIS (Insight)",
+        proficiencyWeapons: "Weapons",
+        proficiencyArmor: "Armor",
+        proficiencyLanguages: "Languages",
+        proficiencyTools: "Tools",
+        actionFiltersAll: "All",
+        actionFiltersAttacks: "Attacks",
+        actionFiltersActions: "Actions",
+        actionFiltersBonusActions: "Bonus Actions",
+        actionFiltersReactions: "Reactions",
+        actionFiltersOther: "Other",
+        actionTableHeader1: "Prof",
+        actionTableHeader2: "Name",
+        actionTableHeader3: "Reach",
+        actionTableHeader4: "ToHit",
+        actionTableHeader5: "Damage",
+        actionTableHeader6: "Info",
+
+
+        //Alignment Options
+        alignmentOptionLG: "Lawful Good",
+        alignmentOptionNG: "Neutral Good",
+        alignmentOptionCG: "Chaotic Good",
+        alignmentOptionLN: "Lawful Neutral",
+        alignmentOptionTN: "True Neutral",
+        alignmentOptionCN: "Chaotic Neutral",
+        alignmentOptionLE: "Lawful Evil",
+        alignmentOptionNE: "Neutral Evil",
+        alignmentOptionCE: "Chaotic Evil",
+
+
+        //character Conditions
+        conditionOptionAid: "Aid",
+        conditionOptionBane: "Bane",
+        conditionOptionBlinded: "Blinded",
+        conditionOptionBless: "Bless",
+        conditionOptionConcentration: "Concentration",
+        conditionOptionCharmed: "Charmed",
+        conditionOptionDeafened: "Deafened",
+        conditionOptionExhaustion: "Exhaustion",
+        conditionOptionFrightened: "Frightened",
+        conditionOptionGrappled: "Grappled",
+        conditionOptionGuidance: "Guidance",
+        conditionOptionHeroism: "Heroism",
+        conditionOptionIncapacitated: "Incapacitated",
+        conditionOptionInvisible: "Invisible",
+        conditionOptionParalyzed: "Paralyzed",
+        conditionOptionPetrified: "Petrified",
+        conditionOptionPoisoned: "Poisoned",
+        conditionOptionProne: "Prone",
+        conditionOptionRestrained: "Restrained",
+        conditionOptionSanctuary: "Sanctuary",
+        conditionOptionStunned: "Stunned",
+        conditionOptionUnconscious: "Unconscious",
+        conditionOptionSlow: "Slow",
+        conditionOptionRaging: "Raging",
+
+
+
 
         // Level 1 headers
         '1st-levelSpellNameHeader': "Spell Name",
@@ -136,43 +268,174 @@ const translations = {
         level9Label: "Nivel 9",
         CantripSpellNameHeader: "Nombre",
         CantripTimeHeader: "Tiempo",
-        CantripHitDCHeader: "Golpe/CD",
+        CantripHitDCHeader: "Ataq/CD",
         CantripDiceHeader: "Dados",
         CantripConcentrationHeader: "Conc",
-        CantripNotesHeader: "Notas",
+        CantripNotesHeader: "Comp",
         CantripDeleteHeader: "Elim",
+        inspiration: "Inspiración",
+        shortRestButton: "Descanso Corto",
+        longRestButton: "Descanso Largo",
+        deleteCharacter: "Eliminar Personaje",
+        customSpells: "Crear Hechizo",
+        'get-selection-button': "Anexar Mini",
+        disadvButton: "DesVent",
+        normalButton: "Plano",
+        advButton: "Vent",
+        characterInit: "Inic",
+        armorClass: "CA",
+        walkingSpeed: "Velocidad",
+        prof: "Comp",
+        levelTextSpan: "Nivel",
+        deathSaves: "Salvaciones de Muer",
+        deathSavesSuccess: "Éxito :",
+        deathSavesFailures: "Fracaso :",
+        healButton: "Curar",
+        damageButton: "Daño",
+        currentHP: "Actual",
+        maxHP: "Max",
+        hpButtomText: "Puntos de golpe",
+        tempHPText: "P.G Temp",
+        characterAbilityStr: "FUE",
+        characterAbilityDex: "DES",
+        characterAbilityCon: "CON",
+        characterAbilityInt: "INT",
+        characterAbilityWis: "SAB",
+        characterAbilityCha: "CAR",
+        acrobaticsMod: "DES",
+        animalHandlingMod: "SAB",
+        arcanaMod: "INT",
+        athleticsMod: "FUE",
+        deceptionMod: "CAR",
+        historyMod: "INT",
+        insightMod: "SAB",
+        intimidationMod: "CAR",
+        investigationMod: "INT",
+        medicineMod: "SAB",
+        natureMod: "INT",
+        perceptionMod: "SAB",
+        performanceMod: "CAR",
+        persuasionMod: "CAR",
+        religionMod: "INT",
+        sleightofHandMod: "DES",
+        stealthMod: "DES",
+        survivalMod: "SAB",
+        skillAcrobatics: "Acrobáticas",
+        skillAnimalHandling: "T. con animales",
+        skillArcana: "C. arcano",
+        skillAthletics: "Atletismo",
+        skillDeception: "Engaño",
+        skillHistory: "Historia",
+        skillInsight: "Perspicacia",
+        skillIntimidation: "Intimidación",
+        skillInvestigation: "Investigación",
+        skillMedicine: "Medicine",
+        skillNature: "Naturaleza",
+        skillPerception: "Percepción",
+        skillPerformance: "Interpretación",
+        skillPersuasion: "Persuasión",
+        skillReligion: "Religión",
+        skillSleightofHand: "Juego de manos",
+        skillStealth: "Sigilo",
+        skillSurvival: "Supervivencia",
+        strSave: "Salvación Fue",
+        dexSave: "Salvación Des",
+        conSave: "Salvación Con",
+        intSave: "Salvación Int",
+        wisSave: "Salvación Sab",
+        chaSave: "Salvación Car",
+        passivePerceptionTitle: "SAB Pasiva (Percepción)",
+        passiveInvestigationTitle: "INT Pasiva (Investigación)",
+        passiveInsightTitle: "SAB Pasiva (Perspicacia)",
+        proficiencyWeapons: "Armas",
+        proficiencyArmor: "Armadura",
+        proficiencyLanguages: "Idioma",
+        proficiencyTools: "Herramientas",
+        actionFiltersAll: "Todo",
+        actionFiltersAttacks: "Ataques",
+        actionFiltersActions: "Acciones",
+        actionFiltersBonusActions: "Acciones adicionales",
+        actionFiltersReactions: "Reacciones",
+        actionFiltersOther: "Otro",
+        actionTableHeader1: "Comp",
+        actionTableHeader2: "Nombre",
+        actionTableHeader3: "Alcance",
+        actionTableHeader4: "Ataque",
+        actionTableHeader5: "Daño",
+        actionTableHeader6: "Info",
+
+
+        //Alignment Options
+        alignmentOptionLG: "Legal Bueno",
+        alignmentOptionNG: "Neutral Bueno",
+        alignmentOptionCG: "Caótico Bueno",
+        alignmentOptionLN: "Legal Neutral",
+        alignmentOptionTN: "Neutral Verdadero",
+        alignmentOptionCN: "Caótico Neutral",
+        alignmentOptionLE: "Legal Malévolo",
+        alignmentOptionNE: "Neutral Malévolo",
+        alignmentOptionCE: "Caótico Malévolo",
+
+        //character Conditions
+        conditionOptionAid: "Ayuda",
+        conditionOptionBane: "Maldición",
+        conditionOptionBlinded: "Cegado",
+        conditionOptionBless: "Bendición",
+        conditionOptionConcentration: "Concentración",
+        conditionOptionCharmed: "Encantado",
+        conditionOptionDeafened: "Sordo",
+        conditionOptionExhaustion: "Agotamiento",
+        conditionOptionFrightened: "Asustado",
+        conditionOptionGrappled: "Sujeto",
+        conditionOptionGuidance: "Orientación",
+        conditionOptionHeroism: "Heroísmo",
+        conditionOptionIncapacitated: "Incapacitado",
+        conditionOptionInvisible: "Invisible",
+        conditionOptionParalyzed: "Paralizado",
+        conditionOptionPetrified: "Petrificado",
+        conditionOptionPoisoned: "Envenenado",
+        conditionOptionProne: "Postrado",
+        conditionOptionRestrained: "Restringido",
+        conditionOptionSanctuary: "Santidad",
+        conditionOptionStunned: "Atónito",
+        conditionOptionUnconscious: "Inconsciente",
+        conditionOptionSlow: "Lento",
+        conditionOptionRaging: "Enfurecido",
+
+
+
 
         '1st-levelSpellNameHeader': "Nombre",
         '1st-levelTimeHeader': "Tiempo",
-        '1st-levelHitDCHeader': "Golpe/CD",
+        '1st-levelHitDCHeader': "Ataq/CD",
         '1st-levelDiceHeader': "Dados",
         '1st-levelConcentrationHeader': "Conc",
-        '1st-levelNotesHeader': "Notas",
+        '1st-levelNotesHeader': "Comp",
         '1st-levelDeleteHeader': "Elim",
 
         '2nd-levelSpellNameHeader': "Nombre",
         '2nd-levelTimeHeader': "Tiempo",
-        '2nd-levelHitDCHeader': "Golpe/CD",
+        '2nd-levelHitDCHeader': "Ataq/CD",
         '2nd-levelDiceHeader': "Dados",
         '2nd-levelConcentrationHeader': "Conc",
-        '2nd-levelNotesHeader': "Notas",
+        '2nd-levelNotesHeader': "Comp",
         '2nd-levelDeleteHeader': "Elim",
 
         '3rd-levelSpellNameHeader': "Nombre",
         '3rd-levelTimeHeader': "Tiempo",
-        '3rd-levelHitDCHeader': "Golpe/CD",
+        '3rd-levelHitDCHeader': "Ataq/CD",
         '3rd-levelDiceHeader': "Dados",
         '3rd-levelConcentrationHeader': "Conc",
-        '3rd-levelNotesHeader': "Notas",
+        '3rd-levelNotesHeader': "Comp",
         '3rd-levelDeleteHeader': "Elim",
 
         ...Array.from({ length: 6 }, (_, i) => i + 4).reduce((acc, level) => {
             acc[`${level}th-levelSpellNameHeader`] = "Nombre";
             acc[`${level}th-levelTimeHeader`] = "Tiempo";
-            acc[`${level}th-levelHitDCHeader`] = "Golpe/CD";
+            acc[`${level}th-levelHitDCHeader`] = "Ataq/CD";
             acc[`${level}th-levelDiceHeader`] = "Dados";
             acc[`${level}th-levelConcentrationHeader`] = "Conc";
-            acc[`${level}th-levelNotesHeader`] = "Notas";
+            acc[`${level}th-levelNotesHeader`] = "Comp";
             acc[`${level}th-levelDeleteHeader`] = "Elim";
             return acc;
         }, {})
@@ -199,8 +462,16 @@ function setLanguage(language) {
 }
 
 // Event listeners for language buttons
-document.getElementById('languageEngButton').addEventListener('click', () => setLanguage('eng'));
-document.getElementById('languageEspButton').addEventListener('click', () => setLanguage('es'));
+const languageEngButton = document.getElementById('languageEngButton');
+const languageEspButton = document.getElementById('languageEspButton');
+
+if (languageEngButton) {
+    languageEngButton.addEventListener('click', () => setLanguage('eng'));
+}
+
+if (languageEspButton) {
+    languageEspButton.addEventListener('click', () => setLanguage('es'));
+}
 
 // Default language on load
 // setLanguage('eng');
@@ -395,6 +666,11 @@ function handleSyncClientEvents(event){
 
 let contentPacks = null;
 
+async function loadSpellDataFiles(){
+    AppData.spellLookupInfo = await readSpellJson();
+    console.log(AppData.spellLookupInfo)
+}
+
 async function onInit() {
     console.log("onInit")
     setupNav();
@@ -413,7 +689,7 @@ async function onInit() {
 
     
     //Initialize spell List
-    AppData.spellLookupInfo = await readSpellJson();
+    await loadSpellDataFiles();
     AppData.monsterLookupInfo = await readMonsterJsonList();
     AppData.equipmentLookupInfo = await readEquipmentJson();
     await initializeClients();
@@ -906,9 +1182,9 @@ function combineWithBlessBane(resultGroup, blessRollGroup, baneRollGroup) {
 
 
 
-function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
+function saveToCampaignStorage(dataType, dataId, data, shouldCheck) {
     // Load the existing data from global storage
-    TS.localStorage.global.getBlob()
+    TS.localStorage.campaign.getBlob()
         .then((existingData) => {
             let allData = {};
             if (existingData) {
@@ -924,7 +1200,7 @@ function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
                 allData[dataType][dataId] = data;
 
                 // Save the updated data back to global storage
-                TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+                TS.localStorage.campaign.setBlob(JSON.stringify(allData, null, 4));
                 return; // Exit the function to avoid further execution
             }
 
@@ -947,7 +1223,7 @@ function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
                 allData[dataType][dataId] = data;
 
                 // Save the updated data back to global storage
-                TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+                TS.localStorage.campaign.setBlob(JSON.stringify(allData, null, 4));
 
                 // Display a message
                 if (shouldCheck) {
@@ -958,10 +1234,49 @@ function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
         });
 }
 
+async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
+    try {
+        // Load the existing data from global storage
+        const existingData = await TS.localStorage.global.getBlob();
+        let allData = {};
 
+        if (existingData) {
+            allData = JSON.parse(existingData);
+        }
 
+        // Check and initialize the dataType property if not present
+        if (!allData[dataType]) {
+            allData[dataType] = {};
+        }
 
+        if (shouldCheck && allData[dataType][dataId]) {
+            // Data already exists, show error modal
+            exists = true;
+            errorModal("This already exists");
+            const removeButton = document.querySelector('#removeButton');
+            // Handle the button click to remove the data
+            removeButton.addEventListener('click', function () {
+                removeFromGlobalStorage(dataType, dataId); // Call the remove function
+            });
 
+            // Return early to prevent saving duplicate data
+            return;
+        }
+
+        // Add or update the data
+        allData[dataType][dataId] = data;
+
+        // Save the updated data back to global storage
+        await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+
+        // Optional: Indicate that the data was saved successfully
+        if (shouldCheck) {
+            console.log(`Saved data of type: ${dataType}`);
+        }
+    } catch (error) {
+        console.error("Error saving to global storage:", error);
+    }
+}
 
 
 // Retrieve data from global storage
@@ -969,6 +1284,34 @@ function loadDataFromGlobalStorage(dataType) {
     console.log("loading Global Storage")
     return new Promise((resolve, reject) => {
         TS.localStorage.global.getBlob()
+            .then((data) => {
+                if (data) {
+                    const allData = JSON.parse(data);
+                    if (allData[dataType]) {
+                        resolve(allData[dataType]);
+                    } else {
+                        resolve({});
+                    }
+                } else {
+                    resolve({});
+                }
+            })
+            .catch((error) => {
+                reject(error);
+            });
+    });
+}
+
+
+
+
+
+
+// Retrieve data from global storage
+function loadDataFromCampaignStorage(dataType) {
+    console.log("loading Global Storage")
+    return new Promise((resolve, reject) => {
+        TS.localStorage.campaign.getBlob()
             .then((data) => {
                 if (data) {
                     const allData = JSON.parse(data);
@@ -1087,7 +1430,8 @@ function errorModal(modalText){
 // read the JSON file spells.json and save the data and names to variables
 async function readSpellJson() {
     try {
-        const allSpellData = await loadDataFromGlobalStorage("spells"); // Load data from global storage
+        const allSpellData = await loadDataFromGlobalStorage("Custom Spells"); // Load data from global storage
+        console.log(allSpellData)
         const isGlobalDataAnObject = typeof allSpellData === 'object';
 
         // Fetch the data from the JSON file
@@ -1134,7 +1478,7 @@ async function readMonsterJsonList() {
             throw new Error('Network response was not ok');
         }
         const monsterData = await response.json();
-        const allCreatureData = (await loadDataFromGlobalStorage("monsters"));
+        const allCreatureData = (await loadDataFromCampaignStorage("monsters"));
 
         // Combine the data from global storage and the JSON file
         const combinedData = {
@@ -1164,7 +1508,7 @@ async function readMonsterJsonList() {
 async function readEquipmentJson() {
     try {
         // Load data from global storage
-        const allequipmentData = await loadDataFromGlobalStorage("equipment"); 
+        const allequipmentData = await loadDataFromCampaignStorage("equipment"); 
         const isGlobalDataAnObject = typeof allequipmentData === 'object';
 
         // Fetch the data from the JSON file

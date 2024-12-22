@@ -7011,92 +7011,6 @@
     }
   },
   {
-    "index": "stone-of-acrobatics",
-    "name": "Stone of Acrobatics",
-    "equipment_category": {
-      "index": "wondrous-item",
-      "name": "Wondrous Item",
-      "url": "/api/equipment-categories/wondrous-item"
-    },
-    "gear_category": {
-      "index": "magical-accessory",
-      "name": "Magical Accessory",
-      "url": "/api/equipment-categories/magical-accessory"
-    },
-    "description": [
-      "This small, smooth stone brings good movement, improving their Acrobatics.",
-      "Requires attunement."
-    ],
-    "properties": [
-      {
-        "index": "attunement",
-        "name": "Requires Attunement",
-        "url": "/api/item-properties/attunement"
-      }
-    ],
-    "bonus": [
-      {
-        "category": "skills",
-        "key": "Acrobatics",
-        "value": 13,
-        "description": "Grants a +1 bonus to all ability checks."
-      }
-    ],
-    "cost": {
-      "quantity": 2000,
-      "unit": "gp"
-    },
-    "weight": 0.2,
-    "rarity": {
-      "index": "uncommon",
-      "name": "Uncommon",
-      "url": "/api/item-rarity/uncommon"
-    }
-  },
-  {
-    "index": "stone-of-initiative",
-    "name": "Stone of Initiative",
-    "equipment_category": {
-      "index": "wondrous-item",
-      "name": "Wondrous Item",
-      "url": "/api/equipment-categories/wondrous-item"
-    },
-    "gear_category": {
-      "index": "magical-accessory",
-      "name": "Magical Accessory",
-      "url": "/api/equipment-categories/magical-accessory"
-    },
-    "description": [
-      "This small, smooth stone brings good movement, improving their Initiative.",
-      "Requires attunement."
-    ],
-    "properties": [
-      {
-        "index": "attunement",
-        "name": "Requires Attunement",
-        "url": "/api/item-properties/attunement"
-      }
-    ],
-    "bonus": [
-      {
-        "category": "skills",
-        "key": "Initiative",
-        "value": 13,
-        "description": "Grants a +1 bonus to all ability checks."
-      }
-    ],
-    "cost": {
-      "quantity": 2000,
-      "unit": "gp"
-    },
-    "weight": 0.2,
-    "rarity": {
-      "index": "uncommon",
-      "name": "Uncommon",
-      "url": "/api/item-rarity/uncommon"
-    }
-  },
-  {
     "index": "amulet-of-the-devout-1",
     "name": "Amulet of the Devout, +1",
     "equipment_category": {
@@ -7300,5 +7214,1661 @@
       "name": "Uncommon",
       "url": "/api/item-rarity/uncommon"
     }
+  },
+  {
+    "index": "adamantine-chain-mail",
+    "name": "Adamantine Chain Mail",
+    "equipment_category": {
+      "index": "armor",
+      "name": "Armor",
+      "url": "/api/equipment-categories/armor"
+    },
+    "armor_category": "Heavy",
+    "armor_class": {
+      "base": 16,
+      "dex_bonus": false,
+      "max_bonus": null
+    },
+    "str_minimum": 13,
+    "stealth_disadvantage": true,
+    "weight": 55,
+    "cost": {
+      "quantity": 2050,
+      "unit": "gp"
+    },
+    "rarity": {
+      "index": "uncommon",
+      "name": "Uncommon",
+      "url": "/api/item-rarity/uncommon"
+    },
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "adamantine-breastplate",
+    "name": "Adamantine Breastplate",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "weight": 20,
+    "cost": { "quantity": 2400, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "adamantine-half-plate",
+    "name": "Adamantine Half Plate",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
+    "weight": 40,
+    "cost": { "quantity": 2750, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "adamantine-chain-mail",
+    "name": "Adamantine Chain Mail",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "weight": 55,
+    "cost": { "quantity": 2050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "adamantine-splint",
+    "name": "Adamantine Splint",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 17, "dex_bonus": false, "max_bonus": null },
+    "weight": 60,
+    "cost": { "quantity": 2200, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "adamantine-plate",
+    "name": "Adamantine Plate",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "weight": 65,
+    "cost": { "quantity": 3000, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is reinforced with adamantine, one of the hardest substances in existence. It makes the wearer immune to critical hits."
+    ],
+    "properties": []
+  },
+  {
+    "index": "animated-shield",
+    "name": "Animated Shield",
+    "equipment_category": { "index": "shield", "name": "Shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2, "dex_bonus": false, "max_bonus": null },
+    "weight": 6,
+    "cost": { "quantity": 6000, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "While holding this shield, you can use a bonus action to speak its command word, causing it to animate. The shield hovers in your space and protects you as if you were wielding it, leaving your hands free. The shield remains animated for 1 minute or until you use a bonus action to end this effect."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },  
+  {
+    "index": "armor-of-invulnerability-padded",
+    "name": "Armor of Invulnerability (Padded)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 8,
+    "cost": { "quantity": 6005, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-invulnerability-leather",
+    "name": "Armor of Invulnerability (Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 10,
+    "cost": { "quantity": 6005, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-invulnerability-studded-leather",
+    "name": "Armor of Invulnerability (Studded Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "weight": 13,
+    "cost": { "quantity": 6015, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-invulnerability-hide",
+    "name": "Armor of Invulnerability (Hide)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "weight": 12,
+    "cost": { "quantity": 6010, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-invulnerability-chain-mail",
+    "name": "Armor of Invulnerability (Chain Mail)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "weight": 55,
+    "cost": { "quantity": 6055, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-invulnerability-plate",
+    "name": "Armor of Invulnerability (Plate)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "weight": 65,
+    "cost": { "quantity": 6065, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While wearing this armor, you have resistance to nonmagical damage. You can use an action to make yourself immune to nonmagical damage for 10 minutes. This property can’t be used again until the next dawn."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-padded",
+    "name": "Armor of Resistance (Padded)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 8,
+    "cost": { "quantity": 6005, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-leather",
+    "name": "Armor of Resistance (Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 10,
+    "cost": { "quantity": 6005, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-studded-leather",
+    "name": "Armor of Resistance (Studded Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "weight": 13,
+    "cost": { "quantity": 6015, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-hide",
+    "name": "Armor of Resistance (Hide)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "weight": 12,
+    "cost": { "quantity": 6010, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-chain-mail",
+    "name": "Armor of Resistance (Chain Mail)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "weight": 55,
+    "cost": { "quantity": 6055, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-resistance-plate",
+    "name": "Armor of Resistance (Plate)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "weight": 65,
+    "cost": { "quantity": 6065, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "You have resistance to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-padded",
+    "name": "Armor of Vulnerability (Padded)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 8,
+    "cost": { "quantity": 10005, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-leather",
+    "name": "Armor of Vulnerability (Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "weight": 10,
+    "cost": { "quantity": 10005, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-studded-leather",
+    "name": "Armor of Vulnerability (Studded Leather)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "weight": 13,
+    "cost": { "quantity": 10015, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-hide",
+    "name": "Armor of Vulnerability (Hide)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "weight": 12,
+    "cost": { "quantity": 10010, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-chain-mail",
+    "name": "Armor of Vulnerability (Chain Mail)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "weight": 55,
+    "cost": { "quantity": 10055, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "armor-of-vulnerability-plate",
+    "name": "Armor of Vulnerability (Plate)",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "weight": 65,
+    "cost": { "quantity": 10065, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "You have vulnerability to one type of damage while wearing this armor. The DM chooses the type or determines it randomly from the options: acid, cold, fire, force, lightning, necrotic, poison, psychic, radiant, or thunder."
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "padded-armor-1",
+    "name": "Padded Armor +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 8,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "leather-armor-1",
+    "name": "Leather Armor +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 10,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "studded-leather-1",
+    "name": "Studded Leather +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 13,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "hide-armor-1",
+    "name": "Hide Armor +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 12,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "Chain Shirt-1",
+    "name": "Chain Shirt +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 13, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "scale-Mail-1",
+    "name": "Scale Mail +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 45,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "breastplate-1",
+    "name": "Breastplate +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "half-plate-1",
+    "name": "Half Plate +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "ring-mail-1",
+    "name": "Ring Mail +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 14, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "chain-mail-1",
+    "name": "Chain Mail +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 13,
+    "stealth_disadvantage": true,
+    "weight": 55,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "splint-armor-1",
+    "name": "splint Armor +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 17, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 60,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "plate-mail-1",
+    "name": "Plate Mail +1",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +1 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "padded-armor-2",
+    "name": "Padded Armor +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 8,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "leather-armor-2",
+    "name": "Leather Armor +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 10,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "studded-leather-2",
+    "name": "Studded Leather +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 13,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "hide-armor-2",
+    "name": "Hide Armor +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 12,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "Chain Shirt-2",
+    "name": "Chain Shirt +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 13, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "scale-Mail-2",
+    "name": "Scale Mail +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 45,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "breastplate-2",
+    "name": "Breastplate +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "half-plate-2",
+    "name": "Half Plate +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "ring-mail-2",
+    "name": "Ring Mail +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 14, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "chain-mail-2",
+    "name": "Chain Mail +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 13,
+    "stealth_disadvantage": true,
+    "weight": 55,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "splint-armor-2",
+    "name": "splint Armor +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 17, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 60,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "plate-mail-2",
+    "name": "Plate Mail +2",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +2 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "padded-armor-3",
+    "name": "Padded Armor +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 8,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "leather-armor-3",
+    "name": "Leather Armor +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 10,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "studded-leather-3",
+    "name": "Studded Leather +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 13,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "hide-armor-3",
+    "name": "Hide Armor +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 12,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "Chain Shirt-3",
+    "name": "Chain Shirt +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 13, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "scale-Mail-3",
+    "name": "Scale Mail +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 45,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "breastplate-3",
+    "name": "Breastplate +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "half-plate-3",
+    "name": "Half Plate +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "ring-mail-3",
+    "name": "Ring Mail +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 14, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": true,
+    "weight": 40,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "chain-mail-3",
+    "name": "Chain Mail +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 13,
+    "stealth_disadvantage": true,
+    "weight": 55,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "splint-armor-3",
+    "name": "splint Armor +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 17, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 60,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "plate-mail-3",
+    "name": "Plate Mail +3",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "This armor is magically infused, granting a +3 bonus to the wearer’s Armor Class."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],   
+    "properties": []
+  },
+  {
+    "index": "arrow-catching-shield",
+    "name": "Arrow-Catching Shield",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": true,
+    "description": [
+      "You gain a +2 bonus to AC against ranged attacks while you wield this shield. This bonus is in addition to the shield's normal bonus to AC. In addition, whenever an attacker makes a ranged attack against a target within 5 feet of you, you can use your reaction to become the target of the attack instead."
+    ],
+    "bonus": [],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "dwarven-plate",
+    "name": "Dwarven Plate",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": false,
+    "description": [
+      "While wearing this armor, you gain a +2 bonus to AC. In addition, if an effect moves you against your will along the ground, you can use your reaction to reduce the distance you are moved by up to 10 feet."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],   
+    "properties": []
+  },
+  {
+    "index": "elven-chain",
+    "name": "Elven Chain",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Medium",
+    "armor_class": { "base": 13, "dex_bonus": true, "max_bonus": 2 },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": false,
+    "description": [
+      "You gain a +1 bonus to AC while you wear this armor. You are considered proficient with this armor even if you lack proficiency with medium armor. "
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],   
+    "properties": []
+  },
+  {
+    "index": "glamoured-studded-leather",
+    "name": "Glamoured Studded Leather",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Light",
+    "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 13,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": false,
+    "description": [
+      "While wearing this armor, you gain a +1 bonus to AC. You can also use a bonus action to speak the armor's command word and cause the armor to assume the appearance of a normal set of clothing or some other kind of armor. You decide what it looks like, including color, style, and accessories, but the armor retains its normal bulk and weight. The illusory appearance lasts until you use this property again or remove the armor"
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": []
+  },
+  {
+    "index": "plate-armor-etherealness",
+    "name": "Plate Armor of Etherealness",
+    "equipment_category": { "index": "armor", "name": "Armor" },
+    "armor_category": "Heavy",
+    "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
+    "str_minimum": 15,
+    "stealth_disadvantage": true,
+    "weight": 65,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "legendary", "name": "Legendary" },
+    "attunement": true,
+    "description": [
+      "While you're wearing this armor, you can speak its command word as an action to gain the effect of the etherealness spell, which last for 10 minutes or until you remove the armor or use an action to speak the command word again. This property of the armor can't be used again until the next dawn"
+    ],
+    "bonus": [
+    ],   
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "shield-of-missile-attraction",
+    "name": "Shield of Missile Attraction",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": true,
+    "description": [
+      "While holding this shield, you have resistance to damage from ranged weapon attacks.<br><br>Curse. This shield is cursed. Attuning to it curses you until you are targeted by the remove curse spell or similar magic. Removing the shield fails to end the curse on you. Whenever a ranged weapon attack is made against a target within 10 feet of you, the curse causes you to become the target instead."
+    ],
+    "bonus": [],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
+  },
+  {
+    "index": "shield-1",
+    "name": "Shield +1",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "uncommon", "name": "Uncommon" },
+    "attunement": false,
+    "description": [
+      "While holding this shield, you have a bonus of +1 AC."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 1,
+        "description": "Grants a +1 bonus to AC."
+      }
+    ],
+    "properties": [
+    ]
+  },
+  {
+    "index": "shield-2",
+    "name": "Shield +2",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "rare", "name": "Rare" },
+    "attunement": false,
+    "description": [
+      "While holding this shield, you have a bonus of +2 AC."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 2,
+        "description": "Grants a +2 bonus to AC."
+      }
+    ],
+    "properties": [
+    ]
+  },
+  {
+    "index": "shield-3",
+    "name": "Shield +3",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": false,
+    "description": [
+      "While holding this shield, you have a bonus of +3 AC."
+    ],
+    "bonus": [
+      {
+        "category": "combatStats",
+        "key": "AC",
+        "value": 3,
+        "description": "Grants a +3 bonus to AC."
+      }
+    ],
+    "properties": [
+    ]
+  },
+  {
+    "index": "spellguard-shield",
+    "name": "Spellguard Shield",
+    "equipment_category": { "index": "shield", "name": "shield" },
+    "armor_category": "Shield",
+    "armor_class": { "base": 2},
+    "str_minimum": 0,
+    "stealth_disadvantage": false,
+    "weight": 20,
+    "cost": { "quantity": 1050, "unit": "gp" },
+    "rarity": { "index": "very-rare", "name": "Very Rare" },
+    "attunement": true,
+    "description": [
+      "While holding this shield, you have advantage on saving throws against spells and other magical effects, and spell attacks have disadvantage against you. "
+    ],
+    "bonus": [
+    ],
+    "properties": [
+      {
+        "index": "attunement",
+        "name": "Requires Attunement",
+        "url": "/api/item-properties/attunement"
+      }
+    ]
   }
 ]

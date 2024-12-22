@@ -12,6 +12,7 @@
         <link rel="stylesheet" href="styleShared.css">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <meta charset="UTF-8">
     </head>
 <body>
     <header>
@@ -26,12 +27,18 @@
                     </li>
                     <li>
                         <div id="languageButtons">
-                            <button id="languageEngButton" class="nonRollButton">English</button>
-                            <button id="languageEspButton" class="nonRollButton">Espanol</button>
+                            <!-- <button id="languageEngButton" class="nonRollButton">English</button>
+                            <button id="languageEspButton" class="nonRollButton">Espanol</button> -->
                         </div>
                     </li>
                     <li>
                         <button id="deleteCharacter" class="nonRollButton">Delete a Character</button>
+                    </li>
+                    <li>
+                        <button id="customSpells" class="nonRollButton">Create Spell</button>
+                    </li>
+                    <li>
+                        <!-- <button id="customItems" class="nonRollButton">Create Item</button> -->
                     </li>
                     <!-- Add more options as needed -->
                 </ul>
@@ -76,7 +83,7 @@
             <div id="playerCharacterContainer">
                 <div id="playerCharacterInput"></div>
                 <div id="playerAuxStats" class="abilityScores">
-                    <div id ="character Init" class="abilitybox">Init
+                    <div id ="characterInit" class="abilitybox">Init
                         <hr>
                         <div class="playerStats">
                             <label class="actionButtonLabel" for="initiativeButton" value="5" data-dice-type="1d20" data-name="Initiative"></label>
@@ -100,7 +107,7 @@
                     </div>
                     <div id ="characterLevelContainer" class="abilitybox">
                             <div id="levelText">
-                                <span>Level</span>
+                                <span id="levelTextSpan">Level</span>
                                 <span id ="characterLevel" class="playerStats levelStat" contenteditable="true">1</span>
                             </div>
                         <hr>
@@ -114,7 +121,7 @@
                         <hr>
                         <div id="successes" class="deathSaves">
                             <div class="deathSaves-row">
-                                <span class="deathSaves-label">Success :</span>
+                                <span id="deathSavesSuccess" class="deathSaves-label">Success :</span>
                                 <div class="buttons-wrapper">
                                     <button id="deathSavesButton01" class="deathSavesButton successDeathSavesButton" value="0"></button>
                                     <button id="deathSavesButton02" class="deathSavesButton successDeathSavesButton" value="0"></button>
@@ -124,7 +131,7 @@
                         </div>
                         <div id="failures" class="deathSaves">
                             <div class="deathSaves-row">
-                                <span class="deathSaves-label">Failure :</span>
+                                <span id="deathSavesFailures" class="deathSaves-label">Failure :</span>
                                 <div class="buttons-wrapper">
                                     <button id="deathSavesButton04" class="deathSavesButton" value="0"></button>
                                     <button id="deathSavesButton05" class="deathSavesButton" value="0"></button>
@@ -143,13 +150,13 @@
                     <div class ="playerHealth">
                         <button id="healButton" class="nonRollButton">Heal</button>  
                         <input type="int" id="healthInput" class= "inputBox" placeholder="">
-                        <button id="damageButton" class="nonRollButton">Damage</button>                            
+                        <button id="damageButton" class="nonRollButton">Damage</button>
                     </div>
                     <div class="playerHealth">
                         <div>
-                            <span>Current</span>
+                            <span id="currentHP">Current</span>
                             <span> / </span>
-                            <span>Max</span>
+                            <span id="maxHP">Max</span>
                         </div>
                         <div id="playerHealthTracker">
                             <span id="currentCharacterHP" contenteditable="true">0</span>
@@ -157,7 +164,7 @@
                             <span id="maxCharacterHP" contenteditable="true">50</span>
                         </div>
                         <div>
-                            <span>Player HitPoints</span>
+                            <span id="hpButtomText">Player HitPoints</span>
                         </div>                        
                     </div>
 
@@ -172,15 +179,15 @@
                     <div id="alignmentHeader">
                         <label for="alignment-select"></label>
                         <select id="alignment-select">
-                            <option value="LG">Lawful Good</option>
-                            <option value="NG">Neutral Good</option>
-                            <option value="CG">Chaotic Good</option>
-                            <option value="LN">Lawful Neutral</option>
-                            <option value="TN">True Neutral</option>
-                            <option value="CN">Chaotic Neutral</option>
-                            <option value="LE">Lawful Evil</option>
-                            <option value="NE">Neutral Evil</option>
-                            <option value="CE">Chaotic Evil</option>
+                            <option id = "alignmentOptionLG" value="LG">Lawful Good</option>
+                            <option id = "alignmentOptionNG" value="NG">Neutral Good</option>
+                            <option id = "alignmentOptionCG" value="CG">Chaotic Good</option>
+                            <option id = "alignmentOptionLN" value="LN">Lawful Neutral</option>
+                            <option id = "alignmentOptionTN" value="TN">True Neutral</option>
+                            <option id = "alignmentOptionCN" value="CN">Chaotic Neutral</option>
+                            <option id = "alignmentOptionLE" value="LE">Lawful Evil</option>
+                            <option id = "alignmentOptionNE" value="NE">Neutral Evil</option>
+                            <option id = "alignmentOptionCE" value="CE">Chaotic Evil</option>
                         </select>
                     </div>
 
@@ -196,30 +203,30 @@
                     <div id="conditionHeader">
                         <label for="condition-select"></label>
                         <select id="condition-select">
-                            <option value="Aid">Aid</option>
-                            <option value="Bane">Bane</option>
-                            <option value="Blinded">Blinded</option>
-                            <option value="Bless">Bless</option>
-                            <option value="Concentration">Concentration</option>
-                            <option value="Charmed">Charmed</option>
-                            <option value="Deafened">Deafened</option> 
-                            <option value="Exhaustion">Exhaustion</option>
-                            <option value="Frightened">Frightened</option>
-                            <option value="Grappled">Grappled</option>
-                            <option value="Guidance">Guidance</option>
-                            <option value="Heroism">Heroism</option>
-                            <option value="Incapacitated">Incapacitated</option>
-                            <option value="Invisible">Invisible</option>
-                            <option value="Paralyzed">Paralyzed</option>
-                            <option value="Petrified">Petrified</option>
-                            <option value="Poisoned">Poisoned</option> 
-                            <option value="Prone">Prone</option>
-                            <option value="Restrained">Restrained</option>
-                            <option value="Sanctuary">Sanctuary</option>
-                            <option value="Stunned">Stunned</option>
-                            <option value="Unconscious">Unconscious</option>
-                            <option value="Slow">Slow</option>
-                            <option value="Raging">Raging</option>
+                            <option id="conditionOptionAid" value="Aid">Aid</option>
+                            <option id="conditionOptionBane" value="Bane">Bane</option>
+                            <option id="conditionOptionBlinded" value="Blinded">Blinded</option>
+                            <option id="conditionOptionBless" value="Bless">Bless</option>
+                            <option id="conditionOptionConcentration" value="Concentration">Concentration</option>
+                            <option id="conditionOptionCharmed" value="Charmed">Charmed</option>
+                            <option id="conditionOptionDeafened" value="Deafened">Deafened</option>
+                            <option id="conditionOptionExhaustion" value="Exhaustion">Exhaustion</option>
+                            <option id="conditionOptionFrightened" value="Frightened">Frightened</option>
+                            <option id="conditionOptionGrappled" value="Grappled">Grappled</option>
+                            <option id="conditionOptionGuidance" value="Guidance">Guidance</option>
+                            <option id="conditionOptionHeroism" value="Heroism">Heroism</option>
+                            <option id="conditionOptionIncapacitated" value="Incapacitated">Incapacitated</option>
+                            <option id="conditionOptionInvisible" value="Invisible">Invisible</option>
+                            <option id="conditionOptionParalyzed" value="Paralyzed">Paralyzed</option>
+                            <option id="conditionOptionPetrified" value="Petrified">Petrified</option>
+                            <option id="conditionOptionPoisoned" value="Poisoned">Poisoned</option>
+                            <option id="conditionOptionProne" value="Prone">Prone</option>
+                            <option id="conditionOptionRestrained" value="Restrained">Restrained</option>
+                            <option id="conditionOptionSanctuary" value="Sanctuary">Sanctuary</option>
+                            <option id="conditionOptionStunned" value="Stunned">Stunned</option>
+                            <option id="conditionOptionUnconscious" value="Unconscious">Unconscious</option>
+                            <option id="conditionOptionSlow" value="Slow">Slow</option>
+                            <option id="conditionOptionRaging" value="Raging">Raging</option>
                         <!-- Add more condition options here -->
                         </select>
                         <button class="nonRollButton" onclick="playerConditions()">Condition</button>
@@ -233,7 +240,7 @@
     <main>
         <section id="playerStats">
             <div id="playerAbilityScores" class="abilityScores">
-                <div class="abilitybox">STR
+                <div id="characterAbilityStr" class="abilitybox">STR
                     <hr>
                     <div id="strengthScore" class="abilityScore" contenteditable="true"> 20</div>
                         <div>
@@ -241,7 +248,7 @@
                             <button class="actionButton abilitybuttonstyler">+5</button>
                         </div>                        
                 </div>
-                <div class="abilitybox">DEX
+                <div id="characterAbilityDex" class="abilitybox">DEX
                     <hr>
                     <div id="dexterityScore" class="abilityScore" contenteditable="true"> 20</div>
                     <div>
@@ -249,7 +256,7 @@
                         <button class="actionButton abilitybuttonstyler" title="click me">+5</button>
                     </div> 
                 </div>
-                <div class="abilitybox">CON
+                <div id="characterAbilityCon" class="abilitybox">CON
                     <hr>
                     <div id="constitutionScore" class="abilityScore" contenteditable="true"> 20</div>
                     <div>
@@ -257,7 +264,7 @@
                         <button class="actionButton abilitybuttonstyler">+5</button>
                     </div>                     
                 </div>
-                <div class="abilitybox">INT
+                <div id="characterAbilityInt" class="abilitybox">INT
                     <hr>
                     <div id="intelligenceScore" class="abilityScore" contenteditable="true"> 20</div>
                     <div>
@@ -265,7 +272,7 @@
                         <button class="actionButton abilitybuttonstyler">+5</button>
                     </div>                     
                 </div>
-                <div class="abilitybox">WIS
+                <div id="characterAbilityWis" class="abilitybox">WIS
                     <hr>
                     <div id="wisdomScore" class="abilityScore" contenteditable="true"> 20</div>
                     <div>
@@ -273,7 +280,7 @@
                         <button class="actionButton abilitybuttonstyler">+5</button>
                     </div>                     
                 </div>
-                <div class="abilitybox">CHA
+                <div id="characterAbilityCha" class="abilitybox">CHA
                     <hr>
                     <div id="charismaScore" class="abilityScore" contenteditable="true"> 20</div>
                     <div>
@@ -291,9 +298,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-1" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="acrobaticsAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div id="acrobaticsMod" class="abilityMod" contenteditable="true">DEX</div>
                         <div class="skillBlock">
-                            <div class="skillName">Acrobatics</div>
+                            <div id="skillAcrobatics" class="skillName">Acrobatics</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Acrobatics"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>
@@ -303,9 +310,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-2" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="animalHandlingAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div id="animalHandlingMod" class="abilityMod" contenteditable="true">WIS</div>
                         <div class="skillBlock">
-                            <div class="skillName">Animal Handling</div>
+                            <div id="skillAnimalHandling" class="skillName">Animal Handling</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Animal Handling"></label>
                             <button class="actionButton skillbuttonstyler">+12</button>
                         </div>                    
@@ -314,9 +321,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-3" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="arcanaAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div id="arcanaMod" class="abilityMod" contenteditable="true">INT</div>
                         <div class="skillBlock">
-                            <div class="skillName">Arcana</div>
+                            <div id="skillArcana" class="skillName">Arcana</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Arcana"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -325,9 +332,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-4" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="athleticsAbilityMod" class="abilityMod" contenteditable="true">STR</div>
+                        <div id="athleticsMod" class="abilityMod" contenteditable="true">STR</div>
                         <div class="skillBlock">
-                            <div class="skillName">Athletics</div>
+                            <div id="skillAthletics" class="skillName">Athletics</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Athletics"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -336,9 +343,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-5" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="deceptionAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div id="deceptionMod" class="abilityMod" contenteditable="true">CHA</div>
                         <div class="skillBlock">
-                            <div class="skillName">Deception</div>
+                            <div id="skillDeception" class="skillName">Deception</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Deception"></label>
                             <button class="actionButton skillbuttonstyler">+12</button>
                         </div>                    
@@ -347,9 +354,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-6" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="historyAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div id="historyMod" class="abilityMod" contenteditable="true">INT</div>
                         <div class="skillBlock">
-                            <div class="skillName">History</div>
+                            <div id="skillHistory" class="skillName">History</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="History"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -358,9 +365,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-7" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="insightAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div id="insightMod" class="abilityMod" contenteditable="true">WIS</div>
                         <div class="skillBlock">
-                            <div class="skillName">Insight</div>
+                            <div id="skillInsight" class="skillName">Insight</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Insight"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -369,9 +376,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-8" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="intimidationAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div id="intimidationMod" class="abilityMod" contenteditable="true">CHA</div>
                         <div class="skillBlock">
-                            <div class="skillName">Intimidation</div>
+                            <div id="skillIntimidation" class="skillName">Intimidation</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Intimidation"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -380,9 +387,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-9" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="investigationAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div id="investigationMod" class="abilityMod" contenteditable="true">INT</div>
                         <div class="skillBlock">
-                            <div class="skillName">Investigation</div>
+                            <div id="skillInvestigation" class="skillName">Investigation</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Investigation"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -391,9 +398,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-10" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="medicineAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div id="medicineMod" class="abilityMod" contenteditable="true">WIS</div>
                         <div class="skillBlock">
-                            <div class="skillName">Medicine</div>
+                            <div id="skillMedicine" class="skillName">Medicine</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Medicine"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -402,9 +409,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-11" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="natureAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div id="natureMod" class="abilityMod" contenteditable="true">INT</div>
                         <div class="skillBlock">
-                            <div class="skillName">Nature</div>
+                            <div id="skillNature" class="skillName">Nature</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Nature"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -413,9 +420,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-12" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="perceptionAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div id="perceptionMod" class="abilityMod" contenteditable="true">WIS</div>
                         <div class="skillBlock">
-                            <div class="skillName">Perception</div>
+                            <div id="skillPerception" class="skillName">Perception</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Perception"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -424,9 +431,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-13" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="performanceAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div id="performanceMod" class="abilityMod" contenteditable="true">CHA</div>
                         <div class="skillBlock">
-                            <div class="skillName">Performance</div>
+                            <div id="skillPerformance" class="skillName">Performance</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Performance"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -435,9 +442,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-14" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="persuasionAbilityMod" class="abilityMod" contenteditable="true">CHA</div>
+                        <div id="persuasionMod" class="abilityMod" contenteditable="true">CHA</div>
                         <div class="skillBlock">
-                            <div class="skillName">Persuasion</div>
+                            <div id="skillPersuasion" class="skillName">Persuasion</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Persuasion"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -446,9 +453,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-15" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="religionAbilityMod" class="abilityMod" contenteditable="true">INT</div>
+                        <div id="religionMod" class="abilityMod" contenteditable="true">INT</div>
                         <div class="skillBlock">
-                            <div class="skillName">Religion</div>
+                            <div id="skillReligion" class="skillName">Religion</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Religion"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -457,9 +464,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-16" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="sleightofHandAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div id="sleightofHandMod" class="abilityMod" contenteditable="true">DEX</div>
                         <div class="skillBlock">
-                            <div class="skillName">Sleight of Hand</div>
+                            <div id="skillSleightofHand" class="skillName">Sleight of Hand</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Sleight of Hand"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -468,9 +475,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-17" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="stealthAbilityMod" class="abilityMod" contenteditable="true">DEX</div>
+                        <div id="stealthMod" class="abilityMod" contenteditable="true">DEX</div>
                         <div class="skillBlock">
-                            <div class="skillName">Stealth</div>
+                            <div id="skillStealth" class="skillName">Stealth</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Stealth"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -479,9 +486,9 @@
                         <div class="proficiencyButtons">
                             <button id="pb-18" title="not proficient" class="notProficient" value="0"></button>
                         </div>
-                        <div id="survivalAbilityMod" class="abilityMod" contenteditable="true">WIS</div>
+                        <div id="survivalMod" class="abilityMod" contenteditable="true">WIS</div>
                         <div class="skillBlock">
-                            <div class="skillName">Survival</div>
+                            <div id="skillSurvival" class="skillName">Survival</div>
                             <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Survival"></label>
                             <button class="actionButton skillbuttonstyler">5</button>
                         </div>                    
@@ -496,7 +503,7 @@
                                 <button id="pb-19" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">STR Save</div>
+                                <div id ="strSave" class="saveName">Str Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Strength Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -506,7 +513,7 @@
                                 <button id="pb-20" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">Dex Save</div>
+                                <div id ="dexSave" class="saveName">Dex Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Dex Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -516,7 +523,7 @@
                                 <button id="pb-21" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">CON Save</div>
+                                <div id ="conSave" class="saveName">Con Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Constitution Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -526,7 +533,7 @@
                                 <button id="pb-22" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">INT Save</div>
+                                <div id ="intSave" class="saveName">Int Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Intelligence Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -536,7 +543,7 @@
                                 <button id="pb-23" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">WIS Save</div>
+                                <div id ="wisSave" class="saveName">Wis Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Wisdom Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -546,7 +553,7 @@
                                 <button id="pb-24" title="not proficient" class="notProficient" value="0"></button>
                             </div>
                             <div class="savesBlock">
-                                <div class="saveName">CHA Save</div>
+                                <div id ="chaSave" class="saveName">Cha Save</div>
                                 <label class="actionButtonLabel" value="5" data-dice-type="1d20" data-name="Charisma Save"></label>
                                 <button class="actionButton skillbuttonstyler">5</button>
                             </div>
@@ -555,14 +562,14 @@
                     </div>
                     <div class="passives-container">
                         <div class="passivesBlock">
-                            <div class="passives">Passive WIS Perception</div><span id ="passivePerception"></span>
+                            <div id="passivePerceptionTitle" class="passives">Passive WIS (Perception)</div><span id ="passivePerception"></span>
     
                         </div>
                         <div class="passivesBlock">
-                            <div class="passives"> Passive INT (Investigation)</div> <span id ="passiveInvestigation"></span>
+                            <div id="passiveInvestigationTitle" class="passives"> Passive INT (Investigation)</div> <span id ="passiveInvestigation"></span>
                         </div>
                         <div class="passivesBlock">
-                            <div class="passives">Passive WIS (Insight)</div><span id ="passiveInsight"></span>
+                            <div id="passiveInsightTitle" class="passives">Passive WIS (Insight)</div><span id ="passiveInsight"></span>
     
                         </div>
                     </div>
@@ -570,7 +577,7 @@
                         <!-- Weapons Proficiency -->
                         <div class="proficiency-group">
                             <h3 class="proficiency-headings">
-                                <span>Weapons</span>
+                                <span id="proficiencyWeapons">Weapons</span>
                                 <i class="fa fa-cog proficiency-settings" id="armor-settings-icon"></i>
                             </h3>
                             <div id="weaponsContainer" class="proficiency-containers">
@@ -579,53 +586,53 @@
                             <div class="proficiency-dropdown" id="weapons-dropdown">
                                 <ul>
                                      <!-- Weapon Categories -->
-                                    <li><input type="checkbox" id="Martial Weapons"> Martial Weapons</li>
-                                    <li><input type="checkbox" id="Simple Weapons"> Simple Weapons</li>
+                                    <li><input type="checkbox" value="Martial Weapons" id="Martial Weapons"> Martial Weapons</li>
+                                    <li><input type="checkbox" value="Simple Weapons" id="Simple Weapons"> Simple Weapons</li>
                                     
                                     <!-- Simple Melee Weapons -->
-                                    <li><input type="checkbox" id="Club"> Club</li>
-                                    <li><input type="checkbox" id="Dagger"> Dagger</li>
-                                    <li><input type="checkbox" id="Greatclub"> Greatclub</li>
-                                    <li><input type="checkbox" id="Handaxe"> Handaxe</li>
-                                    <li><input type="checkbox" id="Javelin"> Javelin</li>
-                                    <li><input type="checkbox" id="LightHammer"> Light Hammer</li>
-                                    <li><input type="checkbox" id="Mace"> Mace</li>
-                                    <li><input type="checkbox" id="Quarterstaff"> Quarterstaff</li>
-                                    <li><input type="checkbox" id="Sickle"> Sickle</li>
-                                    <li><input type="checkbox" id="Spear"> Spear</li>
+                                    <li><input type="checkbox" value="tester" id="Club"> Club</li>
+                                    <li><input type="checkbox" value="Dagger" id="Dagger"> Dagger</li>
+                                    <li><input type="checkbox" value="Greatclub" id="Greatclub"> Greatclub</li>
+                                    <li><input type="checkbox" value="Handaxe" id="Handaxe"> Handaxe</li>
+                                    <li><input type="checkbox" value="Javelin" id="Javelin"> Javelin</li>
+                                    <li><input type="checkbox" value="LightHammer" id="LightHammer"> Light Hammer</li>
+                                    <li><input type="checkbox" value="Mace" id="Mace"> Mace</li>
+                                    <li><input type="checkbox" value="Quarterstaff" id="Quarterstaff"> Quarterstaff</li>
+                                    <li><input type="checkbox" value="Sickle" id="Sickle"> Sickle</li>
+                                    <li><input type="checkbox" value="Spear" id="Spear"> Spear</li>
                                     
                                     <!-- Simple Ranged Weapons -->
-                                    <li><input type="checkbox" id="CrossbowLight"> Light Crossbow</li>
-                                    <li><input type="checkbox" id="Dart"> Dart</li>
-                                    <li><input type="checkbox" id="Shortbow"> Shortbow</li>
-                                    <li><input type="checkbox" id="Sling"> Sling</li>
+                                    <li><input type="checkbox" value="CrossbowLight" id="CrossbowLight"> Light Crossbow</li>
+                                    <li><input type="checkbox" value="Dart" id="Dart"> Dart</li>
+                                    <li><input type="checkbox" value="Shortbow" id="Shortbow"> Shortbow</li>
+                                    <li><input type="checkbox" value="Sling" id="Sling"> Sling</li>
                                     
                                     <!-- Martial Melee Weapons -->
-                                    <li><input type="checkbox" id="Battleaxe"> Battleaxe</li>
-                                    <li><input type="checkbox" id="Flail"> Flail</li>
-                                    <li><input type="checkbox" id="Glaive"> Glaive</li>
-                                    <li><input type="checkbox" id="Greataxe"> Greataxe</li>
-                                    <li><input type="checkbox" id="Greatsword"> Greatsword</li>
-                                    <li><input type="checkbox" id="Halberd"> Halberd</li>
-                                    <li><input type="checkbox" id="Lance"> Lance</li>
-                                    <li><input type="checkbox" id="Longsword"> Longsword</li>
-                                    <li><input type="checkbox" id="Maul"> Maul</li>
-                                    <li><input type="checkbox" id="Morningstar"> Morningstar</li>
-                                    <li><input type="checkbox" id="Pike"> Pike</li>
-                                    <li><input type="checkbox" id="Rapier"> Rapier</li>
-                                    <li><input type="checkbox" id="Scimitar"> Scimitar</li>
-                                    <li><input type="checkbox" id="Shortsword"> Shortsword</li>
-                                    <li><input type="checkbox" id="Trident"> Trident</li>
-                                    <li><input type="checkbox" id="WarPick"> War Pick</li>
-                                    <li><input type="checkbox" id="Warhammer"> Warhammer</li>
-                                    <li><input type="checkbox" id="Whip"> Whip</li>
+                                    <li><input type="checkbox" value="Battleaxe" id="Battleaxe"> Battleaxe</li>
+                                    <li><input type="checkbox" value="Flail" id="Flail"> Flail</li>
+                                    <li><input type="checkbox" value="Glaive" id="Glaive"> Glaive</li>
+                                    <li><input type="checkbox" value="Greataxe" id="Greataxe"> Greataxe</li>
+                                    <li><input type="checkbox" value="Greatsword" id="Greatsword"> Greatsword</li>
+                                    <li><input type="checkbox" value="Halberd" id="Halberd"> Halberd</li>
+                                    <li><input type="checkbox" value="Lance" id="Lance"> Lance</li>
+                                    <li><input type="checkbox" value="Longsword" id="Longsword"> Longsword</li>
+                                    <li><input type="checkbox" value="Maul" id="Maul"> Maul</li>
+                                    <li><input type="checkbox" value="Morningstar" id="Morningstar"> Morningstar</li>
+                                    <li><input type="checkbox" value="Pike" id="Pike"> Pike</li>
+                                    <li><input type="checkbox" value="Rapier" id="Rapier"> Rapier</li>
+                                    <li><input type="checkbox" value="Scimitar" id="Scimitar"> Scimitar</li>
+                                    <li><input type="checkbox" value="Shortsword" id="Shortsword"> Shortsword</li>
+                                    <li><input type="checkbox" value="Trident" id="Trident"> Trident</li>
+                                    <li><input type="checkbox" value="WarPick" id="WarPick"> War Pick</li>
+                                    <li><input type="checkbox" value="Warhammer" id="Warhammer"> Warhammer</li>
+                                    <li><input type="checkbox" value="Whip" id="Whip"> Whip</li>
                                     
                                     <!-- Martial Ranged Weapons -->
-                                    <li><input type="checkbox" id="Blowgun"> Blowgun</li>
-                                    <li><input type="checkbox" id="CrossbowHand"> Hand Crossbow</li>
-                                    <li><input type="checkbox" id="CrossbowHeavy"> Heavy Crossbow</li>
-                                    <li><input type="checkbox" id="Longbow"> Longbow</li>
-                                    <li><input type="checkbox" id="Net"> Net</li>
+                                    <li><input type="checkbox" value="Blowgun" id="Blowgun"> Blowgun</li>
+                                    <li><input type="checkbox" value="CrossbowHand" id="CrossbowHand"> Hand Crossbow</li>
+                                    <li><input type="checkbox" value="CrossbowHeavy" id="CrossbowHeavy"> Heavy Crossbow</li>
+                                    <li><input type="checkbox" value="Longbow" id="Longbow"> Longbow</li>
+                                    <li><input type="checkbox" value="Net" id="Net"> Net</li>
                                     
                                 </ul>
                             </div>
@@ -635,7 +642,7 @@
                         <!-- Armor Proficiency -->
                         <div class="proficiency-group">
                             <h3 class="proficiency-headings">
-                                <span>Armor</span>
+                                <span id="proficiencyArmor">Armor</span>
                                 <i class="fa fa-cog proficiency-settings" id="armor-settings-icon"></i>
                             </h3>
                             <div id="armorContainer" class="proficiency-containers">
@@ -643,10 +650,10 @@
                             </div>
                             <div class="proficiency-dropdown" id="armor-dropdown">
                                 <ul>
-                                    <li><input type="checkbox" id="Light"> Light</li>
-                                    <li><input type="checkbox" id="Medium"> Medium</li>
-                                    <li><input type="checkbox" id="Heavy"> Heavy</li>
-                                    <li><input type="checkbox" id="Shield"> Shield</li>
+                                    <li><input type="checkbox" value="Light" id="Light"> Light</li>
+                                    <li><input type="checkbox" value="Medium" id="Medium"> Medium</li>
+                                    <li><input type="checkbox" value="Heavy" id="Heavy"> Heavy</li>
+                                    <li><input type="checkbox" value="Shield" id="Shield"> Shield</li>
                                 </ul>
                             </div>
                         </div>
@@ -654,7 +661,7 @@
                         <!-- Languages -->
                         <div class="proficiency-group">
                             <h3 class="proficiency-headings">
-                                <span>Languages</span>
+                                <span id="proficiencyLanguages">Languages</span>
                                 <i class="fa fa-cog proficiency-settings" id="armor-settings-icon"></i>
                             </h3>
                             <div id="languageContainer" class="proficiency-containers">
@@ -662,25 +669,27 @@
                             </div>
                             <div class="proficiency-dropdown" id="languages-dropdown">
                                 <ul>
-                                    <li><input type="checkbox" id="Common"> Common</li>
-                                    <li><input type="checkbox" id="Dwarvish"> Dwarvish</li>
-                                    <li><input type="checkbox" id="Elvish"> Elvish</li>
-                                    <li><input type="checkbox" id="Giant"> Giant</li>
-                                    <li><input type="checkbox" id="Gnomish"> Gnomish</li>
-                                    <li><input type="checkbox" id="Goblin"> Goblin</li>
-                                    <li><input type="checkbox" id="Halfling"> Halfling</li>
-                                    <li><input type="checkbox" id="Orc"> Orc</li>
+                                    <li><input type="checkbox" value="Common" id="Common"> Common</li>
+                                    <li><input type="checkbox" value="Dwarvish" id="Dwarvish"> Dwarvish</li>
+                                    <li><input type="checkbox" value="Elvish" id="Elvish"> Elvish</li>
+                                    <li><input type="checkbox" value="Giant" id="Giant"> Giant</li>
+                                    <li><input type="checkbox" value="Gnomish" id="Gnomish"> Gnomish</li>
+                                    <li><input type="checkbox" value="Goblin" id="Goblin"> Goblin</li>
+                                    <li><input type="checkbox" value="Halfling" id="Halfling"> Halfling</li>
+                                    <li><input type="checkbox" value="Orc" id="Orc"> Orc</li>
+                                    <li><input type="checkbox" value="Leonin" id="Leonin"> Leonin</li>
+                                    <li><input type="checkbox" value="Minotaur" id="Minotaur"> Minotaur</li>
                                 
                                     <!-- Exotic Languages -->
-                                    <li><input type="checkbox" id="Abyssal"> Abyssal</li>
-                                    <li><input type="checkbox" id="Celestial"> Celestial</li>
-                                    <li><input type="checkbox" id="Draconic"> Draconic</li>
-                                    <li><input type="checkbox" id="DeepSpeech"> Deep Speech</li>
-                                    <li><input type="checkbox" id="Infernal"> Infernal</li>
-                                    <li><input type="checkbox" id="Primordial"> Primordial</li>
-                                    <li><input type="checkbox" id="Sylvan"> Sylvan</li>]
-                                    <li><input type="checkbox" id="ThievesCant"> Thieves Cant</li>
-                                    <li><input type="checkbox" id="Undercommon"> Undercommon</li>
+                                    <li><input type="checkbox" value="Abyssal" id="Abyssal"> Abyssal</li>
+                                    <li><input type="checkbox" value="Celestial" id="Celestial"> Celestial</li>
+                                    <li><input type="checkbox" value="Draconic" id="Draconic"> Draconic</li>
+                                    <li><input type="checkbox" value="DeepSpeech" id="DeepSpeech"> Deep Speech</li>
+                                    <li><input type="checkbox" value="Infernal" id="Infernal"> Infernal</li>
+                                    <li><input type="checkbox" value="Primordial" id="Primordial"> Primordial</li>
+                                    <li><input type="checkbox" value="Sylvan" id="Sylvan"> Sylvan</li>
+                                    <li><input type="checkbox" value="ThievesCant" id="ThievesCant"> Thieves Cant</li>
+                                    <li><input type="checkbox" value="Undercommon" id="Undercommon"> Undercommon</li>
                                 </ul>
                             </div>
                         </div>
@@ -688,7 +697,7 @@
                         <!-- Tools -->
                         <div class="proficiency-group">
                             <h3 class="proficiency-headings">
-                                <span>Tools</span>
+                                <span id="proficiencyTools">Tools</span>
                                 <i class="fa fa-cog proficiency-settings" id="armor-settings-icon"></i>
                             </h3>
                             <div id="toolsContainer" class="proficiency-containers">
@@ -697,52 +706,52 @@
                             <div class="proficiency-dropdown" id="tools-dropdown">
                                 <ul>
                                     <!-- Artisan's Tools -->
-                                    <li><input type="checkbox" id="Alchemist's Supplies"> Alchemist's Supplies</li>
-                                    <li><input type="checkbox" id="Brewer's Supplies"> Brewer's Supplies</li>
-                                    <li><input type="checkbox" id="Calligrapher's Supplies"> Calligrapher's Supplies</li>
-                                    <li><input type="checkbox" id="Carpenter's Tools"> Carpenter's Tools</li>
-                                    <li><input type="checkbox" id="Cartographer's Tools"> Cartographer's Tools</li>
-                                    <li><input type="checkbox" id="Cobbler's Tools"> Cobbler's Tools</li>
-                                    <li><input type="checkbox" id="Cook's Utensils"> Cook's Utensils</li>
-                                    <li><input type="checkbox" id="Glassblower's Tools"> Glassblower's Tools</li>
-                                    <li><input type="checkbox" id="Jeweler's Tools"> Jeweler's Tools</li>
-                                    <li><input type="checkbox" id="Leatherworker's Tools"> Leatherworker's Tools</li>
-                                    <li><input type="checkbox" id="Mason's Tools"> Mason's Tools</li>
-                                    <li><input type="checkbox" id="Painter's Supplies"> Painter's Supplies</li>
-                                    <li><input type="checkbox" id="Potter's Tools"> Potter's Tools</li>
-                                    <li><input type="checkbox" id="Smith's Tools"> Smith's Tools</li>
-                                    <li><input type="checkbox" id="Tinker's Tools"> Tinker's Tools</li>
-                                    <li><input type="checkbox" id="Weaver's Tools"> Weaver's Tools</li>
-                                    <li><input type="checkbox" id="Woodcarver's Tools"> Woodcarver's Tools</li>
+                                    <li><input type="checkbox" value="Alchemist's Supplies" id="Alchemist's Supplies"> Alchemist's Supplies</li>
+                                    <li><input type="checkbox" value="Brewer's Supplies" id="Brewer's Supplies"> Brewer's Supplies</li>
+                                    <li><input type="checkbox" value="Calligrapher's Supplies" id="Calligrapher's Supplies"> Calligrapher's Supplies</li>
+                                    <li><input type="checkbox" value="Carpenter's Tools" id="Carpenter's Tools"> Carpenter's Tools</li>
+                                    <li><input type="checkbox" value="Cartographer's Tools" id="Cartographer's Tools"> Cartographer's Tools</li>
+                                    <li><input type="checkbox" value="Cobbler's Tools" id="Cobbler's Tools"> Cobbler's Tools</li>
+                                    <li><input type="checkbox" value="Cook's Utensils" id="Cook's Utensils"> Cook's Utensils</li>
+                                    <li><input type="checkbox" value="Glassblower's Tools" id="Glassblower's Tools"> Glassblower's Tools</li>
+                                    <li><input type="checkbox" value="Jeweler's Tools" id="Jeweler's Tools"> Jeweler's Tools</li>
+                                    <li><input type="checkbox" value="Leatherworker's Tools" id="Leatherworker's Tools"> Leatherworker's Tools</li>
+                                    <li><input type="checkbox" value="Mason's Tools" id="Mason's Tools"> Mason's Tools</li>
+                                    <li><input type="checkbox" value="Painter's Supplies" id="Painter's Supplies"> Painter's Supplies</li>
+                                    <li><input type="checkbox" value="Potter's Tools" id="Potter's Tools"> Potter's Tools</li>
+                                    <li><input type="checkbox" value="Smith's Tools" id="Smith's Tools"> Smith's Tools</li>
+                                    <li><input type="checkbox" value="Tinker's Tools" id="Tinker's Tools"> Tinker's Tools</li>
+                                    <li><input type="checkbox" value="Weaver's Tools" id="Weaver's Tools"> Weaver's Tools</li>
+                                    <li><input type="checkbox" value="Woodcarver's Tools" id="Woodcarver's Tools"> Woodcarver's Tools</li>
                                 
                                     <!-- Gaming Sets -->
-                                    <li><input type="checkbox" id="Dice Set"> Dice Set</li>
-                                    <li><input type="checkbox" id="Dragonchess Set"> Dragonchess Set</li>
-                                    <li><input type="checkbox" id="Playing Card Set"> Playing Card Set</li>
-                                    <li><input type="checkbox" id="Three-Dragon Ante Set"> Three-Dragon Ante Set</li>
+                                    <li><input type="checkbox" value="Dice Set" id="Dice Set"> Dice Set</li>
+                                    <li><input type="checkbox" value="Dragonchess Set" id="Dragonchess Set"> Dragonchess Set</li>
+                                    <li><input type="checkbox" value="Playing Card Set" id="Playing Card Set"> Playing Card Set</li>
+                                    <li><input type="checkbox" value="Three-Dragon Ante Set" id="Three-Dragon Ante Set"> Three-Dragon Ante Set</li>
                                 
                                     <!-- Musical Instruments -->
-                                    <li><input type="checkbox" id="Bagpipes"> Bagpipes</li>
-                                    <li><input type="checkbox" id="Drum"> Drum</li>
-                                    <li><input type="checkbox" id="Dulcimer"> Dulcimer</li>
-                                    <li><input type="checkbox" id="Flute"> Flute</li>
-                                    <li><input type="checkbox" id="Lute"> Lute</li>
-                                    <li><input type="checkbox" id="Lyre"> Lyre</li>
-                                    <li><input type="checkbox" id="Horn"> Horn</li>
-                                    <li><input type="checkbox" id="PanFlute"> Pan Flute</li>
-                                    <li><input type="checkbox" id="Shawm"> Shawm</li>
-                                    <li><input type="checkbox" id="Viol"> Viol</li>
-                                    <li><input type="checkbox" id="Wargong"> Wargong</li>
+                                    <li><input type="checkbox" value="Bagpipes" id="Bagpipes"> Bagpipes</li>
+                                    <li><input type="checkbox" value="Drum" id="Drum"> Drum</li>
+                                    <li><input type="checkbox" value="Dulcimer" id="Dulcimer"> Dulcimer</li>
+                                    <li><input type="checkbox" value="Flute" id="Flute"> Flute</li>
+                                    <li><input type="checkbox" value="Lute" id="Lute"> Lute</li>
+                                    <li><input type="checkbox" value="Lyre" id="Lyre"> Lyre</li>
+                                    <li><input type="checkbox" value="Horn" id="Horn"> Horn</li>
+                                    <li><input type="checkbox" value="PanFlute" id="PanFlute"> Pan Flute</li>
+                                    <li><input type="checkbox" value="Shawm" id="Shawm"> Shawm</li>
+                                    <li><input type="checkbox" value="Viol" id="Viol"> Viol</li>
+                                    <li><input type="checkbox" value="Wargong" id="Wargong"> Wargong</li>
                                 
                                     <!-- Other Tools -->
-                                    <li><input type="checkbox" id="Disguise Kit"> Disguise Kit</li>
-                                    <li><input type="checkbox" id="Forgery Kit"> Forgery Kit</li>
-                                    <li><input type="checkbox" id="Herbalism Kit"> Herbalism Kit</li>
-                                    <li><input type="checkbox" id="Navigator's Tools"> Navigator's Tools</li>
-                                    <li><input type="checkbox" id="Poisoner's Kit"> Poisoner's Kit</li>
-                                    <li><input type="checkbox" id="Thieves' Tools"> Thieves' Tools</li>
-                                    <li><input type="checkbox" id="Vehicles (Land)"> Vehicles (Land)</li>
-                                    <li><input type="checkbox" id="Vehicles (Water)"> Vehicles (Water)</li>
+                                    <li><input type="checkbox" value="Disguise Kit" id="Disguise Kit"> Disguise Kit</li>
+                                    <li><input type="checkbox" value="Forgery Kit" id="Forgery Kit"> Forgery Kit</li>
+                                    <li><input type="checkbox" value="Herbalism Kit" id="Herbalism Kit"> Herbalism Kit</li>
+                                    <li><input type="checkbox" value="Navigator's Tools" id="Navigator's Tools"> Navigator's Tools</li>
+                                    <li><input type="checkbox" value="Poisoner's Kit" id="Poisoner's Kit"> Poisoner's Kit</li>
+                                    <li><input type="checkbox" value="Thieves' Tools" id="Thieves' Tools"> Thieves' Tools</li>
+                                    <li><input type="checkbox" value="Vehicles (Land)" id="Vehicles (Land)"> Vehicles (Land)</li>
+                                    <li><input type="checkbox" value="Vehicles (Water)" id="Vehicles (Water)"> Vehicles (Water)</li>
                                 </ul>
                             </div>   
                         </div>
@@ -753,12 +762,12 @@
         <section id="actions">
             <div class="actions-container">
                 <div class="actionsubtabs">
-                    <div class="actionsubtab" data-category="all">All</div>
-                    <div class="actionsubtab" data-category="attacks">Attacks</div>
-                    <div class="actionsubtab" data-category="actions">Actions</div>
-                    <div class="actionsubtab" data-category="bonus-actions">Bonus Actions</div>
-                    <div class="actionsubtab" data-category="reactions">Reactions</div>
-                    <div class="actionsubtab" data-category="other">Other</div>
+                    <div id="actionFiltersAll" class="actionsubtab" data-category="all">All</div>
+                    <div id="actionFiltersAttacks" class="actionsubtab" data-category="attacks">Attacks</div>
+                    <div id="actionFiltersActions" class="actionsubtab" data-category="actions">Actions</div>
+                    <div id="actionFiltersBonusActions" class="actionsubtab" data-category="bonus-actions">Bonus Actions</div>
+                    <div id="actionFiltersReactions" class="actionsubtab" data-category="reactions">Reactions</div>
+                    <div id="actionFiltersOther" class="actionsubtab" data-category="other">Other</div>
                 </div>
         
                 <div class="actions-list">
@@ -766,12 +775,12 @@
                         <table class="actionTable">
                             <thead>
                                 <tr>
-                                    <th>Prof</th>
-                                    <th>Name</th>
-                                    <th>Reach</th>
-                                    <th>ToHit</th>
-                                    <th>Damage</th>
-                                    <th>Info</th>
+                                    <th id="actionTableHeader1">Prof</th>
+                                    <th id="actionTableHeader2">Name</th>
+                                    <th id="actionTableHeader3">Reach</th>
+                                    <th id="actionTableHeader4">ToHit</th>
+                                    <th id="actionTableHeader5">Damage</th>
+                                    <th id="actionTableHeader6">Info</th>
                                 </tr>
                             </thead>
                             <tbody id="actionTableBody">
@@ -1110,6 +1119,264 @@
         <p id="errorModalMessage"></p>
         <button id="removeButton" style="display: none;">Delete from Global</button>
     </div>
+</div>
+
+
+
+<div id="spellFormModal" style="display: none;">
+    <div class="spell-modal-background">
+        <span id="closeForm" class="close">&times;</span>
+        <form id="spellForm">
+            <div></div>
+            <h2>Create a Spell</h2>
+            
+            <div class="form-row">
+                <label for="spellFormName">Spell Name:</label>
+                <input type="text" id="spellFormName" placeholder="e.g., FireBall." required>
+            </div>
+            
+            <div class="form-row">
+                <label for="spellFormDesc">Spell Description:</label>
+                <textarea id="spellFormDesc" rows="5" placeholder="Describe effects when cast at higher levels" required></textarea>
+            </div>
+            
+            <div class="form-row">
+                <label for="higherLevelForm">Higher Level Casting Description:</label>
+                <textarea id="higherLevelForm" rows="3" placeholder="Describe effects when cast at higher levels"></textarea>
+            </div>
+            
+            <div class="form-row">
+                <label for="spellFormRange">Spell Range:</label>
+                <input type="text" id="spellFormRange" placeholder="e.g., 300ft" required>
+            </div>
+            
+            <div class="form-row">
+                <label for="spellFormComponents">Spell Components:</label>
+                <div id="spellFormComponents">
+                    <label>
+                        <input type="checkbox" id="componentVerbal" name="class" value="V">
+                        <span id="labelVerbal">Verbal</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="componentSomatic" name="class" value="S">
+                        <span id="labelSomatic">Somatic</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="componentMaterial" name="class" value="M">
+                        <span id="labelMaterial">Material</span>
+                    </label>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <label for="spellFormMaterials">Spell Materials:</label>
+                <input type="text" id="spellFormMaterials" placeholder="e.g., 300g worth of diamonds" required>
+            </div>
+            
+            <div class="form-row">
+                <label for="ritualForm">Ritual Spell:</label>
+                <select id="ritualForm">
+                    <option value="">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+           
+    
+            <div class="form-row">
+                <label for="spellFormDuration">Duration:</label>
+                <select id="spellFormDuration" required>
+                    <option value="Instantaneous">Instantaneous</option>
+                    <option value="1 Round">1 Round</option>
+                    <option value="1 Minute">1 Minute</option>
+                    <option value="10 Minutes">10 Minutes</option>
+                    <option value="1 Hour">1 Hour</option>
+                    <option value="8 Hours">8 Hours</option>
+                    <option value="12 Hours">12 Hours</option>
+                    <option value="24 Hours">24 Hours</option>
+                    <option value="Until Dispelled">Until Dispelled</option>
+                    <option value="Until Triggered">Until Triggered</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="concentrationForm">Concentration:</label>
+                <select id="concentrationForm">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+
+            
+            <div class="form-row">
+                <label for="castingTimeForm">Casting Time:</label>
+                <select id="castingTimeForm" required>
+                    <option value="1A">1 Action</option>
+                    <option value="1BA">1 Bonus Action</option>
+                    <option value="1R">1 Reaction</option>
+                    <option value="1M">1 Minute</option>
+                    <option value="10M">10 Minutes</option>
+                    <option value="1Hr">1 Hour</option>
+                    <option value="8Hr">8 Hours</option>
+                    <option value="12Hr">12 Hours</option>
+                    <option value="24Hr">24 Hours</option>
+                </select>
+            </div>
+            
+            
+            <div class="form-row">
+                <label for="spellFormLevel">Spell's Level:</label>
+                <select id="spellFormLevel" required>
+                    <option value="Cantrip">Cantrip</option>
+                    <option value="1st-level">Level 1</option>
+                    <option value="2nd-level">Level 2</option>
+                    <option value="3rd-level">Level 3</option>
+                    <option value="4th-level">Level 4</option>
+                    <option value="5th-level">Level 5</option>
+                    <option value="6th-level">Level 6</option>
+                    <option value="7th-level">Level 7</option>
+                    <option value="8th-level">Level 8</option>
+                    <option value="9th-level">Level 9</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="schoolForm">Spell School:</label>
+                <select id="schoolForm">
+                    <option value="Abjuration">Abjuration</option>
+                    <option value="Conjuration">Conjuration</option>
+                    <option value="Divination">Divination</option>
+                    <option value="Enchantment">Enchantment</option>
+                    <option value="Evocation">Evocation</option>
+                    <option value="Illusion">Illusion</option>
+                    <option value="Necromancy">Necromancy</option>
+                    <option value="Transmutation">Transmutation</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="spellFormClass">Spell Classes:</label>
+                <div id="spellFormClass">
+                    <label>
+                        <input type="checkbox" id="classBarbarian" name="class" value="Barbarian">
+                        <span id="labelBarbarian">Barbarian</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classBard" name="class" value="Bard">
+                        <span id="labelBard">Bard</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classCleric" name="class" value="Cleric">
+                        <span id="labelCleric">Cleric</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classDruid" name="class" value="Druid">
+                        <span id="labelDruid">Druid</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classFighter" name="class" value="Fighter">
+                        <span id="labelFighter">Fighter</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classMonk" name="class" value="Monk">
+                        <span id="labelMonk">Monk</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classPaladin" name="class" value="Paladin">
+                        <span id="labelPaladin">Paladin</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classRanger" name="class" value="Ranger">
+                        <span id="labelRanger">Ranger</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classRogue" name="class" value="Rogue">
+                        <span id="labelRogue">Rogue</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classSorcerer" name="class" value="Sorcerer">
+                        <span id="labelSorcerer">Sorcerer</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classWarlock" name="class" value="Warlock">
+                        <span id="labelWarlock">Warlock</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classWizard" name="class" value="Wizard">
+                        <span id="labelWizard">Wizard</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="classArtificer" name="class" value="Artificer">
+                        <span id="labelArtificer">Artificer</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="toHitOrDC">To Hit or DC:</label>
+                <select id="toHitOrDC">
+                    <option value="toHit">To Hit</option>
+                    <option value="DC">DC</option>
+                    <option value="">N/A</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="damageDiceForm">Damage Dice:</label>
+                <input type="text" id="damageDiceForm" placeholder="2d8/2d4 would roll as two groups 2d8+2d4 would roll as one.">
+            </div>
+            
+            <div class="form-row">
+                <label for="damageDiceUpcastForm">Damage Dice (Upcast):</label>
+                <input type="text" id="damageDiceUpcastForm" placeholder="e.g., 1d8 (Increase per spell level)">
+            </div>
+    
+            <div class="form-row">
+                <label for="saveDCType">Spell Save DC:</label>
+                <select id="saveDCType" required>
+                    <option value="">N/A</option>
+                    <option value="str">Strength (STR)</option>
+                    <option value="dex">Dexterity (DEX)</option>
+                    <option value="con">Constitution (CON)</option>
+                    <option value="int">Intelligence (INT)</option>
+                    <option value="wis">Wisdom (WIS)</option>
+                    <option value="cha">Charisma (CHA)</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="abilityModifier">Should spell add Ability Modifier:</label>
+                <select id="abilityModifier">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="damageType01">Damage Type:</label>
+                <select id="damageType01" required>
+                    <option value="">N/A</option>
+                    <option value="Acid">Acid</option>
+                    <option value="Bludgeoning">Bludgeoning</option>
+                    <option value="Cold">Cold</option>
+                    <option value="Fire">Fire</option>
+                    <option value="Force">Force</option>
+                    <option value="Lightning">Lightning</option>
+                    <option value="Necrotic">Necrotic</option>
+                    <option value="Piercing">Piercing</option>
+                    <option value="Poison">Poison</option>
+                    <option value="Psychic">Psychic</option>
+                    <option value="Radiant">Radiant</option>
+                    <option value="Slashing">Slashing</option>
+                    <option value="Thunder">Thunder</option>
+                </select>
+            </div>
+            
+
+    
+            <button type="button" id="saveSpell" class="nonRollButton">Save Spell</button>
+        </form>
+    </div>
+   
 </div>
     <script>
     </script>
