@@ -18267,5 +18267,343 @@
         "Player": "",
         "Version": "1.0.0",
         "ImageURL": ""
+    },
+    "Corrupted Desert Scorpion": {
+        "Id": "Corrupted Desert Scorpion",
+        "Name": "Corrupted Desert Scorpion",
+        "Path": "",
+        "Source": "Monster Manual",
+        "Type": "Large beast",
+        "HP": {
+            "Value": 40,
+            "Notes": "(8d10+12)"
+        },
+        "AC": {
+            "Value": 14,
+            "Notes": "(natural armor)"
+        },
+        "InitiativeModifier": 1,
+        "InitiativeAdvantage": false,
+        "Speed": [
+            "40 ft.",
+            "burrow 10 ft."
+        ],
+        "Abilities": {
+            "Str": 16,
+            "Dex": 12,
+            "Con": 15,
+            "Int": 1,
+            "Wis": 10,
+            "Cha": 3
+        },
+        "DamageVulnerabilities": [],
+        "DamageResistances": ["poison"],
+        "DamageImmunities": [],
+        "ConditionImmunities": ["charmed","frightened"],
+        "Saves": [],
+        "Skills": [
+            {
+                "Name": "Stealth",
+                "Modifier": 5
+            }
+        ],
+        "Senses": [
+            "Tremorsense 60 ft.", "Passive Perception 10"
+        ],
+        "Languages": [
+        ],
+        "Challenge": "2",
+        "Traits": [
+            {
+                "Name": "Corrupted Sting",
+                "Content": "The scorpion's sting deals additional 1d6 necrotic damage.",
+                "Usage": ""
+            },
+            {
+                "Name": "Fey Bloom Aura",
+                "Content": "Creatures within 10 ft. of the scorpion must make a DC 13 Constitution saving throw at the start of their turn or take 1d4 poison damage.",
+                "Usage": ""
+            }
+        ],
+        "Actions": [
+            {
+                "Name": "Multiattack",
+                "Content": "Two claw attacks and one sting.",
+                "Usage": ""
+            },
+            {
+                "Name": "Claw",
+                "Content": " Melee Weapon Attack: +6 to hit, reach 5 ft., 1d8 + 3 bludgeoning.",
+                "Usage": ""
+            },
+            {
+                "Name": "Sting",
+                "Content": "Melee Weapon Attack: +6 to hit, reach 5 ft., (1d10+3/1d6) piercing/necrotic damage. Target must make a DC 13 Constitution saving throw or be poisoned for 1 hour.",
+                "Usage": ""
+            }
+        ],
+        "Reactions": [],
+        "LegendaryActions": [],
+        "Description": "",
+        "Player": "",
+        "Version": "1.8.0",
+        "ImageURL": ""
+    },
+    "Plant Guardian": {
+        "Id": "Plant Guardian",
+        "Name": "Plant Guardian",
+        "Path": "",
+        "Source": "Homebrew",
+        "Type": "Large plant, unaligned",
+        "HP": {
+            "Value": 60,
+            "Notes": "(12d10+24)"
+        },
+        "AC": {
+            "Value": 15,
+            "Notes": "(natural armor)"
+        },
+        "InitiativeModifier": 3,
+        "InitiativeAdvantage": false,
+        "Speed": [
+            "30 ft."
+        ],
+        "Abilities": {
+            "Str": 18,
+            "Dex": 10,
+            "Con": 14,
+            "Int": 4,
+            "Wis": 12,
+            "Cha": 6
+        },
+        "DamageVulnerabilities": [],
+        "DamageResistances": ["Bludgeoning", "piercing"],
+        "DamageImmunities": [],
+        "ConditionImmunities": ["charmed","frightened"],
+        "Saves": [],
+        "Skills": [
+            {
+                "Name": "Stealth",
+                "Modifier": 5
+            }
+        ],
+        "Senses": [
+            "Darkvision 60 ft", "Passive Perception 11"
+        ],
+        "Languages": [
+        ],
+        "Challenge": "3",
+        "Traits": [
+            {
+                "Name": "Fey Bloom Aura",
+                "Content": "Creatures within 10 feet of the guardian must make a DC 14 Constitution saving throw at the start of their turn or be poisoned until the end of their next turn.",
+                "Usage": ""
+            },
+            {
+                "Name": "Regrowth",
+                "Content": "At the start of its turn, the Plant Guardian regains 10 hit points unless it took fire damage during the last round.",
+                "Usage": ""
+            },
+            {
+                "Name": "Plant Camouflage",
+                "Content": "The guardian has advantage on Dexterity (Stealth) checks made to hide in plant-heavy environments.",
+                "Usage": ""
+            }
+        ],
+        "Actions": [
+            {
+                "Name": "Multiattack",
+                "Content": "The guardian makes two vine lash attacks.",
+                "Usage": ""
+            },
+            {
+                "Name": "Vine Lash",
+                "Content": "Melee Weapon Attack: +6 to hit, reach 10 ft., one target. Hit: 2d8 + 4 bludgeoning damage, and the target must make a DC 14 Strength saving throw or be grappled.",
+                "Usage": ""
+            },
+            {
+                "Name": "Root Slam (Recharge 5-6)",
+                "Content": "The guardian slams the ground, sending shockwaves through the plants. All creatures within 10 feet must make a DC 14 Dexterity saving throw or take 1d10 bludgeoning damage and be knocked prone.",
+                "Usage": ""
+            }
+        ],
+        "Reactions": [],
+        "LegendaryActions": [],
+        "Description": "",
+        "Player": "",
+        "Version": "1.8.0",
+        "ImageURL": ""
+    },
+    "Heart of the Bloom - Lair": {
+        "Id": "Heart of the Bloom_Lair",
+        "Name": "Heart of the Bloom - Lair",
+        "Type": "Huge plant, neutral",
+        "Alignment": "Neutral",
+        "HP": {
+            "Value": 75,
+            "Notes": "(17d8 + 68)"
+        },
+        "AC": {
+            "Value": 18,
+            "Notes": "(natural armor)"
+        },
+        "InitiativeModifier": 4,
+        "InitiativeAdvantage": false,
+        "Speed": [
+        ],
+        "Abilities": {
+            "Str": 22,
+            "Dex": 18,
+            "Con": 18,
+            "Int": 18,
+            "Wis": 16,
+            "Cha": 20
+        },
+        "SavingThrows": [
+        ],
+        "Skills": [
+        ],
+        "DamageResistances": [
+        ],
+        "Senses": [
+        ],
+        "Languages": [
+        ],
+        "Challenge": "11",
+        "XP": 7200,
+        "Actions": [
+            {
+            "Name": "Spire Quake",
+            "Content": "Roots twist and tighten, causing tremors. All creatures within 30 feet must make a DC 14 Dexterity saving throw or take 2d6 bludgeoning damage and fall prone."
+            },
+            {
+            "Name": "Thorn Burst",
+            "Content": "The spire releases a burst of sharp thorns in a 20-foot radius centered on the Heart. Creatures in the area must make a DC 14 Constitution saving throw or take 3d6 piercing damage."
+            },
+            {
+            "Name": "Regrowth",
+            "Content": "The Heart regenerates 20 hit points as vines and roots rapidly knit its wounds together."
+            }
+        ],
+        "LegendaryActions": [],
+        "LairActions": [],
+        "Description": "",
+        "Player": "",
+        "Version": "1.0.0",
+        "ImageURL": ""
+    },
+    "Heart of the Bloom": {
+        "Id": "Heart of the Bloom",
+        "Name": "Heart of the Bloom",
+        "Path": "",
+        "Source": "Custom",
+        "Type": "Huge plant, neutral",
+        "HP": {
+        "Value": 150,
+        "Notes": "(20d12 + 20)"
+        },
+        "AC": {
+            "Value": 17,
+            "Notes": "(natural armor)"
+        },
+        "InitiativeModifier": 4,
+        "InitiativeAdvantage": false,
+        "Speed": [
+        "40 ft."
+        ],
+        "Abilities": {
+        "Str": 20,
+        "Dex": 8,
+        "Con": 14,
+        "Int": 6,
+        "Wis": 12,
+        "Cha": 6
+        },
+        "DamageVulnerabilities": [],
+        "DamageResistances": [
+        "psychic",
+        "bludgeoning",
+        "piercing"
+        ],
+        "DamageImmunities": [],
+        "ConditionImmunities": [
+        "charmed",
+        "frightened",
+        "poisoned"
+        ],
+        "Saves": [
+        {
+            "Name": "Dex",
+            "Modifier": -1
+        },
+        {
+            "Name": "Int",
+            "Modifier": 2
+        },
+        {
+            "Name": "Cha",
+            "Modifier": -2
+        },
+        {
+            "Name": "Con",
+            "Modifier": 6
+        },
+        {
+            "Name": "str",
+            "Modifier": 9
+        },
+        {
+            "Name": "wis",
+            "Modifier": 5
+        }
+        ],
+        "Skills": [
+        ],
+        "Senses": [
+        "darkvision 120 ft.",
+        "passive perception 11",
+        "tremorsense 30 ft."
+        ],
+        "Languages": [
+        ],
+        "Challenge": "6",
+        "Traits": [
+        {
+            "Name": "Regenerative Core",
+            "Content": "The Heart regains 10 hit points at the start of its turn unless it took fire or radiant damage during the last round.",
+            "Usage": ""
+        },
+        {
+            "Name": "Fey Bloom Aura",
+            "Content": "Creatures within 20 feet of the Heart must make a DC 15 Constitution saving throw at the start of their turn or be poisoned until the end of their next turn.",
+            "Usage": ""
+        }
+        ],
+        "Actions": [
+        {
+            "Name": "Multiattack",
+            "Content": "The Heart makes two slam attacks",
+            "Usage": ""
+        },
+        {
+            "Name": "Slam",
+            "Content": "Melee Weapon Attack: +8 to hit, reach 10 ft., one target. Hit: 3d10 + 5 bludgeoning damage.",
+            "Usage": ""
+        },
+        {
+            "Name": "Vine Snare",
+            "Content": "(Recharge 5–6) 1d6. The Heart releases a mass of vines in a 40-foot radius. Creatures in the area must make a DC 15 Dexterity saving throw or be restrained for 1 minute taking 1d6 pericing damage. Restrained creatures can repeat the saving throw at the end of their turns.",
+            "Usage": ""
+        }
+        ],
+        "Reactions": [
+        ],
+        "LegendaryActions": [
+        ],
+        "LairActions": [],
+        "Description": "",
+        "Player": "",
+        "Version": "1.0.0",
+        "ImageURL": ""
     }
 }

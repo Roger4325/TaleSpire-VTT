@@ -1568,7 +1568,7 @@ function attachLoadEventListeners(encounterList, savedEncounters) {
         } else if (target.classList.contains('delete-encounter')) {
             event.stopPropagation(); // Prevent triggering the click event on the encounter
             const encounterName = target.closest('li').querySelector('.encounter-load-text').textContent;
-            removeFromGlobalStorage("Encounter Data", encounterName);
+            removeFromCampaignStorage("Encounter Data", encounterName);
             closePopup();
         }
     });

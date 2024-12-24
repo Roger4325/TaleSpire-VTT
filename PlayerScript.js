@@ -2252,7 +2252,7 @@ function confirmDeleteCharacter(characterName, overlay) {
 
     confirmButton.addEventListener('click', () => {
         console.log(`Deleting character: ${characterName}`);
-        removeFromGlobalStorage("characters", characterName); // Add your removal logic here
+        removeFromCampaignStorage("characters", characterName); // Add your removal logic here
         // document.body.removeChild(confirmModal);
         document.body.removeChild(overlay); // Close overlay after deletion
     });
@@ -5922,7 +5922,7 @@ async function handleSyncEvents(event) {
     //by checking if the sender is the own client.
     console.log("Getting message")
     let fromClient = event.payload.fromClient.id;
-    console.log(fromClient)
+    console.log(event.payload)
     TS.clients.isMe(fromClient).then((isMe) => {
         if (!isMe) {
             console.log(event)

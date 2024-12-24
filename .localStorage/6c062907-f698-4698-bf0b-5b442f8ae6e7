@@ -4024,6 +4024,184 @@
                 }
             ],
             "groupNotesData": []
+        },
+        "TESTER": {
+            "characterTempHp": "",
+            "currentHitDice": "1",
+            "playerWeaponProficiency": [],
+            "playerArmorProficiency": [],
+            "playerLanguageProficiency": [],
+            "playerToolsProficiency": [],
+            "initiativeButton": "+2",
+            "AC": "12",
+            "speed": "30ft.",
+            "characterLevel": "1",
+            "playerXP": "0",
+            "playerClass": "Class (SubClass)",
+            "currentCharacterHP": "0",
+            "maxCharacterHP": "50",
+            "hitDiceButton": "1d8",
+            "strengthScore": "18",
+            "dexterityScore": "15",
+            "constitutionScore": "16",
+            "intelligenceScore": "20",
+            "wisdomScore": "15",
+            "charismaScore": "10",
+            "acrobaticsMod": "DEX",
+            "animalHandlingMod": "WIS",
+            "arcanaMod": "INT",
+            "athleticsMod": "STR",
+            "deceptionMod": "CHA",
+            "historyMod": "INT",
+            "insightMod": "WIS",
+            "intimidationMod": "CHA",
+            "investigationMod": "INT",
+            "medicineMod": "WIS",
+            "natureMod": "INT",
+            "perceptionMod": "WIS",
+            "performanceMod": "CHA",
+            "persuasionMod": "CHA",
+            "religionMod": "INT",
+            "sleightofHandMod": "DEX",
+            "stealthMod": "DEX",
+            "survivalMod": "WIS",
+            "": 1,
+            "pb-1": 0.5,
+            "pb-2": 0.5,
+            "pb-3": 0,
+            "pb-4": 2,
+            "pb-5": 0.5,
+            "pb-6": 2,
+            "pb-7": 1,
+            "pb-8": 0,
+            "pb-9": 0.5,
+            "pb-10": 2,
+            "pb-11": 0,
+            "pb-12": 2,
+            "pb-13": 0,
+            "pb-14": 0,
+            "pb-15": 2,
+            "pb-16": 0,
+            "pb-17": 2,
+            "pb-18": 2,
+            "pb-19": 1,
+            "pb-20": 0,
+            "pb-21": 1,
+            "pb-22": 1,
+            "pb-23": 1,
+            "pb-24": 1,
+            "conditions": [],
+            "coins": {
+                "cp": 0,
+                "sp": 0,
+                "ep": 0,
+                "gp": 0,
+                "pp": 0
+            },
+            "alignment": "LG",
+            "actionTable": [
+                {
+                    "1": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Maul of Fire",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+6",
+                        "fifthColumn": "2d6/1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "2": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Maul of Fire",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+6",
+                        "fifthColumn": "2d6/1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "1D10",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                }
+            ],
+            "spellData": {
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "0",
+                "spellmagicbonus": "0",
+                "Cantrip": {
+                    "spells": [],
+                    "slots": []
+                },
+                "1st-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "2nd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "3rd-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "4th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "5th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "6th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "7th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "8th-level": {
+                    "spells": [],
+                    "slots": []
+                },
+                "9th-level": {
+                    "spells": [],
+                    "slots": []
+                }
+            },
+            "inventoryData": {
+                "equipment": [],
+                "backpack": [],
+                "other-possessions": [],
+                "attunement": []
+            },
+            "groupTraitData": [],
+            "groupNotesData": []
         }
     },
     "Encounter Data": {
@@ -4103,119 +4281,96 @@
                 "isClosed": 1
             }
         ],
-        "TESTER": [
+        "Heart of the Bloom": [
             {
                 "isMonster": 1,
-                "init": "0",
-                "name": "Dorian de Nocte (A)",
-                "currentHp": "230",
-                "maxHp": "230",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 1
-            },
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Dorian de Nocte - Lair (A)",
-                "currentHp": "230",
-                "maxHp": "230",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 1
-            },
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Mannequin Minion (A)",
-                "currentHp": "20",
-                "maxHp": "20",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 1
-            },
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Mannequin Minion (B)",
-                "currentHp": "20",
-                "maxHp": "20",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 1
-            },
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Ancient Black Dragon (A)",
-                "currentHp": "367",
-                "maxHp": "367",
+                "init": "20",
+                "name": "Heart of the Bloom - Lair (A)",
+                "currentHp": "75",
+                "maxHp": "75",
                 "tempHp": "0",
                 "conditions": [],
                 "isClosed": 0
             },
             {
                 "isMonster": 1,
-                "init": "0",
-                "name": "Aboleth (A)",
-                "currentHp": "135",
-                "maxHp": "135",
+                "init": "17",
+                "name": "Heart of the Bloom (A)",
+                "currentHp": "150",
+                "maxHp": "150",
                 "tempHp": "0",
                 "conditions": [],
                 "isClosed": 0
             },
             {
                 "isMonster": 1,
-                "init": "0",
-                "name": "Merrow (A)",
-                "currentHp": "45",
-                "maxHp": "45",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 0
-            }
-        ],
-        "testing": [
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Draven, Guard Commander (A)",
+                "init": "13",
+                "name": "Plant Guardian (B)",
                 "currentHp": "60",
                 "maxHp": "60",
                 "tempHp": "0",
                 "conditions": [],
-                "isClosed": 1
+                "isClosed": 0
             },
             {
                 "isMonster": 1,
-                "init": "0",
-                "name": "Vampire Spawn (A)",
-                "currentHp": "35",
-                "maxHp": "35",
+                "init": "6",
+                "name": "Plant Guardian (A)",
+                "currentHp": "60",
+                "maxHp": "60",
                 "tempHp": "0",
                 "conditions": [],
-                "isClosed": 1
-            },
-            {
-                "isMonster": 1,
-                "init": "0",
-                "name": "Vampire Spawn (B)",
-                "currentHp": "35",
-                "maxHp": "35",
-                "tempHp": "0",
-                "conditions": [],
-                "isClosed": 1
+                "isClosed": 0
             },
             {
                 "isMonster": 0,
-                "name": "Tester Mc-Testy",
-                "talespireId": "09112889-0c6c-4174-a11f-e0ebecbfe02f",
+                "name": "Tankmuffin12",
+                "talespireId": "84dac006-1e0b-4f81-b570-2702f4b6f649",
                 "hp": {
                     "current": 0,
                     "max": 0
                 },
                 "ac": 0,
-                "initiative": 10,
+                "initiative": 0,
+                "passivePerception": 0,
+                "spellSave": 0
+            },
+            {
+                "isMonster": 0,
+                "name": "FAL396",
+                "talespireId": "dda5a10d-f555-4278-b38d-b64b0f2624a7",
+                "hp": {
+                    "current": 0,
+                    "max": 0
+                },
+                "ac": 0,
+                "initiative": 0,
+                "passivePerception": 0,
+                "spellSave": 0
+            },
+            {
+                "isMonster": 0,
+                "name": "nathanmeck",
+                "talespireId": "062224cc-2b3a-4acf-b125-7b983876acbb",
+                "hp": {
+                    "current": 0,
+                    "max": 0
+                },
+                "ac": 0,
+                "initiative": 0,
+                "passivePerception": 0,
+                "spellSave": 0
+            },
+            {
+                "isMonster": 0,
+                "name": "plumley41",
+                "talespireId": "227e2d30-d738-4480-a7de-4a85d5a5e7e5",
+                "hp": {
+                    "current": 0,
+                    "max": 0
+                },
+                "ac": 0,
+                "initiative": 0,
                 "passivePerception": 0,
                 "spellSave": 0
             }

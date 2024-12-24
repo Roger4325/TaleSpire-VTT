@@ -287,7 +287,7 @@ const translations = {
         walkingSpeed: "Velocidad",
         prof: "Comp",
         levelTextSpan: "Nivel",
-        deathSaves: "Salvaciones de Muer",
+        deathSaves: "Salvación de Muer",
         deathSavesSuccess: "Éxito :",
         deathSavesFailures: "Fracaso :",
         healButton: "Curar",
@@ -320,7 +320,7 @@ const translations = {
         sleightofHandMod: "DES",
         stealthMod: "DES",
         survivalMod: "SAB",
-        skillAcrobatics: "Acrobáticas",
+        skillAcrobatics: "Acrobacias",
         skillAnimalHandling: "T. con animales",
         skillArcana: "C. arcano",
         skillAthletics: "Atletismo",
@@ -1386,6 +1386,39 @@ function removeFromGlobalStorage(dataType, dataId) {
         })
         .catch((error) => {
             errorModal('Failed to delete data from global storage: ' + error);
+        });
+}
+
+
+function removeFromCampaignStorage(dataType, dataId) {
+    return TS.localStorage.campaign.getBlob()
+        .then((existingData) => {
+            let allData = {};
+            if (existingData) {
+                allData = JSON.parse(existingData);
+            }
+            if (allData[dataType]) {
+                if (allData[dataType][dataId]) {
+                    delete allData[dataType][dataId]; // Attempt to delete
+
+                    // Save the updated data back to global storage
+                    return TS.localStorage.campaign.setBlob(JSON.stringify(allData, null, 4))
+                        .then(() => {
+                            console.log("Updated data saved to campaign storage:", allData);
+                            errorModal('Data deleted from campaign storage');
+                        })
+                        .catch((error) => {
+                            errorModal('Failed to save data to campaign storage: ' + error);
+                        });
+                } else {
+                    errorModal('DataId not found in campaign storage: ' + dataId);
+                }
+            } else {
+                errorModal('DataType not found in campaign storage');
+            }
+        })
+        .catch((error) => {
+            errorModal('Failed to delete data from campaign storage: ' + error);
         });
 }
 
