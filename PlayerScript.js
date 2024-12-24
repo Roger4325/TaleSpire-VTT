@@ -5970,6 +5970,7 @@ function handleIncomingMessage(parsedMessage, FromClient) {
 
 // Handle a request for player info (e.g., name, HP, AC, etc.)
 function handleRequestInfo() {
+    console.log("here")
     sendDMUpdatedStats()
 }
 

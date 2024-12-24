@@ -89,7 +89,6 @@ document.getElementById('load-encounter').addEventListener('click', function() {
     }
 });
 
-
 document.getElementById('rollInitiative').addEventListener('click', () => {
     const monsterCards = document.querySelectorAll('.monster-card');
 
@@ -827,7 +826,7 @@ async function updatePlayerCard(card, player) {
  
      const selectedPlayer = player.talespireId;
      if (selectedPlayer) {
-         await requestPlayerInfo(selectedPlayer);
+        debouncedRequestPlayerInfo;
      }
  
      // Create and add player details
@@ -1013,8 +1012,8 @@ function reorderCards() {
     
     // Sort the cards based on initiative
     cards.sort((a, b) => {
-        const aInit = parseInt(a.querySelector(".init-input").value, 10) || 0;
-        const bInit = parseInt(b.querySelector(".init-input").value, 10) || 0;
+        const aInit = parseInt(a.querySelector(".init-input")?.value, 10) || 0;
+        const bInit = parseInt(b.querySelector(".init-input")?.value, 10) || 0;
         return bInit - aInit; // Higher initiative first
     });
     
@@ -1030,6 +1029,10 @@ function reorderCards() {
 }
 
 const debouncedSendInitiativeListToPlayer = debounce(sendInitiativeListToPlayer, 1000);
+const debouncedRequestPlayerInfo = debounce(requestPlayerInfo, 1000); // 300ms delay
+
+//Event listener for the request player stats button. Should broadcast to all players for stats. 
+document.getElementById("request-player-stats").addEventListener("click", debouncedRequestPlayerInfo);
 
 
 function debounce(func, delay) {
@@ -1589,7 +1592,6 @@ function updateMonsterCardDataFromLoad(encounterData) {
             const card = createEmptyPlayerCard();
             updatePlayerCard(card, monster)
             closePopup();
-        
         }
         else{
             // Create an empty monster card
@@ -1603,6 +1605,7 @@ function updateMonsterCardDataFromLoad(encounterData) {
         }
         
     });
+    debouncedRequestPlayerInfo();
 }
 
 
@@ -1696,7 +1699,7 @@ async function requestPlayerInfo() {
     const message = {
         type: 'request-info',
         data: {
-            request: ['characterName', 'hp', 'ac', 'passivePerception','spellSave'] // Requesting specific info
+            request: [] // Requesting specific info
         }
     };
 

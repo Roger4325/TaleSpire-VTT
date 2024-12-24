@@ -4374,6 +4374,31 @@
                 "passivePerception": 0,
                 "spellSave": 0
             }
+        ],
+        "t": [
+            {
+                "isMonster": 1,
+                "init": "0",
+                "name": "Djinni (A)",
+                "currentHp": "161",
+                "maxHp": "161",
+                "tempHp": "0",
+                "conditions": [],
+                "isClosed": 0
+            },
+            {
+                "isMonster": 0,
+                "name": "roger4325",
+                "talespireId": "09112889-0c6c-4174-a11f-e0ebecbfe02f",
+                "hp": {
+                    "current": 0,
+                    "max": 0
+                },
+                "ac": 0,
+                "initiative": 0,
+                "passivePerception": 0,
+                "spellSave": 0
+            }
         ]
     }
 }
