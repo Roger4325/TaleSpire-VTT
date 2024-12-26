@@ -1620,7 +1620,7 @@ select{
 
 .inventory-item {
     display: grid;
-    grid-template-columns: .6fr 1.8fr 1.2fr .2fr 1fr 2.2fr .05fr;
+    grid-template-columns: .6fr 1.8fr 1.2fr .2fr 1fr 2.2fr 1fr .05fr .05fr;
     align-items: center;
     padding: 5px 0;
     border-bottom: 1px solid #333;
@@ -1653,7 +1653,7 @@ font-size: 14px;
     margin-left: 5px; /* Optional: Add some spacing between weight and other elements */
 }
 
-.item-quantity input{
+.item-quantity input, .item-charges input{
     font-size: 4px;
 }
 
@@ -1674,7 +1674,7 @@ border-bottom: 1px solid #666;
 padding-bottom: 5px;
 }
 
-.item-quantity{
+.item-quantity, .item-charges{
 width: 35px;
 background-color: rgb(2, 2, 2); 
 color: white;
@@ -2043,8 +2043,7 @@ vuplex-dropdown-option {
     border-radius: 5px;
     color: white;
     margin-bottom: 10px;
-    flex: 2; 
-    min-width: 200px;
+    flex: 1; 
 }
 
 #spellFormModal button {
@@ -2088,7 +2087,7 @@ vuplex-dropdown-option {
 .form-row {
     display: flex; 
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 10px;
 }
 
@@ -2099,6 +2098,94 @@ vuplex-dropdown-option {
 }
 
 .form-row select {
-    flex: 2; 
-    min-width: 200px;
+    flex: 1; 
+}
+
+
+
+
+#itemFormModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.item-modal-background{
+    background-color: rgb(2, 2, 2);
+    margin: 5% auto; /* Center the modal */
+    padding: 10px;
+    border: 1px solid var(--ts-button-background);
+    width: 90%; /* Adjust the width as needed */
+    border-radius: 5px;
+    z-index: 10;
+    position: relative;
+}
+
+#itemForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#itemForm > .form-row label, #additional-fields > .form-row label {
+    min-width: 18%;
+}
+
+.magic-bonus-row{
+    margin-bottom: 10px;
+}
+
+#weaponProperties {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 2px; 
+    height: fit-content;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 2px;
+    border: 1px solid var(--ts-button-background); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+
+.range-input {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.range-label{
+    min-width: 10%;
+    flex: 1; /* Labels take equal width */
+    text-align: right; /* Align text to the right */
+    margin-right: 2px; /* Space between label and input */
+}
+
+#range-inputs {
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    gap: 2px; /* Space between each row */
+    align-items: center;
+}
+  
+.range-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px; /* Space between label and input */
+}
+
+.range-input {
+    flex: 2; /* Inputs take more space than labels */
 }

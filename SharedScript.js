@@ -671,6 +671,12 @@ async function loadSpellDataFiles(){
     console.log(AppData.spellLookupInfo)
 }
 
+async function loadEquipmentDataFiles(){
+    AppData.equipmentLookupInfo = await readEquipmentJson();
+    console.log(AppData.equipmentLookupInfo)
+}
+
+
 async function onInit() {
     console.log("onInit")
     setupNav();
@@ -1541,7 +1547,7 @@ async function readMonsterJsonList() {
 async function readEquipmentJson() {
     try {
         // Load data from global storage
-        const allequipmentData = await loadDataFromCampaignStorage("equipment"); 
+        const allequipmentData = await loadDataFromGlobalStorage("Custom Equipment"); 
         const isGlobalDataAnObject = typeof allequipmentData === 'object';
 
         // Fetch the data from the JSON file

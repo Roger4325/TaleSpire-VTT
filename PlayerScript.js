@@ -46,6 +46,23 @@ const savesProficiencyLevels = [
     { class: "proficient", title: "proficient", value: "1" }
 ];
 
+const damageTypes = [
+    "N/A",
+    "Slashing",
+    "Piercing",
+    "Bludgeoning",
+    "Fire",
+    "Cold",
+    "Lightning",
+    "Thunder",
+    "Acid",
+    "Poison",
+    "Psychic",
+    "Radiant",
+    "Necrotic",
+    "Force"
+];
+
 let isMe;
 
 //Define all message Types and the functions they should call this should be expanded as I need different types of messages. 
@@ -108,8 +125,9 @@ const characterStatBonuses = {
 
     combatStats: {
         AC: { bonuses: [] },
-        // AttackRolls: { bonuses: [] },
-        // DamageRolls: { bonuses: [] },
+        // toHitBonus: { bonuses: [] },
+        // damageBonus: { bonuses: [] },
+        // AttackandDamage: { bonuses: [] },
         // MeleeAttackRolls: { bonuses: [] },
         // MeleeDamageRolls: { bonuses: [] },
         RangedAttackRolls: { bonuses: [] },
@@ -119,7 +137,7 @@ const characterStatBonuses = {
         EldritchBlastDamage: { bonuses: [] },
         SpellSaveDC: { bonuses: [] },
         SpellAttackModifier: { bonuses: [] },
-        SpellAttackandSaveBonus: { bonuses: [] },
+        SpellAttackandSave: { bonuses: [] },
         // HitPoints: { bonuses: [] },
         // Speed: { bonuses: [] },
     },
@@ -862,6 +880,16 @@ function handleAbilityScoreChange(event) {
 
 
 function addBonus(category, key, value) {
+
+    console.log("adding bonus")
+
+    if (value === typeof(String)){
+        console.log(value)
+    }
+    else{
+        console.log("number:", value);
+    }
+
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
         characterStatBonuses[category][key].bonuses.push(value);
         updateDerivedStats(category); // Call a category-specific update function
@@ -4089,7 +4117,14 @@ function addItemToInventory(item, group) {
     // Set quantity to the provided value or default to 1
     const itemQuantity = item.quantity > 0 ? item.quantity : 1; // Use provided quantity or default to 1
 
-     // Create the info button
+    let chargesHTML = '<div class="item-charges-container no-charges"></div>';
+    if (item.hasCharges && item.chargesOptions) {
+        chargesHTML = `
+            <div class="item-charges-container" data-charge-reset="${item.chargesOptions.chargeReset || 'unknown'}">
+                <input type="number" id="item-charges-${item.uniqueId}" class="item-charges" 
+                value="${item.chargesOptions.maxCharges}" min="0" max="${item.chargesOptions.maxCharges}">
+            </div>`;
+    }
 
     // Check for notes and format appropriately
     let notes = item.properties ? item.properties.map(p => p.name).join(', ') : '';
@@ -4124,11 +4159,26 @@ function addItemToInventory(item, group) {
     <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
     <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>
     <span class="item-notes"></span> <!-- Placeholder for notes -->
+    ${chargesHTML}
     <span><button class="delete-item-button nonRollButton">X</button></span>
     `;
 
     // Append the itemDiv to the list
     list.appendChild(itemDiv);
+
+    // Access the item-notes div to adjust styling based on charges
+    const itemNotes = itemDiv.querySelector('.item-notes');
+    const itemChargesContainer = itemDiv.querySelector('.item-charges-container');
+
+    // If there are no charges, expand item-notes into the charges column
+    if (itemChargesContainer && !itemChargesContainer.innerHTML) {
+        itemNotes.style.gridColumn = '6 / 8';  // Expanding to take up extra space
+        itemChargesContainer.style.width = '1px';
+    } else {
+        // Otherwise, keep the default style
+        itemNotes.style.gridColumn = 'auto'; // Default behavior
+        itemChargesContainer.style.width = ''
+    }
 
 
 
@@ -4184,7 +4234,7 @@ function addItemToInventory(item, group) {
                 } else if (item.equipment_category.index === "shield") {
                     equipShield(item);
                 } else if (item.equipment_category.index === "weapon") {
-                    addActionItemToTable(item);
+                    equipWeapon(item);
                 } else if (item.equipment_category.index === "wondrous-item") {
                     equipJewelry(item);
                 } else {
@@ -4197,6 +4247,9 @@ function addItemToInventory(item, group) {
                     unequipShield(item);
                 }else if (item.equipment_category.index === "wondrous-item") {
                     unequipJewelry(item);
+                }
+                else if (item.equipment_category.index === "weapon") {
+                    unequipWeapon(item);
                 }
                 // Remove associated row from action table for other items
                 const actionTableRow = document.querySelector(
@@ -4256,11 +4309,12 @@ function addItemToInventory(item, group) {
             unequipArmor(item);
         } else if (item.equipment_category.index === "shield") {
             unequipShield(item);
-        }else if (item.equipment_category.index === "wondrous-item") {
+        } else if (item.equipment_category.index === "wondrous-item") {
             unequipJewelry(item);
-
             console.log("testing")
-        } 
+        } else if (item.equipment_category.index === "weapon") {
+            unequipWeapon(item);
+        }
         
         updateWeight(); // Update the total weight
         updateContent(); // Save inventory changes
@@ -4347,8 +4401,11 @@ function addActionItemToTable(item) {
     const calculateStat = (item) => {
         const isFinesse = item.properties.some(p => p.index === "finesse");
         const isRanged = item.weapon_range === "Ranged";
+
+        console.log(item)
         
         if (isFinesse) {
+            console.log("here")
             // Use the higher of STR or DEX if the weapon has the finesse property
             return getHigherStat("STR", "DEX"); // Assume getHigherStat is a pre-existing function
         } else if (isRanged) {
@@ -4370,7 +4427,7 @@ function addActionItemToTable(item) {
                 proficiencyButton: (() => {
                     // Normalize strings: remove spaces and convert to lowercase
                     const normalize = (str) => str.replace(/\s+/g, "").toLowerCase();
-                
+
                     // Default to "0" (not proficient)
                     let proficient = "0";
                 
@@ -4420,12 +4477,57 @@ function addActionItemToTable(item) {
             },
         },
     ];
-
     updateActionTableUI(null, newActionTableData);
 }
 
 
 const normalize = (str) => str.replace(/\s+/g, "").toLowerCase();
+
+
+function equipWeapon(item) {
+    if (item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            addToAttunementList(item); // Add to attunement UI
+        }
+        else{
+            if (item.bonus) {
+                // Add each bonus from the item to the appropriate stat
+                item.bonus.forEach((bonus) => {
+                    addBonus(bonus.category, bonus.key, {
+                        source: item.name,
+                        value: bonus.value,
+                    });
+                });
+                console.log(`${item.name} equipped: Bonuses applied.`);
+            } else {
+                console.warn(`Item ${item.name} has no bonuses to apply.`);
+            }
+        }
+    }
+    addActionItemToTable(item)         
+}
+
+function unequipWeapon(item) {
+    if(item.properties){
+        if (item.properties.some(property => property.index === "attunement")) {
+            removeFromAttunementList(item); // Remove the item from the attunement UI
+        }
+        if (item.bonus) {
+            // Remove each bonus from the item from the appropriate stat
+            item.bonus.forEach((bonus) => {
+                removeBonus(bonus.category, bonus.key, {
+                    source: item.name,
+                    value: bonus.value,
+                });
+                
+            });
+            console.log(`${item.name} unequipped: Bonuses removed.`);
+        } else {
+            console.warn(`Item ${item.name} has no bonuses to remove.`);
+        }
+    } 
+}
+
 
 function equipArmor(item) {
     // Unequip currently equipped armor if any
@@ -4603,7 +4705,6 @@ function equipJewelry(item) {
 }
 
 function unequipJewelry(item) {
-    console.log("WE ARE AFUIAODSJ ASJFD LASKDF:L KASDKF :ALSK")
     if(item.properties){
         if (item.properties.some(property => property.index === "attunement")) {
             removeFromAttunementList(item); // Remove the item from the attunement UI
@@ -6233,7 +6334,7 @@ document.getElementById('exportCharacterData').addEventListener('click', exportC
 const customSpellsButton = document.getElementById('customSpells');
 const spellFormModal = document.getElementById('spellFormModal');
 const saveSpellButton = document.getElementById('saveSpell');
-const closeFormButton = document.getElementById('closeForm');
+const closeSpellFormButton = document.getElementById('closeSpellForm');
 let spells = []; // Store created spells
 
 // Open the form
@@ -6242,7 +6343,7 @@ customSpellsButton.addEventListener('click', () => {
 });
 
 // Close the form
-closeFormButton.addEventListener('click', () => {
+closeSpellFormButton.addEventListener('click', () => {
     spellFormModal.style.display = 'none';
 });
 
@@ -6279,7 +6380,7 @@ saveSpellButton.addEventListener('click', async () => {
         damage_dice_upcast: document.getElementById('damageDiceUpcastForm').value.trim(),
         spell_save_dc_type: document.getElementById('saveDCType').value.trim(),
         ability_modifier: document.getElementById('abilityModifier').value.trim(),
-        damage_type_01: document.getElementById('damageType01').value.trim()
+        damage_type_01: document.getElementById('spellDamageType01').value.trim()
     };
 
     spells.push(spell); // Add spell to the array
@@ -6298,6 +6399,31 @@ saveSpellButton.addEventListener('click', async () => {
     spellForm.reset(); // Reset the form
 });
 
+// Function to populate a dropdown with damage types
+function populateDamageTypeDropdown(selectElement) {
+    // Clear existing options
+    selectElement.innerHTML = "";
+
+    // Add the default "N/A" option
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = "N/A";
+    selectElement.appendChild(defaultOption);
+
+    // Populate options dynamically from the damageTypes array
+    damageTypes.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = type;
+        selectElement.appendChild(option);
+    });
+}
+
+// Example of how to use this in the spell form
+document.querySelectorAll('select[id^="spellDamageType01"]').forEach(selectElement => {
+    populateDamageTypeDropdown(selectElement);
+});
+
 function validateDiceInput(event) {
     const newValue = event.target.value.trim();
 
@@ -6308,3 +6434,614 @@ function validateDiceInput(event) {
         event.target.value = ''; // Clear invalid input
     }
 }
+
+
+
+
+const customItemsButton = document.getElementById('customItems');
+const itemForm = document.getElementById("itemForm");
+const itemFormModal = document.getElementById('itemFormModal');
+const closeItemFormButton = document.getElementById('closeItemForm');
+let items = []; // Store created spells
+
+// Open the form
+customItemsButton.addEventListener('click', () => {
+    updateDynamicFields("weapon")
+    itemFormModal.style.display = 'block';
+});
+
+// Close the form
+closeItemFormButton.addEventListener('click', () => {
+    itemFormModal.style.display = 'none';
+});
+
+
+const categorySelect = document.getElementById("equipment-category");
+const additionalFields = document.getElementById("additional-fields");
+  
+// Update dynamic fields based on category
+categorySelect.addEventListener("change", () => {
+    const category = categorySelect.value;
+    updateDynamicFields(category);
+});
+
+// Form submission handler
+itemForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const equipmentData = gatherFormData();
+    console.log("%cGenerated Equipment:", "color: red; font-weight: bold;");
+    console.log(equipmentData);
+    saveCustomEquipment(equipmentData)
+});
+
+
+async function saveCustomEquipment(equipmentData){
+    try {
+        // Save and wait for completion
+        await saveToGlobalStorage("Custom Equipment", equipmentData.name, equipmentData, true);
+        console.log("Save completed.");
+        await loadEquipmentDataFiles(); // Ensure this runs after save completes
+    } catch (error) {
+        console.error("Error during save or load:", error);
+    }
+
+    itemFormModal.style.display = 'none'; // Close the form
+    itemForm.reset(); // Reset the form
+}
+
+
+// Function to update dynamic fields
+function updateDynamicFields(category) {
+const additionalFields = document.getElementById("additional-fields");
+additionalFields.innerHTML = ""; // Clear existing fields
+
+let magicBonusSection = `
+        <button type="button" id="add-magic-bonus" class="nonRollButton">Add Magic Bonus</button>
+        <div>
+            <label for="magic-bonuses">Magic Bonuses:</label>
+            <div id="magic-bonus-container"></div>
+        </div>
+    `;
+
+    if (category === "weapon") {
+        additionalFields.innerHTML = `
+            <div class="form-row">
+                <label for="weapon-category">Weapon Type:</label>
+                <select id="weapon-category">
+                    <option value="simple">Simple</option>
+                    <option value="martial">Martial</option>
+                </select>
+            </div>
+
+            <div id="weapon-configurator" class="form-row">
+                <label for="attack-style">Attack Style:</label>
+                <select id="attack-style">
+                    <option value="Melee">Melee</option>
+                    <option value="Ranged">Ranged</option>
+                    <option value="Melee-thrown">Melee and Thrown</option>
+                </select>
+                <div id="range-inputs">
+                    <label for="melee-range" class="range-label">Range:</label>
+                    <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="weaponProperties">Weapon Properties:</label>
+                <div id="weaponProperties">
+                    <label>
+                        <input type="checkbox" id="propertyFinesse" name="property" value="Finesse">
+                        <span id="labelFinesse">Finesse</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyVersatile" name="property" value="Versatile">
+                        <span id="labelVersatile">Versatile</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyHeavy" name="property" value="Heavy">
+                        <span id="labelHeavy">Heavy</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyLight" name="property" value="Light">
+                        <span id="labelLight">Light</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyLoading" name="property" value="Loading">
+                        <span id="labelLoading">Loading</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyReach" name="property" value="Reach">
+                        <span id="labelReach">Reach</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyThrown" name="property" value="Thrown">
+                        <span id="labelThrown">Thrown</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyTwoHanded" name="property" value="Two-Handed">
+                        <span id="labelTwoHanded">Two-Handed</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertySpecial" name="property" value="Special">
+                        <span id="labelSpecial">Special</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyAmmunition" name="property" value="Ammunition">
+                        <span id="labelAmmunition">Ammunition</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyImprovised" name="property" value="Improvised">
+                        <span id="labelImprovised">Improvised</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="attunement" name="property" value="Requires Attunement">
+                        <span id="attunement">Attunement</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="has-charges" name="property" value="Has Charges">
+                        <span id="has-charges">Has Charges</span>
+                    </label>
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <label for="damage-dice">Damage Dice:</label>
+                <input type="text" id="damage-dice" placeholder="e.g., 1d8" />
+            </div>
+            
+            <div class="form-row">
+                <label for="damage-type">Damage Type:</label>
+                <select id="damage-type">
+                    ${damageTypes.map(type => `<option value="${type}">${type}</option>`).join("")}
+                </select>
+            </div>
+    
+            <div id="charges-options" style="display: none; margin-left: 20px;">
+                <div class="form-row">
+                    <label for="charge-reset">When does it reset?</label>
+                    <select id="charge-reset">
+                        <option value="long-rest">Long Rest</option>
+                        <option value="short-rest">Short Rest</option>
+                        <option value="at-dawn">At Dawn</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="max-charges">Maximum Charges:</label>
+                    <input type="number" id="max-charges" placeholder="e.g., 3" min="1"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="weapon-to-hit-bonus">Magical to Hit Bonus:</label>
+                <input type="number" id="weapon-to-hit-bonus" placeholder="e.g., 1"/>
+            </div>
+
+            <div class="form-row">
+                <label for="weapon-damage-bonus">Magical Damage Bonus</label>
+                <input type="number" id="weapon-damage-bonus" placeholder="e.g., 1"/>
+            </div>
+
+            ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+
+        document.getElementById('attack-style').addEventListener('change', function () {
+            const attackStyle = this.value;
+            const rangeInputs = document.getElementById('range-inputs');
+          
+            // Clear existing inputs
+            rangeInputs.innerHTML = '';
+          
+            // Generate inputs based on the selected attack style
+            if (attackStyle === 'Melee') {
+              rangeInputs.innerHTML = `
+                <label for="melee-range" class="range-label">Range:</label>
+                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+              `;
+            } else if (attackStyle === 'Ranged') {
+              rangeInputs.innerHTML = `
+                <label for="short-range" class="range-label">Short Range:</label>
+                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 30" />
+                <label for="long-range" class="range-label">Long Range:</label>
+                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 120" />
+              `;
+            } else if (attackStyle === 'Melee-thrown') {
+              rangeInputs.innerHTML = `
+                <label for="melee-range" class="range-label">Melee Range:</label>
+                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+                <label for="short-range" class="range-label">Short Range:</label>
+                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 20" />
+                <label for="long-range" class="range-label">Long Range:</label>
+                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 60" />
+              `;
+            }
+          });
+
+    } else if (category === "armor") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="armor-category">Armor Type:</label>
+            <select id="armor-category">
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Shield">Shield</option>
+            </select>
+        </div>
+        
+        <div class="form-row">
+            <label for="armor-class">Base Armor Class:</label>
+            <input type="number" id="armor-class" placeholder="e.g., 15" />
+        </div>
+        
+        <div class="form-row">
+            <label for="str-minimum">Strength Requirement:</label>
+            <input type="number" id="str-minimum" placeholder="e.g., 15" />
+        </div>
+        
+        <div class="form-row">
+            <label for="stealth-disadvantage">Stealth Disadvantage:</label>
+            <input type="checkbox" id="stealth-disadvantage" />
+            <label for="attunement-required">Requires Attunement:</label>
+            <input type="checkbox" id="attunement-required" />
+            <label for="has-charges">Has Charges</label>
+            <input type="checkbox" id="has-charges" />
+        </div>
+    
+        <div id="charges-options" style="display: none; margin-left: 20px;">
+            <div class="form-row">
+                <label for="charge-reset">When does it reset?</label>
+                <select id="charge-reset">
+                    <option value="long-rest">Long Rest</option>
+                    <option value="short-rest">Short Rest</option>
+                    <option value="at-dawn">At Dawn</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="max-charges">Maximum Charges:</label>
+                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
+            </div>
+        </div>
+        ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+    } else if (category === "adventuring-gear") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="gear-category">Gear Category:</label>
+            <input type="text" id="gear-category" placeholder="e.g., Standard Gear" />
+        </div>
+        `;
+    } else if (category === "wondrous-item") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="attunement-required">Requires Attunement:</label>
+            <input type="checkbox" id="attunement-required" />
+            <label for="has-charges">Has Charges</label>
+            <input type="checkbox" id="has-charges" />
+        </div>
+    
+        <div id="charges-options" style="display: none; margin-left: 20px;">
+            <div class="form-row">
+                <label for="charge-reset">When does it reset?</label>
+                <select id="charge-reset">
+                    <option value="long-rest">Long Rest</option>
+                    <option value="short-rest">Short Rest</option>
+                    <option value="at-dawn">At Dawn</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="max-charges">Maximum Charges:</label>
+                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
+            </div>
+        </div>
+        ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+    }
+    // Attach event listeners to the Magic Bonus section
+    setupMagicBonusSelection();
+}
+
+// Function to gather form data
+function gatherFormData() {
+    const equipmentData = {
+        index: document.getElementById("equipment-name").value.toLowerCase().replace(/\s+/g, "-"),
+        name: document.getElementById("equipment-name").value,
+        equipment_category: {
+            index: document.getElementById("equipment-category").value,
+            name: document.getElementById("equipment-category").value,
+        },
+        description: document.getElementById("equipment-description").value.split("\n").filter(line => line.trim() !== ""),
+        properties: document.getElementById("attunement-required").checked
+            ? [{
+                  index: "attunement",
+                  name: "Requires Attunement",
+              }]
+            : [],
+        cost: {
+            quantity: parseFloat(document.getElementById("equipment-cost").value) || 0,
+            unit: document.getElementById("equipment-cost-unit").value
+        },
+        weight: parseFloat(document.getElementById("equipment-weight").value) || 0,
+        rarity: {
+            index: document.getElementById("equipment-rarity").value.toLowerCase(),
+            name: document.getElementById("equipment-rarity").value,
+        },
+    };
+
+    // Collect dynamic fields based on the category
+    const category = equipmentData.equipment_category.index;
+
+    if (category === "weapon") {
+        equipmentData.weapon_category = document.getElementById("weapon-category").value;
+    
+        const damageDice = document.getElementById("damage-dice").value;
+        const damageType = document.getElementById("damage-type").value;
+    
+        equipmentData.damage = {
+            damage_dice: damageDice,
+            damage_type: {
+                index: damageType.toLowerCase(),
+                name: damageType,
+            }
+        };
+
+        // Collect selected weapon properties
+        const selectedProperties = Array.from(document.querySelectorAll("#weaponProperties input:checked"))
+        .map(checkbox => ({
+            index: checkbox.value.toLowerCase().replace(/\s+/g, "-"),
+            name: checkbox.value
+        }));
+
+        equipmentData.properties = selectedProperties;
+
+        // Get the weapon range based on the selected attack style
+        const attackStyle = document.getElementById("attack-style").value;
+        equipmentData.weapon_range = document.getElementById("attack-style").value;
+
+        if (attackStyle === "melee") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("melee-range").value) || 5
+            };
+        } else if (attackStyle === "ranged") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("short-range").value) || 30,
+                long: parseInt(document.getElementById("long-range").value) || 120
+            };
+        } else if (attackStyle === "melee-thrown") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("melee-range").value) || 5,
+            };
+            equipmentData.throw_range = {
+                normal: parseInt(document.getElementById("short-range").value) || 20,
+                long: parseInt(document.getElementById("long-range").value) || 60
+            }
+        }
+
+        equipmentData.toHitBonus = document.getElementById("weapon-to-hit-bonus").value;
+        equipmentData.damageBonus = document.getElementById("weapon-damage-bonus").value;
+        equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
+        equipmentData.hasCharges = document.getElementById("has-charges").checked;
+    
+        equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+            chargeReset: document.getElementById("charge-reset").value,
+            maxCharges: parseInt(document.getElementById("max-charges").value) || 0
+        } : null;    
+    } else if (category === "armor") {
+            // Get the selected armor category and base armor class from the form
+            let armorClassData = {};
+
+            // Get the selected armor category and base armor class from the form
+            const armorCategory = document.getElementById("armor-category").value;
+            const baseArmorClass = parseInt(document.getElementById("armor-class").value);
+            
+            // Set default values for the armor class
+            armorClassData.base = baseArmorClass;
+            armorClassData.dex_bonus = false; // Default value for dex_bonus
+            armorClassData.max_bonus = 0;     // Default value for max_bonus
+
+            
+            
+            // Adjust values based on the armor category
+            if (armorCategory === "Light") {
+                armorClassData.dex_bonus = true; // Light armor allows dex bonus
+            } else if (armorCategory === "Medium") {
+                armorClassData.dex_bonus = true; // Medium armor allows dex bonus
+                armorClassData.max_bonus = 2;   // Medium armor has a max dex bonus of 2
+            } else if (armorCategory === "Heavy") {
+                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
+                armorClassData.max_bonus = 0;    // Heavy armor doesn't have a max dex bonus (no bonus)
+            }else if (armorCategory === "Shield") {
+                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
+                equipmentData.equipment_category = {
+                    index: "shield",   // Update the category to 'shield'
+                    name: "Shield",    // Update the name to "Shield"
+                };
+            }
+            
+            // Save armor class data to the equipmentData object (assuming equipmentData is already initialized)
+            equipmentData.armor_class = armorClassData; // Push the generated object into equipmentData
+            
+            // Now you can push other related data to equipmentData
+            equipmentData.armor_category = armorCategory;
+
+
+            equipmentData.strengthRequirement = parseInt(document.getElementById("str-minimum").value);
+            equipmentData.stealthDisadvantage = document.getElementById("stealth-disadvantage").checked;
+            equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
+            equipmentData.hasCharges = document.getElementById("has-charges").checked;
+            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+                chargeReset: document.getElementById("charge-reset").value,
+                maxCharges: parseInt(document.getElementById("max-charges").value)
+            } : null
+    } else if (category === "adventuring-gear") {
+            equipmentData.gearCategory = document.getElementById("gear-category").value;
+    } else if (category === "wondrous-item") {
+            equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
+            equipmentData.hasCharges = document.getElementById("has-charges").checked;
+            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+                chargeReset: document.getElementById("charge-reset").value,
+                maxCharges: parseInt(document.getElementById("max-charges").value)
+            } : null
+    }
+
+    // Collect magic bonus data
+    const magicBonusRows = document.querySelectorAll(".magic-bonus-row");
+    const bonuses = [];
+
+    magicBonusRows.forEach(row => {
+        const category = row.querySelector(".magic-category-select").value;
+        const key = row.querySelector(".magic-bonus-select").value;
+        const value = parseInt(row.querySelector(".magic-bonus-value").value) || 0;
+        const description = row.querySelector(".magic-description-input")?.value || "";
+
+        bonuses.push({
+            category,
+            key,
+            value,
+            description
+        });
+    });
+
+    equipmentData.bonus = bonuses;
+
+    return equipmentData;
+}
+
+
+function setupMagicBonusSelection() {
+    const magicBonusContainer = document.getElementById("magic-bonus-container");
+    const addBonusButton = document.getElementById("add-magic-bonus");
+
+    addBonusButton.addEventListener("click", () => {
+        // Create a container div for each bonus selection
+        const bonusRow = document.createElement("div");
+        bonusRow.className = "magic-bonus-row";
+
+        // Create the first dropdown for category selection
+        const categorySelect = document.createElement("select");
+        categorySelect.className = "magic-category-select";
+        categorySelect.innerHTML = `<option>Select Category</option>`;
+
+        Object.keys(characterStatBonuses).forEach(category => {
+            const option = document.createElement("option");
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+        });
+
+        // Create the second dropdown for specific bonus options (initially empty)
+        const bonusSelect = document.createElement("select");
+        bonusSelect.className = "magic-bonus-select";
+        bonusSelect.disabled = true; // Disabled until a category is selected
+
+        // Populate the second dropdown based on the selected category
+        categorySelect.addEventListener("change", () => {
+            const selectedCategory = categorySelect.value;
+
+            // Clear previous options
+            bonusSelect.innerHTML = `<option value="None">Select Bonus</option>`;
+            bonusSelect.disabled = selectedCategory === "None";
+
+            // Populate with options from the selected category
+            if (characterStatBonuses[selectedCategory]) {
+                Object.keys(characterStatBonuses[selectedCategory]).forEach(bonus => {
+                    const option = document.createElement("option");
+                    option.value = bonus;
+                    option.textContent = bonus;
+                    bonusSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Create a dropdown to toggle between value or ability score
+        const valueOrStatSelect = document.createElement("select");
+        valueOrStatSelect.className = "value-or-stat-select";
+        valueOrStatSelect.innerHTML = `
+            <option value="value">Value</option>
+            <option value="stat">Ability Score</option>
+        `;
+
+        // Create a numeric input for the bonus value (default)
+        const bonusValueInput = document.createElement("input");
+        bonusValueInput.type = "number";
+        bonusValueInput.className = "magic-bonus-value";
+        bonusValueInput.placeholder = "0";
+
+        // Create an ability score dropdown (hidden by default)
+        const statSelect = document.createElement("select");
+        statSelect.className = "magic-stat-select";
+        statSelect.style.display = "none"; // Hidden initially
+        ["STR", "DEX", "CON", "INT", "WIS", "CHA"].forEach(stat => {
+            const option = document.createElement("option");
+            option.value = stat;
+            option.textContent = stat;
+            statSelect.appendChild(option);
+        });
+
+        // Toggle between value input and ability score dropdown
+        valueOrStatSelect.addEventListener("change", () => {
+            if (valueOrStatSelect.value === "value") {
+                bonusValueInput.style.display = "inline-block";
+                statSelect.style.display = "none";
+            } else {
+                bonusValueInput.style.display = "none";
+                statSelect.style.display = "inline-block";
+            }
+        });
+
+        // Create a remove button to delete the bonus row
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.className = "remove-magic-bonus nonRollButton";
+
+        removeButton.addEventListener("click", () => {
+            magicBonusContainer.removeChild(bonusRow);
+        });
+
+        // Append all elements to the bonus row
+        bonusRow.appendChild(categorySelect);
+        bonusRow.appendChild(bonusSelect);
+        bonusRow.appendChild(valueOrStatSelect);
+        bonusRow.appendChild(bonusValueInput);
+        bonusRow.appendChild(statSelect);
+        bonusRow.appendChild(removeButton);
+
+        // Append the bonus row to the container
+        magicBonusContainer.appendChild(bonusRow);
+    });
+}
+
+

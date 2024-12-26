@@ -7038,7 +7038,7 @@
     "bonus": [
       {
         "category": "combatStats",
-        "key": "SpellAttackandSaveBonus",
+        "key": "SpellAttackandSave",
         "value": 1,
         "description": "You gain a +1 bonus to spell attack rolls and the saving throw DCs of your spells."
       }
@@ -7173,6 +7173,11 @@
       "unit": "gp"
     },
     "weight": 0.2,
+    "hasCharges": true,
+    "chargesOptions": {
+        "chargeReset": "at-dawn",
+        "maxCharges": 1
+    },
     "rarity": {
       "index": "rare",
       "name": "Rare",

@@ -38,7 +38,7 @@
                         <button id="customSpells" class="nonRollButton">Create Spell</button>
                     </li>
                     <li>
-                        <!-- <button id="customItems" class="nonRollButton">Create Item</button> -->
+                        <button id="customItems" class="nonRollButton">Create Item</button>
                     </li>
                     <!-- Add more options as needed -->
                 </ul>
@@ -1125,7 +1125,7 @@
 
 <div id="spellFormModal" style="display: none;">
     <div class="spell-modal-background">
-        <span id="closeForm" class="close">&times;</span>
+        <span id="closeSpellForm" class="close">&times;</span>
         <form id="spellForm">
             <div></div>
             <h2>Create a Spell</h2>
@@ -1352,22 +1352,8 @@
             </div>
             
             <div class="form-row">
-                <label for="damageType01">Damage Type:</label>
-                <select id="damageType01" required>
-                    <option value="">N/A</option>
-                    <option value="Acid">Acid</option>
-                    <option value="Bludgeoning">Bludgeoning</option>
-                    <option value="Cold">Cold</option>
-                    <option value="Fire">Fire</option>
-                    <option value="Force">Force</option>
-                    <option value="Lightning">Lightning</option>
-                    <option value="Necrotic">Necrotic</option>
-                    <option value="Piercing">Piercing</option>
-                    <option value="Poison">Poison</option>
-                    <option value="Psychic">Psychic</option>
-                    <option value="Radiant">Radiant</option>
-                    <option value="Slashing">Slashing</option>
-                    <option value="Thunder">Thunder</option>
+                <label for="spellDamageType01">Damage Type:</label>
+                <select id="spellDamageType01" required>
                 </select>
             </div>
             
@@ -1376,8 +1362,79 @@
             <button type="button" id="saveSpell" class="nonRollButton">Save Spell</button>
         </form>
     </div>
-   
 </div>
+
+
+
+<div id="itemFormModal" style="display: none;">
+    <div class="item-modal-background">
+        <span id="closeItemForm" class="close">&times;</span>
+        <form id="itemForm">
+            <h2>Create Equipment</h2>
+        
+            <!-- General Fields -->
+            <div class="form-row">
+                <label for="equipment-name">Name:</label>
+                <input type="text" id="equipment-name" placeholder="Equipment Name" required />
+            </div>
+
+            <!-- Description -->
+            <div class="form-row">
+                <label for="equipment-description">Description:</label>
+                <textarea id="equipment-description" rows="15" placeholder="Description"></textarea>
+            </div>
+            
+            <div class="form-row">
+                <label for="equipment-category">Category:</label>
+                <select id="equipment-category" required>
+                <option value="weapon">Weapon</option>
+                <option value="armor">Armor</option>
+                <option value="wondrous-item">Wonderous Item</option>
+                <option value="adventuring-gear">Adventuring Gear</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="equipment-rarity">Rarity:</label>
+                <select id="equipment-rarity">
+                <option value="common">Common</option>
+                <option value="uncommon">Uncommon</option>
+                <option value="rare">Rare</option>
+                <option value="very-rare">Very Rare</option>
+                <option value="legendary">Legendary</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label for="equipment-cost">Cost:</label>
+                <input type="number" id="equipment-cost" placeholder="Cost" required />
+                <select id="equipment-cost-unit">
+                <option value="cp">cp</option>
+                <option value="sp">sp</option>
+                <option value="gp">gp</option>
+                <option value="pp">pp</option>
+                </select>
+            </div>
+            
+            <div class="form-row">
+                <label for="equipment-weight">Weight:</label>
+                <input type="number" id="equipment-weight" placeholder="Weight" required />
+            </div>
+            
+            
+            <!-- Additional Fields (Dynamic based on category) -->
+            <div id="additional-fields"></div>
+            
+
+            
+            <!-- Submit -->
+            <button type="submit" class="nonRollButton">Create Equipment</button>
+        </form>
+        
+    </div>
+</div>
+
+
     <script>
     </script>
     <footer>
