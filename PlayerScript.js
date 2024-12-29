@@ -210,8 +210,8 @@ async function playerSetUP(){
 
 
     // Add event listeners to the "Short Rest" and "Long Rest" buttons
-    shortRestButton.addEventListener("click", shortRest);
-    longRestButton.addEventListener("click", longRest);
+    // shortRestButton.addEventListener("click", shortRest);
+    longRestButton.addEventListener("click", openLongRestModal);
 
     // Add event listeners to the heal and damage buttons
     healButton.addEventListener("click", function() {
@@ -684,9 +684,6 @@ function updateAC() {
     // Add AC bonuses from characterStatBonuses
     const acBonuses = characterStatBonuses.combatStats.AC.bonuses || [];
     const acBonusTotal = acBonuses.reduce((total, bonus) => total + bonus.value, 0);
-
-    console.log(acBonuses)
-
     finalAC += acBonusTotal;
 
     // Update the AC display
@@ -877,6 +874,7 @@ function addBonus(category, key, value) {
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
         characterStatBonuses[category][key].bonuses.push(value);
         updateDerivedStats(category); // Call a category-specific update function
+        console.log(characterStatBonuses)
     } else {
         console.error(`Invalid category or key: ${category} -> ${key}`);
     }
@@ -1076,7 +1074,60 @@ function longRest() {
     healCreature(maxHPValue);
     resetSpellSlots()
     addHalfHitDiceOnRest()
+    document.getElementById("tempHP").value = 0;
 }
+
+function openLongRestModal() {
+    // Calculate changes for the long rest
+    const maxHPValue = parseInt(maxCharacterHP.textContent);
+    const currentHPValue = parseInt(currentCharacterHP.textContent);
+    const tempHP = document.getElementById("tempHP").value
+
+    const healthRestored = maxHPValue - currentHPValue;
+
+    const spellSlotsResetInfo = gatherSpellSlotsToReset(); // Get reset info without resetting yet
+
+    let resetDetails = '';
+    for (const [level, count] of Object.entries(spellSlotsResetInfo)) {
+        resetDetails += `${level}: ${count} slots reset.<br>`;
+    }
+
+    const hitDiceLabel = document.getElementById("hitDiceLabel");
+
+    // Get the current number of available hit dice from the text content
+    let currentHitDice = parseInt(hitDiceLabel.textContent.trim(), 10);
+    let maxHitDice = parseInt(hitDiceLabel.getAttribute('max'))
+    let hitDiceToAdd
+
+    // Check if currentHitDice is a valid number
+    if (!isNaN(currentHitDice)) {
+        console.log("here")
+        // Add back half of the used hit dice (rounded down) but no less than 1
+        hitDiceToAdd = Math.max(Math.floor(maxHitDice / 2), 1);
+    }
+
+    // Populate the modal content
+    document.getElementById("longRestHPChange").textContent = `HP Restored: ${healthRestored}`;
+    document.getElementById("longRestTempHPChange").textContent =`Removing Temp HP: ${tempHP} `
+    document.getElementById("longRestSpellSlots").innerHTML = resetDetails || "No used spell slots to reset.";
+    document.getElementById("longRestHitDice").textContent =`Adding up to: ${hitDiceToAdd} Hit Dice`
+
+    // Display the modal
+    document.getElementById("longRestModal").classList.remove("hidden");
+}
+
+function closeLongRestModal() {
+    document.getElementById("longRestModal").classList.add("hidden");
+}
+
+// Attach event listeners to modal buttons
+document.getElementById("confirmLongRestButton").addEventListener("click", () => {
+    longRest();
+    closeLongRestModal();
+});
+
+document.getElementById("cancelLongRestButton").addEventListener("click", closeLongRestModal);
+
 
 
 
@@ -3034,6 +3085,28 @@ function resetSpellSlots(){
     });
 }
 
+function gatherSpellSlotsToReset() {
+    const spellGroups = document.querySelectorAll('.spell-group'); // Select all spell groups
+    const resetInfo = {}; // Object to store the count of reset slots by level
+
+    // Loop through all spell groups
+    spellGroups.forEach(group => {
+        const spellLevel = group.getAttribute('spelllevel'); // Get the spell level from the attribute
+        const slotContainer = group.querySelector('.spell-slots'); // Locate the spell slots container
+
+        if (slotContainer) {
+            const usedSlots = slotContainer.querySelectorAll('.spell-slot.used'); // Find all used slots
+            const usedCount = usedSlots.length;
+
+            if (usedCount > 0) {
+                resetInfo[spellLevel] = usedCount; // Add to the reset info object
+            }
+        }
+    });
+
+    return resetInfo; // Return the reset information
+}
+
 
 
 //Working on Spell Table
@@ -3505,13 +3578,70 @@ function updateSpellDamageDice(ability, damageDice, spellDetails) {
         const containerDiv = document.createElement('div');
         containerDiv.classList.add('to-hit-container');
 
+        // Create label for spell
         const label = document.createElement('label');
         label.classList.add('actionButtonLabel', 'damageDiceButton');
         label.setAttribute('data-dice-type', adjustedDamageDice);
         label.setAttribute('data-name', spellDetails.damage_type_01);
 
+        // Create button for spell
         const button = document.createElement('button');
         button.classList.add('actionButton', 'damageDiceButton', 'spell-damage-button');
+        button.textContent = adjustedDamageDice;
+
+        // Create a context menu
+        const contextMenu = document.createElement('div');
+        contextMenu.className = 'custom-context-menu';
+        document.body.appendChild(contextMenu);
+
+        // Right-click event on spell button
+        button.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+
+            // Clear existing context menu content
+            contextMenu.innerHTML = '';
+
+            // Add Crit button to the context menu
+            const critButton = document.createElement('button');
+            critButton.className = 'crit-button actionButton skillbuttonstyler';
+
+            // Duplicate the label and text from the spell button with doubled dice
+            const spellDiceText = button.textContent; // Original dice text, e.g., "3d8+4"
+            const doubledDiceText = spellDiceText.replace(/(\d+)d(\d+)/g, (match, rolls, sides) => `${rolls * 2}d${sides}`);
+
+            // Set the doubled dice text for the Crit button
+            critButton.textContent = 'Crit';
+
+            // Duplicate the label for the Crit button
+            const critLabel = document.createElement('label');
+            critLabel.className = 'actionButtonLabel damageDiceButton';
+            critLabel.setAttribute('value', label.getAttribute('value') || '0');
+            critLabel.setAttribute('data-dice-type', doubledDiceText);
+            critLabel.setAttribute('data-name', label.getAttribute('data-name'));
+
+            // Add both the Crit label and button to the context menu
+            contextMenu.appendChild(critLabel);
+            contextMenu.appendChild(critButton);
+
+            // Position and display the context menu
+            contextMenu.style.left = `${event.pageX}px`;
+            contextMenu.style.top = `${event.pageY}px`;
+            contextMenu.style.display = 'block';
+
+            // Call rollableButtons to reinitialize
+            rollableButtons();
+        });
+
+        // Hide context menu when the mouse leaves it
+        contextMenu.addEventListener('mouseleave', () => {
+            contextMenu.style.display = 'none';
+        });
+
+        // Hide context menu on clicking elsewhere
+        document.addEventListener('click', () => {
+            contextMenu.style.display = 'none';
+        });
+
 
 
         if (spellDetails.ability_modifier === "yes") {
@@ -3725,8 +3855,8 @@ function updateAllSpellDCs() {
                 }
 
                 let characterSpellBonus = 0;
-                if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
-                    characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+                if (characterStatBonuses.combatStats.SpellAttackandSave) {        
+                    characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
                 }
 
                 const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
@@ -3761,8 +3891,8 @@ function updateSpellDCHeader(){
     }
 
     let characterSpellBonus = 0;
-    if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
-        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    if (characterStatBonuses.combatStats.SpellAttackandSave) {        
+        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
     }
 
     const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
@@ -3813,8 +3943,8 @@ function updateSpelltoHitDice(ability) {
     }
 
     let characterSpellBonus = 0;
-    if (characterStatBonuses.combatStats.SpellAttackandSaveBonus) {        
-        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSaveBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    if (characterStatBonuses.combatStats.SpellAttackandSave) {        
+        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
     }
     
     const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus + characterSpellAttackBonus + characterSpellBonus;
@@ -6362,7 +6492,7 @@ async function exportCharacterData() {
 }
 
 // Add event listener to the export button
-document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
+// document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
 
 
 
@@ -7090,5 +7220,3 @@ function setupMagicBonusSelection() {
         magicBonusContainer.appendChild(bonusRow);
     });
 }
-
-

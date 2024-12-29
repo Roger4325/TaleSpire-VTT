@@ -20,16 +20,10 @@
             <div id="settings-dropdown">
                 <ul>
                     <li>
-                        <div id="restButtons">
-                            <button id="shortRestButton" class="nonRollButton">Short Rest</button>
-                            <button id="longRestButton" class="nonRollButton">Long Rest</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div id="languageButtons">
-                            <!-- <button id="languageEngButton" class="nonRollButton">English</button>
-                            <button id="languageEspButton" class="nonRollButton">Espanol</button> -->
-                        </div>
+                        <!-- <div id="languageButtons">
+                            <button id="languageEngButton" class="nonRollButton">English</button>
+                            <button id="languageEspButton" class="nonRollButton">Espanol</button>
+                        </div> -->
                     </li>
                     <li>
                         <button id="deleteCharacter" class="nonRollButton">Delete a Character</button>
@@ -176,21 +170,10 @@
                     </div>
                 </div>
                 <div class="random-container">
-                    <div id="alignmentHeader">
-                        <label for="alignment-select"></label>
-                        <select id="alignment-select">
-                            <option id = "alignmentOptionLG" value="LG">Lawful Good</option>
-                            <option id = "alignmentOptionNG" value="NG">Neutral Good</option>
-                            <option id = "alignmentOptionCG" value="CG">Chaotic Good</option>
-                            <option id = "alignmentOptionLN" value="LN">Lawful Neutral</option>
-                            <option id = "alignmentOptionTN" value="TN">True Neutral</option>
-                            <option id = "alignmentOptionCN" value="CN">Chaotic Neutral</option>
-                            <option id = "alignmentOptionLE" value="LE">Lawful Evil</option>
-                            <option id = "alignmentOptionNE" value="NE">Neutral Evil</option>
-                            <option id = "alignmentOptionCE" value="CE">Chaotic Evil</option>
-                        </select>
+                    <div id="restButtons">
+                        <!-- <button id="shortRestButton" class="nonRollButton">Short Rest</button> -->
+                        <button id="longRestButton" class="nonRollButton">Long Rest</button>
                     </div>
-
                     <div class="hitDiceContainer">
                         <div class="hitDiceCompact"> Hit Die: 
                             <label id="hitDiceLabel" class="actionButtonLabel" max="1" data-name="Hit Dice" data-dice-type="1d8" value="1">1</label>
@@ -1029,12 +1012,7 @@
             <div id="add-item-modal" class="inventory-modal" style="display:none;">
                 <div class="inventory-modal-content">
                     <h3>Add New Inventory Item</h3>
-                
-                    <!-- Searchable Dropdown for Items -->
-                    <label for="item-select">Select Item:</label>
-                    <input type="text" id="item-search" placeholder="Search for an item..." />
-                    <select id="item-select" size="5"></select>
-                
+
                     <!-- Bag Selection -->
                     <label for="bag-select">Select Bag:</label>
                     <select id="bag-select">
@@ -1043,9 +1021,14 @@
                         <option value="other-possessions">Other Possessions</option>
                     </select>
                 
+                    <!-- Searchable Dropdown for Items -->
+                    <label for="item-select">Select Item:</label>
+                    <input type="text" id="item-search" placeholder="Search for an item..." />
+                    <select id="item-select" size="5"></select>
+                
                     <!-- Confirm Button -->
-                    <button id="confirm-add-item">Add Item</button>
-                    <button id="close-modal">Cancel</button>
+                    <button id="confirm-add-item" class ="nonRollButton">Add Item</button>
+                    <button id="close-modal" class ="nonRollButton" >Cancel</button>
                 </div>
             </div>
           
@@ -1058,8 +1041,23 @@
         </section>
 
         <section id="Docs">
-            <button id="exportCharacterData">Export Character Data</button>
-                <h2>Quick Notes</h2>
+            
+            <!-- <button id="exportCharacterData">Export Character Data</button> -->
+                <h2>Character Notes</h2>
+                <div id="alignmentHeader">
+                    <label for="alignment-select"></label>
+                    <select id="alignment-select">
+                        <option id = "alignmentOptionLG" value="LG">Lawful Good</option>
+                        <option id = "alignmentOptionNG" value="NG">Neutral Good</option>
+                        <option id = "alignmentOptionCG" value="CG">Chaotic Good</option>
+                        <option id = "alignmentOptionLN" value="LN">Lawful Neutral</option>
+                        <option id = "alignmentOptionTN" value="TN">True Neutral</option>
+                        <option id = "alignmentOptionCN" value="CN">Chaotic Neutral</option>
+                        <option id = "alignmentOptionLE" value="LE">Lawful Evil</option>
+                        <option id = "alignmentOptionNE" value="NE">Neutral Evil</option>
+                        <option id = "alignmentOptionCE" value="CE">Chaotic Evil</option>
+                    </select>
+                </div>
                 <button class="add-notes-group-button nonRollButton">+ Add Group</button>
         </section>
 
@@ -1431,6 +1429,21 @@
             <button type="submit" class="nonRollButton">Create Equipment</button>
         </form>
         
+    </div>
+</div>
+
+<!-- Long Rest Modal -->
+<div id="longRestModal" class="long-rest-modal hidden">
+    <div class="long-rest-modal-content">
+        <h2>Long Rest Summary</h2>
+        <p id="longRestHPChange" class="long-rest-modal-paragraphs"></p>
+        <p id="longRestTempHPChange" class="long-rest-modal-paragraphs"></p>
+        <p id="longRestSpellSlots" class="long-rest-modal-paragraphs"></p>
+        <p id="longRestHitDice" class="long-rest-modal-paragraphs"></p>
+        <div class="long-rest-modal-actions">
+            <button id="confirmLongRestButton" class="nonRollButton long-rest-confirm">Confirm</button>
+            <button id="cancelLongRestButton" class="nonRollButton long-rest-cancel">Cancel</button>
+        </div>
     </div>
 </div>
 

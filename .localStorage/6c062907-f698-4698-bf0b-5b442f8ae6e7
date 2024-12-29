@@ -1,8 +1,8 @@
 {
     "characters": {
         "Tester Mc-Testy": {
-            "characterTempHp": "",
-            "currentHitDice": "8",
+            "characterTempHp": "14",
+            "currentHitDice": "5",
             "playerWeaponProficiency": [
                 "Martial Weapons",
                 "Simple Weapons",
@@ -17,12 +17,12 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+2",
-            "AC": "21",
+            "AC": "16",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
             "playerClass": "Class (SubClass)",
-            "currentCharacterHP": "121",
+            "currentCharacterHP": "200",
             "maxCharacterHP": "200",
             "hitDiceButton": "1d8",
             "strengthScore": "18",
@@ -111,22 +111,21 @@
                 {
                     "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Longbow +3",
-                        "itemId": "item-1735228025811-ad5a5afc",
+                        "secondColumn": "Maul of Fire",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+9",
-                        "fifthColumn": "1d8",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "2d6/1d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Ranged",
-                        "eighthColumn": "3",
-                        "damageBonus": "3",
-                        "tenthColumn": "Heavy, Two-Handed, Ammunition",
-                        "elventhColumn": "saddfasd f",
-                        "twelvethColumn": "Piercing",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "",
                         "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
+                            "attacks": false,
+                            "actions": false,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -136,22 +135,21 @@
                 {
                     "3": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Dagger",
-                        "itemId": "item-1735181154893-121a3cbe",
-                        "thirdColumn": "5ft (20/60)",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "1d4",
+                        "secondColumn": "Tester Weapon",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+13",
+                        "fifthColumn": "2d6+1d4",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
+                        "seventhColumn": "STR",
                         "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Finesse, Light, Thrown, Monk",
-                        "elventhColumn": "A dagger is a small, versatile melee weapon with a pointed blade, ideal for stabbing or throwing.",
-                        "twelvethColumn": "Piercing",
+                        "eighthColumn": "5",
+                        "damageBonus": "5",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "Fire",
                         "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
+                            "attacks": false,
+                            "actions": false,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -160,31 +158,6 @@
                 },
                 {
                     "4": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Greatsword",
-                        "itemId": "item-1735159645327-35a9e17e",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "2d6",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A large, two-handed sword known for its broad blade and high damage output, ideal for sweeping attacks.",
-                        "twelvethColumn": "Slashing",
-                        "ninthColumn": {
-                            "attacks": true,
-                            "actions": true,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "5": {
                         "proficiencyButton": "1",
                         "secondColumn": "Longsword",
                         "itemId": "item-1732494408397-1388bd98",
@@ -209,20 +182,71 @@
                     }
                 },
                 {
-                    "6": {
+                    "5": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
+                        "secondColumn": "Greatsword",
+                        "itemId": "item-1735159645327-35a9e17e",
                         "thirdColumn": "5ft",
                         "fourthColumn": "+8",
-                        "fifthColumn": "2d6/1d4",
+                        "fifthColumn": "2d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
                         "weaponType": "Melee",
                         "eighthColumn": "",
                         "damageBonus": "",
                         "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
+                        "elventhColumn": "A large, two-handed sword known for its broad blade and high damage output, ideal for sweeping attacks.",
+                        "twelvethColumn": "Slashing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Dagger",
+                        "itemId": "item-1735181154893-121a3cbe",
+                        "thirdColumn": "5ft (20/60)",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Finesse, Light, Thrown, Monk",
+                        "elventhColumn": "A dagger is a small, versatile melee weapon with a pointed blade, ideal for stabbing or throwing.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
+                },
+                {
+                    "7": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Longbow +3",
+                        "itemId": "item-1735228025811-ad5a5afc",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "weaponType": "Ranged",
+                        "eighthColumn": "3",
+                        "damageBonus": "3",
+                        "tenthColumn": "Heavy, Two-Handed, Ammunition",
+                        "elventhColumn": "saddfasd f",
+                        "twelvethColumn": "Piercing",
                         "ninthColumn": {
                             "attacks": false,
                             "actions": false,
@@ -235,42 +259,10 @@
             ],
             "spellData": {
                 "spellcastingModifier": "INT",
-                "spelllevelselected": "3",
+                "spelllevelselected": "6",
                 "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
-                        {
-                            "name": "Druidcraft",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Eldritch Blast",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Mind Sliver*",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Message",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Druidcraft",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Eldritch Blast",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Mind Sliver*",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Message",
-                            "prepared": "false"
-                        },
                         {
                             "name": "Druidcraft",
                             "prepared": "false"
@@ -303,66 +295,63 @@
                         {
                             "name": "Color Spray",
                             "prepared": "0"
-                        },
-                        {
-                            "name": "Mage Armor",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Absorb Elements*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Color Spray",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Mage Armor",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Absorb Elements*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Color Spray",
-                            "prepared": "0"
                         }
                     ],
-                    "slots": []
+                    "slots": [
+                        true,
+                        true,
+                        true,
+                        false
+                    ]
                 },
                 "2nd-level": {
                     "spells": [
                         {
                             "name": "Rime's Binding Ice*",
                             "prepared": "0"
-                        },
+                        }
+                    ],
+                    "slots": [
+                        true,
+                        true,
+                        false
+                    ]
+                },
+                "3rd-level": {
+                    "spells": [
                         {
-                            "name": "Rime's Binding Ice*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Rime's Binding Ice*",
+                            "name": "Animate Dead",
                             "prepared": "0"
                         }
                     ],
-                    "slots": []
-                },
-                "3rd-level": {
-                    "spells": [],
-                    "slots": []
+                    "slots": [
+                        true,
+                        true,
+                        false
+                    ]
                 },
                 "4th-level": {
                     "spells": [],
-                    "slots": []
+                    "slots": [
+                        true,
+                        true,
+                        false
+                    ]
                 },
                 "5th-level": {
                     "spells": [],
-                    "slots": []
+                    "slots": [
+                        true,
+                        false
+                    ]
                 },
                 "6th-level": {
                     "spells": [],
-                    "slots": []
+                    "slots": [
+                        false,
+                        false,
+                        false
+                    ]
                 },
                 "7th-level": {
                     "spells": [],
@@ -412,22 +401,6 @@
                         "equipped": true
                     },
                     {
-                        "name": "Longbow +3",
-                        "uniqueId": "item-1735228025811-ad5a5afc",
-                        "quantity": 1,
-                        "weight": 2,
-                        "cost": "500 pp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Azuredge",
-                        "uniqueId": "item-1735228833209-cceee301",
-                        "quantity": 1,
-                        "weight": 8,
-                        "cost": "45000 gp",
-                        "equipped": false
-                    },
-                    {
                         "name": "Robe of the Winterstep",
                         "uniqueId": "item-1735234048286-dc37ff67",
                         "quantity": 1,
@@ -436,239 +409,36 @@
                         "equipped": false
                     },
                     {
-                        "name": "Armor test",
-                        "uniqueId": "item-1735237634857-1ae01808",
+                        "name": "Oil of Etherealness",
+                        "uniqueId": "item-1735492077556-059489d6",
                         "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
+                        "weight": 0.5,
+                        "cost": "500 gp",
+                        "useable": true
                     },
                     {
-                        "name": "Test Armor Heavy",
-                        "uniqueId": "item-1735237802356-be196996",
+                        "name": "Oil of Slipperiness",
+                        "uniqueId": "item-1735492327556-f3e0b65f",
                         "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
+                        "weight": 0.5,
+                        "cost": "500 gp",
+                        "useable": true
                     },
                     {
-                        "name": "Test Armor Light",
-                        "uniqueId": "item-1735237849982-a0781c9a",
+                        "name": "Potion of Heroism",
+                        "uniqueId": "item-1735493335772-4243bbcb",
                         "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Shield",
-                        "uniqueId": "item-1735238427060-f7b5dd4a",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Tester Wonderous",
-                        "uniqueId": "item-1735242355416-abdbef0c",
-                        "quantity": 1,
-                        "weight": 50,
-                        "cost": "50 cp",
-                        "equipped": true,
-                        "attuned": false
-                    },
-                    {
-                        "name": "Longsword",
-                        "uniqueId": "item-1732494408397-1388bd98",
-                        "quantity": 2,
-                        "weight": 6,
-                        "cost": "15 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Shield",
-                        "uniqueId": "item-1734883776443-aa889b38",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "10 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Greatsword",
-                        "uniqueId": "item-1735159645327-35a9e17e",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "50 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Dagger",
-                        "uniqueId": "item-1735181154893-121a3cbe",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "2 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Longbow +3",
-                        "uniqueId": "item-1735228025811-ad5a5afc",
-                        "quantity": 1,
-                        "weight": 2,
-                        "cost": "500 pp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Azuredge",
-                        "uniqueId": "item-1735228833209-cceee301",
-                        "quantity": 1,
-                        "weight": 8,
-                        "cost": "45000 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Robe of the Winterstep",
-                        "uniqueId": "item-1735234048286-dc37ff67",
-                        "quantity": 1,
-                        "weight": 0.2,
+                        "weight": 0.5,
                         "cost": "2000 gp",
-                        "equipped": false
+                        "useable": true
                     },
                     {
-                        "name": "Armor test",
-                        "uniqueId": "item-1735237634857-1ae01808",
+                        "name": "Potion of Mind Reading",
+                        "uniqueId": "item-1735493527703-06acdbee",
                         "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Armor Heavy",
-                        "uniqueId": "item-1735237802356-be196996",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Armor Light",
-                        "uniqueId": "item-1735237849982-a0781c9a",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Shield",
-                        "uniqueId": "item-1735238427060-f7b5dd4a",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Tester Wonderous",
-                        "uniqueId": "item-1735242355416-abdbef0c",
-                        "quantity": 1,
-                        "weight": 50,
-                        "cost": "50 cp",
-                        "equipped": true,
-                        "attuned": false
-                    },
-                    {
-                        "name": "Longsword",
-                        "uniqueId": "item-1732494408397-1388bd98",
-                        "quantity": 2,
-                        "weight": 6,
-                        "cost": "15 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Shield",
-                        "uniqueId": "item-1734883776443-aa889b38",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "10 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Greatsword",
-                        "uniqueId": "item-1735159645327-35a9e17e",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "50 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Dagger",
-                        "uniqueId": "item-1735181154893-121a3cbe",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "2 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Longbow +3",
-                        "uniqueId": "item-1735228025811-ad5a5afc",
-                        "quantity": 1,
-                        "weight": 2,
-                        "cost": "500 pp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Azuredge",
-                        "uniqueId": "item-1735228833209-cceee301",
-                        "quantity": 1,
-                        "weight": 8,
-                        "cost": "45000 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Robe of the Winterstep",
-                        "uniqueId": "item-1735234048286-dc37ff67",
-                        "quantity": 1,
-                        "weight": 0.2,
+                        "weight": 0.5,
                         "cost": "2000 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Armor test",
-                        "uniqueId": "item-1735237634857-1ae01808",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Armor Heavy",
-                        "uniqueId": "item-1735237802356-be196996",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Armor Light",
-                        "uniqueId": "item-1735237849982-a0781c9a",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Test Shield",
-                        "uniqueId": "item-1735238427060-f7b5dd4a",
-                        "quantity": 1,
-                        "weight": 5,
-                        "cost": "5 cp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Tester Wonderous",
-                        "uniqueId": "item-1735242355416-abdbef0c",
-                        "quantity": 1,
-                        "weight": 50,
-                        "cost": "50 cp",
-                        "equipped": true,
-                        "attuned": false
+                        "useable": true
                     }
                 ],
                 "backpack": [],
@@ -689,6 +459,17 @@
                             "adjustmentSubCategory": "AC",
                             "adjustmentAbility": "Proficiency",
                             "adjustmentValue": "4",
+                            "numberOfUses": "0"
+                        },
+                        {
+                            "traitName": "",
+                            "cheveron": false,
+                            "traitDescription": "",
+                            "checkboxStates": [],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
                             "numberOfUses": "0"
                         }
                     ]

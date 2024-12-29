@@ -8875,5 +8875,701 @@
         "url": "/api/item-properties/attunement"
       }
     ]
+  },
+  {
+    "index": "oil-of-etherealness",
+    "name": "Oil of Etherealness",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "One vial of this oil can cover one Medium or smaller creature, along with the equipment it’s wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of the Etherealness spell for 1 hour.Beads of this cloudy, gray oil form on the outside of its container and quickly evaporate."
+    ],
+    "properties": [
+      {
+        "index": "Etherealness",
+        "name": "Etherealness spell 1 hour.",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "oil-of-sharpness",
+    "name": "Oil of Sharpness",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "This clear, gelatinous oil sparkles with tiny, ultrathin silver shards. The oil can coat one slashing or piercing weapon or up to 5 pieces of slashing or piercing ammunition. Applying the oil takes 1 minute. For 1 hour, the coated item is magical and has a +3 bonus to attack and damage rolls."
+    ],
+    "properties": [
+      {
+        "index": "Bonus-to-Weapons",
+        "name": "+3 attack and damage rolls 1 hour.",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "oil-of-slipperiness",
+    "name": "Oil of Slipperiness",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "This sticky black unguent is thick and heavy in the container, but it flows quickly when poured. The oil can cover a Medium or smaller creature, along with the equipment it's wearing and carrying (one additional vial is required for each size category above Medium). Applying the oil takes 10 minutes. The affected creature then gains the effect of a freedom of movement spell for 8 hours. Alternatively, the oil can be poured on the ground as an action, where it covers a 10-foot square, duplicating the effect of the grease spell in that area for 8 hours."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Freedom of Movement or Greese 8 hours.",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "philter-of-love",
+    "name": "Philter of Love",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "The next time you see a creature within 10 minutes after drinking this philter, you become charmed by that creature for 1 hour. If the creature is of a species and gender you are normally attracted to, you regard it as your true love while you are charmed. This potion's rose-hued, effervescent liquid contains one easy-to-miss bubble shaped like a heart."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Charmed for 1hour.",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-animal-friendship",
+    "name": "Potion of Animal Friendship",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you can cast the animal friendship spell (save DC 13) for 1 hour at will. Agitating this muddy liquid brings little bits into view: a fish scale, a hummingbird tongue, a cat claw, or a squirrel hair."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "animal friendship(save DC 13) for 1hour.",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-clairvoyance",
+    "name": "Potion of Clairvoyance",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the effect of the Clairvoyance spell (no Concentration required). An eyeball bobs in this potion’s yellowish liquid but vanishes when the potion is opened."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Clairvoyance spell (no Concentration required)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-climbing",
+    "name": "Potion of Climbing",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain a Climb Speed equal to your Speed for 1 hour. During this time, you have Advantage on Strength (Athletics) checks to climb. This potion is separated into brown, silver, and gray layers resembling bands of stone. Shaking the bottle fails to mix the colors."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Climb Speed 1 Hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-diminution",
+    "name": "Potion of Diminution",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the “reduce” effect of the Enlarge/Reduce spell for 1d4 hours (no Concentration required). The red in the potion’s liquid continuously contracts to a tiny bead and then expands to color the clear liquid around it. Shaking the bottle fails to interrupt this process."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Reduce for 1d4 hours (no Concentration required)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-flying",
+    "name": "Potion of Flying",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain a Fly Speed equal to your Speed for 1 hour and can hover. If you’re in the air when the potion wears off, you fall unless you have some other means of staying aloft. This potion’s clear liquid floats at the top of its container and has cloudy white impurities drifting in it."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Fly Speed 1 Hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-gaseous-form",
+    "name": "Potion of Gaseous Form",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the effect of the Gaseous Form spell for 1 hour (no Concentration required) or until you end the effect as a Bonus Action. This potion’s container seems to hold fog that moves and pours like water."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Gaseous Form spell 1 Hour (no Concentration required)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-hill-giant-strength",
+    "name": "Potion of Hill Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 21 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. This potion’s transparent liquid has floating in it a sliver of light resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 21 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-frost-giant-strength",
+    "name": "Potion of Frost Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 1000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 23 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. This potion’s translucent liquid contains a shard of icy blue crystal resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 23 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-stone-giant-strength",
+    "name": "Potion of Stone Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 1000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 23 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. The liquid of this potion is a deep brown, and it contains a sliver of stone resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 23 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-fire-giant-strength",
+    "name": "Potion of Fire Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 1200,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 25 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. The liquid is a fiery red, with a glowing ember floating inside, resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 25 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-cloud-giant-strength",
+    "name": "Potion of Cloud Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 1500,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 27 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. This potion’s misty liquid contains a swirling vapor resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 27 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-storm-giant-strength",
+    "name": "Potion of Storm Giant Strength",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, your Strength score changes to 29 for 1 hour. The potion has no effect on you if your Strength is equal to or greater than that score. The liquid of this potion is a vibrant electric blue, with a bolt of lightning floating within, resembling a giant’s fingernail."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Strength score changes to 29 for 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-growth",
+    "name": "Potion of Growth",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the “enlarge” effect of the Enlarge/Reduce spell for 10 minutes (no Concentration required). The red in the potion’s liquid continuously expands from a tiny bead to color the clear liquid around it and then contracts. Shaking the bottle fails to interrupt this process."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Enlarge 10 minutes (no Concentration required)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-heroism",
+    "name": "Potion of Heroism",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain 10 Temporary Hit Points that last for 1 hour. For the same duration, you are under the effect of the Bless spell (no Concentration required). This potion’s blue liquid bubbles and steams as if boiling."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "10 Temp HP & Bless 1hour (no Concentration)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-invisibility",
+    "name": "Potion of Invisibility",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "This potion's container looks empty but feels as though it holds liquid. When you drink it, you become invisible for 1 hour. Anything you wear or carry is invisible with you. The effect ends early if you attack or cast a spell."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Invisible 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-mind-reading",
+    "name": "Potion of Mind Reading",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the effect of the Detect Thoughts spell (save DC 13) for 10 minutes (no Concentration required). This potion’s dense, purple liquid has an ovoid cloud of pink floating in it."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Detect Thoughts(DC 13) 10 mins (no Concentration)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-poison",
+    "name": "Potion of Poison",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "This concoction looks, smells, and tastes like a potion of healing or other beneficial potion. However, it is actually poison masked by illusion magic. An identify spell reveals its true nature. If you drink it, you take 3d6 poison damage, and you must succeed on a DC 13 Constitution saving throw or be poisoned. At the start of each of your turns while you are poisoned in this way, you take 3d6 poison damage. At the end of each of your turns, you can repeat the saving throw. On a successful save, the poison damage you take on your subsequent turns decreases by 1d6. The poison ends when the damage decreases to 0."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "3d6 poison damage DC 13 Con poisoned",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-resistance",
+    "name": "Potion of Resistance",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you have Resistance to one type of damage for 1 hour. The DM chooses the type or determines it randomly by rolling on the following table.<br>1-Acid<br>2-Cold<br>3-Fire<br>4-Force<br>5-Lightning<br>6-Necrotic<br>7-Poison<br>8-Psychic<br>9-Radiant<br>10-Thunder"
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "1/2 damage of type",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-speed",
+    "name": "Potion of Speed",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "When you drink this potion, you gain the effect of the Haste spell for 1 minute (no Concentration required) without suffering the wave of lethargy that typically occurs when the effect ends. This potion’s yellow fluid is streaked with black and swirls on its own."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "Haste 1 min (no Concentration)",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
+  },
+  {
+    "index": "potion-of-water-breathing",
+    "name": "Potion of Water Breathing",
+    "equipment_category": {
+      "index": "potion",
+      "name": "Potion",
+      "url": "/api/equipment-categories/potion"
+    },
+    "gear_category": {
+      "index": "consumable",
+      "name": "Consumable",
+      "url": "/api/equipment-categories/consumable"
+    },
+    "cost": {
+      "quantity": 2000,
+      "unit": "gp"
+    },
+    "weight": 0.5,
+    "description": [
+      "You can breathe underwater for 1 hour after drinking this potion. Its cloudy green fluid smells of the sea and has a jellyfish-like bubble floating in it."
+    ],
+    "properties": [
+      {
+        "index": "Cast Spell",
+        "name": "breathe underwater 1 hour",
+        "url": "/api/equipment-properties/healing"
+      }
+    ]
   }
 ]

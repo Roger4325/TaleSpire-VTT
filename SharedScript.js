@@ -787,6 +787,8 @@ function parseAndReplaceDice(action, text, spell) {
                     label.classList.add('actionButtonLabel');
                     const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
                     const diceRoll = part.replace(/[()\s]/g, '');
+
+                    console.log(diceRoll);
             
                     // Extract the modifier part (+ or - with number)
                     const modifierMatch = part.match(/([+-]\s*\d+)$/);
@@ -801,6 +803,56 @@ function parseAndReplaceDice(action, text, spell) {
                     const button = document.createElement('button');
                     button.classList.add('actionButton');
                     button.textContent = part;
+
+                    // Only add context menu for non-d20 rolls
+                    if (!/^\d*d20(\s*[+-]\s*\d+)?$/.test(diceRoll) && !/^[+-]\d+$/.test(diceRoll)) {
+                        const contextMenu = document.createElement('div');
+                        contextMenu.className = 'custom-context-menu';
+                        document.body.appendChild(contextMenu);
+
+                        button.addEventListener('contextmenu', (event) => {
+                            event.preventDefault();
+
+                            // Clear existing context menu content
+                            contextMenu.innerHTML = '';
+
+                            // Add Crit button to the context menu
+                            const critButton = document.createElement('button');
+                            critButton.className = 'crit-button actionButton skillbuttonstyler';
+
+                            // Duplicate the label and text with doubled dice
+                            const doubledDiceText = diceRoll.replace(/(\d+)d(\d+)/g, (match, rolls, sides) => `${rolls * 2}d${sides}`);
+                            critButton.textContent = 'Crit';
+
+                            // Duplicate the label for the Crit button
+                            const critLabel = document.createElement('label');
+                            critLabel.className = 'actionButtonLabel damageDiceButton';
+                            critLabel.setAttribute('value', modifier);
+                            critLabel.setAttribute('data-dice-type', doubledDiceText);
+                            critLabel.setAttribute('data-name', diceName);
+
+                            // Add both the Crit label and button to the context menu
+                            contextMenu.appendChild(critLabel);
+                            contextMenu.appendChild(critButton);
+
+                            // Position and display the context menu
+                            contextMenu.style.left = `${event.pageX}px`;
+                            contextMenu.style.top = `${event.pageY}px`;
+                            contextMenu.style.display = 'block';
+
+                            rollableButtons();
+                        });
+
+                        // Hide context menu when the mouse leaves it
+                        contextMenu.addEventListener('mouseleave', () => {
+                            contextMenu.style.display = 'none';
+                        });
+
+                        // Hide context menu on clicking elsewhere
+                        document.addEventListener('click', () => {
+                            contextMenu.style.display = 'none';
+                        });
+                    }
             
                     container.appendChild(label);
                     container.appendChild(button);

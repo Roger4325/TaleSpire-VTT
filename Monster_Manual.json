@@ -5751,16 +5751,6 @@
         ],
         "Actions": [
             {
-                "Name": "Fling",
-                "Content": "The giant tries to throw a Small or Medium creature within 10 feet of it. The target must succeed on a DC 20 Dexterity saving throw or be hurled up to 60 feet horizontally in a direction of the giant's choice and land prone, taking 1d8 bludgeoning damage for every 10 feet it was thrown.",
-                "Usage": ""
-            },
-            {
-                "Name": "Wind Aura",
-                "Content": "A magical aura of wind surrounds the giant. The aura is a 10-foot-radius sphere that lasts as long as the giant maintains concentration on it (as if concentrating on a spell). While the aura is in effect, the giant gains a +2 bonus to its AC against ranged weapon attacks, and all open flames within the aura are extinguished unless they are magical.",
-                "Usage": ""
-            },
-            {
                 "Name": "Multiattack",
                 "Content": "The giant makes two morningstar attacks.",
                 "Usage": ""
@@ -7740,16 +7730,6 @@
             }
         ],
         "Actions": [
-            {
-                "Name": "Fling",
-                "Content": "The giant tries to throw a Small or Medium creature within 10 feet of it. The target must succeed on a DC 17 Dexterity saving throw or be hurled up to 60 feet horizontally in a direction of the giant's choice. and land prone, taking 1d6 bludgeoning damage for every 10 feet it was thrown. ",
-                "Usage": ""
-            },
-            {
-                "Name": "Rolling Rock",
-                "Content": "The giant sends a rock tumbling along the ground in a 30-foot line that is 5 feet wide. Each creature in that line must make a DC 17 Dexterity saving throw, taking 22 (3d10 + 6) bludgeoning damage and falling prone on a failed save",
-                "Usage": ""
-            },
             {
                 "Name": "Multiattack",
                 "Content": "The giant makes two greatclub attacks.",
@@ -9769,11 +9749,6 @@
         "Traits": [],
         "Actions": [
             {
-                "Name": "Weighted Net",
-                "Content": "Ranged Weapon Attack: +5 to hit, ranged 20/60 ft., one Small, Medium, or Large creature. Hit: The target is restrained until it escapes the net. Any creature can use its action to make a DC 17 Strength check to free itself or another creature in the net, ending the effect on a success. Dealing 15 slashing damage to the net (AC 12) destroys the net and frees the target.",
-                "Usage": ""
-            },
-            {
                 "Name": "Multiattack",
                 "Content": "The giant makes two greataxe attacks.",
                 "Usage": ""
@@ -10114,7 +10089,7 @@
             },
             {
                 "Name": "Variant: Panpipes",
-                "Content": "Gentle Lullaby. The creature falls asleep and is unconscious for 1 minute. The effect ends if the creature takes damage or if someone takes an action to shake the creature awake.",
+                "Content": "The satyr plays its pipes and chooses one of the following magical effects: a charming melody, a frightening strain, or a gentle lullaby. Any creature within 60 feet of the satyr that can hear the pipes must succeed on a DC 13 Wisdom saving throw or be affected as described below. Other satyrs and creatures that can’t be charmed are unaffected.An affected creature can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success. If a creature’s saving throw is successful or the effect ends for it, the creature is immune to these panpipes for the next 24 hours.<br>-Charming Melody. The creature is charmed by the satyr for 1 minute. If the satyr or any of its companions harms the creature, the effect on it ends immediately.<br>-Frightening Strain. The creature is frightened for 1 minute.<br>-Gentle Lullaby. The creature falls asleep and is unconscious for 1 minute. The effect ends if the creature takes damage or if someone takes an action to shake the creature awake.",
                 "Usage": ""
             }
         ],
