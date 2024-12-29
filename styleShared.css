@@ -254,4 +254,43 @@ margin: 2px;
     right: 0;
     padding: 5px;
     cursor: pointer;
+    display: inline-block;
+    font-size: 1.5rem; /* Adjust size as needed */
+    font-weight: bold;
+    color: #fff; /* Default color */
+    background-color: var(--ts-button-background);
+    border: none;
+    border-radius: 50%; /* Circular button */
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 15px;
+    transition: all 0.3s ease; /* Smooth transition for hover effects */
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+.close:hover {
+    background-color: var(--ts-button-hover);
+    transform: scale(1.1); /* Slightly enlarge */
+}
+
+
+
+
+/* Style for the custom context menu */
+.custom-context-menu {
+    position: absolute;
+    display: none;
+    background: rgb(2,2,2);
+    color: #fff;
+    border: 1px solid #ccc;
+    padding: 5px;
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+/* Hover effect for the Crit button */
+.crit-button:hover {
+    background: var(--ts-button-hover);
 }

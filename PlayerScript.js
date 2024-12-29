@@ -46,23 +46,6 @@ const savesProficiencyLevels = [
     { class: "proficient", title: "proficient", value: "1" }
 ];
 
-const damageTypes = [
-    "N/A",
-    "Slashing",
-    "Piercing",
-    "Bludgeoning",
-    "Fire",
-    "Cold",
-    "Lightning",
-    "Thunder",
-    "Acid",
-    "Poison",
-    "Psychic",
-    "Radiant",
-    "Necrotic",
-    "Force"
-];
-
 let isMe;
 
 //Define all message Types and the functions they should call this should be expanded as I need different types of messages. 
@@ -740,6 +723,7 @@ function handleXPChange(event){
     updateAllSpellDamageDice();
     updateSpellDCHeader()
     updateHitDiceMax()
+    updateAdjustmentValues()
 
 
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
@@ -2532,7 +2516,7 @@ function updateActionTableUI(actionTableData, newActionTableData) {
             damageLabel.className = "actionButtonLabel damageDiceButton";
             damageLabel.setAttribute('value', findAbilityScoreLabel(row.seventhColumn).getAttribute('value') || "0");
             damageLabel.setAttribute('data-dice-type', row.fifthColumn);
-            damageLabel.setAttribute('data-name', "Piercing default" || "default"); //HardCoded example this needs to be updated once Damage Type is implemented. 
+            damageLabel.setAttribute('data-name', "Piercing default" || "default"); 
             
             
             const damageButton = document.createElement('button');
@@ -2541,6 +2525,61 @@ function updateActionTableUI(actionTableData, newActionTableData) {
             damageCell.appendChild(damageLabel);
             damageCell.appendChild(damageButton);
             newRow.appendChild(damageCell);
+
+            // Create a context menu
+            const contextMenu = document.createElement('div');
+            contextMenu.className = 'custom-context-menu';
+            document.body.appendChild(contextMenu);
+
+            
+
+
+            // Right-click event on damageButton
+            damageButton.addEventListener('contextmenu', (event) => {
+                event.preventDefault();
+
+                contextMenu.innerHTML =''
+
+                // Add Crit button to the context menu
+                const critButton = document.createElement('button');
+                critButton.className = 'crit-button actionButton skillbuttonstyler';
+
+                // Duplicate the label and text from the damageButton with doubled dice
+                const damageDiceText = row.fifthColumn;
+                const doubledDiceText = damageDiceText.replace(/(\d+)d(\d+)/g, (match, rolls, sides) => `${rolls * 2}d${sides}`);
+
+                // Set the doubled dice text for the Crit button
+                critButton.textContent = "crit";
+
+                // Duplicate the label for the Crit button
+                const critLabel = document.createElement('label');
+                critLabel.className = "actionButtonLabel damageDiceButton";
+                critLabel.setAttribute('value', damageLabel.getAttribute('value') || "0");
+                critLabel.setAttribute('data-dice-type', doubledDiceText);
+                critLabel.setAttribute('data-name', damageLabel.getAttribute('data-name'));
+
+                // Add both the Crit label and button to the context menu
+                contextMenu.appendChild(critLabel);
+                contextMenu.appendChild(critButton);
+
+                // Position and display the context menu
+                contextMenu.style.left = `${event.pageX}px`;
+                contextMenu.style.top = `${event.pageY}px`;
+                contextMenu.style.display = 'block';
+                rollableButtons()
+            });
+
+            
+
+            // Hide context menu when the mouse leaves it
+            contextMenu.addEventListener('mouseleave', () => {
+                contextMenu.style.display = 'none';
+            });
+
+            // Hide context menu on clicking elsewhere
+            document.addEventListener('click', () => {
+                contextMenu.style.display = 'none';
+            });
             
             // Create and append the content for the sixth column
             const columnSixCell = createColumnSixContent(row, currentRowIndex, newRow);
@@ -5123,12 +5162,13 @@ function updateAdjustmentValues() {
             // Get the selected ability for this trait
             const abilitySelect = trait.querySelector('.trait-ability-select');
             const selectedAbility = abilitySelect?.value;
+            const adjustmentValueInput = trait.querySelector('.adjustment-value');
 
-            if (selectedAbility !== "NONE") {
+            if (selectedAbility !== "NONE" && selectedAbility !== "Proficiency") {
                 const abilityScoreLabel = findAbilityScoreLabel(selectedAbility);
                 const abilityValue = parseInt(abilityScoreLabel.getAttribute("value"), 10);
 
-                const adjustmentValueInput = trait.querySelector('.adjustment-value');
+                
 
                 if (abilityValue !== null) {
                     adjustmentValueInput.value = abilityValue;
@@ -5136,6 +5176,10 @@ function updateAdjustmentValues() {
                     const blurEvent = new Event('blur');
                     adjustmentValueInput.dispatchEvent(blurEvent)
                 }
+            }
+            else if(selectedAbility !== "NONE"){
+                const profBonus = document.getElementById('profBonus').textContent;
+                adjustmentValueInput.value = parseInt(profBonus);
             }
         });
     });
@@ -5444,7 +5488,7 @@ function addNewTrait(groupContainer, traitData = null) {
     abilityLabel.textContent = 'Ability Score to use for adjustment value';
     const abilitySelect = document.createElement('select');
     abilitySelect.classList.add('trait-ability-select');
-    const abilities = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA'];
+    const abilities = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'Proficiency'];
     abilities.forEach(ability => {
         const option = document.createElement('option');
         option.textContent = ability;
@@ -5468,13 +5512,18 @@ function addNewTrait(groupContainer, traitData = null) {
     // Event listener for ability selection
     abilitySelect.addEventListener('change', () => {
         const selectedAbility = abilitySelect.value;
-        if (selectedAbility !== "NONE"){
+        console.log(selectedAbility)
+        if (selectedAbility !== "NONE" && selectedAbility !== "Proficiency"){
             const abilityScoreLabel = findAbilityScoreLabel(selectedAbility);
             const abilityValue = parseInt(abilityScoreLabel.getAttribute("value"), 10);
 
             if (abilityValue !== null) {
                 adjustmentValueInput.value = abilityValue;
             }
+        }
+        else if (selectedAbility !== "NONE"){
+            const profBonus = document.getElementById('profBonus').textContent;
+            adjustmentValueInput.value = parseInt(profBonus);
         }
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
         updateContent();
@@ -6404,12 +6453,6 @@ function populateDamageTypeDropdown(selectElement) {
     // Clear existing options
     selectElement.innerHTML = "";
 
-    // Add the default "N/A" option
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = "N/A";
-    selectElement.appendChild(defaultOption);
-
     // Populate options dynamically from the damageTypes array
     damageTypes.forEach(type => {
         const option = document.createElement("option");
@@ -6560,6 +6603,10 @@ let magicBonusSection = `
                     <label>
                         <input type="checkbox" id="propertyTwoHanded" name="property" value="Two-Handed">
                         <span id="labelTwoHanded">Two-Handed</span>
+                    </label>
+                     <label>
+                        <input type="checkbox" id="propertySilvered" name="property" value="Silvered">
+                        <span id="labelSilvered">Silvered</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertySpecial" name="property" value="Special">

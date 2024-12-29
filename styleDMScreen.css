@@ -12,7 +12,7 @@
     align-items: center;
     color: #fff;
     padding: 5px;
-    z-index: 999; /* Ensure it's above other content */
+    z-index: 5; /* Ensure it's above other content */
 }
 
 .monster-group-header-01{
@@ -116,12 +116,12 @@
     text-align: center;
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
     color: white;
     font-size: 14px;
     font-weight: bold;
     width: 15px;
     height: 40px;
-    border-radius: 5px;
     margin-right: 5px;
     /* Remove arrows */
     -moz-appearance: textfield;
@@ -620,38 +620,32 @@
 }
 
 
-
-
-
 .spell-hover {
     position: relative;
     cursor: pointer; /* Show pointer cursor to indicate it's hoverable */
 }
 
-.spell-hover::after {
-    content: attr(data-desc); /* Show the description */
-    display: none; /* Initially hide the tooltip */
-    position: absolute;
-    background-color: rgb(0, 0, 0);
+.spell-tooltip {
+    position: fixed; /* Use fixed positioning relative to the screen */
+    background-color: rgb(2, 2, 2);
     color: #ffffff;
-    padding: 7px;
+    padding: 2px;
     border-radius: 5px;
     font-size: 14px;
-    width: 350px;
-    white-space: pre-wrap;
+    width: 95%; 
     z-index: 1000;
-    top: 100%; /* Position below the hovered element */
-    left: 100%;
-    transform: translateX(-40%);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-    line-height: 20px;transition: opacity 0.2s ease-in-out; /* For smooth fade-in */
+    line-height: 20px;
+    transition: opacity 0.2s ease-in-out; /* For smooth fade-in */
     opacity: 0; /* Start hidden */
+    top: 0; /* Initially set to 0, will be adjusted dynamically in the code */
+    left: 2%; /* Always aligned to the left of the viewport */
+    pointer-events: none;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--ts-button-background);
 }
 
-/* Only show the tooltip when the class is added */
-.spell-hover.show-tooltip::after {
-    display: block;
-    opacity: 1;
+.spell-tooltip strong {
+    color: var(--ts-accent-primary);
 }
 
 .fa-eye-slash{
@@ -665,3 +659,162 @@
     align-items: center;
     justify-items: center;
 }
+
+
+
+
+#monsterFormModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.monster-modal-background{
+    background-color: rgb(2, 2, 2);
+    margin: 5% auto; /* Center the modal */
+    padding: 10px;
+    border: 1px solid var(--ts-button-background);
+    width: 90%; /* Adjust the width as needed */
+    border-radius: 5px;
+    z-index: 10;
+    position: relative;
+}
+
+#monsterCreationForm {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+#monsterCreationForm textarea {
+    resize: vertical; /* Allow only vertical resizing */
+    min-height: 30px;
+}
+
+.form-row{
+    display: flex;
+    justify-items: center;
+}
+
+.form-row > input, .form-row > textarea, .entry-name, .entry-content{
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    flex: 1; 
+}
+
+.form-row label {
+    flex: 0; 
+    text-align: left; 
+    min-width: 18%;
+}
+
+.form-row select {
+    flex: 1; 
+}
+
+
+.form-fieldset {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    padding: 5px; /* Slightly increased padding for better spacing */
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.monster-ability-fieldset {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    column-gap: 2px; 
+    row-gap: 2px;
+    align-items: center;
+}
+
+.monster-ability-fieldset .form-row {
+    display: flex; 
+    width: 100%; 
+}
+
+.monster-ability-fieldset .form-row > label {
+    flex: 0; 
+    text-align: left; 
+    width: fit-content;
+    margin-right: 20px;
+}
+
+.monster-ability-fieldset .form-row > input {
+    flex: 0;
+    max-width: 30px;
+    text-align: center; 
+    padding: 1px;
+}
+
+.monster-ability-fieldset .form-row > input[type="number"]::-webkit-inner-spin-button,
+.monster-ability-fieldset .form-row > input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* Optional to align input text better */
+}
+
+
+.monster-skill-fieldset{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 2px;
+    row-gap: 2px;
+}
+
+.monster-skill-fieldset .form-row label{
+    min-width: 60%;
+    flex: 0; 
+}
+
+.monster-skill-fieldset .form-row input{
+    flex: 1;
+    max-width: 75px;
+}
+
+#monsterFormVulnerabilities, #monsterFormResistances, #monsterFormImmunities, #monsterFormConditionImmunities{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Three columns */
+    gap: 0px;
+    row-gap: 2px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 1px;
+    background-color: rgb(2, 2, 2); 
+}
+
+#monsterFormTraits, #monsterFormActions, #monsterFormReactions, #monsterFormLegendaryActions {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--ts-button-background);
+    padding: 5px; /* Slightly increased padding for better spacing */
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 5px;
+}
+
+.entry-name{
+    width: 75%;
+    margin-bottom: 2px;
+}
+
+.entry-content{
+    width: 98%;
+    min-height: 30px;
+    margin-bottom: 2px;
+}
+
+
+
+

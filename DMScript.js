@@ -1892,3 +1892,221 @@ function handleUpdatePlayerInitiative(parsedMessage, fromClient){
 function handleRequestInitList(){
     debouncedSendInitiativeListToPlayer()
 }
+
+
+
+
+const customMonsterButton = document.getElementById('customMonsters');
+const monsterForm = document.getElementById("monsterCreationForm");
+const monsterFormModal = document.getElementById("monsterFormModal");
+const closeMonsterFormButton = document.getElementById('closeMonsterForm');
+let items = []; // Store created spells
+
+// Open the form
+customMonsterButton.addEventListener('click', () => {
+    monsterFormModal.style.display = 'block';
+    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability");
+    populateCheckboxes("monsterFormResistances", damageTypes, "resistance");
+    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity");
+    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
+});
+
+// Close the form
+closeMonsterFormButton.addEventListener('click', () => {
+    monsterFormModal.style.display = 'none';
+});
+
+document.getElementById("monsterCreationForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Gather form data
+    const monsterData = {
+        Id: document.getElementById("monsterFormName").value,
+        Name: document.getElementById("monsterFormName").value,
+        Path: "",
+        Source: document.getElementById("monsterFormSource").value,
+        Type: document.getElementById("monsterFormType").value,
+        InitiativeModifier: document.getElementById("monsterFormInitiativeModifier").value,
+        HP: {
+            Value: parseInt(document.getElementById("monsterFormHPValue").value),
+            Notes: document.getElementById("monsterFormHPNotes").value
+        },
+        AC: {
+            Value: parseInt(document.getElementById("monsterFormACValue").value),
+            Notes: document.getElementById("monsterFormACNotes").value
+        },
+        Speed: document.getElementById("monsterFormSpeed").value.split(",") ,
+        Senses: document.getElementById("monsterFormSenses").value.split(",") ,
+        Languages: document.getElementById("monsterFormLanguages").value.split(",") ,
+        Abilities: {
+            Str: parseInt(document.getElementById("monsterFormStr").value),
+            Dex: parseInt(document.getElementById("monsterFormDex").value),
+            Con: parseInt(document.getElementById("monsterFormCon").value),
+            Int: parseInt(document.getElementById("monsterFormInt").value),
+            Wis: parseInt(document.getElementById("monsterFormWis").value),
+            Cha: parseInt(document.getElementById("monsterFormCha").value)
+        },
+        Saves: saveSaves(),
+        Skills: saveSkills(),
+        DamageVulnerabilities: getCheckedValues("monsterFormVulnerabilities"),
+        DamageResistances: getCheckedValues("monsterFormResistances"),
+        DamageImmunities: getCheckedValues("monsterFormImmunities"),
+        ConditionImmunities: getCheckedValues("monsterFormConditionImmunities"),
+        Traits: collectDynamicFields("monsterFormTraits"),
+        Actions: collectDynamicFields("monsterFormActions"),
+        Reactions: collectDynamicFields("monsterFormReactions"),
+        LegendaryActions: collectDynamicFields("monsterFormLegendaryActions")
+    };
+
+    console.log(monsterData); // Save or use this data in your application
+    saveMonsterData(monsterData)
+
+    
+});
+
+async function saveMonsterData(monsterData){
+    try {
+        // Save and wait for completion
+        await saveToGlobalStorage("Custom Monsters", monsterData.Name, monsterData, true);
+        console.log("Save completed.");
+        await loadMonsterDataFiles(); // Ensure this runs after save completes
+    } catch (error) {
+        console.error("Error during save or load:", error);
+    }
+
+    monsterFormModal.style.display = 'none'; // Close the form
+    monsterForm.reset(); // Reset the form
+}
+
+function collectDynamicFields(sectionId) {
+    const section = document.getElementById(sectionId);
+    const items = [...section.querySelectorAll(".dynamic-entry")];
+    return items.map(item => ({
+        Name: item.querySelector(".entry-name").value,
+        Content: item.querySelector(".entry-content").value,
+    }));
+}
+
+// Add dynamic fields
+function addDynamicField(sectionId) {
+    const section = document.getElementById(sectionId);
+    const div = document.createElement("div");
+    div.classList.add("dynamic-entry");
+
+    console.log(section)
+
+    div.innerHTML = `
+        <div>
+            <input type="text" class="entry-name" placeholder="Name">
+            <button type="button" class="removeEntry nonRollButton">Remove</button>
+        </div>
+        <textarea class="entry-content" placeholder="Content"></textarea>  
+    `;
+
+    section.appendChild(div);
+
+    div.querySelector(".removeEntry").addEventListener("click", () => {
+        div.remove();
+    });
+}
+
+// Buttons to add dynamic entries
+document.getElementById("addTraitButton").addEventListener("click", () => addDynamicField("monsterFormTraits"));
+document.getElementById("addActionButton").addEventListener("click", () => addDynamicField("monsterFormActions"));
+document.getElementById("addReactionButton").addEventListener("click", () => addDynamicField("monsterFormReactions"));
+document.getElementById("addLegendaryActionsButton").addEventListener("click", () => addDynamicField("monsterFormLegendaryActions"));
+
+function populateCheckboxes(containerId, types, namePrefix) {
+    const container = document.getElementById(containerId);
+    container.innerHTML = ""; // Clear container before populating (if re-used)
+
+    console.log(containerId);
+    console.log(container)
+
+    types.forEach(type => {
+        const label = document.createElement("label");
+        const checkbox = document.createElement("input");
+        const span = document.createElement("span");
+
+        // Configure the checkbox
+        checkbox.type = "checkbox";
+        checkbox.id = `${namePrefix}${type}`;
+        checkbox.name = namePrefix;
+        checkbox.value = type;
+
+        // Configure the span label
+        span.id = `label${type}`;
+        span.textContent = type;
+
+        // Append the checkbox and span to the label
+        label.appendChild(checkbox);
+        label.appendChild(span);
+
+        // Add the label to the container
+        container.appendChild(label);
+    });
+}
+
+
+function getCheckedValues(containerId) {
+    const container = document.getElementById(containerId);
+    const checkboxes = container.querySelectorAll("input[type='checkbox']");
+    const checkedValues = Array.from(checkboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+    return checkedValues;
+}
+
+function saveSaves() {
+    const saves = [];
+    const saveIds = ["Str", "Dex", "Con", "Int", "Wis", "Cha"];
+
+    saveIds.forEach(saveId => {
+        const saveValue = parseInt(document.getElementById(`monsterForm${saveId}Save`).value);
+        if (!isNaN(saveValue) && saveValue !== 0) {
+            saves.push({
+                Name: saveId,
+                Modifier: saveValue
+            });
+        }
+    });
+
+    return saves;
+}
+
+
+function saveSkills() {
+    const skills = [];
+    const skillInputs = [
+        { id: "monsterAcrobatics", name: "Acrobatics" },
+        { id: "monsterAnimalHandling", name: "Animal Handling" },
+        { id: "monsterArcana", name: "Arcana" },
+        { id: "monsterAthletics", name: "Athletics" },
+        { id: "monsterDeception", name: "Deception" },
+        { id: "monsterHistory", name: "History" },
+        { id: "monsterInsight", name: "Insight" },
+        { id: "monsterIntimidation", name: "Intimidation" },
+        { id: "monsterInvestigation", name: "Investigation" },
+        { id: "monsterMedicine", name: "Medicine" },
+        { id: "monsterNature", name: "Nature" },
+        { id: "monsterPerception", name: "Perception" },
+        { id: "monsterPerformance", name: "Performance" },
+        { id: "monsterPersuasion", name: "Persuasion" },
+        { id: "monsterReligion", name: "Religion" },
+        { id: "monsterSleightOfHand", name: "Sleight of Hand" },
+        { id: "monsterStealth", name: "Stealth" },
+        { id: "monsterSurvival", name: "Survival" }
+    ];
+
+    skillInputs.forEach(skill => {
+        const skillValue = parseInt(document.getElementById(skill.id).value);
+        if (!isNaN(skillValue) && skillValue !== 0) {
+            skills.push({
+                Name: skill.name,
+                Modifier: skillValue
+            });
+        }
+    });
+
+    return skills;
+}

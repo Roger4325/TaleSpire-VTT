@@ -17,7 +17,7 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+2",
-            "AC": "17",
+            "AC": "21",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
@@ -207,6 +207,30 @@
                             "other": false
                         }
                     }
+                },
+                {
+                    "6": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Maul of Fire",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+8",
+                        "fifthColumn": "2d6/1d4",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Heavy, Two-Handed",
+                        "elventhColumn": "A brightly Colored Maul",
+                        "twelvethColumn": "",
+                        "ninthColumn": {
+                            "attacks": false,
+                            "actions": false,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
                 }
             ],
             "spellData": {
@@ -215,6 +239,38 @@
                 "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
+                        {
+                            "name": "Druidcraft",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Eldritch Blast",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Mind Sliver*",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Message",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Druidcraft",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Eldritch Blast",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Mind Sliver*",
+                            "prepared": "false"
+                        },
+                        {
+                            "name": "Message",
+                            "prepared": "false"
+                        },
                         {
                             "name": "Druidcraft",
                             "prepared": "false"
@@ -247,12 +303,44 @@
                         {
                             "name": "Color Spray",
                             "prepared": "0"
+                        },
+                        {
+                            "name": "Mage Armor",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Absorb Elements*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Color Spray",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Mage Armor",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Absorb Elements*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Color Spray",
+                            "prepared": "0"
                         }
                     ],
                     "slots": []
                 },
                 "2nd-level": {
                     "spells": [
+                        {
+                            "name": "Rime's Binding Ice*",
+                            "prepared": "0"
+                        },
+                        {
+                            "name": "Rime's Binding Ice*",
+                            "prepared": "0"
+                        },
                         {
                             "name": "Rime's Binding Ice*",
                             "prepared": "0"
@@ -377,6 +465,200 @@
                         "quantity": 1,
                         "weight": 5,
                         "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Tester Wonderous",
+                        "uniqueId": "item-1735242355416-abdbef0c",
+                        "quantity": 1,
+                        "weight": 50,
+                        "cost": "50 cp",
+                        "equipped": true,
+                        "attuned": false
+                    },
+                    {
+                        "name": "Longsword",
+                        "uniqueId": "item-1732494408397-1388bd98",
+                        "quantity": 2,
+                        "weight": 6,
+                        "cost": "15 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shield",
+                        "uniqueId": "item-1734883776443-aa889b38",
+                        "quantity": 1,
+                        "weight": 6,
+                        "cost": "10 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Greatsword",
+                        "uniqueId": "item-1735159645327-35a9e17e",
+                        "quantity": 1,
+                        "weight": 6,
+                        "cost": "50 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Dagger",
+                        "uniqueId": "item-1735181154893-121a3cbe",
+                        "quantity": 1,
+                        "weight": 1,
+                        "cost": "2 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Longbow +3",
+                        "uniqueId": "item-1735228025811-ad5a5afc",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "500 pp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Azuredge",
+                        "uniqueId": "item-1735228833209-cceee301",
+                        "quantity": 1,
+                        "weight": 8,
+                        "cost": "45000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Robe of the Winterstep",
+                        "uniqueId": "item-1735234048286-dc37ff67",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Armor test",
+                        "uniqueId": "item-1735237634857-1ae01808",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Armor Heavy",
+                        "uniqueId": "item-1735237802356-be196996",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Armor Light",
+                        "uniqueId": "item-1735237849982-a0781c9a",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Shield",
+                        "uniqueId": "item-1735238427060-f7b5dd4a",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Tester Wonderous",
+                        "uniqueId": "item-1735242355416-abdbef0c",
+                        "quantity": 1,
+                        "weight": 50,
+                        "cost": "50 cp",
+                        "equipped": true,
+                        "attuned": false
+                    },
+                    {
+                        "name": "Longsword",
+                        "uniqueId": "item-1732494408397-1388bd98",
+                        "quantity": 2,
+                        "weight": 6,
+                        "cost": "15 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Shield",
+                        "uniqueId": "item-1734883776443-aa889b38",
+                        "quantity": 1,
+                        "weight": 6,
+                        "cost": "10 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Greatsword",
+                        "uniqueId": "item-1735159645327-35a9e17e",
+                        "quantity": 1,
+                        "weight": 6,
+                        "cost": "50 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Dagger",
+                        "uniqueId": "item-1735181154893-121a3cbe",
+                        "quantity": 1,
+                        "weight": 1,
+                        "cost": "2 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Longbow +3",
+                        "uniqueId": "item-1735228025811-ad5a5afc",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "500 pp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Azuredge",
+                        "uniqueId": "item-1735228833209-cceee301",
+                        "quantity": 1,
+                        "weight": 8,
+                        "cost": "45000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Robe of the Winterstep",
+                        "uniqueId": "item-1735234048286-dc37ff67",
+                        "quantity": 1,
+                        "weight": 0.2,
+                        "cost": "2000 gp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Armor test",
+                        "uniqueId": "item-1735237634857-1ae01808",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Armor Heavy",
+                        "uniqueId": "item-1735237802356-be196996",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Armor Light",
+                        "uniqueId": "item-1735237849982-a0781c9a",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
+                        "equipped": false
+                    },
+                    {
+                        "name": "Test Shield",
+                        "uniqueId": "item-1735238427060-f7b5dd4a",
+                        "quantity": 1,
+                        "weight": 5,
+                        "cost": "5 cp",
                         "equipped": true
                     },
                     {
@@ -405,8 +687,8 @@
                             "checkboxStates": [],
                             "adjustmentCategory": "combatStats",
                             "adjustmentSubCategory": "AC",
-                            "adjustmentAbility": "NONE",
-                            "adjustmentValue": "0",
+                            "adjustmentAbility": "Proficiency",
+                            "adjustmentValue": "4",
                             "numberOfUses": "0"
                         }
                     ]
@@ -4563,19 +4845,6 @@
                 "tempHp": "0",
                 "conditions": [],
                 "isClosed": 0
-            },
-            {
-                "isMonster": 0,
-                "name": "roger4325",
-                "talespireId": "09112889-0c6c-4174-a11f-e0ebecbfe02f",
-                "hp": {
-                    "current": 0,
-                    "max": 0
-                },
-                "ac": 0,
-                "initiative": 0,
-                "passivePerception": 0,
-                "spellSave": 0
             }
         ]
     }

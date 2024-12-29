@@ -51,6 +51,40 @@ function generateUUID() {
     });
 }
 
+const damageTypes = [
+    "N/A",
+    "Slashing",
+    "Piercing",
+    "Bludgeoning",
+    "Fire",
+    "Cold",
+    "Lightning",
+    "Thunder",
+    "Acid",
+    "Poison",
+    "Psychic",
+    "Radiant",
+    "Necrotic",
+    "Force"
+];
+
+const conditionTypes = [
+    "Blinded",
+    "Charmed",
+    "Deafened",
+    "Frightened",
+    "Grappled",
+    "Incapacitated",
+    "Invisible",
+    "Paralyzed",
+    "Petrified",
+    "Poisoned",
+    "Prone",
+    "Restrained",
+    "Stunned",
+    "Unconscious",
+    "Exhaustion"
+];
 
 const translations = {
     eng: {
@@ -676,6 +710,13 @@ async function loadEquipmentDataFiles(){
     console.log(AppData.equipmentLookupInfo)
 }
 
+async function loadMonsterDataFiles(){
+    AppData.monsterLookupInfo = await readMonsterJsonList();
+    console.log(AppData.monsterLookupInfo)
+    establishMonsterData()
+}
+
+
 
 async function onInit() {
     console.log("onInit")
@@ -699,8 +740,6 @@ async function onInit() {
     AppData.monsterLookupInfo = await readMonsterJsonList();
     AppData.equipmentLookupInfo = await readEquipmentJson();
     await initializeClients();
-
-    console.log(AppData.equipmentLookupInfo)
 
     const owner = await TS.clients.whoAmI();  
     const ownerInfoArray = await TS.clients.getMoreInfo([owner.id]);
@@ -768,48 +807,90 @@ function parseAndReplaceDice(action, text, spell) {
                 } else {
                     // Check for spell names within the part
                     let remainingText = part;
-                    if(spell){
+                    if (spell) {
                         AppData.spellLookupInfo?.spellsData.forEach(spell => {
                             const spellName = spell.name;
-
+                    
                             // Create a regex for the spell name with word boundaries
                             const spellRegex = new RegExp(`\\b${spellName}\\b`, 'i');
                             const spellIndex = remainingText.search(spellRegex);
-    
+                    
                             if (spellIndex !== -1) {
                                 // If a spell name is found, split the text and insert the hoverable element for the spell
                                 const beforeSpell = remainingText.slice(0, spellIndex);
                                 const afterSpell = remainingText.slice(spellIndex + spellName.length);
-    
+                    
                                 // Add the text before the spell name
                                 if (beforeSpell) container.appendChild(document.createTextNode(beforeSpell));
-    
+                    
                                 // Create and append the spell element
                                 const spellElement = document.createElement('span');
                                 spellElement.classList.add('spell-hover');
                                 spellElement.style.textDecoration = 'underline';
                                 spellElement.textContent = spellName;
-    
-                                // Store the description in a data attribute for the custom tooltip
-                                spellElement.setAttribute('data-desc', spell.desc);
-    
-                                // Timer to delay showing the tooltip
-                                let hoverTimer;
-    
-                                // Add event listeners for hover
-                                spellElement.addEventListener('mouseenter', () => {
-                                    hoverTimer = setTimeout(() => {
-                                        spellElement.classList.add('show-tooltip');
-                                    }, 250); // Adjust the delay time (in milliseconds) as needed
+                    
+                                // Show the spell card as a tooltip on hover
+                                spellElement.addEventListener('mouseenter', (event) => {
+                                    // Create the tooltip (spell card)
+                                    const tooltip = document.createElement('div');
+                                    tooltip.classList.add('spell-tooltip');
+                                    tooltip.setAttribute('data-desc', spell.desc);
+                    
+                                    // Populate the tooltip with spell details
+                                    tooltip.innerHTML = `
+                                        <strong>${spell.name}</strong><br>
+                                        <strong>Level:</strong> ${spell.level}<br>
+                                        <strong>School:</strong> ${spell.school}<br>
+                                        <strong>Casting Time:</strong> ${spell.casting_time}<br>
+                                        <strong>Range:</strong> ${spell.range}<br>
+                                        <strong>Components:</strong> ${spell.components}<br>
+                                        <strong>Duration:</strong> ${spell.duration}<br>
+                                        <strong>Description:</strong> ${spell.desc}
+                                    `;
+                    
+                                    // Append the tooltip to the body (or container)
+                                    document.body.appendChild(tooltip);
+                    
+                                    // Position the tooltip under the hovered spell
+                                    // Get the bounding rect of the spell element
+                                    const rect = spellElement.getBoundingClientRect();
+
+                                    // Calculate space available at the bottom of the screen
+                                    const spaceBelow = window.innerHeight - rect.bottom - window.scrollY;
+
+                                    // Decide whether to place the tooltip above or below
+                                    let tooltipPositionTop;
+                                    if (spaceBelow >= tooltip.offsetHeight + 5) {
+                                        // Enough space below, place tooltip below the spell
+                                        tooltipPositionTop = rect.bottom + window.scrollY + 5; // Slightly below
+                                    } else {
+                                        // Not enough space below, place tooltip above the spell
+                                        tooltipPositionTop = rect.top + window.scrollY - tooltip.offsetHeight - 5; // Slightly above
+                                    }
+
+                                    // Set the position of the tooltip
+                                    tooltip.style.position = 'absolute';
+                                    tooltip.style.top = `${tooltipPositionTop}px`; // Set dynamic top position
+                    
+                                    // Show the tooltip (fade-in effect via opacity)
+                                    tooltip.style.opacity = 0;
+                                    setTimeout(() => tooltip.style.opacity = 1, 0);
+                    
+                                    // Store the tooltip reference for later removal
+                                    spellElement.tooltip = tooltip;
                                 });
-    
+                    
+                                // Remove the tooltip when mouse leaves
                                 spellElement.addEventListener('mouseleave', () => {
-                                    clearTimeout(hoverTimer); // Clear the timer when leaving hover
-                                    spellElement.classList.remove('show-tooltip');
+                                    const tooltip = spellElement.tooltip;
+                                    if (tooltip) {
+                                        tooltip.style.opacity = 0;
+                                        setTimeout(() => tooltip.remove(), 200); // Remove tooltip after fade-out
+                                    }
                                 });
-    
+                    
                                 container.appendChild(spellElement);
-    
+                    
                                 // Update the remaining text to process
                                 remainingText = afterSpell;
                             }
@@ -1517,7 +1598,7 @@ async function readMonsterJsonList() {
             throw new Error('Network response was not ok');
         }
         const monsterData = await response.json();
-        const allCreatureData = (await loadDataFromCampaignStorage("monsters"));
+        const allCreatureData = (await loadDataFromGlobalStorage("Custom Monsters"));
 
         // Combine the data from global storage and the JSON file
         const combinedData = {
