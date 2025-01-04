@@ -291,20 +291,6 @@ async function playerSetUP(){
 
 
 
-    const dropdown = document.querySelector('.magic-bonus-dropdown');
-    // Add the change event listener
-    dropdown.addEventListener('change', (event) => {
-        // Log the selected value to the console
-        updateAllSpellDCs()
-        updateAllSpellDamageDice()
-        updateAllToHitDice()
-        const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
-        updateSpelltoHitDice(spellCastingAbility)
-        updateSpellDCHeader()
-    });
-
-
-
     //Spell Level Dropdown Listener
     document.querySelector('.spell-level-dropdown').addEventListener('change', function() {
         const selectedLevel = parseInt(this.value, 10); // Get the selected level as an integer
@@ -442,7 +428,7 @@ async function playerSetUP(){
                 updateContent()
             }
         });
-    });
+    });    
 
     isMe = await TS.players.whoAmI()
 
@@ -862,13 +848,17 @@ function handleAbilityScoreChange(event) {
 
 function addBonus(category, key, value) {
 
-    console.log("adding bonus")
+    console.log(value.value)
 
-    if (value === typeof(String)){
-        console.log(value)
-    }
-    else{
-        console.log("number:", value);
+    if (typeof value.value === "string") {
+        console.log("This is a string:", value.value);
+        const abilityScoreLabel = findAbilityScoreLabel(value.value);
+        const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
+        value.value = abilityScoreValue;
+
+        console.log("Updated value with modifier:", value.value);
+    } else {
+        console.log("This is not a string, it's a number or something else:", value.value);
     }
 
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
@@ -881,6 +871,17 @@ function addBonus(category, key, value) {
 }
 
 function removeBonus(category, key, value) {
+
+    if (typeof value.value === "string") {
+        console.log("This is a string:", value.value);
+        const abilityScoreLabel = findAbilityScoreLabel(value.value);
+        const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
+        value.value = abilityScoreValue;
+
+        console.log("Updated value with modifier:", value.value);
+    } else {
+        console.log("This is not a string, it's a number or something else:", value.value);
+    }
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
         const bonuses = characterStatBonuses[category][key].bonuses;
 
@@ -2064,9 +2065,13 @@ function updateCharacterUI(characterData, characterName) {
     loadGroupTraitData(characterData.groupTraitData);
     loadNotesGroupData(characterData.groupNotesData);
     
-
+    loadAndSetLanguage()
     updateAdjustmentValues()
     updateHitDiceLabel()
+}
+
+async function loadAndSetLanguage(){
+    setLanguage(savedLanguage);
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -2787,7 +2792,7 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     const magicBonusDiv = document.createElement('div');
     const magicBonusInput = document.createElement('input');
     magicBonusInput.placeholder = "To Hit Bonus";
-    magicBonusDiv.textContent = "ToHitBonus : ";
+    magicBonusDiv.textContent = "To Hit Bonus : ";
     magicBonusInput.classList.add('magic-bonus-weapon');
     magicBonusInput.value = rowData["eighthColumn"];
     magicBonusDiv.appendChild(magicBonusInput);
@@ -2796,7 +2801,7 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     const damageBonusDiv = document.createElement('div');
     const damageBonusInput = document.createElement('input');
     damageBonusInput.placeholder = "Damage Bonus";
-    damageBonusDiv.textContent = "Damage Mod: ";
+    damageBonusDiv.textContent = "Damage Mod : ";
     damageBonusInput.classList.add('damage-bonus-weapon');
     damageBonusInput.value = rowData["damageBonus"] ?? "";
     damageBonusDiv.appendChild(damageBonusInput);
@@ -3045,7 +3050,7 @@ function createDeleteButton(rowIndex) {
     const deleteButtonDiv = document.createElement('div');
     const deleteButton = document.createElement('button');
     deleteButton.id = `deleteRowButton${rowIndex}`;
-    deleteButton.className = 'removeButton';
+    deleteButton.className = 'removeButton nonRollButton';
     deleteButton.textContent = 'Delete Current Row';
     deleteButtonDiv.appendChild(deleteButton);
 
@@ -3711,12 +3716,12 @@ function getCantripDamageDice(baseDice, characterLevel, spellDetails) {
 
 
 function updateSpellsDC(ability, saveType, row){
-    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellDCSelections = row.querySelector('.spell-save');
+    console.log(row);
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8;
     if(saveType){
         spellDCSelections.textContent = saveType + " " + spellSaveDc;
     }
@@ -3823,7 +3828,6 @@ function updateAllSpellDamageDice() {
 
 
 function updateAllSpellDCs() {
-    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellDataObject = AppData.spellLookupInfo;
     const spellDataArray = spellDataObject.spellsData;
     const spellModifier = document.querySelector('.spellcasting-dropdown').value;
@@ -3859,7 +3863,7 @@ function updateAllSpellDCs() {
                     characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
                 }
 
-                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
+                const spellSaveDC = spellAbilityScoreModifier + proficiencyBonus + 8 + spellSaveDCBonus + characterSpellBonus;
 
                 
 
@@ -3876,7 +3880,6 @@ function updateAllSpellDCs() {
 }
 
 function updateSpellDCHeader(){
-    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
     const spellSection = document.getElementById('SpellList');
     const spellDCSelection = spellSection.querySelector('.spell-dc');
@@ -3895,7 +3898,7 @@ function updateSpellDCHeader(){
         characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
     }
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus + spellSaveDCBonus + characterSpellBonus;
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + spellSaveDCBonus + characterSpellBonus;
 
     spellDCSelection.textContent = spellSaveDc;
 
@@ -3903,7 +3906,7 @@ function updateSpellDCHeader(){
     const spellAttackButton = spellSection.querySelector('.spell-attack-button');
     
     // Update the label value and button text
-    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus;
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus;
     spellAttackLabel.setAttribute('value', spellAttackBonus);
     spellAttackButton.textContent = `+${spellAttackBonus}`;
 
@@ -3913,14 +3916,13 @@ function updateSpellDCHeader(){
 
 
 function updateSpellSaveDC(ability){
-    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellSection = document.getElementById('SpellList');
     const spellDCSelections = spellSection.querySelectorAll('.spell-save-dc');
     
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + magicBonus;
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8;
 
     spellDCSelections.forEach((span) =>{
         span.textContent = spellSaveDc;
@@ -3930,7 +3932,6 @@ function updateSpellSaveDC(ability){
 }
 
 function updateSpelltoHitDice(ability) {
-    const magicBonus = parseInt(document.querySelector('.magic-bonus-dropdown').value, 10);
     const spellSection = document.getElementById('SpellList');
     const spellAttackButtons = spellSection.querySelectorAll(".spell-attack-button")
 
@@ -3947,7 +3948,7 @@ function updateSpelltoHitDice(ability) {
         characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
     }
     
-    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + magicBonus + characterSpellAttackBonus + characterSpellBonus;
+    const spellAttackBonus = spellAbilityScoreModifer + proficiencyBonus + characterSpellAttackBonus + characterSpellBonus;
 
     // Loop through each spell attack button
     spellAttackButtons.forEach((button, index) => {
@@ -4055,9 +4056,6 @@ function processSpellData() {
     const spellLevelSelected = document.querySelector('.spell-level-dropdown').value
     spellData['spelllevelselected'] = spellLevelSelected;
 
-    const magicBonus = document.querySelector('.magic-bonus-dropdown').value
-    spellData['spellmagicbonus'] = magicBonus;
-
     // Loop through each spell level container
     const spellContainers = document.querySelectorAll('.spell-container');
     spellContainers.forEach(container => {
@@ -4118,13 +4116,7 @@ function loadSpellData(spellData) {
     const spellcastingDropdown = document.querySelector('.spellcasting-dropdown');
     if (spellcastingDropdown && spellData.spellcastingModifier) {
         spellcastingDropdown.value = spellData.spellcastingModifier;
-    }
-
-    const magicBonus = document.querySelector('.magic-bonus-dropdown');
-    if(magicBonus && spellData.spellmagicbonus){
-        magicBonus.value = spellData.spellmagicbonus;
-    }
-    
+    }    
 
     const spellLevelDropdown = document.querySelector('.spell-level-dropdown');
     if (spellLevelDropdown && spellData.spelllevelselected) {
@@ -6530,6 +6522,33 @@ closeSpellFormButton.addEventListener('click', () => {
 document.getElementById('damageDiceForm').addEventListener('blur', validateDiceInput);
 document.getElementById('damageDiceUpcastForm').addEventListener('blur', validateDiceInput);
 
+document.getElementById('toHitOrDC').addEventListener('change', function () {
+    const toHitOrDCValue = this.value; // Get the value of the first dropdown
+    const saveDCTypeSelect = document.getElementById('saveDCType');
+
+    // Clear all options first
+    saveDCTypeSelect.innerHTML = '';
+
+    if (toHitOrDCValue === 'DC') {
+        // Add all options for DC
+        saveDCTypeSelect.innerHTML = `
+            <option value="str">Strength (STR)</option>
+            <option value="dex">Dexterity (DEX)</option>
+            <option value="con">Constitution (CON)</option>
+            <option value="int">Intelligence (INT)</option>
+            <option value="wis">Wisdom (WIS)</option>
+            <option value="cha">Charisma (CHA)</option>
+        `;
+    } else {
+        // Add only the N/A option if not DC
+        saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`;
+    }
+
+    // Reset to N/A as default
+    saveDCTypeSelect.selectedIndex = 0;
+});
+
+
 // Save the spell
 saveSpellButton.addEventListener('click', async () => {
     const spellForm = document.getElementById('spellForm');
@@ -6751,7 +6770,7 @@ let magicBonusSection = `
                         <span id="labelImprovised">Improvised</span>
                     </label>
                     <label>
-                        <input type="checkbox" id="attunement" name="property" value="Requires Attunement">
+                        <input type="checkbox" id="itemFormAttunement" name="property" value="attunement">
                         <span id="attunement">Attunement</span>
                     </label>
                     <label>
@@ -6844,7 +6863,7 @@ let magicBonusSection = `
               `;
             }
           });
-
+          setupMagicBonusSelection();
     } else if (category === "armor") {
         additionalFields.innerHTML = `
         <div class="form-row">
@@ -6870,8 +6889,8 @@ let magicBonusSection = `
         <div class="form-row">
             <label for="stealth-disadvantage">Stealth Disadvantage:</label>
             <input type="checkbox" id="stealth-disadvantage" />
-            <label for="attunement-required">Requires Attunement:</label>
-            <input type="checkbox" id="attunement-required" />
+            <label for="itemFormAttunement">Requires Attunement:</label>
+            <input type="checkbox" id="itemFormAttunement" />
             <label for="has-charges">Has Charges</label>
             <input type="checkbox" id="has-charges" />
         </div>
@@ -6903,6 +6922,7 @@ let magicBonusSection = `
                 chargesOptions.style.display = "none";
             }
         });
+        setupMagicBonusSelection();
     } else if (category === "adventuring-gear") {
         additionalFields.innerHTML = `
         <div class="form-row">
@@ -6913,8 +6933,8 @@ let magicBonusSection = `
     } else if (category === "wondrous-item") {
         additionalFields.innerHTML = `
         <div class="form-row">
-            <label for="attunement-required">Requires Attunement:</label>
-            <input type="checkbox" id="attunement-required" />
+            <label for="itemFormAttunement">Requires Attunement:</label>
+            <input type="checkbox" id="itemFormAttunement"/>
             <label for="has-charges">Has Charges</label>
             <input type="checkbox" id="has-charges" />
         </div>
@@ -6946,9 +6966,10 @@ let magicBonusSection = `
                 chargesOptions.style.display = "none";
             }
         });
+        setupMagicBonusSelection();
     }
     // Attach event listeners to the Magic Bonus section
-    setupMagicBonusSelection();
+    
 }
 
 // Function to gather form data
@@ -6961,12 +6982,13 @@ function gatherFormData() {
             name: document.getElementById("equipment-category").value,
         },
         description: document.getElementById("equipment-description").value.split("\n").filter(line => line.trim() !== ""),
-        properties: document.getElementById("attunement-required").checked
+        properties: document.getElementById("itemFormAttunement")?.checked
             ? [{
                   index: "attunement",
                   name: "Requires Attunement",
               }]
             : [],
+        
         cost: {
             quantity: parseFloat(document.getElementById("equipment-cost").value) || 0,
             unit: document.getElementById("equipment-cost-unit").value
@@ -7029,13 +7051,13 @@ function gatherFormData() {
 
         equipmentData.toHitBonus = document.getElementById("weapon-to-hit-bonus").value;
         equipmentData.damageBonus = document.getElementById("weapon-damage-bonus").value;
-        equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
         equipmentData.hasCharges = document.getElementById("has-charges").checked;
     
         equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
             chargeReset: document.getElementById("charge-reset").value,
             maxCharges: parseInt(document.getElementById("max-charges").value) || 0
         } : null;    
+        collectMagicBonuses()
     } else if (category === "armor") {
             // Get the selected armor category and base armor class from the form
             let armorClassData = {};
@@ -7077,42 +7099,51 @@ function gatherFormData() {
 
             equipmentData.strengthRequirement = parseInt(document.getElementById("str-minimum").value);
             equipmentData.stealthDisadvantage = document.getElementById("stealth-disadvantage").checked;
-            equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
             equipmentData.hasCharges = document.getElementById("has-charges").checked;
             equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
                 chargeReset: document.getElementById("charge-reset").value,
                 maxCharges: parseInt(document.getElementById("max-charges").value)
             } : null
+            collectMagicBonuses()
     } else if (category === "adventuring-gear") {
             equipmentData.gearCategory = document.getElementById("gear-category").value;
     } else if (category === "wondrous-item") {
-            equipmentData.requiresAttunement = document.getElementById("attunement-required").checked;
             equipmentData.hasCharges = document.getElementById("has-charges").checked;
             equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
                 chargeReset: document.getElementById("charge-reset").value,
                 maxCharges: parseInt(document.getElementById("max-charges").value)
             } : null
+            collectMagicBonuses()
     }
 
     // Collect magic bonus data
-    const magicBonusRows = document.querySelectorAll(".magic-bonus-row");
-    const bonuses = [];
+    function collectMagicBonuses(){
+        const magicBonusRows = document.querySelectorAll(".magic-bonus-row");
 
-    magicBonusRows.forEach(row => {
-        const category = row.querySelector(".magic-category-select").value;
-        const key = row.querySelector(".magic-bonus-select").value;
-        const value = parseInt(row.querySelector(".magic-bonus-value").value) || 0;
-        const description = row.querySelector(".magic-description-input")?.value || "";
+        const bonuses = [];
 
-        bonuses.push({
-            category,
-            key,
-            value,
-            description
+        magicBonusRows.forEach(row => {
+            const magicStatSelect = row.querySelector(".magic-stat-select");
+            const magicBonusValue = row.querySelector(".magic-bonus-value");
+    
+            // Check if magic-stat-select is visible
+            const isMagicStatSelectVisible = window.getComputedStyle(magicStatSelect).display !== "none";
+            const category = row.querySelector(".magic-category-select").value;
+            const key = row.querySelector(".magic-bonus-select").value;
+            const value = isMagicStatSelectVisible? magicStatSelect.value : parseInt(magicBonusValue.value) || 0;
+            const description = row.querySelector(".magic-description-input")?.value || "";
+
+            bonuses.push({
+                category,
+                key,
+                value,
+                description
+            });
         });
-    });
 
-    equipmentData.bonus = bonuses;
+        equipmentData.bonus = bonuses;
+    }
+    
 
     return equipmentData;
 }

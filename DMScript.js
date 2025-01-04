@@ -25,8 +25,12 @@ function establishMonsterData(){
     const monsterDataObject = AppData.monsterLookupInfo;
     monsterNames = monsterDataObject.monsterNames;
     monsterData = monsterDataObject.monsterData;
+    loadAndSetLanguage()
 }
 
+async function loadAndSetLanguage(){
+    setLanguage(savedLanguage);
+}
 
 const messageHandlers = {
     'request-stats': handleRequestedStats,
@@ -58,7 +62,7 @@ function handleMessage(message) {
 
 
 const playerCharacters = [
-    { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
+    // { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
 ];
 
 // Initialize the tracker (Removed initial call to renderMonsterCards())

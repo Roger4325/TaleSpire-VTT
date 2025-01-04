@@ -86,6 +86,10 @@ const conditionTypes = [
     "Exhaustion"
 ];
 
+let savedLanguage = 'eng';
+
+//This is the translation library that changes the textcontent of the id listed as a key below.
+//It looks through the active DOM elements and switchs textcontent to the language based on what the user has selcted. 
 const translations = {
     eng: {
         //Spell Section
@@ -280,7 +284,35 @@ const translations = {
             acc[`${level}th-levelNotesHeader`] = "Notes";
             acc[`${level}th-levelDeleteHeader`] = "Del";
             return acc;
-        }, {})
+        }, {}),
+
+
+        //Player Character Inventory Section 
+        'add-item-button':"Add New Item",
+        currencyLabelPlat: "Platinum (pp):",
+        currencyLabelGold: "Gold (gp):",
+        currencyLabelEP: "Electrum (ep):",
+        currencyLabelSilver: "Silver (sp):",
+        currencyLabelCopper: "Copper (cp):",
+        inventoryHeaderTitle: "Inventory",
+        inventoryGroupEquipment: "Equipment",
+        inventoryGroupBackpack: "Backpack",
+        inventoryGroupOtherPossessions: "Other Possessions",
+        inventoryGroupAttunement: "Attunement",
+        
+
+
+        //DM Section from here to the buttom.
+        DMPageLinkInit: "Initiative Tracker",
+        'add-monster-button': "Add Monster",
+        'add-player-button':"Add Player",
+        'save-encounter': "Save Encounter",
+        'load-encounter':"Load Encounter",
+        conditionDMAddButton: "Add Condition",
+        rollInitiative: "Auto Roll",
+        'previous-turn-btn': "Previous Turn",
+        'next-turn-btn': "Next Turn",
+        'request-player-stats': "Request Player Stats",
 
     },
     es: {
@@ -472,16 +504,43 @@ const translations = {
             acc[`${level}th-levelNotesHeader`] = "Comp";
             acc[`${level}th-levelDeleteHeader`] = "Elim";
             return acc;
-        }, {})
+        }, {}),
+
+        //Player Character Inventory Section 
+        'add-item-button':"Añadir Nuevo Objeto",
+        currencyLabelPlat: "Platino (ppt):",
+        currencyLabelGold: "Oro (po):",
+        currencyLabelEP: "Electrum (pe):",
+        currencyLabelSilver: "Plata (pp):",
+        currencyLabelCopper: "Cobre (pc):",
+        inventoryHeaderTitle: "Inventario",
+        inventoryGroupEquipment: "Equipamiento",
+        inventoryGroupBackpack: "Mochila",
+        inventoryGroupOtherPossessions: "Otras Posesiones ",
+        inventoryGroupAttunement: " Sintonización",
+
+
+        //DM Section from here to the buttom.
+        DMPageLinkInit: " Seguimiento de iniciativa",
+        'add-monster-button': "Añadir Monstruo",
+        'add-player-button':"Añadir Jugador",
+        'save-encounter': "Guardar Encuentro",
+        'load-encounter':"Cargar Encuentro",
+        conditionDMAddButton: "Añadir Condición",
+        rollInitiative: "Auto Roll",
+        'previous-turn-btn': "Turno anterior",
+        'next-turn-btn': "Siguiente Turno",
+        'request-player-stats': "Pedir Estadistica a Jugador",
     }
 };
 
 
 
-function setLanguage(language) {
+async function setLanguage(language) {
     for (const id in translations[language]) {
         const element = document.getElementById(id);
         if (element) {
+            console.log(element)
             const translationText = translations[language][id];
 
             // Check if the first child is a text node
@@ -493,6 +552,7 @@ function setLanguage(language) {
             }
         }
     }
+    await saveToGlobalStorage("language", "Preferred Language", language, false);
 }
 
 // Event listeners for language buttons
@@ -500,15 +560,18 @@ const languageEngButton = document.getElementById('languageEngButton');
 const languageEspButton = document.getElementById('languageEspButton');
 
 if (languageEngButton) {
-    languageEngButton.addEventListener('click', () => setLanguage('eng'));
+    languageEngButton.addEventListener('click', async () => {
+        await setLanguage('eng');
+        location.reload();
+    });
 }
 
 if (languageEspButton) {
-    languageEspButton.addEventListener('click', () => setLanguage('es'));
+    languageEspButton.addEventListener('click', async () => {
+        await setLanguage('es');
+        location.reload();
+    });
 }
-
-// Default language on load
-// setLanguage('eng');
 
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
@@ -733,8 +796,14 @@ async function onInit() {
         return;
     }
 
+    const languageData = await loadDataFromGlobalStorage("language");
 
-    
+    // Extract "Preferred Language" and validate it
+    savedLanguage = languageData?.["Preferred Language"];
+    if (savedLanguage !== "eng" && savedLanguage !== "es") {
+        savedLanguage = "eng"; // Default to "eng" if not valid
+    }
+
     //Initialize spell List
     await loadSpellDataFiles();
     AppData.monsterLookupInfo = await readMonsterJsonList();
@@ -1606,8 +1675,10 @@ async function readSpellJson() {
         console.log(allSpellData)
         const isGlobalDataAnObject = typeof allSpellData === 'object';
 
+        
+
         // Fetch the data from the JSON file
-        const response = await fetch('spells.json');
+        const response = await fetch(`spells-${savedLanguage}.json`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -1645,7 +1716,7 @@ async function readMonsterJsonList() {
     try {
 
         // Fetch the data from the JSON file
-        const response = await fetch('Monster_Manual.json');
+        const response = await fetch(`Monster_Manual-${savedLanguage}.json`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -1720,3 +1791,21 @@ async function readEquipmentJson() {
         return null;
     }
 }
+
+document.getElementById('settings-button').addEventListener('click', function () {
+    const dropdown = document.getElementById('settings-option-dropdown');
+    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+        dropdown.style.display = 'block';
+    } else {
+        dropdown.style.display = 'none';
+    }
+});
+
+document.getElementById('settings-button').addEventListener('blur', function () {
+    const dropdown = document.getElementById('settings-option-dropdown');
+    hideDropdownTimeout = setTimeout(function () {
+        if (dropdown.style.display === 'block') {
+            dropdown.style.display = 'none';
+        }
+    }, 300); // Delay in milliseconds (e.g., 300ms)
+});

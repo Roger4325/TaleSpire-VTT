@@ -42,6 +42,7 @@
             </div>
         </div>
         <h1>Talespire Character Sheet</h1>
+        
         <nav class="tabs">
             <ul>
                 <li><a href="#playerStats">Player Stats</a></li>
@@ -51,7 +52,24 @@
                 <li><a href="#features">Features & Traits</a></li>
                 <li><a href="#Docs">Notes</a></li>
                 <li><a href="#Init">Init List</a></li>
+                <!-- <li><a href="#Extras">Extra</a></li> -->
+                <li>
+                    <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
+                    <div id="settings-option-dropdown" style="display: none; position: absolute;">
+                        <ul>
+                            <li>
+                                <div>experimental</div>
+                                <div id="languageButtons">
+                                    <button id="languageEngButton" class="nonRollButton">English</button>
+                                    <button id="languageEspButton" class="nonRollButton">Espanol</button>
+                                </div>
+                            </li>
+                            <!-- Add more options as needed -->
+                        </ul>
+                    </div>
+                </li>
             </ul>
+            
         </nav>
         <hr>
         
@@ -212,7 +230,7 @@
                             <option id="conditionOptionRaging" value="Raging">Raging</option>
                         <!-- Add more condition options here -->
                         </select>
-                        <button class="nonRollButton" onclick="playerConditions()">Condition</button>
+                        <button id="conditionPlayerAddButton"class="nonRollButton" onclick="playerConditions()">Condition</button>
                     </div>
                     <div id="conditionTracker"></div>
                 </div>
@@ -821,17 +839,6 @@
                         </select>
                     </div>
                 </div>
-                <div class="magicBonusDropdown">
-                    <div>
-                        <label id="bonusLabel" for="magic-bonus-dropdown">Bonus</label>
-                        <select class="magic-bonus-dropdown">
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                        </select>
-                    </div>
-                </div>
             </div>
             
             <hr>
@@ -960,50 +967,50 @@
             <div id="currency-container">
                 <div class="currency-row">
                     <div class="currency-item">
-                        <label for="platinum">Platinum (pp):</label>
+                        <label for="platinum" id="currencyLabelPlat">Platinum (pp):</label>
                         <input type="text" id="pp-input" class="currency-input" value="0" min="0">
                     </div>
                     <div class="currency-item">
-                        <label for="gold">Gold (gp):</label>
+                        <label for="gold" id="currencyLabelGold">Gold (gp):</label>
                         <input type="text" id="gp-input" class="currency-input" value="0" min="0">
                     </div>
                     <div class="currency-item">
-                        <label for="electrum">Electrum (ep):</label>
+                        <label for="electrum" id="currencyLabelEP">Electrum (ep):</label>
                         <input type="text" id="ep-input" class="currency-input" value="0" min="0">
                     </div>
                     <div class="currency-item">
-                        <label for="silver">Silver (sp):</label>
+                        <label for="silver" id="currencyLabelSilver">Silver (sp):</label>
                         <input type="text" id="sp-input" class="currency-input" value="0" min="0">
                     </div>
                     <div class="currency-item">
-                        <label for="copper">Copper (cp):</label>
+                        <label for="copper" id="currencyLabelCopper">Copper (cp):</label>
                         <input type="text" id="cp-input" class="currency-input" value="0" min="0">
                     </div>
                 </div>
             </div>
             <div id="inventory-container">
                 <div id="inventory-header">
-                <h2>Inventory</h2>
+                <h2 id="inventoryHeaderTitle">Inventory</h2>
                 <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>   
                 <hr>
 
                 <div class="inventory-group" id="equipment">
-                    <h3>Equipment<i class="fa fa-chevron-down"></i></h3>
+                    <h3 id="inventoryGroupEquipment">Equipment<i class="fa fa-chevron-down"></i></h3>
                     <div id="equipment-list"></div>
                 </div>
             
                 <div class="inventory-group" id="backpack">
-                    <h3>Backpack<i class="fa fa-chevron-down"></i></h3>
+                    <h3 id="inventoryGroupBackpack">Backpack<i class="fa fa-chevron-down"></i></h3>
                     <div id="backpack-list"></div>
                 </div>
             
                 <div class="inventory-group" id="other-possessions">
-                    <h3>Other Possessions<i class="fa fa-chevron-down"></i></h3>
+                    <h3 id="inventoryGroupOtherPossessions">Other Possessions<i class="fa fa-chevron-down"></i></h3>
                     <div id="other-possessions-list"></div>
                 </div>
 
                 <div class="inventory-group" id="attunement">
-                    <h3>Attunement<i class="fa fa-chevron-down"></i></h3>
+                    <h3 id="inventoryGroupAttunement">Attunement<i class="fa fa-chevron-down"></i></h3>
                     <div id="attunement-list"></div>
                 </div>
             </div>
@@ -1332,12 +1339,6 @@
                 <label for="saveDCType">Spell Save DC:</label>
                 <select id="saveDCType" required>
                     <option value="">N/A</option>
-                    <option value="str">Strength (STR)</option>
-                    <option value="dex">Dexterity (DEX)</option>
-                    <option value="con">Constitution (CON)</option>
-                    <option value="int">Intelligence (INT)</option>
-                    <option value="wis">Wisdom (WIS)</option>
-                    <option value="cha">Charisma (CHA)</option>
                 </select>
             </div>
             

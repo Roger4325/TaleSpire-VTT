@@ -39,12 +39,27 @@
             <h1>Talespire DM Screen</h1>
             <nav class="tabs">
                 <ul>
-                    <li><a href="#Init">Initiative Tracker</a></li>
+                    <li><a href="#Init" id="DMPageLinkInit">Initiative Tracker</a></li>
                     <!-- <li><a href="#testing">Testing</a></li>
                     <li><a href="#SpellList">Spell List</a></li>
                     <li><a href="#inventory">Inventory</a></li>
                     <li><a href="#features">Features & Traits</a></li>
                     <li><a href="#Docs">Quick notes</a></li> -->
+                    <li>
+                        <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
+                        <div id="settings-option-dropdown" style="display: none; position: absolute;">
+                            <ul>
+                                <li>
+                                    <div>experimental</div>
+                                    <div id="languageButtons">
+                                        <button id="languageEngButton" class="nonRollButton">English</button>
+                                        <button id="languageEspButton" class="nonRollButton">Espanol</button>
+                                    </div>
+                                </li>
+                                <!-- Add more options as needed -->
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
     
@@ -140,33 +155,33 @@
                 <div id="conditionHeader">
                     <label for="condition-select"></label>
                     <select id="condition-select">
-                        <option value="Aid">Aid</option>
-                        <option value="Bane">Bane</option>
-                        <option value="Blinded">Blinded</option>
-                        <option value="Bless">Bless</option>
-                        <option value="Concentration">Concentration</option>
-                        <option value="Charmed">Charmed</option>
-                        <option value="Deafened">Deafened</option> 
-                        <option value="Exhaustion">Exhaustion</option>
-                        <option value="Frightened">Frightened</option>
-                        <option value="Grappled">Grappled</option>
-                        <option value="Guidance">Guidance</option>
-                        <option value="Heroism">Heroism</option>
-                        <option value="Incapacitated">Incapacitated</option>
-                        <option value="Invisible">Invisible</option>
-                        <option value="Paralyzed">Paralyzed</option>
-                        <option value="Petrified">Petrified</option>
-                        <option value="Poisoned">Poisoned</option> 
-                        <option value="Prone">Prone</option>
-                        <option value="Restrained">Restrained</option>
-                        <option value="Sanctuary">Sanctuary</option>
-                        <option value="Stunned">Stunned</option>
-                        <option value="Unconscious">Unconscious</option>
-                        <option value="Slow">Slow</option>
-                        <option value="Recharging">Recharging</option>
+                        <option id="conditionOptionAid" value="Aid">Aid</option>
+                        <option id="conditionOptionBane" value="Bane">Bane</option>
+                        <option id="conditionOptionBlinded" value="Blinded">Blinded</option>
+                        <option id="conditionOptionBless" value="Bless">Bless</option>
+                        <option id="conditionOptionConcentration" value="Concentration">Concentration</option>
+                        <option id="conditionOptionCharmed" value="Charmed">Charmed</option>
+                        <option id="conditionOptionDeafened" value="Deafened">Deafened</option>
+                        <option id="conditionOptionExhaustion" value="Exhaustion">Exhaustion</option>
+                        <option id="conditionOptionFrightened" value="Frightened">Frightened</option>
+                        <option id="conditionOptionGrappled" value="Grappled">Grappled</option>
+                        <option id="conditionOptionGuidance" value="Guidance">Guidance</option>
+                        <option id="conditionOptionHeroism" value="Heroism">Heroism</option>
+                        <option id="conditionOptionIncapacitated" value="Incapacitated">Incapacitated</option>
+                        <option id="conditionOptionInvisible" value="Invisible">Invisible</option>
+                        <option id="conditionOptionParalyzed" value="Paralyzed">Paralyzed</option>
+                        <option id="conditionOptionPetrified" value="Petrified">Petrified</option>
+                        <option id="conditionOptionPoisoned" value="Poisoned">Poisoned</option>
+                        <option id="conditionOptionProne" value="Prone">Prone</option>
+                        <option id="conditionOptionRestrained" value="Restrained">Restrained</option>
+                        <option id="conditionOptionSanctuary" value="Sanctuary">Sanctuary</option>
+                        <option id="conditionOptionStunned" value="Stunned">Stunned</option>
+                        <option id="conditionOptionUnconscious" value="Unconscious">Unconscious</option>
+                        <option id="conditionOptionSlow" value="Slow">Slow</option>
+                        <option id="conditionOptionRecharging" value="Recharging">Recharging</option>
                     <!-- Add more condition options here -->
                     </select>
-                    <button class="nonRollButton" onclick="monsterConditions()">Add Condition</button>
+                    <button id="conditionDMAddButton" class="nonRollButton" onclick="monsterConditions()">Add Condition</button>
                 </div>
                 
             </div>

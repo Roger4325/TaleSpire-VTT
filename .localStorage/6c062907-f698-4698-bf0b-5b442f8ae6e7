@@ -17,7 +17,7 @@
             "playerLanguageProficiency": [],
             "playerToolsProficiency": [],
             "initiativeButton": "+2",
-            "AC": "16",
+            "AC": "12",
             "speed": "30ft.",
             "characterLevel": "10",
             "playerXP": "64000",
@@ -31,24 +31,24 @@
             "intelligenceScore": "20",
             "wisdomScore": "14",
             "charismaScore": "18",
-            "acrobaticsMod": "DEX",
-            "animalHandlingMod": "WIS",
+            "acrobaticsMod": "DES",
+            "animalHandlingMod": "SAB",
             "arcanaMod": "INT",
-            "athleticsMod": "STR",
-            "deceptionMod": "CHA",
+            "athleticsMod": "FUE",
+            "deceptionMod": "CAR",
             "historyMod": "INT",
-            "insightMod": "WIS",
-            "intimidationMod": "CHA",
+            "insightMod": "SAB",
+            "intimidationMod": "CAR",
             "investigationMod": "INT",
-            "medicineMod": "WIS",
+            "medicineMod": "SAB",
             "natureMod": "INT",
-            "perceptionMod": "WIS",
-            "performanceMod": "CHA",
-            "persuasionMod": "CHA",
+            "perceptionMod": "SAB",
+            "performanceMod": "CAR",
+            "persuasionMod": "CAR",
             "religionMod": "INT",
-            "sleightofHandMod": "DEX",
-            "stealthMod": "DEX",
-            "survivalMod": "WIS",
+            "sleightofHandMod": "DES",
+            "stealthMod": "DES",
+            "survivalMod": "SAB",
             "": 1,
             "pb-1": 2,
             "pb-2": 2,
@@ -87,78 +87,6 @@
                 {
                     "1": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "2d6/1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "2d6/1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "3": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Tester Weapon",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+13",
-                        "fifthColumn": "2d6+1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "5",
-                        "damageBonus": "5",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "Fire",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "4": {
-                        "proficiencyButton": "1",
                         "secondColumn": "Longsword",
                         "itemId": "item-1732494408397-1388bd98",
                         "thirdColumn": "5ft",
@@ -182,20 +110,20 @@
                     }
                 },
                 {
-                    "5": {
+                    "2": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Greatsword",
-                        "itemId": "item-1735159645327-35a9e17e",
+                        "secondColumn": "Dragon Slayer Longsword",
+                        "itemId": "item-1736002807378-a5791a53",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "2d6",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d8/3d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
                         "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A large, two-handed sword known for its broad blade and high damage output, ideal for sweeping attacks.",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Versatile, Requires Attunement",
+                        "elventhColumn": "You gain a +1 bonus to attack and damage rolls made with this magic weapon. When you hit a dragon with this weapon, the dragon takes an extra 3d6 damage. For the purpose of this weapon,'dragon' refers to any creature with the dragon type, including dragon turtles and wyverns.",
                         "twelvethColumn": "Slashing",
                         "ninthColumn": {
                             "attacks": true,
@@ -207,24 +135,24 @@
                     }
                 },
                 {
-                    "6": {
+                    "3": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Dagger",
-                        "itemId": "item-1735181154893-121a3cbe",
-                        "thirdColumn": "5ft (20/60)",
-                        "fourthColumn": "+8",
-                        "fifthColumn": "1d4",
+                        "secondColumn": "Flame Tongue Longsword",
+                        "itemId": "item-1736003861869-b50cc01d",
+                        "thirdColumn": "5ft",
+                        "fourthColumn": "+9",
+                        "fifthColumn": "1d8/2d6",
                         "sixthColumn": "ActionSettings",
                         "seventhColumn": "STR",
                         "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Finesse, Light, Thrown, Monk",
-                        "elventhColumn": "A dagger is a small, versatile melee weapon with a pointed blade, ideal for stabbing or throwing.",
-                        "twelvethColumn": "Piercing",
+                        "eighthColumn": "1",
+                        "damageBonus": "1",
+                        "tenthColumn": "Versatile, Requires Attunement",
+                        "elventhColumn": "You can use a bonus action to speak this magic sword's command word, causing flames to erupt from the blade. These flames shed bright light in a 40-foot radius and dim light for an additional 40 feet. While the sword is ablaze, it deals an extra 2d6 fire damage to any target it hits. The flames last until you use a bonus action to speak the command word again or until you drop or sheathe the sword.",
+                        "twelvethColumn": "Slashing/Fire",
                         "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
+                            "attacks": true,
+                            "actions": true,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -232,24 +160,24 @@
                     }
                 },
                 {
-                    "7": {
+                    "4": {
                         "proficiencyButton": "1",
-                        "secondColumn": "Longbow +3",
-                        "itemId": "item-1735228025811-ad5a5afc",
+                        "secondColumn": "Nine Lives Stealer",
+                        "itemId": "item-1736007296278-777282b9",
                         "thirdColumn": "5ft",
-                        "fourthColumn": "+9",
+                        "fourthColumn": "+10",
                         "fifthColumn": "1d8",
                         "sixthColumn": "ActionSettings",
-                        "seventhColumn": "DEX",
-                        "weaponType": "Ranged",
-                        "eighthColumn": "3",
-                        "damageBonus": "3",
-                        "tenthColumn": "Heavy, Two-Handed, Ammunition",
-                        "elventhColumn": "saddfasd f",
-                        "twelvethColumn": "Piercing",
+                        "seventhColumn": "STR",
+                        "weaponType": "Melee",
+                        "eighthColumn": "2",
+                        "damageBonus": "2",
+                        "tenthColumn": "Versatile, Requires Attunement",
+                        "elventhColumn": "You gain a +2 bonus to attack rolls and damage rolls made with this magic weapon.<br><br>Life Stealing. The weapon has 1d8 + 1 charges. When you attack a creature that has fewer than 100 Hit Points with this weapon and roll a 20 on the d20 for the attack roll, the creature must succeed on a DC 15 Constitution saving throw or be slain instantly as the sword tears its life force from its body. Constructs and Undead succeed on the save automatically. The weapon loses 1 charge if the creature is slain. When the weapon has no charges remaining, it loses this property.",
+                        "twelvethColumn": "Slashing",
                         "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
+                            "attacks": true,
+                            "actions": true,
                             "bonus-actions": false,
                             "reactions": false,
                             "other": false
@@ -258,59 +186,21 @@
                 }
             ],
             "spellData": {
-                "spellcastingModifier": "INT",
-                "spelllevelselected": "6",
-                "spellmagicbonus": "0",
+                "spellcastingModifier": "STR",
+                "spelllevelselected": "3",
                 "Cantrip": {
-                    "spells": [
-                        {
-                            "name": "Druidcraft",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Eldritch Blast",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Mind Sliver*",
-                            "prepared": "false"
-                        },
-                        {
-                            "name": "Message",
-                            "prepared": "false"
-                        }
-                    ],
+                    "spells": [],
                     "slots": []
                 },
                 "1st-level": {
-                    "spells": [
-                        {
-                            "name": "Mage Armor",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Absorb Elements*",
-                            "prepared": "0"
-                        },
-                        {
-                            "name": "Color Spray",
-                            "prepared": "0"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         true,
-                        true,
-                        true,
-                        false
+                        true
                     ]
                 },
                 "2nd-level": {
-                    "spells": [
-                        {
-                            "name": "Rime's Binding Ice*",
-                            "prepared": "0"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         true,
                         true,
@@ -318,40 +208,23 @@
                     ]
                 },
                 "3rd-level": {
-                    "spells": [
-                        {
-                            "name": "Animate Dead",
-                            "prepared": "0"
-                        }
-                    ],
+                    "spells": [],
                     "slots": [
                         true,
-                        true,
-                        false
+                        true
                     ]
                 },
                 "4th-level": {
                     "spells": [],
-                    "slots": [
-                        true,
-                        true,
-                        false
-                    ]
+                    "slots": []
                 },
                 "5th-level": {
                     "spells": [],
-                    "slots": [
-                        true,
-                        false
-                    ]
+                    "slots": []
                 },
                 "6th-level": {
                     "spells": [],
-                    "slots": [
-                        false,
-                        false,
-                        false
-                    ]
+                    "slots": []
                 },
                 "7th-level": {
                     "spells": [],
@@ -369,112 +242,19 @@
             "inventoryData": {
                 "equipment": [
                     {
-                        "name": "Longsword",
-                        "uniqueId": "item-1732494408397-1388bd98",
-                        "quantity": 2,
-                        "weight": 6,
-                        "cost": "15 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Shield",
-                        "uniqueId": "item-1734883776443-aa889b38",
+                        "name": "Adamantine Breastplate",
+                        "uniqueId": "item-1736019212085-fcabd517",
                         "quantity": 1,
-                        "weight": 6,
-                        "cost": "10 gp",
+                        "weight": 20,
+                        "cost": "2400 gp",
                         "equipped": false
-                    },
-                    {
-                        "name": "Greatsword",
-                        "uniqueId": "item-1735159645327-35a9e17e",
-                        "quantity": 1,
-                        "weight": 6,
-                        "cost": "50 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Dagger",
-                        "uniqueId": "item-1735181154893-121a3cbe",
-                        "quantity": 1,
-                        "weight": 1,
-                        "cost": "2 gp",
-                        "equipped": true
-                    },
-                    {
-                        "name": "Robe of the Winterstep",
-                        "uniqueId": "item-1735234048286-dc37ff67",
-                        "quantity": 1,
-                        "weight": 0.2,
-                        "cost": "2000 gp",
-                        "equipped": false
-                    },
-                    {
-                        "name": "Oil of Etherealness",
-                        "uniqueId": "item-1735492077556-059489d6",
-                        "quantity": 1,
-                        "weight": 0.5,
-                        "cost": "500 gp",
-                        "useable": true
-                    },
-                    {
-                        "name": "Oil of Slipperiness",
-                        "uniqueId": "item-1735492327556-f3e0b65f",
-                        "quantity": 1,
-                        "weight": 0.5,
-                        "cost": "500 gp",
-                        "useable": true
-                    },
-                    {
-                        "name": "Potion of Heroism",
-                        "uniqueId": "item-1735493335772-4243bbcb",
-                        "quantity": 1,
-                        "weight": 0.5,
-                        "cost": "2000 gp",
-                        "useable": true
-                    },
-                    {
-                        "name": "Potion of Mind Reading",
-                        "uniqueId": "item-1735493527703-06acdbee",
-                        "quantity": 1,
-                        "weight": 0.5,
-                        "cost": "2000 gp",
-                        "useable": true
                     }
                 ],
                 "backpack": [],
                 "other-possessions": [],
                 "attunement": []
             },
-            "groupTraitData": [
-                {
-                    "group-title": "",
-                    "group-chevron": false,
-                    "traits": [
-                        {
-                            "traitName": "",
-                            "cheveron": false,
-                            "traitDescription": "",
-                            "checkboxStates": [],
-                            "adjustmentCategory": "combatStats",
-                            "adjustmentSubCategory": "AC",
-                            "adjustmentAbility": "Proficiency",
-                            "adjustmentValue": "4",
-                            "numberOfUses": "0"
-                        },
-                        {
-                            "traitName": "",
-                            "cheveron": false,
-                            "traitDescription": "",
-                            "checkboxStates": [],
-                            "adjustmentCategory": "None",
-                            "adjustmentSubCategory": "",
-                            "adjustmentAbility": "NONE",
-                            "adjustmentValue": "0",
-                            "numberOfUses": "0"
-                        }
-                    ]
-                }
-            ],
+            "groupTraitData": [],
             "groupNotesData": []
         },
         "Mira": {

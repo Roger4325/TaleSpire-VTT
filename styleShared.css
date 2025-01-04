@@ -194,6 +194,24 @@ footer {
     display: block; /* Show the menu when active */
 }
 
+#settings-option-dropdown {
+    position: relative;
+    background-color: black;
+    border: 1px solid var(--ts-button-background);
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    z-index: 8;
+    top: 4%;
+    left: 85%;
+}
+
+#settings-option-dropdown ul {
+    list-style: none; /* Remove bullet points */
+    margin: 0;
+    padding: 0;
+}
+
 
 
 .actionButton{
