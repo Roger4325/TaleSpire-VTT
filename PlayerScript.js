@@ -115,7 +115,7 @@ const characterStatBonuses = {
         // MeleeDamageRolls: { bonuses: [] },
         RangedAttackRolls: { bonuses: [] },
         RageDamageBonus: { bonuses: [] },
-        // RangedDamageRolls: { bonuses: [] },
+        RangedDamageRolls: { bonuses: [] },
         // SpellDamageRolls: { bonuses: [] },
         EldritchBlastDamage: { bonuses: [] },
         SpellSaveDC: { bonuses: [] },
@@ -210,8 +210,9 @@ async function playerSetUP(){
 
 
     // Add event listeners to the "Short Rest" and "Long Rest" buttons
-    // shortRestButton.addEventListener("click", shortRest);
+    shortRestButton.addEventListener("click", openShortRestModal);
     longRestButton.addEventListener("click", openLongRestModal);
+    hitDiceOpenModalButton.addEventListener("click", openHitDiceModal);
 
     // Add event listeners to the heal and damage buttons
     healButton.addEventListener("click", function() {
@@ -327,16 +328,6 @@ async function playerSetUP(){
     });   
     // Add event listener to toggle the inspiration button when clicked
     document.getElementById("inspirationBox").addEventListener("click", toggleInspiration);
-
-
-    // Event listener for the hit dice section
-    const hitDiceButton = document.getElementById("hitDiceButton");
-    hitDiceButton.addEventListener("focus", () => {
-        initialHitDiceValue = hitDiceButton.innerText.trim();
-    });
-
-    // Add an event listener to update the label when the button content is edited
-    hitDiceButton.addEventListener("blur", updateHitDiceLabel);
 
     // Select the anchor element
     const featuresLink = document.querySelector('a[href="#features"]');
@@ -1064,6 +1055,7 @@ function removeConditionPill(condition) {
 
 function shortRest() {
     // Implement the logic for a short rest here
+    gatherAllTraitsToReset("short rest",true)
 }
 
 // Function for long rest
@@ -1072,10 +1064,12 @@ function longRest() {
     const maxHPValue = parseInt(maxCharacterHP.textContent);
 
     // Call the healCreature function with the max HP as the healing amount
+    gatherAllTraitsToReset("long rest",true)
     healCreature(maxHPValue);
     resetSpellSlots()
     addHalfHitDiceOnRest()
     document.getElementById("tempHP").value = 0;
+    
 }
 
 function openLongRestModal() {
@@ -1107,11 +1101,29 @@ function openLongRestModal() {
         hitDiceToAdd = Math.max(Math.floor(maxHitDice / 2), 1);
     }
 
+    const traitsToReset = gatherAllTraitsToReset("long rest");
+    
+    let resetTraitDetails = '';
+
+    // Loop through each group of traits to reset
+    traitsToReset.forEach(group => {       
+        // Loop through each trait in the current group
+        group.traitsToReset.forEach(trait => {
+            // Add the trait name and the max uses to the reset details
+            resetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+        });
+        // Add a line break after each group for clarity
+        resetTraitDetails += '<br>';
+    });
+
     // Populate the modal content
     document.getElementById("longRestHPChange").textContent = `HP Restored: ${healthRestored}`;
     document.getElementById("longRestTempHPChange").textContent =`Removing Temp HP: ${tempHP} `
     document.getElementById("longRestSpellSlots").innerHTML = resetDetails || "No used spell slots to reset.";
     document.getElementById("longRestHitDice").textContent =`Adding up to: ${hitDiceToAdd} Hit Dice`
+    document.getElementById("longRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${resetTraitDetails}`;
+
+
 
     // Display the modal
     document.getElementById("longRestModal").classList.remove("hidden");
@@ -1130,6 +1142,187 @@ document.getElementById("confirmLongRestButton").addEventListener("click", () =>
 document.getElementById("cancelLongRestButton").addEventListener("click", closeLongRestModal);
 
 
+function openShortRestModal() {
+    // Calculate changes for the short rest
+
+    const traitsToReset = gatherAllTraitsToReset("short rest");
+    
+    let resetTraitDetails = '';
+
+    // Loop through each group of traits to reset
+    traitsToReset.forEach(group => {       
+        // Loop through each trait in the current group
+        group.traitsToReset.forEach(trait => {
+            // Add the trait name and the max uses to the reset details
+            resetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+        });
+        // Add a line break after each group for clarity
+        resetTraitDetails += '<br>';
+    });
+
+    // Populate the modal content
+    document.getElementById("shortRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${resetTraitDetails}`;
+
+
+
+    // Display the modal
+    document.getElementById("shortRestModal").classList.remove("hidden");
+}
+
+function closeshortRestModal() {
+    document.getElementById("shortRestModal").classList.add("hidden");
+}
+
+// Attach event listeners to modal buttons
+document.getElementById("confirmshortRestButton").addEventListener("click", () => {
+    shortRest();
+    closeshortRestModal();
+});
+
+document.getElementById("cancelshortRestButton").addEventListener("click", closeshortRestModal);
+
+
+
+
+//Features and Traits reseting checkboxes on long or short rest. 
+//This function is used to gather all reset boxes so that you can tell the user what will be reset prior to them confirming. 
+
+// Loop through all groups and gather traits to reset
+function gatherAllTraitsToReset(resetType, reset = false) {
+    const groups = document.querySelectorAll('.group-container');
+    const allResetData = [];
+
+    groups.forEach(group => {
+        if (reset === false){
+            const resetDataForGroup = gatherTraitsToReset(group, resetType);
+            if(resetDataForGroup.length > 0){
+                allResetData.push({
+                    groupName: group.querySelector('.group-title').value || 'Unnamed Group',
+                    traitsToReset: resetDataForGroup,
+                });
+            }
+            else{
+                console.log("nothing to reset in this group.")
+            }
+        }else if (reset === true){
+            resetTraits(group, resetType);
+        }else{
+
+        }
+    });
+
+    return allResetData;
+}
+
+// Function to gather traits based on the selected reset type
+function gatherTraitsToReset(groupContainer, resetType) {
+    const traits = groupContainer.querySelectorAll('.trait-item');
+    const resetData = [];
+
+    traits.forEach(trait => {
+        const resetDropdown = trait.querySelector('.reset-type-dropdown');
+        const traitName = trait.querySelector('.trait-name').value || 'Unnamed Trait';
+        const usesInput = trait.querySelector('.trait-uses-input');
+
+        // Only reset for the selected reset type
+        if (resetType === resetDropdown.value) {
+            // Gather data for long rest reset
+            resetData.push({
+                name: traitName,
+                maxUses: parseInt(usesInput.value, 10) || 0,
+            });
+        }
+    });
+
+    return resetData;
+}
+
+// Function to gather traits based on the selected reset type
+function resetTraits(groupContainer, resetType) {
+    const traits = groupContainer.querySelectorAll('.trait-item');
+    const resetData = [];
+
+    traits.forEach(trait => {
+        const resetDropdown = trait.querySelector('.reset-type-dropdown');
+
+        // Only reset for the selected reset type
+        if (resetType === resetDropdown.value) {
+            // Gather data for long rest reset
+            const checkboxes = trait.querySelectorAll('.trait-checkbox-main');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = false; 
+            });
+        }
+    });
+
+    return resetData;
+}
+
+
+
+
+
+
+function openHitDiceModal() {
+
+    updateHitDiceMax()
+
+    const hitDiceButton = document.getElementById('hitDiceButton');
+    const diceText = hitDiceButton.textContent; // This is in the format "1d8"
+    
+    // Extract the number of dice and the dice size from the label
+    const [diceCount, diceSize] = diceText.split('d');
+    
+    // Set the number of dice and the dice size input
+    const diceCountInput = document.getElementById('diceCountInput');
+    const diceSizeInput = document.getElementById('diceSizeInput');
+    
+    // Set the values of the inputs based on the hitDiceLabel
+    diceCountInput.value = parseInt(diceCount, 10); // Set the number of dice
+    diceSizeInput.value = diceSize; // Set the dice size
+
+
+    hitDiceButton.addEventListener("focus", () => {
+        initialHitDiceValue = hitDiceButton.innerText.trim();
+    });
+
+    // Add an event listener to update the label when the button content is edited
+    hitDiceButton.addEventListener("blur", updateHitDiceLabel);
+
+    // Function to update the button content
+    function updateHitDiceButton() {
+        // Get the current number of dice and dice size
+        const diceCount = parseInt(diceCountInput.value, 10);
+        const diceSize = diceSizeInput.value;
+
+        // Update the button text (formatted as number of dice + size)
+        hitDiceButton.textContent = `${diceCount}d${diceSize}`;
+        updateHitDiceLabel()
+    }
+
+    // Event listeners for the inputs
+    diceCountInput.addEventListener('input', updateHitDiceButton);
+    diceSizeInput.addEventListener('change', updateHitDiceButton);
+
+    updateHitDiceButton()
+
+
+    // Display the modal
+    document.getElementById("hitDiceModal").classList.remove("hidden");
+}
+
+function closeHitDiceModal() {
+    document.getElementById("hitDiceModal").classList.add("hidden");
+}
+
+// Attach event listeners to modal buttons
+document.getElementById("confirmHitDiceButton").addEventListener("click", () => {
+    const hitDiceButton = document.getElementById("hitDiceButton");
+    hitDiceButton.click();
+    closeHitDiceModal();
+});
+
+document.getElementById("cancelHitDiceButton").addEventListener("click", closeHitDiceModal);
 
 
 
@@ -1174,7 +1367,7 @@ function damageCreature() {
         if (conditionsSet) {
             if (conditionsSet.has('Concentration')) {
                 const dc = Math.max(10, Math.ceil(damageAmount / 2));
-                showErrorModal(`Roll a Con save. <br> DC: ${dc}`);
+                showErrorModal(`Roll a Con save. <br> DC: ${dc}`, 3000);
             }
         }
         if (tempHPValue > 0) {
@@ -2067,7 +2260,7 @@ function updateCharacterUI(characterData, characterName) {
     
     loadAndSetLanguage()
     updateAdjustmentValues()
-    updateHitDiceLabel()
+    
 }
 
 async function loadAndSetLanguage(){
@@ -2941,13 +3134,19 @@ function calculateActionDamageDice() {
             }
         }
 
+        let rangedDamageRollsBonus = 0;
+
+        if (selectedWeaponType === "Ranged"){
+            rangedDamageRollsBonus = characterStatBonuses.combatStats.RangedDamageRolls.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+        }
+
 
         if (damageLabel && damageButton && abilityDropdown) {
             // Get the selected ability from the dropdown
             const selectedAbility = abilityDropdown.value;
 
             // Find the corresponding ability modifier using the provided function
-            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + damageBonus + rageDamageBonus;
+            const abilityScoreLabel = parseInt(findAbilityScoreLabel(selectedAbility).getAttribute('value')) + damageBonus + rageDamageBonus + rangedDamageRollsBonus;
 
             damageLabel.setAttribute ('value', abilityScoreLabel)
 
@@ -4283,9 +4482,11 @@ function addItemToInventory(item, group) {
         chargesHTML = `
             <div class="item-charges-container" data-charge-reset="${item.chargesOptions.chargeReset || 'unknown'}">
                 <input type="number" id="item-charges-${item.uniqueId}" class="item-charges" 
-                value="${item.chargesOptions.maxCharges}" min="0" max="${item.chargesOptions.maxCharges}">
+                value="${item.currentCharges || item.chargesOptions.maxCharges}" min="0" max="${item.chargesOptions.maxCharges}">
             </div>`;
     }
+
+
 
     // Check for notes and format appropriately
     let notes = item.properties ? item.properties.map(p => p.name).join(', ') : '';
@@ -4324,8 +4525,17 @@ function addItemToInventory(item, group) {
     <span><button class="delete-item-button nonRollButton">X</button></span>
     `;
 
+   
+
     // Append the itemDiv to the list
     list.appendChild(itemDiv);
+
+    const chargesInput = itemDiv.querySelector('.item-charges');
+    if (chargesInput) {
+        chargesInput.addEventListener('input', event => {
+            updateContent(); // Call your update logic here
+        });
+    }
 
     // Access the item-notes div to adjust styling based on charges
     const itemNotes = itemDiv.querySelector('.item-notes');
@@ -4718,7 +4928,7 @@ function equipArmor(item) {
 
     // Check proficiency
     const normalizedProficiencies = playerArmorProficiency.map(normalize);
-    if (!normalizedProficiencies.includes(normalize(item.armor_category))) {
+    if (!normalizedProficiencies.includes(normalize(item.armor_category)) && item.armor_category !=="None") {
         showErrorModal(`Warning: Not proficient with ${item.armor_category} Armor`);
     }
 
@@ -5202,6 +5412,12 @@ function saveInventory() {
                 itemData.useable = true; // Mark the item as useable
             }
 
+             // Check if the item has charges
+             const chargesInput = itemDiv.querySelector('.item-charges');
+             if (chargesInput) {
+                 itemData.currentCharges = parseInt(chargesInput.value, 10)
+             }
+
             // Add the item data to the group
             inventoryData[groupId].push(itemData);
         });
@@ -5231,7 +5447,8 @@ function loadInventoryData(characterInventoryData) {
                         quantity: item.quantity, // Add the quantity from characterInventoryData
                         equipped: item.equipped, // Add the equipped status from characterInventoryData
                         uniqueId: item.uniqueId, // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
-                        attuned: item.attuned // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
+                        attuned: item.attuned, // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
+                        currentCharges: item.currentCharges
                     };
 
                     // Add each item to the corresponding inventory group
@@ -5549,9 +5766,37 @@ function addNewTrait(groupContainer, traitData = null) {
     // Initially generate checkboxes based on traitData
     updateCheckboxes();
 
+
+     // Add Reset Uses Dropdown
+
+    const resetLabel = document.createElement('span');
+    resetLabel.classList.add('reset-label');
+    resetLabel.textContent = "Reset on: "; 
+
+     const resetDropdown = document.createElement('select');
+     resetDropdown.classList.add('reset-type-dropdown');
+     resetDropdown.textContent = "Reset on: "
+     const resetOptions = ['None', 'Short Rest', 'Long Rest'];
+     resetOptions.forEach(option => {
+         const opt = document.createElement('option');
+         opt.value = option.toLowerCase();
+         opt.textContent = option;
+         resetDropdown.appendChild(opt);
+     });
+ 
+     // Set the dropdown value if traitData is provided
+     if (traitData && traitData.resetType) {
+         resetDropdown.value = traitData.resetType.toLowerCase();
+     }
+
     // Append uses controls to the submenu
     traitUses.appendChild(usesLabel);
     traitUses.appendChild(usesInput);
+    traitUses.appendChild(resetLabel);
+    traitUses.appendChild(resetDropdown);
+
+    // Add the input listener to call updateContent when the value changes this will be used to save the content. 
+    resetDropdown.addEventListener('change', updateContent);
 
 
     // Initialize and handle trait adjustment updates
@@ -5869,6 +6114,7 @@ function processGroupTraitData() {
                 const adjustmentAbility = traitSettings.querySelector('.trait-ability-select').value;
                 const adjustmentValue = traitSettings.querySelector('.adjustment-value').value;
                 const numberOfUses = traitSettings.querySelector('.trait-uses-input').value;
+                const resetType = traitSettings.querySelector('.reset-type-dropdown').value;
 
                 // Save the trait settings in the traitDataObject
                 traitDataObject['adjustmentCategory'] = adjustmentCategory;
@@ -5876,6 +6122,7 @@ function processGroupTraitData() {
                 traitDataObject['adjustmentAbility'] = adjustmentAbility;
                 traitDataObject['adjustmentValue'] = adjustmentValue;
                 traitDataObject['numberOfUses'] = numberOfUses;
+                traitDataObject['resetType'] = resetType;
             }
 
             // Add the trait data to the list of traits for this group

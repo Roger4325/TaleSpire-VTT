@@ -91,7 +91,8 @@
 
 #restButtons{
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
 }
 
 #restButtons > button{
@@ -384,14 +385,17 @@ select{
     align-items: center;
 }
 
-.hitDiceCompact{
-    font-size: 10px;
-    margin: 0;
-    padding: 0;
+#hitDiceButton {
+    display: block; 
+    clear: both; 
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #hitDiceLabel{
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .conditions-container{
@@ -656,6 +660,25 @@ select{
     color: white;
 }
 
+#hitDiceInputDiv {
+    display: flex;
+    align-items: stretch; /* Ensures all child elements stretch to the same height */
+    gap: 5px; /* Adds spacing between the inputs */
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+.dice-count-input,
+.dice-size-input {
+    border: solid 1px var(--ts-button-background);
+    border-radius: 5px;
+    background-color: rgb(2, 2, 2);
+    color: white;
+    text-align: center;
+    padding: 2px;
+    font-size: .8rem; /* Ensures consistent text size for both inputs */
+    flex: 1; /* Allows them to grow/shrink equally */
+}
 
 
 
@@ -2193,7 +2216,7 @@ vuplex-dropdown-option {
 
 
 /* Modal wrapper */
-.long-rest-modal {
+.long-rest-modal, .short-rest-modal, .hit-dice-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -2203,7 +2226,7 @@ vuplex-dropdown-option {
     justify-content: center;
     align-items: center;
     background-color: rgba(2, 2, 2, .7);
-    z-index: 1000;
+    z-index: 5;
 }
 
 .hidden {
@@ -2211,7 +2234,7 @@ vuplex-dropdown-option {
 }
 
 /* Modal content */
-.long-rest-modal-content {
+.long-rest-modal-content, .short-rest-modal-content, .hit-dice-modal-content {
     background-color: rgb(2, 2, 2);
     text-align: center;
     border: 1px solid var(--ts-button-background);
@@ -2219,7 +2242,7 @@ vuplex-dropdown-option {
     border-radius: 5px;
 }
 
-.long-rest-modal-actions {
+.long-rest-modal-actions, .short-rest-modal-actions, .hit-dice-modal-actions {
     margin-top: 20px;
     display: flex;
     justify-content: space-between;

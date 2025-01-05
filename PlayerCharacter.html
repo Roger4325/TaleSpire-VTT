@@ -20,12 +20,6 @@
             <div id="settings-dropdown">
                 <ul>
                     <li>
-                        <!-- <div id="languageButtons">
-                            <button id="languageEngButton" class="nonRollButton">English</button>
-                            <button id="languageEspButton" class="nonRollButton">Espanol</button>
-                        </div> -->
-                    </li>
-                    <li>
                         <button id="deleteCharacter" class="nonRollButton">Delete a Character</button>
                     </li>
                     <li>
@@ -189,14 +183,9 @@
                 </div>
                 <div class="random-container">
                     <div id="restButtons">
-                        <!-- <button id="shortRestButton" class="nonRollButton">Short Rest</button> -->
+                        <button id="shortRestButton" class="nonRollButton">Short Rest</button>
                         <button id="longRestButton" class="nonRollButton">Long Rest</button>
-                    </div>
-                    <div class="hitDiceContainer">
-                        <div class="hitDiceCompact"> Hit Die: 
-                            <label id="hitDiceLabel" class="actionButtonLabel" max="1" data-name="Hit Dice" data-dice-type="1d8" value="1">1</label>
-                            <button id="hitDiceButton" class="actionButton" title="Roll Hit Dice" contenteditable="true">1d8</button>
-                        </div>
+                        <button id="hitDiceOpenModalButton" class="nonRollButton">Hit Dice</button>
                     </div>
                 </div>
                 
@@ -1441,9 +1430,53 @@
         <p id="longRestTempHPChange" class="long-rest-modal-paragraphs"></p>
         <p id="longRestSpellSlots" class="long-rest-modal-paragraphs"></p>
         <p id="longRestHitDice" class="long-rest-modal-paragraphs"></p>
+        <p id="longRestFeatures&Traits" class="long-rest-modal-paragraphs"></p>
         <div class="long-rest-modal-actions">
             <button id="confirmLongRestButton" class="nonRollButton long-rest-confirm">Confirm</button>
             <button id="cancelLongRestButton" class="nonRollButton long-rest-cancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- short Rest Modal -->
+<div id="shortRestModal" class="short-rest-modal hidden">
+    <div class="short-rest-modal-content">
+        <h2>Short Rest Summary</h2>
+        <p id="shortRestFeatures&Traits" class="long-rest-modal-paragraphs"></p>
+        <div class="short-rest-modal-actions">
+            <button id="confirmshortRestButton" class="nonRollButton short-rest-confirm">Confirm</button>
+            <button id="cancelshortRestButton" class="nonRollButton short-rest-cancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hit Dice Modal -->
+<div id="hitDiceModal" class="hit-dice-modal hidden">
+    <div class="hit-dice-modal-content">
+        <h2>Spend Hit Dice</h2>
+        <div class="hitDiceContainer">
+                        
+            <div class="hitDiceCompact"> Current Hit Dice Available: 
+                <label id="hitDiceLabel" class="actionButtonLabel" max="1" data-name="Hit Dice" data-dice-type="1d8" value="1">1</label>
+                <button id="hitDiceButton" class="actionButton" title="Roll Hit Dice" contenteditable="true">1d8</button>
+                
+            </div>
+
+            <div id="hitDiceInputDiv">
+                <input type="number" id="diceCountInput" min="0" value="1" max="10" class="dice-count-input" />
+                <select id="diceSizeInput" class="dice-size-input">
+                    <option value="6">d6</option>
+                    <option value="8">d8</option>
+                    <option value="10">d10</option>
+                    <option value="12">d12</option>
+                </select>
+            </div>
+            
+
+        </div>
+        <div class="hit-dice-modal-actions">
+            <button id="confirmHitDiceButton" class="nonRollButton short-rest-confirm">Confirm</button>
+            <button id="cancelHitDiceButton" class="nonRollButton hit-dice-cancel">Exit</button>
         </div>
     </div>
 </div>

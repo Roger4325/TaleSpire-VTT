@@ -1,8 +1,8 @@
 {
     "characters": {
         "Tester Mc-Testy": {
-            "characterTempHp": "14",
-            "currentHitDice": "5",
+            "characterTempHp": "0",
+            "currentHitDice": "9",
             "playerWeaponProficiency": [
                 "Martial Weapons",
                 "Simple Weapons",
@@ -11,7 +11,6 @@
             "playerArmorProficiency": [
                 "Light",
                 "Medium",
-                "Heavy",
                 "Shield"
             ],
             "playerLanguageProficiency": [],
@@ -24,7 +23,6 @@
             "playerClass": "Class (SubClass)",
             "currentCharacterHP": "200",
             "maxCharacterHP": "200",
-            "hitDiceButton": "1d8",
             "strengthScore": "18",
             "dexterityScore": "14",
             "constitutionScore": "20",
@@ -50,6 +48,7 @@
             "stealthMod": "DEX",
             "survivalMod": "WIS",
             "": 1,
+            "hitDiceButton": "6d10",
             "pb-1": 2,
             "pb-2": 2,
             "pb-3": 0.5,
@@ -74,7 +73,9 @@
             "pb-22": 1,
             "pb-23": 0,
             "pb-24": 1,
-            "conditions": [],
+            "conditions": [
+                "Concentration"
+            ],
             "coins": {
                 "cp": 5500,
                 "sp": 4000,
@@ -183,6 +184,31 @@
                             "other": false
                         }
                     }
+                },
+                {
+                    "5": {
+                        "proficiencyButton": "1",
+                        "secondColumn": "Longbow",
+                        "itemId": "item-1736046448309-c864327e",
+                        "thirdColumn": "150ft",
+                        "fourthColumn": "+6",
+                        "fifthColumn": "1d8",
+                        "sixthColumn": "ActionSettings",
+                        "seventhColumn": "DEX",
+                        "weaponType": "Ranged",
+                        "eighthColumn": "",
+                        "damageBonus": "",
+                        "tenthColumn": "Ammunition, Heavy, Two-Handed",
+                        "elventhColumn": "A large, two-handed ranged weapon known for its long range and high damage.",
+                        "twelvethColumn": "Piercing",
+                        "ninthColumn": {
+                            "attacks": true,
+                            "actions": true,
+                            "bonus-actions": false,
+                            "reactions": false,
+                            "other": false
+                        }
+                    }
                 }
             ],
             "spellData": {
@@ -195,23 +221,23 @@
                 "1st-level": {
                     "spells": [],
                     "slots": [
-                        true,
-                        true
+                        false,
+                        false
                     ]
                 },
                 "2nd-level": {
                     "spells": [],
                     "slots": [
-                        true,
-                        true,
+                        false,
+                        false,
                         false
                     ]
                 },
                 "3rd-level": {
                     "spells": [],
                     "slots": [
-                        true,
-                        true
+                        false,
+                        false
                     ]
                 },
                 "4th-level": {
@@ -240,13 +266,159 @@
                 }
             },
             "inventoryData": {
-                "equipment": [],
+                "equipment": [
+                    {
+                        "name": "Longbow",
+                        "uniqueId": "item-1736046448309-c864327e",
+                        "quantity": 1,
+                        "weight": 2,
+                        "cost": "50 gp",
+                        "equipped": true
+                    },
+                    {
+                        "name": "Bracers of Archery",
+                        "uniqueId": "item-1736046460364-f83d6afe",
+                        "quantity": 1,
+                        "weight": 0.1,
+                        "cost": "1500 gp",
+                        "equipped": true,
+                        "attuned": true
+                    },
+                    {
+                        "name": "Restorative Ointment",
+                        "uniqueId": "item-1736093222060-b4a8b450",
+                        "quantity": 1,
+                        "weight": 0.1,
+                        "cost": "1200 gp",
+                        "equipped": true,
+                        "currentCharges": 3
+                    }
+                ],
                 "backpack": [],
                 "other-possessions": [],
                 "attunement": []
             },
-            "groupTraitData": [],
-            "groupNotesData": []
+            "groupTraitData": [
+                {
+                    "group-title": "group 1",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "tester",
+                            "cheveron": false,
+                            "traitDescription": "asdfasdfasdf as ",
+                            "checkboxStates": [
+                                false,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "3",
+                            "resetType": "long rest"
+                        },
+                        {
+                            "traitName": "Long Rest 1 ",
+                            "cheveron": false,
+                            "traitDescription": "adasdfasfdsa",
+                            "checkboxStates": [
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "2",
+                            "resetType": "long rest"
+                        },
+                        {
+                            "traitName": "Long Rest 2 ",
+                            "cheveron": false,
+                            "traitDescription": "5616516516565656161",
+                            "checkboxStates": [
+                                true,
+                                true,
+                                false
+                            ],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "3",
+                            "resetType": "none"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "tester",
+                            "cheveron": false,
+                            "traitDescription": "sadf asfd asdf as fa s",
+                            "checkboxStates": [
+                                true,
+                                true,
+                                true,
+                                false,
+                                false
+                            ],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "5",
+                            "resetType": "short rest"
+                        }
+                    ]
+                },
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "traits": [
+                        {
+                            "traitName": "asdfasdfa",
+                            "cheveron": false,
+                            "traitDescription": "asfasdfas",
+                            "checkboxStates": [],
+                            "adjustmentCategory": "None",
+                            "adjustmentSubCategory": "",
+                            "adjustmentAbility": "NONE",
+                            "adjustmentValue": "0",
+                            "numberOfUses": "0",
+                            "resetType": "none"
+                        }
+                    ]
+                }
+            ],
+            "groupNotesData": [
+                {
+                    "group-title": "",
+                    "group-chevron": false,
+                    "notes": [
+                        {
+                            "noteTitle": "",
+                            "noteContent": ""
+                        },
+                        {
+                            "noteTitle": "",
+                            "noteContent": ""
+                        },
+                        {
+                            "noteTitle": "",
+                            "noteContent": ""
+                        },
+                        {
+                            "noteTitle": "",
+                            "noteContent": ""
+                        }
+                    ]
+                }
+            ]
         },
         "Mira": {
             "characterTempHp": "13",
@@ -417,7 +589,6 @@
             "spellData": {
                 "spellcastingModifier": "WIS",
                 "spelllevelselected": "4",
-                "spellmagicbonus": "0",
                 "Cantrip": {
                     "spells": [
                         {
@@ -4035,184 +4206,6 @@
                     ]
                 }
             ],
-            "groupNotesData": []
-        },
-        "TESTER": {
-            "characterTempHp": "",
-            "currentHitDice": "1",
-            "playerWeaponProficiency": [],
-            "playerArmorProficiency": [],
-            "playerLanguageProficiency": [],
-            "playerToolsProficiency": [],
-            "initiativeButton": "+2",
-            "AC": "12",
-            "speed": "30ft.",
-            "characterLevel": "1",
-            "playerXP": "0",
-            "playerClass": "Class (SubClass)",
-            "currentCharacterHP": "0",
-            "maxCharacterHP": "50",
-            "hitDiceButton": "1d8",
-            "strengthScore": "18",
-            "dexterityScore": "15",
-            "constitutionScore": "16",
-            "intelligenceScore": "20",
-            "wisdomScore": "15",
-            "charismaScore": "10",
-            "acrobaticsMod": "DEX",
-            "animalHandlingMod": "WIS",
-            "arcanaMod": "INT",
-            "athleticsMod": "STR",
-            "deceptionMod": "CHA",
-            "historyMod": "INT",
-            "insightMod": "WIS",
-            "intimidationMod": "CHA",
-            "investigationMod": "INT",
-            "medicineMod": "WIS",
-            "natureMod": "INT",
-            "perceptionMod": "WIS",
-            "performanceMod": "CHA",
-            "persuasionMod": "CHA",
-            "religionMod": "INT",
-            "sleightofHandMod": "DEX",
-            "stealthMod": "DEX",
-            "survivalMod": "WIS",
-            "": 1,
-            "pb-1": 0.5,
-            "pb-2": 0.5,
-            "pb-3": 0,
-            "pb-4": 2,
-            "pb-5": 0.5,
-            "pb-6": 2,
-            "pb-7": 1,
-            "pb-8": 0,
-            "pb-9": 0.5,
-            "pb-10": 2,
-            "pb-11": 0,
-            "pb-12": 2,
-            "pb-13": 0,
-            "pb-14": 0,
-            "pb-15": 2,
-            "pb-16": 0,
-            "pb-17": 2,
-            "pb-18": 2,
-            "pb-19": 1,
-            "pb-20": 0,
-            "pb-21": 1,
-            "pb-22": 1,
-            "pb-23": 1,
-            "pb-24": 1,
-            "conditions": [],
-            "coins": {
-                "cp": 0,
-                "sp": 0,
-                "ep": 0,
-                "gp": 0,
-                "pp": 0
-            },
-            "alignment": "LG",
-            "actionTable": [
-                {
-                    "1": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "2d6/1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                },
-                {
-                    "2": {
-                        "proficiencyButton": "1",
-                        "secondColumn": "Maul of Fire",
-                        "thirdColumn": "5ft",
-                        "fourthColumn": "+6",
-                        "fifthColumn": "2d6/1d4",
-                        "sixthColumn": "ActionSettings",
-                        "seventhColumn": "STR",
-                        "weaponType": "Melee",
-                        "eighthColumn": "",
-                        "damageBonus": "1D10",
-                        "tenthColumn": "Heavy, Two-Handed",
-                        "elventhColumn": "A brightly Colored Maul",
-                        "twelvethColumn": "",
-                        "ninthColumn": {
-                            "attacks": false,
-                            "actions": false,
-                            "bonus-actions": false,
-                            "reactions": false,
-                            "other": false
-                        }
-                    }
-                }
-            ],
-            "spellData": {
-                "spellcastingModifier": "STR",
-                "spelllevelselected": "0",
-                "spellmagicbonus": "0",
-                "Cantrip": {
-                    "spells": [],
-                    "slots": []
-                },
-                "1st-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "2nd-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "3rd-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "4th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "5th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "6th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "7th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "8th-level": {
-                    "spells": [],
-                    "slots": []
-                },
-                "9th-level": {
-                    "spells": [],
-                    "slots": []
-                }
-            },
-            "inventoryData": {
-                "equipment": [],
-                "backpack": [],
-                "other-possessions": [],
-                "attunement": []
-            },
-            "groupTraitData": [],
             "groupNotesData": []
         }
     },
