@@ -13,7 +13,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -55,7 +55,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -111,7 +111,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 2,
-      "unit": "sp"
+      "unit": "pp"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -148,7 +148,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -199,7 +199,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -245,7 +245,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -296,7 +296,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -333,7 +333,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 2,
-      "unit": "sp"
+      "unit": "pp"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -383,7 +383,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -425,7 +425,7 @@
     "category_range": "Simple Melee",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -484,7 +484,7 @@
     "category_range": "Simple Ranged",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -532,7 +532,7 @@
     "category_range": "Simple Ranged",
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -579,7 +579,7 @@
     "category_range": "Simple Ranged",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -622,7 +622,7 @@
     "category_range": "Simple Ranged",
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -660,7 +660,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -705,7 +705,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -736,7 +736,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -783,7 +783,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d12",
@@ -825,7 +825,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "2d6",
@@ -867,7 +867,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -914,7 +914,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d12",
@@ -959,7 +959,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1004,7 +1004,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "2d6",
@@ -1046,7 +1046,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1077,7 +1077,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -1124,7 +1124,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1161,7 +1161,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -1203,7 +1203,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -1250,7 +1250,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -1304,7 +1304,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1335,7 +1335,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1380,7 +1380,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -1422,7 +1422,7 @@
     "category_range": "Martial Ranged",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1",
@@ -1465,7 +1465,7 @@
     "category_range": "Martial Ranged",
     "cost": {
       "quantity": 75,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d6",
@@ -1513,7 +1513,7 @@
     "category_range": "Martial Ranged",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -1566,7 +1566,7 @@
     "category_range": "Martial Ranged",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -1614,7 +1614,7 @@
     "category_range": "Martial Ranged",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "range": {
       "normal": 5,
@@ -1660,7 +1660,7 @@
     "weight": 8,
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/padded-armor"
   },
@@ -1682,7 +1682,7 @@
     "weight": 10,
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/leather-armor"
   },
@@ -1704,7 +1704,7 @@
     "weight": 13,
     "cost": {
       "quantity": 45,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/studded-leather-armor"
   },
@@ -1727,7 +1727,7 @@
     "weight": 12,
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/hide-armor"
   },
@@ -1750,7 +1750,7 @@
     "weight": 20,
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/chain-shirt"
   },
@@ -1773,7 +1773,7 @@
     "weight": 45,
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/scale-mail"
   },
@@ -1796,7 +1796,7 @@
     "weight": 20,
     "cost": {
       "quantity": 400,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/breastplate"
   },
@@ -1819,7 +1819,7 @@
     "weight": 40,
     "cost": {
       "quantity": 750,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/half-plate-armor"
   },
@@ -1841,7 +1841,7 @@
     "weight": 40,
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/ring-mail"
   },
@@ -1863,7 +1863,7 @@
     "weight": 55,
     "cost": {
       "quantity": 75,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/chain-mail"
   },
@@ -1885,7 +1885,7 @@
     "weight": 60,
     "cost": {
       "quantity": 200,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/splint-armor"
   },
@@ -1907,7 +1907,7 @@
     "weight": 65,
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/plate-armor"
   },
@@ -1929,7 +1929,7 @@
     "weight": 6,
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "url": "/api/equipment/shield"
   },
@@ -1948,7 +1948,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "url": "/api/equipment/abacus"
@@ -1968,7 +1968,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -1992,7 +1992,7 @@
     },
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "desc": [
       "Este líquido pegajoso y adhesivo se enciende cuando se expone al aire.",
@@ -2017,7 +2017,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Una pequeña caja para limosnas, que normalmente se encuentra en la mochila de un sacerdote."],
@@ -2039,7 +2039,7 @@
     "quantity": 20,
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "url": "/api/equipment/arrow"
@@ -2059,7 +2059,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Un bloque de incienso, que normalmente se encuentra en el paquete de un sacerdote."],
@@ -2081,7 +2081,7 @@
     "quantity": 50,
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "url": "/api/equipment/blowgun-needle"
@@ -2101,7 +2101,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Un incensario, que normalmente se encuentra en el equipaje de un sacerdote."],
@@ -2123,7 +2123,7 @@
     "quantity": 20,
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.08,
     "url": "/api/equipment/crossbow-bolt"
@@ -2144,7 +2144,7 @@
     "quantity": 20,
     "cost": {
       "quantity": 4,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 1.5,
     "url": "/api/equipment/sling-bullet"
@@ -2164,7 +2164,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -2188,7 +2188,7 @@
     },
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -2211,7 +2211,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -2234,7 +2234,7 @@
     },
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -2257,7 +2257,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -2267,26 +2267,23 @@
   },
   {
     "index": "staff",
-    "name": "Bastón",
+    "name": "Bastón Magico",
     "equipment_category": {
       "index": "adventuring-gear",
-      "name": "Equipo de aventuras",
-      "url": "/api/equipment-categories/adventuring-gear"
+      "name": "Equipo de aventuras"
     },
     "gear_category": {
       "index": "arcane-foci",
-      "name": "Foco arcanos",
-      "url": "/api/equipment-categories/arcane-foci"
+      "name": "Foco arcanos"
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "desc": [
       "Un foco arcano es un objeto especial (un orbe, un cristal, una vara, un bastón especialmente construido, un trozo de madera similar a una varita o algún objeto similar) diseñado para canalizar el poder de los hechizos arcanos. Un hechicero, brujo o mago puede usar un objeto de este tipo como foco para lanzar hechizos."
-    ],
-    "url": "/api/equipment/staff"
+    ]
   },
   {
     "index": "wand",
@@ -2303,7 +2300,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -2326,7 +2323,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "url": "/api/equipment/backpack"
@@ -2346,7 +2343,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -2371,7 +2368,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 70,
     "url": "/api/equipment/barrel"
@@ -2391,7 +2388,7 @@
     },
     "cost": {
       "quantity": 4,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 2,
     "url": "/api/equipment/basket"
@@ -2411,7 +2408,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 7,
     "url": "/api/equipment/bedroll"
@@ -2431,7 +2428,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "url": "/api/equipment/bell"
@@ -2451,7 +2448,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 3,
     "url": "/api/equipment/blanket"
@@ -2471,7 +2468,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -2494,7 +2491,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -2517,7 +2514,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "url": "/api/equipment/bottle-glass"
@@ -2537,7 +2534,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 2,
     "url": "/api/equipment/bucket"
@@ -2557,7 +2554,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 2,
     "desc": [
@@ -2583,7 +2580,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": [
@@ -2606,7 +2603,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": ["Este estuche de madera puede contener hasta veinte flechas de ballesta."],
@@ -2627,7 +2624,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -2650,7 +2647,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "desc": [
@@ -2673,7 +2670,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "url": "/api/equipment/chalk-1-piece"
@@ -2693,7 +2690,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 25,
     "url": "/api/equipment/chest"
@@ -2713,7 +2710,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 3,
     "url": "/api/equipment/clothes-common"
@@ -2733,7 +2730,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "url": "/api/equipment/clothes-costume"
@@ -2753,7 +2750,7 @@
     },
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 6,
     "url": "/api/equipment/clothes-fine"
@@ -2773,7 +2770,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "url": "/api/equipment/clothes-travelers"
@@ -2793,7 +2790,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -2816,7 +2813,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -2839,7 +2836,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -2862,7 +2859,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -2885,7 +2882,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "desc": [
@@ -2908,7 +2905,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -2931,7 +2928,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -2955,7 +2952,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "desc": [
@@ -2978,7 +2975,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 1,
     "url": "/api/equipment/flask-or-tankard"
@@ -2998,7 +2995,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "url": "/api/equipment/grappling-hook"
@@ -3018,7 +3015,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "url": "/api/equipment/hammer"
@@ -3038,7 +3035,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "url": "/api/equipment/hammer-sledge"
@@ -3058,7 +3055,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -3084,7 +3081,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "url": "/api/equipment/hourglass"
@@ -3104,7 +3101,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "desc": [
       "Cuando usas tu acción para colocarla, esta trampa forma un anillo de acero con dientes de sierra que se cierra de golpe cuando una criatura pisa una placa de presión en el centro. La trampa está fijada mediante una cadena pesada a un objeto inmóvil, como un árbol o una estaca clavada en el suelo.",
@@ -3129,7 +3126,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "url": "/api/equipment/ink-1-ounce-bottle"
@@ -3149,7 +3146,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "url": "/api/equipment/ink-pen"
@@ -3169,7 +3166,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 4,
     "url": "/api/equipment/jug-or-pitcher"
@@ -3189,7 +3186,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 12,
     "desc": [
@@ -3212,7 +3209,7 @@
     },
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -3235,7 +3232,7 @@
     },
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -3258,7 +3255,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -3281,7 +3278,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -3304,7 +3301,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 1,
     "desc": [
@@ -3327,7 +3324,7 @@
     },
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -3350,7 +3347,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 25,
     "url": "/api/equipment/ladder-10-foot"
@@ -3370,7 +3367,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 1,
     "desc": [
@@ -3393,7 +3390,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -3416,7 +3413,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -3439,7 +3436,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Una pequeña bolsa de arena, que normalmente se encuentra en la mochila de un estudiante."],
@@ -3460,7 +3457,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -3483,7 +3480,7 @@
     },
     "cost": {
       "quantity": 100,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -3507,7 +3504,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 6,
     "desc": [
@@ -3531,7 +3528,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "url": "/api/equipment/mirror-steel"
@@ -3551,7 +3548,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 1,
     "desc": [
@@ -3578,7 +3575,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "url": "/api/equipment/paper-one-sheet"
@@ -3598,7 +3595,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "url": "/api/equipment/parchment-one-sheet"
@@ -3618,7 +3615,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "url": "/api/equipment/perfume-vial"
@@ -3638,7 +3635,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "url": "/api/equipment/pick-miners"
@@ -3658,7 +3655,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0.25,
     "url": "/api/equipment/piton"
@@ -3678,7 +3675,7 @@
     },
     "cost": {
       "quantity": 100,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "desc": [
@@ -3701,7 +3698,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 7,
     "url": "/api/equipment/pole-10-foot"
@@ -3721,7 +3718,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "url": "/api/equipment/pot-iron"
@@ -3741,7 +3738,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 1,
     "desc": [
@@ -3764,7 +3761,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": ["Un carcaj puede contener hasta 20 flechas."],
@@ -3785,7 +3782,7 @@
     },
     "cost": {
       "quantity": 4,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 35,
     "desc": [
@@ -3808,7 +3805,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 2,
     "desc": [
@@ -3831,7 +3828,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -3855,7 +3852,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 4,
     "url": "/api/equipment/robes"
@@ -3875,7 +3872,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "desc": [
@@ -3898,7 +3895,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -3921,7 +3918,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0.5,
     "url": "/api/equipment/sack"
@@ -3941,7 +3938,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -3964,7 +3961,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "url": "/api/equipment/sealing-wax"
@@ -3984,7 +3981,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "url": "/api/equipment/shovel"
@@ -4004,7 +4001,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "url": "/api/equipment/signal-whistle"
@@ -4024,7 +4021,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "url": "/api/equipment/signet-ring"
@@ -4044,7 +4041,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Un cuchillo pequeño, que normalmente se encuentra en la mochila de un erudito."],
@@ -4065,7 +4062,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "url": "/api/equipment/soap"
@@ -4085,7 +4082,7 @@
     },
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -4108,7 +4105,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 5,
     "url": "/api/equipment/spike-iron"
@@ -4128,7 +4125,7 @@
     },
     "cost": {
       "quantity": 1000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -4151,7 +4148,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": [
@@ -4174,7 +4171,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 20,
     "desc": ["Un refugio de lona sencillo y portátil, una tienda de campaña con capacidad para dos personas."],
@@ -4195,7 +4192,7 @@
     },
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 1,
     "desc": [
@@ -4219,7 +4216,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 1,
     "desc": [
@@ -4242,7 +4239,7 @@
     },
     "cost": {
       "quantity": 0,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 0,
     "desc": ["Ropa religiosa, que normalmente se encuentra en la mochila de un sacerdote."],
@@ -4263,7 +4260,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0,
     "url": "/api/equipment/vial"
@@ -4283,7 +4280,7 @@
     },
     "cost": {
       "quantity": 2,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 5,
     "url": "/api/equipment/waterskin"
@@ -4303,7 +4300,7 @@
     },
     "cost": {
       "quantity": 1,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 1,
     "url": "/api/equipment/whetstone"
@@ -4323,7 +4320,7 @@
     },
     "cost": {
       "quantity": 16,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4456,7 +4453,7 @@
     },
     "cost": {
       "quantity": 39,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4565,7 +4562,7 @@
     },
     "cost": {
       "quantity": 12,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4658,7 +4655,7 @@
     },
     "cost": {
       "quantity": 40,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4735,7 +4732,7 @@
     },
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4820,7 +4817,7 @@
     },
     "cost": {
       "quantity": 19,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4921,7 +4918,7 @@
     },
     "cost": {
       "quantity": 40,
-      "unit": "gp"
+      "unit": "po"
     },
     "contents": [
       {
@@ -4994,7 +4991,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 8,
     "desc": [
@@ -5013,7 +5010,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 9,
     "desc": [
@@ -5032,7 +5029,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5051,7 +5048,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 8,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 6,
     "desc": [
@@ -5070,7 +5067,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 6,
     "desc": [
@@ -5089,7 +5086,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5108,7 +5105,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 8,
     "desc": [
@@ -5127,7 +5124,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5146,7 +5143,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5165,7 +5162,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5184,7 +5181,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 8,
     "desc": [
@@ -5203,7 +5200,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5222,7 +5219,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -5241,7 +5238,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 8,
     "desc": [
@@ -5260,7 +5257,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "desc": [
@@ -5279,7 +5276,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5298,7 +5295,7 @@
     "tool_category": "Artisan's Tools",
     "cost": {
       "quantity": 1,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 5,
     "desc": [
@@ -5317,7 +5314,7 @@
     "tool_category": "Gaming Sets",
     "cost": {
       "quantity": 1,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "desc": [
@@ -5336,7 +5333,7 @@
     "tool_category": "Gaming Sets",
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "desc": [
@@ -5355,7 +5352,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 6,
     "desc": [
@@ -5374,7 +5371,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 6,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 3,
     "desc": [
@@ -5393,7 +5390,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 10,
     "desc": [
@@ -5412,7 +5409,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -5431,7 +5428,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 35,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5450,7 +5447,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5469,7 +5466,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 3,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5488,7 +5485,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 12,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5507,7 +5504,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -5526,7 +5523,7 @@
     "tool_category": "Musical Instrument",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -5545,7 +5542,7 @@
     "tool_category": "Other Tools",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 2,
     "desc": [
@@ -5564,7 +5561,7 @@
     "tool_category": "Other Tools",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "desc": [
@@ -5583,7 +5580,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 50,
@@ -5603,7 +5600,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 8,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5623,7 +5620,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 8,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5643,7 +5640,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 200,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5663,7 +5660,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5683,7 +5680,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 75,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 60,
@@ -5703,7 +5700,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 25,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5723,7 +5720,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 30,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 40,
@@ -5743,7 +5740,7 @@
     "vehicle_category": "Mounts and Other Animals",
     "cost": {
       "quantity": 400,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 60,
@@ -5763,7 +5760,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 16,
     "desc": [
@@ -5782,7 +5779,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 40,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 20,
     "desc": [
@@ -5801,7 +5798,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 180,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 26,
     "desc": [
@@ -5820,7 +5817,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 40,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 24,
     "desc": [
@@ -5839,7 +5836,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 200,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 40,
     "desc": [
@@ -5858,7 +5855,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 200,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 90,
     "desc": [
@@ -5877,7 +5874,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 1600,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 40,
     "desc": [
@@ -5896,7 +5893,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 3000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 80,
     "desc": [
@@ -5915,7 +5912,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 12,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 80,
     "desc": [
@@ -5934,7 +5931,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 300,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 110,
     "desc": [
@@ -5953,7 +5950,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 800,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 120,
     "desc": [
@@ -5972,7 +5969,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 6000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 130,
     "desc": [
@@ -5991,7 +5988,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 2,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "url": "/api/equipment/bit-and-bridle"
@@ -6007,7 +6004,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 100,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 600,
     "url": "/api/equipment/carriage"
@@ -6023,7 +6020,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 15,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 200,
     "url": "/api/equipment/cart"
@@ -6039,7 +6036,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 250,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 100,
     "url": "/api/equipment/chariot"
@@ -6055,7 +6052,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 5,
-      "unit": "cp"
+      "unit": "pc"
     },
     "weight": 10,
     "url": "/api/equipment/animal-feed-1-day"
@@ -6071,7 +6068,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 60,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 50,
     "desc": [
@@ -6090,7 +6087,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 30,
     "desc": [
@@ -6109,7 +6106,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 5,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 15,
     "url": "/api/equipment/saddle-pack"
@@ -6125,7 +6122,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 10,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 25,
     "url": "/api/equipment/saddle-riding"
@@ -6141,7 +6138,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 4,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 8,
     "url": "/api/equipment/saddlebags"
@@ -6157,7 +6154,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 20,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 300,
     "url": "/api/equipment/sled"
@@ -6173,7 +6170,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 5,
-      "unit": "sp"
+      "unit": "pp"
     },
     "weight": 0,
     "url": "/api/equipment/stabling-1-day"
@@ -6189,7 +6186,7 @@
     "vehicle_category": "Tack, Harness, and Drawn Vehicles",
     "cost": {
       "quantity": 35,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 400,
     "url": "/api/equipment/wagon"
@@ -6205,7 +6202,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 30000,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 4,
@@ -6224,7 +6221,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 3000,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 1,
@@ -6246,7 +6243,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 10000,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 3,
@@ -6265,7 +6262,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 1.5,
@@ -6287,7 +6284,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 10000,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 2,
@@ -6306,7 +6303,7 @@
     "vehicle_category": "Waterborne Vehicles",
     "cost": {
       "quantity": 25000,
-      "unit": "gp"
+      "unit": "po"
     },
     "speed": {
       "quantity": 2.5,
@@ -6329,7 +6326,7 @@
     },
     "cost": {
       "quantity": 50,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "properties": [
@@ -6356,7 +6353,7 @@
     },
     "cost": {
       "quantity": 100,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "properties": [
@@ -6383,7 +6380,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "properties": [
@@ -6410,7 +6407,7 @@
     },
     "cost": {
       "quantity": 1350,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "properties": [
@@ -6435,7 +6432,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -6481,7 +6478,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 1000,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -6513,7 +6510,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -6561,7 +6558,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d12",
@@ -6604,7 +6601,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 1000,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "2d6",
@@ -6647,7 +6644,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d10",
@@ -6699,7 +6696,7 @@
     "rarity": "Rare",
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d4",
@@ -6775,7 +6772,7 @@
     ],
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "rarity": {
@@ -6803,7 +6800,7 @@
     "weight": 65,
     "cost": {
       "quantity": 5000,
-      "unit": "gp"
+      "unit": "po"
     },
     "description": [
       "La armadura Mortis es una armadura de placas ennegrecidas fabricada durante la Segunda Edad por un herrero que también se dedicó a la nigromancia. Tiene el símbolo de la Orden de la Rosa Negra blasonado en el pecho y patrones florales intrincados esparcidos por su superficie, sin embargo, el metal en sí está chamuscado y ceniciento, como si lo hubieran sacado recientemente de un edificio en llamas. Emana un aura de magia oscura y es helada al tacto.<br>(Requiere Sintonización, Fuerza Mín. 16)<br>Cuando se usa, la armadura Mortis otorga una CA de 19 y NO otorga desventaja en las pruebas de sigilo. Además, como acción adicional, permite al portador entrar en sombras cercanas y emerger de ellas en un radio de 60 pies.<br>Cuando se identifica la Armadura Mortis, la persona que lanza el conjuro también debe realizar una prueba de arcanos con una CD de 20. Si tiene éxito, está disponible la siguiente información:<br>Cuando se lleva puesta, la Armadura Mortis se vincula a la persona que la lleva, lo que significa que si alguna vez se quita la armadura y luego procede a dormir (Descanso prolongado), se despertará habiendo vuelto a ponerse la armadura.<br>Cuando está en combate, cada vez que el portador recibe daño, tira 1d6 de daño necrótico adicional. Si el portador baja por debajo del 25% de salud, deja de decirle la cantidad de daño que recibe. Si el portador muere mientras lleva esta armadura, seguirá luchando como si estuviera perfectamente sano. Continuará sobreviviendo en este estado durante un período de tiempo equivalente a su puntuación de constitución multiplicada por una tirada de 1d4 cuando muera. Los hechizos y pociones curativas no afectarán al portador. Los hechizos de resurrección solo funcionarán una vez que se haya quitado la armadura y tendrán en cuenta el tiempo transcurrido desde la muerte real.<br>La armadura no se puede quitar de forma natural y no se puede desentonar de forma natural. Para quitarse la armadura, el portador debe realizar una tirada de salvación de sabiduría con una CD de 30 o usar un hechizo de deseo. Si el portador murió mientras llevaba la armadura, una vez que se la quiten caerá muerto.<br>Una vez que el portador muera, se puede quitar la armadura, pero se necesitará un breve descanso para desentonar con su portador.",
@@ -6858,7 +6855,7 @@
     ],
     "cost": {
       "quantity": 750,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "rarity": {
@@ -6908,7 +6905,7 @@
     ],
     "cost": {
       "quantity": 750,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 1,
     "rarity": {
@@ -6952,7 +6949,7 @@
     ],
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.1,
     "rarity": {
@@ -7001,7 +6998,7 @@
     ],
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.2,
     "rarity": {
@@ -7045,7 +7042,7 @@
     ],
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.2,
     "rarity": {
@@ -7089,7 +7086,7 @@
     ],
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.2,
     "rarity": {
@@ -7111,7 +7108,7 @@
     "category_range": "Martial Melee",
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "damage": {
       "damage_dice": "1d8",
@@ -7170,7 +7167,7 @@
     ],
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.2,
     "hasCharges": true,
@@ -7211,7 +7208,7 @@
     ],
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.2,
     "rarity": {
@@ -7239,7 +7236,7 @@
     "weight": 55,
     "cost": {
       "quantity": 2050,
-      "unit": "gp"
+      "unit": "po"
     },
     "rarity": {
       "index": "uncommon",
@@ -7258,7 +7255,7 @@
     "armor_category": "Medium",
     "armor_class": { "base": 14, "dex_bonus": true, "max_bonus": 2 },
     "weight": 20,
-    "cost": { "quantity": 2400, "unit": "gp" },
+    "cost": { "quantity": 2400, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7273,7 +7270,7 @@
     "armor_category": "Medium",
     "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
     "weight": 40,
-    "cost": { "quantity": 2750, "unit": "gp" },
+    "cost": { "quantity": 2750, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7288,7 +7285,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
     "weight": 55,
-    "cost": { "quantity": 2050, "unit": "gp" },
+    "cost": { "quantity": 2050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7303,7 +7300,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 17, "dex_bonus": false, "max_bonus": null },
     "weight": 60,
-    "cost": { "quantity": 2200, "unit": "gp" },
+    "cost": { "quantity": 2200, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7318,7 +7315,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
     "weight": 65,
-    "cost": { "quantity": 3000, "unit": "gp" },
+    "cost": { "quantity": 3000, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7333,7 +7330,7 @@
     "armor_category": "Shield",
     "armor_class": { "base": 2, "dex_bonus": false, "max_bonus": null },
     "weight": 6,
-    "cost": { "quantity": 6000, "unit": "gp" },
+    "cost": { "quantity": 6000, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7354,7 +7351,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 8,
-    "cost": { "quantity": 6005, "unit": "gp" },
+    "cost": { "quantity": 6005, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7375,7 +7372,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 10,
-    "cost": { "quantity": 6005, "unit": "gp" },
+    "cost": { "quantity": 6005, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7396,7 +7393,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
     "weight": 13,
-    "cost": { "quantity": 6015, "unit": "gp" },
+    "cost": { "quantity": 6015, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7417,7 +7414,7 @@
     "armor_category": "Medium",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
     "weight": 12,
-    "cost": { "quantity": 6010, "unit": "gp" },
+    "cost": { "quantity": 6010, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7438,7 +7435,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
     "weight": 55,
-    "cost": { "quantity": 6055, "unit": "gp" },
+    "cost": { "quantity": 6055, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7459,7 +7456,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
     "weight": 65,
-    "cost": { "quantity": 6065, "unit": "gp" },
+    "cost": { "quantity": 6065, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -7480,7 +7477,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 8,
-    "cost": { "quantity": 6005, "unit": "gp" },
+    "cost": { "quantity": 6005, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7501,7 +7498,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 10,
-    "cost": { "quantity": 6005, "unit": "gp" },
+    "cost": { "quantity": 6005, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7522,7 +7519,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
     "weight": 13,
-    "cost": { "quantity": 6015, "unit": "gp" },
+    "cost": { "quantity": 6015, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7543,7 +7540,7 @@
     "armor_category": "Medium",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
     "weight": 12,
-    "cost": { "quantity": 6010, "unit": "gp" },
+    "cost": { "quantity": 6010, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7564,7 +7561,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
     "weight": 55,
-    "cost": { "quantity": 6055, "unit": "gp" },
+    "cost": { "quantity": 6055, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7585,7 +7582,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
     "weight": 65,
-    "cost": { "quantity": 6065, "unit": "gp" },
+    "cost": { "quantity": 6065, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -7606,7 +7603,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 8,
-    "cost": { "quantity": 10005, "unit": "gp" },
+    "cost": { "quantity": 10005, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7627,7 +7624,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 11, "dex_bonus": true, "max_bonus": null },
     "weight": 10,
-    "cost": { "quantity": 10005, "unit": "gp" },
+    "cost": { "quantity": 10005, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7648,7 +7645,7 @@
     "armor_category": "Light",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": null },
     "weight": 13,
-    "cost": { "quantity": 10015, "unit": "gp" },
+    "cost": { "quantity": 10015, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7669,7 +7666,7 @@
     "armor_category": "Medium",
     "armor_class": { "base": 12, "dex_bonus": true, "max_bonus": 2 },
     "weight": 12,
-    "cost": { "quantity": 10010, "unit": "gp" },
+    "cost": { "quantity": 10010, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7690,7 +7687,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 16, "dex_bonus": false, "max_bonus": null },
     "weight": 55,
-    "cost": { "quantity": 10055, "unit": "gp" },
+    "cost": { "quantity": 10055, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7711,7 +7708,7 @@
     "armor_category": "Heavy",
     "armor_class": { "base": 18, "dex_bonus": false, "max_bonus": null },
     "weight": 65,
-    "cost": { "quantity": 10065, "unit": "gp" },
+    "cost": { "quantity": 10065, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -7734,7 +7731,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 8,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7759,7 +7756,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 10,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7784,7 +7781,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 13,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7809,7 +7806,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 12,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7834,7 +7831,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7859,7 +7856,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 45,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7884,7 +7881,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7909,7 +7906,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7934,7 +7931,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7959,7 +7956,7 @@
     "str_minimum": 13,
     "stealth_disadvantage": true,
     "weight": 55,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -7984,7 +7981,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 60,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8009,7 +8006,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8034,7 +8031,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 8,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8059,7 +8056,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 10,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8084,7 +8081,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 13,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Cuero tachonado" },
     "attunement": false,
     "description": [
@@ -8109,7 +8106,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 12,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8134,7 +8131,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8159,7 +8156,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 45,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8184,7 +8181,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8209,7 +8206,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8234,7 +8231,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8259,7 +8256,7 @@
     "str_minimum": 13,
     "stealth_disadvantage": true,
     "weight": 55,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8284,7 +8281,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 60,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8309,7 +8306,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8334,7 +8331,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 8,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8359,7 +8356,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 10,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8384,7 +8381,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 13,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8409,7 +8406,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 12,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8434,7 +8431,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8459,7 +8456,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 45,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8484,7 +8481,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8502,14 +8499,14 @@
   },
   {
     "index": "half-plate-3",
-    "name": "AArmadura de Semiplacas +3",
+    "name": "Armadura de Semiplacas +3",
     "equipment_category": { "index": "armor", "name": "Armadura" },
     "armor_category": "Medium",
     "armor_class": { "base": 15, "dex_bonus": true, "max_bonus": 2 },
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8534,7 +8531,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": true,
     "weight": 40,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8559,7 +8556,7 @@
     "str_minimum": 13,
     "stealth_disadvantage": true,
     "weight": 55,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8584,7 +8581,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 60,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8609,7 +8606,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8634,7 +8631,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": true,
     "description": [
@@ -8658,7 +8655,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": false,
     "description": [
@@ -8683,7 +8680,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": false,
     "description": [
@@ -8708,7 +8705,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 13,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": false,
     "description": [
@@ -8733,7 +8730,7 @@
     "str_minimum": 15,
     "stealth_disadvantage": true,
     "weight": 65,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "legendary", "name": "Legendario" },
     "attunement": true,
     "description": [
@@ -8758,7 +8755,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": true,
     "description": [
@@ -8782,7 +8779,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "uncommon", "name": "Poco Común" },
     "attunement": false,
     "description": [
@@ -8808,7 +8805,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "rare", "name": "Raro" },
     "attunement": false,
     "description": [
@@ -8834,7 +8831,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": false,
     "description": [
@@ -8860,7 +8857,7 @@
     "str_minimum": 0,
     "stealth_disadvantage": false,
     "weight": 20,
-    "cost": { "quantity": 1050, "unit": "gp" },
+    "cost": { "quantity": 1050, "unit": "po" },
     "rarity": { "index": "very-rare", "name": "Muy Raro" },
     "attunement": true,
     "description": [
@@ -8891,7 +8888,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -8920,7 +8917,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -8949,7 +8946,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -8978,7 +8975,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9007,7 +9004,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9036,7 +9033,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9065,7 +9062,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9094,7 +9091,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9123,7 +9120,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9152,7 +9149,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9181,7 +9178,7 @@
     },
     "cost": {
       "quantity": 500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9210,7 +9207,7 @@
     },
     "cost": {
       "quantity": 1000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9239,7 +9236,7 @@
     },
     "cost": {
       "quantity": 1000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9268,7 +9265,7 @@
     },
     "cost": {
       "quantity": 1200,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9297,7 +9294,7 @@
     },
     "cost": {
       "quantity": 1500,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9326,7 +9323,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9355,7 +9352,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9384,7 +9381,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9413,7 +9410,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9442,7 +9439,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9471,7 +9468,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9500,7 +9497,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9529,7 +9526,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
@@ -9558,7 +9555,7 @@
     },
     "cost": {
       "quantity": 2000,
-      "unit": "gp"
+      "unit": "po"
     },
     "weight": 0.5,
     "description": [
