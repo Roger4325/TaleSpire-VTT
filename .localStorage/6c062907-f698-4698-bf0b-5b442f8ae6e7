@@ -240,16 +240,7 @@
                 }
             },
             "inventoryData": {
-                "equipment": [
-                    {
-                        "name": "Adamantine Breastplate",
-                        "uniqueId": "item-1736019212085-fcabd517",
-                        "quantity": 1,
-                        "weight": 20,
-                        "cost": "2400 gp",
-                        "equipped": false
-                    }
-                ],
+                "equipment": [],
                 "backpack": [],
                 "other-possessions": [],
                 "attunement": []

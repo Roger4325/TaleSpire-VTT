@@ -1755,7 +1755,7 @@ async function readEquipmentJson() {
         const isGlobalDataAnObject = typeof allequipmentData === 'object';
 
         // Fetch the data from the JSON file
-        const response = await fetch('equipment.json');
+        const response = await fetch(`equipment-${savedLanguage}.json`);
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
