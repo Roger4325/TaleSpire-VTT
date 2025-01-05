@@ -136,7 +136,7 @@ const translations = {
         damageButton: "Damage",
         currentHP: "Current",
         maxHP: "Max",
-        hpButtomText: "Player HitPoints",
+        hpButtomText: "Player Hit Points",
         tempHPText: "Temp Health",
         characterAbilityStr: "STR",
         characterAbilityDex: "DEX",
@@ -540,7 +540,6 @@ async function setLanguage(language) {
     for (const id in translations[language]) {
         const element = document.getElementById(id);
         if (element) {
-            console.log(element)
             const translationText = translations[language][id];
 
             // Check if the first child is a text node

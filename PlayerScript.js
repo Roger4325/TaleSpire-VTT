@@ -1065,6 +1065,7 @@ function longRest() {
 
     // Call the healCreature function with the max HP as the healing amount
     gatherAllTraitsToReset("long rest",true)
+    gatherAllTraitsToReset("short rest",true)
     healCreature(maxHPValue);
     resetSpellSlots()
     addHalfHitDiceOnRest()
@@ -1101,19 +1102,34 @@ function openLongRestModal() {
         hitDiceToAdd = Math.max(Math.floor(maxHitDice / 2), 1);
     }
 
-    const traitsToReset = gatherAllTraitsToReset("long rest");
+    const longTraitsToReset = gatherAllTraitsToReset("long rest");
     
-    let resetTraitDetails = '';
+    let longResetTraitDetails = '';
 
     // Loop through each group of traits to reset
-    traitsToReset.forEach(group => {       
+    longTraitsToReset.forEach(group => {       
         // Loop through each trait in the current group
         group.traitsToReset.forEach(trait => {
             // Add the trait name and the max uses to the reset details
-            resetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+            longResetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
         });
         // Add a line break after each group for clarity
-        resetTraitDetails += '<br>';
+        longResetTraitDetails += '<br>';
+    });
+
+    const shortTraitsToReset = gatherAllTraitsToReset("short rest");
+    
+    let shortResetTraitDetails = '';
+
+    // Loop through each group of traits to reset
+    shortTraitsToReset.forEach(group => {       
+        // Loop through each trait in the current group
+        group.traitsToReset.forEach(trait => {
+            // Add the trait name and the max uses to the reset details
+            shortResetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+        });
+        // Add a line break after each group for clarity
+        shortResetTraitDetails += '<br>';
     });
 
     // Populate the modal content
@@ -1121,7 +1137,8 @@ function openLongRestModal() {
     document.getElementById("longRestTempHPChange").textContent =`Removing Temp HP: ${tempHP} `
     document.getElementById("longRestSpellSlots").innerHTML = resetDetails || "No used spell slots to reset.";
     document.getElementById("longRestHitDice").textContent =`Adding up to: ${hitDiceToAdd} Hit Dice`
-    document.getElementById("longRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${resetTraitDetails}`;
+    document.getElementById("longRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${longResetTraitDetails}`;
+    document.getElementById("shortRestinLongFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${shortResetTraitDetails}`;
 
 
 
@@ -4117,11 +4134,21 @@ function updateSpellDCHeader(){
 function updateSpellSaveDC(ability){
     const spellSection = document.getElementById('SpellList');
     const spellDCSelections = spellSection.querySelectorAll('.spell-save-dc');
+
+    let spellSaveDCBonus = 0;
+    if (characterStatBonuses.combatStats.SpellSaveDC) {        
+        spellSaveDCBonus = characterStatBonuses.combatStats.SpellSaveDC.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
+
+    let characterSpellBonus = 0;
+    if (characterStatBonuses.combatStats.SpellAttackandSave) {        
+        characterSpellBonus = characterStatBonuses.combatStats.SpellAttackandSave.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
     
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
-    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8;
+    const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8 + spellSaveDCBonus + characterSpellBonus;
 
     spellDCSelections.forEach((span) =>{
         span.textContent = spellSaveDc;
