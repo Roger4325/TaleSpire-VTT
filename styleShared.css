@@ -1,3 +1,41 @@
+:root {
+    --border-outline-color: var(--ts-button-background);
+
+    --action-button-color: var(--ts-accent-background);
+    --action-button-color-hover: var(--ts-button-hover);
+
+    --button-color-hover: var(--ts-button-hover);
+}
+
+.alternate-theme-purple{
+    --border-outline-color: #5d6eca;
+
+    --action-button-color: #492880;
+    --action-button-color-hover: #603f96;
+
+    --button-color-hover:  #8b99e6;
+}
+
+.alternate-theme-red{
+    --border-outline-color: #662a2a;
+
+    --action-button-color: #412a66;
+    --action-button-color-hover: #5423a1;
+
+    --button-color-hover:  #aa3737;
+}
+
+.alternate-theme-custom{
+    --border-outline-color: #ff0c0c;
+
+    --action-button-color: #ffffff;
+    --action-button-color-hover: #ffffff;
+
+    --button-color-hover:  #470000;
+}
+
+
+
 /* Reset some default styles */
 body, h1, h2, h3, p {
     margin: 0;
@@ -90,7 +128,7 @@ footer {
     padding: 5px;
     cursor:text;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     background: none;
     color:white;
     font-family: 'OptimusPrinceps', sans-serif;
@@ -127,11 +165,11 @@ footer {
         padding: 1px 2px; 
         border: .1px solid #0f0f0f;
         border-radius: 5px;
-        background-color: var(--ts-button-background);
+        background-color: var(--border-outline-color);
     }
 
     .tabs a:hover {
-        background-color: var(--ts-button-hover); 
+        background-color: var(--button-color-hover); 
     }
 
     /* Hide all sections initially */
@@ -154,7 +192,7 @@ footer {
     top: 100%;
     left: 0;
     background-color: black;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     color: white;
     padding: 5px;
@@ -172,7 +210,7 @@ footer {
 }
 
 /* #settings-dropdown li:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 } */
 
 #settings-toggle {
@@ -197,7 +235,7 @@ footer {
 #settings-option-dropdown {
     position: relative;
     background-color: black;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     color: white;
     padding: 5px;
@@ -215,8 +253,9 @@ footer {
 
 
 .actionButton{
-    background-color: var(--ts-accent-background);
-    color: #FFFFFF;
+    background-color: var(--action-button-color);
+    color: #ffffff;
+    font: bold;
     border: none;
     border-radius: 5px;
     padding: 2px 5px;
@@ -224,13 +263,18 @@ footer {
     margin: 2px;
 }
 
-.actionButton:hover, .nonRollButton:hover, .remove-condition:hover{
-background-color: var(--ts-button-hover);
+.actionButton:hover{
+    background-color: var(--action-button-color-hover);
+    transition: ease-in-out .15s;
+}
+
+.nonRollButton:hover, .remove-condition:hover{
+background-color: var(--button-color-hover);
 transition: ease-in-out .15s;
 }
 
 .nonRollButton,.remove-condition,.dropbtn{
-background-color: var(--ts-button-background);
+background-color: var(--border-outline-color);
 color: #FFFFFF;
 border: none;
 border-radius: 5px;
@@ -276,7 +320,7 @@ margin: 2px;
     font-size: 1.5rem; /* Adjust size as needed */
     font-weight: bold;
     color: #fff; /* Default color */
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     border: none;
     border-radius: 50%; /* Circular button */
     width: 15px;
@@ -289,7 +333,7 @@ margin: 2px;
 }
 
 .close:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
     transform: scale(1.1); /* Slightly enlarge */
 }
 
@@ -310,5 +354,74 @@ margin: 2px;
 
 /* Hover effect for the Crit button */
 .crit-button:hover {
-    background: var(--ts-button-hover);
+    background: var(--button-color-hover);
+}
+
+
+
+.color-preview {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Style for the HEX input fields */
+.hex-input {
+    width: 80px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+
+/* Modal Styling */
+.theme-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+}
+
+.theme-modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.theme-options button {
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    cursor: pointer;
+}
+
+.custom-theme-settings {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* .close-modal {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--action-button-color);
+    color: white;
+    border-radius: 5px;
+} */
+
+/* Show Modal */
+.theme-modal.show {
+    display: block;
 }

@@ -1,12 +1,12 @@
 {
   "manifestVersion": 1,
-  "name": "Talespire VTT",
+  "name": "Talespire 5e Toolset",
   "summary": "A VTT like experiance for Talespire",
   "descriptionFilePath": "/README.md",
   "version": "0.0.1",
   "license": "MIT",
   "about": {
-    "website": "https://www.example.com/Talespire+VTT",
+    "website": "",
     "authors": ["illume63"]
   },
   "kind": "webView",

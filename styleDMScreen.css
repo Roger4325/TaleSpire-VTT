@@ -1,11 +1,10 @@
-
 #Init > hr{
     margin-top: 0px;
     margin-bottom: 8px;
 }
 
 #settings-container {
-    position: fixed;
+    position: absolute;
     top: 24px;
     left: 0px;
     display: flex;
@@ -46,15 +45,15 @@
     text-align: center;
     padding: 5px;
     cursor: pointer;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     font-size: 12px;
 }
 .toggle-button:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 }
 
 .toggle-button.active {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
     color: white;
 }
 
@@ -98,7 +97,7 @@
     display: flex;
     align-items: center;
     background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 3px;
     margin-bottom: 5px;
     border-radius: 8px;
@@ -115,7 +114,7 @@
 .init-input {
     text-align: center;
     background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     color: white;
     font-size: 14px;
@@ -198,7 +197,7 @@
     font-size: 10px;
     text-align: center;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     -moz-appearance: textfield;
 }
 
@@ -231,7 +230,7 @@
     padding: 1px 8px;
     border-radius: 5px;
     background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     min-width: 60px;
     text-align: center;
     font-size: 16px;
@@ -360,7 +359,7 @@
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
 }
 
 
@@ -368,7 +367,7 @@
     width: 50%; /* Full width input */
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     position: relative; /* To position the dropdown list */
 }
 
@@ -409,7 +408,7 @@
 }
 
 .encounter-load-text:hover{
-    background-color: var(--ts-button-background); /* Highlight on hover */
+    background-color: var(--border-outline-color); /* Highlight on hover */
 }
 
 
@@ -434,7 +433,7 @@
     width: 50%; /* Full width input */
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
 }
 
 .monster-list{
@@ -459,7 +458,7 @@
 }
 
 .monster-list li:hover, .save-popup li:hover {
-    background-color: var(--ts-button-background); /* Highlight on hover */
+    background-color: var(--border-outline-color); /* Highlight on hover */
 }
 
 
@@ -576,7 +575,7 @@
 .monster-block hr {
     border: 0;
     height: 1px;
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     margin: 2px 0;
 }
 
@@ -615,7 +614,7 @@
 #abilityScoreDivider01, #abilityScoreDivider02{
     height: 100%; 
     width: 1px; /* Thin width to simulate a vertical line */
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     margin: 0;
 }
 
@@ -641,7 +640,7 @@
     left: 2%; /* Always aligned to the left of the viewport */
     pointer-events: none;
     background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
 }
 
 .spell-tooltip strong {
@@ -681,7 +680,7 @@
     background-color: rgb(2, 2, 2);
     margin: 5% auto; /* Center the modal */
     padding: 10px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     width: 90%; /* Adjust the width as needed */
     border-radius: 5px;
     z-index: 10;
@@ -706,7 +705,7 @@
 
 .form-row > input, .form-row > textarea, .entry-name, .entry-content{
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 5px;
     border-radius: 5px;
     color: white;
@@ -727,7 +726,7 @@
 
 .form-fieldset {
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 5px; /* Slightly increased padding for better spacing */
     border-radius: 5px;
     color: white;
@@ -797,8 +796,8 @@
 
 #monsterFormTraits, #monsterFormActions, #monsterFormReactions, #monsterFormLegendaryActions {
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
-    padding: 5px; /* Slightly increased padding for better spacing */
+    border: 1px solid var(--border-outline-color);
+    padding: 5px;
     border-radius: 5px;
     color: white;
     margin-bottom: 5px;
@@ -813,6 +812,236 @@
     width: 98%;
     min-height: 30px;
     margin-bottom: 2px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Hide all sections initially */
+main section {
+    display: none;
+}
+
+        /* Style the sub-headers of Dm Tables tab*/
+        .table-tab ul {
+            list-style-type: none;
+            padding: 0;
+            margin:0;
+        }
+
+        .table-tab li {
+            display: inline-flex;
+            flex-wrap: wrap;
+            margin-bottom: 2px;
+            font-size: 14px;   
+        }
+
+        /* Update the sub-tab size of DM Tables*/
+        .table-tab a {
+            text-decoration: none;
+            color: #FFFFFF; 
+            padding: 1px 2px; 
+            border: .1px solid #0f0f0f;
+            border-radius: 5px;
+            background-color: var(--border-outline-color);
+        }
+
+        .table-tab a:hover {
+            background-color: var(--button-color-hover); 
+        }
+
+
+        .dmTable table{
+            background-color: rgb(2, 2, 2);
+            padding: 2;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .dmTable table th ,.dmTable table td {
+            border: 1px solid var(--border-outline-color);
+            border-radius: 5px;
+            padding: 3px;
+        }
+
+         /*DM Tabels */   
+        .dmTable thead{
+            background-color: var(--ts-background-secondary);
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+            /*DM Tabels */   
+
+        .dmTable table ul, ol{
+            padding-left: 15px;
+            margin: 0px 5px;
+            font-size: 13px;
+        }
+
+        table{
+            border-spacing: .1rem;
+            display: inline-block;
+        }
+
+        table td:first-child{
+            text-align: left;
+            text-align: top;
+        }
+
+        table td.tableSpacer:first-child {
+            background-color: #1f1f1f;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .shopTables th{
+            text-align: center;
+            padding: 1px;
+        }
+
+        .shopTables td{
+            text-align: center;
+            padding: 1px;
+        }
+
+
+        .dmTable th{
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-top: 3px;
+            padding-bottom: 3px;
+        }
+
+        .dmTable td{
+            padding: 4px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .dmTable > p, label, input {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .dmTable > h2{
+            color: var(--ts-accent-hover);
+        }
+
+        .jumpInput{
+            width:45px;
+            background-color: #080808;
+            color:white;
+        }
+
+        /*Formating for the Shops under dmTables*/
+        .dropdown-content {
+            display: none;
+          }
+
+        .dropdown{
+            display: inline;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Style for the checklist container */
+.checklist {
+    background-color: #313131;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 550px;
+    margin: 0 auto;
+    text-wrap: break-word;
+}
+
+#checklistItem{
+    width: 400px;
+}
+
+
+
+
+
+
+
+
+
+
+/* Style for checklist items */
+.checklist ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.checklist li {
+    display: flex;
+    align-items: left;
+    margin-bottom: 15px;
+    margin-right: 15px;
+}
+
+.checklist li span {
+    overflow: auto;
+    font-size: 14px;
+    padding-right: 10px;
+}
+
+.checklist li button{
+    height: 25px;
+    align-self: center;
+}
+
+.checklist input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+/* Style for the "Add" button */
+.checklist button {
+    background-color: var(--border-outline-color);
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.checklist button:hover{
+    background-color: var(--button-color-hover);
 }
 
 

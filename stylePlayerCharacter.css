@@ -11,7 +11,7 @@
     display: block;
     padding: 2px;
     padding-top: 6px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin: 3px;
 }
@@ -51,15 +51,15 @@
     text-align: center;
     padding: 5px;
     cursor: pointer;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     font-size: 10px;
 }
 .toggle-button:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 }
 
 .toggle-button.active {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
     color: white;
 }
 
@@ -109,7 +109,7 @@
 }
 
 select{
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     padding: 2px;
     background: none;
@@ -285,7 +285,7 @@ select{
     display: block;
     padding: 2px;
     padding-top: 6px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     width: 97%;
     margin-bottom: 2px;
@@ -298,7 +298,7 @@ select{
     display: block;
     padding: 2px;
     padding-top: 6px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin: 3px;
 }
@@ -310,7 +310,7 @@ select{
 #playerHealth{
     display:grid;
     grid-template-columns: 1fr 3fr 1fr;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     min-width: 220px;
     height: 90px;
     border-radius: 5px;
@@ -458,7 +458,7 @@ select{
     width: 295px;
     display: grid;
     gap: 4px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin-left: 18px;
     grid-column-end: 2;
@@ -484,7 +484,7 @@ select{
     display:grid;
     grid-template-columns: 5fr 0px 1fr;
     padding: 1px 4px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin: 0px 2px;
     align-self: center;
@@ -507,7 +507,7 @@ select{
     display:grid;
     grid-template-columns: 5fr 0px 1fr;
     padding: 2px 5px;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin: 0px 2px;
     align-self: center;
@@ -518,7 +518,7 @@ select{
     width: 200px;
     padding: 5px 2px;
     display: grid;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
 }
 
@@ -550,7 +550,7 @@ select{
     background-color: var(--ts-background-secondary);
     position: absolute;
     z-index: 10;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
 }
 
 .proficiency-dropdown ul {
@@ -601,6 +601,12 @@ select{
         border-radius: 50%;
         border: 1px solid white;
         background: rgba(255, 255, 255, 0.089);
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .proficiencyButtons button:hover {
+        transform: scale(1.1); 
     }
 
     .proficiencyButtons button > .skillbuttonstyler {
@@ -613,15 +619,15 @@ select{
 
     /* Increase specificity for the override */
     .proficiencyButtons button.halfProficient {
-        background: linear-gradient(145deg, rgba(255, 255, 255, 0.089) 50%, var(--ts-button-background) 60%);
+        background: linear-gradient(145deg, rgba(255, 255, 255, 0.089) 50%, var(--border-outline-color) 60%);
     }
 
     .proficiencyButtons button.proficient {
-        background: var(--ts-button-background);
+        background: var(--border-outline-color);
     }
 
     .proficiencyButtons button.expertise {
-        background: var(--ts-button-background);
+        background: var(--border-outline-color);
         outline: 1px solid White;
         outline-offset: 3px;
     }
@@ -655,7 +661,7 @@ select{
 }
 
 .additional-info-container input{
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     background-color: var(--ts-background-secondary);
     color: white;
 }
@@ -670,7 +676,7 @@ select{
 
 .dice-count-input,
 .dice-size-input {
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     background-color: rgb(2, 2, 2);
     color: white;
@@ -714,7 +720,7 @@ select{
 }
 
 .actionTable{
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     border-collapse: collapse; 
     width:100%;
@@ -728,7 +734,7 @@ select{
 }
 
 .actionTable th, .actionTable td {
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 0px;
@@ -758,13 +764,13 @@ select{
                 padding: 1px 5px; 
                 border: .1px solid #0f0f0f;
                 border-radius: 5px;
-                background-color: var(--ts-button-background);
+                background-color: var(--border-outline-color);
                 cursor: pointer;
                 margin-right: 3px;
             }
 
             .actionsubtab:hover {
-                background-color: var(--ts-button-hover); 
+                background-color: var(--button-color-hover); 
             }
 
             /* Styling for the active tab */
@@ -782,7 +788,7 @@ select{
     background-color: var(--ts-background-secondary);
     padding: 0px 10px;
     z-index: 1;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     left:15px;
     top: 5px;
 }
@@ -793,7 +799,7 @@ select{
     background-color: var(--ts-background-secondary);
     padding: 0px 10px;
     z-index: 1;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
 }
 
 /* Style for the checkbox labels */
@@ -825,7 +831,7 @@ select{
 
 .action-item-container{
     display: flex;
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
 }
 
 /* creating a form and the ability to make new weapons */
@@ -870,10 +876,15 @@ select{
     border: 1px solid white;
     padding: 2px;
     background: rgba(255, 255, 255, 0.089);
+    cursor: pointer;
+}
+
+.spell-prepared-button:hover {
+    transform: scale(1.1); 
 }
 
 .spell-prepared-button[value="1"] {
-    background-color: var(--ts-button-background); /* Adjust color as needed */
+    background-color: var(--border-outline-color); /* Adjust color as needed */
     border-color: white; /* Optional: matches the filled color */
 }
 
@@ -887,7 +898,7 @@ select{
 }
 
 .minihr {
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     margin-bottom: 0px;
 }
 
@@ -898,7 +909,7 @@ select{
 }
 
 .add-spell-slot, .remove-spell-slot{
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     color: #FFFFFF;
     border: none;
     border-radius: 3px;
@@ -913,7 +924,7 @@ select{
 }
 
 .add-spell-button{
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     color: #FFFFFF;
     border: none;
     border-radius: 3px;
@@ -926,7 +937,7 @@ select{
 }
 
 .add-spell-button:hover, .add-spell-slot:hover, .remove-spell-slot:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
     transition: ease-in-out .15s;
 }
 
@@ -961,11 +972,11 @@ select{
 }
 
 .spell-slot.used {
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
 }
 
 .spell-table{
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     border-collapse: collapse; 
     text-align: center;
@@ -973,14 +984,14 @@ select{
 }
 
 .spell-table tbody {
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     color: #FFFFFF; 
     background-color: var(--ts-background-secondary);
     font-size: 12px;
 }
 
 .spell-table th {
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 2px;
@@ -989,7 +1000,7 @@ select{
 }
 
 .spell-table td {
-    border: solid 1px var(--ts-button-background);
+    border: solid 1px var(--border-outline-color);
     padding-top: 2px;
     padding-bottom: 2px;
     padding-left: 0px;
@@ -1009,7 +1020,7 @@ select{
     width: 190px;
     color: white;
     background-color: var(--ts-background-secondary);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     margin: 0;
     padding: 2px;
     text-align: center;
@@ -1027,7 +1038,7 @@ select{
     position: relative; /* Position within the absolute container */
     left: 25%; /* Align left with the input */
     width: 100%; /* Match container width */
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     cursor: pointer;
     max-height: 450px;
     overflow-y: auto;
@@ -1115,7 +1126,7 @@ select{
 }
 
 .close-button:hover {
-    color: var(--ts-button-hover);
+    color: var(--button-color-hover);
     font-size: 20px;
 }
 
@@ -1123,20 +1134,20 @@ select{
     font-weight: bold;
     font-style: italic;
     color: white;
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     margin-left: 10px;
     border: none;
     cursor: pointer;
 }
 
 .mag-glass-button:hover, .remove-row-button:hover{
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 }
 
 .remove-row-button{
     font-weight: bold;
     color: white;
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     border: none;
     cursor: pointer;
 }
@@ -1158,7 +1169,7 @@ select{
 
 /* Group container styles */
 .group-container {
-    border: .5px solid var(--ts-button-background);
+    border: .5px solid var(--border-outline-color);
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
@@ -1176,7 +1187,7 @@ select{
     background-color: #333;
     color: white;
     padding: 8px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     font-size: 16px;
     font-weight: bold;
@@ -1185,7 +1196,7 @@ select{
 /* Style the chevron icon specifically for feature group collapse buttons */
 .collapse-feature-group-button {
     transition: transform 0.3s ease; /* Smooth rotation */
-    color: var(--ts-button-background);
+    color: var(--border-outline-color);
 
     /* Hide button appearance */
     background: none;
@@ -1200,7 +1211,7 @@ select{
 
 .collapse-feature-group-button:hover, .collapse-feature-trait-button:hover{
     cursor: pointer;
-    color: var(--ts-button-hover);
+    color: var(--button-color-hover);
     transform: scale(1.1);
 }
 
@@ -1210,7 +1221,7 @@ select{
 }
 
 .add-trait-button, .add-group-button {
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     color: white;
     padding: 8px 15px;
     border: none;
@@ -1221,7 +1232,7 @@ select{
 }
 
 .add-trait-button:hover, .add-group-button:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 }
 
 .trait-checkboxes-main{
@@ -1234,8 +1245,8 @@ select{
     display: inline-block;
     width: 15px;
     height: 15px;
-    accent-color: var(--ts-button-background);
-    border: 2px solid var(--ts-button-background);
+    accent-color: var(--border-outline-color);
+    border: 2px solid var(--border-outline-color);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
@@ -1244,7 +1255,7 @@ select{
 /* Hover effect for better user interaction */
 .trait-checkbox-main:hover {
     transform: scale(1.1); /* Slightly increase the size on hover */
-    accent-color: var(--ts-button-hover);
+    accent-color: var(--button-color-hover);
 }
 
 
@@ -1257,7 +1268,7 @@ select{
 .trait-item {
     padding: 5px;
     border-radius: 5px;
-    border: 1px dotted var(--ts-button-background);
+    border: 1px dotted var(--border-outline-color);
     margin-top: 10px;
 }
 
@@ -1269,7 +1280,7 @@ select{
 .collapse-feature-trait-button {
     cursor: pointer;
     transition: transform 0.3s ease; /* Smooth rotation */
-    color: var(--ts-button-background);
+    color: var(--border-outline-color);
 
     /* Hide button appearance */
     background: none;
@@ -1293,7 +1304,7 @@ select{
     padding: 5px;
     border-radius: 5px;
     width: 98%;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     font-size: 16px;
     margin-bottom: 8px;
 }
@@ -1302,7 +1313,7 @@ select{
     width: 96%;
     background-color: #333;
     color: white;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     padding: 8px;
     font-size: 14px;
@@ -1324,11 +1335,11 @@ select{
 
 .trait-uses label {
     font-size: 14px;
-    color: var(--ts-button-background);
+    color: var(--border-outline-color);
 }
 
 .trait-uses button {
-    background-color: var(--ts-button-background);
+    background-color: var(--border-outline-color);
     color: white;
     border: none;
     padding: 5px 10px;
@@ -1338,7 +1349,7 @@ select{
 }
 
 .trait-uses button:hover {
-    background-color: var(--ts-button-hover);
+    background-color: var(--button-color-hover);
 }
 
 .trait-uses-counter {
@@ -1346,7 +1357,7 @@ select{
     text-align: center;
     background-color: #333;
     color: white;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     padding: 5px;
 }
@@ -1367,13 +1378,13 @@ select{
     color: white;
     padding: 5px;
     border-radius: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     font-size: 14px;
 }
 
 .trait-settings {
     display: none;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
@@ -1404,7 +1415,7 @@ select{
 .trait-uses-input,
 .adjustment-value{
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     margin-bottom: 10px;
     color: #FFFFFF;
@@ -1418,7 +1429,7 @@ select{
     width: 98%;
     padding: 6px;
     font-size: 12px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 4px;
     margin-bottom: 10px;
     box-sizing: border-box;
@@ -1633,7 +1644,7 @@ select{
     color: white;
     padding: 20px;
     font-family: Arial, sans-serif;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
 }
 
@@ -1701,7 +1712,7 @@ h3 {
     width: 35px;
     background-color: rgb(2, 2, 2); 
     color: white;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     text-align: center;
 }
@@ -1721,7 +1732,7 @@ input[type="checkbox"] {
     padding: 20px;
     z-index: 1000;
     display: none;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
 }
 
@@ -1810,7 +1821,7 @@ input[type="checkbox"] {
     text-align: center;
     background-color: rgb(2, 2, 2); 
     color: white;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
 }
 
@@ -1875,9 +1886,15 @@ display: none;
 }
 
 .close-item-button:hover {
-    color: var(--ts-button-hover);
+    color: var(--button-color-hover);
     font-size: 20px;
 }
+
+
+
+
+
+
 
 /* Shared styles for all initiative cards */
 .initCard {
@@ -1885,6 +1902,9 @@ display: none;
     padding: 5px;
     margin-bottom: 5px;
     border-radius: 5px;
+    position: relative;
+    overflow: hidden; /* Ensures animations don't spill over */
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s; /* Smooth transitions */
 }
 
 /* Player-specific styles */
@@ -1909,8 +1929,101 @@ display: none;
 
 
 
+/*Testing section for the bloodied condition being applied to monsters.*/
+/* Bloodied condition */
+.initCard.bloodied {
+    position: relative; /* Required for pseudo-elements positioning */
+    overflow: hidden; /* Prevent pseudo-elements from spilling outside the card */
+    box-shadow: 0 0 5px rgba(160, 22, 22, 0.6); /* Glowing effect */
+    animation: bloodPulse 1.3s infinite; /* Pulsing effect */
+}
+
+/* Bloodied condition animation */
+@keyframes bloodPulse {
+    0% {
+        box-shadow: 0 0 8px rgba(168, 29, 29, 0.8);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 16px rgba(168, 29, 29, 0.8);
+        transform: scale(1.01); /* Slightly enlarge */
+    }
+    100% {
+        box-shadow: 0 0 8px rgba(168, 29, 29, 0.8);
+        transform: scale(1);
+    }
+}
+
+/* Optional: Add a blood spatter effect */
+.initCard.bloodied::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(rgba(255, 0, 0, 0.623), rgba(120, 0, 0, 0.3));
+    opacity: 0.7;
+    z-index: 1;
+    pointer-events: none; /* Ensure it doesn't interfere with interactions */
+    animation: spatterFade 1.3s infinite;
+}
+
+/* Blood spatter animation (optional for dynamic fading) */
+@keyframes spatterFade {
+    0%, 100% {
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
 
 
+/* Blood streaks effect */
+/* .initCard.bloodied::before,
+.initCard.bloodied::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: -20%;
+    left: 30%;
+    height: calc(100% + var(--h) + 60px); 
+    background:
+        var(--rad) -12px 3px,
+        var(--rad) 17px 0,
+        var(--rad) 6px 12px,
+        var(--rad) 24px 23px,
+        var(--rad) 39px 30px,
+        var(--rad) 5px 43px;
+    background-size: var(--w) var(--h);
+    animation: bloodDripAnimation 5s linear infinite; 
+    transform: skew(var(--a)); 
+    pointer-events: none; 
+    z-index: 1; 
+}
+
+
+.initCard.bloodied::after {
+    --h: 70px; 
+    --w: 60px;
+}
+
+
+.initCard.bloodied {
+    --s: 6px 18px; 
+    --c: rgba(120, 0, 0, 0.7); 
+    --a: 0deg; 
+    --w: 50px; 
+    --h: 80px; 
+    --rad: radial-gradient(var(--s), var(--c) 50%, transparent 100%);
+}
+
+@keyframes bloodDripAnimation {
+    to {
+        transform: skew(var(--a)) translateY(var(--h)); 
+    }
+} */
 
 
 /*Quick Notes Section*/
@@ -1921,7 +2034,7 @@ display: none;
 
 .notes-group-container {
     margin-bottom: 15px;
-    border: 1px solid var(--ts-button-background);;
+    border: 1px solid var(--border-outline-color);;
     padding: 10px;
 }
 
@@ -1936,7 +2049,7 @@ display: none;
     margin: 0 10px;
     padding: 2px 5px;
     background-color: #2b2b2b; /* Slightly lighter dark gray */;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     color: white;
 }
@@ -1964,7 +2077,7 @@ display: none;
     width: 98%;
     margin-bottom: 5px;
     padding: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     background-color: #2b2b2b; /* Slightly lighter dark gray */;
     color: white;
@@ -1974,7 +2087,7 @@ display: none;
     display: block;
     width: 98%;
     padding: 5px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     resize: none;
     background-color: #2b2b2b; /* Slightly lighter dark gray */;
@@ -1985,7 +2098,7 @@ display: none;
 /* Style the chevron icon specifically for feature group collapse buttons */
 .collapse-notes-group-button {
     transition: transform 0.3s ease; /* Smooth rotation */
-    color: var(--ts-button-background);
+    color: var(--border-outline-color);
 
     /* Hide button appearance */
     background: none;
@@ -2000,7 +2113,7 @@ display: none;
 
 .collapse-notes-group-button:hover, .collapse-notes-group-button:hover{
     cursor: pointer;
-    color: var(--ts-button-hover);
+    color: var(--button-color-hover);
     transform: scale(1.1);
 }
 
@@ -2016,7 +2129,7 @@ display: none;
 vuplex-dropdown {
     position: absolute;
     background-color: rgb(2, 2, 2) !important;
-    border: 1px solid var(--ts-button-background) !important; 
+    border: 1px solid var(--border-outline-color) !important; 
     border-radius: 5px !important;
     box-shadow: none !important;
     border-radius: 5px;
@@ -2047,7 +2160,7 @@ vuplex-dropdown-option {
     background-color: rgb(2, 2, 2);
     margin: 5% auto; /* Center the modal */
     padding: 10px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     width: 90%; /* Adjust the width as needed */
     border-radius: 5px;
     z-index: 10;
@@ -2062,7 +2175,7 @@ vuplex-dropdown-option {
 
 .form-row > input, .form-row > textarea {
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 5px;
     border-radius: 5px;
     color: white;
@@ -2081,7 +2194,7 @@ vuplex-dropdown-option {
     max-height: 40px;
     overflow-y: auto; /* Enable vertical scrolling */
     padding: 10px;
-    border: 1px solid var(--ts-button-background); 
+    border: 1px solid var(--border-outline-color); 
     border-radius: 5px; 
     background-color: rgb(2, 2, 2); 
 }
@@ -2093,7 +2206,7 @@ vuplex-dropdown-option {
     height: fit-content;
     overflow-y: auto; /* Enable vertical scrolling */
     padding: 5px;
-    border: 1px solid var(--ts-button-background); 
+    border: 1px solid var(--border-outline-color); 
     border-radius: 5px; 
     background-color: rgb(2, 2, 2); 
 }
@@ -2146,7 +2259,7 @@ vuplex-dropdown-option {
     background-color: rgb(2, 2, 2);
     margin: 5% auto; /* Center the modal */
     padding: 10px;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     width: 90%; /* Adjust the width as needed */
     border-radius: 5px;
     z-index: 10;
@@ -2174,7 +2287,7 @@ vuplex-dropdown-option {
     height: fit-content;
     overflow-y: auto; /* Enable vertical scrolling */
     padding: 2px;
-    border: 1px solid var(--ts-button-background); 
+    border: 1px solid var(--border-outline-color); 
     border-radius: 5px; 
     background-color: rgb(2, 2, 2); 
 }
@@ -2182,7 +2295,7 @@ vuplex-dropdown-option {
 
 .range-input {
     background-color: rgb(2, 2, 2);
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 5px;
     border-radius: 5px;
     color: white;
@@ -2237,7 +2350,7 @@ vuplex-dropdown-option {
 .long-rest-modal-content, .short-rest-modal-content, .hit-dice-modal-content {
     background-color: rgb(2, 2, 2);
     text-align: center;
-    border: 1px solid var(--ts-button-background);
+    border: 1px solid var(--border-outline-color);
     padding: 20px;
     border-radius: 5px;
 }

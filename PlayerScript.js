@@ -6430,17 +6430,21 @@ function loadNotesGroupData(notesGroupData) {
 
 //Player Init list start.
 
-function createInitiativeCard(name, isPlayer, isVisible) {
+function createInitiativeCard(name, isPlayer, isVisible, isBloodied) {
     // Get the initiative container
     const initCardHolder = document.querySelector('.initCardHolder');
 
     // Create the card element
     const card = document.createElement('div');
-    card.className = `initCard ${isPlayer === 1 ? 'playerCard' : 'enemyCard'}`;
+    card.className = `initCard ${isPlayer === 1 ? 'playerCard' : 'enemyCard '}`;
     card.style.display = isVisible === 1 ? 'block' : 'none'; // Hide if not visible
 
     // Determine the displayed name
     const displayedName = isPlayer === 1 ? name : "Enemy";
+
+    if (isBloodied === 1 && isPlayer === 0) {
+        card.classList.add('bloodied');
+    }
 
     // Add content to the card
     const nameElement = document.createElement('div');
@@ -6669,7 +6673,7 @@ function createPlayerInit(initList) {
 
     // Loop through the initiative list's data array and create cards
     initList.data.forEach(entry => {
-        createInitiativeCard(entry.n, entry.p, entry.v);
+        createInitiativeCard(entry.n, entry.p, entry.v, entry.b);
     });
 }
 

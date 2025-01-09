@@ -416,11 +416,15 @@ function updateMonsterCard(card, monster) {
                 if (damage > 0) {
                     currentHP = Math.max(0, currentHP - damage);
                 }
-                
+
+                if (currentHP < maxHP / 2) {
+                    monsterConditions("Bloodied");
+                }
+                   
+                    
                 if (activeMonsterCard) {
                     // Find the condition tracker div inside the active monster card
                     conditionTrackerDiv = activeMonsterCard.querySelector('.condition-tracker');
-                    console.log()
 
                     // Retrieve the condition set from the conditions map for this specific monster
                     conditionsSet = conditionsMap.get(activeMonsterCard);
@@ -440,6 +444,10 @@ function updateMonsterCard(card, monster) {
                 }
             } else if (adjustment > 0) { // Healing case
                 currentHP = Math.min(maxHP, currentHP + adjustment); // Heal current HP, but no effect on temp HP
+                if (currentHP > maxHP / 2) {
+                    console.log(`Monster is at less than half HP. Current HP: ${currentHP}, Max HP: ${maxHP}`);
+                    removeMonsterCondition("Bloodied");
+                }
             }
     
             // Update HP and temp HP displays
@@ -1226,6 +1234,13 @@ function monsterConditions(condition) {
         }
 
         // Create a condition pill
+        if (selectedCondition === 'Bloodied'){
+            debouncedSendInitiativeListToPlayer()
+            console.log(
+
+                "Testing this here"
+            )
+        }
         const conditionPill = document.createElement('div');
         conditionPill.classList.add('condition-pill');
         conditionPill.innerHTML = `
@@ -1258,7 +1273,25 @@ function removeConditionPill(condition, conditionTrackerDiv) {
 }
 
 
+function removeMonsterCondition(condition) {
+    if (activeMonsterCard) {
+        // Ensure the monster's condition map exists
+        if (!conditionsMap.has(activeMonsterCard)) return;
 
+        // Get the Set of conditions for this monster card
+        const conditionsSet = conditionsMap.get(activeMonsterCard);
+
+        if (conditionsSet.has(condition)) {
+            // Remove the condition from the Set
+            conditionsSet.delete(condition);
+
+            // Remove the condition pill from the DOM
+            const conditionTrackerDiv = activeMonsterCard.querySelector('.conditions-trackers');
+            removeConditionPill(condition, conditionTrackerDiv);
+        }
+    }
+    debouncedSendInitiativeListToPlayer()
+}
 
 
 
@@ -1741,11 +1774,13 @@ async function sendInitiativeListToPlayer() {
         const isPlayer = card.classList.contains("player-card") ? 1 : 0;
         const eyeButton = card.querySelector(".eye-button"); // Assuming the eye button has the class '.eye-button'
         const isVisible = eyeButton && eyeButton.querySelector('i') && eyeButton.querySelector('i').classList.contains('fa-eye-slash') ? 0 : 1;
+        const isBloodied = !isPlayer && conditionsMap.has(card) && conditionsMap.get(card).has("Bloodied") ? 1 : 0;
 
         return {
             n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
             p: isPlayer, // 1 for player, 0 for enemy
-            v: isVisible // 1 for visible, 0 for hidden
+            v: isVisible, // 1 for visible, 0 for hidden
+            b: isBloodied // 1 for bloodied, 0 otherwise (only for monsters)
         };
     });
 
@@ -2114,3 +2149,572 @@ function saveSkills() {
 
     return skills;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // Tab switching code
+    const tabs = document.querySelectorAll('.tabs a');
+    const sections = document.querySelectorAll('main section');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            // Hide all sections
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            tabs.forEach(t => {
+                t.style.border = '';
+            });
+
+            // Show the selected section
+            const targetId = tab.getAttribute('href').substring(1);
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+                tab.style.border = '1px solid rgb(151, 151, 151)';
+            } else {
+                console.log(`Target section with ID '${targetId}' not found.`);
+            }
+        });
+    });
+
+    // Display the initial section (e.g., Player Stats)
+    const initialTab = tabs[0];
+    initialTab.click();
+
+    // Filter elements within .table-tab that have the class .dmTable
+    const tableDivs = [...document.querySelectorAll('.dmTable')];
+    // Sub-tab switching code
+    const subTabs = document.querySelectorAll('.table-tab ul li a');
+
+    subTabs.forEach(subTab => {
+        subTab.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            subTabs.forEach(st => {
+                st.style.border = '';
+            });
+
+            // Get the data-target value from the clicked sub-tab
+            const targetId = subTab.getAttribute('data-target');
+            const targetDiv = document.getElementById(targetId);
+
+            if (targetDiv) {
+                // Hide all dmTable elements
+                tableDivs.forEach(tableDiv => {
+                    tableDiv.style.display = 'none';
+                    tableDiv.classList.remove('active');
+                });
+
+                // Show the selected dmTable and its nested divs (if any)
+                displayTargetDivAndNestedDivs(targetDiv);
+
+                subTab.style.border = '1px solid rgb(151, 151, 151)';
+            } else {
+                console.log(`Target sub-tab content with data-target '${targetId}' not found.`);
+            }
+        });
+    });
+
+    function displayTargetDivAndNestedDivs(div) {
+        // Show the current div
+        div.style.display = 'block';
+        div.classList.add('active');
+
+        // Recursively check for nested divs and show them
+        const nestedDivs = div.querySelectorAll('.dmTable');
+        nestedDivs.forEach(nestedDiv => {
+            displayTargetDivAndNestedDivs(nestedDiv);
+        });
+    }
+
+
+
+
+
+    // Display the initial sub-tab (e.g., Conditions)
+    const initialSubTab = subTabs[0];
+    initialSubTab.click();
+
+
+
+    // Get references to the select element for the shops dropdown list
+    const shopSelect = document.getElementById('shopSelect');
+    const dropdownContents = document.querySelectorAll('.dropdown-content');
+
+    // Function to show the selected dropdown content
+    function showSelectedShopContent() {
+        // Hide all dropdown content divs in the shops
+        dropdownContents.forEach(function (content) {
+            content.style.display = 'none';
+        });
+
+        // Show the selected dropdown content div in the shops
+        const selectedShop = shopSelect.value;
+        const selectedShopContent = document.getElementById(selectedShop);
+        if (selectedShopContent) {
+            selectedShopContent.style.display = 'block';
+        }
+    }
+
+    // Add a change event listener to the select element in the shops
+    shopSelect.addEventListener('change', showSelectedShopContent);
+
+    // Trigger the change event on page load to show the default shop
+    showSelectedShopContent();
+
+
+
+});
+
+
+//DM Tables Section Start
+
+// Function to handle table cell editing
+function tableEditing(cell) {
+    cell.addEventListener("blur", function() {
+        const row = this.closest("tr");
+        const table = this.closest(".dmTable, .shopTables");
+
+        if (table) {
+            const activeTableId = table.id;
+            const rowIndex = Array.from(row.parentNode.children).indexOf(row);
+
+            const dataType = activeTableId;
+            const dataId = rowIndex;
+            const rowData = {};
+
+            for (let i = 0; i < row.cells.length; i++) {
+                rowData[`column${i}`] = row.cells[i].innerHTML;
+            }
+        }
+    });
+
+    cell.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            this.blur();
+            event.preventDefault();
+        }
+    });
+}
+
+// Function to add a new row to the table
+function addNewRow(table) {
+    const newRow = table.rows[1].cloneNode(true);
+
+    // Clear the content in each cell and set contenteditable="true"
+    newRow.querySelectorAll("td").forEach(cell => {
+        cell.textContent = ""; // Clear the content
+        cell.setAttribute("contenteditable", "true"); // Make the cell editable
+
+        // Call tableEditing function for the new cell
+        tableEditing(cell);
+    }); 
+
+    // Append the new row to the table
+    table.querySelector("tbody").appendChild(newRow);
+}
+
+// Use event delegation to handle the click event for "table-row-button"
+const addButtonElements = document.querySelectorAll(".table-row-button");
+addButtonElements.forEach(button => {
+    button.addEventListener("click", function() {
+        // Get the table associated with the button (closest table within the same dmTable)
+        const table = this.closest(".dmTable, .shopTables").querySelector("table");
+
+        if (table) {
+            // Add a new row to the table
+            addNewRow(table);
+        }
+    });
+});
+
+
+
+
+const jumpInputs = document.querySelectorAll('.jumpInput');
+            
+            // Attach event listeners to all elements with the "jumpInput" class
+            jumpInputs.forEach(function(input) {
+                input.addEventListener('input', calculateJump);
+                calculateJump();
+            });
+
+
+function calculateJump() {
+    const strength = parseInt(document.getElementById("strength").value);
+    const feet = parseInt(document.getElementById("feet").value);
+    const inches = parseInt(document.getElementById("inches").value);
+    const jumpMultiplier = parseInt(document.getElementById("jumpMultiplier").value);
+    const heightInInches = (feet * 12) + inches;
+
+    // Calculate jump distances
+    const runningStartLongJump = strength * jumpMultiplier;
+    const runningStartHighJump = (3 + ((strength - 10) / 2)) * jumpMultiplier;
+    const runningStartReach = (3 + ((strength - 10) / 2) * jumpMultiplier) + 1.5  * (heightInInches/12);
+    const noRunningStartLongJump = strength / 2 * jumpMultiplier;
+    const noRunningStartHighJump = ((3 + ((strength - 10) / 2)) /2)* jumpMultiplier;
+    const noRunningStartReach = ((3 + ((strength - 10) / 2)) /2 * jumpMultiplier) + 1.5 * (heightInInches/12);
+
+    // Update the paragraph texts
+    document.getElementById("runningStartLongJump").textContent = runningStartLongJump.toFixed(2) + " feet horizontally.";
+    document.getElementById("runningStartHighJump").textContent = runningStartHighJump.toFixed(2) + " feet off the ground.";
+    document.getElementById("runningStartReach").textContent = runningStartReach.toFixed(2) + " feet off the ground.";
+    document.getElementById("noRunningStartLongJump").textContent = noRunningStartLongJump.toFixed(2) + " feet horizontally.";
+    document.getElementById("noRunningStartHighJump").textContent = noRunningStartHighJump.toFixed(2) + " feet off the ground.";
+    document.getElementById("noRunningStartReach").textContent = noRunningStartReach.toFixed(2) + " feet off the ground.";
+}
+
+document.querySelectorAll("tbody tr").forEach(row => {
+    row.addEventListener("contextmenu", function(e) {
+        e.preventDefault(); // Prevent the default context menu
+        const contextMenu = document.createElement("div");
+        contextMenu.classList.add("context-menu");
+        contextMenu.innerHTML = '<div class="menu-item">Delete</div>';
+        document.body.appendChild(contextMenu);
+
+        contextMenu.style.left = e.clientX + "px";
+        contextMenu.style.top = e.clientY + "px";
+
+        contextMenu.querySelector(".menu-item").addEventListener("click", function() {
+            row.remove(); // Remove the row
+            contextMenu.remove(); // Remove the context menu
+        });
+
+        document.addEventListener("click", function() {
+            contextMenu.remove(); // Remove the context menu on a click outside
+        });
+    });
+});
+
+
+    // Random Encounter Generators Start
+
+
+    // Function to pick a random row from the table
+    function pickRandomRow(tableId) {
+        const table = document.getElementById(tableId);
+        const rows = table.querySelectorAll('tbody tr');
+        
+        if (rows.length === 0) {
+            alert('The table is empty. Add rows to pick a random one.');
+            return;
+        }
+
+        const randomIndex = Math.floor(Math.random() * rows.length);
+        const randomRow = rows[randomIndex];
+        const rowNumber = randomRow.cells[0].textContent.trim();
+        const rowDetails = randomRow.cells[1].textContent.trim();
+
+        errorModal(`#${rowNumber}: ${rowDetails}`);
+    }
+
+    // Add event listeners for picking random rows
+    const dmTables = document.querySelectorAll('.dmTable');
+
+    dmTables.forEach(table => {
+        const button = table.querySelector('.randomButton');
+        
+        if (button) {
+            button.addEventListener('click', function() {
+                pickRandomRow(table.id);
+            });
+        }
+    });
+
+
+    // Random Encounter Generator End
+
+
+
+
+
+//DM Tables Section End
+
+
+  
+// Function to get the unique ID from a checklist item
+function getItemId(element) {
+    // Check if the element is null or undefined
+    if (!element || !(element instanceof HTMLElement)) {
+        console.error('Invalid element:', element);
+        return null;
+    }
+
+    // Check if the input element is present
+    const input = element.querySelector('input');
+    if (!input) {
+        console.error('Input element not found in the checklist item:', element);
+        return null;
+    }
+
+    return input.getAttribute('data-id');
+}
+
+
+// Function to add an item to the checklist
+function addItem() {
+    console.log("here")
+    const itemText = document.getElementById('checklistItem').value.trim();
+    if (itemText === '') return; // Ignore empty items
+
+    // Generate a unique ID for the checklist item
+    const itemId = generateUniqueId();
+
+    // Create a new checklist item
+    const newItem = document.createElement('li');
+    newItem.innerHTML = `
+        <input type="checkbox" onchange="toggleItem(this)" data-id="${itemId}">
+        <span>${itemText}</span>
+        <button onclick="removeItem(this)">Remove</button>
+    `;
+
+    // Append the new item to the checklist
+    document.getElementById('items').appendChild(newItem);
+
+    // Clear the input field
+    document.getElementById('checklistItem').value = '';
+
+    // Save the checklist item to global storage
+    saveToGlobalStorage('checklists', itemId, {
+        text: itemText,
+        checked: false, // Assuming a new item is initially unchecked
+    });
+}
+
+// Function to generate a unique ID for checklist items
+function generateUniqueId() {
+    // Use a timestamp to ensure uniqueness
+    return 'item-' + Date.now();
+}
+
+// Function to toggle the completion status of an item
+function toggleItem(checkbox) {
+    const item = checkbox.parentElement;
+
+    // Get the unique identifier for the checklist item
+    const itemId = getItemId(item);
+
+    if (itemId !== null) {
+        const itemText = item.querySelector('span');
+        itemText.style.textDecoration = checkbox.checked ? 'line-through' : 'none';
+
+        // Save the checklist item status to global storage
+        saveToGlobalStorage('checklists', itemId, {
+            text: itemText.textContent,
+            checked: checkbox.checked,
+        });
+    }
+}
+
+// Function to remove an item from the checklist
+function removeItem(button) {
+    const item = button.parentElement;
+    const itemText = item.querySelector('span');
+
+    // Get the unique identifier for the checklist item
+    const itemId = getItemId(item);
+
+    // Remove the item from the DOM
+    item.remove();
+
+    // Save the removal of the checklist item to global storage
+    removeFromGlobalStorage('checklists', itemId);
+}
+
+
+
+// Function to update the checklist UI based on the loaded data
+function updateChecklistUI(checklistData) {
+    const checklist = document.getElementById('items');
+
+    // Clear existing items in the UI
+    checklist.innerHTML = '';
+
+    // Iterate through the loaded checklist data and create UI elements
+    Object.entries(checklistData).forEach(([itemId, item]) => {
+        const newItem = document.createElement('li');
+        newItem.innerHTML = `
+            <input type="checkbox" onchange="toggleItem(this)" data-id="${itemId}" ${item.checked ? 'checked' : ''}>
+            <span style="text-decoration: ${item.checked ? 'line-through' : 'none'}">${item.text}</span>
+            <button onclick="removeItem(this)">Remove</button>
+        `;
+
+        checklist.appendChild(newItem);
+    });
+}
+
+
+
+// Define the global variable with conditions and their descriptions
+const CONDITIONS = [
+    {
+      condition: "Blinded",
+      description: [
+        "A blinded creature can't see and automatically fails any ability check that requires sight.",
+        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
+      ]
+    },
+    {
+      condition: "Charmed",
+      description: [
+        "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
+        "The charmer has advantage on any ability check to interact socially with the creature."
+      ]
+    },
+    {
+      condition: "Deafened",
+      description: [
+        "A deafened creature can't hear and automatically fails any ability check that requires hearing."
+      ]
+    },
+    {
+      condition: "Exhaustion",
+      description: [
+        "Level 1: Disadvantage on ability checks",
+        "Level 2: Speed halved",
+        "Level 3: Disadvantage on attack rolls and saving throws",
+        "Level 4: Hit point maximum halved",
+        "Level 5: Speed reduced to 0",
+        "Level 6: Death"
+      ]
+    },
+    {
+      condition: "Frightened",
+      description: [
+        "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.",
+        "The creature can't willingly move closer to the source of its fear."
+      ]
+    },
+    {
+      condition: "Grappled",
+      description: [
+        "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+        "The condition ends if the grappler is incapacitated (see the condition).",
+        "The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
+      ]
+    },
+    {
+      condition: "Incapacitated",
+      description: [
+        "An incapacitated creature can't take actions or reactions."
+      ]
+    },
+    {
+      condition: "Invisible",
+      description: [
+        "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
+        "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
+      ]
+    },
+    {
+      condition: "Paralyzed",
+      description: [
+        "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage.",
+        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+      ]
+    },
+    {
+      condition: "Petrified",
+      description: [
+        "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
+        "The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
+        "Attack rolls against the creature have advantage.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "The creature has resistance to all damage.",
+        "The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
+      ]
+    },
+    {
+      condition: "Poisoned",
+      description: [
+        "A poisoned creature has disadvantage on attack rolls and ability checks."
+      ]
+    },
+    {
+      condition: "Prone",
+      description: [
+        "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
+        "The creature has disadvantage on attack rolls.",
+        "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
+      ]
+    },
+    {
+      condition: "Restrained",
+      description: [
+        "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
+        "The creature has disadvantage on Dexterity saving throws."
+      ]
+    },
+    {
+      condition: "Stunned",
+      description: [
+        "A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage."
+      ]
+    },
+    {
+      condition: "Unconscious",
+      description: [
+        "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings.",
+        "The creature drops whatever it's holding and falls prone.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage.",
+        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+      ]
+    }
+  ];
+  
+  // Function to populate the conditions table
+  function populateConditionsTable() {
+    const tableBody = document.querySelector("#conditions tbody");
+    tableBody.innerHTML = ""; // Clear existing rows
+  
+    CONDITIONS.forEach(condition => {
+      const row = document.createElement("tr");
+  
+      // Condition name
+      const conditionCell = document.createElement("td");
+      conditionCell.textContent = condition.condition;
+      row.appendChild(conditionCell);
+  
+      // Description
+      const descriptionCell = document.createElement("td");
+      const descriptionList = document.createElement("ul");
+  
+      condition.description.forEach(desc => {
+        const listItem = document.createElement("li");
+        listItem.textContent = desc;
+        descriptionList.appendChild(listItem);
+      });
+  
+      descriptionCell.appendChild(descriptionList);
+      row.appendChild(descriptionCell);
+  
+      tableBody.appendChild(row);
+    });
+  }
+  
+  // Add an event listener to call the function when the page loads
+  document.addEventListener("DOMContentLoaded", populateConditionsTable);
+  

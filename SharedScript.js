@@ -796,7 +796,6 @@ async function onInit() {
     }
 
     const languageData = await loadDataFromGlobalStorage("language");
-
     // Extract "Preferred Language" and validate it
     savedLanguage = languageData?.["Preferred Language"];
     if (savedLanguage !== "eng" && savedLanguage !== "es") {
@@ -823,7 +822,7 @@ async function onInit() {
         loadAndPickaCharacter()
     }
     rollableButtons();
-
+    loadThemeSettings()
 }
 
 function parseAndReplaceDice(action, text, spell) {
@@ -926,100 +925,110 @@ function parseAndReplaceDice(action, text, spell) {
                     container.appendChild(button);
                 } else {
                     // Check for spell names within the part
-                    let remainingText = part;
+                    // let remainingText = part;
                     if (spell) {
-                        AppData.spellLookupInfo?.spellsData.forEach(spell => {
-                            const spellName = spell.name;
+                        // Combine all spell names into a single regex pattern
+                        const spellNames = AppData.spellLookupInfo?.spellsData.map(spell => spell.name).join('|');
+                        const spellRegex = new RegExp(`\\b(${spellNames})\\b[.,]?`, 'gi');
                     
-                            // Create a regex for the spell name with word boundaries
-                            const spellRegex = new RegExp(`\\b${spellName}\\b`, 'i');
-                            const spellIndex = remainingText.search(spellRegex);
+                        // Find all matches in the text
+                        const matches = [...part.matchAll(spellRegex)];
+                        let lastIndex = 0;
                     
-                            if (spellIndex !== -1) {
-                                // If a spell name is found, split the text and insert the hoverable element for the spell
-                                const beforeSpell = remainingText.slice(0, spellIndex);
-                                const afterSpell = remainingText.slice(spellIndex + spellName.length);
+                        // Debugging
+                        console.log(`Processing text: "${part}"`);
+                        console.log(`Found matches:`, matches);
                     
-                                // Add the text before the spell name
-                                if (beforeSpell) container.appendChild(document.createTextNode(beforeSpell));
+                        // Iterate through each match
+                        matches.forEach(match => {
+                            const [spellName] = match; // Matched spell name
+                            const spellIndex = match.index;
                     
+                            // Debug: Log the matched spell name
+                            console.log(`Matched spell name: "${spellName}"`);
+                    
+                            // Append the text before the spell match
+                            if (spellIndex > lastIndex) {
+                                const beforeSpell = part.slice(lastIndex, spellIndex);
+                                container.appendChild(document.createTextNode(beforeSpell));
+                            }
+                    
+                            // Clean the matched spell name by removing trailing punctuation (e.g., commas, periods)
+                            const cleanedSpellName = spellName.replace(/[.,]$/, '').toLowerCase().trim();
+
+                            // Find the spell object by name (normalize both strings)
+                            const spellData = AppData.spellLookupInfo?.spellsData.find(
+                                s => s.name.toLowerCase().trim() === cleanedSpellName
+                            );
+
+                            // Debug: Log whether the spell was found
+                            if (!spellData) {
+                                console.log(`Spell not found for cleaned name: "${cleanedSpellName}"`);
+                            } else {
+                                console.log(`Found spell:`, spellData);
+                            }
+                    
+                            if (spellData) {
+                                console.log("here")
                                 // Create and append the spell element
                                 const spellElement = document.createElement('span');
                                 spellElement.classList.add('spell-hover');
                                 spellElement.style.textDecoration = 'underline';
                                 spellElement.textContent = spellName;
                     
-                                // Show the spell card as a tooltip on hover
-                                spellElement.addEventListener('mouseenter', (event) => {
-                                    // Create the tooltip (spell card)
+                                // Tooltip logic for spell hover
+                                spellElement.addEventListener('mouseenter', () => {
                                     const tooltip = document.createElement('div');
                                     tooltip.classList.add('spell-tooltip');
-                                    tooltip.setAttribute('data-desc', spell.desc);
-                    
-                                    // Populate the tooltip with spell details
+                                    tooltip.setAttribute('data-desc', spellData.desc);
                                     tooltip.innerHTML = `
-                                        <strong>${spell.name}</strong><br>
-                                        <strong>Level:</strong> ${spell.level}<br>
-                                        <strong>School:</strong> ${spell.school}<br>
-                                        <strong>Casting Time:</strong> ${spell.casting_time}<br>
-                                        <strong>Range:</strong> ${spell.range}<br>
-                                        <strong>Components:</strong> ${spell.components}<br>
-                                        <strong>Duration:</strong> ${spell.duration}<br>
-                                        <strong>Description:</strong> ${spell.desc}
+                                        <strong>${spellData.name}</strong><br>
+                                        <strong>Level:</strong> ${spellData.level}<br>
+                                        <strong>School:</strong> ${spellData.school}<br>
+                                        <strong>Casting Time:</strong> ${spellData.casting_time}<br>
+                                        <strong>Range:</strong> ${spellData.range}<br>
+                                        <strong>Components:</strong> ${spellData.components}<br>
+                                        <strong>Duration:</strong> ${spellData.duration}<br>
+                                        <strong>Description:</strong> ${spellData.desc}
                                     `;
-                    
-                                    // Append the tooltip to the body (or container)
                                     document.body.appendChild(tooltip);
                     
-                                    // Position the tooltip under the hovered spell
-                                    // Get the bounding rect of the spell element
+                                    // Position tooltip dynamically
                                     const rect = spellElement.getBoundingClientRect();
-
-                                    // Calculate space available at the bottom of the screen
                                     const spaceBelow = window.innerHeight - rect.bottom - window.scrollY;
-
-                                    // Decide whether to place the tooltip above or below
-                                    let tooltipPositionTop;
-                                    if (spaceBelow >= tooltip.offsetHeight + 5) {
-                                        // Enough space below, place tooltip below the spell
-                                        tooltipPositionTop = rect.bottom + window.scrollY + 5; // Slightly below
-                                    } else {
-                                        // Not enough space below, place tooltip above the spell
-                                        tooltipPositionTop = rect.top + window.scrollY - tooltip.offsetHeight - 5; // Slightly above
-                                    }
-
-                                    // Set the position of the tooltip
-                                    tooltip.style.position = 'absolute';
-                                    tooltip.style.top = `${tooltipPositionTop}px`; // Set dynamic top position
+                                    const tooltipTop = spaceBelow >= tooltip.offsetHeight + 5
+                                        ? rect.bottom + window.scrollY + 5
+                                        : rect.top + window.scrollY - tooltip.offsetHeight - 5;
                     
-                                    // Show the tooltip (fade-in effect via opacity)
+                                    tooltip.style.position = 'absolute';
+                                    tooltip.style.top = `${tooltipTop}px`;
                                     tooltip.style.opacity = 0;
                                     setTimeout(() => tooltip.style.opacity = 1, 0);
                     
-                                    // Store the tooltip reference for later removal
                                     spellElement.tooltip = tooltip;
                                 });
                     
-                                // Remove the tooltip when mouse leaves
                                 spellElement.addEventListener('mouseleave', () => {
                                     const tooltip = spellElement.tooltip;
                                     if (tooltip) {
                                         tooltip.style.opacity = 0;
-                                        setTimeout(() => tooltip.remove(), 200); // Remove tooltip after fade-out
+                                        setTimeout(() => tooltip.remove(), 200);
                                     }
                                 });
                     
                                 container.appendChild(spellElement);
-                    
-                                // Update the remaining text to process
-                                remainingText = afterSpell;
                             }
+                    
+                            // Update the last index to the end of the current match
+                            lastIndex = spellIndex + spellName.length;
                         });
+                    
+                        // Append any remaining text after the last match
+                        if (lastIndex < part.length) {
+                            container.appendChild(document.createTextNode(part.slice(lastIndex)));
+                        }
                     }
-                    // Add the remaining text after the spell name (if any)
-                    if (remainingText) {
-                        container.appendChild(document.createTextNode(remainingText));
-                    }
+                    
                 }
             }
         } else {
@@ -1808,3 +1817,168 @@ document.getElementById('settings-button').addEventListener('blur', function () 
         }
     }, 300); // Delay in milliseconds (e.g., 300ms)
 });
+
+
+
+
+
+
+// Element references
+const themeModal = document.getElementById("themeModal");
+const openModalBtn = document.getElementById("openModal");
+const closeModalBtn = document.getElementById("closeModal");
+const themeButtons = document.querySelectorAll(".theme-button");
+const customThemeSettings = document.getElementById("customThemeSettings");
+const primaryColorPicker = document.getElementById("primaryColor");
+const secondaryColorPicker = document.getElementById("secondaryColor");
+const applyCustomThemeBtn = document.getElementById("applyCustomTheme");
+
+// Open and close modal
+openModalBtn.addEventListener("click", () => {
+  themeModal.classList.add("show");
+});
+
+closeModalBtn.addEventListener("click", () => {
+  themeModal.classList.remove("show");
+});
+
+// Apply theme
+themeButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const theme = button.dataset.theme;
+
+    // Toggle custom theme settings
+    if (theme === "custom-theme") {
+      customThemeSettings.style.display = "flex";
+    } else {
+      customThemeSettings.style.display = "none";
+      document.documentElement.className = theme; // Apply theme by class name
+      saveThemeSettings(theme, null, null); // Save the settings
+    }
+  });
+});
+
+
+
+// Apply custom theme
+// Add event listeners to the HEX input fields
+document.querySelectorAll('.hex-input').forEach((input) => {
+    input.addEventListener('input', (event) => {
+        const value = event.target.value.trim();
+        const previewId = event.target.id + "Preview";
+        const previewElement = document.getElementById(previewId);
+
+        // Validate HEX color code
+        if (/^#[0-9A-Fa-f]{6}$/.test(value)) {
+            previewElement.style.backgroundColor = value; // Update preview color
+        } else {
+            previewElement.style.backgroundColor = "transparent"; // Invalid HEX
+        }
+    });
+});
+
+// Apply custom theme button
+applyCustomThemeBtn.addEventListener("click", () => {
+    const primaryColor = primaryColorPicker.value.trim();
+    const secondaryColor = secondaryColorPicker.value.trim();
+  
+    if (/^#[0-9A-Fa-f]{6}$/.test(primaryColor) && /^#[0-9A-Fa-f]{6}$/.test(secondaryColor)) {
+      // Find the custom theme's CSS rule
+        const stylesheet = Array.from(document.styleSheets).find(sheet =>
+            sheet.href && sheet.href.includes("styleShared.css")
+        );
+
+        console.log("Targeted Stylesheet:", stylesheet);
+  
+        if (stylesheet) {
+            const rules = Array.from(stylesheet.cssRules).find(rule =>
+            rule.selectorText === ".alternate-theme-custom"
+            );
+    
+            if (rules) {
+            rules.style.setProperty("--border-outline-color", primaryColor);
+            rules.style.setProperty("--button-color-hover", lightenHexColor(primaryColor, 20));
+            rules.style.setProperty("--action-button-color", secondaryColor);
+            rules.style.setProperty("--action-button-color-hover", lightenHexColor(secondaryColor, 20));
+            }
+        }
+    
+        alert("Custom theme applied!");
+        document.documentElement.className = "alternate-theme-custom"; // Apply custom theme class
+        saveThemeSettings("alternate-theme-custom", primaryColor, secondaryColor); // Save the settings
+    } else {
+      errorModal("Please enter valid HEX color codes for both fields.");
+    }
+    
+});
+
+// Function to lighten a HEX color
+function lightenHexColor(hex, percent) {
+    const num = parseInt(hex.slice(1), 16);
+    const amt = Math.round(2.55 * percent);
+    const r = Math.min(255, (num >> 16) + amt);
+    const g = Math.min(255, ((num >> 8) & 0x00ff) + amt);
+    const b = Math.min(255, (num & 0x0000ff) + amt);
+    return `#${(0x1000000 + (r << 16) + (g << 8) + b).toString(16).slice(1).toUpperCase()}`;
+}
+
+
+async function saveThemeSettings(theme, primaryColor, secondaryColor) {
+    const themeData = {
+        selectedTheme: theme,
+        primaryColor: primaryColor,
+        secondaryColor: secondaryColor,
+    };
+
+    try {
+        // Replace with your global storage function
+        await saveToGlobalStorage("ThemeSettings", "UserTheme", themeData, false);
+        console.log("Theme settings saved:", themeData);
+    } catch (error) {
+        console.error("Error saving theme settings:", error);
+    }
+}
+
+
+
+async function loadThemeSettings() {
+    try {
+        // Replace with your global storage retrieval function
+        const themeData = await loadDataFromGlobalStorage("ThemeSettings");
+
+        console.log(themeData)
+
+        if (themeData) {
+            const { selectedTheme, primaryColor, secondaryColor } = themeData.UserTheme;
+
+            if (selectedTheme === "alternate-theme-custom" && primaryColor && secondaryColor) {
+                // Apply custom theme
+                const stylesheet = Array.from(document.styleSheets).find(sheet =>
+                    sheet.href && sheet.href.includes("styleShared.css")
+                );
+
+                if (stylesheet) {
+                    const rules = Array.from(stylesheet.cssRules).find(rule =>
+                        rule.selectorText === ".alternate-theme-custom"
+                    );
+
+                    if (rules) {
+                        rules.style.setProperty("--border-outline-color", primaryColor);
+                        rules.style.setProperty("--button-color-hover", lightenHexColor(primaryColor, 20));
+                        rules.style.setProperty("--action-button-color", secondaryColor);
+                        rules.style.setProperty("--action-button-color-hover", lightenHexColor(secondaryColor, 20));
+                    }
+                }
+
+                document.documentElement.className = "alternate-theme-custom";
+                primaryColorPicker.value = primaryColor; // Update input field
+                secondaryColorPicker.value = secondaryColor;
+            } else if (selectedTheme) {
+                // Apply preset theme
+                document.documentElement.className = selectedTheme;
+            }
+        }
+    } catch (error) {
+        console.error("Error loading theme settings:", error);
+    }
+}
