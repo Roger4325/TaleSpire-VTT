@@ -6623,6 +6623,7 @@ async function sendDMInitiativeResults(totalInitiative){
     if (gmClient !== null) {
         const message = {
             type: 'update-init', // Message type
+            playerId: isMe,
             data: {
                 Initiative: totalInitiative
             }

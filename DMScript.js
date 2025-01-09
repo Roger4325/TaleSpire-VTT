@@ -777,7 +777,7 @@ function createEmptyPlayerCard() {
 
             // Update the card with selected player's details
             updatePlayerCard(card, selectedPlayer);
-
+            debouncedRequestPlayerInfo();
             // Hide the dropdown after selection
             playerList.style.display = 'none';
         });
@@ -834,11 +834,6 @@ async function updatePlayerCard(card, player) {
  
      if (player.talespireId) {
          card.dataset.playerId = player.talespireId; // Store player ID in dataset
-     }
- 
-     const selectedPlayer = player.talespireId;
-     if (selectedPlayer) {
-        debouncedRequestPlayerInfo;
      }
  
      // Create and add player details
@@ -955,8 +950,6 @@ async function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
-
-    reorderCards();
 }
 
 
@@ -1041,7 +1034,7 @@ function reorderCards() {
 }
 
 const debouncedSendInitiativeListToPlayer = debounce(sendInitiativeListToPlayer, 1000);
-const debouncedRequestPlayerInfo = debounce(requestPlayerInfo, 1000); // 300ms delay
+const debouncedRequestPlayerInfo = debounce(requestPlayerInfo, 1000); 
 
 //Event listener for the request player stats button. Should broadcast to all players for stats. 
 document.getElementById("request-player-stats").addEventListener("click", debouncedRequestPlayerInfo);
@@ -1733,6 +1726,8 @@ function handlePlayerPermissionEvents() {
 
 async function requestPlayerInfo() {
 
+    console.log("here")
+
     const message = {
         type: 'request-info',
         data: {
@@ -1741,7 +1736,7 @@ async function requestPlayerInfo() {
     };
 
     // Send the message to all players on the board
-     try {
+    try {
         console.log("sending message request")
         await TS.sync.send(JSON.stringify(message), "board");
     } catch (error) {
@@ -1758,6 +1753,8 @@ async function sendInitiativeListToPlayer() {
         console.error("Initiative tracker element not found.");
         return;
     }
+
+    console.log("sending")
 
     // Retrieve all cards
     const cards = Array.from(tracker.querySelectorAll(".monster-card, .player-card"));
@@ -1902,11 +1899,11 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
     // Apply damage to the player's character sheet, or whatever logic you need
 }
 
-function handleUpdatePlayerInitiative(parsedMessage, fromClient){
+function handleUpdatePlayerInitiative(parsedMessage){
 
     console.log(parsedMessage)
     const playerInit = parseInt(parsedMessage.data.Initiative); 
-    const playerId = fromClient; // Assume fromClient is the unique player ID (client.id)
+    const playerId = parsedMessage.playerId;
 
     // Get all the player cards from the DOM
     const playerCards = document.querySelectorAll('.player-card');
