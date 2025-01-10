@@ -20,12 +20,14 @@ function extractRollResult(message) {
 let monsterNames
 let monsterData
 
-
+//This function is the first function that is called on load and I have been using as if it is an INIT() function. 
 function establishMonsterData(){
     const monsterDataObject = AppData.monsterLookupInfo;
     monsterNames = monsterDataObject.monsterNames;
     monsterData = monsterDataObject.monsterData;
-    loadAndSetLanguage()
+    loadAndSetLanguage();
+    loadDataFromCampaignStorage();
+    populateConditionSelect();
 }
 
 async function loadAndSetLanguage(){
@@ -55,11 +57,6 @@ function handleMessage(message) {
         console.error(`Unhandled message type: ${type}`);
     }
 }
-
-
-
-
-
 
 const playerCharacters = [
     // { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
@@ -1177,7 +1174,6 @@ const conditionsMap = new Map();
 // Function to handle adding conditions to the active monster
 function monsterConditions(condition) {
 
-    console.log(condition)
     let selectedCondition
     if (condition){
         selectedCondition = condition;
@@ -1186,7 +1182,6 @@ function monsterConditions(condition) {
         const conditionSelect = document.getElementById('condition-select');
         selectedCondition = conditionSelect.value;
     }
-    
 
     // Ensure a condition is selected and there's an active monster
     if (selectedCondition && activeMonsterCard) {
@@ -1229,10 +1224,6 @@ function monsterConditions(condition) {
         // Create a condition pill
         if (selectedCondition === 'Bloodied'){
             debouncedSendInitiativeListToPlayer()
-            console.log(
-
-                "Testing this here"
-            )
         }
         const conditionPill = document.createElement('div');
         conditionPill.classList.add('condition-pill');
@@ -1240,6 +1231,53 @@ function monsterConditions(condition) {
             <span>${selectedCondition}</span>
             <button class="remove-condition">x</button>
         `;
+
+         // Fetch the description from CONDITIONS or EFFECTS
+         let conditionDescription = null;
+         const allConditions = [...CONDITIONS, ...EFFECTS];
+         const matchingCondition = allConditions.find(
+             (entry) => entry.condition === selectedCondition || entry.effect === selectedCondition
+         );
+ 
+         if (matchingCondition) {
+             conditionDescription = matchingCondition.description;
+         }
+
+        // Tooltip logic for hover effect
+        if (conditionDescription) {
+            conditionPill.addEventListener('mouseenter', () => {
+                const tooltip = document.createElement('div');
+                tooltip.classList.add('condition-tooltip');
+                tooltip.innerHTML = `
+                    <strong>${selectedCondition}</strong><br>
+                    ${conditionDescription}
+                `;
+                document.body.appendChild(tooltip);
+
+                // Position tooltip dynamically
+                const rect = conditionPill.getBoundingClientRect();
+                const spaceBelow = window.innerHeight - rect.bottom - window.scrollY;
+                const tooltipTop = spaceBelow >= tooltip.offsetHeight + 5
+                    ? rect.bottom + window.scrollY + 5
+                    : rect.top + window.scrollY - tooltip.offsetHeight - 5;
+                const tooltipLeft = rect.left + window.scrollX;
+
+                tooltip.style.position = 'absolute';
+                tooltip.style.top = `${tooltipTop}px`;
+                tooltip.style.opacity = 0;
+                setTimeout(() => tooltip.style.opacity = 1, 0);
+
+                conditionPill.tooltip = tooltip;
+            });
+
+            conditionPill.addEventListener('mouseleave', () => {
+                const tooltip = conditionPill.tooltip;
+                if (tooltip) {
+                    tooltip.style.opacity = 0;
+                    setTimeout(() => tooltip.remove(), 200);
+                }
+            });
+        }
 
         // Add a click event listener to the remove button
         const removeButton = conditionPill.querySelector('.remove-condition');
@@ -1900,15 +1938,11 @@ function handleApplyMonsterDamage(parsedMessage, fromClient) {
 }
 
 function handleUpdatePlayerInitiative(parsedMessage){
-
-    console.log(parsedMessage)
     const playerInit = parseInt(parsedMessage.data.Initiative); 
-    const playerId = parsedMessage.playerId;
+    const playerId = parsedMessage.playerId.id;
 
     // Get all the player cards from the DOM
     const playerCards = document.querySelectorAll('.player-card');
-
-    console.log(playerInit)
 
     // Loop through all the player cards and update the matching one
     playerCards.forEach(card => {
@@ -1932,6 +1966,50 @@ function handleRequestInitList(){
 
 
 
+const openHomebrewButton = document.getElementById('openHomebrew');
+const homebrewModal = document.getElementById("homebrewModal");
+const closehomebrewModalButton = document.getElementById('close-homebrew-modal-button');
+  
+// Open the form
+openHomebrewButton.addEventListener('click', () => {
+    homebrewModal.style.display = 'block';
+    updateStorageUsage()
+    loadAndDisplayCustomMonsters()
+});
+
+// Close the form
+closehomebrewModalButton.addEventListener('click', () => {
+    homebrewModal.style.display = 'none';
+});
+
+async function updateStorageUsage() {
+    const totalQuotaKB = 5120; // 5MB in KB
+
+    // Fetch local storage usage (Assuming localFileSize is already defined elsewhere)
+    const localStorageSize = localFileSize;
+    const localStorageUsageKB = (localStorageSize / 1024).toFixed(2);
+
+    // Fetch global storage usage (Assuming globalFileSize is already defined elsewhere)
+    const globalStorageSize = globalFileSize;
+    const globalStorageUsageKB = (globalStorageSize / 1024).toFixed(2);
+
+    // Update Local Storage progress bar and text
+    const localStorageProgress = document.getElementById("localStorageProgress");
+    const localStorageUsageText = document.getElementById("localStorageUsageText");
+    const localStoragePercentage = ((localStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
+    localStorageProgress.style.width = `${localStoragePercentage}%`; // Update the width to reflect the usage
+    localStorageUsageText.textContent = `${localStorageUsageKB} KB / ${totalQuotaKB} KB`;
+
+    // Update Global Storage progress bar and text
+    const globalStorageProgress = document.getElementById("globalStorageProgress");
+    const globalStorageUsageText = document.getElementById("globalStorageUsageText");
+    const globalStoragePercentage = ((globalStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
+    globalStorageProgress.style.width = `${globalStoragePercentage}%`; // Update the width to reflect the usage
+    globalStorageUsageText.textContent = `${globalStorageUsageKB} KB / ${totalQuotaKB} KB`;
+}
+
+
+/*Monster Creator Form Section*/
 const customMonsterButton = document.getElementById('customMonsters');
 const monsterForm = document.getElementById("monsterCreationForm");
 const monsterFormModal = document.getElementById("monsterFormModal");
@@ -1940,17 +2018,62 @@ let items = []; // Store created spells
 
 // Open the form
 customMonsterButton.addEventListener('click', () => {
+    monsterForm.reset()
+    resetMonsterForm()
     monsterFormModal.style.display = 'block';
     populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability");
     populateCheckboxes("monsterFormResistances", damageTypes, "resistance");
     populateCheckboxes("monsterFormImmunities", damageTypes, "immunity");
     populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
+    homebrewModal.style.display = 'none';
 });
 
 // Close the form
 closeMonsterFormButton.addEventListener('click', () => {
     monsterFormModal.style.display = 'none';
 });
+
+
+
+function resetMonsterForm() {
+    // Clear all input fields
+    const inputs = monsterForm.querySelectorAll("input");
+    inputs.forEach(input => {
+        if (input.type === "checkbox" || input.type === "radio") {
+            input.checked = false; // Uncheck checkboxes and radio buttons
+        } else {
+            input.value = ""; // Clear text fields
+        }
+    });
+
+    // Clear all textareas
+    const textareas = monsterForm.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        textarea.value = ""; // Clear text areas
+    });
+
+    // Reset all dropdowns (select elements)
+    const selects = monsterForm.querySelectorAll("select");
+    selects.forEach(select => {
+        select.selectedIndex = 0; // Reset to the first option
+    });
+
+    // Clear dynamically created checkboxes
+    const dynamicCheckboxContainers = [
+        "monsterFormVulnerabilities",
+        "monsterFormResistances",
+        "monsterFormImmunities",
+        "monsterFormConditionImmunities"
+    ];
+    dynamicCheckboxContainers.forEach(containerId => {
+        const container = document.getElementById(containerId);
+        if (container) {
+            container.innerHTML = ""; // Clear any dynamically populated checkboxes
+        }
+    });
+}
+
+
 
 document.getElementById("monsterCreationForm").addEventListener("submit", function (event) {
     event.preventDefault();
@@ -1962,6 +2085,7 @@ document.getElementById("monsterCreationForm").addEventListener("submit", functi
         Path: "",
         Source: document.getElementById("monsterFormSource").value,
         Type: document.getElementById("monsterFormType").value,
+        CR: document.getElementById("monsterFormCR").value,
         InitiativeModifier: document.getElementById("monsterFormInitiativeModifier").value,
         HP: {
             Value: parseInt(document.getElementById("monsterFormHPValue").value),
@@ -2024,27 +2148,41 @@ function collectDynamicFields(sectionId) {
 }
 
 // Add dynamic fields
-function addDynamicField(sectionId) {
+function addDynamicField(sectionId, entry = null) {
     const section = document.getElementById(sectionId);
     const div = document.createElement("div");
     div.classList.add("dynamic-entry");
 
-    console.log(section)
-
+    // Populate fields with entry data if available
     div.innerHTML = `
         <div>
-            <input type="text" class="entry-name" placeholder="Name">
+            <input type="text" class="entry-name" placeholder="Name" value="${entry?.Name || ""}">
             <button type="button" class="removeEntry nonRollButton">Remove</button>
         </div>
-        <textarea class="entry-content" placeholder="Content"></textarea>  
+        <textarea class="entry-content" placeholder="Content">${entry?.Content || ""}</textarea>  
     `;
 
+    // Append the dynamic entry to the section
     section.appendChild(div);
 
+    // Add event listener to the remove button
     div.querySelector(".removeEntry").addEventListener("click", () => {
         div.remove();
     });
 }
+
+function populateDynamicFields(sectionId, data) {
+    const section = document.getElementById(sectionId);
+    section.innerHTML = `<h3>${sectionId.replace("monsterForm", "")}</h3>
+                         <button type="button" class="nonRollButton">Add</button>`;
+
+    const addButton = section.querySelector("button");
+    addButton.addEventListener("click", () => addDynamicField(sectionId));
+
+    // Populate existing data
+    data?.forEach(entry => addDynamicField(sectionId, entry));
+}
+
 
 // Buttons to add dynamic entries
 document.getElementById("addTraitButton").addEventListener("click", () => addDynamicField("monsterFormTraits"));
@@ -2052,12 +2190,9 @@ document.getElementById("addActionButton").addEventListener("click", () => addDy
 document.getElementById("addReactionButton").addEventListener("click", () => addDynamicField("monsterFormReactions"));
 document.getElementById("addLegendaryActionsButton").addEventListener("click", () => addDynamicField("monsterFormLegendaryActions"));
 
-function populateCheckboxes(containerId, types, namePrefix) {
+function populateCheckboxes(containerId, types, namePrefix, checkedValues = []) {
     const container = document.getElementById(containerId);
     container.innerHTML = ""; // Clear container before populating (if re-used)
-
-    console.log(containerId);
-    console.log(container)
 
     types.forEach(type => {
         const label = document.createElement("label");
@@ -2069,6 +2204,11 @@ function populateCheckboxes(containerId, types, namePrefix) {
         checkbox.id = `${namePrefix}${type}`;
         checkbox.name = namePrefix;
         checkbox.value = type;
+
+        // Check the box if the type exists in the checkedValues array
+        if (checkedValues.includes(type)) {
+            checkbox.checked = true;
+        }
 
         // Configure the span label
         span.id = `label${type}`;
@@ -2149,11 +2289,169 @@ function saveSkills() {
 
 
 
+document.getElementById("editCustomMonsters").addEventListener("click", async() => {
+    const monsterSelect = document.getElementById("customMonsterSelect");
+    const selectedMonster = monsterSelect.value;
+    if (selectedMonster) {
+        // Fetch monster data from global storage
+        loadDataFromGlobalStorage("Custom Monsters")
+            .then((monsters) => {
+                const monsterData = monsters[selectedMonster];
+                if (monsterData) {
+                    // Populate the edit form or interface with the monster's data
+                    monsterFormModal.style.display = 'block';
+                    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability");
+                    populateCheckboxes("monsterFormResistances", damageTypes, "resistance");
+                    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity");
+                    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
+                    homebrewModal.style.display = 'none';
+                    populateMonsterForm(monsterData);
+                } else {
+                    errorModal(`Monster "${selectedMonster}" data not found.`);
+                }
+            })
+            .catch((error) => {
+                console.error("Failed to load monster data for editing:", error);
+            });
+    } else {
+        errorModal("No monster selected for editing.");
+    }
+});
 
 
 
 
+document.getElementById("deleteCustomMonsters").addEventListener("click", async() => {
+    const monsterSelect = document.getElementById("customMonsterSelect");
+    const selectedMonster = monsterSelect.value;
 
+    if (selectedMonster) {
+        removeFromGlobalStorage("Custom Monsters", selectedMonster)
+            .then(() => {
+                console.log(`Monster "${selectedMonster}" deleted successfully.`);
+                loadAndDisplayCustomMonsters(); // Reload the list of monsters
+            })
+            .catch((error) => {
+                console.error("Failed to delete monster:", error);
+            });
+            await loadMonsterDataFiles()
+    } else {
+        errorModal("No monster selected for deletion.");
+    }
+});
+
+function loadAndDisplayCustomMonsters() {
+    loadDataFromGlobalStorage("Custom Monsters")
+        .then((monsters) => {
+            const monsterSelect = document.getElementById("customMonsterSelect");
+            monsterSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with monster names
+            for (const monsterName in monsters) {
+                const option = document.createElement("option");
+                option.value = monsterName;
+                option.textContent = monsterName;
+                monsterSelect.appendChild(option);
+            }
+
+            // If no monsters exist, disable the dropdown and delete button
+            if (Object.keys(monsters).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No monsters available";
+                monsterSelect.appendChild(placeholderOption);
+                monsterSelect.disabled = true;
+                document.getElementById("deleteCustomMonsters").disabled = true;
+            } else {
+                monsterSelect.disabled = false;
+                document.getElementById("deleteCustomMonsters").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom monsters:", error);
+        });
+}
+
+
+function populateMonsterForm(monster) {
+    console.log(monster)
+    document.getElementById("monsterFormName").value = monster.Name || "";
+    document.getElementById("monsterFormType").value = monster.Type || "";
+    document.getElementById("monsterFormCR").value = monster.CR || "";
+    document.getElementById("monsterFormSource").value = monster.Source || "";
+  
+    document.getElementById("monsterFormHPValue").value = monster.HP?.Value || "";
+    document.getElementById("monsterFormHPNotes").value = monster.HP?.Notes || "";
+    document.getElementById("monsterFormACValue").value = monster.AC?.Value || "";
+    document.getElementById("monsterFormACNotes").value = monster.AC?.Notes || "";
+    document.getElementById("monsterFormInitiativeModifier").value = monster.InitiativeModifier || "";
+  
+    document.getElementById("monsterFormSpeed").value = monster.Speed || "";
+    document.getElementById("monsterFormSenses").value = monster.Senses || "";
+    document.getElementById("monsterFormLanguages").value = monster.Languages || "";
+  
+    // Populate ability scores
+    document.getElementById("monsterFormStr").value = monster.Abilities?.Str || "";
+    document.getElementById("monsterFormDex").value = monster.Abilities?.Dex || "";
+    document.getElementById("monsterFormCon").value = monster.Abilities?.Con || "";
+    document.getElementById("monsterFormInt").value = monster.Abilities?.Int || "";
+    document.getElementById("monsterFormWis").value = monster.Abilities?.Wis || "";
+    document.getElementById("monsterFormCha").value = monster.Abilities?.Cha || "";
+  
+    // Define the saves mapping
+    const saveElements = [
+        { id: "monsterFormStrSave", name: "Str" },
+        { id: "monsterFormDexSave", name: "Dex" },
+        { id: "monsterFormConSave", name: "Con" },
+        { id: "monsterFormIntSave", name: "Int" },
+        { id: "monsterFormWisSave", name: "Wis" },
+        { id: "monsterFormChaSave", name: "Cha" }
+    ];
+    
+    // Populate saves
+    saveElements.forEach(saveElement => {
+        const save = monster.Saves?.find(s => s.Name === saveElement.name);
+        document.getElementById(saveElement.id).value = save ? save.Modifier : "";
+    });
+  
+    // Populate skills
+    const skillElements = [
+        { id: "monsterAcrobatics", name: "Acrobatics" },
+        { id: "monsterAnimalHandling", name: "Animal Handling" },
+        { id: "monsterArcana", name: "Arcana" },
+        { id: "monsterAthletics", name: "Athletics" },
+        { id: "monsterDeception", name: "Deception" },
+        { id: "monsterHistory", name: "History" },
+        { id: "monsterInsight", name: "Insight" },
+        { id: "monsterIntimidation", name: "Intimidation" },
+        { id: "monsterInvestigation", name: "Investigation" },
+        { id: "monsterMedicine", name: "Medicine" },
+        { id: "monsterNature", name: "Nature" },
+        { id: "monsterPerception", name: "Perception" },
+        { id: "monsterPerformance", name: "Performance" },
+        { id: "monsterPersuasion", name: "Persuasion" },
+        { id: "monsterReligion", name: "Religion" },
+        { id: "monsterSleightOfHand", name: "Sleight of Hand" },
+        { id: "monsterStealth", name: "Stealth" },
+        { id: "monsterSurvival", name: "Survival" }
+    ];
+
+    skillElements.forEach(skillElement => {
+        const skill = monster.Skills?.find(s => s.Name === skillElement.name);
+        document.getElementById(skillElement.id).value = skill ? skill.Modifier : "";
+    });
+
+    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability", monster.DamageVulnerabilities || []);
+    populateCheckboxes("monsterFormResistances", damageTypes, "resistance", monster.DamageResistances || []);
+    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity", monster.DamageImmunities || []);
+    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity", monster.ConditionImmunities || []);
+
+
+    populateDynamicFields("monsterFormTraits", monster.Traits);
+    populateDynamicFields("monsterFormActions", monster.Actions);
+    populateDynamicFields("monsterFormReactions", monster.Reactions);
+    populateDynamicFields("monsterFormLegendaryActions", monster.LegendaryActions);
+}
 
 
 
@@ -2558,130 +2856,6 @@ function updateChecklistUI(checklistData) {
 }
 
 
-
-// Define the global variable with conditions and their descriptions
-const CONDITIONS = [
-    {
-      condition: "Blinded",
-      description: [
-        "A blinded creature can't see and automatically fails any ability check that requires sight.",
-        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
-      ]
-    },
-    {
-      condition: "Charmed",
-      description: [
-        "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
-        "The charmer has advantage on any ability check to interact socially with the creature."
-      ]
-    },
-    {
-      condition: "Deafened",
-      description: [
-        "A deafened creature can't hear and automatically fails any ability check that requires hearing."
-      ]
-    },
-    {
-      condition: "Exhaustion",
-      description: [
-        "Level 1: Disadvantage on ability checks",
-        "Level 2: Speed halved",
-        "Level 3: Disadvantage on attack rolls and saving throws",
-        "Level 4: Hit point maximum halved",
-        "Level 5: Speed reduced to 0",
-        "Level 6: Death"
-      ]
-    },
-    {
-      condition: "Frightened",
-      description: [
-        "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.",
-        "The creature can't willingly move closer to the source of its fear."
-      ]
-    },
-    {
-      condition: "Grappled",
-      description: [
-        "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
-        "The condition ends if the grappler is incapacitated (see the condition).",
-        "The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
-      ]
-    },
-    {
-      condition: "Incapacitated",
-      description: [
-        "An incapacitated creature can't take actions or reactions."
-      ]
-    },
-    {
-      condition: "Invisible",
-      description: [
-        "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
-        "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
-      ]
-    },
-    {
-      condition: "Paralyzed",
-      description: [
-        "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage.",
-        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
-      ]
-    },
-    {
-      condition: "Petrified",
-      description: [
-        "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
-        "The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
-        "Attack rolls against the creature have advantage.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "The creature has resistance to all damage.",
-        "The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
-      ]
-    },
-    {
-      condition: "Poisoned",
-      description: [
-        "A poisoned creature has disadvantage on attack rolls and ability checks."
-      ]
-    },
-    {
-      condition: "Prone",
-      description: [
-        "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
-        "The creature has disadvantage on attack rolls.",
-        "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
-      ]
-    },
-    {
-      condition: "Restrained",
-      description: [
-        "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
-        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
-        "The creature has disadvantage on Dexterity saving throws."
-      ]
-    },
-    {
-      condition: "Stunned",
-      description: [
-        "A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage."
-      ]
-    },
-    {
-      condition: "Unconscious",
-      description: [
-        "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings.",
-        "The creature drops whatever it's holding and falls prone.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage.",
-        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
-      ]
-    }
-  ];
-  
   // Function to populate the conditions table
   function populateConditionsTable() {
     const tableBody = document.querySelector("#conditions tbody");
@@ -2711,7 +2885,36 @@ const CONDITIONS = [
       tableBody.appendChild(row);
     });
   }
+
+function populateConditionSelect() {
+    // Select the target dropdown by its ID
+    const conditionSelect = document.getElementById("condition-select");
+
+    // Clear existing options (if needed)
+    conditionSelect.innerHTML = "";
+
+    // Combine CONDITIONS and EFFECTS, then sort alphabetically
+    const allConditionsAndEffects = [
+        ...CONDITIONS.map(condition => ({
+            id: `conditionOption${condition.condition}`,
+            value: condition.condition
+        })),
+        ...EFFECTS.map(effect => ({
+            id: `conditionOption${effect.effect}`,
+            value: effect.effect
+        }))
+    ].sort((a, b) => a.value.localeCompare(b.value));
+
+    // Add each sorted option to the dropdown
+    allConditionsAndEffects.forEach(entry => {
+        const option = document.createElement("option");
+        option.id = entry.id;
+        option.value = entry.value;
+        option.textContent = entry.value;
+        conditionSelect.appendChild(option);
+    });
+}
+
   
   // Add an event listener to call the function when the page loads
   document.addEventListener("DOMContentLoaded", populateConditionsTable);
-  

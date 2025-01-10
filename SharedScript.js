@@ -86,6 +86,238 @@ const conditionTypes = [
     "Exhaustion"
 ];
 
+// Define the global variable with conditions and their descriptions
+const CONDITIONS = [
+    {
+      condition: "Blinded",
+      description: [
+        "A blinded creature can't see and automatically fails any ability check that requires sight.",
+        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
+      ]
+    },
+    {
+      condition: "Charmed",
+      description: [
+        "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
+        "The charmer has advantage on any ability check to interact socially with the creature."
+      ]
+    },
+    {
+      condition: "Deafened",
+      description: [
+        "A deafened creature can't hear and automatically fails any ability check that requires hearing."
+      ]
+    },
+    {
+      condition: "Exhaustion",
+      description: [
+        "Level 1: Disadvantage on ability checks",
+        "Level 2: Speed halved",
+        "Level 3: Disadvantage on attack rolls and saving throws",
+        "Level 4: Hit point maximum halved",
+        "Level 5: Speed reduced to 0",
+        "Level 6: Death"
+      ]
+    },
+    {
+      condition: "Frightened",
+      description: [
+        "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.",
+        "The creature can't willingly move closer to the source of its fear."
+      ]
+    },
+    {
+      condition: "Grappled",
+      description: [
+        "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+        "The condition ends if the grappler is incapacitated (see the condition).",
+        "The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
+      ]
+    },
+    {
+      condition: "Incapacitated",
+      description: [
+        "An incapacitated creature can't take actions or reactions."
+      ]
+    },
+    {
+      condition: "Invisible",
+      description: [
+        "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
+        "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
+      ]
+    },
+    {
+      condition: "Paralyzed",
+      description: [
+        "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage.",
+        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+      ]
+    },
+    {
+      condition: "Petrified",
+      description: [
+        "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
+        "The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
+        "Attack rolls against the creature have advantage.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "The creature has resistance to all damage.",
+        "The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
+      ]
+    },
+    {
+      condition: "Poisoned",
+      description: [
+        "A poisoned creature has disadvantage on attack rolls and ability checks."
+      ]
+    },
+    {
+      condition: "Prone",
+      description: [
+        "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
+        "The creature has disadvantage on attack rolls.",
+        "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
+      ]
+    },
+    {
+      condition: "Restrained",
+      description: [
+        "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
+        "The creature has disadvantage on Dexterity saving throws."
+      ]
+    },
+    {
+      condition: "Stunned",
+      description: [
+        "A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage."
+      ]
+    },
+    {
+      condition: "Unconscious",
+      description: [
+        "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings.",
+        "The creature drops whatever it's holding and falls prone.",
+        "The creature automatically fails Strength and Dexterity saving throws.",
+        "Attack rolls against the creature have advantage.",
+        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+      ]
+    }
+];
+
+const EFFECTS = [
+    {
+        effect: "Aid",
+        description: [
+            "The creature gains 5 Max hp per level of aid they have."
+        ]
+    },
+    {
+        effect: "Bloodied",
+        description: [
+            "The creature's hit points are at or below half its maximum hit points."
+        ]
+    },
+    {
+        effect: "Bless",
+        description: [
+            "The creature can add a d4 to attack rolls or saving throws while the effect lasts."
+        ]
+    },
+    {
+        effect: "Bane",
+        description: [
+            "The creature must subtract a d4 from attack rolls or saving throws while the effect lasts."
+        ]
+    },
+    {
+        effect: "Raging",
+        description: [
+            "The creature gains advantage on Strength checks and saving throws.",
+            "The creature's melee weapon attacks deal bonus damage based on level.",
+            "The creature has resistance to bludgeoning, piercing, and slashing damage."
+        ]
+    },
+    {
+        effect: "Inspired",
+        description: [
+            "The creature can add a Bardic Inspiration die to an ability check, attack roll, or saving throw."
+        ]
+    },
+    {
+        effect: "Hasted",
+        description: [
+            "The creature's speed is doubled.",
+            "It gains a +2 bonus to AC.",
+            "It has advantage on Dexterity saving throws.",
+            "It gains an additional action each turn (limited to certain actions)."
+        ]
+    },
+    {
+        effect: "Slowed",
+        description: [
+            "The creature's speed is halved.",
+            "It takes a -2 penalty to AC and Dexterity saving throws.",
+            "It can't use reactions, and it can take only one action or bonus action on its turn."
+        ]
+    },
+    {
+        effect: "Shielded",
+        description: [
+            "The creature gains a temporary increase to its AC (e.g., Shield spell adds +5 to AC until the start of the next turn)."
+        ]
+    },
+    {
+        effect: "Invisible",
+        description: [
+            "The creature can't be seen without magical aid or special senses.",
+            "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
+        ]
+    },
+    {
+        effect: "Concentrating",
+        description: [
+            "The creature is concentrating on a spell. Concentration is broken if the creature takes damage and fails a Constitution saving throw."
+        ]
+    },
+    {
+        effect: "Hexed",
+        description: [
+            "The creature has disadvantage on ability checks of a chosen ability.",
+            "It takes extra necrotic damage from attacks by the caster."
+        ]
+    },
+    {
+        effect: "Cursed",
+        description: [
+            "The curse applies a specific penalty, such as reduced hit points, disadvantage on certain rolls, or inability to regain hit points."
+        ]
+    },
+    {
+        effect: "Heroism",
+        description: [
+            "The creature gains temporary hit points at the start of each turn while the effect lasts.",
+            "It is immune to being frightened."
+        ]
+    },
+    {
+        effect: "Sanctuaried",
+        description: [
+            "Creatures attempting to attack the protected creature must make a Wisdom saving throw or choose a new target."
+        ]
+    }
+    // {
+    //     effect: "Drained",
+    //     description: [
+    //         "The creature's maximum hit points are reduced until it finishes a long rest."
+    //     ]
+    // }
+];
+
 let savedLanguage = 'eng';
 
 //This is the translation library that changes the textcontent of the id listed as a key below.
@@ -244,6 +476,148 @@ const translations = {
         conditionOptionUnconscious: "Unconscious",
         conditionOptionSlow: "Slow",
         conditionOptionRaging: "Raging",
+
+
+        //Proficiency Sections
+        // 'Martial Weapons': "Testing",
+        // "Simple Weapons": "Simple Weapons",
+        
+        //Simple Melee Weapons
+
+        // "Club": "Club",
+        // "Dagger": "Dagger",
+        // "Greatclub": "Greatclub",
+        // "Handaxe": "Handaxe",
+        // "Javelin": "Javelin",
+        // "LightHammer": "Light Hammer",
+        // "Mace": "Mace",
+        // "Quarterstaff": "Quarterstaff",
+        // "Sickle": "Sickle",
+        // "Spear": "Spear",
+
+
+        //Simple Ranged Weapons
+
+        // "CrossbowLight": "Light Crossbow",
+        // "Dart": "Dart",
+        // "Shortbow": "Shortbow",
+        // "Sling": "Sling",
+
+        //Martial Melee Weapons
+
+        // "Battleaxe": "Battleaxe",
+        // "Flail": "Flail",
+        // "Glaive": "Glaive",
+        // "Greataxe": "Greataxe",
+        // "Greatsword": "Greatsword",
+        // "Halberd": "Halberd",
+        // "Lance": "Lance",
+        // "Longsword": "Longsword",
+        // "Maul": "Maul",
+        // "Morningstar": "Morningstar",
+        // "Pike": "Pike",
+        // "Rapier": "Rapier",
+        // "Scimitar": "Scimitar",
+        // "Shortsword": "Shortsword",
+        // "Trident": "Trident",
+        // "WarPick": "War Pick",
+        // "Warhammer": "Warhammer",
+        // "Whip": "Whip",
+
+        //Martial Ranged Weapons
+
+        // "Blowgun": "Blowgun",
+        // "CrossbowHand": "Hand Crossbow",
+        // "CrossbowHeavy": "Heavy Crossbow",
+        // "Longbow": "Longbow",
+        // "Net": "Net",
+
+        //Armor
+
+        // "Light": "Light",
+        // "Medium": "Medium",
+        // "Heavy": "Heavy",
+        // "Shield": "Shield",
+
+
+        //Languages
+
+        // "Common": "Common",
+        // "Dwarvish": "Dwarvish",
+        // "Elvish": "Elvish",
+        // "Giant": "Giant",
+        // "Gnomish": "Gnomish",
+        // "Goblin": "Goblin",
+        // "Halfling": "Halfling",
+        // "Orc": "Orc",
+        // "Leonin": "Leonin",
+        // "Minotaur": "Minotaur",
+
+        //Exotic Languages
+
+        // "Abyssal": "Abyssal",
+        // "Celestial": "Celestial",
+        // "Draconic": "Draconic",
+        // "DeepSpeech": "Deep Speech",
+        // "Infernal": "Infernal",
+        // "Primordial": "Primordial",
+        // "Sylvan": "Sylvan",
+        // "ThievesCant": "Thieves Cant",
+        // "Undercommon": "Undercommon",
+
+
+        //Tools
+        //Artisan's Tools
+
+        // "Alchemist's Supplies": "Alchemist's Supplies",
+        // "Brewer's Supplies": "Brewer's Supplies",
+        // "Calligrapher's Supplies": "Calligrapher's Supplies",
+        // "Carpenter's Tools": "Carpenter's Tools",
+        // "Cartographer's Tools": "Cartographer's Tools",
+        // "Cobbler's Tools": "Cobbler's Tools",
+        // "Cook's Utensils": "Cook's Utensils",
+        // "Glassblower's Tools": "Glassblower's Tools",
+        // "Jeweler's Tools": "Jeweler's Tools",
+        // "Leatherworker's Tools": "Leatherworker's Tools",
+        // "Mason's Tools": "Mason's Tools",
+        // "Painter's Supplies": "Painter's Supplies",
+        // "Potter's Tools": "Potter's Tools",
+        // "Smith's Tools": "Smith's Tools",
+        // "Tinker's Tools": "Tinker's Tools",
+        // "Weaver's Tools": "Weaver's Tools",
+        // "Woodcarver's Tools": "Woodcarver's Tools",
+
+        //Gaming Set
+
+        // "Dice Set": "Dice Set",
+        // "Dragonchess Set": "Dragonchess Set",
+        // "Playing Card Set": "Playing Card Set",
+        // "Three-Dragon Ante Set": "Three-Dragon Ante Set",
+
+        //Musical Instruments
+
+        // "Bagpipes": "Bagpipes",
+        // "Drum": "Drum",
+        // "Dulcimer": "Dulcimer",
+        // "Flute": "Flute",
+        // "Lute": "Lute",
+        // "Lyre": "Lyre",
+        // "Horn": "Horn",
+        // "PanFlute": "Pan Flute",
+        // "Shawm": "Shawm",
+        // "Viol": "Viol",
+        // "Wargong": "Wargong",
+
+        //Other Tools
+
+        // "Disguise Kit" : "Disguise Kit",
+        // "Forgery Kit" : "Forgery Kit",
+        // "Herbalism Kit" : "Herbalism Kit",
+        // "Navigator's Tools" : "Navigator's Tools",
+        // "Poisoner's Kit" : "Poisoner's Kit",
+        // "Thieves' Tools" : "Thieves' Tools",
+        // "Vehicles (Land)" : "Vehicles (Land)",
+        // "Vehicles (Water)" : "Vehicles (Water)",
 
 
 
@@ -467,6 +841,149 @@ const translations = {
         conditionOptionUnconscious: "Inconsciente",
         conditionOptionSlow: "Lento",
         conditionOptionRaging: "Enfurecido",
+
+
+
+        //Proficiency Sections
+        // 'Martial Weapons': "Testing",
+        // "Simple Weapons": "Simple Weapons",
+        
+        //Simple Melee Weapons
+
+        // "Club": "Club",
+        // "Dagger": "Dagger",
+        // "Greatclub": "Greatclub",
+        // "Handaxe": "Handaxe",
+        // "Javelin": "Javelin",
+        // "LightHammer": "Light Hammer",
+        // "Mace": "Mace",
+        // "Quarterstaff": "Quarterstaff",
+        // "Sickle": "Sickle",
+        // "Spear": "Spear",
+
+
+        //Simple Ranged Weapons
+
+        // "CrossbowLight": "Light Crossbow",
+        // "Dart": "Dart",
+        // "Shortbow": "Shortbow",
+        // "Sling": "Sling",
+
+        //Martial Melee Weapons
+
+        // "Battleaxe": "Battleaxe",
+        // "Flail": "Flail",
+        // "Glaive": "Glaive",
+        // "Greataxe": "Greataxe",
+        // "Greatsword": "Greatsword",
+        // "Halberd": "Halberd",
+        // "Lance": "Lance",
+        // "Longsword": "Longsword",
+        // "Maul": "Maul",
+        // "Morningstar": "Morningstar",
+        // "Pike": "Pike",
+        // "Rapier": "Rapier",
+        // "Scimitar": "Scimitar",
+        // "Shortsword": "Shortsword",
+        // "Trident": "Trident",
+        // "WarPick": "War Pick",
+        // "Warhammer": "Warhammer",
+        // "Whip": "Whip",
+
+        //Martial Ranged Weapons
+
+        // "Blowgun": "Blowgun",
+        // "CrossbowHand": "Hand Crossbow",
+        // "CrossbowHeavy": "Heavy Crossbow",
+        // "Longbow": "Longbow",
+        // "Net": "Net",
+
+        //Armor
+
+        // "Light": "Light",
+        // "Medium": "Medium",
+        // "Heavy": "Heavy",
+        // "Shield": "Shield",
+
+
+        //Languages
+
+        // "Common": "Common",
+        // "Dwarvish": "Dwarvish",
+        // "Elvish": "Elvish",
+        // "Giant": "Giant",
+        // "Gnomish": "Gnomish",
+        // "Goblin": "Goblin",
+        // "Halfling": "Halfling",
+        // "Orc": "Orc",
+        // "Leonin": "Leonin",
+        // "Minotaur": "Minotaur",
+
+        //Exotic Languages
+
+        // "Abyssal": "Abyssal",
+        // "Celestial": "Celestial",
+        // "Draconic": "Draconic",
+        // "DeepSpeech": "Deep Speech",
+        // "Infernal": "Infernal",
+        // "Primordial": "Primordial",
+        // "Sylvan": "Sylvan",
+        // "ThievesCant": "Thieves Cant",
+        // "Undercommon": "Undercommon",
+
+
+        //Tools
+        //Artisan's Tools
+
+        // "Alchemist's Supplies": "Alchemist's Supplies",
+        // "Brewer's Supplies": "Brewer's Supplies",
+        // "Calligrapher's Supplies": "Calligrapher's Supplies",
+        // "Carpenter's Tools": "Carpenter's Tools",
+        // "Cartographer's Tools": "Cartographer's Tools",
+        // "Cobbler's Tools": "Cobbler's Tools",
+        // "Cook's Utensils": "Cook's Utensils",
+        // "Glassblower's Tools": "Glassblower's Tools",
+        // "Jeweler's Tools": "Jeweler's Tools",
+        // "Leatherworker's Tools": "Leatherworker's Tools",
+        // "Mason's Tools": "Mason's Tools",
+        // "Painter's Supplies": "Painter's Supplies",
+        // "Potter's Tools": "Potter's Tools",
+        // "Smith's Tools": "Smith's Tools",
+        // "Tinker's Tools": "Tinker's Tools",
+        // "Weaver's Tools": "Weaver's Tools",
+        // "Woodcarver's Tools": "Woodcarver's Tools",
+
+        //Gaming Set
+
+        // "Dice Set": "Dice Set",
+        // "Dragonchess Set": "Dragonchess Set",
+        // "Playing Card Set": "Playing Card Set",
+        // "Three-Dragon Ante Set": "Three-Dragon Ante Set",
+
+        //Musical Instruments
+
+        // "Bagpipes": "Bagpipes",
+        // "Drum": "Drum",
+        // "Dulcimer": "Dulcimer",
+        // "Flute": "Flute",
+        // "Lute": "Lute",
+        // "Lyre": "Lyre",
+        // "Horn": "Horn",
+        // "PanFlute": "Pan Flute",
+        // "Shawm": "Shawm",
+        // "Viol": "Viol",
+        // "Wargong": "Wargong",
+
+        //Other Tools
+
+        // "Disguise Kit" : "Disguise Kit",
+        // "Forgery Kit" : "Forgery Kit",
+        // "Herbalism Kit" : "Herbalism Kit",
+        // "Navigator's Tools" : "Navigator's Tools",
+        // "Poisoner's Kit" : "Poisoner's Kit",
+        // "Thieves' Tools" : "Thieves' Tools",
+        // "Vehicles (Land)" : "Vehicles (Land)",
+        // "Vehicles (Water)" : "Vehicles (Water)",
 
 
 
@@ -1467,34 +1984,80 @@ async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
 
         if (shouldCheck && allData[dataType][dataId]) {
             // Data already exists, show error modal
-            exists = true;
-            errorModal("This already exists");
-            const removeButton = document.querySelector('#removeButton');
-            // Handle the button click to remove the data
-            removeButton.addEventListener('click', function () {
-                removeFromGlobalStorage(dataType, dataId); // Call the remove function
-            });
+            const errorModal = document.getElementById("errorModal");
+            const errorModalMessage = document.getElementById("errorModalMessage");
+            const removeButton = document.getElementById("removeButton");
+            const overWriteButton = document.getElementById("overWriteButton");
 
-            // Return early to prevent saving duplicate data
+            // Set up the modal message and display buttons
+            errorModalMessage.textContent = "This already exists. Would you like to overwrite or delete it?";
+            removeButton.style.display = "inline-block";
+            overWriteButton.style.display = "inline-block";
+
+            // Show the modal
+            errorModal.style.display = "block";
+
+            // Handle the overwrite functionality
+            overWriteButton.onclick = async function () {
+                allData[dataType][dataId] = data;
+
+                // Save the updated data back to global storage
+                await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+
+                // Optional: Indicate success
+                console.log(`Overwritten data of type: ${dataType}`);
+
+                // Close the modal
+                errorModal.style.display = "none";
+            };
+
+            // Handle the delete functionality
+            removeButton.onclick = async function () {
+                removeFromGlobalStorage(dataType, dataId);
+
+                // Optional: Indicate success
+                console.log(`Deleted data of type: ${dataType}`);
+
+                // Close the modal
+                errorModal.style.display = "none";
+            };
+
+            // Handle closing the modal
+            const closeButton = errorModal.querySelector(".close");
+            closeButton.onclick = function () {
+                errorModal.style.display = "none";
+            };
+
+            // Return early to prevent saving without user confirmation
             return;
         }
 
-        // Add or update the data
+        // Add or update the data if it doesn't already exist or `shouldCheck` is false
         allData[dataType][dataId] = data;
 
         // Save the updated data back to global storage
         await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
 
         // Optional: Indicate that the data was saved successfully
-        if (shouldCheck) {
-            console.log(`Saved data of type: ${dataType}`);
-        }
+        console.log(`Saved data of type: ${dataType}`);
     } catch (error) {
         console.error("Error saving to global storage:", error);
     }
 }
 
 
+function getVariableSize(variable) {
+    try {
+        // Convert the variable to a JSON string and calculate its byte size
+        const jsonString = JSON.stringify(variable);
+        return new Blob([jsonString]).size; // Get the size in bytes
+    } catch (error) {
+        console.error("Error calculating size of variable:", error);
+        return 0; // Return 0 bytes if there's an error
+    }
+}
+
+let globalFileSize = 0;
 // Retrieve data from global storage
 function loadDataFromGlobalStorage(dataType) {
     console.log("loading Global Storage")
@@ -1502,6 +2065,7 @@ function loadDataFromGlobalStorage(dataType) {
         TS.localStorage.global.getBlob()
             .then((data) => {
                 if (data) {
+                    globalFileSize = getVariableSize(data) // Blob size in bytes
                     const allData = JSON.parse(data);
                     if (allData[dataType]) {
                         resolve(allData[dataType]);
@@ -1522,14 +2086,16 @@ function loadDataFromGlobalStorage(dataType) {
 
 
 
-
+let localFileSize = 0
 // Retrieve data from global storage
 function loadDataFromCampaignStorage(dataType) {
-    console.log("loading Global Storage")
+    console.log("loading Campaign Storage")
     return new Promise((resolve, reject) => {
         TS.localStorage.campaign.getBlob()
             .then((data) => {
                 if (data) {
+                    localFileSize = getVariableSize(data); // Blob size in bytes
+                    console.log(`Campaign file size: ${localFileSize} bytes`);
                     const allData = JSON.parse(data);
                     if (allData[dataType]) {
                         resolve(allData[dataType]);
@@ -1647,8 +2213,9 @@ function removeFromCampaignStorage(dataType, dataId) {
 let exists = false
 function errorModal(modalText){
     const errorModal = document.getElementById('errorModal');
-    console.log(errorModal)
     const closeModal = errorModal.querySelector('.close');
+    const overWriteButton = errorModal.querySelector('#overWriteButton');
+    const removeButton = errorModal.querySelector('#removeButton');
     const modalContent = errorModal.querySelector('.modal-content p')
 
     modalContent.textContent = modalText;
@@ -1662,11 +2229,12 @@ function errorModal(modalText){
     
     if(exists === true){
         // Show the "Remove Monster" button
-        const removeButton = errorModal.querySelector('#removeButton');
         removeButton.style.display = 'block';
+        overWriteButton.style.display = 'block';
     }
     else{
         removeButton.style.display = 'none';
+        overWriteButton.style.display = 'none';
     }
 
     exists = false; // Reset the global variable
@@ -1786,7 +2354,6 @@ async function readEquipmentJson() {
 
         // Extract equipment names (if needed)
         const equipmentNames = combinedData.map(item => item.name);
-        console.log('Equipment data loaded successfully:', AppData.equipmentLookupInfo);
 
         // Optionally return combined data and equipment names
         return {

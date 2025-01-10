@@ -21,13 +21,9 @@
                 <div id="settings-dropdown">
                     <ul>
                         <li>
-                            <div id="languageButtons">
-                                <!-- <button id="languageEngButton" class="nonRollButton">English</button>
-                                <button id="languageEspButton" class="nonRollButton">Espanol</button> -->
+                            <div id="HomebrewButton">
+                                <button id="openHomebrew" class="nonRollButton">Homebrew</button>
                             </div>
-                        </li>
-                        <li>
-                            <button id="customMonsters" class="nonRollButton">Create Monster</button>
                         </li>
                         <!-- Add more options as needed -->
                     </ul>
@@ -3951,7 +3947,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p id="errorModalMessage"></p>
-            <button id="removeButton" style="display: none;">Delete from Global</button>
+            <button id="removeButton" class="nonRollButton" style="display: none;">Delete from Global</button>
+            <button id="overWriteButton" class="nonRollButton" style="display: none;">Replace the Global information</button>
         </div>
     </div>
 
@@ -4231,6 +4228,77 @@
         </div>
     </div>
 
+    <div id="homebrewModal" style="display: none;">
+        <div class="homebrew-modal-background">
+            <div class="homebrew-modal-content">
+                <span id="close-homebrew-modal-button" class="close">&times;</span>
+                <h2>Homebrew Creator</h2>
+                <div id="homebrewModalSubsectionStorage">
+                    <div>
+                        <span>Local Storage - </span><span id="localStorageUsageText">0 KB / 5120 KB</span>
+                        <div class="progress-bar-container">
+                            <div id="localStorageProgress" class="progress-bar"></div>
+                        </div>
+                        
+                    </div>
+                    <div>
+                        <span>Global Storage - </span><span id="globalStorageUsageText">0 KB / 5120 KB</span>
+                        <div class="progress-bar-container">
+                            <div id="globalStorageProgress" class="progress-bar"></div>
+                        </div>
+                        
+                    </div>    
+                    <div id="homebrewModalSubsectionEditor">
+                        <hr>
+                        <div class="monsterEditorSubsection">
+                            <div>
+                                <button id="customMonsters" class="nonRollButton">Create Monster</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label for="customMonsterSelect">Select Monster to Delete/Edit:</label>
+                                    <button id="deleteCustomMonsters" class="nonRollButton">Delete Monster</button>
+                                    <button id="editCustomMonsters" class="nonRollButton">Edit Monster</button>
+                                </div>
+                                <div id="customMonsterSelectDiv">
+                                    <select id="customMonsterSelect"></select>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <hr>
+                        <!-- <div class="monsterEditorSubsection">
+                            <div>
+                                <button id="customSpellExample" class="nonRollButton">Create Spell</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label for="customSpellSelect">Select Spell to Delete/Edit:</label>
+                                    <button id="deleteCustomSpells" class="nonRollButton">Delete Spell</button>
+                                    <button id="editCustomSpells" class="nonRollButton">Edit Spell</button>
+                                </div>
+                                <select id="customMonsterSelect"></select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="monsterEditorSubsection">
+                            <div>
+                                <button id="customEquipmentExample" class="nonRollButton">Create Item</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label for="customItemSelect">Select Item to Delete/Edit:</label>
+                                    <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
+                                    <button id="editCustomItems" class="nonRollButton">Edit Item</button>
+                                </div>
+                                <select id="customMonsterSelect"></select>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         
 

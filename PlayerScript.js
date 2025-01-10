@@ -969,9 +969,36 @@ function updateAbilityScoreModifiers(characterData) {
 
 
 
-function playerConditions() {
+function playerConditions(condition) {
     const conditionSelect = document.getElementById('condition-select');
-    let selectedCondition = conditionSelect.value;
+    
+
+    let selectedCondition
+    let selectedConditionText
+    if (condition){
+        selectedCondition = condition;    
+        // Loop through all options (including options within groups)
+        for (const option of conditionSelect.options) {
+            if (option.value === selectedCondition) {
+                selectedConditionText = option.textContent.trim();
+                break; // Stop once the match is found
+            }
+        }
+
+        console.log("Value:", selectedCondition); // The value of the selected condition
+        console.log("Text:", selectedConditionText); // The text content of the selected condition
+    }
+    else {
+        selectedCondition = conditionSelect.value;
+    
+        // Get the text content of the selected option
+        selectedConditionText = conditionSelect.options[conditionSelect.selectedIndex].textContent;
+    
+        console.log("Value:", selectedCondition); // The value of the selected condition
+        console.log("Text:", selectedConditionText); // The text content of the selected condition
+    }
+
+    console.log(selectedCondition)
 
     if (selectedCondition) {
         const conditionTrackerDiv = document.getElementById('conditionTracker')
@@ -1017,9 +1044,55 @@ function playerConditions() {
         const conditionPill = document.createElement('div');
         conditionPill.classList.add('condition-pill');
         conditionPill.innerHTML = `
-            <span>${selectedCondition}</span>
+            <span value="${selectedCondition}">${selectedConditionText}</span>
             <button class="remove-condition">x</button>
         `;
+
+         // Fetch the description from CONDITIONS or EFFECTS
+         let conditionDescription = null;
+         const allConditions = [...CONDITIONS, ...EFFECTS];
+         const matchingCondition = allConditions.find(
+             (entry) => entry.condition === selectedCondition || entry.effect === selectedCondition
+         );
+ 
+         if (matchingCondition) {
+             conditionDescription = matchingCondition.description;
+         }
+
+        // Tooltip logic for hover effect
+        if (conditionDescription) {
+            conditionPill.addEventListener('mouseenter', () => {
+                const tooltip = document.createElement('div');
+                tooltip.classList.add('condition-tooltip');
+                tooltip.innerHTML = `
+                    <strong>${selectedCondition}</strong><br>
+                    ${conditionDescription}
+                `;
+                document.body.appendChild(tooltip);
+
+                // Position tooltip dynamically
+                const rect = conditionPill.getBoundingClientRect();
+                const spaceBelow = window.innerHeight - rect.bottom - window.scrollY;
+                const tooltipTop = spaceBelow >= tooltip.offsetHeight + 5
+                    ? rect.bottom + window.scrollY + 5
+                    : rect.top + window.scrollY - tooltip.offsetHeight - 5;
+
+                tooltip.style.position = 'absolute';
+                tooltip.style.top = `${tooltipTop}px`;
+                tooltip.style.opacity = 0;
+                setTimeout(() => tooltip.style.opacity = 1, 0);
+
+                conditionPill.tooltip = tooltip;
+            });
+
+            conditionPill.addEventListener('mouseleave', () => {
+                const tooltip = conditionPill.tooltip;
+                if (tooltip) {
+                    tooltip.style.opacity = 0;
+                    setTimeout(() => tooltip.remove(), 200);
+                }
+            });
+        }
 
         // Add a click event listener to the remove button
         const removeButton = conditionPill.querySelector('.remove-condition');
@@ -1559,10 +1632,7 @@ function updateSaveModifier() {
         const saveNameElement = saveRow.querySelector('.saveName');
         const proficiencyButton = saveRow.querySelector('.proficiencyButtons button');
         const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
-        const saveName = saveNameElement.textContent.trim();
-
-        // Map save names to corresponding ability modifiers
-        const abilityMod = getAbilityModifierForSave(saveName);
+        const abilityMod = saveNameElement.getAttribute('value');;
 
         const abilityScoreLabel = findAbilityScoreLabel(abilityMod);
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
@@ -1584,30 +1654,6 @@ function updateSaveModifier() {
         saveLabel.setAttribute('value', saveModifier);
     });
 }
-
-
-// Helper function to map save names to corresponding ability modifiers
-function getAbilityModifierForSave(saveName) {
-    const saveNameToLower = saveName.toLowerCase();
-
-    switch (saveNameToLower) {
-        case 'str save':
-            return 'STR';
-        case 'dex save':
-            return 'DEX';
-        case 'con save':
-            return 'CON';
-        case 'int save':
-            return 'INT';
-        case 'wis save':
-            return 'WIS';
-        case 'cha save':
-            return 'CHA';
-        default:
-            return '';
-    }
-}
-
 
 
 function findAbilityScoreLabel(abilityMod) {
@@ -1653,7 +1699,7 @@ function getSkillValue(skillName) {
 
     for (let i = 0; i < skillRows.length; i++) {
         const skillRow = skillRows[i];
-        const currentSkillName = skillRow.querySelector('.skillName').textContent.trim();
+        const currentSkillName = skillRow.querySelector('.skillName').getAttribute('data-name');
 
         if (currentSkillName === skillName) {
             const label = skillRow.querySelector('.actionButtonLabel');
@@ -2255,11 +2301,7 @@ function updateCharacterUI(characterData, characterName) {
     const { proficiencyBonus } = calculateLevelFromXp(calculateXPFromLevel(characterLevel));
     document.getElementById('profBonus').textContent = proficiencyBonus;
 
-    // Update conditions UI
-    const conditionTrackerDiv = document.getElementById('conditionTracker');
-    const conditionsSet = new Set(characterData.conditions);
-    conditionsMap.set(conditionTrackerDiv, conditionsSet);
-    updateConditionsUI(conditionsSet);
+    
 
     loadProficiencies(playerWeaponProficiency, '#weaponsContainer', '#weapons-dropdown', 'playerWeaponProficiency');
     loadProficiencies(playerArmorProficiency, '#armorContainer', '#armor-dropdown', 'playerArmorProficiency');
@@ -2277,7 +2319,14 @@ function updateCharacterUI(characterData, characterName) {
     
     loadAndSetLanguage()
     updateAdjustmentValues()
-    
+
+    // Update conditions UI
+    const conditionsSet = new Set(characterData.conditions);
+    // Populate conditions based on conditionsSet
+    conditionsSet.forEach((condition) => {
+        console.log(condition)
+        playerConditions(condition)
+    });
 }
 
 async function loadAndSetLanguage(){
@@ -2315,38 +2364,6 @@ function findCurrentLevel(proficiencyLevel, skillProficiencyLevels, savesProfici
     return isSkillRow ? skillLevelIndex : savesLevelIndex;
 }
 
-function updateConditionsUI(conditionsSet) {
-    // Assuming you have elements with IDs corresponding to the condition tracker
-    const conditionTrackerDiv = document.getElementById('conditionTracker');
-
-    // Clear existing conditions in the UI
-    conditionTrackerDiv.innerHTML = '';
-
-    // Populate conditions based on conditionsSet
-    conditionsSet.forEach((condition) => {
-        // Check if the condition already exists in the UI
-        if (!conditionTrackerDiv.querySelector(`[data-condition="${condition}"]`)) {
-            const conditionPill = document.createElement('div');
-            conditionPill.classList.add('condition-pill');
-            conditionPill.dataset.condition = condition;
-            conditionPill.innerHTML = `
-                <span>${condition}</span>
-                <button class="remove-condition">x</button>
-            `;
-
-            // Add a click event listener to the remove button
-            const removeButton = conditionPill.querySelector('.remove-condition');
-            removeButton.addEventListener('click', () => {
-                conditionsSet.delete(condition);
-                removeConditionPill(condition);
-                updateContent();
-            });
-
-            // Add the condition pill to the container
-            conditionTrackerDiv.appendChild(conditionPill);
-        }
-    });
-}
 
 async function loadAndPickaCharacter() {
     // Step 1: Load all characters from global storage
