@@ -816,93 +816,6 @@
 
 
 
-/*Homebrew Modal section*/
-/* Modal background that blurs everything else */
-#homebrewModal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 9; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
-    backdrop-filter: blur(10px); /* Apply blur effect */
-    -webkit-backdrop-filter: blur(10px); /* For Safari */
-}
-
-/* The container that holds the modal content */
-.homebrew-modal-background {
-    background-color: rgb(2, 2, 2);
-    margin: 5% auto; /* Center the modal */
-    padding: 10px;
-    border: 1px solid var(--border-outline-color);
-    width: 90%; /* Adjust the width as needed */
-    border-radius: 5px;
-    z-index: 9;
-    position: relative;
-    height: 90%;
-}
-
-/* Center the modal content */
-.homebrew-modal-content > h2{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-}
-
-#homebrewModalSubsectionStorage{
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 5%;
-}
-
-
-.monsterEditorSubsection{
-    display: grid;
-    grid-template-columns: 1fr 6fr;
-    gap: 2%;
-}
-
-.progress-bar-container {
-    width: 100%;
-    border: 1px solid var(--border-outline-color);
-    background-color: rgb(2, 2, 2);
-    border-radius: 5px; 
-    height: 20px;
-}
-
-.progress-bar {
-    height: 100%;
-    width: 0%;
-    background-color: var(--border-outline-color);
-    border-radius: 5px;
-}
-
-.deleteMonster {
-    border: 1px solid var(--border-outline-color);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-.deleteMonster-header {
-    gap: 10px; 
-    margin-bottom: 5px; 
-}
-
-#customMonsterSelect {
-    width: 100%; 
-}
-
-#customMonsterSelectDiv{
-    min-height: 20px;
-}
-
-
-
-
-
 
 
 
@@ -969,6 +882,7 @@ main section {
         }
 
         table{
+            margin-top: 5px;
             border-spacing: .1rem;
             display: inline-block;
         }
@@ -982,6 +896,11 @@ main section {
             background-color: #1f1f1f;
             font-size: 16px;
             text-align: center;
+        }
+
+
+        #shopSelect{
+            margin-bottom: 10px;
         }
 
         .shopTables th{
@@ -1004,21 +923,18 @@ main section {
 
         .dmTable td{
             padding: 4px;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .dmTable > p, label, input {
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .dmTable > h2{
-            color: var(--ts-accent-hover);
         }
 
         .jumpInput{
-            width:45px;
-            background-color: #080808;
-            color:white;
+            border: solid 1px var(--border-outline-color);
+            border-radius: 5px;
+            background-color: rgb(2, 2, 2);
+            color: white;
+            text-align: center;
+            padding: 2px;
+            margin: 1px 2px;
+            font-size: .8rem; /* Ensures consistent text size for both inputs */
+            max-width: 40px;
         }
 
         /*Formating for the Shops under dmTables*/
@@ -1030,6 +946,16 @@ main section {
             display: inline;
             border-collapse: collapse;
             width: 100%;
+        }
+
+        #jumpingRules{
+            font-size: 16px;
+            line-height: 1.3rem;
+            
+        }
+
+        #jumpingRules > h2 {
+            text-align: center; /* Center the text horizontally */
         }
 
 
@@ -1057,26 +983,26 @@ main section {
 
 /* Style for the checklist container */
 .checklist {
-    background-color: #313131;
+    background-color: rgb(2, 2, 2);
     padding: 10px;
-    border: 1px solid #ddd;
+    border: solid 1px var(--border-outline-color);
     border-radius: 5px;
-    max-width: 550px;
-    margin: 0 auto;
-    text-wrap: break-word;
+}
+
+.checklistContainer {
+    display: flex;
+    width: 100%; /* Makes sure the container fills the parent */
+    gap: .6rem;
 }
 
 #checklistItem{
-    width: 400px;
+    display: flex;
+    flex-grow: 1;
+    background-color: rgb(2, 2, 2);
+    color: #FFFFFF;
+    padding: .2rem;
+    border: solid 1px var(--border-outline-color);
 }
-
-
-
-
-
-
-
-
 
 
 /* Style for checklist items */
@@ -1085,16 +1011,27 @@ main section {
     padding: 0;
 }
 
-.checklist li {
+
+.checklist-item {
     display: flex;
-    align-items: left;
-    margin-bottom: 15px;
-    margin-right: 15px;
+    justify-content: space-between; /* Space between the checkbox/span and the button */
+    align-items: center; /* Vertically align the content */
+    width: 100%; /* Ensure the container takes the full width */
 }
+
+.checklist-text {
+    display: flex;
+    align-items: center; /* Vertically align the checkbox and text */
+}
+
+.remove-button {
+    margin-left: auto; /* Push the button to the far right */
+}
+
 
 .checklist li span {
     overflow: auto;
-    font-size: 14px;
+    font-size: 15px;
     padding-right: 10px;
 }
 
@@ -1105,6 +1042,12 @@ main section {
 
 .checklist input[type="checkbox"] {
     margin-right: 10px;
+}
+
+.checklist input[type="checkbox"]:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+    transition: 200ms;
 }
 
 /* Style for the "Add" button */
@@ -1118,8 +1061,115 @@ main section {
 
 .checklist button:hover{
     background-color: var(--button-color-hover);
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.line-through {
+    text-decoration: line-through;
+    color: #ff0000; /* Change the color to red or any color you prefer */
 }
 
 
 
 
+
+/*Spell List Section*/
+#SpellList{
+    position: relative;
+    width: 95%;
+}
+
+#SpellList input, #SpellList textarea,  #SpellList select{
+    width:100%;
+    padding: 5px;
+    cursor: text;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    background: none;
+    color:white;
+    font-size: 20px;
+}
+
+#SpellList .spellList{
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    color:white;
+    background-color: var(--ts-background-secondary);
+    display: none;
+    position:absolute;
+    width: 100%;
+    border: 1px solid white;
+    cursor: pointer;
+    max-height: 450px;
+    overflow: hidden;
+    overflow-y:auto;
+}
+
+.listSelection:hover{
+    background-color: var(--border-outline-color);
+}
+
+#SpellList .spellList.show{
+    display: block;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+}
+
+.spellList{
+    list-style: none;
+    margin:0;
+    padding: 5px;
+    line-height: 25px;
+    font-size: 18px;
+}
+
+.monsterSubHeadings{
+    font-size: 22px;
+    color: #FFFFFF;
+    margin-bottom: .8rem;
+}
+
+#spellView{
+    width: 100%;
+    padding: .7rem;
+    margin-top: 1rem;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+}
+
+#spellView > p{
+    margin-top: .3rem;
+}
+
+.tabcontent{
+    font-size: 16px;
+    color: var(--ts-accent-primary);
+}
+
+.monsterContent{
+    font-size: 15px;
+    color: rgb(255, 255, 255);
+}
+
+
+
+
+/*Google Docs Section*/
+#googleContainer iframe {
+    width: 100%;
+    height: 90vh; /* Adjust the height as needed */
+    border: 0;
+    padding: 0;
+    margin-top: 5px;
+    background-color: rgb(2, 2, 2);
+    border: solid 1px var(--border-outline-color);
+    border-radius: 5px;
+}
+
+#docUrlInput{
+    background-color: rgb(2, 2, 2);
+    border: solid 1px var(--border-outline-color);
+    border-radius: 5px;
+    color: #FFFFFF;
+}

@@ -426,25 +426,27 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
-    gap: 0px 30px;
+    gap: 0px 10px;
     font-size: 13px;
     margin-bottom: 30px;
+    margin-top: 25px;
+
 }
 
 .rightBottomStatsContainer{
     display: grid;
     grid-column: 2;
-    margin-top: 25px;
     grid-row-start: 1;
     grid-row-end : 4;
-    gap: 4px;
+    gap: 1rem;
+    justify-items: end; 
+    grid-template-columns: 1fr;
 }
 
 
 
 /* Skills Div */
 .skill-container {
-    margin-top: 25px;
     padding: 5px 5px;
     width: 295px;
     display: grid;
@@ -458,9 +460,8 @@
 }
 
 
-.skill-container > h2, .saves-container > h2{
-    padding-left: 10px;
-    font-size: 20px;
+.skill-container > legend, .saves-container > legend, #proficiency-container > legend{
+    font-size: 18px;
 }
 
 .skill-row{
@@ -495,7 +496,7 @@
 }
 
 .savesBlock, .passivesBlock {
-    display:grid;
+    display: grid;
     grid-template-columns: 5fr 0px 1fr;
     padding: 2px 5px;
     border: solid 1px var(--border-outline-color);
@@ -506,12 +507,16 @@
 
 .saves-container, .passives-container, #proficiency-container {
     height: fit-content;
-    width: 200px;
+    width: 90%;
     padding: 5px 2px;
-    display: grid;
     border: solid 1px var(--border-outline-color);
     border-radius: 5px;
 }
+
+#proficiency-container {
+    align-self: end;
+}
+
 
 .saves-container {
     grid-row: 1; /* First row of the right column */
@@ -719,9 +724,10 @@
 
 .actionTable tbody {
     color: #FFFFFF; 
-    background-color: var(--ts-background-secondary);
+    background-color: rgb(2, 2, 2);
     font-size: 12px;
     text-align: center;
+    padding: 0;
 }
 
 .actionTable th, .actionTable td {
@@ -894,6 +900,7 @@
 }
 
 .spell-slot-controls {
+    margin-left: .5rem;
     display: inline-flex; /* Use inline-flex to keep the container inline */
     align-items: center;  /* Vertically align items */
     gap: 5px; /* Add space between buttons and checkboxes */
@@ -929,6 +936,7 @@
 
 .add-spell-button:hover, .add-spell-slot:hover, .remove-spell-slot:hover {
     background-color: var(--button-color-hover);
+    transform: scale(1.1);
     transition: ease-in-out .15s;
 }
 
@@ -936,6 +944,7 @@
     display: inline-block;
     margin-right: 10px;
 }
+
 
 .spell-slots {
     display: inline-flex;
@@ -955,6 +964,12 @@
     cursor: pointer;
     vertical-align: middle; /* Align with other inline elements */
 }
+
+.spell-slot:hover {
+    transform: scale(1.2);
+    transition: ease-in-out .15s;
+}
+
 
 .spell-group{
     margin-top: -5px;
@@ -1578,10 +1593,10 @@
 }
 
 .confirm-modal {
-    background: white;
-    padding: 20px;
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
     border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
 }
 
 .confirm-button, .cancel-button {
@@ -1596,6 +1611,7 @@
 
 .cancel-button {
     background: #dc3545;
+    margin-left: 10px;
 }
 
 .confirm-button:hover {
@@ -1615,6 +1631,20 @@
     font-size: 20px;
     cursor: pointer;
     color: #007bff;
+}
+
+.confirm-modal > p{
+    text-align: center;
+    font-size: 16px;
+}
+
+.confirm-modal > p > strong{
+    font-size: 20px;
+    color: red;
+}
+
+.confirm-modal-button-div{
+    display: flex;
 }
 
 
@@ -2017,105 +2047,7 @@ display: none;
 } */
 
 
-/*Quick Notes Section*/
-#quickNotes {
-    margin: 20px;
-    padding: 10px;
-}
 
-.notes-group-container {
-    margin-bottom: 15px;
-    border: 1px solid var(--border-outline-color);;
-    padding: 10px;
-}
-
-.notes-group-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.notes-group-title {
-    flex: 1;
-    margin: 0 10px;
-    padding: 2px 5px;
-    background-color: #2b2b2b; /* Slightly lighter dark gray */;
-    border: 1px solid var(--border-outline-color);
-    border-radius: 5px;
-    color: white;
-}
-
-
-.note-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; /* Space between title and delete button */
-    gap: 10px; /* Optional: space between elements */
-}
-
-.note-title {
-    flex-grow: 1; /* Make the title input expand to take available space */
-}
-
-.note-item {
-    margin-top: 10px;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-}
-
-.note-title {
-    display: block;
-    width: 98%;
-    margin-bottom: 5px;
-    padding: 5px;
-    border: 1px solid var(--border-outline-color);
-    border-radius: 5px;
-    background-color: #2b2b2b; /* Slightly lighter dark gray */;
-    color: white;
-}
-
-.note-description {
-    display: block;
-    width: 98%;
-    padding: 5px;
-    border: 1px solid var(--border-outline-color);
-    border-radius: 5px;
-    resize: none;
-    background-color: #2b2b2b; /* Slightly lighter dark gray */;
-    color: white;
-}
-
-
-/* Style the chevron icon specifically for feature group collapse buttons */
-.collapse-notes-group-button {
-    transition: transform 0.3s ease; /* Smooth rotation */
-    color: var(--border-outline-color);
-
-    /* Hide button appearance */
-    background: none;
-    border: none;
-    padding: 0;
-    margin-right: 2px;
-    
-    /* Adjust dimensions to fit just the icon */
-    width: auto;
-    height: auto;
-}
-
-.collapse-notes-group-button:hover, .collapse-notes-group-button:hover{
-    cursor: pointer;
-    color: var(--button-color-hover);
-    transform: scale(1.1);
-}
-
-/* Rotate the chevron when collapsed */
-.collapse-notes-group-button.collapsed {
-    transform: rotate(-90deg);
-}
-
-.select-wrapper{
-    min-height: 60px;
-}
 
 #spellFormModal {
     display: none; /* Hidden by default */
@@ -2213,6 +2145,10 @@ display: none;
     flex: 1; 
 }
 
+#spellFormClass{
+    width: 100%;
+}
+
 
 
 
@@ -2253,6 +2189,8 @@ display: none;
 
 .magic-bonus-row{
     margin-bottom: 10px;
+    display: flex;  
+    gap: .3rem;
 }
 
 #weaponProperties {
@@ -2302,9 +2240,28 @@ display: none;
     flex: 2; /* Inputs take more space than labels */
 }
 
+.magic-bonus-value{
+    border: solid 1px var(--border-outline-color);
+    border-radius: 5px;
+    background-color: rgb(2, 2, 2);
+    color: white;
+    text-align: center;
+    padding: 2px;
+    font-size: .8rem; /* Ensures consistent text size for both inputs */
+    max-width: 40px;
+}
+
+
+
+
+
+
+
+
+
 
 /* Modal wrapper */
-.long-rest-modal, .short-rest-modal, .hit-dice-modal {
+.long-rest-modal, .short-rest-modal, .hit-dice-modal{
     position: fixed;
     top: 0;
     left: 0;
@@ -2322,7 +2279,7 @@ display: none;
 }
 
 /* Modal content */
-.long-rest-modal-content, .short-rest-modal-content, .hit-dice-modal-content {
+.long-rest-modal-content, .short-rest-modal-content, .hit-dice-modal-content{
     background-color: rgb(2, 2, 2);
     text-align: center;
     border: 1px solid var(--border-outline-color);
@@ -2338,4 +2295,15 @@ display: none;
 
 .long-rest-modal-paragraphs{
     margin-bottom: 2px;
+}
+
+#importTextArea {
+    height: 70vh;
+    width: 80vw;
+    text-align: left; /* Override centering */
+    resize: vertical; /* Allow resizing vertically, if desired */
+    background-color: rgb(197, 197, 197);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    margin: 0 auto; /* Keeps alignment consistent */
 }

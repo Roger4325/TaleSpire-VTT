@@ -20,6 +20,8 @@ function extractRollResult(message) {
 let monsterNames
 let monsterData
 
+
+
 //This function is the first function that is called on load and I have been using as if it is an INIT() function. 
 function establishMonsterData(){
     const monsterDataObject = AppData.monsterLookupInfo;
@@ -28,6 +30,33 @@ function establishMonsterData(){
     loadAndSetLanguage();
     loadDataFromCampaignStorage();
     populateConditionSelect();
+    updateShopTable("adventuringSupplies")
+    loadTableData()
+
+    loadDataFromGlobalStorage('checklists')
+    .then((checklistData) => {
+        updateChecklistUI(checklistData);
+    })
+    .catch((error) => {
+        console.error('Error loading checklist data:', error);
+    });
+
+    // Initialize the event listeners for existing cells
+    const existingCells = document.querySelectorAll("[contenteditable='true']");
+    existingCells.forEach(cell => {
+        tableEditing(cell);
+    });
+
+    loadDataFromCampaignStorage('DmNotes')
+    .then((groupNotesData) => {
+        loadNotesGroupData(groupNotesData.groupNotesData)
+    })
+    .catch((error) => {
+        showErrorModal('Error loading DmNotes data:', error);
+    });
+
+    
+    
 }
 
 async function loadAndSetLanguage(){
@@ -1244,9 +1273,10 @@ function monsterConditions(condition) {
          }
 
         // Tooltip logic for hover effect
+        let tooltip;
         if (conditionDescription) {
             conditionPill.addEventListener('mouseenter', () => {
-                const tooltip = document.createElement('div');
+                tooltip = document.createElement('div');
                 tooltip.classList.add('condition-tooltip');
                 tooltip.innerHTML = `
                     <strong>${selectedCondition}</strong><br>
@@ -1284,6 +1314,10 @@ function monsterConditions(condition) {
         removeButton.addEventListener('click', () => {
             conditionsSet.delete(selectedCondition);
             removeConditionPill(selectedCondition, conditionTrackerDiv);
+            if (tooltip) {
+                tooltip.style.opacity = 0;
+                setTimeout(() => tooltip.remove(), 200);
+            }
         });
 
         // Add the condition to the Set and the condition pill to the container
@@ -1964,57 +1998,11 @@ function handleRequestInitList(){
 }
 
 
-
-
-const openHomebrewButton = document.getElementById('openHomebrew');
-const homebrewModal = document.getElementById("homebrewModal");
-const closehomebrewModalButton = document.getElementById('close-homebrew-modal-button');
-  
-// Open the form
-openHomebrewButton.addEventListener('click', () => {
-    homebrewModal.style.display = 'block';
-    updateStorageUsage()
-    loadAndDisplayCustomMonsters()
-});
-
-// Close the form
-closehomebrewModalButton.addEventListener('click', () => {
-    homebrewModal.style.display = 'none';
-});
-
-async function updateStorageUsage() {
-    const totalQuotaKB = 5120; // 5MB in KB
-
-    // Fetch local storage usage (Assuming localFileSize is already defined elsewhere)
-    const localStorageSize = localFileSize;
-    const localStorageUsageKB = (localStorageSize / 1024).toFixed(2);
-
-    // Fetch global storage usage (Assuming globalFileSize is already defined elsewhere)
-    const globalStorageSize = globalFileSize;
-    const globalStorageUsageKB = (globalStorageSize / 1024).toFixed(2);
-
-    // Update Local Storage progress bar and text
-    const localStorageProgress = document.getElementById("localStorageProgress");
-    const localStorageUsageText = document.getElementById("localStorageUsageText");
-    const localStoragePercentage = ((localStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
-    localStorageProgress.style.width = `${localStoragePercentage}%`; // Update the width to reflect the usage
-    localStorageUsageText.textContent = `${localStorageUsageKB} KB / ${totalQuotaKB} KB`;
-
-    // Update Global Storage progress bar and text
-    const globalStorageProgress = document.getElementById("globalStorageProgress");
-    const globalStorageUsageText = document.getElementById("globalStorageUsageText");
-    const globalStoragePercentage = ((globalStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
-    globalStorageProgress.style.width = `${globalStoragePercentage}%`; // Update the width to reflect the usage
-    globalStorageUsageText.textContent = `${globalStorageUsageKB} KB / ${totalQuotaKB} KB`;
-}
-
-
 /*Monster Creator Form Section*/
 const customMonsterButton = document.getElementById('customMonsters');
 const monsterForm = document.getElementById("monsterCreationForm");
 const monsterFormModal = document.getElementById("monsterFormModal");
 const closeMonsterFormButton = document.getElementById('closeMonsterForm');
-let items = []; // Store created spells
 
 // Open the form
 customMonsterButton.addEventListener('click', () => {
@@ -2173,8 +2161,9 @@ function addDynamicField(sectionId, entry = null) {
 
 function populateDynamicFields(sectionId, data) {
     const section = document.getElementById(sectionId);
-    section.innerHTML = `<h3>${sectionId.replace("monsterForm", "")}</h3>
-                         <button type="button" class="nonRollButton">Add</button>`;
+    section.innerHTML = 
+        `<h3>${sectionId.replace("monsterForm", "")}</h3>
+        <button type="button" class="nonRollButton">Add</button>`;
 
     const addButton = section.querySelector("button");
     addButton.addEventListener("click", () => addDynamicField(sectionId));
@@ -2339,38 +2328,6 @@ document.getElementById("deleteCustomMonsters").addEventListener("click", async(
         errorModal("No monster selected for deletion.");
     }
 });
-
-function loadAndDisplayCustomMonsters() {
-    loadDataFromGlobalStorage("Custom Monsters")
-        .then((monsters) => {
-            const monsterSelect = document.getElementById("customMonsterSelect");
-            monsterSelect.innerHTML = ""; // Clear existing options
-
-            // Populate dropdown with monster names
-            for (const monsterName in monsters) {
-                const option = document.createElement("option");
-                option.value = monsterName;
-                option.textContent = monsterName;
-                monsterSelect.appendChild(option);
-            }
-
-            // If no monsters exist, disable the dropdown and delete button
-            if (Object.keys(monsters).length === 0) {
-                const placeholderOption = document.createElement("option");
-                placeholderOption.value = "";
-                placeholderOption.textContent = "No monsters available";
-                monsterSelect.appendChild(placeholderOption);
-                monsterSelect.disabled = true;
-                document.getElementById("deleteCustomMonsters").disabled = true;
-            } else {
-                monsterSelect.disabled = false;
-                document.getElementById("deleteCustomMonsters").disabled = false;
-            }
-        })
-        .catch((error) => {
-            console.error("Failed to load custom monsters:", error);
-        });
-}
 
 
 function populateMonsterForm(monster) {
@@ -2598,6 +2555,8 @@ function tableEditing(cell) {
             for (let i = 0; i < row.cells.length; i++) {
                 rowData[`column${i}`] = row.cells[i].innerHTML;
             }
+
+            saveToGlobalStorage(dataType, dataId, rowData);
         }
     });
 
@@ -2764,33 +2723,54 @@ function getItemId(element) {
 
 
 // Function to add an item to the checklist
-function addItem() {
-    console.log("here")
-    const itemText = document.getElementById('checklistItem').value.trim();
-    if (itemText === '') return; // Ignore empty items
+function addItem(itemId = null, itemText = '') {
+    // If itemId and itemText are not passed, fetch them from input
+    if (!itemId || !itemText) {
+        itemText = document.getElementById('checklistItem').value.trim();
+        if (itemText === '') return; // Ignore empty items
+        itemId = generateUniqueId(); // Generate a unique ID
+    }
 
-    // Generate a unique ID for the checklist item
-    const itemId = generateUniqueId();
+    addItemToUI(itemId, itemText, false);
 
-    // Create a new checklist item
-    const newItem = document.createElement('li');
-    newItem.innerHTML = `
-        <input type="checkbox" onchange="toggleItem(this)" data-id="${itemId}">
-        <span>${itemText}</span>
-        <button onclick="removeItem(this)">Remove</button>
-    `;
-
-    // Append the new item to the checklist
-    document.getElementById('items').appendChild(newItem);
-
-    // Clear the input field
-    document.getElementById('checklistItem').value = '';
+    // Clear the input field if item is added through input
+    if (!itemId || !itemText) {
+        document.getElementById('checklistItem').value = '';
+    }
 
     // Save the checklist item to global storage
     saveToGlobalStorage('checklists', itemId, {
         text: itemText,
         checked: false, // Assuming a new item is initially unchecked
     });
+}
+
+// Helper function to add a checklist item to the UI
+function addItemToUI(itemId, itemText, checked) {
+    const checklist = document.getElementById('items');
+
+    // Create a new checklist item
+    const newItem = document.createElement('li');
+    newItem.innerHTML = `
+        <div class="checklist-item-container">
+            <div class="checklist-item">
+                <div class="checklist-text">
+                    <input type="checkbox" onchange="toggleItem(this)" data-id="${itemId}" ${checked ? 'checked' : ''}>
+                    <span style="text-decoration: ${checked ? 'line-through' : 'none'}">${itemText}</span>
+                </div>
+
+                <div class="remove-button">
+                    <button onclick="removeItem(this)">X</button>
+                </div>
+            
+            </div>
+            <hr>
+        </div> 
+        
+    `;
+
+    // Append the new item to the checklist
+    checklist.appendChild(newItem);
 }
 
 // Function to generate a unique ID for checklist items
@@ -2820,17 +2800,21 @@ function toggleItem(checkbox) {
 
 // Function to remove an item from the checklist
 function removeItem(button) {
-    const item = button.parentElement;
-    const itemText = item.querySelector('span');
-
+    // Target the parent <div> of the button, which is the checklist-item container
+    const item = button.closest('.checklist-item-container'); // Ensure we're targeting the correct list item
+    
     // Get the unique identifier for the checklist item
-    const itemId = getItemId(item);
+    const itemId = item.querySelector('input').getAttribute('data-id'); // Get itemId from the checkbox
 
-    // Remove the item from the DOM
-    item.remove();
+    // Remove the item and the <hr> element
+    item.remove();  // Remove the checklist item container
+    const hrElement = item.nextElementSibling; // The <hr> element that follows
+    if (hrElement && hrElement.tagName.toLowerCase() === 'hr') {
+        hrElement.remove(); // Remove the <hr> element
+    }
 
     // Save the removal of the checklist item to global storage
-    removeFromGlobalStorage('checklists', itemId);
+    removeFromGlobalStorage('checklists', itemId, true);
 }
 
 
@@ -2844,47 +2828,44 @@ function updateChecklistUI(checklistData) {
 
     // Iterate through the loaded checklist data and create UI elements
     Object.entries(checklistData).forEach(([itemId, item]) => {
-        const newItem = document.createElement('li');
-        newItem.innerHTML = `
-            <input type="checkbox" onchange="toggleItem(this)" data-id="${itemId}" ${item.checked ? 'checked' : ''}>
-            <span style="text-decoration: ${item.checked ? 'line-through' : 'none'}">${item.text}</span>
-            <button onclick="removeItem(this)">Remove</button>
-        `;
-
-        checklist.appendChild(newItem);
+        addItemToUI(itemId, item.text, item.checked);
     });
 }
 
 
   // Function to populate the conditions table
-  function populateConditionsTable() {
+function populateConditionsTable() {
     const tableBody = document.querySelector("#conditions tbody");
     tableBody.innerHTML = ""; // Clear existing rows
-  
+
     CONDITIONS.forEach(condition => {
-      const row = document.createElement("tr");
-  
-      // Condition name
-      const conditionCell = document.createElement("td");
-      conditionCell.textContent = condition.condition;
-      row.appendChild(conditionCell);
-  
-      // Description
-      const descriptionCell = document.createElement("td");
-      const descriptionList = document.createElement("ul");
-  
-      condition.description.forEach(desc => {
-        const listItem = document.createElement("li");
-        listItem.textContent = desc;
-        descriptionList.appendChild(listItem);
-      });
-  
-      descriptionCell.appendChild(descriptionList);
-      row.appendChild(descriptionCell);
-  
-      tableBody.appendChild(row);
+        const row = document.createElement("tr");
+
+        // Condition name
+        const conditionCell = document.createElement("td");
+        conditionCell.textContent = condition.condition;
+        row.appendChild(conditionCell);
+
+        // Description
+        const descriptionCell = document.createElement("td");
+        const descriptionList = document.createElement("ul");
+
+        condition.description.forEach(desc => {
+            // Remove any leading <br> tags or whitespace at the beginning of the description
+            const cleanedDesc = desc.replace(/^\s*<br\s*\/?>/, '').trim();
+        
+            // Create a list item and append the cleaned description
+            const listItem = document.createElement("li");
+            listItem.textContent = cleanedDesc; // Use the cleaned description
+            descriptionList.appendChild(listItem);
+        });
+
+        descriptionCell.appendChild(descriptionList);
+        row.appendChild(descriptionCell);
+
+        tableBody.appendChild(row);
     });
-  }
+}
 
 function populateConditionSelect() {
     // Select the target dropdown by its ID
@@ -2918,3 +2899,676 @@ function populateConditionSelect() {
   
   // Add an event listener to call the function when the page loads
   document.addEventListener("DOMContentLoaded", populateConditionsTable);
+
+
+
+document.getElementById('shopSelect').addEventListener('change', function() {
+    updateShopTable(this.value);
+});
+
+// Function to create the shop table dynamically
+function updateShopTable() {
+    const shopSelect = document.getElementById('shopSelect');
+    const selectedShop = shopSelect.value;
+    const tableDiv = document.getElementById(selectedShop);
+
+    // Clear any existing table content
+    const table = tableDiv.querySelector('table');
+    table.innerHTML = ''; // Clears the table
+
+    // Add table header
+    const headerRow = document.createElement('tr');
+    const headers = ['Item', 'Cost', 'Weight', 'Category'];
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+    table.appendChild(headerRow);
+
+    // Get the items for the selected shop (with categories)
+    const categoryGroups = getShopItems(selectedShop);
+
+    // Loop through each category in the shop
+    for (const category in categoryGroups) {
+        // Add a subheading row for the category
+        const subheadingRow = document.createElement('tr');
+        subheadingRow.innerHTML = `<td class="tableSpacer" colspan="4">${category}</td>`;
+        table.appendChild(subheadingRow);
+
+        // Loop through the items in this category and create rows
+        categoryGroups[category].forEach(item => {
+
+            // Try to find the item data in the equipment data
+            const itemData = AppData.equipmentLookupInfo.equipmentData.find(data => data.index === item);
+
+            // If itemData is undefined, log a warning and continue to the next item
+            if (!itemData) {
+                console.warn(`Item with index "${item}" not found in the equipment data.`);
+                return; // Skip the rest of the loop and move to the next item
+            }
+
+            let itemName = itemData.name;
+            // If quantity exists and is greater than 1, add it in parentheses
+            if (itemData.quantity > 1) {
+                itemName += ` (${itemData.quantity})`;
+            }
+
+            // Create row for the item
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${itemName}</td>
+                <td>${itemData.cost.quantity} ${itemData.cost.unit}</td>
+                <td>${itemData.weight} lbs.</td>
+                <td>${itemData.equipment_category.name}</td>
+            `;
+            table.appendChild(row);
+        });
+    }
+}
+
+  
+// Function to retrieve items for a specific shop (e.g., Hunter/Leatherworker) with categories
+function getShopItems(shopType) {
+    // Define categories and items directly within this function
+    const categoryGroups = {
+        "hunterLeatherworker": {
+            "Light Armor": [
+                "padded-armor", "leather-armor", "studded-leather-armor"
+            ],
+            "Medium Armor": [
+                "hide-armor"
+            ],
+            "Simple Melee Weapons": [
+                "club", "dagger", "greatclub", "handaxe", "javelin", "spear"
+            ],
+            "Simple Ranged Weapons": [
+                "shortbow", "sling",
+            ],
+            "Martial Melee Weapons": [
+                "longsword", "shortsword", "whip"
+            ],
+            "Martial Ranged Weapons": [
+                "blowgun", "longbow", "net"
+            ],
+            "Ammunition": [
+                "arrow", "sling-bullet", "blowgun-needle"
+            ],
+            "Tools": [
+                "hunting-trap", "quiver", "leatherworkers-tools", "woodcarvers-tools"
+            ]
+        },
+        // You can add more shops and their categories here
+        "blacksmithArmory": {
+            "Medium Armor": [
+                "chain-shirt", "scale-mail", "breastplate", "half-plate-armor", "shield"
+            ],
+            "Heavy Armor": [
+                "ring-mail", "chain-mail", "splint-armor", "plate-armor"
+            ],
+            "Simple Melee Weapons": [
+                "dagger", "handaxe", "javelin", "light-hammer", "mace", "sickle", "spear"
+            ],
+            "Simple Ranged Weapons": [
+                "crossbow-light", "dart", "javelin", "light-hammer", "mace", "sickle", "spear"
+            ],
+            "Martial Melee Weapons": [
+                "battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd", "lance", "longsword", "maul", "morningstar", "pike", "rapier", "scimitar", "shortsword", "trident", "war-pick", "warhammer"
+            ],
+            "Martial Ranged Weapons": [
+                "crossbow-hand", "crossbow-heavy"
+            ],
+            "Ammunition": [
+                "crossbow-bolt", "case-crossbow-bolt"
+            ],
+            "Artisan's Tools": [
+                "smiths-tools", "tinkers-tools"
+            ],
+            "Other": [
+                "chain-10-feet", "hammer", "hammer-sledge", "lock", "manacles", "whetstone"
+            ]
+        },
+        "generalStore": {
+            "Adventuring Gear": [
+                "backpack", "bedroll", "candle", "chain-10-feet", "chalk", "crowbar", "flint-and-steel", "grappling-hook", "hammer", "lantern-hooded", "lantern-bullseye", "oil-flask", "piton", "rope-hempen-50-feet", "rope-silk-50-feet", "shovel", "tent", "torch", "waterskin"
+            ],
+            "Food and Drink": [
+                "rations-1-day"
+            ],
+            "Clothing": [
+                "clothes-common", "clothes-travelers", "clothes-fine", "clothes-costume"
+            ],
+            "Basic Tools": [
+                "healers-kit", "fishing-tackle", "mess-kit", "sealing-wax", "writing-pen", "ink-bottle", "paper-sheet", "parchment", "soap", "vial-empty"
+            ],
+            "Other": [
+                "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
+            ]
+        },
+        "adventuringSupplies": {
+            "Light Armor": [
+                "padded-armor"
+            ],
+            "Medium Armor": [
+                "chain-shirt", "shield"
+            ],
+            "Heavy Armor": [
+                "ring-mail"
+            ],
+            "Simple Melee Weapons": [
+                "dagger", "handaxe", "quarterstaff", "spear"
+            ],
+            "Simple Ranged Weapons": [
+                "shortbow"
+            ],
+            "Martial Melee Weapons": [
+                "longsword", "shortsword"
+            ],
+            "Martial Ranged Weapons": [
+                "longbow", "net"
+            ],
+            "Ammunition": [
+                "arrow", "sling-bullet", "blowgun-needle"
+            ],
+            "Miscellaneous": [
+                "backpack", "bedroll", "case-map-or-scroll", "climbers-kit", "clothes-travelers", "crowbar", "fishing-tackle", "flask-or-tankard", "grappling-hook", "hammer", "hammock", "healers-kit", "hunting-trap", "lamp", "lantern-bullseye", "lantern-hooded", "mess-kit", "pick-miners", "piton", "pole-10-foot", "potion-of-healing", "pouch", "quiver", "rations-1-day", "rope-hempen-50-feet", "rope-silk-50-feet", "sack", "shovel", "signal-whistle", "torch", "spyglass", "tent-two-person", "tinderbox", "waterskin", "whetstone"
+            ],
+            "Tools": [
+                "cartographers-tools", "navigators-tools", "bit-and-bridle"
+            ],
+            "Saddle": [
+                "saddle-riding", "saddlebags"
+            ],
+            "Other": [
+                "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
+            ]
+        },
+        "alchemistHerbalist": {
+            "Alchemical": [
+                "acid-vial", "alchemists-fire-flask", "antitoxin-vial", "bottle-glass", "component-pouch", "flask-or-tankard", "healers-kit", "oil-flask", "jug-or-pitcher", "healers-kit", "perfume-vial", "poison-basic-vial", "potion-of-healing", "vial"
+            ],
+            "Artisan's Tools": [
+                "alchemists-supplies", "herbalism-kit"
+            ]
+        },
+        "jeweler": {
+            "Adventuring Gear": [
+                "signet-ring"
+            ],
+            "Artisan's Tools": [
+                "jewelers-tools"
+            ]
+        },
+        "libraryBookstore": {
+            "Other Items": [
+                "candle", "case-map-or-scroll", "dictionary", "ink-1-ounce-bottle", "ink-pen",
+                "paper-one-sheet", "parchment-one-sheet", "portal-scroll", "spellbook"
+            ]
+        }
+        // Add more cases for other shop types...
+    };
+
+    // Return the category groups for the specific shop type
+    return categoryGroups[shopType] || {}; // Return an empty object if no matching shopType is found
+}
+
+
+// Function to load data into the tables
+async function loadTableData() {
+    TS.localStorage.global.getBlob().then((existingData) => {
+        if (existingData) {
+            const allData = JSON.parse(existingData);
+
+            // Loop through all possible data types
+            for (const dataType in allData) {
+                if (allData.hasOwnProperty(dataType)) {
+                    // Find the table with the matching ID
+                    const table = document.getElementById(dataType);
+
+                    if (table) {
+                        const tbody = table.querySelector("tbody");
+
+                        if (tbody !== null) {
+                            const numColumns = tbody.querySelector("tr").cells.length;
+
+                            // Loop through all possible row indices for each data type
+                            for (const rowIndex in allData[dataType]) {
+                                if (allData[dataType].hasOwnProperty(rowIndex)) {
+                                    const rowData = allData[dataType][rowIndex];
+                                    const row = tbody.querySelector(`tr:nth-child(${parseInt(rowIndex) + 1})`);
+
+                                    if (row) {
+                                        let isEmpty = true; // Flag to track if the row is empty
+                                        // Check if all cells in the row are empty
+                                        for (let i = 0; i < numColumns; i++) {
+                                            if (rowData[`column${i}`]) {
+                                                isEmpty = false;
+                                                break;
+                                            }
+                                        }
+
+                                        if (!isEmpty) {
+                                            // Populate the table cells with data from the global storage
+                                            for (let i = 0; i < numColumns; i++) {
+                                                if (rowData[`column${i}`]) {
+                                                    row.cells[i].innerHTML = rowData[`column${i}`];
+                                                }
+                                            }
+                                        } else {
+                                            // Hide the row if it's completely empty
+                                            row.style.display = 'none';
+                                        }
+                                    } else {
+                                        // If the row doesn't exist, create a new row and populate it
+                                        const newRow = tbody.insertRow(parseInt(rowIndex));
+                                        newRow.innerHTML = "<td contenteditable='true'></td>".repeat(numColumns);
+
+                                        // Call tableEditing function for the new cells
+                                        newRow.querySelectorAll("td").forEach(cell => {
+                                            cell.setAttribute("contenteditable", "true");
+                                            tableEditing(cell);
+                                        });
+
+                                        for (let i = 0; i < numColumns; i++) {
+                                            if (rowData[`column${i}`]) {
+                                                newRow.cells[i].innerHTML = rowData[`column${i}`];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+// Function to update the spell details in the 'spell-list' ul
+function updateSpellDetails(selectedSpell) {
+    const spellList = document.getElementById('spellView');
+
+    // Clear the existing spell details
+    spellList.innerHTML = '';
+
+    // Create list items to display the selected spell's details
+    const spellDetails = `
+        <h3 class="monsterSubHeadings">${selectedSpell.name}</h3>
+        <p>Level: <span class="monsterContent">${selectedSpell.level}</span></p>
+        <p>Range: <span class="monsterContent">${selectedSpell.range}</span></p>
+        <p>Duration: <span class="monsterContent">${selectedSpell.duration}</span></p>
+        <p>Concentration: <span class="monsterContent"> ${selectedSpell.concentration}</span></p>
+        <p>Ritual: <span class="monsterContent"> ${selectedSpell.ritual}</span></p>
+        <p>Components: <span class="monsterContent">${selectedSpell.components}</span></p>
+        <p>Material Components: <span class="monsterContent">${selectedSpell.material}</span></p>
+        <p>Casting Time: <span class="monsterContent">${selectedSpell.casting_time}</span></p>
+        <p>Classes: <span class="monsterContent">${selectedSpell.class}</span></p>
+        <p>School: <span class="monsterContent"> ${selectedSpell.school}</span></p>
+        <p>Description: <span class="monsterContent" id="descriptionSpan">${selectedSpell.desc}</span></p>
+        <p>Higher Level: <span class="monsterContent" id="higherLevelSpan">${selectedSpell.higher_level}</span></p>
+    `;
+
+    // Append the selected spell details to the 'spell-list' ul
+    spellList.innerHTML = spellDetails;
+}
+
+
+
+// populates a fake dropdown with all of the spell names. And sets clicking the spell name to UpdateSpellDetails()
+function populateListWithAllSpells(spellsData) {
+
+    console.log(spellsData)
+
+    spellsData.sort((a, b) => a.name.localeCompare(b.name, undefined, { sensitivity: 'base' }));
+
+    const spellList = document.getElementById('spell-list');
+    spellList.innerHTML = '';
+
+    spellsData.forEach((spell) => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('listSelection')
+        listItem.textContent = spell.name;
+        listItem.addEventListener('click', () => {
+            // Update the spell details when a spell is selected
+            updateSpellDetails(spell);
+        });
+        spellList.appendChild(listItem);
+        
+    });
+    loadSpells(spellsData)
+}
+
+
+// Function to display the list of spells and parse through the text box to get a fitered search. 
+function loadSpells(spellsData) {
+    const searchInput = document.getElementById('search-input');
+    const spellList = document.getElementById('spell-list');
+
+    let listItem = null;
+    let selectedSpell = null;
+
+    // Event listener for search input focus
+    searchInput.addEventListener('focus', () => {
+        spellList.classList.add('show')                
+    });
+    searchInput.addEventListener('blur',()=> {
+        setTimeout(()=>{
+            spellList.classList.remove('show');
+        }, 200);
+    });
+
+    // Event listener for search input changes
+    searchInput.addEventListener('input', () => {
+        const filter = searchInput.value.toLowerCase();
+        const matchingSpells = spellsData.filter((spell) =>
+            spell.name.toLowerCase().includes(filter)
+        );
+    
+        // Clear the existing spell list
+        const spellList = document.getElementById('spell-list');
+        spellList.innerHTML = '';
+
+        // Populate the list with matching spell names
+        matchingSpells.forEach((spell) => {
+            listItem = document.createElement('li');
+            listItem.textContent = spell.name;
+            listItem.addEventListener('click', () => {
+                // Update the spell details when a spell is selected
+                updateSpellDetails(spell);
+            });
+            spellList.appendChild(listItem);
+        });
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const visibleOptions = Array.from(spellList.getElementsByTagName('li')).filter(option => option.style.display !== 'none');
+            if (visibleOptions.length > 0) {
+                searchInput.value = visibleOptions[0].textContent;
+                listItem = visibleOptions[0].textContent;
+
+                selectedSpell = spellsData.find(spell => spell.name ===listItem);
+
+
+                if(selectedSpell){
+                    updateSpellDetails(selectedSpell)
+                }
+                searchInput.blur();
+            }
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+
+//Quick Notes Event Listener
+const quickNotesSection = document.getElementById('Docs');
+const addNotesGroupButton = quickNotesSection.querySelector('.add-notes-group-button');
+// Event listener for adding new groups
+addNotesGroupButton.addEventListener('click', function () {
+    createNewNotesGroup();
+    saveNotes()
+});
+
+let notesGroupCounter = 0; // Track unique group IDs
+
+// Function to create a new notes group
+function createNewNotesGroup(groupData = null) {
+    notesGroupCounter++;
+    // Create group container
+    const groupContainer = document.createElement('div');
+    groupContainer.classList.add('notes-group-container');
+    groupContainer.id = `notesGroup${notesGroupCounter}`;
+
+    // Create group header
+    const groupHeader = document.createElement('div');
+    groupHeader.classList.add('notes-group-header');
+
+    const groupTitle = document.createElement('input');
+    groupTitle.classList.add('notes-group-title');
+    groupTitle.placeholder = `Notes Group ${notesGroupCounter}`;
+
+    // Populate group title if data is provided
+    if (groupData && groupData['group-title']) {
+        groupTitle.value = groupData['group-title'];
+    }
+
+    const addNoteButton = document.createElement('button');
+    addNoteButton.classList.add('add-note-button');
+    addNoteButton.classList.add('nonRollButton');
+    addNoteButton.textContent = '+ Add Note';
+
+    // Add event listener to create new notes
+    addNoteButton.addEventListener('click', function () {
+        addNewNote(groupContainer);
+        saveNotes()
+    });
+
+    // Create the notes list container
+    const notesList = document.createElement('div');
+    notesList.classList.add('notes-list');
+
+    // Add collapse/expand functionality
+    const collapseButton = document.createElement('button');
+    collapseButton.classList.add('collapse-notes-group-button', 'fa', 'fa-chevron-down');
+    collapseButton.addEventListener('click', function () {
+        const isCollapsed = notesList.style.display === 'none';
+        notesList.style.display = isCollapsed ? 'block' : 'none';
+        collapseButton.classList.toggle('collapsed');
+        saveNotes()
+    });
+
+    groupHeader.appendChild(collapseButton);
+    groupHeader.appendChild(groupTitle);
+    groupHeader.appendChild(addNoteButton);
+    groupContainer.appendChild(groupHeader);
+    groupContainer.appendChild(notesList);
+
+    // Load existing notes if groupData is provided
+    if (groupData && groupData.notes) {
+        groupData.notes.forEach(note => addNewNote(groupContainer, note));
+    }
+
+    // Add group to the Quick Notes section
+    quickNotesSection.insertBefore(groupContainer, addNotesGroupButton);
+    return groupContainer;
+}
+
+
+
+
+
+
+// Function to add a new note
+function addNewNote(groupContainer, noteData = null) {
+    const notesList = groupContainer.querySelector('.notes-list');
+    
+    // Create note container
+    const noteItem = document.createElement('div');
+    noteItem.classList.add('note-item');
+
+    // Create a container for the title and delete button
+    const noteHeader = document.createElement('div');
+    noteHeader.classList.add('note-header');
+
+    // Note title input
+    const noteTitle = document.createElement('input');
+    noteTitle.classList.add('note-title');
+    noteTitle.placeholder = 'Note Title';
+    if (noteData && noteData.noteTitle) {
+        noteTitle.value = noteData.noteTitle;
+    }
+
+    // Delete button
+    const deleteNoteButton = document.createElement('button');
+    deleteNoteButton.classList.add('delete-note-button');
+    deleteNoteButton.classList.add('nonRollButton');
+    deleteNoteButton.textContent = 'X';
+
+    // Delete note event
+    deleteNoteButton.addEventListener('click', function () {
+        noteItem.remove(); // Remove the note item
+        checkAndDeleteGroup(groupContainer); // Check if the group should be deleted
+        saveNotes()
+    });
+
+    // Add title and delete button to the header
+    noteHeader.appendChild(noteTitle);
+    noteHeader.appendChild(deleteNoteButton);
+
+    // Note description textarea
+    const noteDescription = document.createElement('textarea');
+    noteDescription.classList.add('note-description');
+    noteDescription.placeholder = 'Write your note here...';
+    if (noteData && noteData.noteContent) {
+        noteDescription.value = noteData.noteContent;
+    }
+
+    // Auto-resize description textarea
+    noteDescription.addEventListener('input', function () {
+        noteDescription.style.height = 'auto';
+        noteDescription.style.height = `${noteDescription.scrollHeight}px`;
+    });
+
+    //Saving everything when a note has been changed. 
+    noteDescription.addEventListener('blur', function () {
+        saveNotes()
+    });
+
+    noteTitle.addEventListener('blur', function () {
+        saveNotes()
+    });
+
+
+    // Add elements to the note item
+    noteItem.appendChild(noteHeader);
+    noteItem.appendChild(noteDescription);
+    notesList.appendChild(noteItem);
+}
+
+
+function checkAndDeleteGroup(groupContainer) {
+    const notesList = groupContainer.querySelector('.notes-list');
+    if (notesList.children.length === 0) {
+        groupContainer.remove(); // Remove the group container
+    }
+    saveNotes()
+}
+
+
+//Gathering information from the notes to save it in the local storage file. 
+function processNotesGroupData() {
+    // Select all notes group containers
+    const notesGroupContainers = document.querySelectorAll('.notes-group-container');
+    const notesGroupData = [];
+
+    notesGroupContainers.forEach((group, index) => {
+        const groupData = {};
+
+        // Get the group's title
+        const groupName = group.querySelector('.notes-group-title').value;
+        const chevronGroup = group.querySelector('.collapse-notes-group-button');
+        const isChevronGroupCollapsed = chevronGroup.classList.contains('collapsed');
+        groupData['group-title'] = groupName;
+        groupData['group-chevron'] = isChevronGroupCollapsed;
+
+        // Select all notes within this group
+        const notes = group.querySelectorAll('.note-item');
+        const notesData = [];
+
+        notes.forEach((note) => {
+            const noteDataObject = {};
+            
+            // Get the note title and content
+            const noteTitle = note.querySelector('.note-title').value;
+            const noteContent = note.querySelector('.note-description').value;
+
+            // Save the note title and content
+            noteDataObject['noteTitle'] = noteTitle;
+            noteDataObject['noteContent'] = noteContent;
+
+            // Save any additional fields related to the note
+            const tagsInput = note.querySelector('.note-tags');
+            if (tagsInput) {
+                noteDataObject['tags'] = tagsInput.value.split(',').map(tag => tag.trim());
+            }
+
+            // Add the note data to the list of notes for this group
+            notesData.push(noteDataObject);
+        });
+
+        // Save the notes for this group
+        groupData['notes'] = notesData;
+
+        // Add the group data to the overall notesGroupData array
+        notesGroupData.push(groupData);
+    });
+
+    return notesGroupData;
+}
+
+//Loading and updating the notes section with the saved notes. 
+function loadNotesGroupData(notesGroupData) {    
+    if (notesGroupData){
+        // Loop through each group in notesGroupData
+        notesGroupData.forEach(group => {
+            // Use createNewNotesGroup to create a group container with proper groupData
+            createNewNotesGroup(group);
+        });
+    }
+    
+}
+
+
+function saveNotes(){
+    const groupNotes = processNotesGroupData();
+    saveToCampaignStorage("DmNotes", "groupNotesData", groupNotes)
+}
+
+
+
+// Get references to the input field, button, iframe, and the error modal
+const docUrlInput = document.getElementById('docUrlInput');
+const googleDocsButton = document.getElementById('googleDocsButton');
+const googleDocIframe = document.getElementById('googleDocIframe');
+
+googleDocsButton.addEventListener('click', function() {
+    const docUrl = docUrlInput.value.trim(); // Get the URL from the input field
+
+    if (isValidGoogleDocUrl(docUrl)) {
+        // Set the source of the iframe to the URL from the input field
+        const editableUrl = convertToEditableUrl(docUrl);
+        googleDocIframe.src = editableUrl; // Set the iframe source to the editable URL
+        docUrlInput.value = ''; // Clear the input field's content
+    } else {
+        // Display the error modal
+        errorModal("Please enter a valid Google Doc URL")
+        docUrlInput.value = '';
+    }
+});
+
+
+// Function to check if the URL is a valid Google Doc URL
+function isValidGoogleDocUrl(url) {
+    return url.includes('docs.google.com');
+}
+
+// Function to convert the URL to an editable version
+function convertToEditableUrl(url) {
+    if (url.includes('/view') || url.includes('/pub')) {
+        return url.replace(/\/(view|pub).*/, '/edit'); // Replace '/view' or '/pub' with '/edit'
+    }
+    return url; // If it's already an editable link, return as-is
+}
+
+//Google Docs End

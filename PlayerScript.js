@@ -971,71 +971,87 @@ function updateAbilityScoreModifiers(characterData) {
 
 function playerConditions(condition) {
     const conditionSelect = document.getElementById('condition-select');
-    
-
     let selectedCondition
     let selectedConditionText
     if (condition){
-        selectedCondition = condition;    
-        // Loop through all options (including options within groups)
-        for (const option of conditionSelect.options) {
-            if (option.value === selectedCondition) {
-                selectedConditionText = option.textContent.trim();
-                break; // Stop once the match is found
-            }
-        }
-
-        console.log("Value:", selectedCondition); // The value of the selected condition
-        console.log("Text:", selectedConditionText); // The text content of the selected condition
+        selectedCondition = condition.value;
+        selectedConditionText = condition.text;
     }
     else {
         selectedCondition = conditionSelect.value;
     
         // Get the text content of the selected option
         selectedConditionText = conditionSelect.options[conditionSelect.selectedIndex].textContent;
-    
-        console.log("Value:", selectedCondition); // The value of the selected condition
-        console.log("Text:", selectedConditionText); // The text content of the selected condition
     }
 
-    console.log(selectedCondition)
-
     if (selectedCondition) {
-        const conditionTrackerDiv = document.getElementById('conditionTracker')
+        const conditionTrackerDiv = document.getElementById('conditionTracker');
 
-        // Check if the conditionsMap has an entry for this condition
+        // Ensure `conditionsMap` has an entry for this div
         if (!conditionsMap.has(conditionTrackerDiv)) {
             conditionsMap.set(conditionTrackerDiv, new Set());
         }
 
-        // Get the Set of conditions for this div.
+        // Get the Set of conditions for this div
         const conditionsSet = conditionsMap.get(conditionTrackerDiv);
 
-        if (selectedCondition === 'Exhaustion') {
-            // Handle exhaustion separately
+        // Helper function to extract the text and value of a condition
+        const extractConditionText = (conditionElement) => {
+            const span = conditionElement.querySelector('span');
+            if (span) {
+                return {
+                    text: span.textContent.trim(), // e.g., "Aid 1"
+                    value: span.getAttribute('value') // e.g., "Aid"
+                };
+            }
+            return null;
+        };
 
-            // Find the highest exhaustion number and increment it
-            let exhaustionNumber = 1;
+        // Populate the conditions set with the current conditions in the tracker
+        const pills = conditionTrackerDiv.querySelectorAll('.condition-pill');
+        conditionsSet.clear(); // Clear any pre-existing conditions
+
+        pills.forEach((pill) => {
+            const condition = extractConditionText(pill);
+            if (condition) {
+                conditionsSet.add(condition); // Add the condition object to the Set
+            }
+        });
+
+        const levelBasedConditions = ['Exhaustion', 'Aid'];
+        let conditionLevel 
+        if (levelBasedConditions.includes(selectedCondition)) {
+            // Find the highest level number for the selected condition and increment it
+            
+            const match = selectedConditionText.match(/^(.*?)(\d+)$/); // Match text before and the number at the end
+            const baseText = match ? match[1].trim() : selectedConditionText; // First part before the number
+            const number = match ? parseInt(match[2]) : 1; // Extracted number (if present)
+            conditionLevel = number;
+
             for (const condition of conditionsSet) {
-                if (condition.startsWith('Exhaustion ')) {
-                    const number = parseInt(condition.replace('Exhaustion ', ''));
-                    if (!isNaN(number) && number >= exhaustionNumber) {
-                        exhaustionNumber = number + 1;
+                if (condition.value === selectedCondition) {
+                    // Extract the level from the `text` property
+                    const match = condition.text.match(/(\d+)$/); // Match the number at the end
+                    const number = match ? parseInt(match[1]) : 0;
+                    if (!isNaN(number) && number >= conditionLevel) {
+                        conditionLevel = number + 1;
                     }
                 }
             }
-
-            selectedCondition = `Exhaustion ${exhaustionNumber}`;
-
-            // Clear all previous exhaustion conditions
-            for (const condition of conditionsSet) {
-                if (condition.startsWith('Exhaustion ')) {
+        
+            // Update the condition text to include the level
+            selectedConditionText = `${baseText} ${conditionLevel}`;
+        
+            // Remove all existing conditions of the same type (e.g., "Exhaustion")
+            for (const condition of [...conditionsSet]) {
+                if (condition.value === selectedCondition) {
                     conditionsSet.delete(condition);
-                    removeConditionPill(condition);
+                    removeConditionPill(condition.text); // Use `text` to identify the pill
                 }
             }
-            
-        } else if (conditionsSet.has(selectedCondition)) {
+        
+
+        } else if ([...conditionsSet].some(condition => condition.value === selectedCondition)) {
             // If the selected condition is already in the Set, don't add it again
             return;
         }
@@ -1060,9 +1076,10 @@ function playerConditions(condition) {
          }
 
         // Tooltip logic for hover effect
+        let tooltip
         if (conditionDescription) {
             conditionPill.addEventListener('mouseenter', () => {
-                const tooltip = document.createElement('div');
+                tooltip = document.createElement('div');
                 tooltip.classList.add('condition-tooltip');
                 tooltip.innerHTML = `
                     <strong>${selectedCondition}</strong><br>
@@ -1097,12 +1114,22 @@ function playerConditions(condition) {
         // Add a click event listener to the remove button
         const removeButton = conditionPill.querySelector('.remove-condition');
         removeButton.addEventListener('click', () => {
-            conditionsSet.delete(selectedCondition);
-            removeConditionPill(selectedCondition);
+            for (const condition of [...conditionsSet]) {
+                if (condition.text === selectedConditionText && condition.value === selectedCondition) {
+                    conditionsSet.delete(condition);
+                    break; // Stop after deleting the matching condition
+                }
+            }
+            removeConditionPill(selectedConditionText);
+
+            if (tooltip) {
+                tooltip.style.opacity = 0;
+                setTimeout(() => tooltip.remove(), 200);
+            }
         });
 
         // Add the condition to the Set and the condition pill to the container
-        conditionsSet.add(selectedCondition);
+        conditionsSet.add({ text: selectedConditionText, value: selectedCondition });
         const conditionPillsContainer = document.getElementById('conditionTracker');
         conditionPillsContainer.appendChild(conditionPill);
         calculateActionDamageDice()
@@ -1451,8 +1478,21 @@ function damageCreature() {
     console.log(damageAmount)
 
     if (damageAmount > 0) {
+
+        let conditionsSet
+
         conditionTrackerDiv = document.getElementById('conditionTracker');
-        conditionsSet = conditionsMap.get(conditionTrackerDiv);
+
+        const conditionSpans = conditionTrackerDiv.querySelectorAll('.condition-pill span');
+
+        conditionsSet = new Set();
+        // Create a map of condition values
+        conditionSpans.forEach(span => {
+            const value = span.getAttribute('value');
+            if (value) {
+                conditionsSet.add(value)
+            }
+        });
         
         if (conditionsSet) {
             if (conditionsSet.has('Concentration')) {
@@ -2324,7 +2364,6 @@ function updateCharacterUI(characterData, characterName) {
     const conditionsSet = new Set(characterData.conditions);
     // Populate conditions based on conditionsSet
     conditionsSet.forEach((condition) => {
-        console.log(condition)
         playerConditions(condition)
     });
 }
@@ -2485,38 +2524,13 @@ function loadAndDisplayCharacter(characterName, allCharactersData) {
 
 
 document.getElementById('deleteCharacter').addEventListener('click', () => {
-    loadAndDeleteCharacter();
-});
-
-async function loadAndDeleteCharacter() {
-    const dataType = "characters";
-    const allCharactersData = await loadDataFromCampaignStorage(dataType);
-
+    const characterKey = document.getElementById("customCharacterSelect").value;
     const overlay = document.createElement('div');
     overlay.classList.add('character-overlay');
     document.body.appendChild(overlay);
+    confirmDeleteCharacter(characterKey, overlay)
 
-    const container = document.createElement('div');
-    container.classList.add('character-container');
-
-    const title = document.createElement('h2');
-    title.classList.add('character-title');
-    title.textContent = 'Select a Character to Delete';
-    container.appendChild(title);
-
-    Object.keys(allCharactersData).forEach(characterName => {
-        const characterButton = document.createElement('button');
-        characterButton.classList.add('character-button');
-        characterButton.textContent = characterName;
-
-        characterButton.addEventListener('click', () => {
-            confirmDeleteCharacter(characterName, overlay);
-        });
-        container.appendChild(characterButton);
-    });
-
-    overlay.appendChild(container);
-}
+});
 
 function confirmDeleteCharacter(characterName, overlay) {
     // Remove existing confirmation modal if it exists
@@ -2528,19 +2542,13 @@ function confirmDeleteCharacter(characterName, overlay) {
     const confirmModal = document.createElement('div');
     confirmModal.classList.add('confirm-modal');
 
-    // Close button for confirm modal
-    const closeConfirmModalButton = document.createElement('button');
-    closeConfirmModalButton.textContent = 'X';
-    closeConfirmModalButton.classList.add('close-button');
-    closeConfirmModalButton.addEventListener('click', () => {
-        document.body.removeChild(overlay); // Close overlay
-    });
-    confirmModal.appendChild(closeConfirmModalButton);
-
     const message = document.createElement('p');
-    message.textContent = `Are you sure you want to delete "${characterName}"? This action cannot be undone.`;
+    message.innerHTML = `Are you sure you want to delete <strong>${characterName}</strong> ? <br>This action cannot be undone.`;
     confirmModal.appendChild(message);
 
+
+    const buttonDiv = document.createElement('div');
+    buttonDiv.classList.add('confirm-modal-button-div');
     const confirmButton = document.createElement('button');
     confirmButton.textContent = 'Yes, Delete';
     confirmButton.classList.add('confirm-button');
@@ -2557,11 +2565,12 @@ function confirmDeleteCharacter(characterName, overlay) {
     cancelButton.classList.add('cancel-button');
 
     cancelButton.addEventListener('click', () => {
-        document.body.removeChild(confirmModal);
+        document.body.removeChild(overlay);
     });
 
-    confirmModal.appendChild(confirmButton);
-    confirmModal.appendChild(cancelButton);
+    buttonDiv.appendChild(confirmButton);
+    buttonDiv.appendChild(cancelButton);
+    confirmModal.appendChild(buttonDiv);
     overlay.appendChild(confirmModal);
 }
 
@@ -3158,9 +3167,20 @@ function calculateActionDamageDice() {
         } 
 
         let rageDamageBonus = 0
+        let conditionsSet
 
         conditionTrackerDiv = document.getElementById('conditionTracker');
-        conditionsSet = conditionsMap.get(conditionTrackerDiv);
+
+        const conditionSpans = conditionTrackerDiv.querySelectorAll('.condition-pill span');
+
+        conditionsSet = new Set();
+        // Create a map of condition values
+        conditionSpans.forEach(span => {
+            const value = span.getAttribute('value');
+            if (value) {
+                conditionsSet.add(value)
+            }
+        });
         
         if (conditionsSet) {
             if (conditionsSet.has('Raging') && selectedWeaponType === "Melee" && abilityDropdown.value === "STR") {        
@@ -5647,6 +5667,7 @@ function createNewGroup(groupData = null) {
         if (traitsList.style.display === 'none') {
             traitsList.style.display = 'block';
             collapseButton.classList.remove('collapsed');
+            resizeAllTextareas()
         } else {
             traitsList.style.display = 'none';
             collapseButton.classList.add('collapsed');
@@ -6422,7 +6443,7 @@ function processNotesGroupData() {
 
 //Loading and updating the notes section with the saved notes. 
 function loadNotesGroupData(notesGroupData) {
-    
+    console.log(notesGroupData)
     if (notesGroupData){
         // Loop through each group in notesGroupData
         notesGroupData.forEach(group => {
@@ -6746,7 +6767,7 @@ function handleInitRound(message) {
 
 // Function to export character data
 async function exportCharacterData() {
-    const characterKey = document.getElementById("playerCharacterInput").textContent;
+    const characterKey = document.getElementById("customCharacterSelect").value;
 
     // Retrieve character data from global storage
     const allCharacterData = await loadDataFromCampaignStorage("characters");
@@ -6756,794 +6777,86 @@ async function exportCharacterData() {
     // Access the character's data from the global storage
     const characterData = allCharacterData[characterKey];
 
+    // Wrap the character data with its key
+    const characterJsonWithKey = {
+        [characterKey]: characterData
+    };
+
     // Convert the data to a JSON string (this is the format that would be shared)
-    const characterJsonString = JSON.stringify(characterData, null, 2);
+    const characterJsonString = JSON.stringify(characterJsonWithKey, null, 2);
 
     // Base64 encode the JSON string for easy sharing
     const encodedData = btoa(characterJsonString);
 
-    // Output the Base64 encoded string to the console (to simulate sharing)
-    console.log("Exported (Base64 Encoded) String:", encodedData);
-
-    // Wait for 2 seconds, then re-import and simulate saving to global storage
-    setTimeout(() => {
-        // Simulate receiving and decoding the Base64 string
-        const decodedData = atob(encodedData);
-
-        // Parse the JSON string back into an object
-        const reImportedData = JSON.parse(decodedData);
-
-        // Output the re-imported data to the console to see its format
-        console.log("Re-imported Data (to be saved):", reImportedData);
-
-    }, 2000); // 2-second delay
+     // Copy the Base64 encoded string to the clipboard
+     try {
+        await navigator.clipboard.writeText(encodedData);
+        showErrorModal(`Exported: '${characterKey}' has been copied to clipboard:`,5000);
+    } catch (error) {
+        console.error("Failed to copy data to clipboard:", error);
+    }
 }
 
 // Add event listener to the export button
-// document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
+document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
 
 
+function loadAndDisplayCharaceter() {
+    loadDataFromCampaignStorage("characters")
+        .then((items) => {
+            const characterSelect = document.getElementById("customCharacterSelect");
+            characterSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with items names
+            for (const itemName in items) {
+                const option = document.createElement("option");
+                option.value = itemName;
+                option.textContent = itemName;
+                characterSelect.appendChild(option);
+            }
+
+        })
+        .catch((error) => {
+            console.error("Failed to load custom characters:", error);
+        });
+}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-const customSpellsButton = document.getElementById('customSpells');
-const spellFormModal = document.getElementById('spellFormModal');
-const saveSpellButton = document.getElementById('saveSpell');
-const closeSpellFormButton = document.getElementById('closeSpellForm');
-let spells = []; // Store created spells
-
-// Open the form
-customSpellsButton.addEventListener('click', () => {
-    spellFormModal.style.display = 'block';
+document.getElementById("importCharacterData").addEventListener("click", () => {
+    document.getElementById("importModal").style.display = "flex";
 });
 
-// Close the form
-closeSpellFormButton.addEventListener('click', () => {
-    spellFormModal.style.display = 'none';
+// Close the modal when the cancel button is clicked
+document.getElementById("importCancelButton").addEventListener("click", () => {
+    document.getElementById("importModal").style.display = "none";
 });
 
-// Attach event listeners to specific elements
-document.getElementById('damageDiceForm').addEventListener('blur', validateDiceInput);
-document.getElementById('damageDiceUpcastForm').addEventListener('blur', validateDiceInput);
-
-document.getElementById('toHitOrDC').addEventListener('change', function () {
-    const toHitOrDCValue = this.value; // Get the value of the first dropdown
-    const saveDCTypeSelect = document.getElementById('saveDCType');
-
-    // Clear all options first
-    saveDCTypeSelect.innerHTML = '';
-
-    if (toHitOrDCValue === 'DC') {
-        // Add all options for DC
-        saveDCTypeSelect.innerHTML = `
-            <option value="str">Strength (STR)</option>
-            <option value="dex">Dexterity (DEX)</option>
-            <option value="con">Constitution (CON)</option>
-            <option value="int">Intelligence (INT)</option>
-            <option value="wis">Wisdom (WIS)</option>
-            <option value="cha">Charisma (CHA)</option>
-        `;
-    } else {
-        // Add only the N/A option if not DC
-        saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`;
-    }
-
-    // Reset to N/A as default
-    saveDCTypeSelect.selectedIndex = 0;
-});
-
-
-// Save the spell
-saveSpellButton.addEventListener('click', async () => {
-    const spellForm = document.getElementById('spellForm');
-    const selectedClasses = Array.from(document.querySelectorAll('#spellFormClass input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value)
-        .join(', ');
-
-    const selectedComponents = Array.from(document.querySelectorAll('#spellFormComponents input[type="checkbox"]:checked'))
-        .map(checkbox => checkbox.value)
-        .join(', ');
-
-    const spell = {
-        name: document.getElementById('spellFormName').value.trim() || 'Unnamed Spell',
-        desc: document.getElementById('spellFormDesc').value.trim() || 'No description provided.',
-        higher_level: document.getElementById('higherLevelForm').value.trim(),
-        range: document.getElementById('spellFormRange').value.trim(),
-        components: selectedComponents,
-        ritual: document.getElementById('ritualForm').checked ? ", R" : "",
-        duration: document.getElementById('spellFormDuration').value.trim(),
-        concentration: document.getElementById('concentrationForm').checked ? "yes" : "no",
-        casting_time: document.getElementById('castingTimeForm').value.trim(),
-        level: document.getElementById('spellFormLevel').value,
-        school: document.getElementById('schoolForm').value.trim(),
-        class: selectedClasses,
-        toHitOrDC: document.getElementById('toHitOrDC').value.trim(),
-        damage_dice: document.getElementById('damageDiceForm').value.trim(),
-        damage_dice_upcast: document.getElementById('damageDiceUpcastForm').value.trim(),
-        spell_save_dc_type: document.getElementById('saveDCType').value.trim(),
-        ability_modifier: document.getElementById('abilityModifier').value.trim(),
-        damage_type_01: document.getElementById('spellDamageType01').value.trim()
-    };
-
-    spells.push(spell); // Add spell to the array
-    console.log(spells); // Log the spells for debugging
+// Handle saving the imported data
+document.getElementById("importSaveButton").addEventListener("click", async () => {
+    const importTextArea = document.getElementById("importTextArea");
+    const encodedData = importTextArea.value;
 
     try {
-        // Save and wait for completion
-        await saveToGlobalStorage("Custom Spells", spell.name, spell, true);
-        console.log("Save completed.");
-        await loadSpellDataFiles(); // Ensure this runs after save completes
+        // Decode the Base64 string
+        const decodedData = atob(encodedData);
+
+        // Parse the JSON data
+        const characterData = JSON.parse(decodedData);
+
+        // Extract the character key and data
+        const characterKey = Object.keys(characterData)[0];
+        const characterInfo = characterData[characterKey];
+
+        // Save the character data using the specified function
+        saveToCampaignStorage("characters", characterKey, characterInfo, true);
+
+        // Close the modal and clear the text area
+        document.getElementById("importModal").style.display = "none";
+        importTextArea.value = "";
+
+        showErrorModal(`Character data for '${characterKey}' successfully imported and saved.`);
     } catch (error) {
-        console.error("Error during save or load:", error);
+        console.error("Failed to import character data:", error);
+        showErrorModal("Invalid character data. Please check the format and try again.");
     }
-
-    spellFormModal.style.display = 'none'; // Close the form
-    spellForm.reset(); // Reset the form
 });
-
-// Function to populate a dropdown with damage types
-function populateDamageTypeDropdown(selectElement) {
-    // Clear existing options
-    selectElement.innerHTML = "";
-
-    // Populate options dynamically from the damageTypes array
-    damageTypes.forEach(type => {
-        const option = document.createElement("option");
-        option.value = type;
-        option.textContent = type;
-        selectElement.appendChild(option);
-    });
-}
-
-// Example of how to use this in the spell form
-document.querySelectorAll('select[id^="spellDamageType01"]').forEach(selectElement => {
-    populateDamageTypeDropdown(selectElement);
-});
-
-function validateDiceInput(event) {
-    const newValue = event.target.value.trim();
-
-    const dicePattern = /^(\d+d(4|6|8|10|12|20))([+/]\d+d(4|6|8|10|12|20))*$/;
-
-    if (newValue && !dicePattern.test(newValue)) {
-        showErrorModal(`Invalid input: "${newValue}". Please enter a valid dice format like '4d4+5d6'.`);
-        event.target.value = ''; // Clear invalid input
-    }
-}
-
-
-
-
-const customItemsButton = document.getElementById('customItems');
-const itemForm = document.getElementById("itemForm");
-const itemFormModal = document.getElementById('itemFormModal');
-const closeItemFormButton = document.getElementById('closeItemForm');
-let items = []; // Store created spells
-
-// Open the form
-customItemsButton.addEventListener('click', () => {
-    updateDynamicFields("weapon")
-    itemFormModal.style.display = 'block';
-});
-
-// Close the form
-closeItemFormButton.addEventListener('click', () => {
-    itemFormModal.style.display = 'none';
-});
-
-
-const categorySelect = document.getElementById("equipment-category");
-const additionalFields = document.getElementById("additional-fields");
-  
-// Update dynamic fields based on category
-categorySelect.addEventListener("change", () => {
-    const category = categorySelect.value;
-    updateDynamicFields(category);
-});
-
-// Form submission handler
-itemForm.addEventListener("submit", (e) => {
-    e.preventDefault();
-    const equipmentData = gatherFormData();
-    console.log("%cGenerated Equipment:", "color: red; font-weight: bold;");
-    console.log(equipmentData);
-    saveCustomEquipment(equipmentData)
-});
-
-
-async function saveCustomEquipment(equipmentData){
-    try {
-        // Save and wait for completion
-        await saveToGlobalStorage("Custom Equipment", equipmentData.name, equipmentData, true);
-        console.log("Save completed.");
-        await loadEquipmentDataFiles(); // Ensure this runs after save completes
-    } catch (error) {
-        console.error("Error during save or load:", error);
-    }
-
-    itemFormModal.style.display = 'none'; // Close the form
-    itemForm.reset(); // Reset the form
-}
-
-
-// Function to update dynamic fields
-function updateDynamicFields(category) {
-const additionalFields = document.getElementById("additional-fields");
-additionalFields.innerHTML = ""; // Clear existing fields
-
-let magicBonusSection = `
-        <button type="button" id="add-magic-bonus" class="nonRollButton">Add Magic Bonus</button>
-        <div>
-            <label for="magic-bonuses">Magic Bonuses:</label>
-            <div id="magic-bonus-container"></div>
-        </div>
-    `;
-
-    if (category === "weapon") {
-        additionalFields.innerHTML = `
-            <div class="form-row">
-                <label for="weapon-category">Weapon Type:</label>
-                <select id="weapon-category">
-                    <option value="simple">Simple</option>
-                    <option value="martial">Martial</option>
-                </select>
-            </div>
-
-            <div id="weapon-configurator" class="form-row">
-                <label for="attack-style">Attack Style:</label>
-                <select id="attack-style">
-                    <option value="Melee">Melee</option>
-                    <option value="Ranged">Ranged</option>
-                    <option value="Melee-thrown">Melee and Thrown</option>
-                </select>
-                <div id="range-inputs">
-                    <label for="melee-range" class="range-label">Range:</label>
-                    <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
-                </div>
-            </div>
-
-            <div class="form-row">
-                <label for="weaponProperties">Weapon Properties:</label>
-                <div id="weaponProperties">
-                    <label>
-                        <input type="checkbox" id="propertyFinesse" name="property" value="Finesse">
-                        <span id="labelFinesse">Finesse</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyVersatile" name="property" value="Versatile">
-                        <span id="labelVersatile">Versatile</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyHeavy" name="property" value="Heavy">
-                        <span id="labelHeavy">Heavy</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyLight" name="property" value="Light">
-                        <span id="labelLight">Light</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyLoading" name="property" value="Loading">
-                        <span id="labelLoading">Loading</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyReach" name="property" value="Reach">
-                        <span id="labelReach">Reach</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyThrown" name="property" value="Thrown">
-                        <span id="labelThrown">Thrown</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyTwoHanded" name="property" value="Two-Handed">
-                        <span id="labelTwoHanded">Two-Handed</span>
-                    </label>
-                     <label>
-                        <input type="checkbox" id="propertySilvered" name="property" value="Silvered">
-                        <span id="labelSilvered">Silvered</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertySpecial" name="property" value="Special">
-                        <span id="labelSpecial">Special</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyAmmunition" name="property" value="Ammunition">
-                        <span id="labelAmmunition">Ammunition</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="propertyImprovised" name="property" value="Improvised">
-                        <span id="labelImprovised">Improvised</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="itemFormAttunement" name="property" value="attunement">
-                        <span id="attunement">Attunement</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="has-charges" name="property" value="Has Charges">
-                        <span id="has-charges">Has Charges</span>
-                    </label>
-                </div>
-            </div>
-    
-            <div class="form-row">
-                <label for="damage-dice">Damage Dice:</label>
-                <input type="text" id="damage-dice" placeholder="e.g., 1d8" />
-            </div>
-            
-            <div class="form-row">
-                <label for="damage-type">Damage Type:</label>
-                <select id="damage-type">
-                    ${damageTypes.map(type => `<option value="${type}">${type}</option>`).join("")}
-                </select>
-            </div>
-    
-            <div id="charges-options" style="display: none; margin-left: 20px;">
-                <div class="form-row">
-                    <label for="charge-reset">When does it reset?</label>
-                    <select id="charge-reset">
-                        <option value="long-rest">Long Rest</option>
-                        <option value="short-rest">Short Rest</option>
-                        <option value="at-dawn">At Dawn</option>
-                    </select>
-                </div>
-
-                <div class="form-row">
-                    <label for="max-charges">Maximum Charges:</label>
-                    <input type="number" id="max-charges" placeholder="e.g., 3" min="1"/>
-                </div>
-            </div>
-
-            <div class="form-row">
-                <label for="weapon-to-hit-bonus">Magical to Hit Bonus:</label>
-                <input type="number" id="weapon-to-hit-bonus" placeholder="e.g., 1"/>
-            </div>
-
-            <div class="form-row">
-                <label for="weapon-damage-bonus">Magical Damage Bonus</label>
-                <input type="number" id="weapon-damage-bonus" placeholder="e.g., 1"/>
-            </div>
-
-            ${magicBonusSection}
-        `;
-        // JavaScript logic to toggle visibility
-        const hasChargesCheckbox = document.getElementById("has-charges");
-        const chargesOptions = document.getElementById("charges-options");
-
-        hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
-        });
-
-        document.getElementById('attack-style').addEventListener('change', function () {
-            const attackStyle = this.value;
-            const rangeInputs = document.getElementById('range-inputs');
-          
-            // Clear existing inputs
-            rangeInputs.innerHTML = '';
-          
-            // Generate inputs based on the selected attack style
-            if (attackStyle === 'Melee') {
-              rangeInputs.innerHTML = `
-                <label for="melee-range" class="range-label">Range:</label>
-                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
-              `;
-            } else if (attackStyle === 'Ranged') {
-              rangeInputs.innerHTML = `
-                <label for="short-range" class="range-label">Short Range:</label>
-                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 30" />
-                <label for="long-range" class="range-label">Long Range:</label>
-                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 120" />
-              `;
-            } else if (attackStyle === 'Melee-thrown') {
-              rangeInputs.innerHTML = `
-                <label for="melee-range" class="range-label">Melee Range:</label>
-                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
-                <label for="short-range" class="range-label">Short Range:</label>
-                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 20" />
-                <label for="long-range" class="range-label">Long Range:</label>
-                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 60" />
-              `;
-            }
-          });
-          setupMagicBonusSelection();
-    } else if (category === "armor") {
-        additionalFields.innerHTML = `
-        <div class="form-row">
-            <label for="armor-category">Armor Type:</label>
-            <select id="armor-category">
-                <option value="Light">Light</option>
-                <option value="Medium">Medium</option>
-                <option value="Heavy">Heavy</option>
-                <option value="Shield">Shield</option>
-            </select>
-        </div>
-        
-        <div class="form-row">
-            <label for="armor-class">Base Armor Class:</label>
-            <input type="number" id="armor-class" placeholder="e.g., 15" />
-        </div>
-        
-        <div class="form-row">
-            <label for="str-minimum">Strength Requirement:</label>
-            <input type="number" id="str-minimum" placeholder="e.g., 15" />
-        </div>
-        
-        <div class="form-row">
-            <label for="stealth-disadvantage">Stealth Disadvantage:</label>
-            <input type="checkbox" id="stealth-disadvantage" />
-            <label for="itemFormAttunement">Requires Attunement:</label>
-            <input type="checkbox" id="itemFormAttunement" />
-            <label for="has-charges">Has Charges</label>
-            <input type="checkbox" id="has-charges" />
-        </div>
-    
-        <div id="charges-options" style="display: none; margin-left: 20px;">
-            <div class="form-row">
-                <label for="charge-reset">When does it reset?</label>
-                <select id="charge-reset">
-                    <option value="long-rest">Long Rest</option>
-                    <option value="short-rest">Short Rest</option>
-                    <option value="at-dawn">At Dawn</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <label for="max-charges">Maximum Charges:</label>
-                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
-            </div>
-        </div>
-        ${magicBonusSection}
-        `;
-        // JavaScript logic to toggle visibility
-        const hasChargesCheckbox = document.getElementById("has-charges");
-        const chargesOptions = document.getElementById("charges-options");
-
-        hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
-        });
-        setupMagicBonusSelection();
-    } else if (category === "adventuring-gear") {
-        additionalFields.innerHTML = `
-        <div class="form-row">
-            <label for="gear-category">Gear Category:</label>
-            <input type="text" id="gear-category" placeholder="e.g., Standard Gear" />
-        </div>
-        `;
-    } else if (category === "wondrous-item") {
-        additionalFields.innerHTML = `
-        <div class="form-row">
-            <label for="itemFormAttunement">Requires Attunement:</label>
-            <input type="checkbox" id="itemFormAttunement"/>
-            <label for="has-charges">Has Charges</label>
-            <input type="checkbox" id="has-charges" />
-        </div>
-    
-        <div id="charges-options" style="display: none; margin-left: 20px;">
-            <div class="form-row">
-                <label for="charge-reset">When does it reset?</label>
-                <select id="charge-reset">
-                    <option value="long-rest">Long Rest</option>
-                    <option value="short-rest">Short Rest</option>
-                    <option value="at-dawn">At Dawn</option>
-                </select>
-            </div>
-            <div class="form-row">
-                <label for="max-charges">Maximum Charges:</label>
-                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
-            </div>
-        </div>
-        ${magicBonusSection}
-        `;
-        // JavaScript logic to toggle visibility
-        const hasChargesCheckbox = document.getElementById("has-charges");
-        const chargesOptions = document.getElementById("charges-options");
-
-        hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
-        });
-        setupMagicBonusSelection();
-    }
-    // Attach event listeners to the Magic Bonus section
-    
-}
-
-// Function to gather form data
-function gatherFormData() {
-    const equipmentData = {
-        index: document.getElementById("equipment-name").value.toLowerCase().replace(/\s+/g, "-"),
-        name: document.getElementById("equipment-name").value,
-        equipment_category: {
-            index: document.getElementById("equipment-category").value,
-            name: document.getElementById("equipment-category").value,
-        },
-        description: document.getElementById("equipment-description").value.split("\n").filter(line => line.trim() !== ""),
-        properties: document.getElementById("itemFormAttunement")?.checked
-            ? [{
-                  index: "attunement",
-                  name: "Requires Attunement",
-              }]
-            : [],
-        
-        cost: {
-            quantity: parseFloat(document.getElementById("equipment-cost").value) || 0,
-            unit: document.getElementById("equipment-cost-unit").value
-        },
-        weight: parseFloat(document.getElementById("equipment-weight").value) || 0,
-        rarity: {
-            index: document.getElementById("equipment-rarity").value.toLowerCase(),
-            name: document.getElementById("equipment-rarity").value,
-        },
-    };
-
-    // Collect dynamic fields based on the category
-    const category = equipmentData.equipment_category.index;
-
-    if (category === "weapon") {
-        equipmentData.weapon_category = document.getElementById("weapon-category").value;
-    
-        const damageDice = document.getElementById("damage-dice").value;
-        const damageType = document.getElementById("damage-type").value;
-    
-        equipmentData.damage = {
-            damage_dice: damageDice,
-            damage_type: {
-                index: damageType.toLowerCase(),
-                name: damageType,
-            }
-        };
-
-        // Collect selected weapon properties
-        const selectedProperties = Array.from(document.querySelectorAll("#weaponProperties input:checked"))
-        .map(checkbox => ({
-            index: checkbox.value.toLowerCase().replace(/\s+/g, "-"),
-            name: checkbox.value
-        }));
-
-        equipmentData.properties = selectedProperties;
-
-        // Get the weapon range based on the selected attack style
-        const attackStyle = document.getElementById("attack-style").value;
-        equipmentData.weapon_range = document.getElementById("attack-style").value;
-
-        if (attackStyle === "melee") {
-            equipmentData.range = {
-                normal: parseInt(document.getElementById("melee-range").value) || 5
-            };
-        } else if (attackStyle === "ranged") {
-            equipmentData.range = {
-                normal: parseInt(document.getElementById("short-range").value) || 30,
-                long: parseInt(document.getElementById("long-range").value) || 120
-            };
-        } else if (attackStyle === "melee-thrown") {
-            equipmentData.range = {
-                normal: parseInt(document.getElementById("melee-range").value) || 5,
-            };
-            equipmentData.throw_range = {
-                normal: parseInt(document.getElementById("short-range").value) || 20,
-                long: parseInt(document.getElementById("long-range").value) || 60
-            }
-        }
-
-        equipmentData.toHitBonus = document.getElementById("weapon-to-hit-bonus").value;
-        equipmentData.damageBonus = document.getElementById("weapon-damage-bonus").value;
-        equipmentData.hasCharges = document.getElementById("has-charges").checked;
-    
-        equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
-            chargeReset: document.getElementById("charge-reset").value,
-            maxCharges: parseInt(document.getElementById("max-charges").value) || 0
-        } : null;    
-        collectMagicBonuses()
-    } else if (category === "armor") {
-            // Get the selected armor category and base armor class from the form
-            let armorClassData = {};
-
-            // Get the selected armor category and base armor class from the form
-            const armorCategory = document.getElementById("armor-category").value;
-            const baseArmorClass = parseInt(document.getElementById("armor-class").value);
-            
-            // Set default values for the armor class
-            armorClassData.base = baseArmorClass;
-            armorClassData.dex_bonus = false; // Default value for dex_bonus
-            armorClassData.max_bonus = 0;     // Default value for max_bonus
-
-            
-            
-            // Adjust values based on the armor category
-            if (armorCategory === "Light") {
-                armorClassData.dex_bonus = true; // Light armor allows dex bonus
-            } else if (armorCategory === "Medium") {
-                armorClassData.dex_bonus = true; // Medium armor allows dex bonus
-                armorClassData.max_bonus = 2;   // Medium armor has a max dex bonus of 2
-            } else if (armorCategory === "Heavy") {
-                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
-                armorClassData.max_bonus = 0;    // Heavy armor doesn't have a max dex bonus (no bonus)
-            }else if (armorCategory === "Shield") {
-                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
-                equipmentData.equipment_category = {
-                    index: "shield",   // Update the category to 'shield'
-                    name: "Shield",    // Update the name to "Shield"
-                };
-            }
-            
-            // Save armor class data to the equipmentData object (assuming equipmentData is already initialized)
-            equipmentData.armor_class = armorClassData; // Push the generated object into equipmentData
-            
-            // Now you can push other related data to equipmentData
-            equipmentData.armor_category = armorCategory;
-
-
-            equipmentData.strengthRequirement = parseInt(document.getElementById("str-minimum").value);
-            equipmentData.stealthDisadvantage = document.getElementById("stealth-disadvantage").checked;
-            equipmentData.hasCharges = document.getElementById("has-charges").checked;
-            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
-                chargeReset: document.getElementById("charge-reset").value,
-                maxCharges: parseInt(document.getElementById("max-charges").value)
-            } : null
-            collectMagicBonuses()
-    } else if (category === "adventuring-gear") {
-            equipmentData.gearCategory = document.getElementById("gear-category").value;
-    } else if (category === "wondrous-item") {
-            equipmentData.hasCharges = document.getElementById("has-charges").checked;
-            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
-                chargeReset: document.getElementById("charge-reset").value,
-                maxCharges: parseInt(document.getElementById("max-charges").value)
-            } : null
-            collectMagicBonuses()
-    }
-
-    // Collect magic bonus data
-    function collectMagicBonuses(){
-        const magicBonusRows = document.querySelectorAll(".magic-bonus-row");
-
-        const bonuses = [];
-
-        magicBonusRows.forEach(row => {
-            const magicStatSelect = row.querySelector(".magic-stat-select");
-            const magicBonusValue = row.querySelector(".magic-bonus-value");
-    
-            // Check if magic-stat-select is visible
-            const isMagicStatSelectVisible = window.getComputedStyle(magicStatSelect).display !== "none";
-            const category = row.querySelector(".magic-category-select").value;
-            const key = row.querySelector(".magic-bonus-select").value;
-            const value = isMagicStatSelectVisible? magicStatSelect.value : parseInt(magicBonusValue.value) || 0;
-            const description = row.querySelector(".magic-description-input")?.value || "";
-
-            bonuses.push({
-                category,
-                key,
-                value,
-                description
-            });
-        });
-
-        equipmentData.bonus = bonuses;
-    }
-    
-
-    return equipmentData;
-}
-
-
-function setupMagicBonusSelection() {
-    const magicBonusContainer = document.getElementById("magic-bonus-container");
-    const addBonusButton = document.getElementById("add-magic-bonus");
-
-    addBonusButton.addEventListener("click", () => {
-        // Create a container div for each bonus selection
-        const bonusRow = document.createElement("div");
-        bonusRow.className = "magic-bonus-row";
-
-        // Create the first dropdown for category selection
-        const categorySelect = document.createElement("select");
-        categorySelect.className = "magic-category-select";
-        categorySelect.innerHTML = `<option>Select Category</option>`;
-
-        Object.keys(characterStatBonuses).forEach(category => {
-            const option = document.createElement("option");
-            option.value = category;
-            option.textContent = category;
-            categorySelect.appendChild(option);
-        });
-
-        // Create the second dropdown for specific bonus options (initially empty)
-        const bonusSelect = document.createElement("select");
-        bonusSelect.className = "magic-bonus-select";
-        bonusSelect.disabled = true; // Disabled until a category is selected
-
-        // Populate the second dropdown based on the selected category
-        categorySelect.addEventListener("change", () => {
-            const selectedCategory = categorySelect.value;
-
-            // Clear previous options
-            bonusSelect.innerHTML = `<option value="None">Select Bonus</option>`;
-            bonusSelect.disabled = selectedCategory === "None";
-
-            // Populate with options from the selected category
-            if (characterStatBonuses[selectedCategory]) {
-                Object.keys(characterStatBonuses[selectedCategory]).forEach(bonus => {
-                    const option = document.createElement("option");
-                    option.value = bonus;
-                    option.textContent = bonus;
-                    bonusSelect.appendChild(option);
-                });
-            }
-        });
-
-        // Create a dropdown to toggle between value or ability score
-        const valueOrStatSelect = document.createElement("select");
-        valueOrStatSelect.className = "value-or-stat-select";
-        valueOrStatSelect.innerHTML = `
-            <option value="value">Value</option>
-            <option value="stat">Ability Score</option>
-        `;
-
-        // Create a numeric input for the bonus value (default)
-        const bonusValueInput = document.createElement("input");
-        bonusValueInput.type = "number";
-        bonusValueInput.className = "magic-bonus-value";
-        bonusValueInput.placeholder = "0";
-
-        // Create an ability score dropdown (hidden by default)
-        const statSelect = document.createElement("select");
-        statSelect.className = "magic-stat-select";
-        statSelect.style.display = "none"; // Hidden initially
-        ["STR", "DEX", "CON", "INT", "WIS", "CHA"].forEach(stat => {
-            const option = document.createElement("option");
-            option.value = stat;
-            option.textContent = stat;
-            statSelect.appendChild(option);
-        });
-
-        // Toggle between value input and ability score dropdown
-        valueOrStatSelect.addEventListener("change", () => {
-            if (valueOrStatSelect.value === "value") {
-                bonusValueInput.style.display = "inline-block";
-                statSelect.style.display = "none";
-            } else {
-                bonusValueInput.style.display = "none";
-                statSelect.style.display = "inline-block";
-            }
-        });
-
-        // Create a remove button to delete the bonus row
-        const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
-        removeButton.className = "remove-magic-bonus nonRollButton";
-
-        removeButton.addEventListener("click", () => {
-            magicBonusContainer.removeChild(bonusRow);
-        });
-
-        // Append all elements to the bonus row
-        bonusRow.appendChild(categorySelect);
-        bonusRow.appendChild(bonusSelect);
-        bonusRow.appendChild(valueOrStatSelect);
-        bonusRow.appendChild(bonusValueInput);
-        bonusRow.appendChild(statSelect);
-        bonusRow.appendChild(removeButton);
-
-        // Append the bonus row to the container
-        magicBonusContainer.appendChild(bonusRow);
-    });
-}

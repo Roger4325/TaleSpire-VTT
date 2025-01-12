@@ -10,6 +10,10 @@ function setupNav(){
             sections.forEach(section => {
                 section.style.display = 'none';
             });
+
+            if (tab.getAttribute('href').substring(1) === "Docs"){
+                autoResizeTextareas()
+            }
             
             tabs.forEach(t => {
                 t.style.border = '';
@@ -92,7 +96,7 @@ const CONDITIONS = [
       condition: "Blinded",
       description: [
         "A blinded creature can't see and automatically fails any ability check that requires sight.",
-        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
+        "<br>Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
       ]
     },
     {
@@ -112,26 +116,26 @@ const CONDITIONS = [
       condition: "Exhaustion",
       description: [
         "Level 1: Disadvantage on ability checks",
-        "Level 2: Speed halved",
-        "Level 3: Disadvantage on attack rolls and saving throws",
-        "Level 4: Hit point maximum halved",
-        "Level 5: Speed reduced to 0",
-        "Level 6: Death"
+        "<br>Level 2: Speed halved",
+        "<br>Level 3: Disadvantage on attack rolls and saving throws",
+        "<br>Level 4: Hit point maximum halved",
+        "<br>Level 5: Speed reduced to 0",
+        "<br>Level 6: Death"
       ]
     },
     {
       condition: "Frightened",
       description: [
         "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.",
-        "The creature can't willingly move closer to the source of its fear."
+        "<br>The creature can't willingly move closer to the source of its fear."
       ]
     },
     {
       condition: "Grappled",
       description: [
         "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
-        "The condition ends if the grappler is incapacitated (see the condition).",
-        "The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
+        "<br>The condition ends if the grappler is incapacitated (see the condition).",
+        "<br>The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
       ]
     },
     {
@@ -144,27 +148,27 @@ const CONDITIONS = [
       condition: "Invisible",
       description: [
         "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
-        "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
+        "<br>Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
       ]
     },
     {
       condition: "Paralyzed",
       description: [
         "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage.",
-        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+        "<br>The creature automatically fails Strength and Dexterity saving throws.",
+        "<br>Attack rolls against the creature have advantage.",
+        "<br>Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
       ]
     },
     {
       condition: "Petrified",
       description: [
         "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
-        "The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
-        "Attack rolls against the creature have advantage.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "The creature has resistance to all damage.",
-        "The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
+        "<br>The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
+        "<br>Attack rolls against the creature have advantage.",
+        "<br>The creature automatically fails Strength and Dexterity saving throws.",
+        "<br>The creature has resistance to all damage.",
+        "<br>The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
       ]
     },
     {
@@ -177,34 +181,34 @@ const CONDITIONS = [
       condition: "Prone",
       description: [
         "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
-        "The creature has disadvantage on attack rolls.",
-        "An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
+        "<br>The creature has disadvantage on attack rolls.",
+        "<br>An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
       ]
     },
     {
       condition: "Restrained",
       description: [
         "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
-        "Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
-        "The creature has disadvantage on Dexterity saving throws."
+        "<br>Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
+        "<br>The creature has disadvantage on Dexterity saving throws."
       ]
     },
     {
       condition: "Stunned",
       description: [
         "A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage."
+        "<br>The creature automatically fails Strength and Dexterity saving throws.",
+        "<br>Attack rolls against the creature have advantage."
       ]
     },
     {
       condition: "Unconscious",
       description: [
         "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings.",
-        "The creature drops whatever it's holding and falls prone.",
-        "The creature automatically fails Strength and Dexterity saving throws.",
-        "Attack rolls against the creature have advantage.",
-        "Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+        "<br>The creature drops whatever it's holding and falls prone.",
+        "<br>The creature automatically fails Strength and Dexterity saving throws.",
+        "<br>Attack rolls against the creature have advantage.",
+        "<br>Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
       ]
     }
 ];
@@ -279,7 +283,7 @@ const EFFECTS = [
         ]
     },
     {
-        effect: "Concentrating",
+        effect: "Concentration",
         description: [
             "The creature is concentrating on a spell. Concentration is broken if the creature takes damage and fails a Constitution saving throw."
         ]
@@ -309,7 +313,15 @@ const EFFECTS = [
         description: [
             "Creatures attempting to attack the protected creature must make a Wisdom saving throw or choose a new target."
         ]
+    },
+    {
+        effect: "Recharging",
+        "description": [
+            "This monster's ability recharges after use. At the start of each of its turns, roll a d6. <br>If the result is within the recharge range specified in the ability (e.g., 5–6), the ability becomes available to use again. <br>Otherwise, it remains unavailable until the next successful recharge roll."
+        ]
     }
+
+    
     // {
     //     effect: "Drained",
     //     description: [
@@ -1174,6 +1186,8 @@ async function initializeClients() {
     }
 }
 
+
+let myClientType;
 // Handle events related to clients joining, leaving, or changing modes
 function handleClientEvents(eventResponse) {
     let client = eventResponse.payload.client;
@@ -1200,8 +1214,10 @@ function handleClientEvents(eventResponse) {
                 if (isMe) {
                     if (eventResponse.payload.clientMode === "gm") {
                         console.log("Switched to GM mode");
+                        myClientType = "gm"
                         window.open("DMScreen.html");
                     } else {
+                        myClientType = "player"
                         console.log("Switched to player mode");
                         window.open("PlayerCharacter.html");
                     }
@@ -1330,11 +1346,14 @@ async function onInit() {
     const ownerInfo = ownerInfoArray[0];
     
     if (ownerInfo.clientMode === "gm") {
+        myClientType = "gm"
         console.log("GMing is awesome");
         await getPlayersInCampaign()
         establishMonsterData()
+        populateListWithAllSpells(AppData.spellLookupInfo.spellsData)
     }
     else{
+        myClientType = "player"
         await playerSetUP();
         loadAndPickaCharacter()
     }
@@ -1371,8 +1390,6 @@ function parseAndReplaceDice(action, text, spell) {
                     label.classList.add('actionButtonLabel');
                     const diceName = action.Name !== undefined ? action.Name : (action.name || 'Unnamed Action');
                     const diceRoll = part.replace(/[()\s]/g, '');
-
-                    console.log(diceRoll);
             
                     // Extract the modifier part (+ or - with number)
                     const modifierMatch = part.match(/([+-]\s*\d+)$/);
@@ -1452,17 +1469,10 @@ function parseAndReplaceDice(action, text, spell) {
                         const matches = [...part.matchAll(spellRegex)];
                         let lastIndex = 0;
                     
-                        // Debugging
-                        console.log(`Processing text: "${part}"`);
-                        console.log(`Found matches:`, matches);
-                    
                         // Iterate through each match
                         matches.forEach(match => {
                             const [spellName] = match; // Matched spell name
                             const spellIndex = match.index;
-                    
-                            // Debug: Log the matched spell name
-                            console.log(`Matched spell name: "${spellName}"`);
                     
                             // Append the text before the spell match
                             if (spellIndex > lastIndex) {
@@ -1477,16 +1487,8 @@ function parseAndReplaceDice(action, text, spell) {
                             const spellData = AppData.spellLookupInfo?.spellsData.find(
                                 s => s.name.toLowerCase().trim() === cleanedSpellName
                             );
-
-                            // Debug: Log whether the spell was found
-                            if (!spellData) {
-                                console.log(`Spell not found for cleaned name: "${cleanedSpellName}"`);
-                            } else {
-                                console.log(`Found spell:`, spellData);
-                            }
                     
                             if (spellData) {
-                                console.log("here")
                                 // Create and append the spell element
                                 const spellElement = document.createElement('span');
                                 spellElement.classList.add('spell-hover');
@@ -1573,34 +1575,24 @@ function rollableButtons() {
                 const label = button.previousElementSibling;
 
                 if (label && label.classList.contains('actionButtonLabel')) {
-                    const diceValue = parseInt(label.getAttribute('value'), 10);
+                    let diceValue = parseInt(label.getAttribute('value'), 10);
                     const diceType = label.getAttribute('data-dice-type');
                     const diceName = label.getAttribute('data-name');
 
                     // Check if there are multiple dice types separated by '/'
                     const diceGroups = diceType.split('/');
                     // Split dice names by '/'
-                    const diceNames = diceName.split('/');
+                    let diceNames = diceName.split('/');
                     
                     // Check the current advantage/disadvantage state and adjust the dice type accordingly
                     const isAdvantage = toggleContainer.querySelector("#advButton").classList.contains("active");
                     const isDisadvantage = toggleContainer.querySelector("#disadvButton").classList.contains("active");
                     
                     let type = "normal";
+                    let diceExtras = [];
                     let diceRolls = []; // Array to hold all dice rolls for this spell
                     let blessRoll = ""; // For Bless or Guidance
                     let baneRoll = ""; // For Bane
-
-                    // Iterate through each dice group
-                    diceGroups.forEach((diceGroup, index) => {
-                        // Only apply the modifier to the first group
-                        const modifier = (index === 0) ? diceValue : 0;
-                        const diceRoll = dicePacker(diceGroup, modifier);
-                        diceRolls.push({
-                            name: diceNames[index] || diceName, // Use split name if available, fallback to original name
-                            roll: diceRoll
-                        });
-                    });
 
                     let conditionTrackerDiv
                     let conditionsSet
@@ -1620,14 +1612,44 @@ function rollableButtons() {
                             console.log('Conditions for the active monster:', Array.from(conditionsSet));
                         }
                     } else {
-                        console.log('No active monster selected.');
-                        conditionTrackerDiv = document.getElementById('conditionTracker');
-                        conditionsSet = conditionsMap.get(conditionTrackerDiv);
-                    }
+                        const conditionTrackerDiv = document.getElementById('conditionTracker');
+                        
+                        if (conditionTrackerDiv) {
+                            // Select all the spans inside condition pills
+                            const conditionSpans = conditionTrackerDiv.querySelectorAll('.condition-pill span');
 
-                    // Check for conditions in the conditionsMap
-                    // const conditionTrackerDiv = document.getElementById('conditionTracker');
-                    // const conditionsSet = conditionsMap.get(conditionTrackerDiv);
+                            conditionsSet = new Set();
+                            // Create a map of condition values
+                            conditionSpans.forEach(span => {
+                                const value = span.getAttribute('value');
+                                if (value) {
+                                    conditionsSet.add(value)
+                                }
+                            });
+                            
+                            if (conditionsSet.has('Exhaustion')) {
+                                // Loop through condition pills to find the Exhaustion condition and extract the number
+                                const exhaustionHomebrew = document.getElementById("exhaustionHomebrew")
+                                if (exhaustionHomebrew.checked) {
+                                    conditionSpans.forEach(span => {
+                                        const conditionText = span.textContent.trim(); // Get the text of the span, e.g., "Exhaustion 1"
+                                        if (conditionText.startsWith('Exhaustion')) {
+                                            // Parse out the number from the text
+                                            const exhaustionLevel = parseInt(conditionText.split(' ').pop(), 10); // Extract the number
+                                            console.log(`Exhaustion level: ${exhaustionLevel}`);
+                                    
+                                            diceValue = diceValue - exhaustionLevel;
+
+                                            console.log()
+                                        }
+                                    });
+                                }
+                            }
+
+                        } else {
+                            console.error('conditionTrackerDiv not found');
+                        }
+                    }
                     
                     if (diceGroups.some(group => group.includes('d20'))) {
                         if (isAdvantage) {
@@ -1638,14 +1660,27 @@ function rollableButtons() {
 
                         // Handle Bless, Guidance, and Bane separately
                         if (conditionsSet) {
+                            console.log(conditionsSet)
                             if (conditionsSet.has('Bless') || conditionsSet.has('Guidance')) {
                                 blessRoll = "1d4"; // Store the Bless or Guidance roll separately
                             }
                             if (conditionsSet.has('Bane')) {
                                 baneRoll = "1d4"; // Store the Bane roll separately
                             }
+                            
                         }
                     }
+
+                    // Iterate through each dice group
+                    diceGroups.forEach((diceGroup, index) => {
+                        // Only apply the modifier to the first group
+                        const modifier = (index === 0) ? diceValue : 0;
+                        const diceRoll = dicePacker(diceGroup, modifier);
+                        diceRolls.push({
+                            name: diceNames[index] || diceName, // Use split name if available, fallback to original name
+                            roll: diceRoll
+                        });
+                    });
 
                     // Pass the array of dice rolls to the roll function
                     roll(diceRolls, blessRoll, baneRoll, type);
@@ -2007,8 +2042,16 @@ async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
                 // Optional: Indicate success
                 console.log(`Overwritten data of type: ${dataType}`);
 
+                if (dataType === "Custom Monsters"){
+                    console.log("load completed.");
+                    await loadMonsterDataFiles(); // Ensure this runs after save completes
+                    
+                }
+
                 // Close the modal
                 errorModal.style.display = "none";
+               
+                
             };
 
             // Handle the delete functionality
@@ -2031,15 +2074,18 @@ async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
             // Return early to prevent saving without user confirmation
             return;
         }
+        else{
+            // Add or update the data if it doesn't already exist or `shouldCheck` is false
+            allData[dataType][dataId] = data;
 
-        // Add or update the data if it doesn't already exist or `shouldCheck` is false
-        allData[dataType][dataId] = data;
+            // Save the updated data back to global storage
+            await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
 
-        // Save the updated data back to global storage
-        await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+            // Optional: Indicate that the data was saved successfully
+            console.log(`Saved data of type: ${dataType}`);
+        }
 
-        // Optional: Indicate that the data was saved successfully
-        console.log(`Saved data of type: ${dataType}`);
+        
     } catch (error) {
         console.error("Error saving to global storage:", error);
     }
@@ -2139,7 +2185,7 @@ function showErrorModal(errorMessage, delayTimer = 2000) {
 
 
 // Delete data from global storage
-function removeFromGlobalStorage(dataType, dataId) {
+function removeFromGlobalStorage(dataType, dataId, showError = false) {
     return TS.localStorage.global.getBlob()
         .then((existingData) => {
             let allData = {};
@@ -2154,7 +2200,9 @@ function removeFromGlobalStorage(dataType, dataId) {
                     return TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4))
                         .then(() => {
                             console.log("Updated data saved to global storage:", allData);
-                            errorModal('Data deleted from global storage');
+                            if(!showError === true){
+                                errorModal('Data deleted from global storage');
+                            }
                         })
                         .catch((error) => {
                             errorModal('Failed to save data to global storage: ' + error);
@@ -2548,4 +2596,1137 @@ async function loadThemeSettings() {
     } catch (error) {
         console.error("Error loading theme settings:", error);
     }
+}
+
+
+
+
+
+
+
+
+const openHomebrewButton = document.getElementById('openHomebrew');
+const homebrewModal = document.getElementById("homebrewModal");
+const closehomebrewModalButton = document.getElementById('close-homebrew-modal-button');
+  
+// Open the form
+openHomebrewButton.addEventListener('click', () => {
+    homebrewModal.style.display = 'block';
+    updateStorageUsage()
+    console.log(myClientType)
+    if (myClientType === "gm"){
+        loadAndDisplayCustomMonsters()
+    }
+    if (myClientType === "player"){
+        loadAndDisplayCustomSpells()
+        loadAndDisplayCustomItems()
+        loadAndDisplayCharaceter()
+    }
+    
+});
+
+// Close the form
+closehomebrewModalButton.addEventListener('click', () => {
+    homebrewModal.style.display = 'none';
+});
+
+async function updateStorageUsage() {
+    const totalQuotaKB = 5120; // 5MB in KB
+
+    // Fetch local storage usage (Assuming localFileSize is already defined elsewhere)
+    const localStorageSize = localFileSize;
+    const localStorageUsageKB = (localStorageSize / 1024).toFixed(2);
+
+    // Fetch global storage usage (Assuming globalFileSize is already defined elsewhere)
+    const globalStorageSize = globalFileSize;
+    const globalStorageUsageKB = (globalStorageSize / 1024).toFixed(2);
+
+    // Update Local Storage progress bar and text
+    const localStorageProgress = document.getElementById("localStorageProgress");
+    const localStorageUsageText = document.getElementById("localStorageUsageText");
+    const localStoragePercentage = ((localStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
+    localStorageProgress.style.width = `${localStoragePercentage}%`; // Update the width to reflect the usage
+    localStorageUsageText.textContent = `${localStorageUsageKB} KB / ${totalQuotaKB} KB`;
+
+    // Update Global Storage progress bar and text
+    const globalStorageProgress = document.getElementById("globalStorageProgress");
+    const globalStorageUsageText = document.getElementById("globalStorageUsageText");
+    const globalStoragePercentage = ((globalStorageUsageKB / totalQuotaKB) * 100).toFixed(2);
+    globalStorageProgress.style.width = `${globalStoragePercentage}%`; // Update the width to reflect the usage
+    globalStorageUsageText.textContent = `${globalStorageUsageKB} KB / ${totalQuotaKB} KB`;
+}
+
+
+
+
+
+function loadAndDisplayCustomSpells() {
+    loadDataFromGlobalStorage("Custom Spells")
+        .then((spells) => {
+            const spellSelect = document.getElementById("customSpellSelect");
+            spellSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with monster names
+            for (const monsterName in spells) {
+                const option = document.createElement("option");
+                option.value = monsterName;
+                option.textContent = monsterName;
+                spellSelect.appendChild(option);
+            }
+
+            // If no monsters exist, disable the dropdown and delete button
+            if (Object.keys(spells).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No spells available";
+                spellSelect.appendChild(placeholderOption);
+                spellSelect.disabled = true;
+                document.getElementById("deleteCustomSpells").disabled = true;
+            } else {
+                spellSelect.disabled = false;
+                document.getElementById("deleteCustomSpells").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom spells:", error);
+        });
+}
+
+
+function loadAndDisplayCustomMonsters() {
+    loadDataFromGlobalStorage("Custom Monsters")
+        .then((monsters) => {
+            const monsterSelect = document.getElementById("customMonsterSelect");
+            monsterSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with monster names
+            for (const monsterName in monsters) {
+                const option = document.createElement("option");
+                option.value = monsterName;
+                option.textContent = monsterName;
+                monsterSelect.appendChild(option);
+            }
+
+            // If no monsters exist, disable the dropdown and delete button
+            if (Object.keys(monsters).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No monsters available";
+                monsterSelect.appendChild(placeholderOption);
+                monsterSelect.disabled = true;
+                document.getElementById("deleteCustomMonsters").disabled = true;
+            } else {
+                monsterSelect.disabled = false;
+                document.getElementById("deleteCustomMonsters").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom monsters:", error);
+        });
+}
+
+function loadAndDisplayCustomItems() {
+    loadDataFromGlobalStorage("Custom Equipment")
+        .then((items) => {
+            const itemSelect = document.getElementById("customItemSelect");
+            itemSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with items names
+            for (const itemName in items) {
+                const option = document.createElement("option");
+                option.value = itemName;
+                option.textContent = itemName;
+                itemSelect.appendChild(option);
+            }
+
+            // If no items exist, disable the dropdown and delete button
+            if (Object.keys(items).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No items available";
+                itemSelect.appendChild(placeholderOption);
+                itemSelect.disabled = true;
+                document.getElementById("deleteCustomItems").disabled = true;
+            } else {
+                itemSelect.disabled = false;
+                document.getElementById("deleteCustomItems").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom items:", error);
+        });
+}
+
+
+
+
+
+const customSpellsButton = document.getElementById('customSpells');
+const spellFormModal = document.getElementById('spellFormModal');
+const spellForm = document.getElementById('spellForm');
+const saveSpellButton = document.getElementById('saveSpell');
+const closeSpellFormButton = document.getElementById('closeSpellForm');
+let spells = []; // Store created spells
+
+//This if stops the whole sheet from erroring out when hidden for the DM side of things. 
+if(customSpellsButton){
+    // Open the form
+    customSpellsButton.addEventListener('click', () => {
+        loadAndDisplayCustomSpells()
+        resetSpellForm()
+        spellFormModal.style.display = 'block';
+        homebrewModal.style.display = 'none';
+    });
+    
+    // Close the form
+    closeSpellFormButton.addEventListener('click', () => {
+        spellFormModal.style.display = 'none';
+    });
+
+    document.getElementById("deleteCustomSpells").addEventListener("click", async() => {
+        const spellSelect = document.getElementById("customSpellSelect");
+        const selectedSpell = spellSelect.value;
+    
+        console.log(selectedSpell)
+    
+        if (selectedSpell) {
+            removeFromGlobalStorage("Custom Spells", selectedSpell)
+                .then(() => {
+                    console.log(`Spell "${selectedSpell}" deleted successfully.`);
+                    loadAndDisplayCustomSpells(); // Reload the list of spells
+                })
+                .catch((error) => {
+                    console.error("Failed to delete spell:", error);
+                });
+                await loadSpellDataFiles()
+        } else {
+            errorModal("No spell selected for deletion.");
+        }
+    });
+    
+    
+    document.getElementById("editCustomSpells").addEventListener("click", async() => {
+        const spellSelect = document.getElementById("customSpellSelect");
+        const selectedSpell = spellSelect.value;
+    
+        if (selectedSpell) {
+            // Fetch spell data from global storage
+            loadDataFromGlobalStorage("Custom Spells")
+                .then((spells) => {
+                    const spellData = spells[selectedSpell];
+                    if (spellData) {
+                        // Populate the edit form or interface with the spell's data
+                        spellFormModal.style.display = 'block';
+                        homebrewModal.style.display = 'none';
+                        populateSpellForm(spellData);
+                    } else {
+                        errorModal(`Spell "${selectedSpell}" data not found.`);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Failed to load spell data for editing:", error);
+                });
+        } else {
+            errorModal("No spell selected for editing.");
+        }
+    });
+}
+
+
+// Attach event listeners to specific elements
+document.getElementById('damageDiceForm').addEventListener('blur', validateDiceInput);
+document.getElementById('damageDiceUpcastForm').addEventListener('blur', validateDiceInput);
+
+document.getElementById('toHitOrDC').addEventListener('change', function () {
+    const toHitOrDCValue = this.value; // Get the value of the first dropdown
+    const saveDCTypeSelect = document.getElementById('saveDCType');
+
+    // Clear all options first
+    saveDCTypeSelect.innerHTML = '';
+
+    if (toHitOrDCValue === 'DC') {
+        // Add all options for DC
+        saveDCTypeSelect.innerHTML = `
+            <option value="str">Strength (STR)</option>
+            <option value="dex">Dexterity (DEX)</option>
+            <option value="con">Constitution (CON)</option>
+            <option value="int">Intelligence (INT)</option>
+            <option value="wis">Wisdom (WIS)</option>
+            <option value="cha">Charisma (CHA)</option>
+        `;
+    } else {
+        // Add only the N/A option if not DC
+        saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`;
+    }
+
+    // Reset to N/A as default
+    saveDCTypeSelect.selectedIndex = 0;
+});
+
+
+// Save the spell
+saveSpellButton.addEventListener('click', async () => {
+    const spellForm = document.getElementById('spellForm');
+    const selectedClasses = Array.from(document.querySelectorAll('#spellFormClass input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value)
+        .join(', ');
+
+    const selectedComponents = Array.from(document.querySelectorAll('#spellFormComponents input[type="checkbox"]:checked'))
+        .map(checkbox => checkbox.value)
+        .join(', ');
+
+    const spell = {
+        name: document.getElementById('spellFormName').value.trim() || 'Unnamed Spell',
+        desc: document.getElementById('spellFormDesc').value.trim() || 'No description provided.',
+        higher_level: document.getElementById('higherLevelForm').value.trim(),
+        material: document.getElementById("spellFormMaterials").value.trim(),
+        range: document.getElementById('spellFormRange').value.trim(),
+        components: selectedComponents,
+        ritual: document.getElementById('ritualForm').checked ? ", R" : "",
+        duration: document.getElementById('spellFormDuration').value.trim(),
+        concentration: document.getElementById('concentrationForm').checked ? "yes" : "no",
+        casting_time: document.getElementById('castingTimeForm').value.trim(),
+        level: document.getElementById('spellFormLevel').value,
+        school: document.getElementById('schoolForm').value.trim(),
+        class: selectedClasses,
+        toHitOrDC: document.getElementById('toHitOrDC').value.trim(),
+        damage_dice: document.getElementById('damageDiceForm').value.trim(),
+        damage_dice_upcast: document.getElementById('damageDiceUpcastForm').value.trim(),
+        spell_save_dc_type: document.getElementById('saveDCType').value.trim(),
+        ability_modifier: document.getElementById('abilityModifier').value.trim(),
+        damage_type_01: document.getElementById('spellDamageType01').value.trim()
+    };
+
+    spells.push(spell); // Add spell to the array
+    console.log(spells); // Log the spells for debugging
+
+    try {
+        // Save and wait for completion
+        await saveToGlobalStorage("Custom Spells", spell.name, spell, true);
+        console.log("Save completed.");
+        await loadSpellDataFiles(); // Ensure this runs after save completes
+    } catch (error) {
+        console.error("Error during save or load:", error);
+    }
+
+    spellFormModal.style.display = 'none'; // Close the form
+    spellForm.reset(); // Reset the form
+});
+
+// Function to populate a dropdown with damage types
+function populateDamageTypeDropdown(selectElement) {
+    // Clear existing options
+    selectElement.innerHTML = "";
+
+    // Populate options dynamically from the damageTypes array
+    damageTypes.forEach(type => {
+        const option = document.createElement("option");
+        option.value = type;
+        option.textContent = type;
+        selectElement.appendChild(option);
+    });
+}
+
+document.querySelectorAll('select[id^="spellDamageType01"]').forEach(selectElement => {
+    populateDamageTypeDropdown(selectElement);
+});
+
+function validateDiceInput(event) {
+    const newValue = event.target.value.trim();
+
+    const dicePattern = /^(\d+d(4|6|8|10|12|20))([+/]\d+d(4|6|8|10|12|20))*$/;
+
+    if (newValue && !dicePattern.test(newValue)) {
+        showErrorModal(`Invalid input: "${newValue}". Please enter a valid dice format like '4d4+5d6'.`);
+        event.target.value = ''; // Clear invalid input
+    }
+}
+
+
+function populateSpellForm(spell) {
+    // Spell Name
+    document.getElementById("spellFormName").value = spell.name || "";
+
+    // Spell Description
+    document.getElementById("spellFormDesc").value = spell.desc || "";
+
+    // Higher Level Casting Description
+    document.getElementById("higherLevelForm").value = spell.higher_level || "";
+
+    // Spell Range
+    document.getElementById("spellFormRange").value = spell.range || "";
+
+    // Spell Components
+    document.getElementById("componentVerbal").checked = spell.components.includes("V");
+    document.getElementById("componentSomatic").checked = spell.components.includes("S");
+    document.getElementById("componentMaterial").checked = spell.components.includes("M");
+
+    // Spell Materials
+    document.getElementById("spellFormMaterials").value = spell.material || "";
+
+    // Ritual
+    document.getElementById("ritualForm").value = spell.ritual || "";
+
+    // Duration
+    document.getElementById("spellFormDuration").value = spell.duration || "Instantaneous";
+
+    // Concentration
+    document.getElementById("concentrationForm").value = spell.concentration || "no";
+
+    // Casting Time
+    document.getElementById("castingTimeForm").value = spell.casting_time || "1A";
+
+    // Spell Level
+    document.getElementById("spellFormLevel").value = spell.level || "Cantrip";
+
+    // Spell School
+    document.getElementById("schoolForm").value = spell.school || "Abjuration";
+
+    // Spell Classes
+    const spellClasses = spell.class ? spell.class.split(", ").map(cls => cls.trim()) : [];
+    const allClassCheckboxes = document.querySelectorAll("#spellFormClass input[type=checkbox]");
+    allClassCheckboxes.forEach(checkbox => {
+        checkbox.checked = spellClasses.includes(checkbox.value);
+    });
+
+    // Populate To Hit or DC
+    document.getElementById('toHitOrDC').value = spell.toHitOrDC || '';
+    console.log(document.getElementById('toHitOrDC'))
+
+    // Populate Damage Dice
+    document.getElementById('damageDiceForm').value = spell.damage_dice || '';
+
+    // Populate Damage Dice (Upcast)
+    document.getElementById('damageDiceUpcastForm').value = spell.damage_dice_upcast || '';
+
+    // Populate Save DC Type
+    const saveDCTypeSelect = document.getElementById('saveDCType');
+    const dcTypes = ['str', 'dex', 'con', 'int', 'wis', 'cha']; // Common DC attributes
+    saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`; // Default option
+    dcTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type.toUpperCase();
+        if (type === spell.spell_save_dc_type) {
+            option.selected = true;
+        }
+        saveDCTypeSelect.appendChild(option);
+    });
+
+    // Populate Ability Modifier
+    const abilityModifierSelect = document.getElementById('abilityModifier');
+    abilityModifierSelect.value = spell.ability_modifier || 'no';
+
+    // Populate Damage Type
+    const spellDamageTypeSelect = document.getElementById('spellDamageType01');
+    const damageTypes = ['Acid', 'Cold', 'Fire', 'Force', 'Lightning', 'Necrotic', 'Poison', 'Psychic', 'Radiant', 'Thunder'];
+    spellDamageTypeSelect.innerHTML = `<option value="">N/A</option>`; // Default option
+    damageTypes.forEach(type => {
+        const option = document.createElement('option');
+        option.value = type;
+        option.textContent = type;
+        if (type === spell.damage_type_01) {
+            option.selected = true;
+        }
+        spellDamageTypeSelect.appendChild(option);
+    });
+}
+
+
+function resetSpellForm() {
+    // Clear all input fields
+    const inputs = spellForm.querySelectorAll("input");
+    inputs.forEach(input => {
+        if (input.type === "checkbox" || input.type === "radio") {
+            input.checked = false; // Uncheck checkboxes and radio buttons
+        } else {
+            input.value = ""; // Clear text fields
+        }
+    });
+
+    // Clear all textareas
+    const textareas = spellForm.querySelectorAll("textarea");
+    textareas.forEach(textarea => {
+        textarea.value = ""; // Clear text areas
+    });
+
+    // Reset all dropdowns (select elements)
+    const selects = spellForm.querySelectorAll("select");
+    selects.forEach(select => {
+        select.selectedIndex = 0; // Reset to the first option
+    });
+}
+
+
+
+
+
+
+
+const customItemsButton = document.getElementById('customItems');
+const itemForm = document.getElementById("itemForm");
+const itemFormModal = document.getElementById('itemFormModal');
+const closeItemFormButton = document.getElementById('closeItemForm');
+let items = []; // Store created spells
+
+// Open the form
+
+
+//This if stops the whole sheet from erroring out when hidden for the DM side of things. 
+if(customItemsButton){
+    customItemsButton.addEventListener('click', () => {
+        updateDynamicFields("weapon")
+        loadAndDisplayCustomItems()
+        homebrewModal.style.display = 'none';
+        itemFormModal.style.display = 'block';
+    });
+    
+    // Close the form
+    closeItemFormButton.addEventListener('click', () => {
+        itemFormModal.style.display = 'none';
+    });
+
+    const categorySelect = document.getElementById("equipment-category");
+    const additionalFields = document.getElementById("additional-fields");
+    
+    // Update dynamic fields based on category
+    categorySelect.addEventListener("change", () => {
+        const category = categorySelect.value;
+        updateDynamicFields(category);
+    });
+
+    // Form submission handler
+    itemForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const equipmentData = gatherFormData();
+        console.log("%cGenerated Equipment:", "color: red; font-weight: bold;");
+        console.log(equipmentData);
+        saveCustomEquipment(equipmentData)
+    });
+
+    //Event listener for the delete button
+    document.getElementById("deleteCustomItems").addEventListener("click", async() => {
+        const itemSelect = document.getElementById("customItemSelect");
+        const selectedItem = itemSelect.value;
+
+        console.log(selectedItem)
+
+        if (selectedItem) {
+            removeFromGlobalStorage("Custom Equipment", selectedItem)
+                .then(() => {
+                    console.log(`Item: "${selectedItem}" deleted successfully.`);
+                    loadAndDisplayCustomItems(); // Reload the list of items
+                })
+                .catch((error) => {
+                    console.error("Failed to delete item:", error);
+                });
+                await loadEquipmentDataFiles()
+        } else {
+            errorModal("No item selected for deletion.");
+        }
+    });
+}
+
+
+
+
+
+
+async function saveCustomEquipment(equipmentData){
+    try {
+        // Save and wait for completion
+        await saveToGlobalStorage("Custom Equipment", equipmentData.name, equipmentData, true);
+        console.log("Save completed.");
+        await loadEquipmentDataFiles(); // Ensure this runs after save completes
+    } catch (error) {
+        console.error("Error during save or load:", error);
+    }
+
+    itemFormModal.style.display = 'none'; // Close the form
+    itemForm.reset(); // Reset the form
+}
+
+
+// Function to update dynamic fields
+function updateDynamicFields(category) {
+const additionalFields = document.getElementById("additional-fields");
+additionalFields.innerHTML = ""; // Clear existing fields
+
+let magicBonusSection = `
+        <button type="button" id="add-magic-bonus" class="nonRollButton">Add Magic Bonus</button>
+        <div>
+            <label for="magic-bonuses">Magic Bonuses:</label>
+            <div id="magic-bonus-container"></div>
+        </div>
+    `;
+
+    if (category === "weapon") {
+        additionalFields.innerHTML = `
+            <div class="form-row">
+                <label for="weapon-category">Weapon Type:</label>
+                <select id="weapon-category">
+                    <option value="simple">Simple</option>
+                    <option value="martial">Martial</option>
+                </select>
+            </div>
+
+            <div id="weapon-configurator" class="form-row">
+                <label for="attack-style">Attack Style:</label>
+                <select id="attack-style">
+                    <option value="Melee">Melee</option>
+                    <option value="Ranged">Ranged</option>
+                    <option value="Melee-thrown">Melee and Thrown</option>
+                </select>
+                <div id="range-inputs">
+                    <label for="melee-range" class="range-label">Range:</label>
+                    <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="weaponProperties">Weapon Properties:</label>
+                <div id="weaponProperties">
+                    <label>
+                        <input type="checkbox" id="propertyFinesse" name="property" value="Finesse">
+                        <span id="labelFinesse">Finesse</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyVersatile" name="property" value="Versatile">
+                        <span id="labelVersatile">Versatile</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyHeavy" name="property" value="Heavy">
+                        <span id="labelHeavy">Heavy</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyLight" name="property" value="Light">
+                        <span id="labelLight">Light</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyLoading" name="property" value="Loading">
+                        <span id="labelLoading">Loading</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyReach" name="property" value="Reach">
+                        <span id="labelReach">Reach</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyThrown" name="property" value="Thrown">
+                        <span id="labelThrown">Thrown</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyTwoHanded" name="property" value="Two-Handed">
+                        <span id="labelTwoHanded">Two-Handed</span>
+                    </label>
+                     <label>
+                        <input type="checkbox" id="propertySilvered" name="property" value="Silvered">
+                        <span id="labelSilvered">Silvered</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertySpecial" name="property" value="Special">
+                        <span id="labelSpecial">Special</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyAmmunition" name="property" value="Ammunition">
+                        <span id="labelAmmunition">Ammunition</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="propertyImprovised" name="property" value="Improvised">
+                        <span id="labelImprovised">Improvised</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="itemFormAttunement" name="property" value="attunement">
+                        <span id="attunement">Attunement</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="has-charges" name="property" value="Has Charges">
+                        <span id="has-charges">Has Charges</span>
+                    </label>
+                </div>
+            </div>
+    
+            <div class="form-row">
+                <label for="damage-dice">Damage Dice:</label>
+                <input type="text" id="damage-dice" placeholder="e.g., 1d8" />
+            </div>
+            
+            <div class="form-row">
+                <label for="damage-type">Damage Type:</label>
+                <select id="damage-type">
+                    ${damageTypes.map(type => `<option value="${type}">${type}</option>`).join("")}
+                </select>
+            </div>
+    
+            <div id="charges-options" style="display: none; margin-left: 20px;">
+                <div class="form-row">
+                    <label for="charge-reset">When does it reset?</label>
+                    <select id="charge-reset">
+                        <option value="long-rest">Long Rest</option>
+                        <option value="short-rest">Short Rest</option>
+                        <option value="at-dawn">At Dawn</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label for="max-charges">Maximum Charges:</label>
+                    <input type="number" id="max-charges" placeholder="e.g., 3" min="1"/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label for="weapon-to-hit-bonus">Magical to Hit Bonus:</label>
+                <input type="number" id="weapon-to-hit-bonus" placeholder="e.g., 1"/>
+            </div>
+
+            <div class="form-row">
+                <label for="weapon-damage-bonus">Magical Damage Bonus</label>
+                <input type="number" id="weapon-damage-bonus" placeholder="e.g., 1"/>
+            </div>
+
+            ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+
+        document.getElementById('attack-style').addEventListener('change', function () {
+            const attackStyle = this.value;
+            const rangeInputs = document.getElementById('range-inputs');
+          
+            // Clear existing inputs
+            rangeInputs.innerHTML = '';
+          
+            // Generate inputs based on the selected attack style
+            if (attackStyle === 'Melee') {
+              rangeInputs.innerHTML = `
+                <label for="melee-range" class="range-label">Range:</label>
+                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+              `;
+            } else if (attackStyle === 'Ranged') {
+              rangeInputs.innerHTML = `
+                <label for="short-range" class="range-label">Short Range:</label>
+                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 30" />
+                <label for="long-range" class="range-label">Long Range:</label>
+                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 120" />
+              `;
+            } else if (attackStyle === 'Melee-thrown') {
+              rangeInputs.innerHTML = `
+                <label for="melee-range" class="range-label">Melee Range:</label>
+                <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
+                <label for="short-range" class="range-label">Short Range:</label>
+                <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 20" />
+                <label for="long-range" class="range-label">Long Range:</label>
+                <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 60" />
+              `;
+            }
+          });
+          setupMagicBonusSelection();
+    } else if (category === "armor") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="armor-category">Armor Type:</label>
+            <select id="armor-category">
+                <option value="Light">Light</option>
+                <option value="Medium">Medium</option>
+                <option value="Heavy">Heavy</option>
+                <option value="Shield">Shield</option>
+            </select>
+        </div>
+        
+        <div class="form-row">
+            <label for="armor-class">Base Armor Class:</label>
+            <input type="number" id="armor-class" placeholder="e.g., 15" />
+        </div>
+        
+        <div class="form-row">
+            <label for="str-minimum">Strength Requirement:</label>
+            <input type="number" id="str-minimum" placeholder="e.g., 15" />
+        </div>
+        
+        <div class="form-row">
+            <label for="stealth-disadvantage">Stealth Disadvantage:</label>
+            <input type="checkbox" id="stealth-disadvantage" />
+            <label for="itemFormAttunement">Requires Attunement:</label>
+            <input type="checkbox" id="itemFormAttunement" />
+            <label for="has-charges">Has Charges</label>
+            <input type="checkbox" id="has-charges" />
+        </div>
+    
+        <div id="charges-options" style="display: none; margin-left: 20px;">
+            <div class="form-row">
+                <label for="charge-reset">When does it reset?</label>
+                <select id="charge-reset">
+                    <option value="long-rest">Long Rest</option>
+                    <option value="short-rest">Short Rest</option>
+                    <option value="at-dawn">At Dawn</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="max-charges">Maximum Charges:</label>
+                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
+            </div>
+        </div>
+        ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+        setupMagicBonusSelection();
+    } else if (category === "adventuring-gear") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="gear-category">Gear Category:</label>
+            <input type="text" id="gear-category" placeholder="e.g., Standard Gear" />
+        </div>
+        `;
+    } else if (category === "wondrous-item") {
+        additionalFields.innerHTML = `
+        <div class="form-row">
+            <label for="itemFormAttunement">Requires Attunement:</label>
+            <input type="checkbox" id="itemFormAttunement"/>
+            <label for="has-charges">Has Charges</label>
+            <input type="checkbox" id="has-charges" />
+        </div>
+    
+        <div id="charges-options" style="display: none; margin-left: 20px;">
+            <div class="form-row">
+                <label for="charge-reset">When does it reset?</label>
+                <select id="charge-reset">
+                    <option value="long-rest">Long Rest</option>
+                    <option value="short-rest">Short Rest</option>
+                    <option value="at-dawn">At Dawn</option>
+                </select>
+            </div>
+            <div class="form-row">
+                <label for="max-charges">Maximum Charges:</label>
+                <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
+            </div>
+        </div>
+        ${magicBonusSection}
+        `;
+        // JavaScript logic to toggle visibility
+        const hasChargesCheckbox = document.getElementById("has-charges");
+        const chargesOptions = document.getElementById("charges-options");
+
+        hasChargesCheckbox.addEventListener("change", () => {
+            if (hasChargesCheckbox.checked) {
+                chargesOptions.style.display = "block";
+            } else {
+                chargesOptions.style.display = "none";
+            }
+        });
+        setupMagicBonusSelection();
+    }
+    // Attach event listeners to the Magic Bonus section
+    
+}
+
+// Function to gather form data
+function gatherFormData() {
+    const equipmentData = {
+        index: document.getElementById("equipment-name").value.toLowerCase().replace(/\s+/g, "-"),
+        name: document.getElementById("equipment-name").value,
+        equipment_category: {
+            index: document.getElementById("equipment-category").value,
+            name: document.getElementById("equipment-category").value,
+        },
+        description: document.getElementById("equipment-description").value.split("\n").filter(line => line.trim() !== ""),
+        properties: document.getElementById("itemFormAttunement")?.checked
+            ? [{
+                  index: "attunement",
+                  name: "Requires Attunement",
+              }]
+            : [],
+        
+        cost: {
+            quantity: parseFloat(document.getElementById("equipment-cost").value) || 0,
+            unit: document.getElementById("equipment-cost-unit").value
+        },
+        weight: parseFloat(document.getElementById("equipment-weight").value) || 0,
+        rarity: {
+            index: document.getElementById("equipment-rarity").value.toLowerCase(),
+            name: document.getElementById("equipment-rarity").value,
+        },
+    };
+
+    // Collect dynamic fields based on the category
+    const category = equipmentData.equipment_category.index;
+
+    if (category === "weapon") {
+        equipmentData.weapon_category = document.getElementById("weapon-category").value;
+    
+        const damageDice = document.getElementById("damage-dice").value;
+        const damageType = document.getElementById("damage-type").value;
+    
+        equipmentData.damage = {
+            damage_dice: damageDice,
+            damage_type: {
+                index: damageType.toLowerCase(),
+                name: damageType,
+            }
+        };
+
+        // Collect selected weapon properties
+        const selectedProperties = Array.from(document.querySelectorAll("#weaponProperties input:checked"))
+        .map(checkbox => ({
+            index: checkbox.value.toLowerCase().replace(/\s+/g, "-"),
+            name: checkbox.value
+        }));
+
+        equipmentData.properties = selectedProperties;
+
+        // Get the weapon range based on the selected attack style
+        const attackStyle = document.getElementById("attack-style").value;
+        equipmentData.weapon_range = document.getElementById("attack-style").value;
+
+        if (attackStyle === "melee") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("melee-range").value) || 5
+            };
+        } else if (attackStyle === "ranged") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("short-range").value) || 30,
+                long: parseInt(document.getElementById("long-range").value) || 120
+            };
+        } else if (attackStyle === "melee-thrown") {
+            equipmentData.range = {
+                normal: parseInt(document.getElementById("melee-range").value) || 5,
+            };
+            equipmentData.throw_range = {
+                normal: parseInt(document.getElementById("short-range").value) || 20,
+                long: parseInt(document.getElementById("long-range").value) || 60
+            }
+        }
+
+        equipmentData.toHitBonus = document.getElementById("weapon-to-hit-bonus").value;
+        equipmentData.damageBonus = document.getElementById("weapon-damage-bonus").value;
+        equipmentData.hasCharges = document.getElementById("has-charges").checked;
+    
+        equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+            chargeReset: document.getElementById("charge-reset").value,
+            maxCharges: parseInt(document.getElementById("max-charges").value) || 0
+        } : null;    
+        collectMagicBonuses()
+    } else if (category === "armor") {
+            // Get the selected armor category and base armor class from the form
+            let armorClassData = {};
+
+            // Get the selected armor category and base armor class from the form
+            const armorCategory = document.getElementById("armor-category").value;
+            const baseArmorClass = parseInt(document.getElementById("armor-class").value);
+            
+            // Set default values for the armor class
+            armorClassData.base = baseArmorClass;
+            armorClassData.dex_bonus = false; // Default value for dex_bonus
+            armorClassData.max_bonus = 0;     // Default value for max_bonus
+
+            
+            
+            // Adjust values based on the armor category
+            if (armorCategory === "Light") {
+                armorClassData.dex_bonus = true; // Light armor allows dex bonus
+            } else if (armorCategory === "Medium") {
+                armorClassData.dex_bonus = true; // Medium armor allows dex bonus
+                armorClassData.max_bonus = 2;   // Medium armor has a max dex bonus of 2
+            } else if (armorCategory === "Heavy") {
+                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
+                armorClassData.max_bonus = 0;    // Heavy armor doesn't have a max dex bonus (no bonus)
+            }else if (armorCategory === "Shield") {
+                armorClassData.dex_bonus = false; // Heavy armor doesn't allow dex bonus
+                equipmentData.equipment_category = {
+                    index: "shield",   // Update the category to 'shield'
+                    name: "Shield",    // Update the name to "Shield"
+                };
+            }
+            
+            // Save armor class data to the equipmentData object (assuming equipmentData is already initialized)
+            equipmentData.armor_class = armorClassData; // Push the generated object into equipmentData
+            
+            // Now you can push other related data to equipmentData
+            equipmentData.armor_category = armorCategory;
+
+
+            equipmentData.strengthRequirement = parseInt(document.getElementById("str-minimum").value);
+            equipmentData.stealthDisadvantage = document.getElementById("stealth-disadvantage").checked;
+            equipmentData.hasCharges = document.getElementById("has-charges").checked;
+            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+                chargeReset: document.getElementById("charge-reset").value,
+                maxCharges: parseInt(document.getElementById("max-charges").value)
+            } : null
+            collectMagicBonuses()
+    } else if (category === "adventuring-gear") {
+            equipmentData.gearCategory = document.getElementById("gear-category").value;
+    } else if (category === "wondrous-item") {
+            equipmentData.hasCharges = document.getElementById("has-charges").checked;
+            equipmentData.chargesOptions = document.getElementById("has-charges").checked ? {
+                chargeReset: document.getElementById("charge-reset").value,
+                maxCharges: parseInt(document.getElementById("max-charges").value)
+            } : null
+            collectMagicBonuses()
+    }
+
+    // Collect magic bonus data
+    function collectMagicBonuses(){
+        const magicBonusRows = document.querySelectorAll(".magic-bonus-row");
+
+        const bonuses = [];
+
+        magicBonusRows.forEach(row => {
+            const magicStatSelect = row.querySelector(".magic-stat-select");
+            const magicBonusValue = row.querySelector(".magic-bonus-value");
+    
+            // Check if magic-stat-select is visible
+            const isMagicStatSelectVisible = window.getComputedStyle(magicStatSelect).display !== "none";
+            const category = row.querySelector(".magic-category-select").value;
+            const key = row.querySelector(".magic-bonus-select").value;
+            const value = isMagicStatSelectVisible? magicStatSelect.value : parseInt(magicBonusValue.value) || 0;
+            const description = row.querySelector(".magic-description-input")?.value || "";
+
+            bonuses.push({
+                category,
+                key,
+                value,
+                description
+            });
+        });
+
+        equipmentData.bonus = bonuses;
+    }
+    
+
+    return equipmentData;
+}
+
+
+function setupMagicBonusSelection() {
+    const magicBonusContainer = document.getElementById("magic-bonus-container");
+    const addBonusButton = document.getElementById("add-magic-bonus");
+
+    addBonusButton.addEventListener("click", () => {
+        // Create a container div for each bonus selection
+        const bonusRow = document.createElement("div");
+        bonusRow.className = "magic-bonus-row";
+
+        // Create the first dropdown for category selection
+        const categorySelect = document.createElement("select");
+        categorySelect.className = "magic-category-select";
+        categorySelect.innerHTML = `<option>Select Category</option>`;
+
+        Object.keys(characterStatBonuses).forEach(category => {
+            const option = document.createElement("option");
+            option.value = category;
+            option.textContent = category;
+            categorySelect.appendChild(option);
+        });
+
+        // Create the second dropdown for specific bonus options (initially empty)
+        const bonusSelect = document.createElement("select");
+        bonusSelect.className = "magic-bonus-select";
+        bonusSelect.disabled = true; // Disabled until a category is selected
+
+        // Populate the second dropdown based on the selected category
+        categorySelect.addEventListener("change", () => {
+            const selectedCategory = categorySelect.value;
+
+            // Clear previous options
+            bonusSelect.innerHTML = `<option value="None">Select Bonus</option>`;
+            bonusSelect.disabled = selectedCategory === "None";
+
+            // Populate with options from the selected category
+            if (characterStatBonuses[selectedCategory]) {
+                Object.keys(characterStatBonuses[selectedCategory]).forEach(bonus => {
+                    const option = document.createElement("option");
+                    option.value = bonus;
+                    option.textContent = bonus;
+                    bonusSelect.appendChild(option);
+                });
+            }
+        });
+
+        // Create a dropdown to toggle between value or ability score
+        const valueOrStatSelect = document.createElement("select");
+        valueOrStatSelect.className = "value-or-stat-select";
+        valueOrStatSelect.innerHTML = `
+            <option value="value">Value</option>
+            <option value="stat">Ability Score</option>
+        `;
+
+        // Create a numeric input for the bonus value (default)
+        const bonusValueInput = document.createElement("input");
+        bonusValueInput.type = "number";
+        bonusValueInput.className = "magic-bonus-value";
+        bonusValueInput.placeholder = "0";
+
+        // Create an ability score dropdown (hidden by default)
+        const statSelect = document.createElement("select");
+        statSelect.className = "magic-stat-select";
+        statSelect.style.display = "none"; // Hidden initially
+        ["STR", "DEX", "CON", "INT", "WIS", "CHA"].forEach(stat => {
+            const option = document.createElement("option");
+            option.value = stat;
+            option.textContent = stat;
+            statSelect.appendChild(option);
+        });
+
+        // Toggle between value input and ability score dropdown
+        valueOrStatSelect.addEventListener("change", () => {
+            if (valueOrStatSelect.value === "value") {
+                bonusValueInput.style.display = "inline-block";
+                statSelect.style.display = "none";
+            } else {
+                bonusValueInput.style.display = "none";
+                statSelect.style.display = "inline-block";
+            }
+        });
+
+        // Create a remove button to delete the bonus row
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove";
+        removeButton.className = "remove-magic-bonus nonRollButton";
+
+        removeButton.addEventListener("click", () => {
+            magicBonusContainer.removeChild(bonusRow);
+        });
+
+        // Append all elements to the bonus row
+        bonusRow.appendChild(categorySelect);
+        bonusRow.appendChild(bonusSelect);
+        bonusRow.appendChild(valueOrStatSelect);
+        bonusRow.appendChild(bonusValueInput);
+        bonusRow.appendChild(statSelect);
+        bonusRow.appendChild(removeButton);
+
+        // Append the bonus row to the container
+        magicBonusContainer.appendChild(bonusRow);
+    });
+}
+
+
+
+
+// Function to auto-resize textareas
+function autoResizeTextareas() {
+    const textareas = document.querySelectorAll('.note-description');
+    textareas.forEach((textarea) => {
+        setTimeout(() => {
+            textarea.style.height = 'auto'; // Reset height
+            textarea.style.height = `${textarea.scrollHeight}px`; // Adjust to content
+        }, 10); // Delay allows the browser to calculate scrollHeight
+    });
 }
