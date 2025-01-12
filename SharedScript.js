@@ -69,7 +69,8 @@ const damageTypes = [
     "Psychic",
     "Radiant",
     "Necrotic",
-    "Force"
+    "Force",
+    "Healing"
 ];
 
 const conditionTypes = [
@@ -3016,20 +3017,6 @@ function populateSpellForm(spell) {
     // Populate Ability Modifier
     const abilityModifierSelect = document.getElementById('abilityModifier');
     abilityModifierSelect.value = spell.ability_modifier || 'no';
-
-    // Populate Damage Type
-    const spellDamageTypeSelect = document.getElementById('spellDamageType01');
-    const damageTypes = ['Acid', 'Cold', 'Fire', 'Force', 'Lightning', 'Necrotic', 'Poison', 'Psychic', 'Radiant', 'Thunder'];
-    spellDamageTypeSelect.innerHTML = `<option value="">N/A</option>`; // Default option
-    damageTypes.forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type;
-        if (type === spell.damage_type_01) {
-            option.selected = true;
-        }
-        spellDamageTypeSelect.appendChild(option);
-    });
 }
 
 
