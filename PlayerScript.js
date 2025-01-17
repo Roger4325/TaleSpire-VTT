@@ -331,16 +331,12 @@ async function playerSetUP(){
 
     // Select the anchor element
     const featuresLink = document.querySelector('a[href="#features"]');
-
-    // Add an event listener for the 'click' event
     featuresLink.addEventListener('click', function() {
         resizeAllTextareas()
     });
 
 
     const initLink = document.querySelector('a[href="#Init"]');
-
-    // Add an event listener for the 'click' event
     initLink.addEventListener('click', function() {
         resizeAllTextareas()
     });
@@ -350,7 +346,6 @@ async function playerSetUP(){
 
     //adding event listener to the different proficiency types so that we can select different types of proficiency. 
     const proficiencySettings = document.querySelectorAll('.proficiency-settings');
-
     proficiencySettings.forEach(function(icon) {
         icon.addEventListener('click', function(event) {
             console.log("click");
@@ -1451,6 +1446,18 @@ const currentCharacterHP = document.getElementById("currentCharacterHP");
 const maxCharacterHP = document.getElementById("maxCharacterHP");
 const tempHP = document.getElementById("tempHP");
 const healthInput = document.getElementById("healthInput");
+
+// Function to handle Enter key and blur the input field
+function handleEnterBlur(event) {
+    if (event.key === "Enter") {
+        event.target.blur();
+    }
+}
+
+// Add event listeners for the Enter key
+currentCharacterHP.addEventListener("keydown", handleEnterBlur);
+maxCharacterHP.addEventListener("keydown", handleEnterBlur);
+tempHP.addEventListener("keydown", handleEnterBlur);
 
 function healCreature(healingAmount) {
     const maxHPValue = parseInt(maxCharacterHP.textContent);

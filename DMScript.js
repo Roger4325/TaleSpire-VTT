@@ -23,7 +23,7 @@ let monsterData
 
 
 //This function is the first function that is called on load and I have been using as if it is an INIT() function. 
-function establishMonsterData(){
+async function establishMonsterData(){
     const monsterDataObject = AppData.monsterLookupInfo;
     monsterNames = monsterDataObject.monsterNames;
     monsterData = monsterDataObject.monsterData;
@@ -55,8 +55,11 @@ function establishMonsterData(){
         showErrorModal('Error loading DmNotes data:', error);
     });
 
-    
-    
+    populateMonsterDropdown()
+    await mergeOtherPlayers(playersInCampaign)
+
+    populatePlayerDropdown()
+
 }
 
 async function loadAndSetLanguage(){
@@ -91,13 +94,50 @@ const playerCharacters = [
     // { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
 ];
 
-// Initialize the tracker (Removed initial call to renderMonsterCards())
+function populateMonsterDropdown() {
+    // Populate the dropdown list with monster names
+    const monsterList = document.getElementById("monster-list");
+    const nameInput = document.getElementById("monster-name-input");
+    const dropdownContainer = document.getElementById("monster-dropdown-container");
 
-// Event listener for adding a new empty monster card
-document.getElementById('add-monster-button').addEventListener('click', function() {
-    createEmptyMonsterCard();
-    closePopup()
-});
+    monsterList.style.display = 'none'; // Initially hide the dropdown
+
+    // Clear the existing list
+    monsterList.innerHTML = '';
+
+    // Populate the dropdown
+    monsterNames.forEach(monsterName => {
+        const listItem = document.createElement('li');
+        listItem.textContent = monsterName;
+        listItem.addEventListener('click', () => {
+            nameInput.value = monsterName; // Set the input value to selected monster
+            createEmptyMonsterCard(monsterName);
+            monsterList.style.display = 'none'; // Hide the dropdown
+        });
+        monsterList.appendChild(listItem);
+    });
+
+    // Show dropdown on focus
+    nameInput.addEventListener('focus', () => {
+        monsterList.style.display = 'block';
+    });
+
+    // Filter dropdown items based on input
+    nameInput.addEventListener('input', () => {
+        const filterText = nameInput.value.toLowerCase();
+        monsterList.querySelectorAll('li').forEach(li => {
+            const monsterName = li.textContent.toLowerCase();
+            li.style.display = monsterName.includes(filterText) ? 'block' : 'none';
+        });
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!dropdownContainer.contains(event.target) && event.target !== nameInput) {
+            monsterList.style.display = 'none';
+        }
+    });
+}
 
 // Event listener for saving each encounter
 document.getElementById('save-encounter').addEventListener('click', function() {
@@ -168,79 +208,25 @@ function activateMonsterCard(card){
     card.style.borderColor = 'red';
 }
 
-function createEmptyMonsterCard() {
+
+function createEmptyMonsterCard(monster) {
     // Create the monster card container
     const card = document.createElement('div');
     card.classList.add('monster-card');
 
-    // Add click event listener to the card to set it as active
     card.addEventListener('click', () => {
-        // If there's an active card, reset its border to the default
         activateMonsterCard(card)
     });
 
-    // Create the dropdown container
-    const dropdownContainer = document.createElement('div');
-    dropdownContainer.classList.add('dropdown-container');
-
-    // Create the input field for monster names
-    const nameInput = document.createElement('input');
-    nameInput.classList.add('monster-name-input');
-    nameInput.placeholder = 'Select or type a monster name...';
-
-    // Create the dropdown list
-    const monsterList = document.createElement('ul');
-    monsterList.classList.add('monster-list');
-
-    // Populate the dropdown list with monster names
-    monsterNames.forEach(monsterName => {
-        const listItem = document.createElement('li');
-        listItem.textContent = monsterName;
-        listItem.addEventListener('click', () => {
-            // Find the selected monster
-            const selectedMonster = monsterName;
-
-            // Update the monster card with selected monster's details
-            updateMonsterCard(card, selectedMonster);
-
-            // Hide the dropdown after selection
-            monsterList.style.display = 'none';
-        });
-        monsterList.appendChild(listItem);
-    });
-
-    // Add event listener to show/hide the dropdown list
-    nameInput.addEventListener('focus', () => {
-        monsterList.style.display = 'block'; // Show dropdown on focus
-    });
-
-    // Add event listener to filter the dropdown list
-    nameInput.addEventListener('input', () => {
-        const filterText = nameInput.value.toLowerCase();
-        monsterList.querySelectorAll('li').forEach(li => {
-            const monsterName = li.textContent.toLowerCase();
-            li.style.display = monsterName.includes(filterText) ? 'block' : 'none';
-        });
-    });
-
-    // Hide the dropdown when clicking outside of it
-    document.addEventListener('click', (event) => {
-        if (!dropdownContainer.contains(event.target)) {
-            monsterList.style.display = 'none';
-        }
-    });
-
-    // Append elements to the card
-    dropdownContainer.appendChild(nameInput);
-    dropdownContainer.appendChild(monsterList);
-    card.appendChild(dropdownContainer);
-
-    // Append the card to the container
     const tracker = document.getElementById('initiative-tracker');
     if (tracker) {
         tracker.appendChild(card);
     } else {
         console.error('Initiative tracker container not found.');
+    }
+
+    if (monster){
+        updateMonsterCard(card, monster)
     }
 
     return card
@@ -560,13 +546,8 @@ function showMonsterCardDetails(monsterName) {
         toggleMonsterCardVisibility(false);
         return; // Exit the function early
     }
-
-    console.log(monsterName)
-
     // Find the monster in the new data source monsterData
     const monster = monsterData[monsterName];
-
-    console.log(monster)
 
     if (monster) {
         currentSelectedMonsterName = monsterName;
@@ -640,7 +621,6 @@ function populateField(elementId, label, value, isRollable = false) {
 // Populates monster fields
 function populateMonsterFields(monster) {
     // Populate basic monster info
-
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
     populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
@@ -653,7 +633,7 @@ function populateMonsterFields(monster) {
     populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
     populateField('monsterConditionImmunities', 'Condition Immunities', monster.ConditionImmunities, false);
     populateField('monsterSenses', 'Senses', monster.Senses, false);
-    populateField('monsterChallenge', 'CR', monster.Challenge, false);
+    populateField('monsterChallenge', 'CR', monster.Challenge||monster.CR, false);
 
     function checkAndPopulateSection(elementId, data, type) {
         const container = document.getElementById(elementId);
@@ -757,43 +737,17 @@ function populateMonsterListField(elementId, items, type) {
 }
 
 
+function populatePlayerDropdown() {
+    const playerList = document.getElementById("player-list");
+    const nameInput = document.getElementById("player-name-input");
+    const dropdownContainer = document.getElementById("player-dropdown-container");
 
+    playerList.style.display = 'none'; // Initially hide the dropdown
 
+    // Clear the existing list
+    playerList.innerHTML = '';
 
-
-
-
-
-
-// Event listener for adding a new empty player card
-document.getElementById('add-player-button').addEventListener('click', async function() {
-    // await fetchAndCreatePlayerCards();
-    mergeOtherPlayers(playersInCampaign) ;
-    createEmptyPlayerCard();
-    closePopup();
-    
-});
-
-// Function to create player cards
-function createEmptyPlayerCard() {
-    // Create the player card container
-    const card = document.createElement('div');
-    card.classList.add('player-card'); // Reuse monster-card class for styling
-
-    // Create the dropdown container
-    const dropdownContainer = document.createElement('div');
-    dropdownContainer.classList.add('dropdown-container');
-
-    // Create the input field for player names
-    const nameInput = document.createElement('input');
-    nameInput.classList.add('monster-name-input');
-    nameInput.placeholder = 'Select or type a player name...';
-
-    // Create the dropdown list
-    const playerList = document.createElement('ul');
-    playerList.classList.add('monster-list');
-
-    // Populate the dropdown list with player names
+    // Populate the dropdown
     playerCharacters.forEach(player => {
         const listItem = document.createElement('li');
         listItem.textContent = player.name;
@@ -801,41 +755,44 @@ function createEmptyPlayerCard() {
             // Find the selected player
             const selectedPlayer = playerCharacters.find(p => p.name === listItem.textContent);
 
-            // Update the card with selected player's details
-            updatePlayerCard(card, selectedPlayer);
-            debouncedRequestPlayerInfo();
+            console.log(selectedPlayer)
+
+            createEmptyPlayerCard(selectedPlayer)
+            // updatePlayerCard(card, selectedPlayer);
+
             // Hide the dropdown after selection
             playerList.style.display = 'none';
         });
         playerList.appendChild(listItem);
     });
 
-    // Add event listener to show/hide the dropdown list
+    // Show dropdown on focus
     nameInput.addEventListener('focus', () => {
-        playerList.style.display = 'block'; // Show dropdown on focus
+        playerList.style.display = 'block';
     });
 
-    // Add event listener to filter the dropdown list
+    // Filter dropdown items based on input
     nameInput.addEventListener('input', () => {
         const filterText = nameInput.value.toLowerCase();
         playerList.querySelectorAll('li').forEach(li => {
-            const playerName = li.textContent.toLowerCase();
-            li.style.display = playerName.includes(filterText) ? 'block' : 'none';
+            const monsterName = li.textContent.toLowerCase();
+            li.style.display = monsterName.includes(filterText) ? 'block' : 'none';
         });
     });
 
-    // Hide the dropdown when clicking outside of it
+    // Hide dropdown when clicking outside
     document.addEventListener('click', (event) => {
-        if (!dropdownContainer.contains(event.target)) {
+        if (!dropdownContainer.contains(event.target) && event.target !== nameInput) {
             playerList.style.display = 'none';
         }
     });
+}
 
-    // Append elements to the card
-    dropdownContainer.appendChild(nameInput);
-    dropdownContainer.appendChild(playerList);
-
-    card.appendChild(dropdownContainer);
+// Function to create player cards
+function createEmptyPlayerCard(player) {
+    // Create the player card container
+    const card = document.createElement('div');
+    card.classList.add('player-card'); 
 
     // Append the card to the container
     const tracker = document.getElementById('initiative-tracker');
@@ -843,6 +800,11 @@ function createEmptyPlayerCard() {
         tracker.appendChild(card);
     } else {
         console.error('Initiative tracker container not found.');
+    }
+
+    if (player){
+        updatePlayerCard(card, player);
+        debouncedRequestPlayerInfo();
     }
 
     return card
@@ -985,7 +947,7 @@ async function updatePlayerCard(card, player) {
 // Fetch players on the board and populate the dropdown
 
 // Function to merge other players into the playerCharacters array
-function mergeOtherPlayers(otherPlayers) {
+async function mergeOtherPlayers(otherPlayers) {
     try {
         // Flatten the array of arrays into a single array of player objects
         const flattenedPlayers = otherPlayers.flat();
@@ -1475,9 +1437,14 @@ async function showSavePopup() {
         encounterItem.addEventListener('click', () => {
             encounterList.style.display = 'none'; // Hide the list after selecting
             saveMonsterCardsAsEncounter(encounterName)
-            closePopup();
+            showErrorModal(`Saved Encounter - ${encounterName}`)
+            // Add a delay before closing the popup (e.g., 500 milliseconds)
+            setTimeout(() => {
+                closePopup();
+            }, 500); // Adjust the 500ms delay as needed
             
         });
+
         encounterList.appendChild(encounterItem);
     });
 
@@ -1488,7 +1455,7 @@ async function showSavePopup() {
     newEncounterInput.addEventListener('blur', () => {
         setTimeout(() => {
             encounterList.style.display = 'none'; // Hide the list after a small delay
-        }, 20); // Delay of 20 milliseconds (adjust as needed)
+        }, 1000);
     });
 
     // Filter the list based on user input
@@ -2009,9 +1976,9 @@ customMonsterButton.addEventListener('click', () => {
     monsterForm.reset()
     resetMonsterForm()
     monsterFormModal.style.display = 'block';
-    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability");
-    populateCheckboxes("monsterFormResistances", damageTypes, "resistance");
-    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity");
+    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability");
+    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance");
+    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity");
     populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
     homebrewModal.style.display = 'none';
 });
@@ -2867,6 +2834,42 @@ function populateConditionsTable() {
     });
 }
 
+function populateEffectsTable() {
+    const tableBody = document.querySelector("#effects tbody");
+    tableBody.innerHTML = ""; // Clear existing rows
+
+    EFFECTS.forEach(effect => {
+        const row = document.createElement("tr");
+
+        // Condition name
+        const conditionCell = document.createElement("td");
+        conditionCell.textContent = effect.effect;
+        row.appendChild(conditionCell);
+
+        // Description
+        const descriptionCell = document.createElement("td");
+        const descriptionList = document.createElement("ul");
+
+        effect.description.forEach(desc => {
+            // Remove any leading <br> tags or whitespace at the beginning of the description
+            const cleanedDesc = desc.replace(/^\s*<br\s*\/?>/, '').trim();
+        
+            // Create a list item and append the cleaned description
+            const listItem = document.createElement("li");
+            listItem.textContent = cleanedDesc; // Use the cleaned description
+            descriptionList.appendChild(listItem);
+        });
+
+        descriptionCell.appendChild(descriptionList);
+        row.appendChild(descriptionCell);
+
+        tableBody.appendChild(row);
+    });
+}
+
+
+
+
 function populateConditionSelect() {
     // Select the target dropdown by its ID
     const conditionSelect = document.getElementById("condition-select");
@@ -2897,9 +2900,9 @@ function populateConditionSelect() {
 }
 
   
-  // Add an event listener to call the function when the page loads
-  document.addEventListener("DOMContentLoaded", populateConditionsTable);
-
+// Add an event listener to call the function when the page loads
+document.addEventListener("DOMContentLoaded", populateConditionsTable);
+document.addEventListener("DOMContentLoaded", populateEffectsTable);
 
 
 document.getElementById('shopSelect').addEventListener('change', function() {

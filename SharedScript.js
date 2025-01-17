@@ -73,6 +73,28 @@ const damageTypes = [
     "Healing"
 ];
 
+const resistanceTypes = [
+    "Slashing",
+    "Piercing",
+    "Bludgeoning",
+    "Fire",
+    "Cold",
+    "Lightning",
+    "Thunder",
+    "Acid",
+    "Poison",
+    "Psychic",
+    "Radiant",
+    "Necrotic",
+    "Force",
+    "Non-magical damage",
+    "Silvered weapons",
+    "Magical weapons",
+    "Bludgeoning (Non-magical)",
+    "Slashing (Non-magical)",
+    "Piercing (Non-magical)",
+];
+
 const conditionTypes = [
     "Blinded",
     "Charmed",
@@ -222,9 +244,9 @@ const EFFECTS = [
         ]
     },
     {
-        effect: "Bloodied",
+        effect: "Bane",
         description: [
-            "The creature's hit points are at or below half its maximum hit points."
+            "The creature must subtract a d4 from attack rolls or saving throws while the effect lasts."
         ]
     },
     {
@@ -234,9 +256,63 @@ const EFFECTS = [
         ]
     },
     {
-        effect: "Bane",
+        effect: "Bloodied",
         description: [
-            "The creature must subtract a d4 from attack rolls or saving throws while the effect lasts."
+            "The creature's hit points are at or below half its maximum hit points."
+        ]
+    },
+    {
+        effect: "Concentration",
+        description: [
+            "The creature is concentrating on a spell. Concentration is broken if the creature takes damage and fails a Constitution saving throw."
+        ]
+    },
+    {
+        effect: "Curse",
+        description: [
+            "The curse applies a specific penalty, such as reduced hit points, disadvantage on certain rolls, or inability to regain hit points."
+        ]
+    },
+    {
+        effect: "Drained",
+        description: [
+            "The creature's maximum hit points are reduced until it finishes a long rest."
+        ]
+    },
+    {
+        effect: "Haste",
+        description: [
+            "The creature's speed is doubled.",
+            "It gains a +2 bonus to AC.",
+            "It has advantage on Dexterity saving throws.",
+            "It gains an additional action each turn (limited to certain actions)."
+        ]
+    },
+    {
+        effect: "Heroism",
+        description: [
+            "The creature gains temporary hit points at the start of each turn while the effect lasts.",
+            "It is immune to being frightened."
+        ]
+    },
+    {
+        effect: "Hex",
+        description: [
+            "The creature has disadvantage on ability checks of a chosen ability.",
+            "It takes extra necrotic damage from attacks by the caster."
+        ]
+    },
+    {
+        effect: "Inspire",
+        description: [
+            "The creature can add a Bardic Inspiration die to an ability check, attack roll, or saving throw."
+        ]
+    },
+    {
+        effect: "Invisible",
+        description: [
+            "The creature can't be seen without magical aid or special senses.",
+            "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
         ]
     },
     {
@@ -248,87 +324,33 @@ const EFFECTS = [
         ]
     },
     {
-        effect: "Inspired",
-        description: [
-            "The creature can add a Bardic Inspiration die to an ability check, attack roll, or saving throw."
+        effect: "Recharging",
+        "description": [
+            "This monster's ability recharges after use. At the end of its turns, roll a d6.", 
+            "<br>If the result is within the recharge range specified in the ability (e.g., 5–6), the ability becomes available to use again.", 
+            "<br>Otherwise, it remains unavailable until the next successful recharge roll."
         ]
     },
     {
-        effect: "Hasted",
-        description: [
-            "The creature's speed is doubled.",
-            "It gains a +2 bonus to AC.",
-            "It has advantage on Dexterity saving throws.",
-            "It gains an additional action each turn (limited to certain actions)."
-        ]
-    },
-    {
-        effect: "Slowed",
-        description: [
-            "The creature's speed is halved.",
-            "It takes a -2 penalty to AC and Dexterity saving throws.",
-            "It can't use reactions, and it can take only one action or bonus action on its turn."
-        ]
-    },
-    {
-        effect: "Shielded",
-        description: [
-            "The creature gains a temporary increase to its AC (e.g., Shield spell adds +5 to AC until the start of the next turn)."
-        ]
-    },
-    {
-        effect: "Invisible",
-        description: [
-            "The creature can't be seen without magical aid or special senses.",
-            "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
-        ]
-    },
-    {
-        effect: "Concentration",
-        description: [
-            "The creature is concentrating on a spell. Concentration is broken if the creature takes damage and fails a Constitution saving throw."
-        ]
-    },
-    {
-        effect: "Hexed",
-        description: [
-            "The creature has disadvantage on ability checks of a chosen ability.",
-            "It takes extra necrotic damage from attacks by the caster."
-        ]
-    },
-    {
-        effect: "Cursed",
-        description: [
-            "The curse applies a specific penalty, such as reduced hit points, disadvantage on certain rolls, or inability to regain hit points."
-        ]
-    },
-    {
-        effect: "Heroism",
-        description: [
-            "The creature gains temporary hit points at the start of each turn while the effect lasts.",
-            "It is immune to being frightened."
-        ]
-    },
-    {
-        effect: "Sanctuaried",
+        effect: "Sanctuary",
         description: [
             "Creatures attempting to attack the protected creature must make a Wisdom saving throw or choose a new target."
         ]
     },
     {
-        effect: "Recharging",
-        "description": [
-            "This monster's ability recharges after use. At the start of each of its turns, roll a d6. <br>If the result is within the recharge range specified in the ability (e.g., 5–6), the ability becomes available to use again. <br>Otherwise, it remains unavailable until the next successful recharge roll."
+        effect: "Shield",
+        description: [
+            "The creature gains a temporary increase to its AC (e.g., Shield spell adds +5 to AC until the start of the next turn)."
+        ]
+    },
+    {
+        effect: "Slow",
+        description: [
+            "The creature's speed is halved.",
+            "It takes a -2 penalty to AC and Dexterity saving throws.",
+            "It can't use reactions, and it can take only one action or bonus action on its turn."
         ]
     }
-
-    
-    // {
-    //     effect: "Drained",
-    //     description: [
-    //         "The creature's maximum hit points are reduced until it finishes a long rest."
-    //     ]
-    // }
 ];
 
 let savedLanguage = 'eng';
