@@ -218,10 +218,11 @@
 /* HP display */
 .current-hp,
 .max-hp{
+    display: inline-block;
     padding: 3px;
     border-radius: 5px;
     background-color: var(--ts-background-secondary);
-    min-width: 40px;
+    min-width: 20px;
     text-align: center;
     font-size: 16px;
 }

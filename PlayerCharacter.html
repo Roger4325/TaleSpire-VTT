@@ -1556,14 +1556,16 @@
                     </div>
                     <hr> -->
                     <div class="monsterEditorSubsection">
-                        <div>
+                        <div class="">
                             <button id="customSpells" class="nonRollButton">Create Spell</button>
+                            <button id="importCustomSpell" class="nonRollButton">Import Spell</button>
                         </div>
                         <div class="deleteMonster">
                             <div class="deleteMonster-header">
                                 <label for="customSpellSelect">Select Spell to Delete/Edit:</label>
                                 <button id="deleteCustomSpells" class="nonRollButton">Delete Spell</button>
                                 <button id="editCustomSpells" class="nonRollButton">Edit Spell</button>
+                                <button id="exportCustomSpell" class="nonRollButton">Export Spell</button>
                             </div>
                             <select id="customSpellSelect"></select>
                         </div>
@@ -1572,12 +1574,14 @@
                     <div class="monsterEditorSubsection">
                         <div>
                             <button id="customItems" class="nonRollButton">Create Item</button>
+                            <buton id="importCustomItem" class="nonRollButton">Import Item</button>
                         </div>
                         <div class="deleteMonster">
                             <div class="deleteMonster-header">
                                 <label for="customItemSelect">Select Item to Delete/Edit:</label>
                                 <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
                                 <!-- <button id="editCustomItems" class="nonRollButton">Edit Item</button> -->
+                                <button id="exportCustomItem" class="nonRollButton">Export Item</button>
                             </div>
                             <select id="customItemSelect"></select>
                         </div>
@@ -1605,7 +1609,8 @@
 <!-- Modal Structure -->
 <div id="importModal" class="modal" style="display: none;">
     <div class="modal-content">
-        <h2>Import Character Data</h2>
+        <h2 id="importTitle" data-type="">Import Character Data</h2>
+        <p>This data has to be of the format exported from the saved global or campaign storage. Please only use the exported data from Talespire 5e Toolset.</p>
         <textarea id="importTextArea" rows="30"></textarea>
         <div style="margin-top: 1rem;">
             <button id="importSaveButton" class="nonRollButton">Save</button>

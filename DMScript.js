@@ -29,9 +29,9 @@ async function establishMonsterData(){
     monsterData = monsterDataObject.monsterData;
     loadAndSetLanguage();
     loadDataFromCampaignStorage();
-    populateConditionSelect();
+    
     updateShopTable("adventuringSupplies")
-    loadTableData()
+    await loadTableData()
 
     loadDataFromGlobalStorage('checklists')
     .then((checklistData) => {
@@ -59,6 +59,7 @@ async function establishMonsterData(){
     await mergeOtherPlayers(playersInCampaign)
 
     populatePlayerDropdown()
+    populateConditionSelect();
 
 }
 
@@ -372,10 +373,75 @@ function updateMonsterCard(card, monster) {
     currentHPDiv.contentEditable = true;
     currentHPDiv.textContent = monsterCurrentHp
 
+    // Add input validation for currentHPDiv
+    addMathValidation(currentHPDiv);
+
     const maxHPDiv = document.createElement('span');
     maxHPDiv.classList.add('max-hp');
     maxHPDiv.contentEditable = true;
-    maxHPDiv.textContent = monsterMaxHp  // Use maxHp from the object, if available
+    maxHPDiv.textContent = monsterMaxHp  
+
+    // Add input validation for maxHPDiv
+    addMathValidation(maxHPDiv);
+
+    // Function to add math validation
+    // Function to add math validation
+    function addMathValidation(element) {
+        let lastValidValue = element.textContent;
+
+        element.addEventListener('input', () => {
+            const value = element.textContent.trim();
+
+            // Allow intermediate states by checking if input is partially valid
+            const isPartiallyValid = /^-?\d*(\s*[-+*/]\s*-?\d*)*$/.test(value);
+
+            if (isPartiallyValid) {
+                // Update the last valid value only if the expression is fully valid
+                if (/^-?\d+(\s*[-+*/]\s*-?\d+)*$/.test(value)) {
+                    lastValidValue = value;
+                }
+            } else {
+                // Revert to the last valid value if input is invalid
+                element.textContent = lastValidValue;
+            }
+
+            // Move the caret to the end after reverting
+            placeCaretAtEnd(element);
+        });
+
+        element.addEventListener('blur', () => {
+            // Optionally evaluate the result when the user finishes editing
+            try {
+                const result = eval(element.textContent.trim());
+                if (Number.isFinite(result)) {
+                    element.textContent = Math.floor(result); 
+                    lastValidValue = element.textContent; 
+                } else {
+                    element.textContent = 0; 
+                }
+            } catch {
+                element.textContent = lastValidValue;
+            }
+        });
+
+        // Blur on Enter key press
+        element.addEventListener('keydown', (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent a new line in the contentEditable
+                element.blur();
+            }
+        });
+    }
+
+    // Helper function to move the caret to the end of the element
+    function placeCaretAtEnd(el) {
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
 
     const hpDisplay = document.createElement('div');
     hpDisplay.classList.add('hp-display');
@@ -1285,6 +1351,9 @@ function monsterConditions(condition) {
         // Add the condition to the Set and the condition pill to the container
         conditionsSet.add(selectedCondition);
         conditionTrackerDiv.appendChild(conditionPill);
+    }
+    else{
+        showErrorModal("No monster currently slected. Please click on the monster you would like to apply a condition to.")
     }
 }
 
@@ -2523,6 +2592,30 @@ function tableEditing(cell) {
                 rowData[`column${i}`] = row.cells[i].innerHTML;
             }
 
+            if (dataType === "effects") {
+                // Ensure no duplicates exist in EFFECTS
+                const effectName = rowData.column0?.trim(); //column0 holds the effect name
+                const effectDescription = rowData.column1?.trim(); //column1 holds the description
+
+                if (effectName) {
+                    const existingEffect = EFFECTS.find(
+                        (effect) => effect.effect.toLowerCase() === effectName.toLowerCase()
+                    );
+
+                    if (existingEffect) {
+                        // Update existing effect description
+                        existingEffect.description = [effectDescription];
+                    } else {
+                        // Add new effect to EFFECTS
+                        EFFECTS.push({
+                            effect: effectName,
+                            description: [effectDescription],
+                        });
+                    }
+                }
+                populateConditionSelect();
+            }
+
             saveToGlobalStorage(dataType, dataId, rowData);
         }
     });
@@ -2889,6 +2982,8 @@ function populateConditionSelect() {
         }))
     ].sort((a, b) => a.value.localeCompare(b.value));
 
+    console.log(allConditionsAndEffects)
+
     // Add each sorted option to the dropdown
     allConditionsAndEffects.forEach(entry => {
         const option = document.createElement("option");
@@ -2903,6 +2998,16 @@ function populateConditionSelect() {
 // Add an event listener to call the function when the page loads
 document.addEventListener("DOMContentLoaded", populateConditionsTable);
 document.addEventListener("DOMContentLoaded", populateEffectsTable);
+
+
+
+
+
+
+
+
+
+
 
 
 document.getElementById('shopSelect').addEventListener('change', function() {
@@ -3159,7 +3264,7 @@ async function loadTableData() {
                                             }
                                         } else {
                                             // Hide the row if it's completely empty
-                                            row.style.display = 'none';
+                                            row.style.display = "none";
                                         }
                                     } else {
                                         // If the row doesn't exist, create a new row and populate it
@@ -3167,7 +3272,7 @@ async function loadTableData() {
                                         newRow.innerHTML = "<td contenteditable='true'></td>".repeat(numColumns);
 
                                         // Call tableEditing function for the new cells
-                                        newRow.querySelectorAll("td").forEach(cell => {
+                                        newRow.querySelectorAll("td").forEach((cell) => {
                                             cell.setAttribute("contenteditable", "true");
                                             tableEditing(cell);
                                         });
@@ -3178,6 +3283,33 @@ async function loadTableData() {
                                             }
                                         }
                                     }
+
+                                    // Push data to EFFECTS if dataType is "effects"
+                                    if (dataType === "effects") {
+                                        const effectName = rowData.column0?.trim(); //column0 is effect name
+                                        const effectDescription = rowData.column1?.trim(); //column1 is description
+
+                                        if (effectName) {
+                                            const existingEffect = EFFECTS.find(
+                                                (effect) =>
+                                                    effect.effect.toLowerCase() === effectName.toLowerCase()
+                                            );
+
+                                            if (existingEffect) {
+                                                // Update description if it already exists
+                                                existingEffect.description = [effectDescription];
+                                            } else {
+                                                // Add new effect to EFFECTS
+                                                EFFECTS.push({
+                                                    effect: effectName,
+                                                    description: [effectDescription],
+                                                });
+                                            }
+                                        }
+                                        console.log(effectName, effectDescription)
+                                        console.log(EFFECTS)
+                                        populateConditionSelect();
+                                    }
                                 }
                             }
                         }
@@ -3186,7 +3318,9 @@ async function loadTableData() {
             }
         }
     });
+    
 }
+
 
 
 // Function to update the spell details in the 'spell-list' ul

@@ -6772,40 +6772,46 @@ function handleInitRound(message) {
 
 
 
-// Function to export character data
-async function exportCharacterData() {
-    const characterKey = document.getElementById("customCharacterSelect").value;
-
-    // Retrieve character data from global storage
-    const allCharacterData = await loadDataFromCampaignStorage("characters");
-
-    console.log(characterKey);
-
-    // Access the character's data from the global storage
-    const characterData = allCharacterData[characterKey];
-
+// Function to export data from the character sheet. This will allow DM's to share spells and equipment. Or allow DM's to share character sheets with their players. 
+async function exportData(dataType, key) {
+    let keyData
+    if (dataType === "characters"){
+        const allData = await loadDataFromCampaignStorage(dataType);
+        keyData = allData[key];
+    }
+    else{
+        const allData = await loadDataFromGlobalStorage(dataType);
+        console.log(allData)
+        keyData = allData[key];
+    }
+   
     // Wrap the character data with its key
-    const characterJsonWithKey = {
-        [characterKey]: characterData
-    };
+    const jsonWithKey = { [key]: keyData};
 
-    // Convert the data to a JSON string (this is the format that would be shared)
-    const characterJsonString = JSON.stringify(characterJsonWithKey, null, 2);
-
-    // Base64 encode the JSON string for easy sharing
-    const encodedData = btoa(characterJsonString);
-
-     // Copy the Base64 encoded string to the clipboard
-     try {
-        await navigator.clipboard.writeText(encodedData);
-        showErrorModal(`Exported: '${characterKey}' has been copied to clipboard:`,5000);
+    const jsonString = JSON.stringify(jsonWithKey, null, 2);
+    try {
+        await navigator.clipboard.writeText(jsonString);
+        showErrorModal(`Exported: '${key}' has been copied to clipboard:`,5000);
     } catch (error) {
         console.error("Failed to copy data to clipboard:", error);
     }
 }
 
-// Add event listener to the export button
-document.getElementById('exportCharacterData').addEventListener('click', exportCharacterData);
+document.getElementById('exportCharacterData').addEventListener("click", async () => {
+    const characterKey = document.getElementById("customCharacterSelect").value;
+    exportData("characters",characterKey);
+});
+document.getElementById('exportCustomSpell').addEventListener("click", async () => {
+    const spellKey = document.getElementById("customSpellSelect").value;
+    exportData("Custom Spells",spellKey);
+});
+document.getElementById('exportCustomItem').addEventListener("click", async () => {
+    const itemKey = document.getElementById("customItemSelect").value;
+    exportData("Custom Equipment",itemKey);
+});
+
+
+
 
 
 function loadAndDisplayCharaceter() {
@@ -6829,41 +6835,71 @@ function loadAndDisplayCharaceter() {
 }
 
 
+
+
+
+
 document.getElementById("importCharacterData").addEventListener("click", () => {
     document.getElementById("importModal").style.display = "flex";
+    document.getElementById("importTitle").textContent = "Import Character Data"
+    document.getElementById("importTitle").setAttribute("data-type", "characters")
 });
+document.getElementById("importCustomSpell").addEventListener("click", () => {
+    document.getElementById("importModal").style.display = "flex";
+    document.getElementById("importTitle").textContent = "Import Spell Data"
+    document.getElementById("importTitle").setAttribute('data-type', "Custom Spells")
+});
+
+document.getElementById("importCustomItem").addEventListener("click", () => {
+    document.getElementById("importModal").style.display = "flex";
+    document.getElementById("importTitle").textContent = "Import Item Data"
+    document.getElementById("importTitle").setAttribute('data-type', "Custom Equipment")
+});
+
+
 
 // Close the modal when the cancel button is clicked
 document.getElementById("importCancelButton").addEventListener("click", () => {
     document.getElementById("importModal").style.display = "none";
 });
 
+
+
 // Handle saving the imported data
 document.getElementById("importSaveButton").addEventListener("click", async () => {
     const importTextArea = document.getElementById("importTextArea");
-    const encodedData = importTextArea.value;
+    const importDataType = document.getElementById("importTitle").getAttribute('data-type')
+    console.log(importDataType)
+    const data = importTextArea.value;
 
     try {
-        // Decode the Base64 string
-        const decodedData = atob(encodedData);
-
         // Parse the JSON data
-        const characterData = JSON.parse(decodedData);
+        const parsedData = JSON.parse(data);
 
         // Extract the character key and data
-        const characterKey = Object.keys(characterData)[0];
-        const characterInfo = characterData[characterKey];
+        const key = Object.keys(parsedData)[0];
+        const dataInfo = parsedData[key];
 
-        // Save the character data using the specified function
-        saveToCampaignStorage("characters", characterKey, characterInfo, true);
+        if (importDataType === "character"){
+            // Save the character data using the specified function
+            saveToCampaignStorage(importDataType, key, dataInfo, true);
+        }
+        else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
+            saveToGlobalStorage(importDataType, key, dataInfo, true);
+        }
+        else{
+            showErrorModal("Invalid dataType. Please check the format and try again.");
+        }
+
+        
 
         // Close the modal and clear the text area
         document.getElementById("importModal").style.display = "none";
         importTextArea.value = "";
 
-        showErrorModal(`Character data for '${characterKey}' successfully imported and saved.`);
+        showErrorModal(`'${importDataType}' data for '${key}' successfully imported and saved.`);
     } catch (error) {
-        console.error("Failed to import character data:", error);
-        showErrorModal("Invalid character data. Please check the format and try again.");
+        console.error("Failed to import data:", error);
+        showErrorModal("Invalid data. Please check the format and try again.");
     }
 });

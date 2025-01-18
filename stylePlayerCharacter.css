@@ -2297,6 +2297,27 @@ display: none;
     margin-bottom: 2px;
 }
 
+#importModal {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(121, 121, 121, 0.377);
+}
+
+
+#importCustomSpell, #importCustomItem{
+    display: flex;
+    text-align: center;
+}
+
 #importTextArea {
     height: 70vh;
     width: 80vw;
