@@ -380,7 +380,7 @@ margin: 2px;
     margin-bottom: 5px; 
 }
 
-#customMonsterSelect {
+#customMonsterSelect, #customShopSelect {
     width: 100%; 
 }
 
@@ -388,6 +388,10 @@ margin: 2px;
     min-height: 20px;
 }
 
+.non-editable {
+    user-select: none; 
+    cursor: default; 
+}
 
 
 
@@ -643,4 +647,395 @@ margin: 2px;
 
 .select-wrapper{
     min-height: 60px;
+}
+
+
+
+
+/* Monster card styles */
+.monster-card {
+    display: flex;
+    align-items: center;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--border-outline-color);
+    padding: 3px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    position: relative; /* Ensure dropdown positioning is relative to card */
+    transition: border-color 0.3s ease;
+}
+
+/* Add larger margin to the last monster card */
+.monster-card:last-child {
+    margin-bottom: 40px; /* Adjust the value as needed */
+}
+
+/* Initiative box */
+.init-input {
+    text-align: center;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    width: 15px;
+    height: 40px;
+    margin-right: 5px;
+    /* Remove arrows */
+    -moz-appearance: textfield;
+}
+
+.init-input::-webkit-outer-spin-button,
+.init-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.monster-picture{
+    width: 40px;
+    height: 40px;
+    margin-right: 3px;
+}
+
+
+/* Monster information */
+.monster-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 5px;
+}
+
+
+.monster-name {
+    cursor: pointer; 
+    font-weight: bold;
+    font-size: 15px;
+    display: inline-block;
+    color: rgb(252, 222, 56);
+}
+
+.monster-name:hover {
+    text-decoration: underline; 
+}
+
+.monster-details {
+    font-size: 14px;
+    color: var(--ts-text-secondary);
+}
+
+.conditions-trackers {
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 2px; 
+    align-items: flex-start; 
+    min-width: 200px;
+    height: auto; 
+    align-self: flex-start;
+}
+
+
+
+
+/* HP and adjustments */
+.monster-hp {
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-rows: .5fr 1fr;
+    gap: 2px; 
+    max-height: 65px;
+    min-width: 85px;
+}
+
+/* Math input for healing/damage */
+.hp-adjust-input {
+    height: 10px;
+    width: 60px;
+    padding: 3px;
+    font-size: 10px;
+    text-align: center;
+    border-radius: 5px;
+    border: 1px solid var(--border-outline-color);
+    -moz-appearance: textfield;
+}
+
+.hp-adjust-input::-webkit-outer-spin-button,
+.hp-adjust-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
+/* HP display */
+.current-hp,
+.max-hp{
+    display: inline-block;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: var(--ts-background-secondary);
+    min-width: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* Temporary HP */
+
+.temp-hp-container{
+    font-size: 12px;
+}
+
+.temp-hp {
+    background-color: var(--ts-background-tertiary); /* Different background for temporary HP */
+    padding: 1px 8px;
+    border-radius: 5px;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--border-outline-color);
+    min-width: 60px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.monster-card-delete-button{
+    margin-right: 10px;
+}
+.monster-card-delete-button button{
+    font-size: 8px;
+}
+
+.monster-name-input {
+    width: 93%; /* Full width input */
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--border-outline-color);
+    background-color: rgb(2, 2, 2);
+    color: white;
+}
+
+#monster-list, #player-list{
+    position: absolute; /* Position dropdown list below input */
+    top: 100%; /* Below the input field */
+    left: 0;
+    width: 100%;
+    max-height: 500px; /* Max height of the dropdown list */
+    overflow-y: auto; /* Scroll if content is too long */
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Drop shadow for better visibility */
+    z-index: 1000; /* Ensure dropdown is above other elements */
+    display: none; /* Initially hidden */
+    font-size: 16px;
+}
+
+#monster-list li, .save-popup li, #player-list li {
+    padding-bottom: .3rem;
+    padding-left: .1rem;
+    cursor: pointer;
+    list-style: none;
+    margin: 0;
+}
+
+#monster-list, .save-popup, #player-list {
+    padding: 0;
+    padding-left: .3rem;
+}
+
+#monster-list li:hover, .save-popup li:hover, #player-list li:hover {
+    background-color: var(--border-outline-color); /* Highlight on hover */
+}
+
+/* Main container for the monster card */
+.monster-card-container {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    right: -100%;
+    width: 100%; 
+    max-height: 90vh; 
+    background-color: var(--ts-background-secondary);
+    transition: right 0.5s ease, opacity 0.5s ease; 
+    z-index: 5;
+    font-size: 14px;
+    padding: 15px;
+    padding-top: 2px;
+    border: 1px solid var(--ts-accent-color);
+    overflow-y: auto; /* Add scroll if content overflows */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+
+/* Visibility controls for the container */
+.monster-card-container.visible {
+    right: -20px; /* Slides in from the right */
+    opacity: 1;
+    transition: right 0.5s ease, opacity 0.1s ease; /* Reset to ensure no delay when visible */
+}
+
+.monster-card-container.hidden {
+    right: -100%; /* Slides out to the right */
+    opacity: 0;
+    transition: right 0.5s ease, opacity 0.5s ease 0.5s; /* Delay only when hiding */
+}
+
+
+/* Internal monster card content */
+.monster-block {
+    padding: 10px;
+    font-size: 14px;
+}
+
+.monster-block .monster-section-header{
+    display: grid;
+    grid-template-columns: 1fr 2fr 2fr;
+    gap: 15px;
+}
+
+/* Monster name styling */
+.monster-block .monster-name {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Subtitle, e.g., size, type, and alignment */
+.monster-block .monster-subtitle {
+    font-style: italic;
+    text-align: center;
+}
+
+.monster-section-extra-stats{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.full-width-columns{
+    grid-column: 1 / -1; /* Make this item span across both columns */
+}
+
+/* Sections like 'Armor Class', 'Hit Points', etc. */
+.monster-block .monster-section {
+    margin-bottom: 0px;
+}
+
+/* Section titles */
+.monster-block .monster-section-title {
+    margin-bottom: 5px;
+}
+
+.monster-block .rollable-monster-stats{
+    display: grid;
+    grid-template-columns: 1fr .01fr 1fr .01fr 1fr;
+    gap: 5px;
+}
+
+/* Stats block styling */
+.monster-block .monster-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+    text-align: center;
+}
+
+.monster-block #monsterSaves {
+    display: grid;
+    grid-template-columns: 1fr .01fr 1fr .01fr;
+    gap: 3px;
+    text-align: center;
+}
+
+
+
+/* Each individual stat (e.g., STR, DEX, CON) */
+.monster-block .monster-stat {
+    font-size: 12px;
+    padding: 2px;
+}
+
+/* Divider between sections */
+.monster-block hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--border-outline-color);
+    margin: 2px 0;
+}
+
+/* Special abilities and actions */
+.monster-block .monster-abilities,
+.monster-block .monster-actions {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.monster-actions span, .monster-abilities span, .monster-facts{
+    font-size: 12px; 
+    font-family: Arial, sans-serif;
+    color: #FFFFFF;
+}
+
+.monster-actions strong, .monster-abilities strong, .monster-facts strong  {
+    font-size: 14px; 
+    font-family: 'OptimusPrinceps', sans-serif;
+    color: var(--ts-accent-primary);
+}
+
+/* Actions heading */
+.monster-block .monster-actions-title {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+/* Description texts for actions/abilities */
+.monster-block .description-text {
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#abilityScoreDivider01, #abilityScoreDivider02{
+    height: 100%; 
+    width: 1px; /* Thin width to simulate a vertical line */
+    background-color: var(--border-outline-color);
+    margin: 0;
+}
+
+
+.spell-hover {
+    position: relative;
+    cursor: pointer; /* Show pointer cursor to indicate it's hoverable */
+}
+
+.spell-tooltip {
+    position: fixed; /* Use fixed positioning relative to the screen */
+    background-color: rgb(2, 2, 2);
+    color: #ffffff;
+    padding: 2px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 95%; 
+    z-index: 1000;
+    line-height: 20px;
+    transition: opacity 0.2s ease-in-out; /* For smooth fade-in */
+    opacity: 0; /* Start hidden */
+    top: 0; /* Initially set to 0, will be adjusted dynamically in the code */
+    left: 2%; /* Always aligned to the left of the viewport */
+    pointer-events: none;
+    background-color: var(--ts-background-secondary);
+    border: 1px solid var(--border-outline-color);
+}
+
+.spell-tooltip strong {
+    color: var(--ts-accent-primary);
+}
+
+.fa-eye-slash{
+    color: black;
+}
+
+.eye-and-close-buttons{
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
 }

@@ -168,13 +168,6 @@ const CONDITIONS = [
       ]
     },
     {
-      condition: "Invisible",
-      description: [
-        "An invisible creature is impossible to see without the aid of magic or a special sense. For the purpose of hiding, the creature is heavily obscured. The creature's location can be detected by any noise it makes or any tracks it leaves.",
-        "<br>Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
-      ]
-    },
-    {
       condition: "Paralyzed",
       description: [
         "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",

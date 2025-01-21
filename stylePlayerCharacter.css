@@ -193,6 +193,10 @@
     transition: background-color 0.3s ease;
 }
 
+.deathSavesButton:hover{
+    transform: scale(1.1);
+}
+
 .deathSavesButton.active {
     background-color: rgb(190, 34, 34);
 }
@@ -305,6 +309,7 @@
     min-width: 220px;
     height: 90px;
     border-radius: 5px;
+    padding: .2rem;
     max-width: 98%;
 }
 
@@ -314,6 +319,7 @@
     gap:0;
     justify-content: center;
     align-items: center;
+    font-size: .8rem;
 }
 
 .playerHealth > button{
@@ -322,6 +328,7 @@
     height: 15px;
     margin-left: 5px;
 }
+
 .playerHealth > input{
     height: 10px;
     width: 40px;
@@ -336,9 +343,14 @@
     padding: 0;
 }
 
+#currentCharacterHP, #maxCharacterHP{
+    display: inline-block;
+    min-width: 1rem;
+}
+
 #tempHPText{
     margin: 5px;
-    font-size: 13px;
+    font-size: .8rem;
 }
 
 #tempHP{
@@ -1080,7 +1092,19 @@
 
 .spell-level-dropdown{
     width: 40px;
+    cursor: pointer;
 }
+
+.spellcasting-dropdown{
+    cursor: pointer;
+    min-width: 5rem;
+}
+
+.spellcasting-dropdown:hover, .spell-level-dropdown:hover{
+    border-color: var(--button-color-hover);
+}
+
+
 
 .magic-bonus-dropdown{
     width: 40px;
@@ -2327,4 +2351,30 @@ display: none;
     border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     margin: 0 auto; /* Keeps alignment consistent */
+}
+
+
+.tooltip {
+    position: absolute;
+    text-align: center;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgb(2, 2, 2);
+    color: #ffffff;
+    padding: 2px 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 20;
+    height: fit-content;
+}
+
+/* Show tooltip */
+.tooltip.show {
+    opacity: 1;
 }

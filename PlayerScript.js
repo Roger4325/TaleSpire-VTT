@@ -59,6 +59,8 @@ const messageHandlers = {
     'player-init-round': handleInitRound
 };
 
+let monsterNames
+let monsterData
 
 
 //The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
@@ -243,6 +245,36 @@ async function playerSetUP(){
         }
     });
 
+    document.querySelectorAll('[data-title]').forEach(element => {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'tooltip';
+        tooltip.innerText = element.getAttribute('data-title');
+        document.body.appendChild(tooltip);
+    
+        element.addEventListener('mouseenter', () => {
+            showTimeout = setTimeout(() => {
+                const rect = element.getBoundingClientRect();
+                tooltip.style.top = `${rect.top - tooltip.offsetHeight - 2}px`;
+                tooltip.style.left = `${rect.left + rect.width - 20}px`;
+                tooltip.classList.add('show');
+
+                // Check bounds to keep tooltip fully visible
+                const tooltipRect = tooltip.getBoundingClientRect();
+                if (tooltipRect.left < 0) {
+                    tooltip.style.left = `${tooltipRect.width/2 + 5}px`;
+                } else if (tooltipRect.right > window.innerWidth) {
+                    tooltip.style.left = `${window.innerWidth - (tooltipRect.width/2+5)}px`;
+                }
+            }, 300);
+        });
+    
+        element.addEventListener('mouseleave', () => {
+            clearTimeout(showTimeout);
+            tooltip.classList.remove('show');
+        });
+    });
+    
+
 
     // Event listener for subtab clicks
     document.querySelectorAll('.actionsubtab').forEach(subtab => {
@@ -418,7 +450,12 @@ async function playerSetUP(){
 
     isMe = await TS.players.whoAmI()
 
+    const monsterDataObject = AppData.monsterLookupInfo;
+    monsterNames = monsterDataObject.monsterNames;
+    monsterData = monsterDataObject.monsterData;
+
     sendDMUpdatedStatsDebounced()
+    populateMonsterDropdown()
 }  
 
 // Function to format numbers with commas
@@ -2112,6 +2149,9 @@ function getAllEditableContent() {
 
     const notesData = processNotesGroupData();
     content['groupNotesData'] = notesData;
+
+    const extrasData = gatherExtrasInfo();
+    content['extrasData'] = extrasData;
     
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
@@ -2366,6 +2406,8 @@ function updateCharacterUI(characterData, characterName) {
     
     loadAndSetLanguage()
     updateAdjustmentValues()
+
+    updateExtrasCardDataFromLoad(characterData.extrasData)
 
     // Update conditions UI
     const conditionsSet = new Set(characterData.conditions);
@@ -6903,3 +6945,602 @@ document.getElementById("importSaveButton").addEventListener("click", async () =
         showErrorModal("Invalid data. Please check the format and try again.");
     }
 });
+
+
+
+
+
+
+
+
+function populateMonsterDropdown() {
+    // Populate the dropdown list with monster names
+    const monsterList = document.getElementById("monster-list");
+    const nameInput = document.getElementById("monster-name-input");
+    const dropdownContainer = document.getElementById("monster-dropdown-container");
+
+    monsterList.style.display = 'none'; // Initially hide the dropdown
+
+    // Clear the existing list
+    monsterList.innerHTML = '';
+
+    // Populate the dropdown
+    monsterNames.forEach(monsterName => {
+        const listItem = document.createElement('li');
+        listItem.textContent = monsterName;
+        listItem.addEventListener('click', () => {
+            nameInput.value = monsterName; // Set the input value to selected monster
+            createEmptyMonsterCard(monsterName);
+            monsterList.style.display = 'none'; // Hide the dropdown
+        });
+        monsterList.appendChild(listItem);
+    });
+
+    // Show dropdown on focus
+    nameInput.addEventListener('focus', () => {
+        monsterList.style.display = 'block';
+    });
+
+    // Filter dropdown items based on input
+    nameInput.addEventListener('input', () => {
+        const filterText = nameInput.value.toLowerCase();
+        monsterList.querySelectorAll('li').forEach(li => {
+            const monsterName = li.textContent.toLowerCase();
+            li.style.display = monsterName.includes(filterText) ? 'block' : 'none';
+        });
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!dropdownContainer.contains(event.target) && event.target !== nameInput) {
+            monsterList.style.display = 'none';
+        }
+    });
+}
+
+
+function createEmptyMonsterCard(monster) {
+    // Create the monster card container
+    const card = document.createElement('div');
+    card.classList.add('monster-card');
+    
+    const tracker = document.getElementById('initiative-tracker');
+    if (tracker) {
+        tracker.appendChild(card);
+    } else {
+        console.error('Initiative tracker container not found.');
+    }
+
+    if (monster){
+        updateMonsterCard(card, monster)
+    }
+
+    return card
+}
+
+
+
+function updateMonsterCard(card, monster) {
+    // Clear previous content
+    card.innerHTML = '';
+
+    // Check if the monster is a string (name) or an object (full monster data)
+    let monsterName, selectedMonsterData, monsterCurrentHp, monsterMaxHp, monsterTempHP, newConditionsMap, monsterVisable
+    
+    if (typeof monster === 'string') {
+        // If a string is provided, it's just the monster name, so we fetch the data
+        monsterName = monster;
+        selectedMonsterData = monsterData[monster]; // Look up monster data by name
+
+        monsterCurrentHp = selectedMonsterData.HP.Value
+        monsterMaxHp = selectedMonsterData.HP.Value
+        monsterTempHP = 0;
+        monsterVisable = 0;
+
+    } else if (typeof monster === 'object') {
+        // If an object is provided, use the data from the monster object that we loaded
+        monsterName = monster.name;  // Name from the object
+        const rearrangedName = monsterName.replace(/\s\([A-Z]\)$/, ''); // Removes the letter in parentheses
+        selectedMonsterData = monsterData[rearrangedName]; // Get the stored monster data based on the name
+    
+        monsterCurrentHp = monster.currentHp;
+        monsterMaxHp = monster.maxHp;
+        monsterTempHP = monster.tempHp;
+        newConditionsMap = monster.conditions;
+        monsterVisable = monster.isClosed;
+    }
+    
+
+    // Handle missing monster data
+    if (!selectedMonsterData) {
+        console.error(`Monster data not found for: ${monsterName}`);
+        return;
+    }
+
+    // Create the monster initiative box
+    const initDiv = document.createElement('div');
+    initDiv.classList.add('monster-init');
+    
+    // Add monster picture
+    const monsterPictureDiv = document.createElement('div');
+    monsterPictureDiv.classList.add('monster-picture-div');
+    const monsterPicture = document.createElement('img');
+    monsterPicture.classList.add('monster-picture');
+    monsterPictureDiv.appendChild(monsterPicture);
+
+    // Monster info section
+    const monsterInfo = document.createElement('div');
+    monsterInfo.classList.add('monster-info');
+    const monsterNameDiv = document.createElement('div');
+    monsterNameDiv.classList.add('monster-name');
+
+    // Determine the monster name to use
+    let monsterNameToUse 
+    if(monster.name){
+        monsterNameDiv.textContent = monster.name
+    }
+    else{
+        monsterNameToUse = selectedMonsterData.Name
+        const existingNames = Array.from(document.getElementsByClassName('monster-name')).map(nameElem => nameElem.textContent.replace(/\s\([A-Z]\)$/, ''));
+        const count = existingNames.filter(name => name === monsterNameToUse).length;
+        monsterNameDiv.textContent = `${monsterNameToUse} (${String.fromCharCode(65 + count)})`;
+    }
+
+    // Add a unique identifier to the monster name
+
+
+    
+    monsterNameDiv.addEventListener('click', function () {
+        const monsterNameText = monsterNameDiv.textContent.replace(/\s\([A-Z]\)$/, '');
+        console.log(monsterNameText)
+        showMonsterCardDetails(monsterNameText);
+    });
+
+    // Stats section (AC, Initiative, Speed)
+    const statsDiv = document.createElement('div');
+    statsDiv.classList.add('monster-details');
+    let monsterInitiative
+    if(selectedMonsterData.InitiativeModifier < 0){
+        monsterInitiative = selectedMonsterData.InitiativeModifier;
+    }
+    else{
+        monsterInitiative = "+" + selectedMonsterData.InitiativeModifier;
+    }
+    
+    const initiativeButton = parseAndReplaceDice({ name: 'extraInitiative' }, `Init Mod: ${monsterInitiative} <br>`);
+    
+    const statsSpan = document.createElement('span');
+    const acText = document.createTextNode(`AC: ${selectedMonsterData.AC.Value} | `);
+    const speedText = document.createTextNode(` Speed: ${selectedMonsterData.Speed}`);
+    statsSpan.appendChild(acText);
+    statsSpan.appendChild(initiativeButton);
+    statsSpan.appendChild(speedText);
+    statsDiv.appendChild(statsSpan);
+
+    // Add monster name and stats to the monster info
+    monsterInfo.appendChild(monsterNameDiv);
+    monsterInfo.appendChild(statsDiv);
+
+    card.appendChild(initDiv);
+    card.appendChild(monsterPictureDiv);
+    card.appendChild(monsterInfo);
+
+
+    // HP section
+    const monsterHP = document.createElement('div');
+    monsterHP.classList.add('monster-hp');
+
+    const currentHPDiv = document.createElement('span');
+    currentHPDiv.classList.add('current-hp');
+    currentHPDiv.contentEditable = true;
+    currentHPDiv.textContent = monsterCurrentHp
+
+    // Add input validation for currentHPDiv
+    addMathValidation(currentHPDiv);
+
+    const maxHPDiv = document.createElement('span');
+    maxHPDiv.classList.add('max-hp');
+    maxHPDiv.contentEditable = true;
+    maxHPDiv.textContent = monsterMaxHp  
+
+    // Add input validation for maxHPDiv
+    addMathValidation(maxHPDiv);
+
+    // Function to add math validation
+    // Function to add math validation
+    function addMathValidation(element) {
+        let lastValidValue = element.textContent;
+
+        element.addEventListener('input', () => {
+            const value = element.textContent.trim();
+
+            // Allow intermediate states by checking if input is partially valid
+            const isPartiallyValid = /^-?\d*(\s*[-+*/]\s*-?\d*)*$/.test(value);
+
+            if (isPartiallyValid) {
+                // Update the last valid value only if the expression is fully valid
+                if (/^-?\d+(\s*[-+*/]\s*-?\d+)*$/.test(value)) {
+                    lastValidValue = value;
+                }
+            } else {
+                // Revert to the last valid value if input is invalid
+                element.textContent = lastValidValue;
+            }
+
+            // Move the caret to the end after reverting
+            placeCaretAtEnd(element);
+        });
+
+        element.addEventListener('blur', () => {
+            // Optionally evaluate the result when the user finishes editing
+            try {
+                const result = eval(element.textContent.trim());
+                if (Number.isFinite(result)) {
+                    element.textContent = Math.floor(result); 
+                    lastValidValue = element.textContent; 
+                } else {
+                    element.textContent = 0; 
+                }
+            } catch {
+                element.textContent = lastValidValue;
+            }
+            updateContent();
+        });
+
+        // Blur on Enter key press
+        element.addEventListener('keydown', (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Prevent a new line in the contentEditable
+                element.blur();
+            }
+        });
+    }
+
+    // Helper function to move the caret to the end of the element
+    function placeCaretAtEnd(el) {
+        const range = document.createRange();
+        const sel = window.getSelection();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range);
+    }
+
+    const hpDisplay = document.createElement('div');
+    hpDisplay.classList.add('hp-display');
+    hpDisplay.appendChild(currentHPDiv);
+    hpDisplay.appendChild(document.createTextNode(' / '));
+    hpDisplay.appendChild(maxHPDiv);
+    
+    const hpAdjustInput = document.createElement('input');
+    hpAdjustInput.type = 'number';
+    hpAdjustInput.classList.add('hp-adjust-input');
+    hpAdjustInput.placeholder = 'Math';
+    
+    const tempHPDiv = document.createElement('span');
+    tempHPDiv.classList.add('temp-hp');
+    tempHPDiv.contentEditable = true;
+    tempHPDiv.textContent = monsterTempHP || 0;  // Use tempHp from the object, if available
+    
+    const tempHPContainer = document.createElement('div');
+    tempHPContainer.classList.add('temp-hp-container');
+    tempHPContainer.appendChild(document.createTextNode('Temp: '));
+    tempHPContainer.appendChild(tempHPDiv);
+    
+    // Add event listener for HP adjustment
+    hpAdjustInput.addEventListener('keypress', (event) => {
+        if (event.key === 'Enter') {
+            const adjustment = parseInt(hpAdjustInput.value, 10);
+            if (isNaN(adjustment)) return;
+    
+            let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
+            const maxHP = parseInt(maxHPDiv.textContent, 10) || selectedMonsterData.HP.Value;
+            let tempHP = parseInt(tempHPDiv.textContent, 10) || 0;  // Get current temp HP
+    
+            // Subtract from temp HP first, then from current HP if temp HP is depleted
+            if (adjustment < 0) { // Damage case
+                let damage = Math.abs(adjustment);
+    
+                // Subtract damage from temp HP first
+                if (tempHP > 0) {
+                    const tempHPRemainder = tempHP - damage;
+                    if (tempHPRemainder >= 0) {
+                        tempHP = tempHPRemainder;
+                        damage = 0;
+                    } else {
+                        damage -= tempHP; // Subtract remaining damage after temp HP is depleted
+                        tempHP = 0;
+                    }
+                }
+    
+                // If there's still damage left, subtract from current HP
+                if (damage > 0) {
+                    currentHP = Math.max(0, currentHP - damage);
+                }
+            } else if (adjustment > 0) { // Healing case
+                currentHP = Math.min(maxHP, currentHP + adjustment); // Heal current HP, but no effect on temp HP
+            }
+    
+            // Update HP and temp HP displays
+            currentHPDiv.textContent = currentHP;
+            tempHPDiv.textContent = tempHP;
+    
+            hpAdjustInput.value = '';  // Clear input
+        }
+        updateContent();
+    });
+    
+    monsterHP.appendChild(hpDisplay);
+    monsterHP.appendChild(tempHPContainer);
+    monsterHP.appendChild(hpAdjustInput);
+
+    // Delete button
+    const deleteButtonDiv = document.createElement('div');
+    deleteButtonDiv.classList.add('monster-card-delete-button');
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('nonRollButton');
+    deleteButton.textContent = "X";
+    deleteButton.addEventListener('click', () => {
+        card.remove();
+        updateContent();
+    });
+
+    deleteButtonDiv.appendChild(deleteButton);
+
+    // Add all components to the card in a consistent layout
+    card.appendChild(monsterHP);
+    card.appendChild(deleteButtonDiv);
+    
+    updateContent();
+    rollableButtons();  // Update rollable buttons after card updates
+}
+
+
+// Event listener for hiding the monster stat block
+document.getElementById('closeMonsterCard').addEventListener('click', function() {
+    toggleMonsterCardVisibility(false);
+});
+
+
+let currentSelectedMonsterName = '';
+
+function showMonsterCardDetails(monsterName) {
+    // Check if the monster card is currently visible
+    const monsterCardContainer = document.getElementById('monsterCardContainer');
+
+    if (monsterCardContainer.classList.contains('visible') && currentSelectedMonsterName === monsterName) {
+        // Hide the card if it's already open
+        toggleMonsterCardVisibility(false);
+        return; // Exit the function early
+    }
+    // Find the monster in the new data source monsterData
+    const monster = monsterData[monsterName];
+
+    if (monster) {
+        currentSelectedMonsterName = monsterName;
+
+        // Populate all fields
+        populateMonsterFields(monster);
+
+        // Show the monster card container
+        toggleMonsterCardVisibility(true);
+    } else {
+        console.error(`Monster data not found for: ${monsterName}`);
+    }
+}
+
+
+// Toggles the visibility of the monster card
+function toggleMonsterCardVisibility(isVisible) {
+    const monsterCardContainer = document.getElementById('monsterCardContainer');
+    if (isVisible) {
+        monsterCardContainer.classList.remove('hidden');
+        monsterCardContainer.classList.add('visible');
+    } else {
+        monsterCardContainer.classList.remove('visible');
+        monsterCardContainer.classList.add('hidden');
+    }
+}
+
+// Reusable function to populate data conditionally
+function populateField(elementId, label, value, isRollable = false) {
+    const element = document.getElementById(elementId);
+
+    if (value || value === 0) {
+        const labelText = label ? `<strong>${label}:</strong> ` : ''; // Add colon and break only if label exists
+
+        if (isRollable) {
+            // Use parseAndReplaceDice to handle rollable text
+            element.innerHTML = ''; // Clear the element content
+            const parsedContent = parseAndReplaceDice({ name: label }, value, true);
+            const labelNode = document.createElement('span');
+            labelNode.innerHTML = labelText;
+            element.appendChild(labelNode);
+            element.appendChild(parsedContent);
+        } else {
+            if (value || value === 0) {
+                // Only add colon if label is non-empty
+                const labelText = label ? `<strong>${label}:</strong> ` : '';
+                if (isRollable) {
+                    element.innerHTML = ''; // Clear content
+                    const parsedContent = parseAndReplaceDice({ name: label }, value, true);
+                    element.appendChild(document.createTextNode(labelText));
+                    element.appendChild(parsedContent);
+                } else {
+                    const formattedValue = typeof value === 'string'
+                        ? value.replace(/,\s*/g, ', ')
+                        : Array.isArray(value) ? value.join(', ') : String(value);
+                    element.innerHTML = `${labelText}${formattedValue}`;
+                }
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+
+        element.style.display = 'block';
+    } else {
+        element.style.display = 'none';
+    }
+}
+
+
+// Populates monster fields
+function populateMonsterFields(monster) {
+    // Populate basic monster info
+    populateField('monsterName', '', monster.Name);
+    populateField('monsterType', '', monster.Type, false);
+    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
+    console.log(monster.AC?.Value)
+    populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
+    populateField('monsterSpeed', 'Speed', monster.Speed);
+    populateField('monsterLanguages', 'Languages', monster.Languages, false);
+    populateField('monsterDamageVulnerabilities', 'Vulnerabilities', monster.DamageVulnerabilities, false);
+    populateField('monsterDamageResistances', 'Resistances', monster.DamageResistances, false);
+    populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
+    populateField('monsterConditionImmunities', 'Condition Immunities', monster.ConditionImmunities, false);
+    populateField('monsterSenses', 'Senses', monster.Senses, false);
+    populateField('monsterChallenge', 'CR', monster.Challenge||monster.CR, false);
+
+    function checkAndPopulateSection(elementId, data, type) {
+        const container = document.getElementById(elementId);
+        container.innerHTML = ''; // Always clear previous content
+    
+        if (data && data.length > 0) {
+            populateMonsterListField(elementId, data, type);
+        }
+    }
+    
+    populateMonsterListField('monsterAbilityScores', monster.Abilities, 'abilityScores');
+
+
+    checkAndPopulateSection('monsterSkills', monster.Skills, 'skill');
+    checkAndPopulateSection('monsterSaves', monster.Saves, 'savingThrow');
+    checkAndPopulateSection('monsterActions', monster.Actions, 'action');
+    checkAndPopulateSection('monsterReactions', monster.Reactions, 'action');
+    checkAndPopulateSection('monsterAbilities', monster.Traits, 'traits');
+    checkAndPopulateSection('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
+    
+    rollableButtons()
+}
+
+
+
+// Updated function to populate list fields with various item types
+function populateMonsterListField(elementId, items, type) {
+    const container = document.getElementById(elementId);
+    container.innerHTML = ''; // Clear previous content
+
+    // Check if items exist and are not empty
+    if (items) {
+        // Handle if items is an array (Actions, Legendary Actions, Skills, Saving Throws)
+        if (Array.isArray(items) && items.length > 0) {
+            items.forEach(item => {
+                let itemContent;
+                // Determine the item content based on the type
+                switch (type) {
+                    case 'traits':
+                    case 'action':
+                    case 'reaction':
+                    case 'legendaryAction':
+                        itemContent = parseAndReplaceDice({ name: item.Name }, `<strong>${item.Name}: </strong>${item.Content}`, true);
+                        break;
+                    case 'savingThrow':
+                        const savemodifier = parseInt(item.Modifier) >= 0 ? `+${item.Modifier}` : item.Modifier;
+                        itemContent = parseAndReplaceDice({ name: item.Name + " Save"}, `<strong>${item.Name} : </strong> ${savemodifier}`);
+                        break;
+                    case 'skill':
+                        const skillmodifier = parseInt(item.Modifier) >= 0 ? `+${item.Modifier}` : item.Modifier;
+                        itemContent = parseAndReplaceDice({ name: item.Name}, `<strong>${item.Name} : </strong> ${skillmodifier}`);
+                        break;
+                    default:
+                        itemContent = document.createElement('div');
+                        itemContent.textContent = item.Name || 'Unknown Item';
+                }
+                
+                if (itemContent) {
+                    container.appendChild(itemContent);
+
+                    // Create and append a <br> element after each item
+                    const lineBreak = document.createElement('br');
+                    container.appendChild(lineBreak);
+                }
+            });
+            container.style.display = '';
+        }
+        // Handle if items is an object (Ability Scores)
+        else if (typeof items === 'object' && !Array.isArray(items)) {
+            Object.keys(items).forEach(key => {
+                const abilityScore = items[key];
+                // Calculate the ability modifier
+                const modifier = Math.floor((abilityScore - 10) / 2);
+                const modifierText = modifier >= 0 ? `+${modifier}` : `${modifier}`; // Add "+" for positive numbers, no change for negative
+        
+                // Create a container for the ability score and rollable modifier
+                const scoreElement = document.createElement('div');
+        
+                // Create the static part of the text (ability score)
+                const staticText = document.createElement('strong');
+                staticText.textContent = `${key} : `;
+                scoreElement.appendChild(staticText);
+                scoreElement.appendChild(document.createTextNode(`${abilityScore} `));
+        
+                // Use the parseAndReplaceDice function to make the modifier rollable, and append it
+                const rollableModifier = parseAndReplaceDice({ name: key }, modifierText, true);
+                scoreElement.appendChild(rollableModifier); // Appends the actual button or label returned by the function
+        
+                container.appendChild(scoreElement); // Append the entire scoreElement to the container
+            });
+            container.style.display = ''; // Ensure the container is displayed
+        } else {
+            container.style.display = 'none';
+        }
+        
+
+
+    } else {
+        container.style.display = 'none';
+    }
+}
+
+
+
+function gatherExtrasInfo() {
+
+    const monsterCards = document.querySelectorAll('.monster-card');
+    let extraData = [];
+
+    // Loop through each card to collect data
+    monsterCards.forEach(card => {
+        const name = card.querySelector('.monster-name').textContent;
+        const currentHp = card.querySelector('.current-hp').textContent;
+        const maxHp = card.querySelector('.max-hp').textContent;
+        const tempHp = card.querySelector('.temp-hp').textContent;
+
+
+        // Push the gathered data for each monster into the encounterData array
+        extraData.push({
+            name,
+            currentHp,
+            maxHp,
+            tempHp,
+        });
+    });
+
+    return extraData
+}
+
+
+function updateExtrasCardDataFromLoad(extrasData) {
+    const monsterCardsContainer = document.getElementById('initiative-tracker');
+    monsterCardsContainer.innerHTML = ''; // Clear previous monster cards
+
+    // Loop through the monsters in the encounter data and create a new card for each
+    extrasData.forEach(monster => {
+            // Create an empty monster card
+            const newMonsterCard = createEmptyMonsterCard();
+            updateMonsterCard(newMonsterCard, monster);
+            monsterCardsContainer.appendChild(newMonsterCard);
+        
+    });
+}

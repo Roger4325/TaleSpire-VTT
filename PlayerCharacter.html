@@ -35,14 +35,14 @@
         
         <nav class="tabs">
             <ul>
-                <li><a href="#playerStats">Player Stats</a></li>
-                <li><a href="#actions">Actions</a></li>
-                <li><a href="#SpellList">Spell List</a></li>
-                <li><a href="#inventory">Inventory</a></li>
-                <li><a href="#features">Features & Traits</a></li>
-                <li><a href="#Docs">Notes</a></li>
-                <li><a href="#Init">Init List</a></li>
-                <!-- <li><a href="#Extras">Extra</a></li> -->
+                <li><a href="#playerStats" data-title="View player statistics and details.">Player Stats</a></li>
+                <li><a href="#actions" data-title="Explore the available actions for your character.">Actions</a></li>
+                <li><a href="#SpellList" data-title="Check your list of prepared and known spells.">Spell List</a></li>
+                <li><a href="#inventory" data-title="Manage and view your character's inventory.">Inventory</a></li>
+                <li><a href="#features" data-title="Review your character's features and traits.">Features & Traits</a></li>
+                <li><a href="#Docs" data-title="Keep track of important notes.">Notes</a></li>
+                <li><a href="#Extras" data-title="Used to track pet's, wildshaps or polymorphs">Extra</a></li>
+                <li><a href="#Init" data-title="View the initiative list when actively in Initiative.">Init List</a></li>
                 <li>
                     <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
                     <div id="settings-option-dropdown" style="display: none; position: absolute;">
@@ -72,7 +72,7 @@
         
         <div id="playerInformation">
             <div id="playerPictureContainer"> 
-                <button id="get-selection-button" class="nonRollButton">Link mini</button>
+                <button id="get-selection-button" class="nonRollButton" data-title="Link a specific mini's thumbnail. This doesn't work on modded minis">Link mini</button>
                 <div id="characterPicture" class="characterPicture"></div>
                 
                 <div id="toggleContainer" class="toggle-container">
@@ -222,7 +222,7 @@
                             <option id="conditionOptionRaging" value="Raging">Raging</option>
                         <!-- Add more condition options here -->
                         </select>
-                        <button id="conditionPlayerAddButton"class="nonRollButton" onclick="playerConditions()">Condition</button>
+                        <button id="conditionPlayerAddButton" data-title="Adds a condition to the player." class="nonRollButton" onclick="playerConditions()">Condition</button>
                     </div>
                     <div id="conditionTracker"></div>
                 </div>
@@ -756,12 +756,12 @@
         <section id="actions">
             <div class="actions-container">
                 <div class="actionsubtabs">
-                    <div id="actionFiltersAll" class="actionsubtab" data-category="all">All</div>
-                    <div id="actionFiltersAttacks" class="actionsubtab" data-category="attacks">Attacks</div>
-                    <div id="actionFiltersActions" class="actionsubtab" data-category="actions">Actions</div>
-                    <div id="actionFiltersBonusActions" class="actionsubtab" data-category="bonus-actions">Bonus Actions</div>
-                    <div id="actionFiltersReactions" class="actionsubtab" data-category="reactions">Reactions</div>
-                    <div id="actionFiltersOther" class="actionsubtab" data-category="other">Other</div>
+                    <div id="actionFiltersAll" data-title="Show Everything" class="actionsubtab" data-category="all">All</div>
+                    <div id="actionFiltersAttacks" data-title="Filter only Attacks" class="actionsubtab" data-category="attacks">Attacks</div>
+                    <div id="actionFiltersActions" data-title="Filter only Actions" class="actionsubtab" data-category="actions">Actions</div>
+                    <div id="actionFiltersBonusActions" data-title="Filter only Bonus Actions" class="actionsubtab" data-category="bonus-actions">Bonus Actions</div>
+                    <div id="actionFiltersReactions" data-title="Filter only Reactions" class="actionsubtab" data-category="reactions">Reactions</div>
+                    <div id="actionFiltersOther" data-title="Filter only other actions" class="actionsubtab" data-category="other">Other</div>
                 </div>
         
                 <div class="actions-list">
@@ -1057,6 +1057,93 @@
                     </select>
                 </div>
                 <button class="add-notes-group-button nonRollButton">+ Add Group</button>
+        </section>
+
+        <section id="Extras">
+            <div class ="monster-group-header-01">
+                <div class="add-group-div">
+                    <input type="text" id="monster-name-input" class="monster-name-input" placeholder="Select or type a monster name...">
+                    <div id="monster-dropdown-container" class="dropdown-container">
+                        <ul id="monster-list">
+
+                        </ul>
+                    </div>
+                </div>            
+            </div>
+            <hr>
+            <div id="initiative-tracker">
+                    
+                <!-- Monster cards will be added here dynamically -->
+            </div>
+            <div id="monsterCardContainer" class="monster-card-container hidden">
+                <div class="monster-block">
+                    <button id="closeMonsterCard" class="nonRollButton">Close</button>
+                    <div class="monster-section-header">
+                        <div id="monsterSpeed" class="monster-section-title">Speed</div>
+                        <div>
+                            <div id="monsterName" class="monster-name"></div>
+                            <div id="monsterType" class="monster-subtitle"></div>
+                        </div>
+                        <div class="monster-section monster-section-extra-stats">
+                            <div id="monsterAC" class="monster-section-title">Armor Class</div>
+                            <div id="monsterChallenge" class="monster-section-title"></div>
+                            <div id="monsterHP" class="monster-section-title full-width-columns">Hit Points</div>
+                        </div>
+                    </div>
+                    
+                    <hr>
+            
+                    <!-- Stats Block -->
+                    <div class="rollable-monster-stats">
+                        <div  id="monsterAbilityScores" class="monster-stats">
+                            <div class="monster-stat">STR 8 (-1)</div>
+                            <div class="monster-stat">DEX 14 (+2)</div>
+                            <div class="monster-stat">CON 10 (+0)</div>
+                            <div class="monster-stat">INT 10 (+0)</div>
+                            <div class="monster-stat">WIS 8 (-1)</div>
+                            <div class="monster-stat">CHA 8 (-1)</div>
+                        </div>
+                        <hr id ="abilityScoreDivider01" class="monsterStatsDividerVert">
+                        <div><u><strong>Saves:</strong></u><div id="monsterSaves" class="monster-section"></div></div>
+                        <hr id ="abilityScoreDivider02" class="monsterStatsDividerVert">
+                        <div><u><strong>Skills:</strong></u><div id="monsterSkills" class="monster-section"></div></div>
+                        
+                        
+                    </div>
+                    <hr id="monsterStatHR" class="monsterStatsDivider">
+                    
+            
+                    <!-- Senses, Languages, Challenge -->
+                    
+                    
+                    
+                    
+                    <div class="monster-facts">
+                        <div id="monsterLanguages" class="monster-section"></div>
+                        <div id="monsterDamageVulnerabilities" class="monster-section"></div>
+                        <div id="monsterDamageResistances" class="monster-section"></div>
+                        <div id="monsterDamageImmunities" class="monster-section"></div>
+                        <div id="monsterConditionImmunities" class="monster-section"></div>
+                        <div id="monsterSenses" class="monster-section"></div>
+                    </div>
+                    
+                    <hr id="monsterSavesHR" class="monsterStatsDivider">
+            
+                    <!-- Special Abilities -->
+                    <div id="monsterAbilities" class="monster-abilities">
+                        <div class="monster-ability">
+                        </div>
+                    </div>
+                    <hr id="monsterAbilitiesHR"class="monsterAbilitiesDivider">
+            
+                    <!-- Actions -->
+                    <div id="monsterActions" class="monster-actions"></div>
+                    <hr id="monsterActionsHR" class="monsterActionsDivider">
+                    <div id="monsterReactions" class="monster-actions"></div>
+                    <hr id="monsterActionsHR" class="monsterActionsDivider">
+                    <div id="monsterLegendaryActions" class="monster-actions"></div>
+                </div>
+            </div>
         </section>
 
         <section id="Init">

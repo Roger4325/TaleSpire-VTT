@@ -60,6 +60,7 @@ async function establishMonsterData(){
 
     populatePlayerDropdown()
     populateConditionSelect();
+    populateEquipmentList();
 
 }
 
@@ -332,6 +333,7 @@ function updateMonsterCard(card, monster) {
     const initiativeButton = parseAndReplaceDice({ name: 'Initiative' }, `Init Mod: ${monsterInitiative} <br>`);
     
     const statsSpan = document.createElement('span');
+    statsSpan.classList.add('non-editable');
     const acText = document.createTextNode(`AC: ${selectedMonsterData.AC.Value} | `);
     const speedText = document.createTextNode(` Speed: ${selectedMonsterData.Speed}`);
     statsSpan.appendChild(acText);
@@ -373,74 +375,59 @@ function updateMonsterCard(card, monster) {
     currentHPDiv.contentEditable = true;
     currentHPDiv.textContent = monsterCurrentHp
 
-    // Add input validation for currentHPDiv
-    addMathValidation(currentHPDiv);
-
     const maxHPDiv = document.createElement('span');
     maxHPDiv.classList.add('max-hp');
     maxHPDiv.contentEditable = true;
     maxHPDiv.textContent = monsterMaxHp  
 
-    // Add input validation for maxHPDiv
-    addMathValidation(maxHPDiv);
+    currentHPDiv.addEventListener('blur', () => {
+        // Optionally evaluate the result when the user finishes editing
+        try {
+            const currentExpression = currentHPDiv.textContent.trim();
+            const adjustment = extractAdjustment(currentExpression);
+            adjustMonsterHealth(adjustment);
+        }
+        catch {
+            currentHPDiv.textContent = 0;
+        }
+    });
 
-    // Function to add math validation
-    // Function to add math validation
-    function addMathValidation(element) {
-        let lastValidValue = element.textContent;
+    // Blur on Enter key press
+    currentHPDiv.addEventListener('keydown', (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent a new line in the contentEditable
+            currentHPDiv.blur();
+        }
+    });
 
-        element.addEventListener('input', () => {
-            const value = element.textContent.trim();
+    maxHPDiv.addEventListener('blur', () => {
+        // Optionally evaluate the result when the user finishes editing
+        try {
+            const currentExpression = maxHPDiv.textContent.trim();
+            const adjustment = extractAdjustment(currentExpression);
+            adjustMonsterHealth(adjustment);
+        }
+        catch {
+            maxHPDiv.textContent = 0;
+        }
+    });
 
-            // Allow intermediate states by checking if input is partially valid
-            const isPartiallyValid = /^-?\d*(\s*[-+*/]\s*-?\d*)*$/.test(value);
+    // Blur on Enter key press
+    maxHPDiv.addEventListener('keydown', (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent a new line in the contentEditable
+            maxHPDiv.blur();
+        }
+    });
 
-            if (isPartiallyValid) {
-                // Update the last valid value only if the expression is fully valid
-                if (/^-?\d+(\s*[-+*/]\s*-?\d+)*$/.test(value)) {
-                    lastValidValue = value;
-                }
-            } else {
-                // Revert to the last valid value if input is invalid
-                element.textContent = lastValidValue;
-            }
-
-            // Move the caret to the end after reverting
-            placeCaretAtEnd(element);
-        });
-
-        element.addEventListener('blur', () => {
-            // Optionally evaluate the result when the user finishes editing
-            try {
-                const result = eval(element.textContent.trim());
-                if (Number.isFinite(result)) {
-                    element.textContent = Math.floor(result); 
-                    lastValidValue = element.textContent; 
-                } else {
-                    element.textContent = 0; 
-                }
-            } catch {
-                element.textContent = lastValidValue;
-            }
-        });
-
-        // Blur on Enter key press
-        element.addEventListener('keydown', (event) => {
-            if (event.key === "Enter") {
-                event.preventDefault(); // Prevent a new line in the contentEditable
-                element.blur();
-            }
-        });
-    }
-
-    // Helper function to move the caret to the end of the element
-    function placeCaretAtEnd(el) {
-        const range = document.createRange();
-        const sel = window.getSelection();
-        range.selectNodeContents(el);
-        range.collapse(false);
-        sel.removeAllRanges();
-        sel.addRange(range);
+    function extractAdjustment(expression) {
+        // Trim the expression and match the last operation with its operand
+        const match = expression.trim().match(/([-+*/]\s*-?\d+)$/);
+        if (match) {
+            const adjustment = match[0].replace(/\s+/g, ''); // Remove spaces
+            return adjustment.startsWith('+') ? adjustment.slice(1) : adjustment; // Remove leading '+' if present
+        }
+        return null; // Return null if no match
     }
 
     const hpDisplay = document.createElement('div');
@@ -461,7 +448,29 @@ function updateMonsterCard(card, monster) {
     
     const tempHPContainer = document.createElement('div');
     tempHPContainer.classList.add('temp-hp-container');
-    tempHPContainer.appendChild(document.createTextNode('Temp: '));
+    const tempHPText = document.createElement('span'); // Create a span for the text
+    tempHPText.classList.add('non-editable'); // Add the non-editable class to the span
+    tempHPText.textContent = 'Temp: '; // Add the text
+
+    tempHPContainer.appendChild(tempHPText); // Append the span to the container
+
+    tempHPDiv.addEventListener('keydown', (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            tempHPDiv.blur();
+        }
+    });
+
+    tempHPDiv.addEventListener('blur', () => {
+        const value = parseFloat(tempHPDiv.textContent.trim());
+        if (isNaN(value) || value < 0) {
+            tempHPDiv.textContent = 0;
+        } 
+        else {
+            tempHPDiv.textContent = Math.floor(value);
+        }
+    });
+
     tempHPContainer.appendChild(tempHPDiv);
     
     // Add event listener for HP adjustment
@@ -469,8 +478,16 @@ function updateMonsterCard(card, monster) {
         if (event.key === 'Enter') {
             const adjustment = parseInt(hpAdjustInput.value, 10);
             if (isNaN(adjustment)) return;
+            adjustMonsterHealth(adjustment)
+            
     
-            let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
+            hpAdjustInput.value = '';  // Clear input
+        }
+    });
+
+
+    function adjustMonsterHealth(adjustment){
+        let currentHP = parseInt(currentHPDiv.textContent, 10) || 0;
             const maxHP = parseInt(maxHPDiv.textContent, 10) || selectedMonsterData.HP.Value;
             let tempHP = parseInt(tempHPDiv.textContent, 10) || 0;  // Get current temp HP
     
@@ -531,10 +548,7 @@ function updateMonsterCard(card, monster) {
             // Update HP and temp HP displays
             currentHPDiv.textContent = currentHP;
             tempHPDiv.textContent = tempHP;
-    
-            hpAdjustInput.value = '';  // Clear input
-        }
-    });
+    }
     
     monsterHP.appendChild(hpDisplay);
     monsterHP.appendChild(tempHPContainer);
@@ -560,8 +574,10 @@ function updateMonsterCard(card, monster) {
         // Toggle between open and closed eye
         if (openEyeButton.querySelector('i').classList.contains('fa-eye')) {
             openEyeButton.innerHTML = '<i class="fa fa-eye-slash" aria-hidden="true"></i>';
+            card.style.opacity = "0.5";
         } else {
             openEyeButton.innerHTML = '<i class="fa fa-eye" aria-hidden="true"></i>';
+            card.style.opacity = "1";
         }
         debouncedSendInitiativeListToPlayer();
     });
@@ -2787,7 +2803,10 @@ function addItem(itemId = null, itemText = '') {
     // If itemId and itemText are not passed, fetch them from input
     if (!itemId || !itemText) {
         itemText = document.getElementById('checklistItem').value.trim();
-        if (itemText === '') return; // Ignore empty items
+        if (itemText === ''){
+            showErrorModal("Task input is empty. Please enter the task you would like to create.")
+            return;
+        }  // Ignore empty items
         itemId = generateUniqueId(); // Generate a unique ID
     }
 
@@ -3075,11 +3094,12 @@ function updateShopTable() {
     }
 }
 
+let categoryGroups
   
 // Function to retrieve items for a specific shop (e.g., Hunter/Leatherworker) with categories
 function getShopItems(shopType) {
     // Define categories and items directly within this function
-    const categoryGroups = {
+    categoryGroups = {
         "hunterLeatherworker": {
             "Light Armor": [
                 "padded-armor", "leather-armor", "studded-leather-armor"
@@ -3709,3 +3729,288 @@ function convertToEditableUrl(url) {
 }
 
 //Google Docs End
+
+
+
+//Custom Shops Start
+/*Monster Creator Form Section*/
+const customShopButton = document.getElementById('createCustomShops');
+const shopForm = document.getElementById("shopForm");
+const shopFormModal = document.getElementById("shopFormModal");
+const closeShopFormButton = document.getElementById('closeShopForm');
+
+// Open the form
+customShopButton.addEventListener('click', () => {
+    shopForm.reset()
+    shopFormModal.style.display = 'block';
+    homebrewModal.style.display = 'none';
+});
+
+// Close the form
+closeShopFormButton.addEventListener('click', () => {
+    shopFormModal.style.display = 'none';
+});
+
+document.getElementById("addshopItem").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default button behavior
+    console.log("Adding a new item input to the group...");
+    
+    // Find the item container in the current group and append the new item input
+    const itemInputsContainer = document.querySelector("#itemInputsContainer");
+    if (itemInputsContainer) {
+        const newItemInput = createItemInput(); // Call the reusable function to create a new item input
+        itemInputsContainer.appendChild(newItemInput);
+    } else {
+        console.error("Item inputs container not found!");
+    }
+});
+
+
+// Function to attach dropdown behavior to an input
+function attachDropdownBehavior(input, dropdown) {
+    input.addEventListener("focus", () => showDropdown(input, dropdown));
+    input.addEventListener("input", () => filterDropdown(input, dropdown));
+    input.addEventListener("blur", () => hideDropdown(dropdown));
+}
+
+
+
+
+
+
+
+document.getElementById("addShopGroup").addEventListener("click", function () {
+    // Get the container for all groups
+    const groupsContainer = document.getElementById("groupsContainer");
+
+    // Create a new group container
+    const newGroup = document.createElement("div");
+    newGroup.classList.add("form-group", "group");
+
+    // Create the "Add Item to Group" button
+    const addItemButtonDiv = document.createElement("div");
+    const addItemButton = document.createElement("button");
+    addItemButton.type = "button";
+    addItemButton.classList.add("nonRollButton", "addshopItem");
+    addItemButton.textContent = "Add Item to Group";
+    addItemButtonDiv.appendChild(addItemButton);
+    newGroup.appendChild(addItemButtonDiv);
+
+    // Create the group name input
+    const groupNameLabel = document.createElement("label");
+    groupNameLabel.textContent = "Group Name:";
+    const groupNameInput = document.createElement("input");
+    groupNameInput.type = "text";
+    groupNameInput.classList.add("shopGroupName");
+    groupNameInput.placeholder = "e.g., Heavy Armor";
+    newGroup.appendChild(groupNameLabel);
+    newGroup.appendChild(groupNameInput);
+
+    // Create the container for item inputs
+    const itemInputsContainer = document.createElement("div");
+    itemInputsContainer.classList.add("itemInputsContainer");
+
+    // Create the first item input in the group
+    const firstItemInput = createItemInput();
+    itemInputsContainer.appendChild(firstItemInput);
+
+    newGroup.appendChild(itemInputsContainer);
+    groupsContainer.appendChild(newGroup);
+
+    // Attach event listener to the "Add Item to Group" button
+    addItemButton.addEventListener("click", function () {
+        const newItemInput = createItemInput();
+        itemInputsContainer.appendChild(newItemInput);
+    });
+});
+
+document.getElementById("createShop").addEventListener("click", function () {
+    const shopData = gatherShopData();
+
+    if (shopData) {
+        // Extract shop title and the rest of the shop data
+        const [shopTitle, restOfShopData] = Object.entries(shopData)[0];
+
+        console.log("Shop Title:", shopTitle);
+        console.log("Rest of Shop Data:", restOfShopData);
+
+        // Now you can pass them separately to saveToCampaignStorage
+        saveToGlobalStorage("Shop Data", shopTitle, restOfShopData);
+    }
+});
+
+async function populateEquipmentList() {
+    // Ensure equipment data is loaded
+    if (!AppData.equipmentLookupInfo) {
+        await readEquipmentJson();
+    }
+
+    const input = document.getElementById("shopItemName");
+    const dropdown = document.getElementById("customShopDropdown");
+
+    input.addEventListener("focus", showDropdown);
+    input.addEventListener("input", filterDropdown);
+    input.addEventListener("blur", hideDropdown);
+
+    function showDropdown() {
+        dropdown.innerHTML = ""; // Clear previous items
+        AppData.equipmentLookupInfo.equipmentNames.forEach(item => {
+            const option = document.createElement("div");
+            option.classList.add("dropdown-item");
+            option.textContent = item;
+            option.addEventListener("mousedown", () => {
+                input.value = item; // Set the input value
+                hideDropdown(); // Hide the dropdown after selection
+            });
+            dropdown.appendChild(option);
+        });
+        dropdown.style.display = "block"; // Show the dropdown
+    }
+
+    function filterDropdown() {
+        const search = input.value.toLowerCase();
+        dropdown.innerHTML = ""; // Clear previous items
+        AppData.equipmentLookupInfo.equipmentNames
+            .filter(item => item.toLowerCase().includes(search))
+            .forEach(item => {
+                const option = document.createElement("div");
+                option.classList.add("dropdown-item");
+                option.textContent = item;
+                option.addEventListener("mousedown", () => {
+                    input.value = item;
+                    hideDropdown();
+                });
+                dropdown.appendChild(option);
+            });
+    }
+
+    function hideDropdown() {
+        setTimeout(() => {
+            dropdown.style.display = "none"; // Hide after a small delay
+        }, 200); // Delay to allow mousedown to register
+    }
+}
+
+// Show dropdown
+function showDropdown(input, dropdown) {
+    dropdown.innerHTML = ""; // Clear previous items
+    AppData.equipmentLookupInfo.equipmentNames.forEach(item => {
+        const option = document.createElement("div");
+        option.classList.add("dropdown-item");
+        option.textContent = item;
+        option.addEventListener("mousedown", () => {
+            input.value = item; // Set the input value
+            hideDropdown(dropdown); // Hide the dropdown
+        });
+        dropdown.appendChild(option);
+    });
+    dropdown.style.display = "block"; // Show the dropdown
+}
+
+// Filter dropdown
+function filterDropdown(input, dropdown) {
+    const search = input.value.toLowerCase();
+    dropdown.innerHTML = ""; // Clear previous items
+    AppData.equipmentLookupInfo.equipmentNames
+        .filter(item => item.toLowerCase().includes(search))
+        .forEach(item => {
+            const option = document.createElement("div");
+            option.classList.add("dropdown-item");
+            option.textContent = item;
+            option.addEventListener("mousedown", () => {
+                input.value = item;
+                hideDropdown(dropdown);
+            });
+            dropdown.appendChild(option);
+        });
+}
+
+// Hide dropdown
+function hideDropdown(dropdown) {
+    setTimeout(() => {
+        dropdown.style.display = "none"; // Hide after a small delay
+    }, 200); // Delay to allow mousedown to register
+}
+
+// Function to create a new item input
+function createItemInput() {
+    const itemInputGroup = document.createElement("div");
+    itemInputGroup.classList.add("item-input");
+
+    const label = document.createElement("label");
+    label.textContent = "Item Name: ";
+    itemInputGroup.appendChild(label);
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.classList.add("shop-item-input");
+    input.placeholder = "e.g., plate-armor";
+    itemInputGroup.appendChild(input);
+
+    const dropdown = document.createElement("div");
+    dropdown.classList.add("dropdown");
+    itemInputGroup.appendChild(dropdown);
+
+    // Attach dropdown behavior to the input
+    attachDropdownBehavior(input, dropdown);
+
+    return itemInputGroup;
+}
+
+
+function gatherShopData() {
+    const shopData = {};
+
+    // Get the shop name
+    const shopNameInput = document.getElementById("shopName");
+    const shopName = shopNameInput.value.trim();
+    if (!shopName) {
+        showErrorModal("Shop name is required.");
+        return null; // Return null if shop name is missing
+    }
+
+    // Initialize the shop object
+    shopData[shopName] = {};
+
+    // Get all groups in the shop
+    const groups = document.querySelectorAll("#groupsContainer .group");
+
+    groups.forEach((group) => {
+        // Get the group name
+        const groupNameInput = group.querySelector(".shopGroupName");
+        const groupName = groupNameInput.value.trim();
+        if (!groupName) {
+            showErrorModal("Skipping Group without a name");
+            return; // Skip this group if no name is provided
+        }
+
+        // Initialize the array for this group
+        shopData[shopName][groupName] = [];
+
+        // Get all items in the group
+        const items = group.querySelectorAll(".item-input .shop-item-input");
+        items.forEach((itemInput) => {
+            const itemName = itemInput.value.trim();
+
+            if (itemName) {
+                // Find the item in AppData.equipmentLookupInfo.equipmentData by name
+                const item = AppData.equipmentLookupInfo.equipmentData.find(
+                    (data) => data.name.toLowerCase() === itemName.toLowerCase()
+                );
+
+                if (item) {
+                    shopData[shopName][groupName].push(item.index); // Push the `index` value
+                } else {
+                    console.warn(`Item "${itemName}" not found in equipment data.`);
+                }
+            }
+        });
+
+        // Warn if a group has no items
+        if (shopData[shopName][groupName].length === 0) {
+            showErrorModal(`Group "${groupName}" has no items.`);
+        }
+    });
+
+    return shopData;
+}

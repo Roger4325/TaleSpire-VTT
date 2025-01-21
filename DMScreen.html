@@ -139,6 +139,8 @@
                         <div id="monsterLegendaryActions" class="monster-actions"></div>
                     </div>
                 </div>
+
+
                 <div class ="monster-group-header-01">
                     <div class="add-group-div">
                         <input type="text" id="monster-name-input" class="monster-name-input" placeholder="Select or type a monster name...">
@@ -1523,6 +1525,43 @@
         </div>
     </div>
 
+    <div id="shopFormModal" class="form-container" style="display: none;">
+        <div class="shop-modal-background">
+            <span id="closeShopForm" class="close">&times;</span>
+            <form id="shopForm">
+                <h2>Create Custom Shops</h2>
+                <div class="form-group">
+                    <label for="shopName">Shop Name:</label>
+                    <input type="text" id="shopName" placeholder="e.g., blacksmith/Armory">
+                </div>
+                <div id="groupsContainer">
+                    <div class="form-group group">
+                        <div>   
+                            <button id="addshopItem" type="button" class="nonRollButton">Add Item to Group</button>
+                        </div>
+                        <label for="shopGroupName">Group Name:</label>
+                        <input type="text" id="shopGroupName" class="shopGroupName" placeholder="e.g., Heavy Armor">
+                        <div id="itemInputsContainer">
+                            <div class="item-input">
+                                <label for="shopItemName">Item Name:</label>
+                                <input type="text" id="shopItemName" class="shop-item-input" placeholder="e.g., plate-armor">
+                                <div id="customShopDropdown" class="dropdown"></div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                </div>
+                <div class="form-group">
+                    <button id="addShopGroup" type="button" class="nonRollButton">Add Group to Shop</button>
+                    <button id="createShop" type="button" class="nonRollButton">Create/Update Shop</button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
     <div id="themeModal" class="theme-modal">
         <div class="theme-modal-content">
             <h2>Select a Theme</h2>
@@ -1610,9 +1649,22 @@
                                     <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
                                     <button id="editCustomItems" class="nonRollButton">Edit Item</button>
                                 </div>
-                                <select id="customMonsterSelect"></select>
+                                <select id="customItemSelect"></select>
                             </div>
                         </div> -->
+                        <div class="monsterEditorSubsection">
+                            <div>
+                                <button id="createCustomShops" class="nonRollButton">Create Shop</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label for="customShopSelect">Select Item to Delete/Edit:</label>
+                                    <button id="editCustomShops" class="nonRollButton">Edit Shop</button>
+                                    <button id="deleteCustomShops" class="nonRollButton">Delete Shop</button>
+                                </div>
+                                <select id="customShopSelect"></select>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
