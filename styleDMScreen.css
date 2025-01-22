@@ -856,9 +856,40 @@ main section {
     margin-bottom: .4rem;
 }
 
-.shop-item-input{
+#shopForm > h2{
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+
+.shop-item-input, #shopName, .shopGroupName{
     background-color: rgb(2, 2, 2);
     color: #FFFFFF;
     border: solid 1px var(--border-outline-color);
     border-radius: 5px;
+    width: 80%;
+    padding: .3rem;
+}
+
+.shop-item-input:hover{
+    cursor: pointer;
+    border: solid 1px var(--button-color-hover);
+}
+
+.form-group-header label{
+    text-align: center;
+}
+
+#shopName{
+    margin-bottom: 1rem;
+    width: 80%;
+}
+
+.shopGroupName{
+    margin-top: .5rem;
+    margin-bottom: .5rem;
+}
+
+#createShop{
+    margin-top: 1.5rem;
 }

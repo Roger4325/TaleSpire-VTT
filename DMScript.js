@@ -34,12 +34,24 @@ async function establishMonsterData(){
     await loadTableData()
 
     loadDataFromGlobalStorage('checklists')
-    .then((checklistData) => {
-        updateChecklistUI(checklistData);
-    })
-    .catch((error) => {
-        console.error('Error loading checklist data:', error);
-    });
+        .then((checklistData) => {
+            updateChecklistUI(checklistData);
+        })
+        .catch((error) => {
+            console.error('Error loading checklist data:', error);
+        });
+
+    await loadDataFromGlobalStorage('Shop Data')
+        .then((shopData) => {
+            // This function will process the shop data and add it to the categoryGroups
+            for (const [shopTitle, shopInfo] of Object.entries(shopData)) {
+                addShopToCategoryGroups(shopTitle, shopInfo);
+            }
+            populateShopSelect()
+        })
+        .catch((error) => {
+            console.error('Error loading shop data:', error);
+        });
 
     // Initialize the event listeners for existing cells
     const existingCells = document.querySelectorAll("[contenteditable='true']");
@@ -2557,13 +2569,10 @@ document.addEventListener('DOMContentLoaded', async function () {
     initialSubTab.click();
 
 
-
-    // Get references to the select element for the shops dropdown list
-    const shopSelect = document.getElementById('shopSelect');
-    const dropdownContents = document.querySelectorAll('.dropdown-content');
-
     // Function to show the selected dropdown content
     function showSelectedShopContent() {
+        const shopSelect = document.getElementById('shopSelect');
+        const dropdownContents = document.querySelectorAll('.dropdown-content');
         // Hide all dropdown content divs in the shops
         dropdownContents.forEach(function (content) {
             content.style.display = 'none';
@@ -3030,18 +3039,43 @@ document.addEventListener("DOMContentLoaded", populateEffectsTable);
 
 
 document.getElementById('shopSelect').addEventListener('change', function() {
-    updateShopTable(this.value);
+    updateShopTable();
 });
 
 // Function to create the shop table dynamically
 function updateShopTable() {
     const shopSelect = document.getElementById('shopSelect');
     const selectedShop = shopSelect.value;
-    const tableDiv = document.getElementById(selectedShop);
+    // Find the parent container where new divs can be appended
+    const parentContainer = document.getElementById('dropdownShopsDiv');
 
-    // Clear any existing table content
-    const table = tableDiv.querySelector('table');
-    table.innerHTML = ''; // Clears the table
+    // Check if the div for the selected shop exists, if not create it
+    let tableDiv = document.getElementById(selectedShop);
+    if (!tableDiv) {
+        console.warn(`No element found with ID "${selectedShop}". Creating one dynamically.`);
+        tableDiv = document.createElement('div');
+        tableDiv.className = 'dropdownShops';
+        parentContainer.appendChild(tableDiv);
+    }
+
+    // Check if the table exists
+    let table = tableDiv.querySelector('table');
+    if (table) {
+        table.innerHTML = ''; // Clears the table
+    } else {
+        // Create a new table if it doesn't exist
+        tableContainer = document.createElement('div');
+        tableContainer.id = `${selectedShop}`; // Assign an ID to the new table
+        tableContainer.className = 'dropdown-content'; // Add the necessary class
+
+        table = document.createElement('table');
+        table.id = `${selectedShop}Table`; // Assign an ID to the new table
+        table.className = 'shopTables'; // Add the necessary class
+
+        tableDiv.appendChild(tableContainer); // Append the new table to the div
+        tableContainer.appendChild(table); // Append the new table to the div
+    }
+    
 
     // Add table header
     const headerRow = document.createElement('tr');
@@ -3056,6 +3090,8 @@ function updateShopTable() {
     // Get the items for the selected shop (with categories)
     const categoryGroups = getShopItems(selectedShop);
 
+    console.log(categoryGroups)
+
     // Loop through each category in the shop
     for (const category in categoryGroups) {
         // Add a subheading row for the category
@@ -3065,7 +3101,6 @@ function updateShopTable() {
 
         // Loop through the items in this category and create rows
         categoryGroups[category].forEach(item => {
-
             // Try to find the item data in the equipment data
             const itemData = AppData.equipmentLookupInfo.equipmentData.find(data => data.index === item);
 
@@ -3094,147 +3129,148 @@ function updateShopTable() {
     }
 }
 
-let categoryGroups
+let categoryGroups = {
+    "hunterLeatherworker": {
+        "Light Armor": [
+            "padded-armor", "leather-armor", "studded-leather-armor"
+        ],
+        "Medium Armor": [
+            "hide-armor"
+        ],
+        "Simple Melee Weapons": [
+            "club", "dagger", "greatclub", "handaxe", "javelin", "spear"
+        ],
+        "Simple Ranged Weapons": [
+            "shortbow", "sling",
+        ],
+        "Martial Melee Weapons": [
+            "longsword", "shortsword", "whip"
+        ],
+        "Martial Ranged Weapons": [
+            "blowgun", "longbow", "net"
+        ],
+        "Ammunition": [
+            "arrow", "sling-bullet", "blowgun-needle"
+        ],
+        "Tools": [
+            "hunting-trap", "quiver", "leatherworkers-tools", "woodcarvers-tools"
+        ]
+    },
+    // You can add more shops and their categories here
+    "blacksmithArmory": {
+        "Medium Armor": [
+            "chain-shirt", "scale-mail", "breastplate", "half-plate-armor", "shield"
+        ],
+        "Heavy Armor": [
+            "ring-mail", "chain-mail", "splint-armor", "plate-armor"
+        ],
+        "Simple Melee Weapons": [
+            "dagger", "handaxe", "javelin", "light-hammer", "mace", "sickle", "spear"
+        ],
+        "Simple Ranged Weapons": [
+            "crossbow-light", "dart", "javelin", "light-hammer", "mace", "sickle", "spear"
+        ],
+        "Martial Melee Weapons": [
+            "battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd", "lance", "longsword", "maul", "morningstar", "pike", "rapier", "scimitar", "shortsword", "trident", "war-pick", "warhammer"
+        ],
+        "Martial Ranged Weapons": [
+            "crossbow-hand", "crossbow-heavy"
+        ],
+        "Ammunition": [
+            "crossbow-bolt", "case-crossbow-bolt"
+        ],
+        "Artisan's Tools": [
+            "smiths-tools", "tinkers-tools"
+        ],
+        "Other": [
+            "chain-10-feet", "hammer", "hammer-sledge", "lock", "manacles", "whetstone"
+        ]
+    },
+    "generalStore": {
+        "Adventuring Gear": [
+            "backpack", "bedroll", "candle", "chain-10-feet", "chalk", "crowbar", "flint-and-steel", "grappling-hook", "hammer", "lantern-hooded", "lantern-bullseye", "oil-flask", "piton", "rope-hempen-50-feet", "rope-silk-50-feet", "shovel", "tent", "torch", "waterskin"
+        ],
+        "Food and Drink": [
+            "rations-1-day"
+        ],
+        "Clothing": [
+            "clothes-common", "clothes-travelers", "clothes-fine", "clothes-costume"
+        ],
+        "Basic Tools": [
+            "healers-kit", "fishing-tackle", "mess-kit", "sealing-wax", "writing-pen", "ink-bottle", "paper-sheet", "parchment", "soap", "vial-empty"
+        ],
+        "Other": [
+            "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
+        ]
+    },
+    "adventuringSupplies": {
+        "Light Armor": [
+            "padded-armor"
+        ],
+        "Medium Armor": [
+            "chain-shirt", "shield"
+        ],
+        "Heavy Armor": [
+            "ring-mail"
+        ],
+        "Simple Melee Weapons": [
+            "dagger", "handaxe", "quarterstaff", "spear"
+        ],
+        "Simple Ranged Weapons": [
+            "shortbow"
+        ],
+        "Martial Melee Weapons": [
+            "longsword", "shortsword"
+        ],
+        "Martial Ranged Weapons": [
+            "longbow", "net"
+        ],
+        "Ammunition": [
+            "arrow", "sling-bullet", "blowgun-needle"
+        ],
+        "Miscellaneous": [
+            "backpack", "bedroll", "case-map-or-scroll", "climbers-kit", "clothes-travelers", "crowbar", "fishing-tackle", "flask-or-tankard", "grappling-hook", "hammer", "hammock", "healers-kit", "hunting-trap", "lamp", "lantern-bullseye", "lantern-hooded", "mess-kit", "pick-miners", "piton", "pole-10-foot", "potion-of-healing", "pouch", "quiver", "rations-1-day", "rope-hempen-50-feet", "rope-silk-50-feet", "sack", "shovel", "signal-whistle", "torch", "spyglass", "tent-two-person", "tinderbox", "waterskin", "whetstone"
+        ],
+        "Tools": [
+            "cartographers-tools", "navigators-tools", "bit-and-bridle"
+        ],
+        "Saddle": [
+            "saddle-riding", "saddlebags"
+        ],
+        "Other": [
+            "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
+        ]
+    },
+    "alchemistHerbalist": {
+        "Alchemical": [
+            "acid-vial", "alchemists-fire-flask", "antitoxin-vial", "bottle-glass", "component-pouch", "flask-or-tankard", "healers-kit", "oil-flask", "jug-or-pitcher", "healers-kit", "perfume-vial", "poison-basic-vial", "potion-of-healing", "vial"
+        ],
+        "Artisan's Tools": [
+            "alchemists-supplies", "herbalism-kit"
+        ]
+    },
+    "jeweler": {
+        "Adventuring Gear": [
+            "signet-ring"
+        ],
+        "Artisan's Tools": [
+            "jewelers-tools"
+        ]
+    },
+    "libraryBookstore": {
+        "Other Items": [
+            "candle", "case-map-or-scroll", "dictionary", "ink-1-ounce-bottle", "ink-pen",
+            "paper-one-sheet", "parchment-one-sheet", "portal-scroll", "spellbook"
+        ]
+    }
+    // Add more cases for other shop types...
+}; 
   
 // Function to retrieve items for a specific shop (e.g., Hunter/Leatherworker) with categories
 function getShopItems(shopType) {
-    // Define categories and items directly within this function
-    categoryGroups = {
-        "hunterLeatherworker": {
-            "Light Armor": [
-                "padded-armor", "leather-armor", "studded-leather-armor"
-            ],
-            "Medium Armor": [
-                "hide-armor"
-            ],
-            "Simple Melee Weapons": [
-                "club", "dagger", "greatclub", "handaxe", "javelin", "spear"
-            ],
-            "Simple Ranged Weapons": [
-                "shortbow", "sling",
-            ],
-            "Martial Melee Weapons": [
-                "longsword", "shortsword", "whip"
-            ],
-            "Martial Ranged Weapons": [
-                "blowgun", "longbow", "net"
-            ],
-            "Ammunition": [
-                "arrow", "sling-bullet", "blowgun-needle"
-            ],
-            "Tools": [
-                "hunting-trap", "quiver", "leatherworkers-tools", "woodcarvers-tools"
-            ]
-        },
-        // You can add more shops and their categories here
-        "blacksmithArmory": {
-            "Medium Armor": [
-                "chain-shirt", "scale-mail", "breastplate", "half-plate-armor", "shield"
-            ],
-            "Heavy Armor": [
-                "ring-mail", "chain-mail", "splint-armor", "plate-armor"
-            ],
-            "Simple Melee Weapons": [
-                "dagger", "handaxe", "javelin", "light-hammer", "mace", "sickle", "spear"
-            ],
-            "Simple Ranged Weapons": [
-                "crossbow-light", "dart", "javelin", "light-hammer", "mace", "sickle", "spear"
-            ],
-            "Martial Melee Weapons": [
-                "battleaxe", "flail", "glaive", "greataxe", "greatsword", "halberd", "lance", "longsword", "maul", "morningstar", "pike", "rapier", "scimitar", "shortsword", "trident", "war-pick", "warhammer"
-            ],
-            "Martial Ranged Weapons": [
-                "crossbow-hand", "crossbow-heavy"
-            ],
-            "Ammunition": [
-                "crossbow-bolt", "case-crossbow-bolt"
-            ],
-            "Artisan's Tools": [
-                "smiths-tools", "tinkers-tools"
-            ],
-            "Other": [
-                "chain-10-feet", "hammer", "hammer-sledge", "lock", "manacles", "whetstone"
-            ]
-        },
-        "generalStore": {
-            "Adventuring Gear": [
-                "backpack", "bedroll", "candle", "chain-10-feet", "chalk", "crowbar", "flint-and-steel", "grappling-hook", "hammer", "lantern-hooded", "lantern-bullseye", "oil-flask", "piton", "rope-hempen-50-feet", "rope-silk-50-feet", "shovel", "tent", "torch", "waterskin"
-            ],
-            "Food and Drink": [
-                "rations-1-day"
-            ],
-            "Clothing": [
-                "clothes-common", "clothes-travelers", "clothes-fine", "clothes-costume"
-            ],
-            "Basic Tools": [
-                "healers-kit", "fishing-tackle", "mess-kit", "sealing-wax", "writing-pen", "ink-bottle", "paper-sheet", "parchment", "soap", "vial-empty"
-            ],
-            "Other": [
-                "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
-            ]
-        },
-        "adventuringSupplies": {
-            "Light Armor": [
-                "padded-armor"
-            ],
-            "Medium Armor": [
-                "chain-shirt", "shield"
-            ],
-            "Heavy Armor": [
-                "ring-mail"
-            ],
-            "Simple Melee Weapons": [
-                "dagger", "handaxe", "quarterstaff", "spear"
-            ],
-            "Simple Ranged Weapons": [
-                "shortbow"
-            ],
-            "Martial Melee Weapons": [
-                "longsword", "shortsword"
-            ],
-            "Martial Ranged Weapons": [
-                "longbow", "net"
-            ],
-            "Ammunition": [
-                "arrow", "sling-bullet", "blowgun-needle"
-            ],
-            "Miscellaneous": [
-                "backpack", "bedroll", "case-map-or-scroll", "climbers-kit", "clothes-travelers", "crowbar", "fishing-tackle", "flask-or-tankard", "grappling-hook", "hammer", "hammock", "healers-kit", "hunting-trap", "lamp", "lantern-bullseye", "lantern-hooded", "mess-kit", "pick-miners", "piton", "pole-10-foot", "potion-of-healing", "pouch", "quiver", "rations-1-day", "rope-hempen-50-feet", "rope-silk-50-feet", "sack", "shovel", "signal-whistle", "torch", "spyglass", "tent-two-person", "tinderbox", "waterskin", "whetstone"
-            ],
-            "Tools": [
-                "cartographers-tools", "navigators-tools", "bit-and-bridle"
-            ],
-            "Saddle": [
-                "saddle-riding", "saddlebags"
-            ],
-            "Other": [
-                "bag-of-sand", "mirror-steel", "signal-whistle", "bell", "iron-pot", "spoon", "cup-metal"
-            ]
-        },
-        "alchemistHerbalist": {
-            "Alchemical": [
-                "acid-vial", "alchemists-fire-flask", "antitoxin-vial", "bottle-glass", "component-pouch", "flask-or-tankard", "healers-kit", "oil-flask", "jug-or-pitcher", "healers-kit", "perfume-vial", "poison-basic-vial", "potion-of-healing", "vial"
-            ],
-            "Artisan's Tools": [
-                "alchemists-supplies", "herbalism-kit"
-            ]
-        },
-        "jeweler": {
-            "Adventuring Gear": [
-                "signet-ring"
-            ],
-            "Artisan's Tools": [
-                "jewelers-tools"
-            ]
-        },
-        "libraryBookstore": {
-            "Other Items": [
-                "candle", "case-map-or-scroll", "dictionary", "ink-1-ounce-bottle", "ink-pen",
-                "paper-one-sheet", "parchment-one-sheet", "portal-scroll", "spellbook"
-            ]
-        }
-        // Add more cases for other shop types...
-    };
+
+    console.log(shopType)
+    
 
     // Return the category groups for the specific shop type
     return categoryGroups[shopType] || {}; // Return an empty object if no matching shopType is found
@@ -3787,6 +3823,10 @@ document.getElementById("addShopGroup").addEventListener("click", function () {
     const newGroup = document.createElement("div");
     newGroup.classList.add("form-group", "group");
 
+    const divider = document.createElement("hr");
+
+    newGroup.appendChild(divider);
+
     // Create the "Add Item to Group" button
     const addItemButtonDiv = document.createElement("div");
     const addItemButton = document.createElement("button");
@@ -3798,7 +3838,7 @@ document.getElementById("addShopGroup").addEventListener("click", function () {
 
     // Create the group name input
     const groupNameLabel = document.createElement("label");
-    groupNameLabel.textContent = "Group Name:";
+    groupNameLabel.textContent = "Group Name: ";
     const groupNameInput = document.createElement("input");
     groupNameInput.type = "text";
     groupNameInput.classList.add("shopGroupName");
@@ -3836,7 +3876,15 @@ document.getElementById("createShop").addEventListener("click", function () {
 
         // Now you can pass them separately to saveToCampaignStorage
         saveToGlobalStorage("Shop Data", shopTitle, restOfShopData);
+
+        addShopToCategoryGroups(shopTitle, shopData)
+
+        showErrorModal(`Created: ${shopTitle}`)
     }
+    
+    shopForm.reset()
+    shopFormModal.style.display = 'none';
+
 });
 
 async function populateEquipmentList() {
@@ -4012,5 +4060,55 @@ function gatherShopData() {
         }
     });
 
+    for (const [shopTitle, shopInfo] of Object.entries(shopData)) {
+        addShopToCategoryGroups(shopTitle, shopInfo);
+    }
+    populateShopSelect()
+
     return shopData;
+}
+
+
+
+function addShopToCategoryGroups(shopTitle, shopData) {
+    // Check if the shop title already exists in categoryGroups
+    if (!categoryGroups[shopTitle]) {
+        categoryGroups[shopTitle] = {};  // Initialize if it doesn't exist
+    }
+
+    // Iterate over each group in the shop data and add it to categoryGroups
+    for (const [groupName, items] of Object.entries(shopData)) {
+        // Ensure items is an array, if it's not, wrap it in an array
+        const itemsArray = Array.isArray(items) ? items : [items];
+
+        if (!categoryGroups[shopTitle][groupName]) {
+            categoryGroups[shopTitle][groupName] = [];  // Initialize group if it doesn't exist
+        }
+
+        // Merge items with the existing ones
+        categoryGroups[shopTitle][groupName] = [...categoryGroups[shopTitle][groupName], ...itemsArray];
+    }
+
+    console.log(categoryGroups);
+}
+
+
+function populateShopSelect() {
+    // Clear any existing options in the dropdown
+    const shopSelect = document.getElementById('shopSelect');
+    shopSelect.innerHTML = '';
+
+    
+
+    // Iterate over the shop data and add each shop title as an option
+    for (const shopTitle in categoryGroups) {
+        if (categoryGroups.hasOwnProperty(shopTitle)) {
+            const option = document.createElement('option');
+            option.value = shopTitle;
+            option.textContent = shopTitle;
+
+            // Append the option to the select element
+            shopSelect.appendChild(option);
+        }
+    }
 }

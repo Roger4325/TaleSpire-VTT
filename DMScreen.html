@@ -263,7 +263,7 @@
                  
                  <!-- Shops Table -->
                  <div id="shops" class="dmTable">
-                     <div class="dropdownShops">
+                     <div id="dropdownShopsDiv" class="dropdownShops">
                          <label for="shops">Select a shop:</label>
                          <select name = shops id="shopSelect">
                              <option value = "adventuringSupplies">Adventuring Supplies</option>
@@ -1530,8 +1530,8 @@
             <span id="closeShopForm" class="close">&times;</span>
             <form id="shopForm">
                 <h2>Create Custom Shops</h2>
-                <div class="form-group">
-                    <label for="shopName">Shop Name:</label>
+                <div class="form-group-header">
+                    <label for="shopName">Shop Name : </label>
                     <input type="text" id="shopName" placeholder="e.g., blacksmith/Armory">
                 </div>
                 <div id="groupsContainer">
@@ -1539,8 +1539,10 @@
                         <div>   
                             <button id="addshopItem" type="button" class="nonRollButton">Add Item to Group</button>
                         </div>
-                        <label for="shopGroupName">Group Name:</label>
-                        <input type="text" id="shopGroupName" class="shopGroupName" placeholder="e.g., Heavy Armor">
+                        <div>
+                            <label for="shopGroupName">Group Name:</label>
+                            <input type="text" id="shopGroupName" class="shopGroupName" placeholder="e.g., Heavy Armor">
+                        </div>
                         <div id="itemInputsContainer">
                             <div class="item-input">
                                 <label for="shopItemName">Item Name:</label>
@@ -1555,8 +1557,10 @@
                 </div>
                 <div class="form-group">
                     <button id="addShopGroup" type="button" class="nonRollButton">Add Group to Shop</button>
-                    <button id="createShop" type="button" class="nonRollButton">Create/Update Shop</button>
+                    
                 </div>
+
+                <button id="createShop" type="button" class="nonRollButton">Create/Update Shop</button>
                 
             </form>
         </div>
