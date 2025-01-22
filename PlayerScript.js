@@ -4929,17 +4929,28 @@ function addActionItemToTable(item) {
                 })(),
                 secondColumn: item.name,
                 thirdColumn: (() => {
-                    // Base range (normal range with "ft" or default to "5ft")
-                    let range = `${item.range?.normal ? `${item.range.normal}ft` : "5ft"}`;
-                    
+                    let result = "";
+                
+                    // Check if the item has a range property and extract normal/long ranges
+                    if (item.range) {
+                        const normalRange = item.range.normal ? `${item.range.normal}ft` : null;
+                        const longRange = item.range.long ? `${item.range.long}ft` : null;
+                        result = longRange ? `${normalRange}/${longRange}` : normalRange;
+                    }
+                
                     // Add thrown range if applicable
                     if (item.throw_range) {
-                        const thrownNormal = item.throw_range.normal;
-                        const thrownLong = item.throw_range.long;
-                        range += ` (${thrownNormal}/${thrownLong})`;
+                        const thrownNormal = item.throw_range.normal ? `${item.throw_range.normal}` : null;
+                        const thrownLong = item.throw_range.long ? `${item.throw_range.long}` : null;
+                
+                        if (thrownNormal && thrownLong) {
+                            // Include both base range and thrown range in the result
+                            result += result ? ` - ${thrownNormal}/${thrownLong}ft` : `${thrownNormal}/${thrownLong}ft`;
+                        }
                     }
-                    
-                    return range;
+                
+                    // Default to "5ft" if no range or throw_range is provided
+                    return result || "5ft";
                 })(),
                 fourthColumn: "+5", // Default or calculated To Hit
                 fifthColumn: `${item.damage?.damage_dice || "1d8"}`, // Damage dice

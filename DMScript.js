@@ -3046,6 +3046,7 @@ document.getElementById('shopSelect').addEventListener('change', function() {
 function updateShopTable() {
     const shopSelect = document.getElementById('shopSelect');
     const selectedShop = shopSelect.value;
+
     // Find the parent container where new divs can be appended
     const parentContainer = document.getElementById('dropdownShopsDiv');
 
@@ -3064,7 +3065,7 @@ function updateShopTable() {
         table.innerHTML = ''; // Clears the table
     } else {
         // Create a new table if it doesn't exist
-        tableContainer = document.createElement('div');
+        const tableContainer = document.createElement('div');
         tableContainer.id = `${selectedShop}`; // Assign an ID to the new table
         tableContainer.className = 'dropdown-content'; // Add the necessary class
 
@@ -3075,7 +3076,6 @@ function updateShopTable() {
         tableDiv.appendChild(tableContainer); // Append the new table to the div
         tableContainer.appendChild(table); // Append the new table to the div
     }
-    
 
     // Add table header
     const headerRow = document.createElement('tr');
@@ -3090,7 +3090,7 @@ function updateShopTable() {
     // Get the items for the selected shop (with categories)
     const categoryGroups = getShopItems(selectedShop);
 
-    console.log(categoryGroups)
+    console.log(categoryGroups);
 
     // Loop through each category in the shop
     for (const category in categoryGroups) {
@@ -3118,16 +3118,90 @@ function updateShopTable() {
 
             // Create row for the item
             const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${itemName}</td>
-                <td>${itemData.cost.quantity} ${itemData.cost.unit}</td>
-                <td>${itemData.weight} lbs.</td>
-                <td>${itemData.equipment_category.name}</td>
-            `;
+
+            // Create a hoverable item element
+            const itemElement = document.createElement('span');
+            itemElement.classList.add('item-hover');
+            itemElement.style.textDecoration = 'underline';
+            itemElement.textContent = itemName;
+
+            // Tooltip logic for equipment hover
+            itemElement.addEventListener('mouseenter', () => {
+                console.log("entering item");
+                const tooltip = document.createElement('div');
+                tooltip.classList.add('item-tooltip');
+                tooltip.innerHTML = `
+                    <strong>${itemData.name}</strong><br>
+                    ${itemData.cost ? `<strong>Cost:</strong> ${itemData.cost.quantity} ${itemData.cost.unit}<br>` : ''}
+                    ${itemData.weight !== undefined ? `<strong>Weight:</strong> ${itemData.weight} lbs<br>` : ''}
+                    ${itemData.equipment_category ? `<strong>Category:</strong> ${itemData.equipment_category.name}<br>` : ''}
+                    ${itemData.weapon_category ? `<strong>Weapon Category:</strong> ${itemData.weapon_category}<br>` : ''}
+                    ${itemData.armor_category ? `<strong>Armor Category:</strong> ${itemData.armor_category}<br>` : ''}
+                    ${itemData.armor_class ? `<strong>Armor Class:</strong> ${itemData.armor_class.base} ${itemData.armor_class.dex_bonus ? '+ Dex Modifier' : ''}<br>` : ''}
+                    ${itemData.str_minimum ? `<strong>Strength Requirement:</strong> ${itemData.str_minimum}<br>` : ''}
+                    ${itemData.stealth_disadvantage ? `<strong>Stealth:</strong> Disadvantage<br>` : ''}
+                    ${itemData.damage ? `<strong>Damage:</strong> ${itemData.damage.damage_dice} ${itemData.damage.damage_type.name}<br>` : ''}
+                    ${itemData.range ? `<strong>Range:</strong> ${itemData.range.normal} ft${itemData.range.long ? `/${itemData.range.long} ft` : ''}<br>` : ''}
+                    ${itemData.rarity ? `<strong>Rarity:</strong> ${itemData.rarity.name}<br>` : ''}
+                    ${itemData.hasCharges ? `<strong>Charges:</strong> ${itemData.chargesOptions.maxCharges} (${itemData.chargesOptions.chargeReset})<br>` : ''}
+                    ${itemData.properties && itemData.properties.length > 0 
+                        ? `<strong>Properties:</strong> ${itemData.properties.map(prop => prop.name).join(', ')}<br>` 
+                        : ''}
+                    ${itemData.description 
+                        ? `<strong>Description:</strong> ${Array.isArray(itemData.description) 
+                            ? itemData.description.join(' ') 
+                            : itemData.description}<br>` 
+                        : ''}
+                    ${itemData.bonus && itemData.bonus.length > 0 
+                        ? itemData.bonus.map(b => `<strong>Bonus:</strong> ${b.description}<br>`).join('') 
+                        : ''}
+                `;
+                document.body.appendChild(tooltip);
+
+                // Position tooltip dynamically
+                const rect = itemElement.getBoundingClientRect();
+                tooltip.style.position = 'absolute';
+                tooltip.style.left = `${rect.left + window.scrollX}px`;
+                tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                tooltip.style.opacity = 0;
+                setTimeout(() => tooltip.style.opacity = 1, 0);
+
+                itemElement.tooltip = tooltip;
+            });
+
+            itemElement.addEventListener('mouseleave', () => {
+                const tooltip = itemElement.tooltip;
+                if (tooltip) {
+                    tooltip.style.opacity = 0;
+                    setTimeout(() => tooltip.remove(), 200);
+                }
+            });
+
+            // Append the item element to a cell and the row
+            const itemCell = document.createElement('td');
+            itemCell.appendChild(itemElement);
+            row.appendChild(itemCell);
+
+            // Append other item details
+            const costCell = document.createElement('td');
+            costCell.textContent = `${itemData.cost.quantity} ${itemData.cost.unit}`;
+            row.appendChild(costCell);
+
+            const weightCell = document.createElement('td');
+            weightCell.textContent = `${itemData.weight} lbs.`;
+            row.appendChild(weightCell);
+
+            const categoryCell = document.createElement('td');
+            categoryCell.textContent = itemData.equipment_category.name;
+            row.appendChild(categoryCell);
+
+            // Append the row to the table
             table.appendChild(row);
         });
+
     }
 }
+
 
 let categoryGroups = {
     "hunterLeatherworker": {
@@ -4093,12 +4167,22 @@ function addShopToCategoryGroups(shopTitle, shopData) {
 }
 
 
+function removeShopFromCategoryGroups(shopTitle) {
+    // Check if the shop title exists in categoryGroups
+    if (categoryGroups[shopTitle]) {
+        delete categoryGroups[shopTitle]; // Remove the shop and its associated data
+        console.log(`Shop "${shopTitle}" has been removed.`);
+    } else {
+        console.log(`Shop "${shopTitle}" does not exist.`);
+    }
+
+    console.log(categoryGroups); // Log the updated categoryGroups for verification
+}
+
 function populateShopSelect() {
     // Clear any existing options in the dropdown
     const shopSelect = document.getElementById('shopSelect');
     shopSelect.innerHTML = '';
-
-    
 
     // Iterate over the shop data and add each shop title as an option
     for (const shopTitle in categoryGroups) {
@@ -4112,3 +4196,26 @@ function populateShopSelect() {
         }
     }
 }
+
+
+document.getElementById("deleteCustomShops").addEventListener("click", async() => {
+    const shopSelect = document.getElementById("customShopSelect");
+    const selectedShop = shopSelect.value;
+
+    console.log(selectedShop)
+
+    if (selectedShop) {
+        await removeFromGlobalStorage("Shop Data", selectedShop)
+            .then(() => {
+                console.log(`Shop "${selectedShop}" deleted successfully.`);
+                loadAndDisplayCustomShops()
+                removeShopFromCategoryGroups(selectedShop)
+            })
+            .catch((error) => {
+                errorModal("Failed to delete shop:", error);
+            });
+            populateShopSelect();
+    } else {
+        errorModal("No shop selected for deletion.");
+    }
+});

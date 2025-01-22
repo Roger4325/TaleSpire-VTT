@@ -2632,6 +2632,7 @@ openHomebrewButton.addEventListener('click', () => {
     console.log(myClientType)
     if (myClientType === "gm"){
         loadAndDisplayCustomMonsters()
+        loadAndDisplayCustomShops()
     }
     if (myClientType === "player"){
         loadAndDisplayCustomSpells()
@@ -2770,6 +2771,38 @@ function loadAndDisplayCustomItems() {
         })
         .catch((error) => {
             console.error("Failed to load custom items:", error);
+        });
+}
+
+function loadAndDisplayCustomShops() {
+    loadDataFromGlobalStorage("Shop Data")
+        .then((shops) => {
+            const shopSelect = document.getElementById("customShopSelect");
+            shopSelect.innerHTML = ""; // Clear existing options
+
+            // Populate dropdown with monster names
+            for (const monsterName in shops) {
+                const option = document.createElement("option");
+                option.value = monsterName;
+                option.textContent = monsterName;
+                shopSelect.appendChild(option);
+            }
+
+            // If no monsters exist, disable the dropdown and delete button
+            if (Object.keys(shops).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No shops available";
+                shopSelect.appendChild(placeholderOption);
+                shopSelect.disabled = true;
+                document.getElementById("deleteCustomShops").disabled = true;
+            } else {
+                shopSelect.disabled = false;
+                document.getElementById("deleteCustomShops").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom shops:", error);
         });
 }
 

@@ -1000,12 +1000,12 @@ margin: 2px;
 }
 
 
-.spell-hover {
+.spell-hover, .item-hover {
     position: relative;
     cursor: pointer; /* Show pointer cursor to indicate it's hoverable */
 }
 
-.spell-tooltip {
+.spell-tooltip, .item-tooltip {
     position: fixed; /* Use fixed positioning relative to the screen */
     background-color: rgb(2, 2, 2);
     color: #ffffff;
@@ -1024,7 +1024,7 @@ margin: 2px;
     border: 1px solid var(--border-outline-color);
 }
 
-.spell-tooltip strong {
+.spell-tooltip strong, .item-tooltip strong {
     color: var(--ts-accent-primary);
 }
 
