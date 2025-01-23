@@ -104,7 +104,7 @@ function handleMessage(message) {
 }
 
 const playerCharacters = [
-    // { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
+    { name: 'Custom', hp: { current: 40, max: 40 }, ac: 14, initiative: 0 ,passivePerception: 0, spellSave: 12}
 ];
 
 function populateMonsterDropdown() {
@@ -938,41 +938,118 @@ async function updatePlayerCard(card, player) {
     playerInfo.classList.add('player-info'); // Reuse monster-info class
 
     // Check if the player name is "Custom"
-    if (player.name === "Custom") {
+    if (player.name === "Custom" || player.isCustom === true) {
         // Create a container for the player info
         const playerInfoContainer = document.createElement('div');
         playerInfoContainer.classList.add('player-custom-info'); // Add player-info class for styling
-
-        // Helper function to create label-input pairs
-        function createLabelInputPair(labelText, inputType, inputId, placeholder) {
+    
+        // Helper function to create label and content-editable sections for HP and Max HP
+        function createHPGroup() {
+            const hpGroup = document.createElement('div');
+            hpGroup.classList.add('hp-group'); // Class to style the group
+    
+            // Label
+            const label = document.createElement('label');
+            label.textContent = 'HP:';
+            label.style.userSelect = 'none';
+    
+            // HP (current) - content editable
+            const hpCurrent = document.createElement('div');
+            hpCurrent.contentEditable = true;
+            hpCurrent.classList.add('hp-current'); // Add a class for styling
+            hpCurrent.textContent = player.hp?.current || '10'; // Default to saved or fallback to 10
+            hpCurrent.title = 'Editable: You can do math here, e.g., "15-3"';
+    
+            // Max HP - content editable
+            const hpMax = document.createElement('div');
+            hpMax.contentEditable = true;
+            hpMax.classList.add('hp-max'); // Add a class for styling
+            hpMax.textContent = player.hp?.max || '20'; // Default to saved or fallback to 20
+            hpMax.title = 'Max HP: Edit as needed';
+    
+            // Append everything
+            hpGroup.appendChild(label);
+            hpGroup.appendChild(hpCurrent);
+            hpGroup.appendChild(document.createTextNode(' / ')); // Add separator
+            hpGroup.appendChild(hpMax);
+    
+            // Add event listener for HP math calculations
+            hpCurrent.addEventListener('blur', () => {
+                try {
+                    // Retrieve the current Max HP value
+                    const maxHP = parseInt(hpMax.textContent, 10) || 0;
+    
+                    // Evaluate the math inside the content editable
+                    const result = eval(hpCurrent.textContent.replace(/[^-()\d/*+.]/g, '')); // Remove invalid characters
+    
+                    // Clamp the result between 0 and maxHP
+                    hpCurrent.textContent = Math.min(Math.max(0, Math.floor(result)), maxHP); // Ensure it's within bounds
+                } catch {
+                    hpCurrent.textContent = '0'; // Reset on invalid input
+                }
+            });
+            hpCurrent.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent newline in content-editable
+                    hpCurrent.blur(); // Trigger blur event
+                }
+            });
+    
+            hpMax.addEventListener('blur', () => {
+                try {
+                    // Evaluate the math inside the content-editable
+                    const result = eval(hpMax.textContent.replace(/[^-()\d/*+.]/g, '')); // Remove invalid characters
+    
+                    // Ensure hpMax is a non-negative number
+                    hpMax.textContent = Math.max(0, Math.floor(result)); // Result cannot be less than 0
+                } catch {
+                    hpMax.textContent = '0'; // Reset to 0 on invalid input
+                }
+            });
+            hpMax.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    event.preventDefault(); // Prevent newline in content-editable
+                    hpMax.blur(); // Trigger blur event
+                }
+            });
+    
+            return hpGroup;
+        }
+    
+        // Helper function to create other label-input pairs
+        function createLabelInputPair(labelText, inputType, inputId, placeholder, savedValue) {
             const labelInputGroup = document.createElement('div');
             labelInputGroup.classList.add('label-input-group'); // Class to style the group
-
+    
             const label = document.createElement('label');
             label.textContent = labelText;
-
+            label.style.userSelect = 'none';
+    
             const input = document.createElement('input');
             input.type = inputType;
             input.id = inputId;
             input.placeholder = placeholder;
-
+            input.value = savedValue || ''; // Use savedValue if available
+    
             // Append label and input to the group
             labelInputGroup.appendChild(label);
             labelInputGroup.appendChild(input);
-
+    
             return labelInputGroup;
         }
-
-        // Create and append all label-input pairs
-        playerInfoContainer.appendChild(createLabelInputPair('Name:', 'text', 'customCharacterName', 'Character Name'));
-        playerInfoContainer.appendChild(createLabelInputPair('HP:', 'number', 'customHP', 'HP'));
-        playerInfoContainer.appendChild(createLabelInputPair('AC:', 'number', 'customAC', 'AC'));
-        playerInfoContainer.appendChild(createLabelInputPair('Passive Per:', 'number', 'customPassivePerception', 'Per'));
-        playerInfoContainer.appendChild(createLabelInputPair('Spell Save:', 'number', 'customSpellSaveDC', 'DC'));
-
+    
+        // Append elements to the container
+        playerInfoContainer.appendChild(createLabelInputPair('Name:', 'text', 'customCharacterName', 'Character Name', player.name));
+        playerInfoContainer.appendChild(createLabelInputPair('AC:', 'number', 'customAC', 'AC', player.ac));
+        playerInfoContainer.appendChild(createHPGroup());
+        playerInfoContainer.appendChild(createLabelInputPair('Passive Per:', 'number', 'customPassivePerception', 'Per', player.passivePerception));
+        playerInfoContainer.appendChild(createLabelInputPair('Spell Save:', 'number', 'customSpellSaveDC', 'DC', player.spellSave));
+    
         // Append the container to the playerInfo element
         playerInfo.appendChild(playerInfoContainer);
     }
+    
+    
  else {
         // Display existing player details
         const playerName = document.createElement('div');
@@ -1031,6 +1108,7 @@ async function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
+    debouncedSendInitiativeListToPlayer()
 }
 
 
@@ -1465,18 +1543,21 @@ function saveMonsterCardsAsEncounter(encounterName) {
     });
     playerCards.forEach(card => {
         const isMonster = 0;
-        const name = card.querySelector('.monster-name')?.textContent || "default"; 
-        const talespireId = card.getAttribute('data-player-id');
-        const hpCurrent = 0; 
-        const hpMax = 0; 
-        const ac = 0; 
-        const initiative = parseInt(card.querySelector('.init-input')?.value) || 0; 
-        const passivePerception = 0; 
-        const spellSave = 0; 
+        const isCustom = card.querySelector('#customCharacterName') !== null;
+        const name = card.querySelector('.monster-name')?.textContent 
+                  || card.querySelector('#customCharacterName')?.value 
+                  || "default";
+        const talespireId = card.getAttribute('data-player-id')|| null;
+        const hpCurrent = parseInt(card.querySelector('.hp-current')?.textContent) || 0;
+        const hpMax = parseInt(card.querySelector('.hp-max')?.textContent) || 0;
+        const ac = parseInt(card.querySelector('#customAC')?.value) || 0;
+        const initiative = parseInt(card.querySelector('.init-input')?.value) || 0;
+        const passivePerception = parseInt(card.querySelector('#customPassivePerception')?.value) || 0;
+        const spellSave = parseInt(card.querySelector('#customSpellSaveDC')?.value) || 0;
     
-        // Push the gathered data for each player character into the encounterData array
         encounterData.push({
             isMonster,
+            isCustom,
             name,
             talespireId,
             hp: { current: hpCurrent, max: hpMax },
@@ -1767,6 +1848,7 @@ function updateMonsterCardDataFromLoad(encounterData) {
         
     });
     debouncedRequestPlayerInfo();
+    debouncedSendInitiativeListToPlayer();
 }
 
 
@@ -1905,14 +1987,16 @@ async function sendInitiativeListToPlayer() {
 
     // Prepare the initiative list with compact data
     const initiativeList = cards.map(card => {
-        const nameElement = card.querySelector(".monster-name");
+        const nameElement = card.querySelector('.monster-name')?.textContent 
+        || card.querySelector('#customCharacterName')?.value 
+        || "default";
         const isPlayer = card.classList.contains("player-card") ? 1 : 0;
         const eyeButton = card.querySelector(".eye-button"); // Assuming the eye button has the class '.eye-button'
         const isVisible = eyeButton && eyeButton.querySelector('i') && eyeButton.querySelector('i').classList.contains('fa-eye-slash') ? 0 : 1;
         const isBloodied = !isPlayer && conditionsMap.has(card) && conditionsMap.get(card).has("Bloodied") ? 1 : 0;
-
+        console.log(nameElement)
         return {
-            n: isPlayer ? nameElement.textContent.trim() : "", // Name only for players
+            n: isPlayer ? nameElement : "", // Name only for players
             p: isPlayer, // 1 for player, 0 for enemy
             v: isVisible, // 1 for visible, 0 for hidden
             b: isBloodied // 1 for bloodied, 0 otherwise (only for monsters)

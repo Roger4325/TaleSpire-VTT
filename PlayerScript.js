@@ -184,6 +184,7 @@ async function playerSetUP(){
         
         labelElement.setAttribute('value', extractedNumber);
     });
+
     document.getElementById("initiativeButton").addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
             this.blur();
@@ -457,6 +458,11 @@ async function playerSetUP(){
 
     sendDMUpdatedStatsDebounced()
     populateMonsterDropdown()
+
+
+    document.querySelector('a[href="#Init"]').addEventListener('click', (event) => {
+        debounce(requestInitList, 1000)();
+    });
 }  
 
 // Function to format numbers with commas
@@ -6795,6 +6801,8 @@ function handleInitiativeResult(resultGroup) {
 
 
 
+
+
 function createPlayerInit(initList) {
     console.log(initList);
 
@@ -6858,6 +6866,20 @@ function handleInitRound(message) {
     } else {
         console.error("Invalid message structure:", message);
     }
+}
+
+function requestInitList(){
+    const message = {
+        type: 'request-init-list', // Message type
+        playerId: isMe,
+        data: {
+        }
+    };
+
+    console.warn("click")
+
+    // Send the message
+    TS.sync.send(JSON.stringify(message), gmClient.id).catch(console.error);
 }
 
 
