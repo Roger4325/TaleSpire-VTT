@@ -73,7 +73,6 @@ async function establishMonsterData(){
     populatePlayerDropdown()
     populateConditionSelect();
     populateEquipmentList();
-
 }
 
 async function loadAndSetLanguage(){
@@ -1170,15 +1169,11 @@ function nextTurn() {
     if (currentMonsterCard) {
         // Find the condition tracker div inside the active monster card
         conditionTrackerDiv = currentMonsterCard.querySelector('.condition-tracker');
-        console.log(conditionTrackerDiv)
 
         // Retrieve the condition set from the conditions map for this specific monster
         conditionsSet = conditionsMap.get(currentMonsterCard);
-        console.log(conditionsSet)
 
-        if (!conditionsSet) {
-            console.log('No conditions set for this monster yet.');
-        } else {
+        if (conditionsSet) {
             if (conditionsSet.has('Recharging')) {
                 showErrorModal(`Roll Recharge`,1000);
             }
@@ -1785,16 +1780,23 @@ function handleInitiativeResult(resultGroup) {
 
     let totalInitiative = 0;
 
-    // Loop through each operand to compute the total initiative value
-    for (const operand of operands) {
-        if (operand.kind === "d20" && operand.results) {
-            // Sum up the d20 results
-            totalInitiative += operand.results.reduce((sum, roll) => sum + roll, 0);
-        } else if (operand.value) {
-            // Adjust total based on the operator
-            totalInitiative += (resultGroup.result.operator === "+") ? operand.value : -operand.value;
+
+    if(operands){
+         // Loop through each operand to compute the total initiative value
+        for (const operand of operands) {
+            if (operand.kind === "d20" && operand.results) {
+                // Sum up the d20 results
+                totalInitiative += operand.results.reduce((sum, roll) => sum + roll, 0);
+            } else if (operand.value) {
+                // Adjust total based on the operator
+                totalInitiative += (resultGroup.result.operator === "+") ? operand.value : -operand.value;
+            }
         }
     }
+    else{
+        totalInitiative = resultGroup.result.results[0]
+    }
+   
 
     if (activeMonsterCard) {
         const initInput = activeMonsterCard.querySelector('.init-input');
@@ -3131,7 +3133,7 @@ function updateShopTable() {
                 const tooltip = document.createElement('div');
                 tooltip.classList.add('item-tooltip');
                 tooltip.innerHTML = `
-                    <strong>${itemData.name}</strong><br>
+                    <h2>${itemData.name}</h2>
                     ${itemData.cost ? `<strong>Cost:</strong> ${itemData.cost.quantity} ${itemData.cost.unit}<br>` : ''}
                     ${itemData.weight !== undefined ? `<strong>Weight:</strong> ${itemData.weight} lbs<br>` : ''}
                     ${itemData.equipment_category ? `<strong>Category:</strong> ${itemData.equipment_category.name}<br>` : ''}
@@ -3160,9 +3162,14 @@ function updateShopTable() {
 
                 // Position tooltip dynamically
                 const rect = itemElement.getBoundingClientRect();
+                const spaceBelow = window.innerHeight - rect.bottom - window.scrollY;
+                const tooltipTop = spaceBelow >= tooltip.offsetHeight + 5
+                    ? rect.bottom + window.scrollY + 5
+                    : rect.top + window.scrollY - tooltip.offsetHeight - 5;
+
                 tooltip.style.position = 'absolute';
                 tooltip.style.left = `${rect.left + window.scrollX}px`;
-                tooltip.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                tooltip.style.top = `${tooltipTop}px`;
                 tooltip.style.opacity = 0;
                 setTimeout(() => tooltip.style.opacity = 1, 0);
 

@@ -670,6 +670,12 @@ margin: 2px;
     margin-bottom: 40px; /* Adjust the value as needed */
 }
 
+.current-turn {
+    border: 1px solid rgb(252, 222, 56); /* Golden border */
+    background-color: rgba(252, 222, 56, 0.2); /* Soft golden background */
+}
+
+
 /* Initiative box */
 .init-input {
     text-align: center;
@@ -1009,7 +1015,7 @@ margin: 2px;
     position: fixed; /* Use fixed positioning relative to the screen */
     background-color: rgb(2, 2, 2);
     color: #ffffff;
-    padding: 2px;
+    padding: .3rem;
     border-radius: 5px;
     font-size: 14px;
     width: 95%; 
@@ -1026,6 +1032,12 @@ margin: 2px;
 
 .spell-tooltip strong, .item-tooltip strong {
     color: var(--ts-accent-primary);
+}
+
+.spell-tooltip > h2, .item-tooltip > h2{
+    padding: .3rem;
+    margin: 0;
+    font-size: 1.5rem;
 }
 
 .fa-eye-slash{

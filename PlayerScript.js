@@ -356,6 +356,7 @@ async function playerSetUP(){
             // Toggle the active class on click
             console.log("click")
             button.classList.toggle('active');
+            updateContent()
         });
     });   
     // Add event listener to toggle the inspiration button when clicked
@@ -519,6 +520,22 @@ function toggleInspiration() {
     } else {
         starContainer.classList.remove("inactive");
         starContainer.classList.add("active");
+    }
+    updateContent();
+}
+
+function loadInspiration(savedState) {
+    const inspirationButton = document.getElementById("inspirationBox");
+    const starContainer = inspirationButton.querySelector('.star-container');
+
+    if (savedState === 1) {
+        // Set to active
+        starContainer.classList.add("active");
+        starContainer.classList.remove("inactive");
+    } else {
+        // Set to inactive
+        starContainer.classList.add("inactive");
+        starContainer.classList.remove("active");
     }
 }
 
@@ -2087,8 +2104,8 @@ function getAllEditableContent() {
 
     // Add specific elements to the content object
     content['characterTempHp'] = characterTempHp.value;
-    content['currentHitDice'] = currentHitDice.textContent;
-
+    content['currentHitDice'] = currentHitDice.textContent
+    content['insp'] = getInspirationState();
     content['playerWeaponProficiency'] = [...playerWeaponProficiency];
     content['playerArmorProficiency'] = [...playerArmorProficiency];
     content['playerLanguageProficiency'] = [...playerLanguageProficiency];
@@ -2151,8 +2168,7 @@ function getAllEditableContent() {
     content['groupNotesData'] = notesData;
 
     const extrasData = gatherExtrasInfo();
-    content['extrasData'] = extrasData;
-    
+    content['extrasData'] = extrasData;    
 
     // Assuming you want to use 'characterName' as the unique identifier for the 'character' data type
     saveToCampaignStorage("characters", characterName.textContent, content, true);
@@ -2161,6 +2177,16 @@ function getAllEditableContent() {
 }
 
 
+function getInspirationState() {
+    const inspirationButton = document.getElementById("inspirationBox");
+    if (!inspirationButton) return;
+
+    const starContainer = inspirationButton.querySelector('.star-container');
+    if (!starContainer) return;
+
+    const inspirationState = starContainer.classList.contains("active") ? 1 : 0;
+    return inspirationState;
+}
 
 function updateCoinsInFields(coins) {
     const coinTypes = ['cp', 'sp', 'ep', 'gp', 'pp']; // Define coin types
@@ -2313,7 +2339,18 @@ const debouncedGetAllEditableContent = debounce(() => {
 
 // Function to update content whenever a change occurs
 function updateContent() {
-    debouncedGetAllEditableContent();
+    // Check if the DOM is fully loaded
+    if (document.readyState === 'loading') {
+        // If DOM is still loading, wait for it to be ready
+        document.addEventListener('DOMContentLoaded', () => {
+            debouncedGetAllEditableContent();
+            
+        });
+        console.warn("loading")
+    } else {
+        // If DOM is already ready, just call the debounced function directly
+        debouncedGetAllEditableContent();
+    }
 }
 
 // Add input and content-editable event listeners
@@ -2389,7 +2426,7 @@ function updateCharacterUI(characterData, characterName) {
     document.getElementById('profBonus').textContent = proficiencyBonus;
 
     
-
+    loadInspiration(characterData.insp);
     loadProficiencies(playerWeaponProficiency, '#weaponsContainer', '#weapons-dropdown', 'playerWeaponProficiency');
     loadProficiencies(playerArmorProficiency, '#armorContainer', '#armor-dropdown', 'playerArmorProficiency');
     loadProficiencies(playerLanguageProficiency, '#languageContainer', '#languages-dropdown', 'playerLanguageProficiency');
@@ -2560,14 +2597,14 @@ async function loadAndPickaCharacter() {
 
 // Load and update character data
 function loadAndDisplayCharacter(characterName, allCharactersData) {
-            const characterData = allCharactersData[characterName];
+    const characterData = allCharactersData[characterName];
 
-            if (characterData) {
-                updateCharacterUI(characterData, characterName);
-            } else {
-                console.error("Character data not found.");
-                // Handle the case where data is not found, e.g., show a message to the user
-            }
+    if (characterData) {
+        updateCharacterUI(characterData, characterName);
+    } else {
+        console.error("Character data not found.");
+        // Handle the case where data is not found, e.g., show a message to the user
+    }
 }
 
 
@@ -2725,7 +2762,7 @@ function actionTableEventListenerSetup() {
         }
         
         console.log("Cell updated:", cell, "New content:", updatedContent);
-        getAllEditableContent()
+        updateContent();
     }
 
     // Add event listeners to all relevant cells

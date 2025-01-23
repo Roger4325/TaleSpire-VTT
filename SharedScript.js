@@ -1517,7 +1517,7 @@ function parseAndReplaceDice(action, text, spell) {
                                     tooltip.classList.add('spell-tooltip');
                                     tooltip.setAttribute('data-desc', spellData.desc);
                                     tooltip.innerHTML = `
-                                        <strong>${spellData.name}</strong><br>
+                                        <h2>${spellData.name}</h2>
                                         <strong>Level:</strong> ${spellData.level}<br>
                                         <strong>School:</strong> ${spellData.school}<br>
                                         <strong>Casting Time:</strong> ${spellData.casting_time}<br>

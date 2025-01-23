@@ -256,28 +256,11 @@
     background-color: var(--border-outline-color); /* Highlight on hover */
 }
 
-
-
-
-
-.current-turn {
-    border: 3px solid rgb(252, 222, 56); /* Golden border */
-    background-color: rgba(252, 222, 56, 0.2); /* Soft golden background */
-}
-
-
-
-
 /* Dropdown container */
 .dropdown-container {
     position: relative; /* To position the dropdown list */
     width: 100%; /* Ensures the dropdown takes full width of the container */
 }
-
-
-
-
-
 
 #monsterFormModal, #shopFormModal {
     display: none; /* Hidden by default */
