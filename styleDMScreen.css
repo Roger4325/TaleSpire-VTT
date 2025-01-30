@@ -759,9 +759,8 @@ main section {
     color:white;
     background-color: var(--ts-background-secondary);
     display: none;
-    position:absolute;
+    position: absolute;
     width: 100%;
-    border: 1px solid white;
     cursor: pointer;
     max-height: 450px;
     overflow: hidden;

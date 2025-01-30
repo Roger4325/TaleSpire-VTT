@@ -24,7 +24,7 @@ const xpLevels = [
   ];
 
 // checkboxes to determine what type of action the ability is and how to filter it. 
-const checkboxData = [
+let checkboxData = [
 { label: 'Attacks', category: 'attacks' },
 { label: 'Actions', category: 'actions' },
 { label: 'Bonus Actions', category: 'bonus-actions' },
@@ -412,24 +412,161 @@ async function playerSetUP(){
         }
     });
 
-    const allCheckboxes = document.querySelectorAll('.proficiency-dropdown input[type="checkbox"]');
-    allCheckboxes.forEach(function (checkbox) {
-        checkbox.addEventListener('change', function () {
-            const parentGroup = checkbox.closest('.proficiency-group'); // Find the closest group to determine the category
+    // Updated event listener setup with proper translation handling
+    function setupProficiencyCheckboxes() {
+        const allCheckboxes = document.querySelectorAll('.proficiency-dropdown input[type="checkbox"]');
+        allCheckboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                const parentGroup = checkbox.closest('.proficiency-group');
+                const categoryTitle = parentGroup.querySelector('h3 span').textContent;
 
-            if (parentGroup.querySelector('h3 span').textContent === 'Weapons') {
-                updateProficiencyArray(checkbox, playerWeaponProficiency);
-            } else if (parentGroup.querySelector('h3 span').textContent === 'Armor') {
-                updateProficiencyArray(checkbox, playerArmorProficiency);
-            } else if (parentGroup.querySelector('h3 span').textContent === 'Languages') {
-                updateProficiencyArray(checkbox, playerLanguageProficiency);
-                console.log('Languages Proficiency:', playerLanguageProficiency);
-            } else if (parentGroup.querySelector('h3 span').textContent === 'Tools') {
-                updateProficiencyArray(checkbox, playerToolsProficiency);
-            }
-            updateProficiencyContainers();
+                console.warn(categoryTitle , " , ",translations[savedLanguage].proficiencyWeapons )
+
+                // Modified detection logic using translation keys
+                if (categoryTitle.includes(translations[savedLanguage].proficiencyWeapons)) {
+                    updateProficiencyArray(checkbox, playerWeaponProficiency);
+                } else if (categoryTitle.includes(translations[savedLanguage].proficiencyArmor)) { // "Shield" as anchor
+                    updateProficiencyArray(checkbox, playerArmorProficiency);
+                } else if (categoryTitle.includes(translations[savedLanguage].proficiencyLanguages)) { // First exotic language
+                    updateProficiencyArray(checkbox, playerLanguageProficiency);
+                } else if (categoryTitle.includes(translations[savedLanguage].proficiencyTools)) { // First tool category
+                    updateProficiencyArray(checkbox, playerToolsProficiency);
+                }
+                updateProficiencyContainers();
+                updateContent();
+            });
         });
-    });
+    }
+
+    // Modified update function to handle both languages
+    function updateProficiencyArray(checkbox, proficiencyArray) {
+        const itemKey = checkbox.value;
+
+        if (checkbox.checked) {
+            if (!proficiencyArray.includes(itemKey)) {
+                proficiencyArray.push(itemKey);
+            }
+        } else {
+            const index = proficiencyArray.indexOf(itemKey);
+            if (index > -1) {
+                proficiencyArray.splice(index, 1);
+            }
+        }
+    }
+
+    // Updated container update function with translation support
+    function updateProficiencyContainers() {
+        const getTranslatedLabels = (items, lang) => items.map(item => {
+            // Search through all translations to find matching key
+            for (const category in translations[lang].proficiencies) {
+                const categoryData = translations[lang].proficiencies[category];
+                if (Array.isArray(categoryData)) {
+                    const found = categoryData.find(transItem => transItem === item);
+                    if (found) return found;
+                } else {
+                    for (const subcat in categoryData) {
+                        const found = categoryData[subcat].find(transItem => transItem === item);
+                        if (found) return found;
+                    }
+                }
+            }
+            return item; // Fallback to original if not found
+        });
+
+        // Helper function with language support
+        function updateContainer(container, array) {
+            const translatedItems = getTranslatedLabels(array, savedLanguage);
+            container.textContent = translatedItems.join(', ') || '';
+        }
+
+        updateContainer(document.querySelector('#weaponsContainer'), playerWeaponProficiency);
+        updateContainer(document.querySelector('#armorContainer'), playerArmorProficiency);
+        updateContainer(document.querySelector('#languageContainer'), playerLanguageProficiency);
+        updateContainer(document.querySelector('#toolsContainer'), playerToolsProficiency);
+    }
+    
+    
+    
+    function updateProficiencyContainers() {
+        // Select the containers
+        const weaponsContainer = document.querySelector('#weaponsContainer');
+        const armorContainer = document.querySelector('#armorContainer');
+        const languageContainer = document.querySelector('#languageContainer');
+        const toolsContainer = document.querySelector('#toolsContainer');
+    
+        // Helper function to update container content
+        function updateContainer(container, array) {
+            if (array.length > 0) {
+                container.textContent = array.join(', ');
+            } else {
+                container.textContent = '';
+            }
+        }
+    
+        // Update each container with its respective proficiency array
+        updateContainer(weaponsContainer, playerWeaponProficiency);
+        updateContainer(armorContainer, playerArmorProficiency);
+        updateContainer(languageContainer, playerLanguageProficiency);
+        updateContainer(toolsContainer, playerToolsProficiency);
+    }
+
+
+
+    function populateProficiencyDropdowns() {
+        // Data for the checkboxes
+        const proficiencies = translations[savedLanguage].proficiencies;
+    
+        // Function to create a list of checkboxes
+        function createCheckboxList(items) {
+            const ul = document.createElement('ul');
+            items.forEach(item => {
+                const li = document.createElement('li');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = item;
+                checkbox.id = item
+                li.appendChild(checkbox);
+                li.appendChild(document.createTextNode(item));
+                ul.appendChild(li);
+            });
+            return ul;
+        }
+    
+        // Populate Weapons Dropdown
+        const weaponsDropdown = document.getElementById('weapons-dropdown');
+        const weaponsItems = [
+            ...proficiencies.weapons.categories,
+            ...proficiencies.weapons.simpleMelee,
+            ...proficiencies.weapons.simpleRanged,
+            ...proficiencies.weapons.martialMelee,
+            ...proficiencies.weapons.martialRanged
+        ];
+        weaponsDropdown.appendChild(createCheckboxList(weaponsItems));
+    
+        // Populate Armor Dropdown
+        const armorDropdown = document.getElementById('armor-dropdown');
+        armorDropdown.appendChild(createCheckboxList(proficiencies.armor));
+    
+        // Populate Languages Dropdown
+        const languagesDropdown = document.getElementById('languages-dropdown');
+        const languagesItems = [
+            ...proficiencies.languages.common,
+            ...proficiencies.languages.exotic
+        ];
+        languagesDropdown.appendChild(createCheckboxList(languagesItems));
+    
+        // Populate Tools Dropdown
+        const toolsDropdown = document.getElementById('tools-dropdown');
+        const toolsItems = [
+            ...proficiencies.tools.artisan,
+            ...proficiencies.tools.gaming,
+            ...proficiencies.tools.musical,
+            ...proficiencies.tools.other
+        ];
+        toolsDropdown.appendChild(createCheckboxList(toolsItems));
+
+        setupProficiencyCheckboxes()
+    }
 
 
     document.getElementById('closeItemCard').addEventListener('click', () => {
@@ -463,6 +600,9 @@ async function playerSetUP(){
     document.querySelector('a[href="#Init"]').addEventListener('click', (event) => {
         debounce(requestInitList, 1000)();
     });
+
+    populateConditionSelect();
+    populateProficiencyDropdowns();
 }  
 
 // Function to format numbers with commas
@@ -471,47 +611,7 @@ function formatWithCommas(number) {
 }
 
 
-function updateProficiencyArray(checkbox, proficiencyArray) {
-    const itemLabel = checkbox.parentNode.textContent.trim(); // Get the label text
 
-    if (checkbox.checked) {
-        // Add the item if it's checked and not already in the array
-        if (!proficiencyArray.includes(itemLabel)) {
-            proficiencyArray.push(itemLabel);
-        }
-    } else {
-        // Remove the item if it's unchecked
-        const index = proficiencyArray.indexOf(itemLabel);
-        if (index > -1) {
-            proficiencyArray.splice(index, 1);
-        }
-    }
-}
-
-
-
-function updateProficiencyContainers() {
-    // Select the containers
-    const weaponsContainer = document.querySelector('#weaponsContainer');
-    const armorContainer = document.querySelector('#armorContainer');
-    const languageContainer = document.querySelector('#languageContainer');
-    const toolsContainer = document.querySelector('#toolsContainer');
-
-    // Helper function to update container content
-    function updateContainer(container, array) {
-        if (array.length > 0) {
-            container.textContent = array.join(', ');
-        } else {
-            container.textContent = '';
-        }
-    }
-
-    // Update each container with its respective proficiency array
-    updateContainer(weaponsContainer, playerWeaponProficiency);
-    updateContainer(armorContainer, playerArmorProficiency);
-    updateContainer(languageContainer, playerLanguageProficiency);
-    updateContainer(toolsContainer, playerToolsProficiency);
-}
 
 
     
@@ -897,20 +997,14 @@ function addBonus(category, key, value) {
     console.log(value.value)
 
     if (typeof value.value === "string") {
-        console.log("This is a string:", value.value);
         const abilityScoreLabel = findAbilityScoreLabel(value.value);
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
         value.value = abilityScoreValue;
-
-        console.log("Updated value with modifier:", value.value);
-    } else {
-        console.log("This is not a string, it's a number or something else:", value.value);
     }
 
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
         characterStatBonuses[category][key].bonuses.push(value);
         updateDerivedStats(category); // Call a category-specific update function
-        console.log(characterStatBonuses)
     } else {
         console.error(`Invalid category or key: ${category} -> ${key}`);
     }
@@ -919,15 +1013,10 @@ function addBonus(category, key, value) {
 function removeBonus(category, key, value) {
 
     if (typeof value.value === "string") {
-        console.log("This is a string:", value.value);
         const abilityScoreLabel = findAbilityScoreLabel(value.value);
         const abilityScoreValue = parseInt(abilityScoreLabel.getAttribute('value')) || 0;
         value.value = abilityScoreValue;
-
-        console.log("Updated value with modifier:", value.value);
-    } else {
-        console.log("This is not a string, it's a number or something else:", value.value);
-    }
+    } 
     if (characterStatBonuses[category] && characterStatBonuses[category][key]) {
         const bonuses = characterStatBonuses[category][key].bonuses;
 
@@ -1073,7 +1162,7 @@ function playerConditions(condition) {
             }
         });
 
-        const levelBasedConditions = ['Exhaustion', 'Aid'];
+        const levelBasedConditions = ['exhaustion', 'aid'];
         let conditionLevel 
         if (levelBasedConditions.includes(selectedCondition)) {
             // Find the highest level number for the selected condition and increment it
@@ -1119,16 +1208,18 @@ function playerConditions(condition) {
             <button class="remove-condition">x</button>
         `;
 
-         // Fetch the description from CONDITIONS or EFFECTS
-         let conditionDescription = null;
-         const allConditions = [...CONDITIONS, ...EFFECTS];
-         const matchingCondition = allConditions.find(
-             (entry) => entry.condition === selectedCondition || entry.effect === selectedCondition
-         );
- 
-         if (matchingCondition) {
-             conditionDescription = matchingCondition.description;
-         }
+        // Fetch the description from CONDITIONS or EFFECTS
+        let conditionDescription = null;
+        const conditionObj = translations[savedLanguage].conditions;
+        const effectObj = translations[savedLanguage].effects;
+
+        const processedCondition = selectedCondition.replace(/\s\d+$/, '').toLowerCase();
+
+        if (conditionObj[processedCondition]) {
+            conditionDescription = conditionObj[processedCondition].description;
+        } else if (effectObj[processedCondition]) {
+            conditionDescription = effectObj[processedCondition].description;
+        }
 
         // Tooltip logic for hover effect
         let tooltip
@@ -1137,7 +1228,7 @@ function playerConditions(condition) {
                 tooltip = document.createElement('div');
                 tooltip.classList.add('condition-tooltip');
                 tooltip.innerHTML = `
-                    <strong>${selectedCondition}</strong><br>
+                    <strong>${selectedConditionText}</strong><br>
                     ${conditionDescription}
                 `;
                 document.body.appendChild(tooltip);
@@ -1240,7 +1331,7 @@ function openLongRestModal() {
 
     let resetDetails = '';
     for (const [level, count] of Object.entries(spellSlotsResetInfo)) {
-        resetDetails += `${level}: ${count} slots reset.<br>`;
+        resetDetails += `${level}: ${count} ${translations[savedLanguage].longRestSpellSlotsTrans}.<br>`;
     }
 
     const hitDiceLabel = document.getElementById("hitDiceLabel");
@@ -1249,6 +1340,9 @@ function openLongRestModal() {
     let currentHitDice = parseInt(hitDiceLabel.textContent.trim(), 10);
     let maxHitDice = parseInt(hitDiceLabel.getAttribute('max'))
     let hitDiceToAdd
+
+    document.getElementById("cancelLongRestButton").textContent = `${translations[savedLanguage].cancelLongRestButton}`
+    document.getElementById("confirmLongRestButton").textContent = `${translations[savedLanguage].confirmLongRestButton}`
 
     // Check if currentHitDice is a valid number
     if (!isNaN(currentHitDice)) {
@@ -1266,7 +1360,7 @@ function openLongRestModal() {
         // Loop through each trait in the current group
         group.traitsToReset.forEach(trait => {
             // Add the trait name and the max uses to the reset details
-            longResetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+            longResetTraitDetails += `${trait.name} (${translations[savedLanguage].traitDescriptionTexts0} ${trait.maxUses} ${translations[savedLanguage].traitDescriptionTexts1})<br>`;
         });
         // Add a line break after each group for clarity
         longResetTraitDetails += '<br>';
@@ -1281,19 +1375,19 @@ function openLongRestModal() {
         // Loop through each trait in the current group
         group.traitsToReset.forEach(trait => {
             // Add the trait name and the max uses to the reset details
-            shortResetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+            shortResetTraitDetails += `${trait.name} (${translations[savedLanguage].traitDescriptionTexts0} ${trait.maxUses} ${translations[savedLanguage].traitDescriptionTexts1})<br>`;
         });
         // Add a line break after each group for clarity
         shortResetTraitDetails += '<br>';
     });
 
     // Populate the modal content
-    document.getElementById("longRestHPChange").textContent = `HP Restored: ${healthRestored}`;
-    document.getElementById("longRestTempHPChange").textContent =`Removing Temp HP: ${tempHP} `
-    document.getElementById("longRestSpellSlots").innerHTML = resetDetails || "No used spell slots to reset.";
-    document.getElementById("longRestHitDice").textContent =`Adding up to: ${hitDiceToAdd} Hit Dice`
-    document.getElementById("longRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${longResetTraitDetails}`;
-    document.getElementById("shortRestinLongFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${shortResetTraitDetails}`;
+    document.getElementById("longRestHPChange").textContent = `${translations[savedLanguage].longRestHPChangeTrans} ${healthRestored}`;
+    document.getElementById("longRestTempHPChange").textContent =`${translations[savedLanguage].longRestTempHPChangeTrans} ${tempHP} `
+    document.getElementById("longRestSpellSlots").innerHTML = resetDetails || `${translations[savedLanguage].longRestSpellSlotDefaultText}`;
+    document.getElementById("longRestHitDice").textContent =`${translations[savedLanguage].longRestHitDiceTrans} ${hitDiceToAdd} ${translations[savedLanguage].longRestHitDice01}`
+    document.getElementById("longRestFeatures&Traits").innerHTML =`<strong><br>${translations[savedLanguage].longRestFeatures}</strong><br>${longResetTraitDetails}`;
+    document.getElementById("shortRestinLongFeatures&Traits").innerHTML =`<strong><br>${translations[savedLanguage].longRestFeatures}</strong><br>${shortResetTraitDetails}`;
 
 
 
@@ -1321,19 +1415,22 @@ function openShortRestModal() {
     
     let resetTraitDetails = '';
 
+    document.getElementById("cancelshortRestButton").textContent = `${translations[savedLanguage].cancelLongRestButton}`
+    document.getElementById("confirmshortRestButton").textContent = `${translations[savedLanguage].confirmLongRestButton}`
+
     // Loop through each group of traits to reset
     traitsToReset.forEach(group => {       
         // Loop through each trait in the current group
         group.traitsToReset.forEach(trait => {
             // Add the trait name and the max uses to the reset details
-            resetTraitDetails += `${trait.name} (reseting up to ${trait.maxUses} uses)<br>`;
+            resetTraitDetails += `${trait.name} (${translations[savedLanguage].traitDescriptionTexts0} ${trait.maxUses} ${translations[savedLanguage].traitDescriptionTexts1})<br>`;
         });
         // Add a line break after each group for clarity
         resetTraitDetails += '<br>';
     });
 
     // Populate the modal content
-    document.getElementById("shortRestFeatures&Traits").innerHTML =`<strong><br>Traits to reset:</strong><br>${resetTraitDetails}`;
+    document.getElementById("shortRestFeatures&Traits").innerHTML =`<strong><br>${translations[savedLanguage].longRestFeatures}</strong><br>${resetTraitDetails}`;
 
 
 
@@ -1437,10 +1534,18 @@ function resetTraits(groupContainer, resetType) {
 
 function openHitDiceModal() {
 
+    
+
+    document.getElementById("cancelHitDiceButton").textContent = `${translations[savedLanguage].cancelLongRestButton}`
+    document.getElementById("confirmHitDiceButton").textContent = `${translations[savedLanguage].confirmLongRestButton}`
+
+    //document.getElementById("hitDiceModalHeader").textContent = `${translations[savedLanguage].hitDiceModalHeader}`
+    //document.getElementById("hitDiceModalText").textContent = `${translations[savedLanguage].hitDiceModalText}`
+
     updateHitDiceMax()
 
     const hitDiceButton = document.getElementById('hitDiceButton');
-    const diceText = hitDiceButton.textContent; // This is in the format "1d8"
+    const diceText = hitDiceButton.textContent; 
     
     // Extract the number of dice and the dice size from the label
     const [diceCount, diceSize] = diceText.split('d');
@@ -1562,7 +1667,7 @@ function damageCreature() {
         });
         
         if (conditionsSet) {
-            if (conditionsSet.has('Concentration')) {
+            if (conditionsSet.has('concentration')) {
                 const dc = Math.max(10, Math.ceil(damageAmount / 2));
                 showErrorModal(`Roll a Con save. <br> DC: ${dc}`, 3000);
             }
@@ -1950,8 +2055,9 @@ function updateToHitDice(proficiencyButton) {
         const weaponTypeSelect = row.querySelector('.weapon-type-dropdown-select');
         const selectedWeaponType = weaponTypeSelect ? weaponTypeSelect.value : null;
 
-        if (selectedWeaponType === "Ranged"){
+        if (selectedWeaponType === translations[savedLanguage].rangedWeapon){
             rangedAttackRollsBonus = characterStatBonuses.combatStats.RangedAttackRolls.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+            // console.log(rangedAttackRollsBonus)
         }
 
         // Find the associated ability score label without using :is selector
@@ -2105,6 +2211,8 @@ function getAllEditableContent() {
     const characterTempHp = document.getElementById("tempHP");
     const proficiencyButtons = document.querySelectorAll(".proficiencyButtons button");
     const currentHitDice = document.getElementById("hitDiceLabel");
+    const upcastToggle = document.getElementById("showUpcastSpells");
+    const exhaustionToggle = document.getElementById("exhaustionHomebrew");
 
     const content = {};
 
@@ -2112,6 +2220,8 @@ function getAllEditableContent() {
     content['characterTempHp'] = characterTempHp.value;
     content['currentHitDice'] = currentHitDice.textContent
     content['insp'] = getInspirationState();
+    content['upcastToggle'] = upcastToggle.checked ? 1 : 0;
+    content['exhaustionToggle'] = exhaustionToggle.checked ? 1 : 0;
     content['playerWeaponProficiency'] = [...playerWeaponProficiency];
     content['playerArmorProficiency'] = [...playerArmorProficiency];
     content['playerLanguageProficiency'] = [...playerLanguageProficiency];
@@ -2383,6 +2493,9 @@ function updateCharacterUI(characterData, characterName) {
     characterTempHpElement.value = characterData.characterTempHp;
     currentHitDice.textContent = characterData.currentHitDice;
 
+    setUpcastToggle(characterData.upcastToggle)
+    setExhaustionToggle(characterData.exhaustionToggle)
+
     const characterInit = document.getElementById("initiativeButton");
     const characterInitLabel = document.querySelector(`.playerStats label[for="initiativeButton"]`);
     characterInit.textContent = characterData.initiativeButton
@@ -2441,13 +2554,14 @@ function updateCharacterUI(characterData, characterName) {
     
     updateAbilityScoreModifiers(characterData);
     
-    updateActionTableUI(characterData.actionTable);
+    
     loadInventoryData(characterData.inventoryData);
     loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
     loadNotesGroupData(characterData.groupNotesData);
     
     loadAndSetLanguage()
+    updateActionTableUI(characterData.actionTable);
     updateAdjustmentValues()
 
     updateExtrasCardDataFromLoad(characterData.extrasData)
@@ -2462,6 +2576,16 @@ function updateCharacterUI(characterData, characterName) {
 
 async function loadAndSetLanguage(){
     setLanguage(savedLanguage);
+}
+
+function setUpcastToggle(value) {
+    const upcastToggle = document.getElementById("showUpcastSpells");
+    upcastToggle.checked = value === 1;
+}
+
+function setExhaustionToggle(value){
+    const exahustionToggle = document.getElementById("exhaustionHomebrew");
+    exahustionToggle.checked = value === 1;
 }
 
 //finding the proficency level saved in gloabl storage and calling updateProficiency
@@ -3039,7 +3163,15 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     abilityStatDropdown.className = "abilityStatDropdown";
     const select = document.createElement('select');
     select.className = "ability-dropdown";
-    const abilities = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+    let abilities = [
+        translations[savedLanguage].characterAbilityStr,
+        translations[savedLanguage].characterAbilityDex,
+        translations[savedLanguage].characterAbilityCon,
+        translations[savedLanguage].characterAbilityInt,
+        translations[savedLanguage].characterAbilityWis,
+        translations[savedLanguage].characterAbilityCha
+    ];
+
 
     abilities.forEach(ab => {
         const option = document.createElement('option');
@@ -3058,7 +3190,11 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     weaponTypeDropdown.className = "weapon-type-dropdown";
     const weaponTypeSelect = document.createElement('select');
     weaponTypeSelect.className = "weapon-type-dropdown-select";
-    const weaponTypeSelectOptions = ["Melee", "Ranged", "Magic"];
+    let weaponTypeSelectOptions = [
+        translations[savedLanguage].meleeWeapon,
+        translations[savedLanguage].rangedWeapon,
+        translations[savedLanguage].magicWeapon
+    ];
 
     weaponTypeSelectOptions.forEach(ab => {
         const option = document.createElement('option');
@@ -3082,6 +3218,7 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     weaponTypeSelect.addEventListener('change', function () {
         updateContent();
         calculateActionDamageDice()
+        updateAllToHitDice()
     });
 
     // Add contenteditable divs for weapon properties and description
@@ -3102,7 +3239,7 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     dropdownDiv.className = "dropdown";
     const dropbtn = document.createElement('button');
     dropbtn.className = "dropbtn";
-    dropbtn.innerText = "Filter Actions";
+    dropbtn.innerText = translations[savedLanguage].filterActionsButton;
     dropdownDiv.appendChild(dropbtn);
 
     const updatedrowIndex = rowIndex - 1
@@ -3116,37 +3253,48 @@ function createColumnSixContent(rowData, rowIndex, newRow) {
     dropdownDiv.appendChild(checkboxContainer);
     additionalInfoContainer.appendChild(dropdownDiv);
 
+    const actionBonusContainer = document.createElement('div');
+    actionBonusContainer.classList.add('actionBonusContainerDiv')
+
     // Magic Bonus input
     const magicBonusDiv = document.createElement('div');
     const magicBonusInput = document.createElement('input');
-    magicBonusInput.placeholder = "To Hit Bonus";
-    magicBonusDiv.textContent = "To Hit Bonus : ";
+    const magicBonusText = document.createElement('span');
+    magicBonusInput.placeholder = "5";
+    magicBonusText.textContent = translations[savedLanguage].actionTableToHitBonus;
     magicBonusInput.classList.add('magic-bonus-weapon');
     magicBonusInput.value = rowData["eighthColumn"];
+    magicBonusDiv.appendChild(magicBonusText);
     magicBonusDiv.appendChild(magicBonusInput);
-    additionalInfoContainer.appendChild(magicBonusDiv);
+    actionBonusContainer.appendChild(magicBonusDiv);
 
     const damageBonusDiv = document.createElement('div');
     const damageBonusInput = document.createElement('input');
-    damageBonusInput.placeholder = "Damage Bonus";
-    damageBonusDiv.textContent = "Damage Mod : ";
+    const damageText = document.createElement('span');
+    damageBonusInput.placeholder = "2";
+    damageText.textContent = translations[savedLanguage].actionTableDamageMod;
     damageBonusInput.classList.add('damage-bonus-weapon');
     damageBonusInput.value = rowData["damageBonus"] ?? "";
+    damageBonusDiv.appendChild(damageText);
     damageBonusDiv.appendChild(damageBonusInput);
-    additionalInfoContainer.appendChild(damageBonusDiv);
+    actionBonusContainer.appendChild(damageBonusDiv);
 
     // Create the damage dice input field
     const damageDiceInput = createDamageDiceInput(rowIndex);
-    additionalInfoContainer.appendChild(damageDiceInput);
+    actionBonusContainer.appendChild(damageDiceInput);
 
     const damageTypeDiv = document.createElement('div');
     const damageTypeInput = document.createElement('input');
-    damageTypeInput.placeholder = "Damage Type";
-    damageTypeDiv.textContent = "Damage Type : ";
+    const damageTypeText = document.createElement('span');
+    damageTypeInput.placeholder = "Slashing";
+    damageTypeText.textContent = translations[savedLanguage].actionTableDamageType;
     damageTypeInput.classList.add('damage-type')
     damageTypeInput.value = rowData["twelvethColumn"]
+    damageTypeDiv.appendChild(damageTypeText);
     damageTypeDiv.appendChild(damageTypeInput);
-    additionalInfoContainer.appendChild(damageTypeDiv);
+    actionBonusContainer.appendChild(damageTypeDiv);
+
+    additionalInfoContainer.appendChild(actionBonusContainer);
 
     // Add blur event listener
     const inputElement = damageDiceInput.querySelector('.actionDamageDice');
@@ -3275,14 +3423,16 @@ function calculateActionDamageDice() {
         });
         
         if (conditionsSet) {
-            if (conditionsSet.has('Raging') && selectedWeaponType === "Melee" && abilityDropdown.value === "STR") {        
+            if (conditionsSet.has('Raging') && 
+            selectedWeaponType === translations[savedLanguage].meleeWeapon && 
+            abilityDropdown.value === translations[savedLanguage].characterAbilityStr) {        
                     rageDamageBonus = characterStatBonuses.combatStats.RageDamageBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
             }
         }
 
         let rangedDamageRollsBonus = 0;
 
-        if (selectedWeaponType === "Ranged"){
+        if (selectedWeaponType === translations[savedLanguage].rangedWeapon){
             rangedDamageRollsBonus = characterStatBonuses.combatStats.RangedDamageRolls.bonuses.reduce((total, bonus) => total + bonus.value, 0);
         }
 
@@ -3377,13 +3527,16 @@ function addDamageDiceInputListener(inputElement, rowElement) {
 function createDamageDiceInput(rowIndex) {
     const div = document.createElement('div');
     const input = document.createElement('input');
+    const text = document.createElement('span');
     input.id = `damageDiceActions${rowIndex}`;
     input.className = 'actionDamageDice';
-    input.placeholder = 'Enter damage dice';
-    div.textContent ="Damage Dice : "
+    input.placeholder = '1d10/2d5 or 1d10+2d5';
+    text.textContent = translations[savedLanguage].actionTableDamageDice;
 
     const label = document.createElement('span');
     label.textContent = '';
+
+    div.appendChild(text);
 
     div.appendChild(input);
     div.appendChild(label);
@@ -3396,7 +3549,7 @@ function createDeleteButton(rowIndex) {
     const deleteButton = document.createElement('button');
     deleteButton.id = `deleteRowButton${rowIndex}`;
     deleteButton.className = 'removeButton nonRollButton';
-    deleteButton.textContent = 'Delete Current Row';
+    deleteButton.textContent = translations[savedLanguage].actionTableDeleteButton;
     deleteButtonDiv.appendChild(deleteButton);
 
     // Add the event listener
@@ -3533,6 +3686,7 @@ document.querySelectorAll('.remove-spell-slot').forEach(button => {
 function createSpellTable(spellLevel) {
     const table = document.createElement('table');
     table.classList.add('spell-table');
+    table.dataset.spellLevel = spellLevel;
 
     const headerRow = document.createElement('tr');
     headerRow.classList.add('spell-row', 'spell-header');
@@ -3558,23 +3712,75 @@ function createSpellTable(spellLevel) {
     });
 
     table.appendChild(headerRow);
+
+    // Table Drag and Drop Handlers
+    table.addEventListener('dragover', handleDragOver);
+    table.addEventListener('drop', handleDrop);
     return table;
 }
 
+
+function handleDragOver(e) {
+    e.preventDefault();
+    const targetTable = e.currentTarget;
+    
+    // Verify same spell level
+    if (targetTable.dataset.spellLevel !== draggedRow.dataset.spellLevel) {
+        e.dataTransfer.dropEffect = 'none';
+        return;
+    }
+
+    const rows = [...targetTable.querySelectorAll('tr:not(.dragging):not(.spell-header)')];
+    const afterElement = getDragAfterElement(rows, e.clientY);
+    
+    if (afterElement) {
+        targetTable.insertBefore(draggedRow, afterElement);
+    } else {
+        targetTable.appendChild(draggedRow);
+    }
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    updateContent(); // Persist the new order
+}
+
+function getDragAfterElement(rows, y) {
+    return rows.reduce((closest, row) => {
+        const box = row.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+        if (offset < 0 && offset > closest.offset) {
+            return { offset: offset, element: row };
+        } else {
+            return closest;
+        }
+    }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
 
 
 
 function createSpellRow(spell,spellLevel) {
     const row = document.createElement('tr');
+    row.draggable = false;
     row.classList.add('spell-row');
     row.title = spell.description;
     row.id = `${spellLevel}`+ row.index;
+    row.dataset.spellLevel = spellLevel;
 
     // Spell name input field
+   
+    const dragHandle = document.createElement('span');
+    dragHandle.classList.add('drag-handle');
+    dragHandle.innerHTML = '⋮⋮';
+    dragHandle.addEventListener('mousedown', () => {
+        row.draggable = true;
+    });
+    dragHandle.addEventListener('mouseup', () => {
+        row.draggable = false;
+    });
+
     const spellNameContainer = document.createElement('td');
     spellNameContainer.classList.add('spell-name');
-
-    console.log(spell)
 
     let spellPreparedButton
 
@@ -3583,10 +3789,6 @@ function createSpellRow(spell,spellLevel) {
         spellPreparedButton.classList.add('spell-prepared-button')
         const preparedValue = spell.prepared ? spell.prepared : '0';
         spellPreparedButton.setAttribute('value', preparedValue);
-    }
-    else{
-        console.log("no")
-        console.log(spellLevel)
     }
     
 
@@ -3666,6 +3868,8 @@ function createSpellRow(spell,spellLevel) {
         }
     });
 
+    spellNameContainer.appendChild(dragHandle);
+
     if(spellPreparedButton){
         spellPreparedButton.addEventListener('click', () => {
             // Get the current value and toggle between '0' and '1'
@@ -3723,15 +3927,56 @@ function createSpellRow(spell,spellLevel) {
     row.appendChild(components);
     row.appendChild(removeCell);
 
+    // Drag and Drop Event Listeners
+    row.addEventListener('dragstart', handleDragStart);
+    row.addEventListener('dragend', handleDragEnd);
+    updateAllSpellDamageDice()
     return row;
+    
+}
+
+let draggedRow = null;
+
+function handleDragStart(e) {
+    // Store dragged row and its original spell level
+    draggedRow = e.target.closest('tr');
+    draggedRow.classList.add('dragging');
+    draggedRow.dataset.originalSpellLevel = draggedRow.closest('table').dataset.spellLevel;
+    
+    // Set up data transfer
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', '');
+}
+
+
+function handleDragEnd(e) {
+    draggedRow.classList.remove('dragging');
+    draggedRow = null;
 }
 
 function removeSpellRow(row) {
+    // Get the spell name from the input before removal
+    const spellNameInput = row.querySelector('.spell-name-input');
+    const spellName = spellNameInput ? spellNameInput.value.trim() : '';
+
+    // Remove the main spell row
     row.parentElement.removeChild(row);
-    updateContent()
+
+    // Remove all upcast spells with the same name
+    document.querySelectorAll('.upcast-spell').forEach(upcastRow => {
+        const upcastNameInput = upcastRow.querySelector('.spell-name-input');
+        const upcastName = upcastNameInput ? upcastNameInput.value.trim() : '';
+        
+        if (upcastName === spellName) {
+            upcastRow.parentElement.removeChild(upcastRow);
+        }
+    });
+
+    updateContent();
 }
 
 function addSpellToContainer(spellContainer, spellData = null) {
+    console.warn(spellData)
     // Default spell data if not provided
     if (!spellData) {
         spellData = {
@@ -3812,7 +4057,6 @@ function loadSpell(spell,row) {
 
     // Find the corresponding spell object based on the spell name
     let spellDetails = spellDataArray.find(spellData => spellData.name === spell.name);
-    
     if (!spellDetails) {
         console.error(`Spell "${spell.name}" not found.`);
         return;
@@ -3823,6 +4067,8 @@ function loadSpell(spell,row) {
         return;
     }
 
+    const spellLevel = row.getAttribute('data-spell-level');
+    const baseLevel = spellDetails.level;
     // Update each field in the row with the spell details
     const spellNameInput = row.querySelector('.spell-name-input');
     if (spellNameInput) {
@@ -3854,6 +4100,7 @@ function loadSpell(spell,row) {
         spellDice.innerHTML = "";
 
         spellDice.appendChild(updateSpellDamageDice(spellmodifier,spellDetails.damage_dice,spellDetails))
+        updateAllSpellDamageDice()
         
     }
 
@@ -3867,10 +4114,107 @@ function loadSpell(spell,row) {
         components.textContent = spellDetails.components + spellDetails.ritual;
     }
 
+    if(spellDetails.higher_level === "" || spellLevel === "Cantrip"){
+    }
+    else if(spellLevel > baseLevel){
+        row.classList.add('upcast-spell');
+    }
+    else{
+        generateUpcastSpells(spell, spellLevel, spellDetails, row);
+    }
 
     rollableButtons()
     updateContent()
 }
+
+function getLevelNumber(levelStr) {
+    return parseInt(levelStr.replace(/\D/g, ''));
+}
+
+function calculateUpcastDamage(originalDamage, upcastDice, levelsAbove) {
+    // Split the original damage into parts and determine the separators
+    const parts = originalDamage.split(/[/+]/g);
+    const separators = originalDamage.match(/[/+]/g) || [];
+
+    // Parse the upcast dice to get the number and die type
+    const upcastMatch = upcastDice.match(/^(\d+)d(\d+)$/);
+    if (!upcastMatch) {
+        console.error('Invalid upcastDice format:', upcastDice);
+        return originalDamage;
+    }
+    const upcastNum = parseInt(upcastMatch[1], 10);
+    const upcastDie = `d${upcastMatch[2]}`;
+
+    // Process each part of the original damage
+    const modifiedParts = parts.map(part => {
+        const partMatch = part.match(/^(\d+)d(\d+)$/);
+        if (!partMatch) return part; // Skip if format is invalid
+
+        const originalNum = parseInt(partMatch[1], 10);
+        const die = `d${partMatch[2]}`;
+
+        if (die === upcastDie) {
+            return `${originalNum + upcastNum * levelsAbove}${die}`;
+        } else {
+            return part;
+        }
+    });
+
+    // Rebuild the damage string with original separators
+    let result = modifiedParts[0];
+    for (let i = 0; i < separators.length; i++) {
+        result += separators[i] + modifiedParts[i + 1];
+    }
+    return result;
+}
+
+function generateUpcastSpells(baseSpell, baseLevel, spell) {
+    const spellLevels = ['1st-level', '2nd-level', '3rd-level', '4th-level', '5th-level', '6th-level', '7th-level', '8th-level', '9th-level'];
+    const spellLevelContainer = ['level1', 'level2', 'level3', 'level4', 'level5', 'level6', 'level7', 'level8', 'level9'];
+    const baseLevelIndex = spellLevels.indexOf(baseLevel);
+
+    const spellDataObject = AppData.spellLookupInfo;
+    const spellDataArray = spellDataObject.spellsData;
+
+    // Find the corresponding spell object based on the spell name
+    let spellData = spellDataArray.find(spellData => spellData.name === spell.name);
+    
+    if (baseLevelIndex === -1 || !document.getElementById('showUpcastSpells').checked) return;
+
+    for (let i = baseLevelIndex + 1; i < spellLevels.length; i++) {
+        const container = document.querySelector(`#${spellLevelContainer[i].replace(' ', '-')}-container`);
+        if (container) {
+            const upcastSpell = {...baseSpell};
+            upcastSpell.level = spellLevels[i];
+
+            // Handle spell data within the spell container
+            const spellGroup = document.querySelector(`.spell-group[spellLevel="${spellLevels[i]}"]`);
+            const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spelllevel="${spellLevels[i]}"]`) : null;
+
+            if (spellContainer) {
+                // Check for existing spell table or create one if it doesn't exist
+                let spellTable = spellContainer.querySelector('.spell-table');
+                if (!spellTable) {
+                    spellTable = createSpellTable(spellLevels[i]);
+                    spellContainer.appendChild(spellTable);
+                }
+
+                const spellRow = createSpellRow(spellData, spellLevels[i]);
+                spellTable.appendChild(spellRow);
+                loadSpell(spellData, spellRow);  // Populates the row with spell details
+            } else {
+                console.error(`Spell container for level ${spellLevels[i]} not found.`);
+            }
+        }
+    }
+}
+
+document.getElementById('showUpcastSpells').addEventListener('change', function() {
+    document.querySelectorAll('.upcast-spell').forEach(row => {
+        row.style.display = this.checked ? '' : 'none';
+    });
+    updateContent();
+});
 
 function updateSpelltoHitorDC(spellDetails) {
     
@@ -4062,7 +4406,6 @@ function getCantripDamageDice(baseDice, characterLevel, spellDetails) {
 
 function updateSpellsDC(ability, saveType, row){
     const spellDCSelections = row.querySelector('.spell-save');
-    console.log(row);
     const spellAbilityScoreModifer = parseInt(findAbilityScoreLabel(ability).getAttribute('value'));
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
@@ -4105,6 +4448,23 @@ function updateAllSpellDamageDice() {
                     if (spellDetails.level.toLowerCase() === "cantrip") {
                         if (spellDetails.damage_dice_upcast) {
                             adjustedDamageDice = getCantripDamageDice(adjustedDamageDice, characterLevel, spellDetails);
+                        }
+                    }
+
+                    let upCastedDice
+                    const spellLevel = row.getAttribute('data-spell-level');
+                    const baseLevel = spellDetails.level;
+                    if(spellDetails.higher_level === "" || spellLevel === "Cantrip"){
+                        // No upcasting needed
+                    }
+                    else if(spellLevel > baseLevel){
+                        if (spellDetails.damage_dice_upcast) {
+                            const levelsAbove = getLevelNumber(spellLevel) - getLevelNumber(baseLevel);
+                            const diceIncrease = spellDetails.damage_dice_upcast;
+                            console.log(levelsAbove, diceIncrease)
+                            upCastedDice = calculateUpcastDamage(spellDetails.damage_dice, diceIncrease, levelsAbove);
+                            console.warn(upCastedDice)
+                            adjustedDamageDice = upCastedDice;
                         }
                     }
 
@@ -4217,8 +4577,6 @@ function updateAllSpellDCs() {
                 }
 
             }
-        } else {
-            console.log("Spell Name Input not found in this row.");
         }
     });
     updateContent()
@@ -4426,6 +4784,9 @@ function processSpellData() {
             const spellDetails = {};
 
             // Get spell details
+            if (row.classList.contains('upcast-spell')) {
+                return
+            }
             const spellNameInput = row.querySelector('.spell-name-input');
             const spellName = spellNameInput ? spellNameInput.value.trim() : '';
             const spellPreparedButton = row.querySelector('.spell-prepared-button');
@@ -4540,9 +4901,11 @@ function loadSpellData(spellData) {
 }
 
 
+
 // Function to filter spells by selected level
 function filterSpellsByLevel(selectedLevel) {
     const spellGroups = document.querySelectorAll('.spell-group');
+    
 
     spellGroups.forEach(spellGroup => {
         const spellLevelAttr = spellGroup.getAttribute('spellLevel');
@@ -5735,7 +6098,7 @@ function createNewGroup(groupData = null) {
 
     const addTraitButton = document.createElement('button');
     addTraitButton.classList.add('add-trait-button');
-    addTraitButton.textContent = '+ Add New Trait';
+    addTraitButton.textContent = `${translations[savedLanguage].featuresAddTraitButton} `;
 
     // Add event listener to add new traits to the group
     addTraitButton.addEventListener('click', function () {
@@ -5896,7 +6259,7 @@ function addNewTrait(groupContainer, traitData = null) {
     const traitUses = document.createElement('div');
     traitUses.classList.add('trait-uses');
     const usesLabel = document.createElement('label');
-    usesLabel.textContent = 'Number of Uses:';
+    usesLabel.textContent = `${translations[savedLanguage].featuresNumberUsesText}`;
     const usesInput = document.createElement('input');
     usesInput.type = 'number';
     usesInput.classList.add('trait-uses-input');
@@ -5911,7 +6274,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Function to update the checkboxes on the main section
     function updateCheckboxes() {
         const numberOfUses = parseInt(usesInput.value);
-        checkboxesContainerMain.innerHTML = 'Uses: '; // Clear existing checkboxes
+        checkboxesContainerMain.innerHTML = `${translations[savedLanguage].featuresUsesText}: `;
 
         for (let i = 0; i < numberOfUses; i++) {
             const checkboxMain = document.createElement('input');
@@ -5939,11 +6302,10 @@ function addNewTrait(groupContainer, traitData = null) {
 
     const resetLabel = document.createElement('span');
     resetLabel.classList.add('reset-label');
-    resetLabel.textContent = "Reset on: "; 
+    resetLabel.textContent = `${translations[savedLanguage].featuresResetText}`; 
 
      const resetDropdown = document.createElement('select');
      resetDropdown.classList.add('reset-type-dropdown');
-     resetDropdown.textContent = "Reset on: "
      const resetOptions = ['None', 'Short Rest', 'Long Rest'];
      resetOptions.forEach(option => {
          const opt = document.createElement('option');
@@ -5981,7 +6343,7 @@ function addNewTrait(groupContainer, traitData = null) {
     const categoryWrapper = document.createElement('div');
     categoryWrapper.classList.add('select-wrapper')
     const categoryLabel = document.createElement('label');
-    categoryLabel.textContent = 'Category:';
+    categoryLabel.textContent = `${translations[savedLanguage].featuresCategoryText}`;
     const categorySelect = document.createElement('select');
     categorySelect.classList.add('category-select');
     Object.keys(characterStatBonuses).forEach(category => {
@@ -5999,7 +6361,7 @@ function addNewTrait(groupContainer, traitData = null) {
     const subcategoryWrapper = document.createElement('div');
     subcategoryWrapper.classList.add('select-wrapper')
     const subCategoryLabel = document.createElement('label');
-    subCategoryLabel.textContent = 'Subcategory:';
+    subCategoryLabel.textContent = `${translations[savedLanguage].featuresSubcategoryText}`;
     const subCategorySelect = document.createElement('select');
     subCategorySelect.classList.add('subcategory-select');
     if (traitData?.adjustmentCategory) {
@@ -6020,7 +6382,7 @@ function addNewTrait(groupContainer, traitData = null) {
     const abilityWrapper = document.createElement('div');
     abilityWrapper.classList.add('select-wrapper')
     const abilityLabel = document.createElement('label');
-    abilityLabel.textContent = 'Ability Score to use for adjustment value';
+    abilityLabel.textContent = `${translations[savedLanguage].featuresAbilityScoreText}`;
     const abilitySelect = document.createElement('select');
     abilitySelect.classList.add('trait-ability-select');
     const abilities = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'Proficiency'];
@@ -6037,7 +6399,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Adjustment Value
     const adjustmentValueLabel = document.createElement('label');
-    adjustmentValueLabel.textContent = 'Adjustment Value: ';
+    adjustmentValueLabel.textContent = `${translations[savedLanguage].featuresAdjustmentText} `;
     const adjustmentValueInput = document.createElement('input');
     adjustmentValueInput.classList.add('adjustment-value');
     adjustmentValueInput.placeholder = 'Enter value or formula';
@@ -6113,7 +6475,7 @@ function addNewTrait(groupContainer, traitData = null) {
     
     // Delete Trait Button
     const deleteTraitButton = document.createElement('button');
-    deleteTraitButton.textContent = 'Delete Trait';
+    deleteTraitButton.textContent = `${translations[savedLanguage].featuresDeleteButton}`;
     deleteTraitButton.classList.add('delete-trait-button');
     deleteTraitButton.classList.add('nonRollButton');
 
@@ -6373,7 +6735,7 @@ function createNewNotesGroup(groupData = null) {
     const addNoteButton = document.createElement('button');
     addNoteButton.classList.add('add-note-button');
     addNoteButton.classList.add('nonRollButton');
-    addNoteButton.textContent = '+ Add Note';
+    addNoteButton.textContent = `${translations[savedLanguage].docsSectionNoteButton}`;
 
     // Add event listener to create new notes
     addNoteButton.addEventListener('click', function () {
@@ -6546,7 +6908,6 @@ function processNotesGroupData() {
 
 //Loading and updating the notes section with the saved notes. 
 function loadNotesGroupData(notesGroupData) {
-    console.log(notesGroupData)
     if (notesGroupData){
         // Loop through each group in notesGroupData
         notesGroupData.forEach(group => {
@@ -6731,9 +7092,6 @@ async function sendDMUpdatedStatsDebounced() {
 
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
-
-    console.log(gmClient)
-
     if (gmClient !== null) {
         const playerStats = getPlayerData();
 
@@ -6992,7 +7350,7 @@ document.getElementById("importSaveButton").addEventListener("click", async () =
         const key = Object.keys(parsedData)[0];
         const dataInfo = parsedData[key];
 
-        if (importDataType === "character"){
+        if (importDataType === "characters"){
             // Save the character data using the specified function
             saveToCampaignStorage(importDataType, key, dataInfo, true);
         }

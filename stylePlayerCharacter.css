@@ -259,6 +259,54 @@
     gap: 2px;
 }
 
+#conditionPlayerAddButton{
+    font-size: 12px;
+}
+
+.drag-handle {
+    cursor: pointer;
+    user-select: none;
+    opacity: .5;
+    padding-right: 5px;
+    padding-left: 5px;
+    font-size: 1.2em;
+    vertical-align: middle;
+    transition: opacity 0.2s;
+}
+
+.drag-handle:hover {
+    opacity: 0.8;
+}
+
+tr.dragging .drag-handle {
+    opacity: 0;
+}
+
+tr.dragging {
+    opacity: 0.8;
+    background: #7a7a7a;
+}
+
+tr.spell-row {
+    transition: opacity 0.2s;
+}
+
+.upcast-spell {
+    position: relative;
+    cursor: help;
+}
+
+.upcast-spell::before {
+    content: "⮝";
+    position: absolute;
+    left: 235px;
+    top: 5px;
+    font-size: 1.4em;
+    color: var(--border-outline-color);
+    z-index: 1;
+}
+
+
 #playerCharacterInput{
     padding: 8px;
     margin-bottom: 5px;
@@ -266,6 +314,45 @@
     font-size: 18px;
 
 }
+
+.fire::before { content: "🔥"; }
+.cold::before { content: "❄"; }
+.lightning::before { content: "⚡"; }
+.necrosis::before { content: "🦴"; }
+.psychic::before { content: "🌀"; }
+.radiant::before { content: "☀"; }
+.force::before { content: "✨"; }
+.piercing::before { content: "➳"; }
+
+
+.poisoned::before { content: "☠"; }
+.blinded::before { content: "👁\0020\0336"; } /* Strikethrough eye */
+.restrained::before { content: "⛓"; }
+.prone::before { content: "↓"; }
+.frightened::before { content: "😱"; }
+.paralyzed::before { content: "⏸"; }
+.unconscious::before { content: "💤"; }
+.concentration::before { content: "⧗"; } /* Hourglass */
+
+.aoe-square::before { content: "□"; }
+.aoe-circle::before { content: "○"; }
+.aoe-cone::before {
+    content: "";
+    display: inline-block;
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 12px solid currentColor;
+}
+
+.disadvantage::before { content: "⮟"; }  /* Downwards arrow */
+.advantage::before { content: "⮝"; }  /* Upwards arrow */
+
+
+
+
+
 #levelText, #characterLevel, #playerXP{
     font-size: 18px;
 }
@@ -873,6 +960,31 @@
     left: 20px;
 }
 
+.actionBonusContainerDiv {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    justify-items: stretch;
+    align-items: center;
+}
+
+.actionBonusContainerDiv > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: space-between;
+}
+
+.actionBonusContainerDiv span {
+    width: 10rem;
+    text-align: right;
+    justify-self: right;
+}
+
+.actionBonusContainerDiv input {
+    width: 10rem;
+    text-align: left;
+}
+
 
 
 .spell-prepared-button{
@@ -1026,36 +1138,47 @@
     margin: 0;
     text-align: center;
     vertical-align: middle; 
+    white-space: nowrap;
 }
 
-.spell-name{
-    padding: 0;
+.spell-name {
+    border: none !important;
+    border-top: solid 1px var(--border-outline-color) !important;
+    position: relative; 
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 4px;
+    margin-left: 5px;
+    min-width: 250px; /* Adjust based on your needs */
 }
-
 
 
 .spell-name-input{
-    width: 190px;
     color: white;
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--border-outline-color);
+    flex-grow: 1;
+    width: auto; /* Remove fixed width */
+    min-width: 150px; /* Minimum width */
+    padding: 2px 4px;
     margin: 0;
-    padding: 2px;
     text-align: center;
 }
 
 .dropdown-container{
     position: absolute;
-    width: 190px; /* Match input width */
-    font-size: 15px;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
 }
 
 .dropdown-list{
     color: white;
     background-color: var(--ts-background-secondary);
-    position: relative; /* Position within the absolute container */
-    left: 25%; /* Align left with the input */
-    width: 100%; /* Match container width */
+    position: relative;
+    width: 100%;
     border: 1px solid var(--border-outline-color);
     cursor: pointer;
     max-height: 450px;
@@ -1165,7 +1288,8 @@
     font-style: italic;
     color: white;
     background-color: var(--border-outline-color);
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     border: none;
     cursor: pointer;
 }

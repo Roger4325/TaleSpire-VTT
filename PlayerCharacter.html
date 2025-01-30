@@ -24,6 +24,12 @@
                             <button id="openHomebrew" class="nonRollButton">Homebrew</button>
                         </div>
                     </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" id="showUpcastSpells" checked>Show Upcast Spells
+                        </label>    
+                    </li>
+                    
                     <!-- Add more options as needed -->
                 </ul>
             </div>
@@ -35,14 +41,14 @@
         
         <nav class="tabs">
             <ul>
-                <li><a href="#playerStats" data-title="View player statistics and details.">Player Stats</a></li>
-                <li><a href="#actions" data-title="Explore the available actions for your character.">Actions</a></li>
-                <li><a href="#SpellList" data-title="Check your list of prepared and known spells.">Spell List</a></li>
-                <li><a href="#inventory" data-title="Manage and view your character's inventory.">Inventory</a></li>
-                <li><a href="#features" data-title="Review your character's features and traits.">Features & Traits</a></li>
-                <li><a href="#Docs" data-title="Keep track of important notes.">Notes</a></li>
-                <li><a href="#Extras" data-title="Used to track pet's, wildshaps or polymorphs">Extra</a></li>
-                <li><a href="#Init" data-title="View the initiative list when actively in Initiative.">Init List</a></li>
+                <li><a href="#playerStats" id="playerStatsHeader" data-title="View player statistics and details.">Player Stats</a></li>
+                <li><a href="#actions" id="actionsHeader" data-title="Explore the available actions for your character.">Actions</a></li>
+                <li><a href="#SpellList" id="spellListHeader" data-title="Check your list of prepared and known spells.">Spell List</a></li>
+                <li><a href="#inventory" id="inventoryHeader" data-title="Manage and view your character's inventory.">Inventory</a></li>
+                <li><a href="#features" id="featuresHeader" data-title="Review your character's features and traits.">Features & Traits</a></li>
+                <li><a href="#Docs" id="docsHeader" data-title="Keep track of important notes.">Notes</a></li>
+                <li><a href="#Extras" id="extrasHeader" data-title="Used to track pet's, wildshaps or polymorphs">Extra</a></li>
+                <li><a href="#Init" id="initHeader" data-title="View the initiative list when actively in Initiative.">Init List</a></li>
                 <li>
                     <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
                     <div id="settings-option-dropdown" style="display: none; position: absolute;">
@@ -222,7 +228,7 @@
                             <option id="conditionOptionRaging" value="Raging">Raging</option>
                         <!-- Add more condition options here -->
                         </select>
-                        <button id="conditionPlayerAddButton" data-title="Adds a condition to the player." class="nonRollButton" onclick="playerConditions()">Condition</button>
+                        <button id="conditionPlayerAddButton" data-title="Adds a condition to the player." class="nonRollButton" onclick="playerConditions()">Add Condition</button>
                     </div>
                     <div id="conditionTracker"></div>
                 </div>
@@ -567,7 +573,7 @@
                         </div>
                     </div>
                     <fieldset id="proficiency-container">
-                        <legend>Proficiencies</legend>
+                        <legend id="proficiencyGroupHeading">Proficiencies</legend>
                         <!-- Weapons Proficiency -->
                         <div class="proficiency-group">
                             <h3 class="proficiency-headings">
@@ -578,57 +584,6 @@
                                 
                             </div>
                             <div class="proficiency-dropdown" id="weapons-dropdown">
-                                <ul>
-                                    <!-- Weapon Categories -->
-                                    <li><input type="checkbox" value="Martial Weapons" id="Martial Weapons"> Martial Weapons</li>
-                                    <li><input type="checkbox" value="Simple Weapons" id="Simple Weapons"> Simple Weapons</li>
-                                    
-                                    <!-- Simple Melee Weapons -->
-                                    <li><input type="checkbox" value="tester" id="Club"> Club</li>
-                                    <li><input type="checkbox" value="Dagger" id="Dagger"> Dagger</li>
-                                    <li><input type="checkbox" value="Greatclub" id="Greatclub"> Greatclub</li>
-                                    <li><input type="checkbox" value="Handaxe" id="Handaxe"> Handaxe</li>
-                                    <li><input type="checkbox" value="Javelin" id="Javelin"> Javelin</li>
-                                    <li><input type="checkbox" value="LightHammer" id="LightHammer"> Light Hammer</li>
-                                    <li><input type="checkbox" value="Mace" id="Mace"> Mace</li>
-                                    <li><input type="checkbox" value="Quarterstaff" id="Quarterstaff"> Quarterstaff</li>
-                                    <li><input type="checkbox" value="Sickle" id="Sickle"> Sickle</li>
-                                    <li><input type="checkbox" value="Spear" id="Spear"> Spear</li>
-                                    
-                                    <!-- Simple Ranged Weapons -->
-                                    <li><input type="checkbox" value="CrossbowLight" id="CrossbowLight"> Light Crossbow</li>
-                                    <li><input type="checkbox" value="Dart" id="Dart"> Dart</li>
-                                    <li><input type="checkbox" value="Shortbow" id="Shortbow"> Shortbow</li>
-                                    <li><input type="checkbox" value="Sling" id="Sling"> Sling</li>
-                                    
-                                    <!-- Martial Melee Weapons -->
-                                    <li><input type="checkbox" value="Battleaxe" id="Battleaxe"> Battleaxe</li>
-                                    <li><input type="checkbox" value="Flail" id="Flail"> Flail</li>
-                                    <li><input type="checkbox" value="Glaive" id="Glaive"> Glaive</li>
-                                    <li><input type="checkbox" value="Greataxe" id="Greataxe"> Greataxe</li>
-                                    <li><input type="checkbox" value="Greatsword" id="Greatsword"> Greatsword</li>
-                                    <li><input type="checkbox" value="Halberd" id="Halberd"> Halberd</li>
-                                    <li><input type="checkbox" value="Lance" id="Lance"> Lance</li>
-                                    <li><input type="checkbox" value="Longsword" id="Longsword"> Longsword</li>
-                                    <li><input type="checkbox" value="Maul" id="Maul"> Maul</li>
-                                    <li><input type="checkbox" value="Morningstar" id="Morningstar"> Morningstar</li>
-                                    <li><input type="checkbox" value="Pike" id="Pike"> Pike</li>
-                                    <li><input type="checkbox" value="Rapier" id="Rapier"> Rapier</li>
-                                    <li><input type="checkbox" value="Scimitar" id="Scimitar"> Scimitar</li>
-                                    <li><input type="checkbox" value="Shortsword" id="Shortsword"> Shortsword</li>
-                                    <li><input type="checkbox" value="Trident" id="Trident"> Trident</li>
-                                    <li><input type="checkbox" value="WarPick" id="WarPick"> War Pick</li>
-                                    <li><input type="checkbox" value="Warhammer" id="Warhammer"> Warhammer</li>
-                                    <li><input type="checkbox" value="Whip" id="Whip"> Whip</li>
-                                    
-                                    <!-- Martial Ranged Weapons -->
-                                    <li><input type="checkbox" value="Blowgun" id="Blowgun"> Blowgun</li>
-                                    <li><input type="checkbox" value="CrossbowHand" id="CrossbowHand"> Hand Crossbow</li>
-                                    <li><input type="checkbox" value="CrossbowHeavy" id="CrossbowHeavy"> Heavy Crossbow</li>
-                                    <li><input type="checkbox" value="Longbow" id="Longbow"> Longbow</li>
-                                    <li><input type="checkbox" value="Net" id="Net"> Net</li>
-                                    
-                                </ul>
                             </div>
                             
                         </div>
@@ -643,12 +598,6 @@
                                 
                             </div>
                             <div class="proficiency-dropdown" id="armor-dropdown">
-                                <ul>
-                                    <li><input type="checkbox" value="Light" id="Light"> Light</li>
-                                    <li><input type="checkbox" value="Medium" id="Medium"> Medium</li>
-                                    <li><input type="checkbox" value="Heavy" id="Heavy"> Heavy</li>
-                                    <li><input type="checkbox" value="Shield" id="Shield"> Shield</li>
-                                </ul>
                             </div>
                         </div>
                     
@@ -662,29 +611,6 @@
                                     
                             </div>
                             <div class="proficiency-dropdown" id="languages-dropdown">
-                                <ul>
-                                    <li><input type="checkbox" value="Common" id="Common"> Common</li>
-                                    <li><input type="checkbox" value="Dwarvish" id="Dwarvish"> Dwarvish</li>
-                                    <li><input type="checkbox" value="Elvish" id="Elvish"> Elvish</li>
-                                    <li><input type="checkbox" value="Giant" id="Giant"> Giant</li>
-                                    <li><input type="checkbox" value="Gnomish" id="Gnomish"> Gnomish</li>
-                                    <li><input type="checkbox" value="Goblin" id="Goblin"> Goblin</li>
-                                    <li><input type="checkbox" value="Halfling" id="Halfling"> Halfling</li>
-                                    <li><input type="checkbox" value="Orc" id="Orc"> Orc</li>
-                                    <li><input type="checkbox" value="Leonin" id="Leonin"> Leonin</li>
-                                    <li><input type="checkbox" value="Minotaur" id="Minotaur"> Minotaur</li>
-                                
-                                    <!-- Exotic Languages -->
-                                    <li><input type="checkbox" value="Abyssal" id="Abyssal"> Abyssal</li>
-                                    <li><input type="checkbox" value="Celestial" id="Celestial"> Celestial</li>
-                                    <li><input type="checkbox" value="Draconic" id="Draconic"> Draconic</li>
-                                    <li><input type="checkbox" value="DeepSpeech" id="DeepSpeech"> Deep Speech</li>
-                                    <li><input type="checkbox" value="Infernal" id="Infernal"> Infernal</li>
-                                    <li><input type="checkbox" value="Primordial" id="Primordial"> Primordial</li>
-                                    <li><input type="checkbox" value="Sylvan" id="Sylvan"> Sylvan</li>
-                                    <li><input type="checkbox" value="ThievesCant" id="ThievesCant"> Thieves Cant</li>
-                                    <li><input type="checkbox" value="Undercommon" id="Undercommon"> Undercommon</li>
-                                </ul>
                             </div>
                         </div>
                     
@@ -698,55 +624,6 @@
                                  
                             </div>
                             <div class="proficiency-dropdown" id="tools-dropdown">
-                                <ul>
-                                    <!-- Artisan's Tools -->
-                                    <li><input type="checkbox" value="Alchemist's Supplies" id="Alchemist's Supplies"> Alchemist's Supplies</li>
-                                    <li><input type="checkbox" value="Brewer's Supplies" id="Brewer's Supplies"> Brewer's Supplies</li>
-                                    <li><input type="checkbox" value="Calligrapher's Supplies" id="Calligrapher's Supplies"> Calligrapher's Supplies</li>
-                                    <li><input type="checkbox" value="Carpenter's Tools" id="Carpenter's Tools"> Carpenter's Tools</li>
-                                    <li><input type="checkbox" value="Cartographer's Tools" id="Cartographer's Tools"> Cartographer's Tools</li>
-                                    <li><input type="checkbox" value="Cobbler's Tools" id="Cobbler's Tools"> Cobbler's Tools</li>
-                                    <li><input type="checkbox" value="Cook's Utensils" id="Cook's Utensils"> Cook's Utensils</li>
-                                    <li><input type="checkbox" value="Glassblower's Tools" id="Glassblower's Tools"> Glassblower's Tools</li>
-                                    <li><input type="checkbox" value="Jeweler's Tools" id="Jeweler's Tools"> Jeweler's Tools</li>
-                                    <li><input type="checkbox" value="Leatherworker's Tools" id="Leatherworker's Tools"> Leatherworker's Tools</li>
-                                    <li><input type="checkbox" value="Mason's Tools" id="Mason's Tools"> Mason's Tools</li>
-                                    <li><input type="checkbox" value="Painter's Supplies" id="Painter's Supplies"> Painter's Supplies</li>
-                                    <li><input type="checkbox" value="Potter's Tools" id="Potter's Tools"> Potter's Tools</li>
-                                    <li><input type="checkbox" value="Smith's Tools" id="Smith's Tools"> Smith's Tools</li>
-                                    <li><input type="checkbox" value="Tinker's Tools" id="Tinker's Tools"> Tinker's Tools</li>
-                                    <li><input type="checkbox" value="Weaver's Tools" id="Weaver's Tools"> Weaver's Tools</li>
-                                    <li><input type="checkbox" value="Woodcarver's Tools" id="Woodcarver's Tools"> Woodcarver's Tools</li>
-                                
-                                    <!-- Gaming Sets -->
-                                    <li><input type="checkbox" value="Dice Set" id="Dice Set"> Dice Set</li>
-                                    <li><input type="checkbox" value="Dragonchess Set" id="Dragonchess Set"> Dragonchess Set</li>
-                                    <li><input type="checkbox" value="Playing Card Set" id="Playing Card Set"> Playing Card Set</li>
-                                    <li><input type="checkbox" value="Three-Dragon Ante Set" id="Three-Dragon Ante Set"> Three-Dragon Ante Set</li>
-                                
-                                    <!-- Musical Instruments -->
-                                    <li><input type="checkbox" value="Bagpipes" id="Bagpipes"> Bagpipes</li>
-                                    <li><input type="checkbox" value="Drum" id="Drum"> Drum</li>
-                                    <li><input type="checkbox" value="Dulcimer" id="Dulcimer"> Dulcimer</li>
-                                    <li><input type="checkbox" value="Flute" id="Flute"> Flute</li>
-                                    <li><input type="checkbox" value="Lute" id="Lute"> Lute</li>
-                                    <li><input type="checkbox" value="Lyre" id="Lyre"> Lyre</li>
-                                    <li><input type="checkbox" value="Horn" id="Horn"> Horn</li>
-                                    <li><input type="checkbox" value="PanFlute" id="PanFlute"> Pan Flute</li>
-                                    <li><input type="checkbox" value="Shawm" id="Shawm"> Shawm</li>
-                                    <li><input type="checkbox" value="Viol" id="Viol"> Viol</li>
-                                    <li><input type="checkbox" value="Wargong" id="Wargong"> Wargong</li>
-                                
-                                    <!-- Other Tools -->
-                                    <li><input type="checkbox" value="Disguise Kit" id="Disguise Kit"> Disguise Kit</li>
-                                    <li><input type="checkbox" value="Forgery Kit" id="Forgery Kit"> Forgery Kit</li>
-                                    <li><input type="checkbox" value="Herbalism Kit" id="Herbalism Kit"> Herbalism Kit</li>
-                                    <li><input type="checkbox" value="Navigator's Tools" id="Navigator's Tools"> Navigator's Tools</li>
-                                    <li><input type="checkbox" value="Poisoner's Kit" id="Poisoner's Kit"> Poisoner's Kit</li>
-                                    <li><input type="checkbox" value="Thieves' Tools" id="Thieves' Tools"> Thieves' Tools</li>
-                                    <li><input type="checkbox" value="Vehicles (Land)" id="Vehicles (Land)"> Vehicles (Land)</li>
-                                    <li><input type="checkbox" value="Vehicles (Water)" id="Vehicles (Water)"> Vehicles (Water)</li>
-                                </ul>
                             </div>   
                         </div>
                     </fieldset>
@@ -797,12 +674,12 @@
                     <div>
                         <label id="spellModLabel" for="spellcastingDropdown">Spell Mod:</label>
                         <select class="spellcasting-dropdown">
-                            <option value="STR">STR</option>
-                            <option value="DEX">DEX</option>
-                            <option value="CON">CON</option>
-                            <option value="INT">INT</option>
-                            <option value="WIS">WIS</option>
-                            <option value="CHA">CHA</option>
+                            <option id="spellModSTR" value="STR">STR</option>
+                            <option id="spellModDEX" value="DEX">DEX</option>
+                            <option id="spellModCON" value="CON">CON</option>
+                            <option id="spellModINT" value="INT">INT</option>
+                            <option id="spellModWIS" value="WIS">WIS</option>
+                            <option id="spellModCHA" value="CHA">CHA</option>
                         </select>
                     </div>
                 </div>
@@ -1011,18 +888,18 @@
             <!-- Modal for Adding Items -->
             <div id="add-item-modal" class="inventory-modal" style="display:none;">
                 <div class="inventory-modal-content">
-                    <h3>Add New Inventory Item</h3>
+                    <h3 id="addItemModalHeader">Add New Inventory Item</h3>
 
                     <!-- Bag Selection -->
-                    <label for="bag-select">Select Bag:</label>
+                    <label for="bag-select" id="addItemModalBagSelect">Select Bag:</label>
                     <select id="bag-select">
-                        <option value="equipment">Equipment</option>
-                        <option value="backpack">Backpack</option>
-                        <option value="other-possessions">Other Possessions</option>
+                        <option value="equipment" id="addItemModalEquipment">Equipment</option>
+                        <option value="backpack"id="addItemModalBackpack">Backpack</option>
+                        <option value="other-possessions"id="addItemModalOtherPossessions">Other Possessions</option>
                     </select>
                 
                     <!-- Searchable Dropdown for Items -->
-                    <label for="item-select">Select Item:</label>
+                    <label for="item-select" id="addItemModalDropdownText">Select Item:</label>
                     <input type="text" id="item-search" placeholder="Search for an item..." />
                     <select id="item-select" size="5"></select>
                 
@@ -1037,11 +914,11 @@
         <section id="features">
             <div id ="feature-groups-container"></div>
             <!-- Button to add a new group -->
-            <button class="add-group-button">+ Add New Group</button>
+            <button id="featuresAddGroupButton" class="add-group-button">+ Add New Group</button>
         </section>
 
         <section id="Docs">
-                <h2>Character Notes</h2>
+                <h2 id="docsSectionHeader">Character Notes</h2>
                 <div id="alignmentHeader">
                     <label for="alignment-select"></label>
                     <select id="alignment-select">
@@ -1056,7 +933,7 @@
                         <option id = "alignmentOptionCE" value="CE">Chaotic Evil</option>
                     </select>
                 </div>
-                <button class="add-notes-group-button nonRollButton">+ Add Group</button>
+                <button id="docsSectionGroupButton" class="add-notes-group-button nonRollButton">+ Add Group</button>
         </section>
 
         <section id="Extras">
@@ -1466,21 +1343,22 @@
             <div class="form-row">
                 <label for="equipment-category">Category:</label>
                 <select id="equipment-category" required>
-                <option value="weapon">Weapon</option>
-                <option value="armor">Armor</option>
-                <option value="wondrous-item">Wonderous Item</option>
-                <option value="adventuring-gear">Adventuring Gear</option>
+                    <option value="weapon">Weapon</option>
+                    <option value="armor">Armor</option>
+                    <option value="wondrous-item">Wonderous Item</option>
+                    <option value="potion">Potion</option>
+                    <option value="adventuring-gear">Adventuring Gear</option>
                 </select>
             </div>
             
             <div class="form-row">
                 <label for="equipment-rarity">Rarity:</label>
                 <select id="equipment-rarity">
-                <option value="common">Common</option>
-                <option value="uncommon">Uncommon</option>
-                <option value="rare">Rare</option>
-                <option value="very-rare">Very Rare</option>
-                <option value="legendary">Legendary</option>
+                    <option value="common">Common</option>
+                    <option value="uncommon">Uncommon</option>
+                    <option value="rare">Rare</option>
+                    <option value="very-rare">Very Rare</option>
+                    <option value="legendary">Legendary</option>
                 </select>
             </div>
 
@@ -1488,10 +1366,10 @@
                 <label for="equipment-cost">Cost:</label>
                 <input type="number" id="equipment-cost" placeholder="Cost" required />
                 <select id="equipment-cost-unit">
-                <option value="cp">cp</option>
-                <option value="sp">sp</option>
-                <option value="gp">gp</option>
-                <option value="pp">pp</option>
+                    <option value="cp">cp</option>
+                    <option value="sp">sp</option>
+                    <option value="gp">gp</option>
+                    <option value="pp">pp</option>
                 </select>
             </div>
             
@@ -1516,7 +1394,7 @@
 <!-- Long Rest Modal -->
 <div id="longRestModal" class="long-rest-modal hidden">
     <div class="long-rest-modal-content">
-        <h2>Long Rest Summary</h2>
+        <h2 id="longRestHeader">Long Rest Summary</h2>
         <p id="longRestHPChange" class="long-rest-modal-paragraphs"></p>
         <p id="longRestTempHPChange" class="long-rest-modal-paragraphs"></p>
         <p id="longRestSpellSlots" class="long-rest-modal-paragraphs"></p>
@@ -1524,8 +1402,8 @@
         <p id="longRestFeatures&Traits" class="long-rest-modal-paragraphs"></p>
         <p id="shortRestinLongFeatures&Traits" class="long-rest-modal-paragraphs"></p>
         <div class="long-rest-modal-actions">
-            <button id="confirmLongRestButton" class="nonRollButton long-rest-confirm">Confirm</button>
             <button id="cancelLongRestButton" class="nonRollButton long-rest-cancel">Cancel</button>
+            <button id="confirmLongRestButton" class="nonRollButton long-rest-confirm">Confirm</button>
         </div>
     </div>
 </div>
@@ -1533,11 +1411,11 @@
 <!-- short Rest Modal -->
 <div id="shortRestModal" class="short-rest-modal hidden">
     <div class="short-rest-modal-content">
-        <h2>Short Rest Summary</h2>
+        <h2 id="shortRestHeader">Short Rest Summary</h2>
         <p id="shortRestFeatures&Traits" class="long-rest-modal-paragraphs"></p>
         <div class="short-rest-modal-actions">
-            <button id="confirmshortRestButton" class="nonRollButton short-rest-confirm">Confirm</button>
             <button id="cancelshortRestButton" class="nonRollButton short-rest-cancel">Cancel</button>
+            <button id="confirmshortRestButton" class="nonRollButton short-rest-confirm">Confirm</button>
         </div>
     </div>
 </div>
@@ -1545,10 +1423,10 @@
 <!-- Hit Dice Modal -->
 <div id="hitDiceModal" class="hit-dice-modal hidden">
     <div class="hit-dice-modal-content">
-        <h2>Spend Hit Dice</h2>
+        <h2 id="hitDiceModalHeader">Spend Hit Dice</h2>
         <div class="hitDiceContainer">
                         
-            <div class="hitDiceCompact"> Current Hit Dice Available: 
+            <div class="hitDiceCompact" id="hitDiceModalText"> Current Hit Dice Available: 
                 <label id="hitDiceLabel" class="actionButtonLabel" max="1" data-name="Hit Dice" data-dice-type="1d8" value="1">1</label>
                 <button id="hitDiceButton" class="actionButton" title="Roll Hit Dice" contenteditable="true">1d8</button>
                 
@@ -1567,8 +1445,8 @@
 
         </div>
         <div class="hit-dice-modal-actions">
+            <button id="cancelHitDiceButton" class="nonRollButton hit-dice-cancel">Cancel</button>
             <button id="confirmHitDiceButton" class="nonRollButton short-rest-confirm">Confirm</button>
-            <button id="cancelHitDiceButton" class="nonRollButton hit-dice-cancel">Exit</button>
         </div>
     </div>
 </div>

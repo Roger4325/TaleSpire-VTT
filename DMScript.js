@@ -29,6 +29,8 @@ async function establishMonsterData(){
     monsterData = monsterDataObject.monsterData;
     loadAndSetLanguage();
     loadDataFromCampaignStorage();
+    populateConditionsTable();
+    populateEffectsTable();
     
     updateShopTable("adventuringSupplies")
     await loadTableData()
@@ -71,8 +73,10 @@ async function establishMonsterData(){
     await mergeOtherPlayers(playersInCampaign)
 
     populatePlayerDropdown()
+    
     populateConditionSelect();
     populateEquipmentList();
+
 }
 
 async function loadAndSetLanguage(){
@@ -524,7 +528,7 @@ function updateMonsterCard(card, monster) {
                 }
 
                 if (currentHP < maxHP / 2) {
-                    monsterConditions("Bloodied");
+                    monsterConditions("bloodied");
                 }
                    
                     
@@ -716,7 +720,7 @@ function populateMonsterFields(monster) {
     // Populate basic monster info
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
-    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
+    populateField('monsterAC', 'AC', monster.AC?.Value, false);
     console.log(monster.AC?.Value)
     populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
     populateField('monsterSpeed', 'Speed', monster.Speed);
@@ -1328,6 +1332,7 @@ function makeRoundEditable() {
 
 
 const conditionsMap = new Map();
+const monsterExhaustionLevels = new Map();
 
 // Function to handle adding conditions to the active monster
 function monsterConditions(condition) {
@@ -1351,55 +1356,73 @@ function monsterConditions(condition) {
             conditionsMap.set(activeMonsterCard, new Set());
         }
 
+        // Track exhaustion levels for each monster card (initialize this elsewhere in your code)
+        
         // Get the Set of conditions for this monster card
         const conditionsSet = conditionsMap.get(activeMonsterCard);
+        let displayName;
+        let isExhaustion = false;
 
-        // Handle Exhaustion separately (same as your previous logic)
-        if (selectedCondition === 'Exhaustion') {
-            let exhaustionNumber = 1;
-            for (const condition of conditionsSet) {
-                if (condition.startsWith('Exhaustion ')) {
-                    const number = parseInt(condition.replace('Exhaustion ', ''));
-                    if (!isNaN(number) && number >= exhaustionNumber) {
-                        exhaustionNumber = number + 1;
-                    }
-                }
-            }
-            selectedCondition = `Exhaustion ${exhaustionNumber}`;
+        // Handle Exhaustion
+        if (selectedCondition === 'exhaustion') {
+            isExhaustion = true;
+            
+            // Get/Increment exhaustion level
+            console.log(monsterExhaustionLevels)
+            const currentLevel = monsterExhaustionLevels.get(activeMonsterCard) || 0;
+            const newLevel = currentLevel + 1;
+            monsterExhaustionLevels.set(activeMonsterCard, newLevel);
 
-            // Clear all previous exhaustion conditions
-            for (const condition of conditionsSet) {
-                if (condition.startsWith('Exhaustion ')) {
-                    conditionsSet.delete(condition);
-                    removeConditionPill(condition, conditionTrackerDiv);
-                }
+            // Clear previous exhaustion entry (if any)
+            console.warn(conditionsSet)
+            if (conditionsSet.has('exhaustion')) {
+                displayName = `${translations[savedLanguage].conditions.exhaustion.name} ${currentLevel}`;
+                removeConditionPill(displayName, conditionTrackerDiv);
+                conditionsSet.delete(selectedCondition);
+                console.warn(conditionsSet)  
             }
+
+            displayName = `${translations[savedLanguage].conditions.exhaustion.name} ${newLevel}`;
+
+            // Add the internal identifier to the Set
+            conditionsSet.add('exhaustion');
+
         } else if (conditionsSet.has(selectedCondition)) {
             // If the selected condition is already applied, do nothing
             return;
         }
 
+        // Fetch display name for other conditions
+        const conditionObj = translations[savedLanguage].conditions;
+        const effectObj = translations[savedLanguage].effects;
+        if (!isExhaustion) {
+            const processedCondition = selectedCondition.replace(/\s\d+$/, '').toLowerCase();
+            displayName = conditionObj[processedCondition]?.name || effectObj[processedCondition]?.name || selectedCondition;
+        }
+
         // Create a condition pill
-        if (selectedCondition === 'Bloodied'){
+        console.log(selectedCondition)
+        if (selectedCondition === 'bloodied'){
             debouncedSendInitiativeListToPlayer()
+            console.log("here")
         }
         const conditionPill = document.createElement('div');
         conditionPill.classList.add('condition-pill');
         conditionPill.innerHTML = `
-            <span>${selectedCondition}</span>
+            <span>${displayName}</span>
             <button class="remove-condition">x</button>
         `;
 
-         // Fetch the description from CONDITIONS or EFFECTS
-         let conditionDescription = null;
-         const allConditions = [...CONDITIONS, ...EFFECTS];
-         const matchingCondition = allConditions.find(
-             (entry) => entry.condition === selectedCondition || entry.effect === selectedCondition
-         );
- 
-         if (matchingCondition) {
-             conditionDescription = matchingCondition.description;
-         }
+        // Fetch the description from translated conditions or effects
+        let conditionDescription = null;
+        // Process the selectedCondition to remove trailing space + number and convert to lowercase
+        const processedCondition = selectedCondition.replace(/\s\d+$/, '').toLowerCase();
+
+        if (conditionObj[processedCondition]) {
+            conditionDescription = conditionObj[processedCondition].description;
+        } else if (effectObj[processedCondition]) {
+            conditionDescription = effectObj[processedCondition].description;
+        }
 
         // Tooltip logic for hover effect
         let tooltip;
@@ -1407,9 +1430,13 @@ function monsterConditions(condition) {
             conditionPill.addEventListener('mouseenter', () => {
                 tooltip = document.createElement('div');
                 tooltip.classList.add('condition-tooltip');
+
+                // Use the translated name for the tooltip title
+                const translatedName = conditionObj[processedCondition]?.name || effectObj[processedCondition]?.name;
+
                 tooltip.innerHTML = `
-                    <strong>${selectedCondition}</strong><br>
-                    ${conditionDescription}
+                    <strong>${translatedName}</strong><br>
+                    ${conditionDescription.join('<br>')} <!-- Join description array with <br> -->
                 `;
                 document.body.appendChild(tooltip);
 
@@ -1419,10 +1446,10 @@ function monsterConditions(condition) {
                 const tooltipTop = spaceBelow >= tooltip.offsetHeight + 5
                     ? rect.bottom + window.scrollY + 5
                     : rect.top + window.scrollY - tooltip.offsetHeight - 5;
-                const tooltipLeft = rect.left + window.scrollX;
 
                 tooltip.style.position = 'absolute';
                 tooltip.style.top = `${tooltipTop}px`;
+                
                 tooltip.style.opacity = 0;
                 setTimeout(() => tooltip.style.opacity = 1, 0);
 
@@ -1436,13 +1463,13 @@ function monsterConditions(condition) {
                     setTimeout(() => tooltip.remove(), 200);
                 }
             });
-        }
+}
 
         // Add a click event listener to the remove button
         const removeButton = conditionPill.querySelector('.remove-condition');
         removeButton.addEventListener('click', () => {
             conditionsSet.delete(selectedCondition);
-            removeConditionPill(selectedCondition, conditionTrackerDiv);
+            removeConditionPill(displayName, conditionTrackerDiv);
             if (tooltip) {
                 tooltip.style.opacity = 0;
                 setTimeout(() => tooltip.remove(), 200);
@@ -1461,7 +1488,9 @@ function monsterConditions(condition) {
 // Function to remove a condition pill
 function removeConditionPill(condition, conditionTrackerDiv) {
     const conditionPills = conditionTrackerDiv.querySelectorAll('.condition-pill');
+    console.log(conditionPills)
     for (const pill of conditionPills) {
+        console.warn(pill.querySelector('span').textContent, condition)
         if (pill.querySelector('span').textContent === condition) {
             conditionTrackerDiv.removeChild(pill);
             break;
@@ -1993,8 +2022,7 @@ async function sendInitiativeListToPlayer() {
         const isPlayer = card.classList.contains("player-card") ? 1 : 0;
         const eyeButton = card.querySelector(".eye-button"); // Assuming the eye button has the class '.eye-button'
         const isVisible = eyeButton && eyeButton.querySelector('i') && eyeButton.querySelector('i').classList.contains('fa-eye-slash') ? 0 : 1;
-        const isBloodied = !isPlayer && conditionsMap.has(card) && conditionsMap.get(card).has("Bloodied") ? 1 : 0;
-        console.log(nameElement)
+        const isBloodied = !isPlayer && conditionsMap.has(card) && conditionsMap.get(card).has("bloodied") ? 1 : 0;
         return {
             n: isPlayer ? nameElement : "", // Name only for players
             p: isPlayer, // 1 for player, 0 for enemy
@@ -2439,9 +2467,9 @@ document.getElementById("editCustomMonsters").addEventListener("click", async() 
                 if (monsterData) {
                     // Populate the edit form or interface with the monster's data
                     monsterFormModal.style.display = 'block';
-                    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability");
-                    populateCheckboxes("monsterFormResistances", damageTypes, "resistance");
-                    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity");
+                    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability");
+                    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance");
+                    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity");
                     populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
                     homebrewModal.style.display = 'none';
                     populateMonsterForm(monsterData);
@@ -2548,9 +2576,9 @@ function populateMonsterForm(monster) {
         document.getElementById(skillElement.id).value = skill ? skill.Modifier : "";
     });
 
-    populateCheckboxes("monsterFormVulnerabilities", damageTypes, "vulnerability", monster.DamageVulnerabilities || []);
-    populateCheckboxes("monsterFormResistances", damageTypes, "resistance", monster.DamageResistances || []);
-    populateCheckboxes("monsterFormImmunities", damageTypes, "immunity", monster.DamageImmunities || []);
+    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability", monster.DamageVulnerabilities || []);
+    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance", monster.DamageResistances || []);
+    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity", monster.DamageImmunities || []);
     populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity", monster.ConditionImmunities || []);
 
 
@@ -2704,27 +2732,31 @@ function tableEditing(cell) {
             }
 
             if (dataType === "effects") {
-                // Ensure no duplicates exist in EFFECTS
-                const effectName = rowData.column0?.trim(); //column0 holds the effect name
-                const effectDescription = rowData.column1?.trim(); //column1 holds the description
-
+                const effectName = rowData.column0?.trim(); // column0: effect name
+                const effectDescription = rowData.column1?.trim(); // column1: description
+            
                 if (effectName) {
-                    const existingEffect = EFFECTS.find(
-                        (effect) => effect.effect.toLowerCase() === effectName.toLowerCase()
+                    const currentEffects = translations[savedLanguage].effects;
+            
+                    // Check for existing effect by name (case-insensitive)
+                    const existingEffectEntry = Object.values(currentEffects).find(
+                        effect => effect.name.toLowerCase() === effectName.toLowerCase()
                     );
-
-                    if (existingEffect) {
-                        // Update existing effect description
-                        existingEffect.description = [effectDescription];
+            
+                    if (existingEffectEntry) {
+                        // Update existing effect's description
+                        existingEffectEntry.description = [effectDescription];
                     } else {
-                        // Add new effect to EFFECTS
-                        EFFECTS.push({
-                            effect: effectName,
-                            description: [effectDescription],
-                        });
+                        // Generate a unique key and add new effect
+                        const newKey = generateKey(effectName, currentEffects);
+                        currentEffects[newKey] = {
+                            name: effectName,
+                            description: [effectDescription]
+                        };
                     }
+            
+                    populateConditionSelect();
                 }
-                populateConditionSelect();
             }
 
             saveToGlobalStorage(dataType, dataId, rowData);
@@ -2732,7 +2764,7 @@ function tableEditing(cell) {
     });
 
     cell.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !event.shiftKey) {
             this.blur();
             event.preventDefault();
         }
@@ -3007,120 +3039,57 @@ function updateChecklistUI(checklistData) {
 }
 
 
-  // Function to populate the conditions table
-function populateConditionsTable() {
-    const tableBody = document.querySelector("#conditions tbody");
+// Generic function to populate a table
+function populateTable(tableId, dataKey) {
+    const tableBody = document.querySelector(`#${tableId} tbody`);
     tableBody.innerHTML = ""; // Clear existing rows
 
-    CONDITIONS.forEach(condition => {
+    // Get the data object and its keys
+    const dataObj = translations[savedLanguage][dataKey];
+    const dataKeys = Object.keys(dataObj);
+
+    // Sort the keys alphabetically by the name
+    dataKeys.sort((a, b) => {
+        const nameA = dataObj[a].name.toLowerCase();
+        const nameB = dataObj[b].name.toLowerCase();
+        return nameA.localeCompare(nameB);
+    });
+
+    // Populate the table with sorted data
+    dataKeys.forEach(key => {
+        const item = dataObj[key];
         const row = document.createElement("tr");
 
-        // Condition name
-        const conditionCell = document.createElement("td");
-        conditionCell.textContent = condition.condition;
-        row.appendChild(conditionCell);
+        // Name
+        const nameCell = document.createElement("td");
+        nameCell.textContent = item.name;
+        row.appendChild(nameCell);
 
         // Description
-        const descriptionCell = document.createElement("td");
-        const descriptionList = document.createElement("ul");
+        const descCell = document.createElement("td");
+        const descList = document.createElement("ul");
 
-        condition.description.forEach(desc => {
-            // Remove any leading <br> tags or whitespace at the beginning of the description
+        item.description.forEach(desc => {
             const cleanedDesc = desc.replace(/^\s*<br\s*\/?>/, '').trim();
-        
-            // Create a list item and append the cleaned description
             const listItem = document.createElement("li");
-            listItem.textContent = cleanedDesc; // Use the cleaned description
-            descriptionList.appendChild(listItem);
+            listItem.textContent = cleanedDesc;
+            descList.appendChild(listItem);
         });
 
-        descriptionCell.appendChild(descriptionList);
-        row.appendChild(descriptionCell);
-
+        descCell.appendChild(descList);
+        row.appendChild(descCell);
         tableBody.appendChild(row);
     });
+}
+
+// Functions to populate specific tables
+function populateConditionsTable() {
+    populateTable("conditions", "conditions");
 }
 
 function populateEffectsTable() {
-    const tableBody = document.querySelector("#effects tbody");
-    tableBody.innerHTML = ""; // Clear existing rows
-
-    EFFECTS.forEach(effect => {
-        const row = document.createElement("tr");
-
-        // Condition name
-        const conditionCell = document.createElement("td");
-        conditionCell.textContent = effect.effect;
-        row.appendChild(conditionCell);
-
-        // Description
-        const descriptionCell = document.createElement("td");
-        const descriptionList = document.createElement("ul");
-
-        effect.description.forEach(desc => {
-            // Remove any leading <br> tags or whitespace at the beginning of the description
-            const cleanedDesc = desc.replace(/^\s*<br\s*\/?>/, '').trim();
-        
-            // Create a list item and append the cleaned description
-            const listItem = document.createElement("li");
-            listItem.textContent = cleanedDesc; // Use the cleaned description
-            descriptionList.appendChild(listItem);
-        });
-
-        descriptionCell.appendChild(descriptionList);
-        row.appendChild(descriptionCell);
-
-        tableBody.appendChild(row);
-    });
+    populateTable("effects", "effects");
 }
-
-
-
-
-function populateConditionSelect() {
-    // Select the target dropdown by its ID
-    const conditionSelect = document.getElementById("condition-select");
-
-    // Clear existing options (if needed)
-    conditionSelect.innerHTML = "";
-
-    // Combine CONDITIONS and EFFECTS, then sort alphabetically
-    const allConditionsAndEffects = [
-        ...CONDITIONS.map(condition => ({
-            id: `conditionOption${condition.condition}`,
-            value: condition.condition
-        })),
-        ...EFFECTS.map(effect => ({
-            id: `conditionOption${effect.effect}`,
-            value: effect.effect
-        }))
-    ].sort((a, b) => a.value.localeCompare(b.value));
-
-    console.log(allConditionsAndEffects)
-
-    // Add each sorted option to the dropdown
-    allConditionsAndEffects.forEach(entry => {
-        const option = document.createElement("option");
-        option.id = entry.id;
-        option.value = entry.value;
-        option.textContent = entry.value;
-        conditionSelect.appendChild(option);
-    });
-}
-
-  
-// Add an event listener to call the function when the page loads
-document.addEventListener("DOMContentLoaded", populateConditionsTable);
-document.addEventListener("DOMContentLoaded", populateEffectsTable);
-
-
-
-
-
-
-
-
-
 
 
 
@@ -3457,6 +3426,8 @@ async function loadTableData() {
                     if (table) {
                         const tbody = table.querySelector("tbody");
 
+                        console.log(tbody)
+
                         if (tbody !== null) {
                             const numColumns = tbody.querySelector("tr").cells.length;
 
@@ -3470,6 +3441,7 @@ async function loadTableData() {
                                         let isEmpty = true; // Flag to track if the row is empty
                                         // Check if all cells in the row are empty
                                         for (let i = 0; i < numColumns; i++) {
+                                            console.warn(rowData)
                                             if (rowData[`column${i}`]) {
                                                 isEmpty = false;
                                                 break;
@@ -3479,7 +3451,7 @@ async function loadTableData() {
                                         if (!isEmpty) {
                                             // Populate the table cells with data from the global storage
                                             for (let i = 0; i < numColumns; i++) {
-                                                if (rowData[`column${i}`]) {
+                                                if (rowData[`column${i}`] && row.cells[i]) { // Check if cell exists
                                                     row.cells[i].innerHTML = rowData[`column${i}`];
                                                 }
                                             }
@@ -3488,48 +3460,59 @@ async function loadTableData() {
                                             row.style.display = "none";
                                         }
                                     } else {
-                                        // If the row doesn't exist, create a new row and populate it
-                                        const newRow = tbody.insertRow(parseInt(rowIndex));
-                                        newRow.innerHTML = "<td contenteditable='true'></td>".repeat(numColumns);
-
-                                        // Call tableEditing function for the new cells
-                                        newRow.querySelectorAll("td").forEach((cell) => {
-                                            cell.setAttribute("contenteditable", "true");
-                                            tableEditing(cell);
-                                        });
-
-                                        for (let i = 0; i < numColumns; i++) {
-                                            if (rowData[`column${i}`]) {
-                                                newRow.cells[i].innerHTML = rowData[`column${i}`];
+                                        // Check if rowData has at least one non-empty column
+                                        const hasData = Object.values(rowData).some(value => {
+                                            // Remove all `<br>` tags (case-insensitive) and trim whitespace
+                                            const cleanedValue = (value || '').replace(/<br\s*\/?>/gi, '').trim();
+                                            return cleanedValue !== '';
+                                          });
+                                    
+                                        if (hasData) {
+                                            // Only create a new row if there's data
+                                            const newRow = tbody.insertRow(parseInt(rowIndex));
+                                            newRow.innerHTML = "<td contenteditable='true'></td>".repeat(numColumns);
+                                    
+                                            newRow.querySelectorAll("td").forEach((cell) => {
+                                                cell.setAttribute("contenteditable", "true");
+                                                tableEditing(cell);
+                                            });
+                                    
+                                            // Populate cells with data (if it exists)
+                                            for (let i = 0; i < numColumns; i++) {
+                                                if (rowData[`column${i}`]) {
+                                                    newRow.cells[i].innerHTML = rowData[`column${i}`];
+                                                }
                                             }
                                         }
                                     }
 
-                                    // Push data to EFFECTS if dataType is "effects"
+                                    // Push data to if dataType is "effects"
                                     if (dataType === "effects") {
-                                        const effectName = rowData.column0?.trim(); //column0 is effect name
-                                        const effectDescription = rowData.column1?.trim(); //column1 is description
-
+                                        const effectName = rowData.column0?.trim(); // column0: effect name
+                                        const effectDescription = rowData.column1?.trim(); // column1: description
+                                    
                                         if (effectName) {
-                                            const existingEffect = EFFECTS.find(
-                                                (effect) =>
-                                                    effect.effect.toLowerCase() === effectName.toLowerCase()
+                                            const currentEffects = translations[savedLanguage].effects;
+                                    
+                                            // Check for existing effect by name (case-insensitive)
+                                            const existingEffectEntry = Object.values(currentEffects).find(
+                                                effect => effect.name.toLowerCase() === effectName.toLowerCase()
                                             );
-
-                                            if (existingEffect) {
-                                                // Update description if it already exists
-                                                existingEffect.description = [effectDescription];
+                                    
+                                            if (existingEffectEntry) {
+                                                // Update existing effect's description
+                                                existingEffectEntry.description = [effectDescription];
                                             } else {
-                                                // Add new effect to EFFECTS
-                                                EFFECTS.push({
-                                                    effect: effectName,
-                                                    description: [effectDescription],
-                                                });
+                                                // Generate a unique key and add new effect
+                                                const newKey = generateKey(effectName, currentEffects);
+                                                currentEffects[newKey] = {
+                                                    name: effectName,
+                                                    description: [effectDescription]
+                                                };
                                             }
+                                    
+                                            populateConditionSelect()
                                         }
-                                        console.log(effectName, effectDescription)
-                                        console.log(EFFECTS)
-                                        populateConditionSelect();
                                     }
                                 }
                             }
@@ -3540,6 +3523,25 @@ async function loadTableData() {
         }
     });
     
+}
+
+// Helper function to generate a unique key
+function generateKey(name, effectsObj) {
+    let baseKey = name
+        .toLowerCase()
+        .replace(/\s+/g, '_')    // Replace spaces with underscores
+        .replace(/[^\w-]/g, ''); // Remove non-word characters
+
+    let key = baseKey;
+    let counter = 1;
+
+    // Ensure the key is unique
+    while (effectsObj.hasOwnProperty(key)) {
+        key = `${baseKey}_${counter}`;
+        counter++;
+    }
+
+    return key;
 }
 
 

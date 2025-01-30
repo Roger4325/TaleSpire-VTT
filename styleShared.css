@@ -167,6 +167,7 @@ vuplex-dropdown-option {
         border: .1px solid #0f0f0f;
         border-radius: 5px;
         background-color: var(--border-outline-color);
+        font-size: 13px;
     }
 
     .tabs a:hover {
@@ -241,8 +242,8 @@ vuplex-dropdown-option {
     color: white;
     padding: 5px;
     z-index: 8;
-    top: 4%;
-    left: 85%;
+    top: 5%;
+    left: 80%;
 }
 
 #settings-option-dropdown ul {
@@ -974,9 +975,10 @@ margin: 2px;
 }
 
 .monster-actions span, .monster-abilities span, .monster-facts{
-    font-size: 12px; 
-    font-family: Arial, sans-serif;
+    display: inline-block;
+    font-size: 13px; 
     color: #FFFFFF;
+    margin-bottom: .4rem;
 }
 
 .monster-actions strong, .monster-abilities strong, .monster-facts strong  {

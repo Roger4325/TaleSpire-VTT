@@ -354,6 +354,12 @@ const translations = {
     eng: {
         //Spell Section
         spellModLabel: "Spell Mod:",
+        spellModSTR: "STR",
+        spellModDEX: "DEX",
+        spellModCON: "CON",
+        spellModINT: "INT",
+        spellModWIS: "WIS",
+        spellModCHA: "CHA",
         toHitLabel: "To Hit:",
         saveDcLabel: "Save DC:",
         spellLevelLabel: "Spell Level",
@@ -375,6 +381,10 @@ const translations = {
         CantripConcentrationHeader: "Con",
         CantripNotesHeader: "Notes",
         CantripDeleteHeader: "Del",
+
+
+
+        //Header
         inspiration: "Inspiration",
         shortRestButton: "Short Rest",
         longRestButton: "Long Rest",
@@ -398,6 +408,305 @@ const translations = {
         maxHP: "Max",
         hpButtomText: "Player Hit Points",
         tempHPText: "Temp Health",
+        
+
+        //This all needs to be moved to the approriate grouping. Together for translating. 
+        playerStatsHeader: "Player Stats",
+        actionsHeader: "Actions",
+        spellListHeader: "Spell List",
+        inventoryHeader: "Inventory",
+        featuresHeader: "Features & Traits",
+        docsHeader: "Notes",
+        extrasHeader: "Extra",
+        initHeader: "Init List",
+        addItemModalHeader: "Add New Inventory Item",
+        addItemModalBagSelect: "Select Bag:",
+        addItemModalEquipment: "Equipment",
+        addItemModalBackpack: "Backpack",
+        addItemModalOtherPossessions: "Other Possessions",
+        addItemModalDropdownText: "Select Item:",
+        'confirm-add-item': "Add Item",
+        'close-modal': "Cancel",
+
+        conditionPlayerAddButton: "Add Condition",
+        hitDiceOpenModalButton: "Hit Dice",
+
+        longRestHeader: "Long Rest Summary",
+        shortRestHeader: "Short Rest Summary",
+        longRestHPChangeTrans: "HP Restored:",
+        longRestTempHPChangeTrans: "Removing Temp HP:",
+        longRestSpellSlotsTrans: "slots reset",
+        longRestSpellSlotDefaultText: "No used spell slots to reset.",
+        longRestHitDiceTrans: "Adding up to:",
+        longRestHitDice01: "Hit Dice",
+        longRestFeatures: "Traits to reset:",
+        traitDescriptionTexts0: "reseting up to",
+        traitDescriptionTexts1: "uses",
+        confirmLongRestButton: "Confirm",
+        cancelLongRestButton: "Cancel",
+
+        hitDiceModalHeader: "Spend Hit Dice",
+        hitDiceModalText: "Current Hit Dice Available:",
+
+        featuresAddGroupButton:"+ Add New Group",
+        featuresAddTraitButton: "+ Add New Trait",
+        featuresUsesText: "Uses",
+        featuresCategoryText: "Category",
+        featuresSubcategoryText: "Subcategory",
+        featuresAbilityScoreText: "Ability Score to use for adjustment value",
+        featuresAdjustmentText: "Adjustment Value:",
+        featuresNumberUsesText: "Number of Uses:",
+        featuresResetText: "Reset On:",
+        featuresDeleteButton: "Delete Trait",
+
+        docsSectionHeader: "Character Notes",
+        docsSectionGroupButton: "+ Add Group",
+        docsSectionNoteButton: "+ Add Note",
+
+        damage: {
+            na: "N/A",
+            slashing: "Slashing",
+            piercing: "Piercing",
+            // ... all damage types
+        },
+        resistance: {
+            slashing: "Slashing",
+            piercing: "Piercing",
+            // ... all resistance types
+            bludgeoning_non_magical: "Bludgeoning (Non-magical)"
+        },
+        conditions: {
+            blinded: {
+                name: "Blinded",
+                description: [
+                    "A blinded creature can't see and automatically fails any ability check that requires sight.",
+                    "<br>Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage."
+                ]
+            },
+            charmed: {
+                name: "Charmed",
+                description: [
+                    "A charmed creature can't attack the charmer or target the charmer with harmful abilities or magical effects.",
+                    "The charmer has advantage on any ability check to interact socially with the creature."
+                ]
+            },
+            deafened: {
+                name: "Deafened",
+                description: [
+                    "A deafened creature can't hear and automatically fails any ability check that requires hearing."
+                ]
+            },
+            exhaustion: {
+                name: "Exhaustion",
+                description: [
+                    "Level 1: Disadvantage on ability checks",
+                    "<br>Level 2: Speed halved",
+                    "<br>Level 3: Disadvantage on attack rolls and saving throws",
+                    "<br>Level 4: Hit point maximum halved",
+                    "<br>Level 5: Speed reduced to 0",
+                    "<br>Level 6: Death"
+                ]
+            },
+            frightened: {
+                name: "Frightened",
+                description: [
+                    "A frightened creature has disadvantage on ability checks and attack rolls while the source of its fear is within line of sight.",
+                    "<br>The creature can't willingly move closer to the source of its fear."
+                ]
+            },
+            grappled: {
+                name: "Grappled",
+                description: [
+                    "A grappled creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+                    "<br>The condition ends if the grappler is incapacitated (see the condition).",
+                    "<br>The condition also ends if an effect removes the grappled creature from the reach of the grappler or grappling effect, such as when a creature is hurled away by the thunderwave spell."
+                ]
+            },
+            incapacitated: {
+                name: "Incapacitated",
+                description: [
+                    "An incapacitated creature can't take actions or reactions."
+                ]
+            },
+            paralyzed: {
+                name: "Paralyzed",
+                description: [
+                    "A paralyzed creature is incapacitated (see the condition) and can't move or speak.",
+                    "<br>The creature automatically fails Strength and Dexterity saving throws.",
+                    "<br>Attack rolls against the creature have advantage.",
+                    "<br>Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+                ]
+            },
+            petrified: {
+                name: "Petrified",
+                description: [
+                    "A petrified creature is transformed, along with any nonmagical object it is wearing or carrying, into a solid inanimate substance (usually stone). Its weight increases by a factor of ten, and it ceases aging.",
+                    "<br>The creature is incapacitated (see the condition), can't move or speak, and is unaware of its surroundings.",
+                    "<br>Attack rolls against the creature have advantage.",
+                    "<br>The creature automatically fails Strength and Dexterity saving throws.",
+                    "<br>The creature has resistance to all damage.",
+                    "<br>The creature is immune to poison and disease, although a poison or disease already in its system is suspended, not neutralized."
+                ]
+            },
+            poisoned: {
+                name: "Poisoned",
+                description: [
+                    "A poisoned creature has disadvantage on attack rolls and ability checks."
+                ]
+            },
+            prone: {
+                name: "Prone",
+                description: [
+                    "A prone creature's only movement option is to crawl, unless it stands up and thereby ends the condition.",
+                    "<br>The creature has disadvantage on attack rolls.",
+                    "<br>An attack roll against the creature has advantage if the attacker is within 5 feet of the creature. Otherwise, the attack roll has disadvantage."
+                ]
+            },
+            restrained: {
+                name: "Restrained",
+                description: [
+                    "A restrained creature's speed becomes 0, and it can't benefit from any bonus to its speed.",
+                    "<br>Attack rolls against the creature have advantage, and the creature's attack rolls have disadvantage.",
+                    "<br>The creature has disadvantage on Dexterity saving throws."
+                ]
+            },
+            stunned: {
+                name: "Stunned",
+                description: [
+                    "A stunned creature is incapacitated (see the condition), can't move, and can speak only falteringly.",
+                    "<br>The creature automatically fails Strength and Dexterity saving throws.",
+                    "<br>Attack rolls against the creature have advantage."
+                ]
+            },
+            unconscious: {
+                name: "Unconscious",
+                description: [
+                    "An unconscious creature is incapacitated, can't move or speak, and is unaware of its surroundings.",
+                    "<br>The creature drops whatever it's holding and falls prone.",
+                    "<br>The creature automatically fails Strength and Dexterity saving throws.",
+                    "<br>Attack rolls against the creature have advantage.",
+                    "<br>Any attack that hits the creature is a critical hit if the attacker is within 5 feet of the creature."
+                ]
+            },
+        // ... all conditions
+        },
+        effects: {
+            aid: {
+                name: "Aid",
+                description: [
+                    "The creature gains 5 Max hp per level of aid they have."
+                ]
+            },
+            bane: {
+                name: "Bane",
+                description: [
+                    "The creature must subtract a d4 from attack rolls or saving throws while the effect lasts."
+                ]
+            },
+            bless: {
+                name: "Bless",
+                description: [
+                    "The creature can add a d4 to attack rolls or saving throws while the effect lasts."
+                ]
+            },
+            bloodied: {
+                name: "Bloodied",
+                description: [
+                    "The creature's hit points are at or below half its maximum hit points."
+                ]
+            },
+            concentration: {
+                name: "Concentration",
+                description: [
+                    "The creature is concentrating on a spell. Concentration is broken if the creature takes damage and fails a Constitution saving throw."
+                ]
+            },
+            curse: {
+                name: "Curse",
+                description: [
+                    "The curse applies a specific penalty, such as reduced hit points, disadvantage on certain rolls, or inability to regain hit points."
+                ]
+            },
+            drained: {
+                name: "Drained",
+                description: [
+                    "The creature's maximum hit points are reduced until it finishes a long rest."
+                ]
+            },
+            haste: {
+                name: "Haste",
+                description: [
+                    "The creature's speed is doubled.",
+                    "It gains a +2 bonus to AC.",
+                    "It has advantage on Dexterity saving throws.",
+                    "It gains an additional action each turn (limited to certain actions)."
+                ]
+            },
+            heroism: {
+                name: "Heroism",
+                description: [
+                    "The creature gains temporary hit points at the start of each turn while the effect lasts.",
+                    "It is immune to being frightened."
+                ]
+            },
+            hex: {
+                name: "Hex",
+                description: [
+                    "The creature has disadvantage on ability checks of a chosen ability.",
+                    "It takes extra necrotic damage from attacks by the caster."
+                ]
+            },
+            inspire: {
+                name: "Inspire",
+                description: [
+                    "The creature can add a Bardic Inspiration die to an ability check, attack roll, or saving throw."
+                ]
+            },
+            invisible: {
+                name: "Invisible",
+                description: [
+                    "The creature can't be seen without magical aid or special senses.",
+                    "Attack rolls against the creature have disadvantage, and the creature's attack rolls have advantage."
+                ]
+            },
+            raging: {
+                name: "Raging",
+                description: [
+                    "The creature gains advantage on Strength checks and saving throws.",
+                    "The creature's melee weapon attacks deal bonus damage based on level.",
+                    "The creature has resistance to bludgeoning, piercing, and slashing damage."
+                ]
+            },
+            recharging: {
+                name: "Recharging",
+                description: [
+                    "This monster's ability recharges after use. At the end of its turns, roll a d6.", 
+                    "<br>If the result is within the recharge range specified in the ability (e.g., 5–6), the ability becomes available to use again.", 
+                    "<br>Otherwise, it remains unavailable until the next successful recharge roll."
+                ]
+            },
+            sanctuary: {
+                name: "Sanctuary",
+                description: [
+                    "Creatures attempting to attack the protected creature must make a Wisdom saving throw or choose a new target."
+                ]
+            },
+            shield: {
+                name: "Shield",
+                description: [
+                    "The creature gains a temporary increase to its AC (e.g., Shield spell adds +5 to AC until the start of the next turn)."
+                ]
+            },
+            slow: {
+                name: "Slow",
+                description: [
+                    "The creature's speed is halved.",
+                    "It takes a -2 penalty to AC and Dexterity saving throws.",
+                    "It can't use reactions, and it can take only one action or bonus action on its turn."
+                ]
+            }
+        },
+        //Player Stats Section
         characterAbilityStr: "STR",
         characterAbilityDex: "DEX",
         characterAbilityCon: "CON",
@@ -449,10 +758,15 @@ const translations = {
         passivePerceptionTitle: "Passive WIS (Perception)",
         passiveInvestigationTitle: "Passive INT (Investigation)",
         passiveInsightTitle: "Passive WIS (Insight)",
+        proficiencyGroupHeading: "Proficiencies",
         proficiencyWeapons: "Weapons",
         proficiencyArmor: "Armor",
         proficiencyLanguages: "Languages",
         proficiencyTools: "Tools",
+        
+
+
+        //Action Section
         actionFiltersAll: "All",
         actionFiltersAttacks: "Attacks",
         actionFiltersActions: "Actions",
@@ -465,6 +779,13 @@ const translations = {
         actionTableHeader4: "ToHit",
         actionTableHeader5: "Damage",
         actionTableHeader6: "Info",
+
+        filterActionsButton: "Filter Actions",
+        actionTableToHitBonus: "To Hit Bonus : ",
+        actionTableDamageMod: "Damage Mod : ",
+        actionTableDamageDice: "Damage Dice : ",
+        actionTableDamageType: "Damage Type : ",
+        actionTableDeleteButton: "Delete Current Row",
 
 
         //Alignment Options
@@ -505,147 +826,26 @@ const translations = {
         conditionOptionSlow: "Slow",
         conditionOptionRaging: "Raging",
 
-
-        //Proficiency Sections
-        // 'Martial Weapons': "Testing",
-        // "Simple Weapons": "Simple Weapons",
-        
-        //Simple Melee Weapons
-
-        // "Club": "Club",
-        // "Dagger": "Dagger",
-        // "Greatclub": "Greatclub",
-        // "Handaxe": "Handaxe",
-        // "Javelin": "Javelin",
-        // "LightHammer": "Light Hammer",
-        // "Mace": "Mace",
-        // "Quarterstaff": "Quarterstaff",
-        // "Sickle": "Sickle",
-        // "Spear": "Spear",
-
-
-        //Simple Ranged Weapons
-
-        // "CrossbowLight": "Light Crossbow",
-        // "Dart": "Dart",
-        // "Shortbow": "Shortbow",
-        // "Sling": "Sling",
-
-        //Martial Melee Weapons
-
-        // "Battleaxe": "Battleaxe",
-        // "Flail": "Flail",
-        // "Glaive": "Glaive",
-        // "Greataxe": "Greataxe",
-        // "Greatsword": "Greatsword",
-        // "Halberd": "Halberd",
-        // "Lance": "Lance",
-        // "Longsword": "Longsword",
-        // "Maul": "Maul",
-        // "Morningstar": "Morningstar",
-        // "Pike": "Pike",
-        // "Rapier": "Rapier",
-        // "Scimitar": "Scimitar",
-        // "Shortsword": "Shortsword",
-        // "Trident": "Trident",
-        // "WarPick": "War Pick",
-        // "Warhammer": "Warhammer",
-        // "Whip": "Whip",
-
-        //Martial Ranged Weapons
-
-        // "Blowgun": "Blowgun",
-        // "CrossbowHand": "Hand Crossbow",
-        // "CrossbowHeavy": "Heavy Crossbow",
-        // "Longbow": "Longbow",
-        // "Net": "Net",
-
-        //Armor
-
-        // "Light": "Light",
-        // "Medium": "Medium",
-        // "Heavy": "Heavy",
-        // "Shield": "Shield",
-
-
-        //Languages
-
-        // "Common": "Common",
-        // "Dwarvish": "Dwarvish",
-        // "Elvish": "Elvish",
-        // "Giant": "Giant",
-        // "Gnomish": "Gnomish",
-        // "Goblin": "Goblin",
-        // "Halfling": "Halfling",
-        // "Orc": "Orc",
-        // "Leonin": "Leonin",
-        // "Minotaur": "Minotaur",
-
-        //Exotic Languages
-
-        // "Abyssal": "Abyssal",
-        // "Celestial": "Celestial",
-        // "Draconic": "Draconic",
-        // "DeepSpeech": "Deep Speech",
-        // "Infernal": "Infernal",
-        // "Primordial": "Primordial",
-        // "Sylvan": "Sylvan",
-        // "ThievesCant": "Thieves Cant",
-        // "Undercommon": "Undercommon",
-
-
-        //Tools
-        //Artisan's Tools
-
-        // "Alchemist's Supplies": "Alchemist's Supplies",
-        // "Brewer's Supplies": "Brewer's Supplies",
-        // "Calligrapher's Supplies": "Calligrapher's Supplies",
-        // "Carpenter's Tools": "Carpenter's Tools",
-        // "Cartographer's Tools": "Cartographer's Tools",
-        // "Cobbler's Tools": "Cobbler's Tools",
-        // "Cook's Utensils": "Cook's Utensils",
-        // "Glassblower's Tools": "Glassblower's Tools",
-        // "Jeweler's Tools": "Jeweler's Tools",
-        // "Leatherworker's Tools": "Leatherworker's Tools",
-        // "Mason's Tools": "Mason's Tools",
-        // "Painter's Supplies": "Painter's Supplies",
-        // "Potter's Tools": "Potter's Tools",
-        // "Smith's Tools": "Smith's Tools",
-        // "Tinker's Tools": "Tinker's Tools",
-        // "Weaver's Tools": "Weaver's Tools",
-        // "Woodcarver's Tools": "Woodcarver's Tools",
-
-        //Gaming Set
-
-        // "Dice Set": "Dice Set",
-        // "Dragonchess Set": "Dragonchess Set",
-        // "Playing Card Set": "Playing Card Set",
-        // "Three-Dragon Ante Set": "Three-Dragon Ante Set",
-
-        //Musical Instruments
-
-        // "Bagpipes": "Bagpipes",
-        // "Drum": "Drum",
-        // "Dulcimer": "Dulcimer",
-        // "Flute": "Flute",
-        // "Lute": "Lute",
-        // "Lyre": "Lyre",
-        // "Horn": "Horn",
-        // "PanFlute": "Pan Flute",
-        // "Shawm": "Shawm",
-        // "Viol": "Viol",
-        // "Wargong": "Wargong",
-
-        //Other Tools
-
-        // "Disguise Kit" : "Disguise Kit",
-        // "Forgery Kit" : "Forgery Kit",
-        // "Herbalism Kit" : "Herbalism Kit",
-        // "Navigator's Tools" : "Navigator's Tools",
-        // "Poisoner's Kit" : "Poisoner's Kit",
-        // "Thieves' Tools" : "Thieves' Tools",
-        // "Vehicles (Land)" : "Vehicles (Land)",
-        // "Vehicles (Water)" : "Vehicles (Water)",
+        proficiencies: {
+            weapons: {
+                categories: ["Martial Weapons", "Simple Weapons"],
+                simpleMelee: ["Club", "Dagger", "Greatclub", "Handaxe", "Javelin", "LightHammer", "Mace", "Quarterstaff", "Sickle", "Spear"],
+                simpleRanged: ["CrossbowLight", "Dart", "Shortbow", "Sling"],
+                martialMelee: ["Battleaxe", "Flail", "Glaive", "Greataxe", "Greatsword", "Halberd", "Lance", "Longsword", "Maul", "Morningstar", "Pike", "Rapier", "Scimitar", "Shortsword", "Trident", "WarPick", "Warhammer", "Whip"],
+                martialRanged: ["Blowgun", "CrossbowHand", "CrossbowHeavy", "Longbow", "Net"]
+            },
+            armor: ["Light", "Medium", "Heavy", "Shield"],
+            languages: {
+                common: ["Common", "Dwarvish", "Elvish", "Giant", "Gnomish", "Goblin", "Halfling", "Orc", "Leonin", "Minotaur", "SignLanguage"],
+                exotic: ["Abyssal", "Celestial", "Draconic", "DeepSpeech", "Infernal", "Primordial", "Sylvan", "ThievesCant", "Undercommon"]
+            },
+            tools: {
+                artisan: ["Alchemist's Supplies", "Brewer's Supplies", "Calligrapher's Supplies", "Carpenter's Tools", "Cartographer's Tools", "Cobbler's Tools", "Cook's Utensils", "Glassblower's Tools", "Jeweler's Tools", "Leatherworker's Tools", "Mason's Tools", "Painter's Supplies", "Potter's Tools", "Smith's Tools", "Tinker's Tools", "Weaver's Tools", "Woodcarver's Tools"],
+                gaming: ["Dice Set", "Dragonchess Set", "Playing Card Set", "Three-Dragon Ante Set"],
+                musical: ["Bagpipes", "Drum", "Dulcimer", "Flute", "Lute", "Lyre", "Horn", "PanFlute", "Shawm", "Viol", "Wargong", "BirdPipes"],
+                other: ["Disguise Kit", "Forgery Kit", "Herbalism Kit", "Navigator's Tools", "Poisoner's Kit", "Thieves' Tools", "Vehicles (Land)", "Vehicles (Water)"]
+            }
+        },
 
 
 
@@ -701,6 +901,13 @@ const translations = {
         inventoryGroupBackpack: "Backpack",
         inventoryGroupOtherPossessions: "Other Possessions",
         inventoryGroupAttunement: "Attunement",
+
+
+
+        //This section is for variables used throughout the sheet needed for the changing of stats. 
+        meleeWeapon: "Melee",
+        rangedWeapon: "Ranged",
+        magicWeapon: "Magic",
         
 
 
@@ -720,6 +927,12 @@ const translations = {
     es: {
         //Spell Section
         spellModLabel: "Modificador:",
+        spellModSTR: "FUE",
+        spellModDEX: "DES",
+        spellModCON: "CON",
+        spellModINT: "INT",
+        spellModWIS: "SAB",
+        spellModCHA: "CAR",
         toHitLabel: "Para Golpear:",
         saveDcLabel: "CD:",
         spellLevelLabel: "Nivel",
@@ -797,7 +1010,7 @@ const translations = {
         skillInsight: "Perspicacia",
         skillIntimidation: "Intimidación",
         skillInvestigation: "Investigación",
-        skillMedicine: "Medicine",
+        skillMedicine: "Medicina",
         skillNature: "Naturaleza",
         skillPerception: "Percepción",
         skillPerformance: "Interpretación",
@@ -815,10 +1028,317 @@ const translations = {
         passivePerceptionTitle: "SAB Pasiva (Percepción)",
         passiveInvestigationTitle: "INT Pasiva (Investigación)",
         passiveInsightTitle: "SAB Pasiva (Perspicacia)",
+        proficiencyGroupHeading: "Proficiencias",
         proficiencyWeapons: "Armas",
         proficiencyArmor: "Armadura",
         proficiencyLanguages: "Idioma",
         proficiencyTools: "Herramientas",
+
+
+
+        //This all needs to be moved to the approriate grouping. Together for translating. 
+        playerStatsHeader: "Estadísticas",
+        actionsHeader: "Acciones",
+        spellListHeader: "List Hechizos",
+        inventoryHeader: "Inventario",
+        featuresHeader: "Caracteristicas",
+        docsHeader: "Notas",
+        extrasHeader: "Extras",
+        initHeader: "List Inici",
+        addItemModalHeader: "Agregar Nuevo Objeto al Inventario",
+        addItemModalBagSelect: "Seleccionar Bolsa:",
+        addItemModalEquipment: "Equipamiento",
+        addItemModalBackpack: "Mochila",
+        addItemModalOtherPossessions: "Otras posesiones",
+        addItemModalDropdownText: "Seleccionar Objeto:",
+        'confirm-add-item': "Agregar Objeto",
+        'close-modal': "Cancelar",
+
+        conditionPlayerAddButton: "Añadir Condición",
+        hitDiceOpenModalButton: "Dados de Golpe",
+
+        longRestHeader: "Resumen de descanso largo",
+        shortRestHeader: "Resumen de descanso corto",
+        longRestHPChangeTrans: "PV Restaurados:",
+        longRestTempHPChangeTrans: "Eliminación de HP temporal:",  
+        longRestSpellSlotsTrans: "espacios recuperados",  
+        longRestSpellSlotDefaultText: "No hay conjuros usados que reiniciar.",
+        longRestHitDiceTrans: "Añadiendo Hasta:", 
+        longRestHitDice01: "Dados de Golpe",
+        longRestFeatures: "Rasgos Restablecidos:",
+        traitDescriptionTexts0: "restableciendo hasta",
+        traitDescriptionTexts1: "usos", 
+        confirmLongRestButton: "Confirmar",  
+        cancelLongRestButton: "Cancelar",
+
+        hitDiceModalHeader: "Usar Dados de Golp",
+        hitDiceModalText: "Dados de Golpe disponibles actuales:",
+
+        featuresAddGroupButton: "+ Añadir Nuevo Grupo",
+        featuresAddTraitButton: "+ Añadir Nuevo Rasgo",
+        featuresUsesText: "Usos",
+        featuresCategoryText: "Categoría:",
+        featuresSubcategoryText: "Subcategoría:",
+        featuresAbilityScoreText: "Puntuación de habilidad que se utilizará para el valor de ajuste",
+        featuresAdjustmentText: "Ajustar Valor:",
+        featuresNumberUsesText: "Número de Usos:",
+        featuresResetText: "Recuperar Cuando:",
+        featuresDeleteButton: "Eliminar Rasgo",
+
+
+        docsSectionHeader: "Notas del Personaje",
+        docsSectionGroupButton: "+ Agregar Grupo",
+        docsSectionNoteButton: "+ Añadir Nota",
+
+        damage: {
+            na: "N/A",
+            slashing: "Cortante",
+            piercing: "Perforante",
+            bludgeoning: "Contundente",
+            fire: "Fuego",
+            // ... translated damage types
+        },
+        resistance: {
+            slashing: "Cortante",
+            piercing: "Perforante",
+            bludgeoning_non_magical: "Contundente (No mágico)"
+            // ... translated resistance types
+          },
+        conditions: {
+            blinded: {
+                name: "Cegado",
+                description: [
+                    "Una criatura cegada no puede ver y falla automáticamente todas las pruebas de característica que requieran vista.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja y las tiradas de ataque hechas por la criatura tienen desventaja."
+                ]
+            },
+            charmed: {
+                name: "Hechizado",
+                description: [
+                    "Una criatura hechizada no puede atacar ni elegir como objetivo de efectos dañinos o mágicos a quien la hechizó.",
+                    "Quien hechizó a la criatura tiene ventaja en las pruebas de característica para interactuar socialmente con ella."
+                ]
+            },
+            deafened: {
+                name: "Ensordecido",
+                description: [
+                    "Una criatura ensordecida no puede oír y falla automáticamente todas las pruebas de característica que requieran el oído."
+                ]
+            },
+            exhaustion: {
+                name: "Agotamiento",
+                description: [
+                    "Nivel 1: Desventaja en las pruebas de habilidad",
+                    "<br>Nivel 2: Velocidad reducida a la mitad",
+                    "<br>Nivel 3: Desventaja en tiradas de ataque y tiradas de salvación",
+                    "<br>Nivel 4: El máximo de puntos de vida se reduce a la mitad",
+                    "<br>Nivel 5: Velocidad reducida a 0",
+                    "<br>Nivel 6: Muerte"
+                ]
+            },
+            frightened: {
+                name: "Asustado",
+                description: [
+                    "Una criatura asustada tiene desventaja en las pruebas de característica y tiradas de ataque mientras pueda ver a la fuente de su miedo.",
+                    "<br>La criatura no puede acercarse a la fuente de su miedo voluntariamente."
+                ]
+            },
+            grappled: {
+                name: "Agarrado",
+                description: [
+                    "La velocidad de una criatura agarrada es 0 y no puede aumentar por encima de ese valor.",
+                    "<br>Este estado termina si quien agarra queda incapacitado (consulta Incapacitado).",
+                    "<br>Este estado también termina si algún efecto aleja a la criatura de quien (o lo que) la tiene agarrada, como cuando el conjuro ola atronadora hace salir despedida a una criatura."
+                ]
+            },
+            incapacitated: {
+                name: "Incapacitado",
+                description: [
+                    "Una criatura incapacitada no puede llevar a cabo acciones ni reacciones."
+                ]
+            },
+            paralyzed: {
+                name: "paralizado",
+                description: [
+                    "Una criatura paralizada está incapacitada (consulta Incapacitado) y no puede moverse ni hablar.",
+                    "<br>La criatura falla automáticamente las tiradas de salvación de Fuerza y Destreza.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja.",
+                    "<br>Todos los ataques que impacten a la criatura son críticos si el atacante está a 5 pies o menos de ella."
+                ]
+            },
+            petrified: {
+                name: "Petrificado",
+                description: [
+                    "Una criatura petrificada es transformada, junto con todos los objetos no mágicos que lleve encima o tenga puestos, en una sustancia sólida e inanimada (normalmente piedra). Su peso se multiplica por diez y deja de envejecer.",
+                    "<br>La criatura está incapacitada (consulta el estado), no puede moverse o hablar y no es consciente de su entorno.",
+                    "<br>La criatura fa lla automáticamente las tiradas de salvación de Fuerza y Destreza.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja.",
+                    "<br>La criatura tiene resistencia contra todo el daño.",
+                    "<br>La criatura es inmune al veneno y la enfermedad. Sin embargo. cua lquier enfermedad o veneno que ya estuviera presente en su cuerpo queda suspendido, pero no neutralizado."
+                ]
+            },
+            poisoned: {
+                name: "Envenenado",
+                description: [
+                    "Una criatura envenenada tiene desventaja en las tiradas de ataque y las pruebas de característica."
+                ]
+            },
+            prone: {
+                name: "Derribado",
+                description: [
+                    "Una criatura derribada solo podrá moverse arrastrándose, a no ser que se levante, terminando así el estado.",
+                    "<br>La criatura tiene desventaja en las tiradas de ataque.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja si el atacante está a 5 pies o menos de ella. Sin embargo, tienen desventaja si el atacante está a más distancia."
+                ]
+            },
+            restrained: {
+                name: "Apresado",
+                description: [
+                    "La velocidad de una criatura apresada es 0 y no puede aumentar por encima de este valor.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja y las tiradas de ataque hechas por la criatura tienen desventaja.",
+                    "<br>La criatura tiene desventaja en las tiradas de salvación de Destreza."
+                ]
+            },
+            stunned: {
+                name: "Aturdido",
+                description: [
+                    "Una criatura aturdida está incapacitada (consulta el estado), no puede moverse y solo es capaz de hablar con voz entrecortada.",
+                    "<br>La criatura falla automáticamente las tiradas de salvación de Fuerza y Destreza.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja."
+                ]
+            },
+            unconscious: {
+                name: "Inconsciente",
+                description: [
+                    "Una criatura inconsciente está incapacitada (consulta el estado), no puede moverse o hablar y no es consciente de su entorno.",
+                    "<br>La criatura deja caer cualquier cosa que esté s ujetando y cae derribada.",
+                    "<br>La criatura falla automáticamente las tiradas de salvación de Fuerza y Destreza.",
+                    "<br>Las tiradas de ataque contra la criatura tienen ventaja.",
+                    "<br>Todos los ataques que impacten a la criatura son críticos si el atacante está a 5 pies o menos de ella."
+                ]
+            },
+        // ... all conditions
+        },
+        effects: {
+            aid: {
+                name: "Ayuda",
+                description: [
+                    "La criatura gana 5 puntos de HP máximos por cada nivel de ayuda que tenga."
+                ]
+            },
+            bane: {
+                name: "Perdición",
+                description: [
+                    "La criatura debe restar 1d4 de las tiradas de ataque o de salvación mientras dure el efecto."
+                ]
+            },
+            bless: {
+                name: "Bendecir",
+                description: [
+                    "La criatura puede añadir un d4 a sus tiradas de ataque o de salvación mientras dure el efecto."
+                ]
+            },
+            bloodied: {
+                name: "Desangrandose",
+                description: [
+                    "Los puntos de golpe de la criatura son iguales o inferiores a la mitad de sus puntos de golpe máximos."
+                ]
+            },
+            concentration: {
+                name: "Concentración",
+                description: [
+                    "La criatura está concentrada en un hechizo. La concentración se interrumpe si la criatura recibe daño y falla una tirada de salvación de Constitución."
+                ]
+            },
+            curse: {
+                name: "Maldición",
+                description: [
+                    "La maldición aplica una penalización específica, como puntos de golpe reducidos, desventaja en ciertas tiradas o incapacidad para recuperar puntos de golpe."
+                ]
+            },
+            drained: {
+                name: "consumido",
+                description: [
+                    "Los puntos de vida máximos de la criatura se reducen hasta que finaliza un descanso prolongado."
+                ]
+            },
+            haste: {
+                name: "Prisa",
+                description: [
+                    "La velocidad de la criatura se duplica.",
+                    "Obtiene una bonificación de +2 a la CA.",
+                    "Tiene ventaja en las tiradas de salvación de Destreza.",
+                    "Obtiene una acción adicional cada turno (limitada a ciertas acciones)."
+                ]
+            },
+            heroism: {
+                name: "Heroísmo",
+                description: [
+                    "La criatura gana puntos de vida temporales al comienzo de cada turno mientras dura el efecto.",
+                    "Es inmune a estar asustado."
+                ]
+            },
+            hex: {
+                name: "Maleficio",
+                description: [
+                    "La criatura tiene desventaja en las pruebas de habilidad de una habilidad elegida.",
+                    "Recibe daño necrótico adicional de los ataques del lanzador."
+                ]
+            },
+            inspire: {
+                name: "Inspirar",
+                description: [
+                    "La criatura puede añadir un dado de Inspiración Bárdica a una prueba de característica, tirada de ataque o tirada de salvación."
+                ]
+            },
+            invisible: {
+                name: "Invisible",
+                description: [
+                    "Tes imposible ver a una criatura invisible sin la ayuda de magia o sentidos especiales. En lo que a esconderse respecta, se considera que la criatura se encuentra en una zona muy oscura, aunque se puede determinar su ubicación si esta hace algún ruido o deja huellas.",
+                    "Las tiradas de ataque contra la criatura tienen desventaja y las tiradas de ataque hechas por la criatura tienen ventaja."
+                ]
+            },
+            raging: {
+                name: "Furia",
+                description: [
+                    "La criatura obtiene ventaja en las pruebas de Fuerza y ​​en las tiradas de salvación.",
+                    "Los ataques con armas cuerpo a cuerpo de la criatura infligen daño adicional según el nivel.",
+                    "La criatura tiene resistencia al daño contundente, perforante y cortante."
+                ]
+            },
+            recharging: {
+                name: "Recargando",
+                description: [
+                    "La habilidad de este monstruo se recarga después de su uso. Al final de sus turnos, tira un d6.", 
+                    "<br>Si el resultado está dentro del rango de recarga especificado en la habilidad (por ejemplo, 5-6), la habilidad vuelve a estar disponible para usarse.", 
+                    "<br>De lo contrario, no permanecerá disponible hasta la siguiente tirada de recarga exitosa."
+                ]
+            },
+            sanctuary: {
+                name: "Santuario",
+                description: [
+                    "Las criaturas que intenten atacar a la criatura protegida deben realizar una tirada de salvación de Sabiduría o elegir un nuevo objetivo."
+                ]
+            },
+            shield: {
+                name: "Escudo",
+                description: [
+                    "La criatura obtiene un aumento temporal a su CA (por ejemplo, el hechizo Escudo agrega +5 a la CA hasta el comienzo del siguiente turno)."
+                ]
+            },
+            slow: {
+                name: "Ralentizar",
+                description: [
+                    "La velocidad de la criatura se reduce a la mitad.",
+                    "Supone una penalización de -2 a las tiradas de salvación de CA y Destreza.",
+                    "No puede usar reacciones y solo puede realizar una acción o acción adicional en su turno."
+                ]
+            }
+        },
+
+
+
+        //Actions Section
         actionFiltersAll: "Todo",
         actionFiltersAttacks: "Ataques",
         actionFiltersActions: "Acciones",
@@ -831,6 +1351,13 @@ const translations = {
         actionTableHeader4: "Ataque",
         actionTableHeader5: "Daño",
         actionTableHeader6: "Info",
+
+        filterActionsButton: "Filtrar acciones",
+        actionTableToHitBonus: "Bono de ataque : ",
+        actionTableDamageMod: "Modificador de daño : ",
+        actionTableDamageDice: "Dados de daño : ",
+        actionTableDamageType: "Tipo de daño : ",
+        actionTableDeleteButton: "Eliminar fila actual",
 
 
         //Alignment Options
@@ -872,146 +1399,26 @@ const translations = {
 
 
 
-        //Proficiency Sections
-        // 'Martial Weapons': "Testing",
-        // "Simple Weapons": "Simple Weapons",
-        
-        //Simple Melee Weapons
-
-        // "Club": "Club",
-        // "Dagger": "Dagger",
-        // "Greatclub": "Greatclub",
-        // "Handaxe": "Handaxe",
-        // "Javelin": "Javelin",
-        // "LightHammer": "Light Hammer",
-        // "Mace": "Mace",
-        // "Quarterstaff": "Quarterstaff",
-        // "Sickle": "Sickle",
-        // "Spear": "Spear",
-
-
-        //Simple Ranged Weapons
-
-        // "CrossbowLight": "Light Crossbow",
-        // "Dart": "Dart",
-        // "Shortbow": "Shortbow",
-        // "Sling": "Sling",
-
-        //Martial Melee Weapons
-
-        // "Battleaxe": "Battleaxe",
-        // "Flail": "Flail",
-        // "Glaive": "Glaive",
-        // "Greataxe": "Greataxe",
-        // "Greatsword": "Greatsword",
-        // "Halberd": "Halberd",
-        // "Lance": "Lance",
-        // "Longsword": "Longsword",
-        // "Maul": "Maul",
-        // "Morningstar": "Morningstar",
-        // "Pike": "Pike",
-        // "Rapier": "Rapier",
-        // "Scimitar": "Scimitar",
-        // "Shortsword": "Shortsword",
-        // "Trident": "Trident",
-        // "WarPick": "War Pick",
-        // "Warhammer": "Warhammer",
-        // "Whip": "Whip",
-
-        //Martial Ranged Weapons
-
-        // "Blowgun": "Blowgun",
-        // "CrossbowHand": "Hand Crossbow",
-        // "CrossbowHeavy": "Heavy Crossbow",
-        // "Longbow": "Longbow",
-        // "Net": "Net",
-
-        //Armor
-
-        // "Light": "Light",
-        // "Medium": "Medium",
-        // "Heavy": "Heavy",
-        // "Shield": "Shield",
-
-
-        //Languages
-
-        // "Common": "Common",
-        // "Dwarvish": "Dwarvish",
-        // "Elvish": "Elvish",
-        // "Giant": "Giant",
-        // "Gnomish": "Gnomish",
-        // "Goblin": "Goblin",
-        // "Halfling": "Halfling",
-        // "Orc": "Orc",
-        // "Leonin": "Leonin",
-        // "Minotaur": "Minotaur",
-
-        //Exotic Languages
-
-        // "Abyssal": "Abyssal",
-        // "Celestial": "Celestial",
-        // "Draconic": "Draconic",
-        // "DeepSpeech": "Deep Speech",
-        // "Infernal": "Infernal",
-        // "Primordial": "Primordial",
-        // "Sylvan": "Sylvan",
-        // "ThievesCant": "Thieves Cant",
-        // "Undercommon": "Undercommon",
-
-
-        //Tools
-        //Artisan's Tools
-
-        // "Alchemist's Supplies": "Alchemist's Supplies",
-        // "Brewer's Supplies": "Brewer's Supplies",
-        // "Calligrapher's Supplies": "Calligrapher's Supplies",
-        // "Carpenter's Tools": "Carpenter's Tools",
-        // "Cartographer's Tools": "Cartographer's Tools",
-        // "Cobbler's Tools": "Cobbler's Tools",
-        // "Cook's Utensils": "Cook's Utensils",
-        // "Glassblower's Tools": "Glassblower's Tools",
-        // "Jeweler's Tools": "Jeweler's Tools",
-        // "Leatherworker's Tools": "Leatherworker's Tools",
-        // "Mason's Tools": "Mason's Tools",
-        // "Painter's Supplies": "Painter's Supplies",
-        // "Potter's Tools": "Potter's Tools",
-        // "Smith's Tools": "Smith's Tools",
-        // "Tinker's Tools": "Tinker's Tools",
-        // "Weaver's Tools": "Weaver's Tools",
-        // "Woodcarver's Tools": "Woodcarver's Tools",
-
-        //Gaming Set
-
-        // "Dice Set": "Dice Set",
-        // "Dragonchess Set": "Dragonchess Set",
-        // "Playing Card Set": "Playing Card Set",
-        // "Three-Dragon Ante Set": "Three-Dragon Ante Set",
-
-        //Musical Instruments
-
-        // "Bagpipes": "Bagpipes",
-        // "Drum": "Drum",
-        // "Dulcimer": "Dulcimer",
-        // "Flute": "Flute",
-        // "Lute": "Lute",
-        // "Lyre": "Lyre",
-        // "Horn": "Horn",
-        // "PanFlute": "Pan Flute",
-        // "Shawm": "Shawm",
-        // "Viol": "Viol",
-        // "Wargong": "Wargong",
-
-        //Other Tools
-
-        // "Disguise Kit" : "Disguise Kit",
-        // "Forgery Kit" : "Forgery Kit",
-        // "Herbalism Kit" : "Herbalism Kit",
-        // "Navigator's Tools" : "Navigator's Tools",
-        // "Poisoner's Kit" : "Poisoner's Kit",
-        // "Thieves' Tools" : "Thieves' Tools",
-        // "Vehicles (Land)" : "Vehicles (Land)",
-        // "Vehicles (Water)" : "Vehicles (Water)",
+        proficiencies: {
+            weapons: {
+                categories: ["Arma Marcial", "Arma Simple"],
+                simpleMelee: ["Clava", "Daga", "Gran Clava", "Hacha de Mano","Jabalina", "Martillo ligero", "Maza", "Bastón","Hoz", "Lanza"],
+                simpleRanged: ["Ballesta Ligera", "Dardo", "Arco corto", "Honda"],
+                martialMelee: ["Hacha de batalla", "Mangual", "Gruja", "Gran hacha","Espadón", "Alabarda", "Lanza", "Espada Larga","Mazo de guerra", "Lucero del alba", "Pica", "Estoque","Simitarra", "Espada Corta", "Tridente", "Pico de guerra","Martillo de guerra", "Látigo"],
+                martialRanged: ["Cerbatana", "Ballesta de mano", "Ballesta pesada","Arco largo", "Red"]
+            },
+            armor: ["Liviano", "Media", "Pesada", "Escudo"],
+            languages: {
+                common: ["Comun", "Enano", "Elfo", "Gigante", "Gnomo","Duende", "Mediano", "Orco", "Leonino", "Minotauro","Lenguaje de Señas"],
+                exotic: ["Abysal", "Celestial", "Dracónico", "Profundidades","Infernal", "Primordial", "Sylvano", "Canto de Ladron","Infracomún"]
+            },
+            tools: {
+                artisan: ["Suministros del Alquimista", "Suministros para Cerveceros","Suministros para Calígrafos", "Herramientas de Carpintero","Herramientas del Cartógrafo", "Herramientas de zapatero","Utensilios de cocina", "Herramientas del Soplador de Vidrio","Herramientas de joyero", "Herramientas para Curtidor","Herramientas de Albañil", "Suministros para Pintores","Herramientas de Alfarero", "Herramientas de Herrero","Herramientas de Retoques", "Herramientas del Tejedor","Herramientas del Tallador de Madera"],
+                gaming: ["Juego de dados", "Juego de Dragonchess","Juego de Cartas para Jugar", "Juego de Apuesta Inicial de Tres Dragones"],
+                musical: ["Gaita", "Tambor", "Dulcimer", "Flauta", "Laúd","Lira", "Cuerno", "Flauta de pan", "Caramillo","Viola", "Gong de Guerra", "Flautas de Pájaros"],
+                other: ["Kit de Disfraz", "Kit de Falsificación","Kit de Herbalismo", "Herramientas de Navegación","Kit de Envenenador", "Herramientas de Ladrón","Vehículos (Tierra)", "Vehículos (Agua)"]
+            }
+        },
 
 
 
@@ -1065,6 +1472,13 @@ const translations = {
         inventoryGroupAttunement: " Sintonización",
 
 
+
+        //This section is for variables used throughout the sheet needed for the changing of stats. 
+        meleeWeapon: "Cuerpo a cuerpo",
+        rangedWeapon: "A distancia",
+        magicWeapon: "Mágico",
+
+
         //DM Section from here to the buttom.
         DMPageLinkInit: " Seguimiento de iniciativa",
         'add-monster-button': "Añadir Monstruo",
@@ -1096,8 +1510,17 @@ async function setLanguage(language) {
             }
         }
     }
+
+    checkboxData = [
+        { label: translations[savedLanguage].actionFiltersAttacks, category: 'attacks' },
+        { label: translations[savedLanguage].actionFiltersActions, category: 'actions' },
+        { label: translations[savedLanguage].actionFiltersBonusActions, category: 'bonus-actions' },
+        { label: translations[savedLanguage].actionFiltersReactions, category: 'reactions' },
+        { label: translations[savedLanguage].actionFiltersOther, category: 'other' }
+    ];
     await saveToGlobalStorage("language", "Preferred Language", language, false);
 }
+
 
 // Event listeners for language buttons
 const languageEngButton = document.getElementById('languageEngButton');
@@ -1605,7 +2028,6 @@ function rollableButtons() {
                     const isDisadvantage = toggleContainer.querySelector("#disadvButton").classList.contains("active");
                     
                     let type = "normal";
-                    let diceExtras = [];
                     let diceRolls = []; // Array to hold all dice rolls for this spell
                     let blessRoll = ""; // For Bless or Guidance
                     let baneRoll = ""; // For Bane
@@ -1642,21 +2064,17 @@ function rollableButtons() {
                                     conditionsSet.add(value)
                                 }
                             });
-                            
-                            if (conditionsSet.has('Exhaustion')) {
+
+                            if (conditionsSet.has('exhaustion')) {
                                 // Loop through condition pills to find the Exhaustion condition and extract the number
                                 const exhaustionHomebrew = document.getElementById("exhaustionHomebrew")
                                 if (exhaustionHomebrew.checked) {
                                     conditionSpans.forEach(span => {
                                         const conditionText = span.textContent.trim(); // Get the text of the span, e.g., "Exhaustion 1"
-                                        if (conditionText.startsWith('Exhaustion')) {
+                                        if (conditionText.startsWith(`${translations[savedLanguage].conditions.exhaustion.name}`)) {
                                             // Parse out the number from the text
                                             const exhaustionLevel = parseInt(conditionText.split(' ').pop(), 10); // Extract the number
-                                            console.log(`Exhaustion level: ${exhaustionLevel}`);
-                                    
                                             diceValue = diceValue - exhaustionLevel;
-
-                                            console.log()
                                         }
                                     });
                                 }
@@ -1677,10 +2095,10 @@ function rollableButtons() {
                         // Handle Bless, Guidance, and Bane separately
                         if (conditionsSet) {
                             console.log(conditionsSet)
-                            if (conditionsSet.has('Bless') || conditionsSet.has('Guidance')) {
+                            if (conditionsSet.has('Bless') || conditionsSet.has('Guidance') || conditionsSet.has('bless') || conditionsSet.has('guidance')) {
                                 blessRoll = "1d4"; // Store the Bless or Guidance roll separately
                             }
-                            if (conditionsSet.has('Bane')) {
+                            if (conditionsSet.has('Bane') || conditionsSet.has('bane')) {
                                 baneRoll = "1d4"; // Store the Bane roll separately
                             }
                             
@@ -2446,7 +2864,7 @@ document.getElementById('settings-button').addEventListener('blur', function () 
         if (dropdown.style.display === 'block') {
             dropdown.style.display = 'none';
         }
-    }, 300); // Delay in milliseconds (e.g., 300ms)
+    }, 200); // Delay in milliseconds (e.g., 300ms)
 });
 
 
@@ -3468,6 +3886,46 @@ let magicBonusSection = `
         });
         setupMagicBonusSelection();
     }
+    else if (category === "potion") {
+        additionalFields.innerHTML = `
+          <div class="form-row">
+            <label>Potion Effect Type:</label>
+            <label><input type="radio" name="potion-effect" value="healing" checked> Healing</label>
+            <label><input type="radio" name="potion-effect" value="spell"> Spell</label>
+            <label><input type="radio" name="potion-effect" value="other"> Other</label>
+          </div>
+          <div id="healing-effect" class="potion-effect-section">
+            <div class="form-row">
+              <label for="healing-dice">Healing Formula:</label>
+              <input type="text" id="healing-dice" placeholder="e.g., 2d4+2" />
+            </div>
+          </div>
+          <div id="spell-effect" class="potion-effect-section" style="display: none;">
+            <div class="form-row">
+              <label for="spell-name">Spell Name:</label>
+              <input type="text" id="spell-name" placeholder="e.g., Clairvoyance" />
+            </div>
+            <div class="form-row">
+              <label for="spell-duration">Duration:</label>
+              <input type="text" id="spell-duration" placeholder="e.g., 1 hour" />
+            </div>
+            <div class="form-row">
+              <label for="no-concentration">No Concentration:</label>
+              <input type="checkbox" id="no-concentration" />
+            </div>
+          </div>
+        `;
+    
+        // Toggle between healing and spell effects
+        document.querySelectorAll('input[name="potion-effect"]').forEach(radio => {
+          radio.addEventListener('change', function() {
+            document.querySelectorAll('.potion-effect-section').forEach(div => {
+              div.style.display = 'none';
+            });
+            document.getElementById(`${this.value}-effect`).style.display = 'block';
+          });
+        });
+    }
     // Attach event listeners to the Magic Bonus section
     
 }
@@ -3499,6 +3957,12 @@ function gatherFormData() {
             name: document.getElementById("equipment-rarity").value,
         },
     };
+    if (equipmentData.equipment_category.index === "potion") {
+        equipmentData.gear_category = {
+          index: "consumable",
+          name: "Consumable"
+        };
+      }
 
     // Collect dynamic fields based on the category
     const category = equipmentData.equipment_category.index;
@@ -3615,6 +4079,32 @@ function gatherFormData() {
             } : null
             collectMagicBonuses()
     }
+    // Process potion-specific data
+    if (equipmentData.equipment_category.index === "potion") {
+    const effectType = document.querySelector('input[name="potion-effect"]:checked').value;
+
+    if (effectType === "healing") {
+        const healingDice = document.getElementById("healing-dice").value;
+        equipmentData.properties.push({
+        index: "healing",
+        name: `Heals ${healingDice}`
+        });
+    } else {
+        const spellName = document.getElementById("spell-name").value;
+        const duration = document.getElementById("spell-duration").value;
+        const noConcentration = document.getElementById("no-concentration").checked;
+        
+        let spellEffect = `${spellName} spell`;
+        if (duration) spellEffect += ` for ${duration}`;
+        if (noConcentration) spellEffect += " (no Concentration required)";
+        
+        equipmentData.properties.push({
+        index: "Cast Spell",
+        name: spellEffect
+        });
+    }
+    }
+    
 
     // Collect magic bonus data
     function collectMagicBonuses(){
@@ -3763,5 +4253,43 @@ function autoResizeTextareas() {
             textarea.style.height = 'auto'; // Reset height
             textarea.style.height = `${textarea.scrollHeight}px`; // Adjust to content
         }, 10); // Delay allows the browser to calculate scrollHeight
+    });
+}
+
+
+
+
+
+function populateConditionSelect() {
+    // Select the target dropdown by its ID
+    const conditionSelect = document.getElementById("condition-select");
+
+    // Clear existing options (if needed)
+    conditionSelect.innerHTML = "";
+
+    // Get the translated conditions and effects
+    const conditionObj = translations[savedLanguage].conditions;
+    const effectObj = translations[savedLanguage].effects;
+
+    // Combine conditions and effects into a single array
+    const allConditionsAndEffects = [
+        ...Object.keys(conditionObj).map(key => ({
+            key: key,
+            name: conditionObj[key].name,
+            type: "condition"
+        })),
+        ...Object.keys(effectObj).map(key => ({
+            key: key,
+            name: effectObj[key].name,
+            type: "effect"
+        }))
+    ].sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Add each sorted option to the dropdown
+    allConditionsAndEffects.forEach(entry => {
+        const option = document.createElement("option");
+        option.value = entry.key;
+        option.textContent = entry.name;
+        conditionSelect.appendChild(option);
     });
 }
