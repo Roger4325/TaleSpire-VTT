@@ -369,6 +369,11 @@ tr.spell-row {
     color: green;
 }
 
+/* When both are present */
+.advantage.disadvantage::after {
+    content: "⇅"; /* Combined symbol */
+    color: orange;
+}
 
 
 
