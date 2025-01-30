@@ -3,7 +3,7 @@
   "name": "Talespire 5e Toolset",
   "summary": "A VTT like experiance for Talespire",
   "descriptionFilePath": "/README.md",
-  "version": "0.6.3",
+  "version": "0.6.5",
   "license": "MIT",
   "about": {
     "website": "",

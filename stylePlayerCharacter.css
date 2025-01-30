@@ -346,8 +346,28 @@ tr.spell-row {
     border-bottom: 12px solid currentColor;
 }
 
-.disadvantage::before { content: "⮟"; }  /* Downwards arrow */
-.advantage::before { content: "⮝"; }  /* Upwards arrow */
+.disadvantage::after {
+    content: "⮟"; 
+    color: red;
+}
+
+.skillBlock .disadvantage::after, .skillBlock .advantage::after {
+    margin-left: 38px;
+    position: relative;
+    top: 3px; /* Moves down 3px */
+    display: inline-block; /* Required for positioning */
+    font-size: 1.2em;
+    
+}
+
+.skillBlock .disadvantage::after{
+    top: 2px;
+}
+
+.advantage::after { 
+    content: "⮝"; 
+    color: green;
+}
 
 
 
@@ -558,7 +578,6 @@ tr.spell-row {
     grid-row-end : 4;
 }
 
-
 .skill-container > legend, .saves-container > legend, #proficiency-container > legend{
     font-size: 18px;
 }
@@ -573,12 +592,13 @@ tr.spell-row {
 
 .skillBlock {
     display:grid;
-    grid-template-columns: 5fr 0px 1fr;
+    grid-template-columns: 5fr 0px 1.4fr;
     padding: 1px 4px;
     border: solid 1px var(--border-outline-color);
     border-radius: 5px;
     margin: 0px 2px;
     align-self: center;
+    padding-right: 15px;
 }
 
 .skillName{

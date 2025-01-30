@@ -5468,6 +5468,15 @@ function equipArmor(item) {
         item.uniqueId = itemDiv.getAttribute('data-unique-id');
     }
 
+    // Add stealth disadvantage if needed
+    if (item.stealth_disadvantage) {
+        const stealthElement = document.querySelector('.actionButtonLabel[data-name="Stealth"]');
+        if (stealthElement) {
+            stealthElement.classList.add('disadvantage');
+            console.log(`Stealth disadvantage applied for ${item.name}`);
+        }
+    }
+
     // Equip the armor
     equippedArmor = item;
     updateAC(); // Recalculate AC
@@ -5491,6 +5500,15 @@ function unequipArmor(item) {
                 console.log(`${item.name} unequipped: Bonuses removed.`);
             } else {
                 console.warn(`Item ${item.name} has no bonuses to remove.`);
+            }
+        }
+
+        // Remove stealth disadvantage if present
+        if (item.stealth_disadvantage) {
+            const stealthElement = document.querySelector('.actionButtonLabel[data-name="Stealth"]');
+            if (stealthElement) {
+                stealthElement.classList.remove('disadvantage');
+                console.log(`Stealth disadvantage removed for ${item.name}`);
             }
         }
 
