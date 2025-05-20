@@ -64,6 +64,7 @@ async function establishMonsterData(){
     loadDataFromCampaignStorage('DmNotes')
     .then((groupNotesData) => {
         loadNotesGroupData(groupNotesData.groupNotesData)
+        console.log("here")
     })
     .catch((error) => {
         showErrorModal('Error loading DmNotes data:', error);
@@ -356,6 +357,95 @@ function updateMonsterCard(card, monster) {
     statsSpan.appendChild(speedText);
     statsDiv.appendChild(statsSpan);
 
+    // Create context menu once (place this at the top of your script)
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'custom-context-menu';
+    contextMenu.style.display = 'none';
+    document.body.appendChild(contextMenu);
+
+    // Add Quick Actions if available
+    if (selectedMonsterData.QuickAction && Array.isArray(selectedMonsterData.QuickAction)) {
+        selectedMonsterData.QuickAction.forEach((action) => {
+            // Create container for the quick action
+            const quickActionContainer = document.createElement('div');
+            quickActionContainer.classList.add('quick-action-container');
+            quickActionContainer.style.display = 'flex';
+            quickActionContainer.style.gap = '5px';
+            quickActionContainer.style.alignItems = 'center';
+
+            // Action name label
+            const actionLabel = document.createElement('span');
+            actionLabel.textContent = (action.Name || 'Quick Action') + ": ";
+            quickActionContainer.appendChild(actionLabel);
+
+            // To Hit section
+            const toHitLabel = document.createElement('span');
+            toHitLabel.classList.add('actionButtonLabel');
+            toHitLabel.setAttribute('data-dice-type', "1d20"+action.ToHit);
+            toHitLabel.setAttribute('data-name', action.Name);
+            quickActionContainer.appendChild(toHitLabel);
+
+            const toHitButton = document.createElement('button');
+            toHitButton.classList.add('actionButton');
+            toHitButton.textContent = action.ToHit;
+            quickActionContainer.appendChild(toHitButton);
+
+            // Damage section
+            const damageLabel = document.createElement('span');
+            damageLabel.classList.add('actionButtonLabel');
+            damageLabel.setAttribute('data-dice-type', action.Damage);
+            damageLabel.setAttribute('data-name', action.DamageType);
+            quickActionContainer.appendChild(damageLabel);
+
+            const damageButton = document.createElement('button');
+            damageButton.classList.add('actionButton');
+            damageButton.textContent = action.Damage;
+            
+            // Add right-click context menu for crit damage
+            damageButton.addEventListener('contextmenu', (event) => {
+                event.preventDefault();
+                contextMenu.innerHTML = '';
+
+                // Double the damage dice
+                const doubledDice = action.Damage.replace(/(\d+)d(\d+)/g, 
+                    (match, rolls, sides) => `${rolls * 2}d${sides}`);
+
+                // Create crit label
+                const critLabel = document.createElement('label');
+                critLabel.className = "actionButtonLabel damageDiceButton";
+                critLabel.setAttribute('value', "0");
+                critLabel.setAttribute('data-dice-type', doubledDice);
+                critLabel.setAttribute('data-name', damageLabel.getAttribute('data-name'));
+
+                // Create crit button
+                const critButton = document.createElement('button');
+                critButton.className = 'crit-button actionButton skillbuttonstyler';
+                critButton.textContent = "Crit";
+
+                contextMenu.appendChild(critLabel);
+                contextMenu.appendChild(critButton);
+                
+                // Position and show menu
+                contextMenu.style.left = `${event.pageX}px`;
+                contextMenu.style.top = `${event.pageY}px`;
+                contextMenu.style.display = 'block';
+                
+                rollableButtons(); // Enable rolling for the new crit button
+            });
+
+            quickActionContainer.appendChild(damageButton);
+            statsDiv.appendChild(quickActionContainer);
+        });
+        rollableButtons();
+    }
+
+    // Close context menu on click (add this elsewhere in your script)
+    document.addEventListener('click', () => {
+        contextMenu.style.display = 'none';
+    });
+
+
+
     // Add monster name and stats to the monster info
     monsterInfo.appendChild(monsterNameDiv);
     monsterInfo.appendChild(statsDiv);
@@ -454,7 +544,7 @@ function updateMonsterCard(card, monster) {
     const hpAdjustInput = document.createElement('input');
     hpAdjustInput.type = 'number';
     hpAdjustInput.classList.add('hp-adjust-input');
-    hpAdjustInput.placeholder = 'Math';
+    hpAdjustInput.placeholder = 'Math +n or -n';
     
     const tempHPDiv = document.createElement('span');
     tempHPDiv.classList.add('temp-hp');
@@ -1070,7 +1160,17 @@ async function updatePlayerCard(card, player) {
         // Create the player health div
         const playerHealthDiv = document.createElement('div');
         playerHealthDiv.classList.add('player-health');
-        playerHealthDiv.innerHTML = `<span>HP: ${player.hp.current} / ${player.hp.max}</span>`;
+        
+        // HP: current / max
+        const hpSpan = document.createElement('span');
+        hpSpan.textContent = `HP: ${player.hp.current} / ${player.hp.max}`;
+        
+        // Temp HP: value (default to 0)
+        const tempHpSpan = document.createElement('div');
+        tempHpSpan.textContent = `Temp HP: ${player.tempHp ?? 0}`;
+        
+        playerHealthDiv.appendChild(hpSpan);
+        playerHealthDiv.appendChild(tempHpSpan);
 
         // Append player health to the header
         playerHeader.appendChild(playerHealthDiv);
@@ -1190,7 +1290,7 @@ function reorderCards() {
         tracker.appendChild(card);
     });
 
-    currentTurnIndex = 0;
+    // currentTurnIndex = 0;
     highlightCurrentTurn();
 
     debouncedSendInitiativeListToPlayer();
@@ -2237,6 +2337,35 @@ function resetMonsterForm() {
             container.innerHTML = ""; // Clear any dynamically populated checkboxes
         }
     });
+    // Reset dynamic sections
+    const dynamicSections = [
+        "monsterFormTraits",
+        "monsterFormActions",
+        "monsterFormReactions",
+        "monsterFormLegendaryActions",
+        "monsterFormQuickActions"
+    ];
+
+    dynamicSections.forEach(sectionId => {
+        const section = document.getElementById(sectionId);
+        // Clear existing content
+        const addButtonHtml = sectionId === "monsterFormQuickActions" 
+            ? "" 
+            : '<button type="button" class="nonRollButton">Add</button>';
+        
+        section.innerHTML = `
+            <h3>${sectionId.replace("monsterForm", "")}</h3>
+            ${addButtonHtml}
+        `;
+
+        // Only add event listener for non-QuickAction sections
+        if (sectionId !== "monsterFormQuickActions") {
+            section.querySelector("button").addEventListener("click", () => addDynamicField(sectionId));
+        }
+
+        // Add initial empty entry
+        addDynamicField(sectionId);
+    });
 }
 
 
@@ -2249,16 +2378,16 @@ document.getElementById("monsterCreationForm").addEventListener("submit", functi
         Id: document.getElementById("monsterFormName").value,
         Name: document.getElementById("monsterFormName").value,
         Path: "",
-        Source: document.getElementById("monsterFormSource").value,
+        Source: document.getElementById("monsterFormSource").value || "Homebrew",
         Type: document.getElementById("monsterFormType").value,
-        CR: document.getElementById("monsterFormCR").value,
-        InitiativeModifier: document.getElementById("monsterFormInitiativeModifier").value,
+        CR: document.getElementById("monsterFormCR").value || "0",
+        InitiativeModifier: document.getElementById("monsterFormInitiativeModifier").value || Math.floor((parseInt(document.getElementById("monsterFormDex").value) - 10) / 2) || "0",
         HP: {
-            Value: parseInt(document.getElementById("monsterFormHPValue").value),
+            Value: parseInt(document.getElementById("monsterFormHPValue").value) || "10",
             Notes: document.getElementById("monsterFormHPNotes").value
         },
         AC: {
-            Value: parseInt(document.getElementById("monsterFormACValue").value),
+            Value: parseInt(document.getElementById("monsterFormACValue").value) || "10",
             Notes: document.getElementById("monsterFormACNotes").value
         },
         Speed: document.getElementById("monsterFormSpeed").value.split(",") ,
@@ -2278,6 +2407,7 @@ document.getElementById("monsterCreationForm").addEventListener("submit", functi
         DamageResistances: getCheckedValues("monsterFormResistances"),
         DamageImmunities: getCheckedValues("monsterFormImmunities"),
         ConditionImmunities: getCheckedValues("monsterFormConditionImmunities"),
+        QuickAction: collectDynamicFields("monsterFormQuickActions"),
         Traits: collectDynamicFields("monsterFormTraits"),
         Actions: collectDynamicFields("monsterFormActions"),
         Reactions: collectDynamicFields("monsterFormReactions"),
@@ -2307,10 +2437,20 @@ async function saveMonsterData(monsterData){
 function collectDynamicFields(sectionId) {
     const section = document.getElementById(sectionId);
     const items = [...section.querySelectorAll(".dynamic-entry")];
-    return items.map(item => ({
-        Name: item.querySelector(".entry-name").value,
-        Content: item.querySelector(".entry-content").value,
-    }));
+    
+    if (sectionId === "monsterFormQuickActions") {
+        return items.map(item => ({
+            Name: item.querySelector(".entry-name").value,
+            ToHit: item.querySelector(".entry-tohit").value,
+            Damage: item.querySelector(".entry-damage").value,
+            DamageType: item.querySelector(".entry-damagetype").value
+        }));
+    } else {
+        return items.map(item => ({
+            Name: item.querySelector(".entry-name").value,
+            Content: item.querySelector(".entry-content").value,
+        }));
+    }
 }
 
 // Add dynamic fields
@@ -2319,32 +2459,50 @@ function addDynamicField(sectionId, entry = null) {
     const div = document.createElement("div");
     div.classList.add("dynamic-entry");
 
-    // Populate fields with entry data if available
-    div.innerHTML = `
-        <div>
-            <input type="text" class="entry-name" placeholder="Name" value="${entry?.Name || ""}">
-            <button type="button" class="removeEntry nonRollButton">Remove</button>
-        </div>
-        <textarea class="entry-content" placeholder="Content">${entry?.Content || ""}</textarea>  
-    `;
+    let html;
+    if (sectionId === "monsterFormQuickActions") {
+        // Quick Actions without remove button
+        html = `
+            <div>
+                <input type="text" class="entry-name" placeholder="Action Name" value="${entry?.Name || ""}">
+                <input type="text" class="entry-tohit" placeholder="To Hit Bonus" value="${entry?.ToHit || ""}">
+                <input type="text" class="entry-damage" placeholder="Damage Dice" value="${entry?.Damage || ""}">
+                <input type="text" class="entry-damagetype" placeholder="Damage Type" value="${entry?.DamageType || ""}">
+            </div>
+        `;
+    } else {
+        // Other sections with remove button
+        html = `
+            <div>
+                <input type="text" class="entry-name" placeholder="Name" value="${entry?.Name || ""}">
+                <button type="button" class="removeEntry nonRollButton">Remove</button>
+            </div>
+            <textarea class="entry-content" placeholder="Content">${entry?.Content || ""}</textarea>
+        `;
+    }
 
-    // Append the dynamic entry to the section
+    div.innerHTML = html;
     section.appendChild(div);
-
-    // Add event listener to the remove button
-    div.querySelector(".removeEntry").addEventListener("click", () => {
-        div.remove();
-    });
+    
+    // Only add remove listener for non-QuickAction sections
+    if (sectionId !== "monsterFormQuickActions") {
+        div.querySelector(".removeEntry")?.addEventListener("click", () => div.remove());
+    }
 }
 
 function populateDynamicFields(sectionId, data) {
     const section = document.getElementById(sectionId);
-    section.innerHTML = 
-        `<h3>${sectionId.replace("monsterForm", "")}</h3>
-        <button type="button" class="nonRollButton">Add</button>`;
+    const addButtonHtml = sectionId === "monsterFormQuickActions" ? "" : "<button type='button' class='nonRollButton'>Add</button>";
+    
+    section.innerHTML = `
+        <h3>${sectionId.replace("monsterForm", "")}</h3>
+        ${addButtonHtml}
+    `;
 
-    const addButton = section.querySelector("button");
-    addButton.addEventListener("click", () => addDynamicField(sectionId));
+    // Only add click listener if add button exists
+    if (sectionId !== "monsterFormQuickActions") {
+        section.querySelector("button")?.addEventListener("click", () => addDynamicField(sectionId));
+    }
 
     // Populate existing data
     data?.forEach(entry => addDynamicField(sectionId, entry));
@@ -2586,6 +2744,7 @@ function populateMonsterForm(monster) {
     populateDynamicFields("monsterFormActions", monster.Actions);
     populateDynamicFields("monsterFormReactions", monster.Reactions);
     populateDynamicFields("monsterFormLegendaryActions", monster.LegendaryActions);
+    populateDynamicFields("monsterFormQuickActions", monster.QuickAction);
 }
 
 
@@ -3879,16 +4038,20 @@ function processNotesGroupData() {
 
 //Loading and updating the notes section with the saved notes. 
 function loadNotesGroupData(notesGroupData) {    
-    if (notesGroupData){
+    // Clear existing groups before loading
+    const quickNotesSection = document.getElementById('Docs');
+    const existingGroups = quickNotesSection.querySelectorAll('.notes-group-container');
+    existingGroups.forEach(group => group.remove());
+    notesGroupCounter = 0; // Reset counter to maintain consistent IDs
+
+    if (notesGroupData) {
         // Loop through each group in notesGroupData
         notesGroupData.forEach(group => {
             // Use createNewNotesGroup to create a group container with proper groupData
             createNewNotesGroup(group);
         });
     }
-    
 }
-
 
 function saveNotes(){
     const groupNotes = processNotesGroupData();

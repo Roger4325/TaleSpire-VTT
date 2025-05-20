@@ -42,6 +42,12 @@
             "necrotic",
             "poison"
         ],
+        "QuickAction": [{
+            "Name": "Life Drain",
+            "ToHit": "+6",
+            "Damage": "4d8+3",
+            "DamageType": "necrotic"
+        }],
         "ConditionImmunities": [
             "charmed",
             "exhaustion",
@@ -312,6 +318,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Tentacle",
+            "ToHit": "+9",
+            "Damage": "2d6+5",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -431,6 +443,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Scimitar",
+            "ToHit": "+9",
+            "Damage": "2d6+5",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -509,6 +527,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+3",
+            "Damage": "1d6+1",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Slam",
@@ -708,6 +732,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Paralyzing Touch",
+            "ToHit": "+12",
+            "Damage": "3d6",
+            "DamageType": "cold"
+        }],
         "Actions": [
             {
                 "Name": "Paralyzing Touch",
@@ -1081,6 +1111,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -1346,6 +1382,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d6",
+            "DamageType": "piercing/poison"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -1433,6 +1475,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claw",
+            "ToHit": "+7",
+            "Damage": "2d6+2",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -2115,6 +2163,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -2186,6 +2240,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Spear",
+            "ToHit": "+2",
+            "Damage": "1d6/1d8",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Spear",
@@ -2339,6 +2399,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Rotting Touch",
+            "ToHit": "+2",
+            "Damage": "1d8",
+            "DamageType": "necrotic"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -2524,6 +2590,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Sting",
+            "ToHit": "+5",
+            "Damage": "1d4+3",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Sting (Bite in Beast Form)",
@@ -2828,6 +2900,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Touch",
+            "ToHit": "+6",
+            "Damage": "2d6+3",
+            "DamageType": "fire"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -2938,6 +3016,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+6",
+            "Damage": "2d8+4",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -3008,6 +3092,12 @@
         "Languages": [],
         "Challenge": "1/2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Hooves",
+            "ToHit": "+6",
+            "Damage": "2d6+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Hooves",
@@ -3087,6 +3177,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Warhammer",
+            "ToHit": "+5",
+            "Damage": "1d8+3/1d10+3",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Warhammer",
@@ -3258,6 +3354,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+10",
+            "Damage": "3d8+6",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -3645,6 +3747,12 @@
         ],
         "Challenge": "2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Hooves",
+            "ToHit": "+6",
+            "Damage": "2d6+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Hooves",
@@ -3789,6 +3897,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+2",
+            "Damage": "1d4/1d4",
+            "DamageType": "slashing/fire"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -4080,6 +4194,12 @@
         ],
         "Challenge": "1",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+4",
+            "Damage": "1d10+2",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -4473,6 +4593,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+11",
+            "Damage": "6d10+7/3d6",
+            "DamageType": "piercing/fire"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -4625,6 +4751,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Touch",
+            "ToHit": "+4",
+            "Damage": "2d6",
+            "DamageType": "fire"
+        }],
         "Actions": [
             {
                 "Name": "Touch",
@@ -4844,6 +4976,12 @@
         ],
         "Challenge": "2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+6",
+            "Damage": "1d10+4",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -4924,6 +5062,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Fist",
+            "ToHit": "+3",
+            "Damage": "1d4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Fist",
@@ -4991,6 +5135,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Dagger/Sling",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "piercing/bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Dagger",
@@ -5076,6 +5226,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+8",
+            "Damage": "1d10+5",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -5166,6 +5322,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "claws",
+            "ToHit": "+3",
+            "Damage": "1d4+1/1d4",
+            "DamageType": "slashing/fire"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -5485,6 +5647,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -5828,6 +5996,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Hooves",
+            "ToHit": "+6",
+            "Damage": "2d8+4/2d6",
+            "DamageType": "bludgeoning/fire"
+        }],
         "Actions": [
             {
                 "Name": "Hooves",
@@ -5915,6 +6089,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+8",
+            "Damage": "2d8+5",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -6083,6 +6263,12 @@
         "Languages": [],
         "Challenge": "1/2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+3",
+            "Damage": "1d4+1",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -6147,6 +6333,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+3",
+            "Damage": "1d8+1",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -6251,6 +6443,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claw",
+            "ToHit": "+9",
+            "Damage": "2d8+4",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -6898,6 +7096,12 @@
         ],
         "Challenge": "4",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+6",
+            "Damage": "2d10+4/1d6",
+            "DamageType": "piercing/fire"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -6983,6 +7187,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Smother",
+            "ToHit": "+5",
+            "Damage": "2d6+3",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Smother",
@@ -7055,6 +7265,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite/Claw",
+            "ToHit": "+4",
+            "Damage": "1d6+2",
+            "DamageType": "piercing/slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -7155,6 +7371,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+3",
+            "Damage": "1d4+1/1d4",
+            "DamageType": "slashing/cold"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -7411,6 +7633,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+5",
+            "Damage": "2d6+3",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Claws",
@@ -7635,6 +7863,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Fist",
+            "ToHit": "+7",
+            "Damage": "2d6+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -7922,6 +8156,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+3",
+            "Damage": "2d4+1",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -8170,6 +8410,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Longsword",
+            "ToHit": "+3",
+            "Damage": "1d8+1",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Longsword",
@@ -8258,6 +8504,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claw",
+            "ToHit": "+4",
+            "Damage": "1d4+3/2d4",
+            "DamageType": "piercing/poison"
+        }],
         "Actions": [
             {
                 "Name": "Claw (Bite in Beast Form)",
@@ -8360,6 +8612,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d4",
+            "DamageType": "piercing/acid"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -8778,6 +9036,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudopod",
+            "ToHit": "+4",
+            "Damage": "2d6+2/1d6",
+            "DamageType": "bludgeoning/acid"
+        }],
         "Actions": [
             {
                 "Name": "Pseudopod",
@@ -8854,6 +9118,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Crush",
+            "ToHit": "+5",
+            "Damage": "1d6+3",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Crush",
@@ -9016,6 +9286,12 @@
         "Languages": [],
         "Challenge": "3",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Tail",
+            "ToHit": "+7",
+            "Damage": "4d6+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Tail",
@@ -9237,6 +9513,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mace",
+            "ToHit": "+8",
+            "Damage": "1d6+4/4d8",
+            "DamageType": "bludgeoning/radiant"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -9366,6 +9648,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claws",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Claws (Hag Form Only)",
@@ -9555,6 +9843,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite/Sting",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -9811,6 +10105,12 @@
         "Languages": [],
         "Challenge": "1/8",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Blood Drain",
+            "ToHit": "+5",
+            "Damage": "1d4+3",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Blood Drain",
@@ -9882,6 +10182,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudopod",
+            "ToHit": "+4",
+            "Damage": "3d6",
+            "DamageType": "acid"
+        }],
         "Actions": [
             {
                 "Name": "Pseudopod",
@@ -10430,6 +10736,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+8",
+            "Damage": "2d10+5",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -10645,6 +10957,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Life Drain",
+            "ToHit": "+4",
+            "Damage": "3d6",
+            "DamageType": "necrotic"
+        }],
         "Actions": [
             {
                 "Name": "Life Drain",
@@ -11031,6 +11349,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+6",
+            "Damage": "3d6+4",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -11333,6 +11657,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+6",
+            "Damage": "2d6+3",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -11518,6 +11848,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+8",
+            "Damage": "2d8+5",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -11530,7 +11866,7 @@
                 "Usage": ""
             },
             {
-                "Name": "Whirlwind (Recharge   4 to 6 1d6)",
+                "Name": "Whirlwind (Recharge 4 to 6 1d6)",
                 "Content": "Each creature in the elemental's space must make a DC 13 Strength saving throw. On a failure, a target takes 15 (3d8 + 2) bludgeoning damage and is flung up 20 feet away from the elemental in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 feet it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone.",
                 "Usage": ""
             }
@@ -11633,6 +11969,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Greatsword",
+            "ToHit": "+12",
+            "Damage": "4d6+7/5d8",
+            "DamageType": "slashing/radiant"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -11716,8 +12058,7 @@
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
-        "Version": "1.5.6",
-        "ImageURL": "https://vignette.wikia.nocookie.net/forgottenrealms/images/8/8f/Ghoul-lmp-5e.png/revision/latest?cb=20180212162520"
+        "Version": "1.5.6"
     },
     "Minotaur Skeleton": {
         "Id": "Minotaur Skeleton",
@@ -12180,6 +12521,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Claw",
+            "ToHit": "+12",
+            "Damage": "4d10+6",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -12667,6 +13014,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+5",
+            "Damage": "1d10+3",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -13115,6 +13468,12 @@
         ],
         "Challenge": "1",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+4",
+            "Damage": "1d10+2",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -13212,6 +13571,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+6",
+            "Damage": "1d10+4",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -13925,6 +14290,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Spiked Bone Club",
+            "ToHit": "+5",
+            "Damage": "1d4+3/1d4",
+            "DamageType": "bludgeoning/piercing"
+        }],
         "Actions": [
             {
                 "Name": "Spiked Bone Club",
@@ -14011,6 +14382,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudopod",
+            "ToHit": "+3",
+            "Damage": "1d6+1/2d6",
+            "DamageType": "bludgeoning/acid"
+        }],
         "Actions": [
             {
                 "Name": "Pseudopod",
@@ -14097,10 +14474,16 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "club",
+            "ToHit": "+6",
+            "Damage": "1d8+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Club",
-                "Content": "Melee Weapon Attack: +2 to hit (+6 to hit with shillelagh), reach 5 ft., one target. Hit: 2 (1 d4) bludgeoning damage, or 8 (1d8 + 4) bludgeoning damage with shillelagh.",
+                "Content": "Melee Weapon Attack: +2 to hit (+6 to hit with shillelagh), reach 5 ft., one target. Hit: 2 (1d4) bludgeoning damage, or 8 (1d8 + 4) bludgeoning damage with shillelagh.",
                 "Usage": ""
             },
             {
@@ -14192,6 +14575,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Chain",
+            "ToHit": "+8",
+            "Damage": "2d6+4",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -14219,8 +14608,7 @@
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
-        "Version": "2.4.1",
-        "ImageURL": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/235/1000/1000/636252766618069332.jpeg"
+        "Version": "2.4.1"
     },
     "Roper": {
         "Id": "Roper",
@@ -14357,6 +14745,12 @@
         "Languages": [],
         "Challenge": "2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+5",
+            "Damage": "2d6+3/1d6",
+            "DamageType": "slashing/acid"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -14529,8 +14923,7 @@
         "LegendaryActions": [],
         "Description": "The tyrannical duergar, also known as gray dwarves, dwell in fantastic cities deep in the Underdark. Using ancient dwarven knowledge and myriad slaves, they work tirelessly to expand their subterranean kingdoms.\n\nMost duergar (including females) are bald and have ashen gray skin. They wear drab clothing designed to blend in with stone, along with simple jewelry that reflects their severe and utilitarian demeanor.\n\nSlaves to Slavers. The duergar were once dwarves, before their greed and endless delving beneath the earth brought them into contact with the mind flayers. Held in captivity for generations by the illithids, the dwarves eventually won their independence with the aid of the evil god Laduguer. Slavery had forever changed them, however, darkening their spirits to make the duergar as evil as the tyrants they had escaped. Despite winning their freedom, duergar are dour, pessimistic, untrusting creatures, always toiling and complaining, with no memory of what it means to be happy or proud. Their craftsmanship and accomplishments endure, yet they are bereft of warmth or artistry.\n\nDuergar make war against their dwarven kin and all other subterranean races. They forge alliances when it is convenient, then break those alliances when they have nothing more to gain. They take and hold slaves to toil in the Underdark, regarding them as free labor and crude currency.\n\nTough as Stone. Like dwarves, duergar have strong constitutions. Adding to their physical stamina is an incredible mental fortitude resulting from their time as slaves of the illithids. A duergar\u2019s mind is a fortress, able to shrug off charms, illusions, and other spells.\n\nBorn of Darkness. The Underdark is saturated with strange magical power, which the duergar absorbed over generations of imprisonment. A duergar can increase its size and strength for a short time, becoming a powerful ogre-sized warrior. If it faces a foe it can\u2019t fight, or when spying on creatures approaching its territory, it can just as easily become invisible to slip away into the darkness.\n\nEons spent in the Underdark also sharpened their darkvision, allowing them to see twice as far as other dwarves. This keen eyesight comes at a cost, however, as a duergar\u2019s vision is compromised by sunlight.\n\nInfernal Master. Asmodeus, Lord of the Nine Hells, has been known to impersonate duergar gods in order to cultivate the evil brimming in the hearts of the gray dwarves. He offers them divine guidance and vengeance against their enemies while urging them on toward greater acts of tyranny, all the while concealing his true identity.",
         "Player": "",
-        "Version": "2.1.5",
-        "ImageURL": "https://1d4chan.org/images/thumb/8/8c/Duergar 5e.jpg/400px-Duergar 5e.jpg"
+        "Version": "2.1.5"
     },
     "Xorn": {
         "Id": "Xorn",
@@ -14623,8 +15016,7 @@
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
-        "Version": "1.7.4",
-        "ImageURL": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/46/1000/1000/636252723241554579.jpeg"
+        "Version": "1.7.4"
     },
     "Wyvern": {
         "Id": "Wyvern",
@@ -15009,6 +15401,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Withering Touch",
+            "ToHit": "+5",
+            "Damage": "4d6+3",
+            "DamageType": "necrotic"
+        }],
         "Actions": [
             {
                 "Name": "Withering Touch",
@@ -15739,6 +16137,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Slam",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "bludgeoning"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -16002,6 +16406,12 @@
         ],
         "Challenge": "2",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d4",
+            "DamageType": "piercing/cold"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -16644,6 +17054,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+5",
+            "Damage": "1d8+3/2d6",
+            "DamageType": "piercing/fire"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -16731,6 +17147,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudopod",
+            "ToHit": "+5",
+            "Damage": "1d6+3/4d8",
+            "DamageType": "bludgeoning/acid"
+        }],
         "Actions": [
             {
                 "Name": "Pseudopod",
@@ -16992,6 +17414,12 @@
         ],
         "Challenge": "3",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+5",
+            "Damage": "1d10+3/1d6",
+            "DamageType": "piercing/lightning"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -17056,6 +17484,12 @@
         ],
         "Challenge": "1/4",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Shortsword/Shortbow",
+            "ToHit": "+4",
+            "Damage": "1d6+2",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Shortsword",
@@ -17320,6 +17754,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Bite",
+            "ToHit": "+7",
+            "Damage": "4d12+4",
+            "DamageType": "piercing"
+        }],
         "Actions": [
             {
                 "Name": "Bite",
@@ -17394,6 +17834,12 @@
         ],
         "Challenge": "3",
         "Traits": [],
+        "QuickAction": [{
+            "Name": "Rotting Fist",
+            "ToHit": "+5",
+            "Damage": "2d6+3/3d6",
+            "DamageType": "bludgeoning/necrotic"
+        }],
         "Actions": [
             {
                 "Name": "Multiattack",
@@ -17836,9 +18282,15 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Talons",
+            "ToHit": "+3",
+            "Damage": "2d6+1",
+            "DamageType": "slashing"
+        }],
         "Actions": [
             {
-                "Name": "Talons.",
+                "Name": "Talons",
                 "Content": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 8 (2d6+1) slashing damage.",
                 "Usage": ""
             }
@@ -17917,7 +18369,7 @@
         ],
         "Actions": [
             {
-                "Name": "Talons.",
+                "Name": "Talons",
                 "Content": "Melee Weapon Attack: +3 to hit, reach 5 ft., one target. Hit: 1 slashing damage.",
                 "Usage": ""
             }

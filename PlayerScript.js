@@ -62,81 +62,6 @@ const messageHandlers = {
 let monsterNames
 let monsterData
 
-
-//The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
-const characterStatBonuses = {
-    None: { 
-
-    },
-    skills: {
-        Acrobatics: { bonuses: [] },
-        AnimalHandling: { bonuses: [] },
-        Arcana: { bonuses: [] },
-        Athletics: { bonuses: [] },
-        Deception: { bonuses: [] },
-        History: { bonuses: [] },
-        Initiative: { bonuses: [] },
-        Insight: { bonuses: [] },
-        Intimidation: { bonuses: [] },
-        Investigation: { bonuses: [] },
-        Medicine: { bonuses: [] },
-        Nature: { bonuses: [] },
-        Perception: { bonuses: [] },
-        Performance: { bonuses: [] },
-        Persuasion: { bonuses: [] },
-        Religion: { bonuses: [] },
-        SleightOfHand: { bonuses: [] },
-        Stealth: { bonuses: [] },
-        Survival: { bonuses: [] },
-        All: { bonuses: [] },
-    },
-    saves: {
-        STR: { bonuses: [] },
-        DEX: { bonuses: [] },
-        CON: { bonuses: [] },
-        INT: { bonuses: [] },
-        WIS: { bonuses: [] },
-        CHA: { bonuses: [] },
-        All: { bonuses: [] },
-    },
-    // attributes: {
-    //     STR: { bonuses: [] },
-    //     DEX: { bonuses: [] },
-    //     CON: { bonuses: [] },
-    //     INT: { bonuses: [] },
-    //     WIS: { bonuses: [] },
-    //     CHA: { bonuses: [] },
-    // },
-
-    combatStats: {
-        AC: { bonuses: [] },
-        // toHitBonus: { bonuses: [] },
-        // damageBonus: { bonuses: [] },
-        // AttackandDamage: { bonuses: [] },
-        // MeleeAttackRolls: { bonuses: [] },
-        // MeleeDamageRolls: { bonuses: [] },
-        RangedAttackRolls: { bonuses: [] },
-        RageDamageBonus: { bonuses: [] },
-        RangedDamageRolls: { bonuses: [] },
-        // SpellDamageRolls: { bonuses: [] },
-        EldritchBlastDamage: { bonuses: [] },
-        SpellSaveDC: { bonuses: [] },
-        SpellAttackModifier: { bonuses: [] },
-        SpellAttackandSave: { bonuses: [] },
-        // HitPoints: { bonuses: [] },
-        // Speed: { bonuses: [] },
-    },
-    senses: {
-        PassivePerception: { bonuses: [] },
-        PassiveInsight: { bonuses: [] },
-        PassiveInvestigation: { bonuses: [] },
-        // Darkvision: { bonuses: [] }, 
-        // Tremorsense: { bonuses: [] },
-        // Blindsight: { bonuses: [] },
-        // Truesight: { bonuses: [] },
-    }
-};
-
 let baseAC = 10; // Default base AC
 let equippedArmor = null; // No armor equipped by default
 let equippedShield = null; // No shield equipped by default
@@ -4461,9 +4386,7 @@ function updateAllSpellDamageDice() {
                         if (spellDetails.damage_dice_upcast) {
                             const levelsAbove = getLevelNumber(spellLevel) - getLevelNumber(baseLevel);
                             const diceIncrease = spellDetails.damage_dice_upcast;
-                            console.log(levelsAbove, diceIncrease)
                             upCastedDice = calculateUpcastDamage(spellDetails.damage_dice, diceIncrease, levelsAbove);
-                            console.warn(upCastedDice)
                             adjustedDamageDice = upCastedDice;
                         }
                     }
@@ -6208,6 +6131,14 @@ function addNewTrait(groupContainer, traitData = null) {
         traitName.value = traitData.traitName;
     }
 
+    traitItem.traitDataStore = traitData ? {...traitData} : {
+        checkboxStates: [],
+        numberOfUses: 0,
+    };
+    if (!traitItem.traitDataStore.checkboxStates) {
+        traitItem.traitDataStore.checkboxStates = [];
+    }
+
     // Trait Description Textarea
     const traitDescription = document.createElement('textarea');
     traitDescription.classList.add('trait-description');
@@ -6273,7 +6204,6 @@ function addNewTrait(groupContainer, traitData = null) {
         updateContent();
     });
 
-    // Trait Usage Section (number input and checkboxes)
     const traitUses = document.createElement('div');
     traitUses.classList.add('trait-uses');
     const usesLabel = document.createElement('label');
@@ -6283,37 +6213,115 @@ function addNewTrait(groupContainer, traitData = null) {
     usesInput.classList.add('trait-uses-input');
     usesInput.value = traitData && traitData.numberOfUses ? traitData.numberOfUses : 0;
     usesInput.min = 0;
-    usesInput.max = 10;
 
-    // Container for dynamically generated checkboxes (on main page)
+    // Container for controls
     const checkboxesContainerMain = document.createElement('div');
     checkboxesContainerMain.classList.add('trait-checkboxes-main');
 
-    // Function to update the checkboxes on the main section
     function updateCheckboxes() {
-        const numberOfUses = parseInt(usesInput.value);
-        checkboxesContainerMain.innerHTML = `${translations[savedLanguage].featuresUsesText}: `;
+        const numberOfUses = parseInt(usesInput.value) || 0;
+        checkboxesContainerMain.innerHTML = '';
 
-        for (let i = 0; i < numberOfUses; i++) {
-            const checkboxMain = document.createElement('input');
-            checkboxMain.type = 'checkbox';
-            checkboxMain.classList.add('trait-checkbox-main');
+        // Maintain checkboxStates array
+        if (!traitItem.traitDataStore.checkboxStates) {
+            traitItem.traitDataStore.checkboxStates = [];
+        } 
 
-            // Check if traitData contains saved checkbox states
-            if (traitData && traitData.checkboxStates && traitData.checkboxStates[i] !== undefined) {
-                checkboxMain.checked = traitData.checkboxStates[i];
-            }
+        // Create label
+        const label = document.createElement('span');
+        label.textContent = `${translations[savedLanguage].featuresUsesText}: `;
+        checkboxesContainerMain.appendChild(label);
 
-            checkboxesContainerMain.appendChild(checkboxMain);
+        if (numberOfUses <= 10) {
+            // Checkbox mode
+            checkboxesContainerMain.innerHTML = '';
+    
+            // Create new checkboxes from stored data
+            traitItem.traitDataStore.checkboxStates.forEach((state, i) => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.checked = state;
+                checkbox.classList.add('trait-checkbox-main');
+                checkbox.addEventListener('change', () => {
+                    traitItem.traitDataStore.checkboxStates[i] = checkbox.checked;
+                });
+                checkboxesContainerMain.appendChild(checkbox);
+            });
+        } else {
+            // Numeric control mode
+            const container = document.createElement('div');
+            container.className = 'numeric-uses-control';
+            
+            const minusBtn = document.createElement('button');
+            minusBtn.textContent = '-';
+            minusBtn.className = "nonRollButton";
+            
+            const plusBtn = document.createElement('button');
+            plusBtn.textContent = '+';
+            plusBtn.className = "nonRollButton";
+            
+            const display = document.createElement('span');
+            display.className = 'current-uses';
+            
+            // Initialize display value
+            let currentValue = calculateCurrentUses();
+            display.textContent = currentValue;
+
+            // Button handlers
+            minusBtn.onclick = () => {
+                currentValue = Math.max(0, currentValue - 1);
+                display.textContent = currentValue;
+                updateCheckboxStatesFromDisplay(currentValue);
+                updateContent();
+            };
+
+            plusBtn.onclick = () => {
+                currentValue = Math.min(parseInt(usesInput.value), currentValue + 1);
+                display.textContent = currentValue;
+                updateCheckboxStatesFromDisplay(currentValue);
+                updateContent();
+            };
+
+            container.append(minusBtn, display, plusBtn);
+            checkboxesContainerMain.appendChild(container);
         }
+
         updateContent();
     }
 
-    // Update checkboxes when the input changes
-    usesInput.addEventListener('input', updateCheckboxes);
+    function updateCheckboxStatesFromDisplay(currentValue) {
+        const totalUses = parseInt(usesInput.value);
+        const usedCount = totalUses - currentValue;
+        
+        traitItem.traitDataStore.checkboxStates = Array(totalUses)
+            .fill(false)
+            .map((_, index) => index < usedCount);
+    }
 
-    // Initially generate checkboxes based on traitData
+    function calculateCurrentUses() {
+        if (!traitItem.traitDataStore.checkboxStates) return parseInt(usesInput.value);
+        const used = traitItem.traitDataStore.checkboxStates.filter(Boolean).length;
+        return Math.max(0, parseInt(usesInput.value) - used);
+    }
+
+    function adjustUses(delta) {
+        const currentUses = parseInt(usesInput.value) - 
+                        traitItem.traitDataStore.checkboxStates.filter(Boolean).length;
+        const newCurrent = Math.max(0, currentUses + delta);
+        const usedCount = parseInt(usesInput.value) - newCurrent;
+        
+        // Update stored data
+        traitItem.traitDataStore.checkboxStates = 
+            Array(parseInt(usesInput.value)).fill(false).map((_, i) => i < usedCount);
+        
+        updateCheckboxes();
+    }
+
+    usesInput.addEventListener('input', updateCheckboxes);
     updateCheckboxes();
+
+    // Add elements to DOM
+    traitUses.append(usesLabel, usesInput, checkboxesContainerMain);
 
 
      // Add Reset Uses Dropdown
@@ -6650,8 +6658,8 @@ function processGroupTraitData() {
             traitDataObject['traitDescription'] = traitDescription;
 
             // Save the trait checkbox state if available
-            const checkboxes = trait.querySelectorAll('.trait-checkbox-main');
-            traitDataObject['checkboxStates'] = Array.from(checkboxes).map(checkbox => checkbox.checked);
+            traitDataObject['checkboxStates'] = trait.traitDataStore.checkboxStates;
+            traitDataObject['numberOfUses'] = trait.traitDataStore.numberOfUses; 
 
             // Save any other trait-specific fields (like dropdowns, etc.)
             const traitSettings = trait.querySelector('.trait-settings');
@@ -7017,6 +7025,7 @@ function getPlayerData() {
             current: document.getElementById('currentCharacterHP').textContent,
             max: document.getElementById('maxCharacterHP').textContent
         },
+        tempHP: document.getElementById('tempHP').textContent,
         ac: document.getElementById('AC').textContent,
         passivePerception: document.getElementById('passivePerception').textContent,
         spellSave: document.getElementById('spellSaveDc').textContent
@@ -7123,6 +7132,7 @@ async function sendDMUpdatedStats() {
                     current: playerStats.hp.current.toString(), // Ensure current HP is a string
                     max: playerStats.hp.max.toString() // Ensure max HP is a string
                 },
+                tempHp: playerStats.hp.current.toString(),
                 ac: playerStats.ac.toString(), // Ensure AC is a string
                 passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
                 spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
@@ -7289,15 +7299,6 @@ document.getElementById('exportCharacterData').addEventListener("click", async (
     const characterKey = document.getElementById("customCharacterSelect").value;
     exportData("characters",characterKey);
 });
-document.getElementById('exportCustomSpell').addEventListener("click", async () => {
-    const spellKey = document.getElementById("customSpellSelect").value;
-    exportData("Custom Spells",spellKey);
-});
-document.getElementById('exportCustomItem').addEventListener("click", async () => {
-    const itemKey = document.getElementById("customItemSelect").value;
-    exportData("Custom Equipment",itemKey);
-});
-
 
 
 

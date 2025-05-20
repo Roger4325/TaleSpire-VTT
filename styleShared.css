@@ -646,6 +646,11 @@ margin: 2px;
     transform: rotate(-90deg);
 }
 
+
+.add-notes-group-button{
+    margin-bottom: 25px;
+}
+
 .select-wrapper{
     min-height: 60px;
 }
@@ -1052,4 +1057,242 @@ margin: 2px;
     gap: 10px;
     align-items: center;
     justify-items: center;
+}
+
+
+
+
+
+#spellFormModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.spell-modal-background{
+    background-color: rgb(2, 2, 2);
+    margin: 5% auto; /* Center the modal */
+    padding: 10px;
+    border: 1px solid var(--border-outline-color);
+    width: 90%; /* Adjust the width as needed */
+    border-radius: 5px;
+    z-index: 10;
+    position: relative;
+}
+
+#spellForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-row > input, .form-row > textarea {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+    flex: 1; 
+}
+
+#spellFormModal button {
+    margin-top: 10px;
+}
+
+#spellFormComponents{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Three columns */
+    gap: 5px; 
+    max-height: 40px;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 10px;
+    border: 1px solid var(--border-outline-color); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+#spellFormClass {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Three columns */
+    gap: 5px; 
+    height: fit-content;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 5px;
+    border: 1px solid var(--border-outline-color); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+#spellFormClass label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+#spellFormClass input[type="checkbox"] {
+    margin-right: 5px; /* Add spacing between checkbox and label text */
+}
+
+.form-row {
+    display: flex; 
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 10px;
+}
+
+.form-row label {
+    flex: 0; 
+    text-align: left; 
+    min-width: 22%;
+}
+
+.form-row select {
+    flex: 1; 
+}
+
+#spellFormClass{
+    width: 100%;
+}
+
+
+
+
+#itemFormModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 9; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+    backdrop-filter: blur(10px); /* Apply blur effect */
+    -webkit-backdrop-filter: blur(10px); /* For Safari */
+}
+
+.item-modal-background{
+    background-color: rgb(2, 2, 2);
+    margin: 5% auto; /* Center the modal */
+    padding: 10px;
+    border: 1px solid var(--border-outline-color);
+    width: 90%; /* Adjust the width as needed */
+    border-radius: 5px;
+    z-index: 10;
+    position: relative;
+}
+
+#itemForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#itemForm > .form-row label, #additional-fields > .form-row label {
+    min-width: 18%;
+}
+
+.magic-bonus-row{
+    margin-bottom: 10px;
+    display: flex;  
+    gap: .3rem;
+}
+
+#weaponProperties {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 2px; 
+    height: fit-content;
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 2px;
+    border: 1px solid var(--border-outline-color); 
+    border-radius: 5px; 
+    background-color: rgb(2, 2, 2); 
+}
+
+
+.range-input {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.range-label{
+    min-width: 10%;
+    flex: 1; /* Labels take equal width */
+    text-align: right; /* Align text to the right */
+    margin-right: 2px; /* Space between label and input */
+}
+
+#range-inputs {
+    display: grid;
+    grid-template-columns: 1fr 2fr; 
+    gap: 2px; /* Space between each row */
+    align-items: center;
+}
+  
+.range-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2px; /* Space between label and input */
+}
+
+.range-input {
+    flex: 2; /* Inputs take more space than labels */
+}
+
+.magic-bonus-value{
+    border: solid 1px var(--border-outline-color);
+    border-radius: 5px;
+    background-color: rgb(2, 2, 2);
+    color: white;
+    text-align: center;
+    padding: 2px;
+    font-size: .8rem; /* Ensures consistent text size for both inputs */
+    max-width: 40px;
+}
+
+#importCustomSpell, #importCustomItem{
+    display: flex;
+    text-align: center;
+}
+
+#importModal {
+    display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    padding: 16px;
+    border-radius: 8px;
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(121, 121, 121, 0.377);
+}
+
+
+#importTextArea {
+    height: 70vh;
+    width: 80vw;
+    text-align: left; /* Override centering */
+    resize: vertical; /* Allow resizing vertically, if desired */
+    background-color: rgb(197, 197, 197);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    margin: 0 auto; /* Keeps alignment consistent */
 }

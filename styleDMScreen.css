@@ -329,7 +329,7 @@
     justify-items: center;
 }
 
-.form-row > input, .form-row > textarea, .entry-name, .entry-content{
+.form-row > input, .form-row > textarea, .entry-name, .entry-content, .entry-tohit, .entry-damage, .entry-damagetype{
     background-color: rgb(2, 2, 2);
     border: 1px solid var(--border-outline-color);
     padding: 5px;
@@ -456,7 +456,7 @@
 }
 
 
-#monsterFormTraits, #monsterFormActions, #monsterFormReactions, #monsterFormLegendaryActions {
+#monsterFormTraits, #monsterFormActions, #monsterFormReactions, #monsterFormLegendaryActions, #monsterFormQuickActions {
     background-color: rgb(2, 2, 2);
     border: 1px solid var(--border-outline-color);
     padding: 5px;
@@ -474,6 +474,10 @@
     width: 98%;
     min-height: 30px;
     margin-bottom: 2px;
+}
+
+.entry-tohit, .entry-damage, .entry-damagetype{
+    width: 30%;
 }
 
 

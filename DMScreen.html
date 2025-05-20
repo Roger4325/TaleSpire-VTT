@@ -1265,6 +1265,10 @@
 
         
                 <!-- Traits, Actions, and Reactions -->
+                <fieldset id="monsterFormQuickActions">
+                    <legend>Quick Actions</legend>
+                </fieldset>
+
                 <fieldset id="monsterFormTraits">
                     <legend>Traits</legend>
                     <button type="button" id="addTraitButton" class="nonRollButton">Add Trait</button>
@@ -1564,6 +1568,75 @@
                 
             </form>
         </div>
+    </div>   
+    
+    <div id="itemFormModal" style="display: none;">
+        <div class="item-modal-background">
+            <span id="closeItemForm" class="close">&times;</span>
+            <form id="itemForm">
+                <h2>Create Equipment</h2>
+            
+                <!-- General Fields -->
+                <div class="form-row">
+                    <label for="equipment-name">Name:</label>
+                    <input type="text" id="equipment-name" placeholder="Equipment Name" required />
+                </div>
+    
+                <!-- Description -->
+                <div class="form-row">
+                    <label for="equipment-description">Description:</label>
+                    <textarea id="equipment-description" rows="15" placeholder="Description"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label for="equipment-category">Category:</label>
+                    <select id="equipment-category" required>
+                        <option value="weapon">Weapon</option>
+                        <option value="armor">Armor</option>
+                        <option value="wondrous-item">Wonderous Item</option>
+                        <option value="potion">Potion</option>
+                        <option value="adventuring-gear">Adventuring Gear</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label for="equipment-rarity">Rarity:</label>
+                    <select id="equipment-rarity">
+                        <option value="common">Common</option>
+                        <option value="uncommon">Uncommon</option>
+                        <option value="rare">Rare</option>
+                        <option value="very-rare">Very Rare</option>
+                        <option value="legendary">Legendary</option>
+                    </select>
+                </div>
+    
+                <div class="form-row">
+                    <label for="equipment-cost">Cost:</label>
+                    <input type="number" id="equipment-cost" placeholder="Cost" required />
+                    <select id="equipment-cost-unit">
+                        <option value="cp">cp</option>
+                        <option value="sp">sp</option>
+                        <option value="gp">gp</option>
+                        <option value="pp">pp</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label for="equipment-weight">Weight:</label>
+                    <input type="number" id="equipment-weight" placeholder="Weight" required />
+                </div>
+                
+                
+                <!-- Additional Fields (Dynamic based on category) -->
+                <div id="additional-fields"></div>
+                
+    
+                
+                <!-- Submit -->
+                <button type="submit" class="nonRollButton">Create Equipment</button>
+            </form>
+            
+        </div>
     </div>
 
     <div id="themeModal" class="theme-modal">
@@ -1629,33 +1702,38 @@
                             </div>
                         </div>
                         <hr>
-                        <!-- <div class="monsterEditorSubsection">
-                            <div>
+                        <div class="monsterEditorSubsection">
+                            <div class="">
                                 <button id="customSpells" class="nonRollButton">Create Spell</button>
+                                <button id="importCustomSpell" class="nonRollButton">Import Spell</button>
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
                                     <label for="customSpellSelect">Select Spell to Delete/Edit:</label>
                                     <button id="deleteCustomSpells" class="nonRollButton">Delete Spell</button>
                                     <button id="editCustomSpells" class="nonRollButton">Edit Spell</button>
+                                    <button id="exportCustomSpell" class="nonRollButton">Export Spell</button>
                                 </div>
-                                <select id="customMonsterSelect"></select>
+                                <select id="customSpellSelect"></select>
                             </div>
                         </div>
                         <hr>
                         <div class="monsterEditorSubsection">
                             <div>
-                                <button id="customEquipmentExample" class="nonRollButton">Create Item</button>
+                                <button id="customItems" class="nonRollButton">Create Item</button>
+                                <buton id="importCustomItem" class="nonRollButton">Import Item</button>
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
                                     <label for="customItemSelect">Select Item to Delete/Edit:</label>
                                     <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
                                     <button id="editCustomItems" class="nonRollButton">Edit Item</button>
+                                    <button id="exportCustomItem" class="nonRollButton">Export Item</button>
                                 </div>
                                 <select id="customItemSelect"></select>
                             </div>
-                        </div> -->
+                        </div>
+                        <hr>
                         <div class="monsterEditorSubsection">
                             <div>
                                 <button id="createCustomShops" class="nonRollButton">Create Shop</button>

@@ -55,6 +55,80 @@ function generateUUID() {
     });
 }
 
+//The characterStatBonuses will be used to maintain an array of all bonuses effecting each skill, save profiencey, etc. This will then be added into each skill. 
+const characterStatBonuses = {
+    None: { 
+
+    },
+    skills: {
+        Acrobatics: { bonuses: [] },
+        AnimalHandling: { bonuses: [] },
+        Arcana: { bonuses: [] },
+        Athletics: { bonuses: [] },
+        Deception: { bonuses: [] },
+        History: { bonuses: [] },
+        Initiative: { bonuses: [] },
+        Insight: { bonuses: [] },
+        Intimidation: { bonuses: [] },
+        Investigation: { bonuses: [] },
+        Medicine: { bonuses: [] },
+        Nature: { bonuses: [] },
+        Perception: { bonuses: [] },
+        Performance: { bonuses: [] },
+        Persuasion: { bonuses: [] },
+        Religion: { bonuses: [] },
+        SleightOfHand: { bonuses: [] },
+        Stealth: { bonuses: [] },
+        Survival: { bonuses: [] },
+        All: { bonuses: [] },
+    },
+    saves: {
+        STR: { bonuses: [] },
+        DEX: { bonuses: [] },
+        CON: { bonuses: [] },
+        INT: { bonuses: [] },
+        WIS: { bonuses: [] },
+        CHA: { bonuses: [] },
+        All: { bonuses: [] },
+    },
+    // attributes: {
+    //     STR: { bonuses: [] },
+    //     DEX: { bonuses: [] },
+    //     CON: { bonuses: [] },
+    //     INT: { bonuses: [] },
+    //     WIS: { bonuses: [] },
+    //     CHA: { bonuses: [] },
+    // },
+
+    combatStats: {
+        AC: { bonuses: [] },
+        // toHitBonus: { bonuses: [] },
+        // damageBonus: { bonuses: [] },
+        // AttackandDamage: { bonuses: [] },
+        // MeleeAttackRolls: { bonuses: [] },
+        // MeleeDamageRolls: { bonuses: [] },
+        RangedAttackRolls: { bonuses: [] },
+        RageDamageBonus: { bonuses: [] },
+        RangedDamageRolls: { bonuses: [] },
+        // SpellDamageRolls: { bonuses: [] },
+        EldritchBlastDamage: { bonuses: [] },
+        SpellSaveDC: { bonuses: [] },
+        SpellAttackModifier: { bonuses: [] },
+        SpellAttackandSave: { bonuses: [] },
+        // HitPoints: { bonuses: [] },
+        // Speed: { bonuses: [] },
+    },
+    senses: {
+        PassivePerception: { bonuses: [] },
+        PassiveInsight: { bonuses: [] },
+        PassiveInvestigation: { bonuses: [] },
+        // Darkvision: { bonuses: [] }, 
+        // Tremorsense: { bonuses: [] },
+        // Blindsight: { bonuses: [] },
+        // Truesight: { bonuses: [] },
+    }
+};
+
 const damageTypes = [
     "N/A",
     "Slashing",
@@ -2772,7 +2846,6 @@ async function readSpellJson() {
 
 async function readMonsterJsonList() {
     try {
-
         // Fetch the data from the JSON file
         const response = await fetch(`Monster_Manual-${savedLanguage}.json`);
         if (!response.ok) {
@@ -2781,16 +2854,25 @@ async function readMonsterJsonList() {
         const monsterData = await response.json();
         const allCreatureData = (await loadDataFromGlobalStorage("Custom Monsters"));
 
-        // Combine the data from global storage and the JSON file
+        // Combine the data
         const combinedData = {
             ...allCreatureData,
             ...monsterData
         };
 
-        // Extract monster names from the combined data
-        const monsterNames = Object.keys(combinedData);
+        // Extract and sort monster names
+        const monsterNames = Object.keys(combinedData).sort((a, b) => {
+            // Remove articles for sorting (adjust based on language)
+            const cleanA = a.replace(/^(the|a|an) /i, '');
+            const cleanB = b.replace(/^(the|a|an) /i, '');
+            
+            // Case-insensitive comparison with fallback to case-sensitive
+            return cleanA.localeCompare(cleanB, undefined, {
+                sensitivity: 'base',
+                numeric: true
+            }) || a.localeCompare(b);
+        });
 
-        // Log and return the data
         return {
             monsterNames: monsterNames,
             monsterData: combinedData
@@ -2798,7 +2880,7 @@ async function readMonsterJsonList() {
     } catch (error) {
         console.error('Error loading data:', error);
         return null;
-    }     
+    }
 }
 
 
@@ -3035,6 +3117,15 @@ async function loadThemeSettings() {
 
 
 
+document.getElementById('exportCustomSpell').addEventListener("click", async () => {
+    const spellKey = document.getElementById("customSpellSelect").value;
+    exportData("Custom Spells",spellKey);
+});
+document.getElementById('exportCustomItem').addEventListener("click", async () => {
+    const itemKey = document.getElementById("customItemSelect").value;
+    exportData("Custom Equipment",itemKey);
+});
+
 
 
 
@@ -3053,11 +3144,11 @@ openHomebrewButton.addEventListener('click', () => {
         loadAndDisplayCustomShops()
     }
     if (myClientType === "player"){
-        loadAndDisplayCustomSpells()
-        loadAndDisplayCustomItems()
         loadAndDisplayCharaceter()
     }
-    
+
+    loadAndDisplayCustomSpells()
+    loadAndDisplayCustomItems()
 });
 
 // Close the form
@@ -3528,6 +3619,7 @@ let items = []; // Store created spells
 //This if stops the whole sheet from erroring out when hidden for the DM side of things. 
 if(customItemsButton){
     customItemsButton.addEventListener('click', () => {
+        resetItemForm();
         updateDynamicFields("weapon")
         loadAndDisplayCustomItems()
         homebrewModal.style.display = 'none';
@@ -4293,3 +4385,283 @@ function populateConditionSelect() {
         conditionSelect.appendChild(option);
     });
 }
+
+
+
+
+
+
+// Edit Item Button Handler
+document.getElementById("editCustomItems").addEventListener("click", async () => {
+    const itemSelect = document.getElementById("customItemSelect");
+    const selectedItem = itemSelect.value;
+
+    if (selectedItem) {
+        try {
+            const items = await loadDataFromGlobalStorage("Custom Equipment");
+            const itemData = items[selectedItem];
+            if (itemData) {
+                populateItemForm(itemData);
+                itemFormModal.style.display = 'block';
+                homebrewModal.style.display = 'none';
+            } else {
+                errorModal(`Item "${selectedItem}" not found.`);
+            }
+        } catch (error) {
+            console.error("Error loading item:", error);
+        }
+    } else {
+        errorModal("No item selected for editing.");
+    }
+});
+
+
+
+
+function populateItemForm(itemData) {
+    resetItemForm();
+    
+    // Set basic fields
+    document.getElementById('equipment-name').value = itemData.name;
+    document.getElementById('equipment-description').value = itemData.description.join('\n');
+    
+    // Handle category mapping for shields
+    const category = itemData.equipment_category.index === 'shield' 
+        ? 'armor' 
+        : itemData.equipment_category.index;
+    document.getElementById('equipment-category').value = category;
+    
+    document.getElementById('equipment-rarity').value = itemData.rarity.index;
+    document.getElementById('equipment-cost').value = itemData.cost.quantity;
+    document.getElementById('equipment-cost-unit').value = itemData.cost.unit;
+    document.getElementById('equipment-weight').value = itemData.weight;
+
+    // Force update dynamic fields
+    const categorySelect = document.getElementById('equipment-category');
+    updateDynamicFields(categorySelect.value);
+    
+    // Delay population to ensure DOM updates
+    setTimeout(() => {
+        switch(category) {
+            case 'weapon':
+                populateWeaponFields(itemData);
+                break;
+            case 'armor':
+                populateArmorFields(itemData);
+                break;
+            case 'wondrous-item':
+                populateWondrousItemFields(itemData);
+                break;
+            case 'potion':
+                populatePotionFields(itemData);
+                break;
+        }
+
+        // Handle magic bonuses once here
+        if (itemData.bonus) {
+            itemData.bonus.forEach(bonus => addMagicBonusRow(bonus));
+        }
+    }, 100);
+}
+
+function populateWeaponFields(itemData) {
+    // Weapon category and attack style
+    document.getElementById('weapon-category').value = itemData.weapon_category;
+    document.getElementById('attack-style').value = itemData.weapon_range;
+    document.getElementById('attack-style').dispatchEvent(new Event('change'));
+
+    // Range values
+    if (itemData.range) {
+        if (itemData.weapon_range === 'Melee') {
+            document.getElementById('melee-range').value = itemData.range.normal;
+        } else if (itemData.weapon_range === 'Ranged') {
+            document.getElementById('short-range').value = itemData.range.normal;
+            document.getElementById('long-range').value = itemData.range.long;
+        } else if (itemData.weapon_range === 'Melee-thrown') {
+            document.getElementById('melee-range').value = itemData.range.normal;
+            document.getElementById('short-range').value = itemData.throw_range.normal;
+            document.getElementById('long-range').value = itemData.throw_range.long;
+        }
+    }
+
+    // Damage and properties
+    document.getElementById('damage-dice').value = itemData.damage?.damage_dice || '';
+    document.getElementById('damage-type').value = itemData.damage?.damage_type?.name || '';
+    document.getElementById('weapon-to-hit-bonus').value = itemData.toHitBonus || '';
+    document.getElementById('weapon-damage-bonus').value = itemData.damageBonus || '';
+
+    // Checkboxes
+    const properties = itemData.properties.map(p => p.name);
+    document.querySelectorAll('#weaponProperties input[type="checkbox"]').forEach(checkbox => {
+        checkbox.checked = properties.includes(checkbox.value);
+    });
+    const hasChargesCheckbox = document.getElementById('has-charges');
+    if (itemData.hasCharges) {
+        hasChargesCheckbox.checked = true;
+        hasChargesCheckbox.dispatchEvent(new Event('change')); // Trigger visibility update
+        document.getElementById('charge-reset').value = itemData.chargesOptions?.chargeReset || 'long-rest';
+        document.getElementById('max-charges').value = itemData.chargesOptions?.maxCharges || 0;
+    }
+}
+
+function populateArmorFields(itemData) {
+    // Determine if editing a shield (new check)
+    const isShield = itemData.equipment_category.index === 'shield' || 
+                    itemData.armor_category === 'Shield';
+
+    // Set armor category selector
+    const armorCategory = isShield ? 'Shield' : itemData.armor_category;
+    document.getElementById('armor-category').value = armorCategory;
+
+    // Handle shield-specific properties
+    const stealthCheckbox = document.getElementById('stealth-disadvantage');
+    if (isShield) {
+        stealthCheckbox.checked = false;
+        stealthCheckbox.disabled = true;
+        document.getElementById('armor-class').value = itemData.armor_class?.base || 2; // Default shield AC
+    } else {
+        document.getElementById('armor-class').value = itemData.armor_class?.base || '';
+        stealthCheckbox.checked = itemData.stealthDisadvantage || false;
+        stealthCheckbox.disabled = false;
+    }
+
+    // Set remaining fields
+    document.getElementById('str-minimum').value = itemData.strengthRequirement || '';
+    document.getElementById('itemFormAttunement').checked = itemData.properties?.some(p => p.index === 'attunement') || false;
+
+    // Handle charges
+    const hasChargesCheckbox = document.getElementById('has-charges');
+    if (itemData.hasCharges) {
+        hasChargesCheckbox.checked = true;
+        hasChargesCheckbox.dispatchEvent(new Event('change')); // Trigger visibility update
+        document.getElementById('charge-reset').value = itemData.chargesOptions?.chargeReset || 'long-rest';
+        document.getElementById('max-charges').value = itemData.chargesOptions?.maxCharges || 0;
+    }
+}
+
+
+function populateWondrousItemFields(itemData) {
+    // Handle attunement
+    const attunementCheckbox = document.getElementById('itemFormAttunement');
+    attunementCheckbox.checked = itemData.properties?.some(p => p.index === 'attunement') || false;
+
+    const hasChargesCheckbox = document.getElementById('has-charges');
+    if (itemData.hasCharges) {
+        hasChargesCheckbox.checked = true;
+        hasChargesCheckbox.dispatchEvent(new Event('change')); // Trigger visibility update
+        document.getElementById('charge-reset').value = itemData.chargesOptions?.chargeReset || 'long-rest';
+        document.getElementById('max-charges').value = itemData.chargesOptions?.maxCharges || 0;
+    }
+}
+
+function populatePotionFields(itemData) {
+    // Determine effect type from properties
+    const effectType = itemData.properties?.find(p => p.index === 'healing') ? 'healing' :
+                      itemData.properties?.find(p => p.index === 'Cast Spell') ? 'spell' : 'other';
+
+    // Set radio button
+    document.querySelector(`input[name="potion-effect"][value="${effectType}"]`).checked = true;
+    
+    // Trigger visibility update
+    document.querySelectorAll('input[name="potion-effect"]').forEach(radio => {
+        if (radio.checked) radio.dispatchEvent(new Event('change'));
+    });
+
+    // Populate effect-specific fields
+    if (effectType === 'healing') {
+        const healingValue = itemData.properties.find(p => p.index === 'healing')?.name.match(/\d+d\d+[\+−]\d+|\d+d\d+/)[0];
+        document.getElementById('healing-dice').value = healingValue || '';
+    } 
+    else if (effectType === 'spell') {
+        const spellEffect = itemData.properties.find(p => p.index === 'Cast Spell')?.name;
+        const spellMatch = spellEffect?.match(/(.*?) spell(?: for (.*?))?( \(no Concentration required\))?$/);
+        
+        if (spellMatch) {
+            document.getElementById('spell-name').value = spellMatch[1] || '';
+            document.getElementById('spell-duration').value = spellMatch[2] || '';
+            document.getElementById('no-concentration').checked = !!spellMatch[3];
+        }
+    }
+}
+
+
+
+function addMagicBonusRow(bonus) {
+    const container = document.getElementById('magic-bonus-container');
+    if (!container) return;
+
+    // Create new row
+    const row = document.createElement('div');
+    row.className = 'magic-bonus-row';
+    
+    // Generate category options
+    const categoryOptions = Object.keys(characterStatBonuses)
+        .filter(c => c !== 'None') // Exclude None category
+        .map(c => `<option value="${c}" ${c === bonus.category ? 'selected' : ''}>${c}</option>`)
+        .join('');
+
+    // Generate stat options
+    const statOptions = ['STR','DEX','CON','INT','WIS','CHA']
+        .map(s => `<option value="${s}" ${s === bonus.value ? 'selected' : ''}>${s}</option>`)
+        .join('');
+
+    row.innerHTML = `
+        <select class="magic-category-select">
+            ${categoryOptions}
+        </select>
+        <select class="magic-bonus-select"></select>
+        <select class="value-or-stat-select">
+            <option value="value" ${typeof bonus.value === 'number' ? 'selected' : ''}>Value</option>
+            <option value="stat" ${typeof bonus.value === 'string' ? 'selected' : ''}>Stat</option>
+        </select>
+        <input type="number" class="magic-bonus-value" 
+               value="${typeof bonus.value === 'number' ? bonus.value : ''}"
+               style="${typeof bonus.value === 'string' ? 'display: none;' : ''}">
+        <select class="magic-stat-select" 
+                style="${typeof bonus.value === 'number' ? 'display: none;' : ''}">
+            ${statOptions}
+        </select>
+        <button class="remove-magic-bonus nonRollButton">Remove</button>
+    `;
+
+    // Initialize bonus select
+    const categorySelect = row.querySelector('.magic-category-select');
+    const bonusSelect = row.querySelector('.magic-bonus-select');
+    
+    // Populate bonus options based on initial category
+    const populateBonusOptions = () => {
+        bonusSelect.innerHTML = '';
+        const category = categorySelect.value;
+        if (characterStatBonuses[category]) {
+            Object.keys(characterStatBonuses[category]).forEach(key => {
+                const option = new Option(key, key);
+                option.selected = key === bonus.key;
+                bonusSelect.add(option);
+            });
+        }
+    };
+    
+    categorySelect.addEventListener('change', populateBonusOptions);
+    populateBonusOptions(); // Initial population
+
+    // Handle value/stat toggle
+    const valueTypeSelect = row.querySelector('.value-or-stat-select');
+    valueTypeSelect.addEventListener('change', function() {
+        const isValue = this.value === 'value';
+        row.querySelector('.magic-bonus-value').style.display = isValue ? 'inline-block' : 'none';
+        row.querySelector('.magic-stat-select').style.display = isValue ? 'none' : 'inline-block';
+    });
+
+    row.querySelector('.remove-magic-bonus').addEventListener('click', () => row.remove());
+    
+    container.appendChild(row);
+}
+
+function resetItemForm() {
+    if (itemForm) itemForm.reset();
+    
+    const additionalFields = document.getElementById('additional-fields');
+    if (additionalFields) additionalFields.innerHTML = '';
+    
+}
+

@@ -1,6 +1,6 @@
 [
     {
-	"name": "Absorber Elementos*",
+	"name": "Absorber Elementos",
         "desc": "El hechizo captura parte de la energía entrante, lo que reduce su efecto sobre ti y la almacena para tu próximo ataque cuerpo a cuerpo. Tienes resistencia al tipo de daño desencadenante hasta el comienzo de tu siguiente turno. Además, la primera vez que impactas con un ataque cuerpo a cuerpo en tu próximo turno, el objetivo recibe 1d6 puntos de daño adicionales del tipo desencadenante y el hechizo termina..",
         "higher_level": "Cuando lanzas este hechizo usando un espacio de hechizo de nivel 2 o superior, el daño adicional aumenta en 1d6 por cada nivel de espacio por encima de 1.",
         "page": "phb 211",
@@ -65,7 +65,7 @@
         
     },
     {
-        "name": "Abrasador de Aganazzar*",
+        "name": "Abrasador de Aganazzar",
         "desc": "Una línea de llamas rugientes de 30 pies de largo y 5 pies de ancho emana de ti en la dirección que elijas. Cada criatura en la línea debe realizar una tirada de salvación de Destreza. Una criatura recibe 3d8 puntos de daño por fuego si falla la tirada, o la mitad de daño si tiene éxito.",
         "higher_level": "Cuando lanzas este hechizo usando un espacio de hechizo de nivel 3 o superior, el daño aumenta en 1d8 por cada nivel de espacio mayor que 2.",
         "page": "",
@@ -368,7 +368,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Aura de vida*",
+        "name": "Aura de vida",
         "desc": "Energía que preserva la vida irradia desde ti en un aura en un radio de 30 pies. Hasta que el hechizo termine, el aura se mueve contigo, centrada en ti. Cada criatura no hostil en el aura (incluyéndote) tiene resistencia al daño necrótico y su máximo de puntos de golpe no puede reducirse. Además, una criatura viva no hostil recupera 1 punto de golpe cuando comienza su turno en el aura con 0 puntos de golpe.",
         "higher_level": "",
         "page": "phb 215",
@@ -913,7 +913,7 @@
         "damage_type_01": "Veneno"
     },
     {
-        "name": "Nube de dagas*",
+        "name": "Nube de dagas",
         "desc": "Cuando lanzas el conjuro Nube de dagas, llenas de dagas giratorias el aire de un cubo de 5 pies de lado, centrado en un punto a tu elección dentro del alcance. Las criaturas reciben 4d4 de daño cortante si comienzan su turno en el área o cuando entran en él por primera vez.",
         "higher_level": "Si lanzas este conjuro usando un espacio de nivel 3 o superior, el daño aumenta en 2d4 por cada nivel por encima de 2 que tenga el espacio utilizado.",
         "page": "phb 222",
@@ -1890,7 +1890,7 @@
         "damage_type_01": "Contundente"
     },
     {
-        "name": "Temblor de Tierra*",
+        "name": "Temblor de Tierra",
         "desc": "Provocas un temblor en el suelo en un radio de 10 pies. Todas las criaturas que se encuentren en esa área, excepto tú, deben hacer una tirada de salvación de Destreza. Si falla, la criatura sufre 1d6 de daño contundente y queda tumbada. Si el suelo en esa área es tierra suelta o piedra, se convierte en terreno difícil hasta que se despeje.",
         "page": "phb 236",
         "range": "10 pies",
@@ -2557,7 +2557,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Galder's Tower*",
+        "name": "Torre de Galder",
         "desc": "Conjuras una torre de dos pisos hecha de piedra, madera o materiales similares que sean lo suficientemente resistentes. La torre puede tener forma redonda o cuadrada. Cada nivel de la torre mide 10 pies de alto y tiene un área de hasta 100 pies cuadrados. El acceso entre los niveles consiste en una simple escalera y trampilla.<br><br>Cada nivel toma una de las siguientes formas, elegidas por ti cuando lanzas el hechizo:<br>- Un dormitorio con cama, sillas, arcón y chimenea mágica.<br>- Un estudio con escritorios, libros, estanterías, pergaminos, tinta y bolígrafos.<br>- Un espacio de comedor con mesa, sillas, chimenea mágica, recipientes y utensilios de cocina.<br>- Un salón con sofás, sillones, mesas auxiliares y reposapiés.<br>- Un baño con inodoros, lavabos, un brasero mágico y bancos de sauna.<br>- Un observatorio con un telescopio y mapas del cielo nocturno.<br>- Una habitación vacía y sin muebles<br><br>El interior de la torre es cálido y seco, independientemente de las condiciones externas. Cualquier equipo o mobiliario que se encuentre en contacto con la torre se disipará en humo si se lo saca de ella.<br><br>Al final de la duración del hechizo, todas las criaturas y objetos dentro de la torre que no fueron creados por el hechizo aparecen sanos y salvos afuera en el suelo, y todos los rastros de la torre y sus muebles desaparecen.<br><br>Puedes volver a lanzar este hechizo mientras esté activo para mantener la existencia de la torre durante otras 24 horas. Puedes crear una torre permanente lanzando este hechizo en la misma ubicación y con la misma configuración todos los días durante un año.",
         "page": "phb 244",
         "range": "60 pies",
@@ -2973,7 +2973,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Espíritu sanador*",
+        "name": "Espíritu sanador",
         "desc": "Invocas a un espíritu de la naturaleza para que alivie a los heridos. El espíritu intangible aparece en un espacio que es un cubo de 5 pies que puedes ver dentro del alcance. El espíritu parece una bestia transparente o un hada (a tu elección). Hasta que el hechizo termine, siempre que tú o una criatura que puedas ver se muevan al espacio del espíritu por primera vez en un turno o comiencen su turno allí, puedes hacer que el espíritu restaure 1d6 puntos de golpe a esa criatura (no se requiere ninguna acción). El espíritu no puede curar constructos ni muertos vivientes. Como acción adicional en tu turno, puedes mover al Espíritu hasta 30 pies a un espacio que puedas ver. El Espíritu puede curarse una cantidad de veces igual a 1 + tu modificador de habilidad de lanzamiento de conjuros (mínimo de dos veces). Después de curarse esa cantidad de veces, el Espíritu desaparece.",
         "higher_level": "Cuando lanzas este hechizo usando un espacio de hechizo de nivel 3 o superior, la curación aumenta 1d6 por cada nivel de espacio por encima del 2.",
         "page": "phb 250",
@@ -3193,7 +3193,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Cuchilla de hielo*",
+        "name": "Cuchilla de hielo",
         "desc": "Creas un fragmento de hielo y lo arrojas a una criatura que esté dentro del alcance. Realizas un ataque de hechizo a distancia contra el objetivo. Si impactas, el objetivo sufre 1d10 puntos de daño perforante. Tanto si impactas como si fallas, el fragmento explota. El objetivo y cada criatura que se encuentre a 5 pies o menos del punto donde explotó el hielo deben superar una tirada de salvación de Destreza o sufrir 2d6 puntos de daño por frío.",
         "higher_level": "Cuando lanzas este hechizo usando un espacio de hechizo de nivel 2 o superior, el daño por frío aumenta en 1d6 por cada nivel de espacio por encima del 1.",
         "page": "phb 252",
@@ -3442,7 +3442,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Pequeña choza de Leomund*",
+        "name": "Pequeña choza de Leomund",
         "desc": "Una cúpula de fuerza inmóvil con un radio de 10 pies te rodea por encima mientras dura el conjuro. El conjuro termina si te vas del área. Nueve criaturas de tamaño Mediano o menor pueden entrar dentro de la cúpula contigo. El conjuro falla si en el área hay una criatura mayor o más de nueve criaturas. Las criaturas y los objetos que se encuentren dentro de la cúpula cuando lanzas el conjuro pueden cruzarla y moverse por ella libremente. Dentro de la cúpula no tienen efecto conjuros ni otros efectos mágicos, ni se pueden lanzar a través de ella desde fuera. La atmósfera que hay dentro del espacio es cómoda y seca, independientemente del clima exterior. Hasta que el conjuro termine, puedes hacer que el interior esté débilmente iluminado u oscuro. La cúpula es opaca desde el exterior y del color que elijas, pero es transparente desde dentro.",
         "page": "phb 254",
         "range": "10 pies",
@@ -3498,7 +3498,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Transferencia de vida*",
+        "name": "Transferencia de vida",
         "desc": "Sacrificas parte de tu salud para curar las heridas de otra criatura. Recibes 4d8 puntos de daño necrótico, que no se pueden reducir de ninguna manera, y una criatura de tu elección que puedas ver dentro del alcance recupera una cantidad de puntos de golpe igual al doble del daño necrótico que recibes.",
         "page": "phb 255",
         "range": "30 Pies",
@@ -4608,7 +4608,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Pirotécnica*",
+        "name": "Pirotécnica",
         "desc": "Elige un área de llamas que puedas ver y que quepa en un cubo de 5 pies dentro del alcance. Puedes extinguir el fuego en esa área y crear fuegos artificiales o humo.<br>Fuegos artificiales. El objetivo explota con una deslumbrante exhibición de colores. Todas las criaturas que se encuentren a 10 pies del objetivo deben superar una tirada de salvación de Constitución o quedarán cegadas hasta el final de tu siguiente turno.<br>Humo. Un humo negro y espeso se extiende desde el objetivo en un radio de 20 pies, rodeando las esquinas. La zona del humo está muy oscurecida. El humo persiste durante 1 minuto o hasta que un fuerte viento lo dispersa.",
         "page": "",
         "range": "60 pies / Cubo de 5 pies",
@@ -4703,7 +4703,8 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Tocas el cadáver de un humanoide o un trozo de él. Siempre y cuando la criatura no lleve muerta más de 10 días, el conjuro forma un nuevo cuerpo adulto y luego llama al alma para que entre en él. Si el alma del objetivo no es libre o no está dispuesta a volver, el conjuro falla. La magia crea un nuevo cuerpo para que lo habite la criatura y es posible que haga que cambie su raza. El director de juego debe determinar al azar qué forma toma cuando vuelve a la vida o elegir una directamente.<b>01-04</b> Dragonborn<b>05-13</b> Dwarf, hill<b>14-21</b> Dwarf, mountain<b>22-25</b> Elf, dark<b>26-34</b> Elf, high<b>35-42</b> Elf, wood<b>43-46</b> Gnome, forest<b>47-52</b> Gnome, rock<b>53-56</b> Half-elf<b>57-60</b> Half-orc<b>61-68</b> Halfling, lightfoot<b>69-76</b> Halfling, stout<b>77-96</b> Human<b>97-00</b> Tiefling La criatura reencarnada recuerda su antigua vida y experiencias. Mantiene las capacidades que tenía en su forma original, salvo por la raza y sus rasgos raciales.",
+        "name": "Reencarnar",
+        "desc": "Tocas el cadáver de un humanoide o un trozo de él. Siempre y cuando la criatura no lleve muerta más de 10 días, el conjuro forma un nuevo cuerpo adulto y luego llama al alma para que entre en él. Si el alma del objetivo no es libre o no está dispuesta a volver, el conjuro falla. La magia crea un nuevo cuerpo para que lo habite la criatura y es posible que haga que cambie su raza. El director de juego debe determinar al azar qué forma toma cuando vuelve a la vida o elegir una directamente.<b>01-04</b> Dragonborn<b>05-13</b> Dwarf, hill<b>14-21</b> Dwarf, mountain<b>22-25</b> Elf, dark<b>26-34</b> Elf, high<b>35-42</b> Elf, wood<b>43-46</b> Gnome, forest<b>47-52</b> Gnome, rock<b>53-56</b> Half-elf<b>57-60</b> Half-orc<b>61-68</b> Halfling, lightfoot<b>69-76</b> Halfling, stout<b>77-96</b> Human<b>97-00</b> Tiefling La criatura reencarnada recuerda su antigua vida y experiencias. Mantiene las capacidades que tenía en su forma original, salvo por la raza y sus rasgos raciales.",
         "page": "phb 271",
         "range": "Toque",
         "components": "V, S, M",
@@ -4811,7 +4812,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Hielo vinculante de Rime*",
+        "name": "Hielo vinculante de Rime",
         "desc": "Una explosión de energía fría emana de ti en un cono de 30 pies. Cada criatura en esa área debe realizar una tirada de salvación de Constitución. Si falla la tirada, una criatura sufre 3d8 puntos de daño por frío y queda obstaculizada por formaciones de hielo durante 1 minuto, o hasta que ella u otra criatura dentro de su alcance use una acción para romper el hielo. Una criatura obstaculizada por el hielo ve su velocidad reducida a 0. Si tiene éxito en la tirada, una criatura sufre la mitad de daño y no queda obstaculizada por el hielo.",
         "page": "",
         "range": "Cono de 30 pies",
@@ -5191,7 +5192,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Púas plateadas*",
+        "name": "Púas plateadas",
         "desc": "Distraes mágicamente a la criatura que ha activado el hechizo y conviertes su incertidumbre momentánea en un estímulo para otra criatura. La criatura que ha activado el hechizo debe volver a tirar el d20 y usar la tirada más baja. Luego puedes elegir una criatura diferente que puedas ver dentro del alcance (puedes elegirla tú mismo). La criatura elegida tiene ventaja en la siguiente tirada de ataque, prueba de característica o tirada de salvación que realice en el plazo de 1 minuto. Una criatura solo puede potenciarse con un uso de este hechizo a la vez.",
         "page": "phb 276",
         "range": "60 pies",
@@ -5677,7 +5678,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Thunder Step*",
+        "name": "Paso atronador",
         "desc": "Te teletransportas a un espacio desocupado que puedas ver dentro del alcance. Inmediatamente después de desaparecer, se oye un estruendo atronador y todas las criaturas que se encuentren a 10 pies del espacio que abandonaste deben realizar una tirada de salvación de Constitución. Si fallan, reciben 3d10 puntos de daño por trueno o la mitad si tienen éxito. El trueno se puede escuchar a una distancia de hasta 300 pies. Puedes llevar objetos contigo siempre que su peso no exceda lo que puedes llevar. También puedes teletransportar a una criatura voluntaria de tu tamaño o más pequeña que lleve equipo hasta su capacidad de carga. La criatura debe estar a 5 pies o menos de ti cuando lances este hechizo, y debe haber un espacio desocupado a 5 pies o menos de tu espacio de destino para que la criatura aparezca; de lo contrario, la criatura se queda atrás.",
         "higher_level": "Cuando lanzas este hechizo usando un espacio de hechizo de nivel 4 o superior, el daño aumenta en 1d10 por cada nivel de espacio por encima del 3.",
         "page": "Xanathar's Guide to Everything",
@@ -5950,7 +5951,7 @@
         "damage_type_01": "Psíquico"
     },
     {
-        "name": "Vórtice deformado*",
+        "name": "Vórtice deformado",
         "desc": "Giras mágicamente el espacio alrededor de otra criatura que puedas ver dentro del alcance. El objetivo debe superar una tirada de salvación de Constitución (el objetivo puede elegir fallar) o es teletransportado a un espacio desocupado de tu elección que puedas ver dentro del alcance. El espacio elegido debe estar sobre una superficie o en un líquido que pueda sostener al objetivo sin que este tenga que apretarse.",
         "page": "phb 285",
         "range": "90 pies",
@@ -6267,7 +6268,7 @@
         "ability_modifier": "no"
     },
     {
-        "name": "Golpe de Céfiro*",
+        "name": "Golpe de Céfiro",
         "desc": "Te mueves como el viento. Hasta que el conjuro termine, tu movimiento no provoca ataques de oportunidad. Una vez antes de que el conjuro termine, puedes darte ventaja en una tirada de ataque con arma en tu turno. Ese ataque inflige 1d8 puntos de daño de fuerza adicionales en caso de impacto. Tanto si impactas como si fallas, tu velocidad al caminar aumenta en 30 pies hasta el final de ese turno.",
         "page": "phb 289",
         "range": "Propio",
