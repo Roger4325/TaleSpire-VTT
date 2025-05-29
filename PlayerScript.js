@@ -4301,7 +4301,6 @@ function updateSpellDamageDice(ability, damageDice, spellDetails) {
 // Updated getCantripDamageDice function
 function getCantripDamageDice(baseDice, characterLevel, spellDetails) {
     const levels = [5, 11, 17]; // Level thresholds for cantrip damage increases
-    const damageDiceUpcast = spellDetails.damage_dice_upcast;
 
     // Determine the scaling factor based on the character level
     let scaleFactor = 1;

@@ -780,6 +780,82 @@ const translations = {
                 ]
             }
         },
+        schools: {
+            abjuration: {
+                name: "Abjuration",
+                description: ["The School of Abjuration emphasizes magic that blocks, banishes, or protects."]
+                    
+            },
+            conjuration: {
+                name: "Conjuration",
+                description: ["The School of Conjuration deals with creating objects and creatures, or making them disappear."]
+            },
+            divination: {
+                name: "Divination",
+                description: ["The magical School of Divination is centered around revealing and granting knowledge and information to the caster. Useful for reading ancient scripts, identifying magical items, and seeing invisible enemies."]
+            },
+            enchantment: {
+                name: "Enchantment",
+                description: ["Spells within the School of Enchantment are designed to manipulate the mental state of the target. This entire school is very similar to hypnotism, where the affected creature may act completely differently than how they normally behave."]
+            },
+            evocation: {
+                name: "Evocation" ,
+                description: ["Casters within the school of evocation unleash a raw magical energy upon their enemies. Whether it be flames, ice, or pure arcane energy."]
+            },
+            illusion: {
+                name: "Illusion" ,
+                description: ["The School of Illusion is concerned with manipulating the various senses of people and creatures. This could be vision, hearing, or other various senses such as body temperature."]
+            },
+            necromancy: {
+                name: "Necromancy",
+                description:[
+                        "In general, think of spells within the School of Necromancy as manipulating the ebb and flow of different creatures life energy, or the balance of energy between life and death. This can come across in the form of helping resurrection, or draining necrotic damage."]
+            },
+            transmutation: {
+                name: "Transmutation",
+                description: ["Casters who study within the School of Transmutation are able to manipulate the physical properties of both items and people. This could be something simple such as turning copper into gold or could be an advanced spell that turns you into a newt"]
+            }
+        },
+        travel: {
+            fast: {
+                name: "Fast",
+                description: ["Per Minute - 400 feet","Per Hour - 4 miles","Per Day - 30 miles", " Effect - -5 penalty to passive Wisdom (Perception) scores"]
+                    
+            },
+            normal: {
+                name: "Normal",
+                description: ["Per Minute - 300 feet","Per Hour - 3 miles","Per Day - 24 miles"," Effect-"]
+                    
+            },
+            slow: {
+                name: "Slow",
+                description: ["Per Minute - 200 feet","Per Hour - 2 miles","Per Day - 18 miles"," Effect - Able to use stealth"]
+                    
+            },
+        },
+
+        travelCosts: {
+            airship: {
+                name: "Airship",
+                description: ["Cost - 1 gp Per Mile","Speed - 20mph"]
+                    
+            },
+            galleon: {
+                name: "Galleon",
+                description: ["Cost - 5 sp Per Mile","Speed - 10mph"]
+                    
+            },
+            coach: {
+                name: "Coach",
+                description: ["Cost - 2 sp Per Mile","Speed - 30mph"]
+                    
+            },
+            teleportationCircle: {
+                name: "Teleportation Circle",
+                description: ["Cost - 2,500 gp","Speed - Instant"]
+                    
+            },
+        },
         //Player Stats Section
         characterAbilityStr: "STR",
         characterAbilityDex: "DEX",
@@ -987,6 +1063,13 @@ const translations = {
 
         //DM Section from here to the buttom.
         DMPageLinkInit: "Initiative Tracker",
+        DMTablesLinkInit: "DM Tables",
+        checklistsLinkInit: "Checklists",
+        SpellListLinkInit: "Spell List",
+        DocsLinkInit: "Notes",
+        GoogleDocsLinkInit: "Google Docs",
+
+
         'add-monster-button': "Add Monster",
         'add-player-button':"Add Player",
         'save-encounter': "Save Encounter",
@@ -996,6 +1079,58 @@ const translations = {
         'previous-turn-btn': "Previous Turn",
         'next-turn-btn': "Next Turn",
         'request-player-stats': "Request Player Stats",
+
+
+
+        conditionsSectionLink: "Condition",
+        effectsSectionLink: "Effects",
+        schoolsOfMagicSectionLink: "Magic Schools",
+        shopsSectionLink: "Shops",
+        travelSectionLink: "Travel",
+        npcListSectionLink: "NPC's",
+        skillsTableSectionLink: "Skills",
+        jumpingRulesSectionLink: "Jumping",
+        RandomSectionLink: "Random Tables",
+
+        ConditionTableRowHeader01: "Condition",
+        ConditionTableRowHeader02: "Description",
+        EffectTableRowHeader01: "Effects",
+        EffectTableRowHeader02: "Description",
+        effectsAddRowButton: "Add Button",
+        SchoolTableRowHeader01: "School",
+        SchoolTableRowHeader02: "Description",
+        
+        travelTableHeader: "Travel Pace",
+        travelTableHeader01: "Pace",
+        travelTableHeader02: "Speed / Effects",
+
+        travelCostTableHeader: "Transportation; Travel Services",
+        travelCostTableHeader01: "Service",
+        travelCostTableHeader02: "Cost / Speed",
+
+        jumpCalculatorTitle: "Jump Calculator",
+        strengthLabel: "What is your Strength score?",
+        heightLabel: "How tall are you?",
+        feetLabel: "feet",
+        inchesLabel: "inches",
+        multiplierLabel: "Multiply your results by",
+        runningHeader: "With a running start (10 feet of movement)",
+        runningLongLabel: "Your long jump is ",
+        runningLongUnit: "feet",
+        runningHighLabel: "Your high jump is ",
+        runningHighUnit: "feet",
+        runningReachLabel: "You can reach up and grab something ",
+        runningReachUnit: "feet away",
+        standingHeader: "Without a running start",
+        standingLongLabel: "Your long jump is ",
+        standingLongUnit: "feet",
+        standingHighLabel: "Your high jump is ",
+        standingHighUnit: "feet",
+        standingReachLabel: "You can reach up and grab something ",
+        standingReachUnit: "feet away",
+        
+        checklistHeader: "Checklists",
+        addChecklistbutton: "Add",
 
     },
     es: {
@@ -1409,6 +1544,83 @@ const translations = {
                 ]
             }
         },
+        schools: {
+            abjuration: {
+                name: "Abjuración",
+                description: ["La Escuela de Abjuración se centra en magia que bloquea, destierra o protege."]
+                    
+            },
+            conjuration: {
+                name: "Conjuración",
+                description: ["La Escuela de Conjuración manipula la creación de objetos y criaturas, o su desaparición."]
+            },
+            divination: {
+                name: "Adivinación",
+                description: ["La Escuela de Adivinación se enfoca en revelar conocimiento e información,",
+                            "<br>útil para leer textos antiguos, identificar objetos mágicos y detectar enemigos invisibles."]
+            },
+            enchantment: {
+                name: "Encantamiento",
+                description: ["Los hechizos de Encantamiento manipulan el estado mental del objetivo, alterando su comportamiento habitual."]
+            },
+            evocation: {
+                name: "Evocación" ,
+                description: ["La Escuela de Evocación libera energía mágica cruda, como llamas, hielo o energía arcana pura."]
+            },
+            illusion: {
+                name: "Ilusión" ,
+                description: ["La Escuela de Ilusión manipula los sentidos (vista, oído, temperatura) para crear percepciones falsas."]
+            },
+            necromancy: {
+                name: "Nigromancia",
+                description:[
+                        "La Nigromancia manipula la energía vital y el equilibrio entre vida y muerte,",
+                        "<br>mediante resurrección o daño necrótico."]
+            },
+            transmutation: {
+                name: "Transmutación",
+                description: ["La Transmutación altera propiedades físicas de objetos y seres, desde convertir metales hasta transformar formas."]
+            }
+        },
+        travel: {
+            fast: {
+                name: "Rápido",
+                description: ["Por minuto: 400 pies", "Por hora: 4 millas", "Por día: 30 millas", "Efecto: penalización de -5 a las puntuaciones pasivas de Sabiduría (Percepción)"]
+
+            },
+            normal: {
+                name: "Normal",
+                description: ["Por minuto: 300 pies","Por hora: 3 millas","Por día: 24 millas","Efecto-"]
+
+            },
+            slow: {
+                name: "Slow",
+                description: ["Por minuto: 200 pies", "Por hora: 2 millas", "Por día: 18 millas", "Efecto: Se puede usar sigilo"]
+
+            },
+        },
+        travelCosts: {
+            airship: {
+                name: "Aeronave",
+                description: ["Costo: 1 po por milla","Velocidad: 20mph"]
+                    
+            },
+            galleon: {
+                name: "Galeón",
+                description: ["Costo: 5 pc por milla","Velocidad: 10mph"]
+                    
+            },
+            coach: {
+                name: "Carruaje",
+                description: ["Costo: 2 pc por milla","Velocidad: 30mph"]
+                    
+            },
+            teleportationCircle: {
+                name: "Círculo de teletransporte",
+                description: ["Costo: 2,500 po","Velocidad: Instantáneo"]
+                    
+            },
+        },
 
 
 
@@ -1554,7 +1766,13 @@ const translations = {
 
 
         //DM Section from here to the buttom.
-        DMPageLinkInit: " Seguimiento de iniciativa",
+        DMPageLinkInit: "Gestor de Iniciativa",
+        DMTablesLinkInit: "Tablas DM",
+        checklistsLinkInit: "Pendientes",
+        SpellListLinkInit: "Lista de Hechizos",
+        DocsLinkInit: "Notas",
+        GoogleDocsLinkInit: "Google",
+
         'add-monster-button': "Añadir Monstruo",
         'add-player-button':"Añadir Jugador",
         'save-encounter': "Guardar Encuentro",
@@ -1564,6 +1782,120 @@ const translations = {
         'previous-turn-btn': "Turno anterior",
         'next-turn-btn': "Siguiente Turno",
         'request-player-stats': "Pedir Estadistica a Jugador",
+
+
+        conditionsSectionLink: "Condiciones",
+        effectsSectionLink: "Efectos",
+        schoolsOfMagicSectionLink: "Magias",
+        shopsSectionLink: "Tienda",
+        travelSectionLink: "Viaje",
+        npcListSectionLink: "PNJs",
+        skillsTableSectionLink: "Habilidades",
+        jumpingRulesSectionLink: "Saltos",
+        RandomSectionLink: "Tabla Aleatoria",
+
+        ConditionTableRowHeader01: "Condiciones",
+        ConditionTableRowHeader02: "Descripción",
+        EffectTableRowHeader01: "Efectos",
+        EffectTableRowHeader02: "Descripción",
+        effectsAddRowButton: "Añadir fila",
+        SchoolTableRowHeader01: "Escuela",
+        SchoolTableRowHeader02: "Descripción",
+
+        travelTableHeader: "Ritmo de viaje",
+        travelTableHeader01: "Paso",
+        travelTableHeader02: "Velocidad / Efectos",
+
+        travelCostTableHeader: "Transporte; Servicios de viajes",
+        travelCostTableHeader01: "Servicio",
+        travelCostTableHeader02: "Costo / Velocidad",
+
+        jumpCalculatorTitle: "Calculadora de Salto",
+        strengthLabel: "¿Cuál es tu puntuación de fuerza?",
+        heightLabel: "¿Que tan alto eres?",
+        feetLabel: "pies",
+        inchesLabel: "pulgadas",
+        multiplierLabel: "Multiplica tus resultados por",
+        runningHeader: "Si comenzaste corriendo (10 pies de movimiento)",
+        runningLongLabel: "La longitud del salto es",
+        runningLongUnit: "pies",
+        runningHighLabel: "La altura del salto es ",
+        runningHighUnit: "pies",
+        runningReachLabel: "Puedes alcanzar y agarrar algo ",
+        runningReachUnit: "a pies de distancia",
+        standingHeader: "Sin comenzar corriendo ",
+        standingLongLabel: "Tu longitud del salto es ",
+        standingLongUnit: "pies",
+        standingHighLabel: "La altura del salto es ",
+        standingHighUnit: "pies",
+        standingReachLabel: "Puedes alcanzar y agarrar algo ",
+        standingReachUnit: "a pies de distancia",
+
+        checklistHeader: "Checklists",
+        addChecklistbutton: "Add",
+
+
+        monsterFormTitle: "Create Custom Monster",
+        monsterNameLabel: "Name:",
+        monsterTypeLabel: "Type:",
+        monsterCRLabel: "CR Value:",
+        monsterSourceLabel: "Source:",
+        monsterHPLabel: "HP Value:",
+        monsterHPNotesLabel: "HP Notes:",
+        monsterACLabel: "AC Value:",
+        monsterACNotesLabel: "AC Notes:",
+        monsterInitiativeLabel: "Initiative Value:",
+        monsterSpeedLabel: "Speed:",
+        monsterSensesLabel: "Senses:",
+        monsterLanguagesLabel: "Languages:",
+        abilitiesLegend: "Abilities",
+        monsterStrLabel: "STR:",
+        monsterDexLabel: "DEX:",
+        monsterConLabel: "CON:",
+        monsterIntLabel: "INT:",
+        monsterWisLabel: "WIS:",
+        monsterChaLabel: "CHA:",
+        savesLegend: "Saves",
+        monsterStrSaveLabel: "STR:",
+        monsterDexSaveLabel: "DEX:",
+        monsterConSaveLabel: "CON:",
+        monsterIntSaveLabel: "INT:",
+        monsterWisSaveLabel: "WIS:",
+        monsterChaSaveLabel: "CHA:",
+        skillsLegend: "Skills",
+        monsterAcrobaticsLabel: "Acrobatics (DEX):",
+        monsterAnimalHandlingLabel: "Animal Handling (WIS):",
+        monsterArcanaLabel: "Arcana (INT):",
+        monsterAthleticsLabel: "Athletics (STR):",
+        monsterDeceptionLabel: "Deception (CHA):",
+        monsterHistoryLabel: "History (INT):",
+        monsterInsightLabel: "Insight (WIS):",
+        monsterIntimidationLabel: "Intimidation (CHA):",
+        monsterInvestigationLabel: "Investigation (INT):",
+        monsterMedicineLabel: "Medicine (WIS):",
+        monsterNatureLabel: "Nature (INT):",
+        monsterPerceptionLabel: "Perception (WIS):",
+        monsterPerformanceLabel: "Performance (CHA):",
+        monsterPersuasionLabel: "Persuasion (CHA):",
+        monsterReligionLabel: "Religion (INT):",
+        monsterSleightOfHandLabel: "Sleight of Hand (DEX):",
+        monsterStealthLabel: "Stealth (DEX):",
+        monsterSurvivalLabel: "Survival (WIS):",
+        vulnerabilitiesLegend: "Damage Vulnerabilities",
+        resistancesLegend: "Damage Resistances",
+        immunitiesLegend: "Damage Immunities",
+        conditionImmunitiesLegend: "Condition Immunities",
+        quickActionsLegend: "Quick Actions",
+        traitsLegend: "Traits",
+        actionsLegend: "Actions",
+        reactionsLegend: "Reactions",
+        legendaryActionsLegend: "Legendary Actions",
+        saveMonsterButton: "Save Monster",
+        addTraitButton: "Add Trait",
+        addActionButton: "Add Action",
+        addReactionButton: "Add Reaction",
+        addLegendaryActionsButton: "Add Legendary Actions",
+        
     }
 };
 

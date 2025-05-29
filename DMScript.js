@@ -31,6 +31,9 @@ async function establishMonsterData(){
     loadDataFromCampaignStorage();
     populateConditionsTable();
     populateEffectsTable();
+    populateSchoolofMagicTable();
+    populateTravelTable()
+    populateTravelCostTable()
     
     updateShopTable("adventuringSupplies")
     await loadTableData()
@@ -347,15 +350,41 @@ function updateMonsterCard(card, monster) {
     }
     
     const initiativeButton = parseAndReplaceDice({ name: 'Initiative' }, `Init Mod: ${monsterInitiative} <br>`);
+
+        // Check for Spellcasting trait and extract spell save DC
+    let spellDC = null;
+    if (selectedMonsterData.Traits) {
+        for (const trait of selectedMonsterData.Traits) {
+            if (trait.Name.toLowerCase().includes("spellcasting")) {
+                const content = trait.Content;
+                const dcMatch = content.match(/spell save DC (\d+)/i);
+                if (dcMatch) {
+                    spellDC = dcMatch[1];
+                    break;
+                }
+            }
+        }
+    }
+
     
     const statsSpan = document.createElement('span');
     statsSpan.classList.add('non-editable');
     const acText = document.createTextNode(`AC: ${selectedMonsterData.AC.Value} | `);
     const speedText = document.createTextNode(` Speed: ${selectedMonsterData.Speed}`);
     statsSpan.appendChild(acText);
+    // Add Spell Save DC to the stats section if found
+    if (spellDC) {
+        const dcSpan = document.createElement('span');
+        dcSpan.classList.add('spell-dc');
+        dcSpan.textContent = `DC: ${spellDC} | `;
+        statsSpan.appendChild(dcSpan);
+    }
     statsSpan.appendChild(initiativeButton);
     statsSpan.appendChild(speedText);
     statsDiv.appendChild(statsSpan);
+
+
+
 
     // Create context menu once (place this at the top of your script)
     const contextMenu = document.createElement('div');
@@ -2989,12 +3018,12 @@ function calculateJump() {
     const noRunningStartReach = ((3 + ((strength - 10) / 2)) /2 * jumpMultiplier) + 1.5 * (heightInInches/12);
 
     // Update the paragraph texts
-    document.getElementById("runningStartLongJump").textContent = runningStartLongJump.toFixed(2) + " feet horizontally.";
-    document.getElementById("runningStartHighJump").textContent = runningStartHighJump.toFixed(2) + " feet off the ground.";
-    document.getElementById("runningStartReach").textContent = runningStartReach.toFixed(2) + " feet off the ground.";
-    document.getElementById("noRunningStartLongJump").textContent = noRunningStartLongJump.toFixed(2) + " feet horizontally.";
-    document.getElementById("noRunningStartHighJump").textContent = noRunningStartHighJump.toFixed(2) + " feet off the ground.";
-    document.getElementById("noRunningStartReach").textContent = noRunningStartReach.toFixed(2) + " feet off the ground.";
+    document.getElementById("runningStartLongJump").textContent = runningStartLongJump.toFixed(2);
+    document.getElementById("runningStartHighJump").textContent = runningStartHighJump.toFixed(2);
+    document.getElementById("runningStartReach").textContent = runningStartReach.toFixed(2);
+    document.getElementById("noRunningStartLongJump").textContent = noRunningStartLongJump.toFixed(2);
+    document.getElementById("noRunningStartHighJump").textContent = noRunningStartHighJump.toFixed(2);
+    document.getElementById("noRunningStartReach").textContent = noRunningStartReach.toFixed(2);
 }
 
 document.querySelectorAll("tbody tr").forEach(row => {
@@ -3201,14 +3230,19 @@ function updateChecklistUI(checklistData) {
 // Generic function to populate a table
 function populateTable(tableId, dataKey) {
     const tableBody = document.querySelector(`#${tableId} tbody`);
+
+    console.warn(tableId, dataKey)
     tableBody.innerHTML = ""; // Clear existing rows
 
     // Get the data object and its keys
     const dataObj = translations[savedLanguage][dataKey];
     const dataKeys = Object.keys(dataObj);
 
+    console.log(dataKeys)
+
     // Sort the keys alphabetically by the name
     dataKeys.sort((a, b) => {
+        console.warn(dataObj[a])
         const nameA = dataObj[a].name.toLowerCase();
         const nameB = dataObj[b].name.toLowerCase();
         return nameA.localeCompare(nameB);
@@ -3243,12 +3277,25 @@ function populateTable(tableId, dataKey) {
 
 // Functions to populate specific tables
 function populateConditionsTable() {
-    populateTable("conditions", "conditions");
+    populateTable("conditionsTable", "conditions");
 }
 
 function populateEffectsTable() {
-    populateTable("effects", "effects");
+    populateTable("effectsTable", "effects");
 }
+
+function populateSchoolofMagicTable() {
+    populateTable("schoolsTable", "schools");
+}
+
+function populateTravelTable() {
+    populateTable("travelTable", "travel");
+}
+
+function populateTravelCostTable() {
+    populateTable("travelCostTable", "travelCosts");
+}
+
 
 
 
@@ -3303,8 +3350,6 @@ function updateShopTable() {
 
     // Get the items for the selected shop (with categories)
     const categoryGroups = getShopItems(selectedShop);
-
-    console.log(categoryGroups);
 
     // Loop through each category in the shop
     for (const category in categoryGroups) {
@@ -3561,10 +3606,6 @@ let categoryGroups = {
   
 // Function to retrieve items for a specific shop (e.g., Hunter/Leatherworker) with categories
 function getShopItems(shopType) {
-
-    console.log(shopType)
-    
-
     // Return the category groups for the specific shop type
     return categoryGroups[shopType] || {}; // Return an empty object if no matching shopType is found
 }

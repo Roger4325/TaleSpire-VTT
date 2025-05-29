@@ -36,11 +36,11 @@
             <nav class="tabs">
                 <ul>
                     <li><a href="#Init" id="DMPageLinkInit">Initiative Tracker</a></li>
-                    <li><a href="#dmTables">DM Tables</a></li>
-                    <li><a href="#checklists">Checklists</a></li>
-                    <li><a href="#SpellList">Spell List</a></li>
-                    <li><a href="#Docs">Notes</a></li>
-                    <li><a href="#GoogleDocs">Google Docs</a></li>
+                    <li><a href="#dmTables" id="DMTablesLinkInit">DM Tables</a></li>
+                    <li><a href="#checklists" id="checklistsLinkInit">Checklists</a></li>
+                    <li><a href="#SpellList" id="SpellListLinkInit">Spell List</a></li>
+                    <li><a href="#Docs" id="DocsLinkInit">Notes</a></li>
+                    <li><a href="#GoogleDocs" id="GoogleDocsLinkInit">Google Docs</a></li>
                     <li>
                         <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
                         <div id="settings-option-dropdown" style="display: none; position: absolute;">
@@ -220,26 +220,25 @@
             <section id="dmTables" class = "dmTables">
                 <nav class="table-tab">
                     <ul>
-                        <li><a href="#conditions" data-target="conditions">Conditions</a></li>
-                        <li><a href="#effects" data-target="effects">Effects</a></li>
-                        <li><a href="#schoolsOfMagic" data-target="schoolsOfMagic">Magic Schools</a></li>
-                        <li><a href="#shops" data-target="shops">Shops</a></li>
-                        <li><a href="#travel" data-target="travel">Travel</a></li>
-                        <li><a href="#npcList" data-target="npcList">NPCs</a></li>
-                        <li><a href="#skillsTable" data-target="skillsTable">Skills</a></li>
-                        <li><a href="#jumpingRules" data-target="jumpingRules">Jumping</a></li>
-                        <li><a href="#Random" data-target="Random">Random Table</a></li>
+                        <li><a href="#conditionsSection" id="conditionsSectionLink" data-target="conditionsSection">Conditions</a></li>
+                        <li><a href="#effectsSection" id="effectsSectionLink" data-target="effectsSection">Effects</a></li>
+                        <li><a href="#schoolsOfMagicSection" id="schoolsOfMagicSectionLink" data-target="schoolsOfMagicSection">Magic Schools</a></li>
+                        <li><a href="#shops" id="shopsSectionLink" data-target="shops">Shops</a></li>
+                        <li><a href="#travelSection" id="travelSectionLink" data-target="travelSection">Travel</a></li>
+                        <li><a href="#npcList" id="npcListSectionLink" data-target="npcList">NPCs</a></li>
+                        <li><a href="#skillsTable" id="skillsTableSectionLink" data-target="skillsTable">Skills</a></li>
+                        <li><a href="#jumpingRules" id="jumpingRulesSectionLink" data-target="jumpingRules">Jumping</a></li>
+                        <li><a href="#Random" id="RandomSectionLink" data-target="Random">Random Table</a></li>
                     </ul>
                     <hr>
                 </nav> 
                  <!-- Conditions Table -->
-                 <div id="conditions" class="dmTable">
-                     <!-- <button class="table-row-button nonRollButton">Add Row</button> -->
+                 <div id="conditionsSection" class="dmTable">
                      <table id="conditionsTable">
                          <thead>
                              <tr>
-                                 <th>Condition</th>
-                                 <th>Description</th>
+                                 <th id="ConditionTableRowHeader01">Condition</th>
+                                 <th id="ConditionTableRowHeader02">Description</th>
                              </tr>
                          </thead>
                          <tbody>                            
@@ -247,13 +246,13 @@
                      </table>
                  </div>
 
-                 <div id="effects" class="dmTable">
-                    <button class="table-row-button nonRollButton">Add Row</button>
+                 <div id="effectsSection" class="dmTable">
+                    <button class="table-row-button nonRollButton" id="effectsAddRowButton">Add Row</button>
                     <table id="effectsTable">
                         <thead>
                             <tr>
-                                <th>Effect</th>
-                                <th>Description</th>
+                                <th id="EffectTableRowHeader01">Effect</th>
+                                <th id="EffectTableRowHeader02">Description</th>
                             </tr>
                         </thead>
                         <tbody>                            
@@ -333,157 +332,50 @@
                  </div>
      
                  <!-- Schools of Magic Table -->
-                 <div id="schoolsOfMagic" class="dmTable">
+                 <div id="schoolsOfMagicSection" class="dmTable">
                      <!-- <button class="table-row-button">Add Row</button> -->
-                     <table>
+                     <table id="schoolsTable">
                          <thead>
                              <tr>
-                                 <th>School</th>
-                                 <th>Description</th>
+                                 <th id="SchoolTableRowHeader01">School</th>
+                                 <th id="SchoolTableRowHeader02">Description</th>
                              </tr>
                          </thead>
                          <tbody>
-                             <tr>
-                                 <td >Abjuration</td>
-                                 <td >
-                                     <ul>
-                                         <li>The School of Abjuration emphasizes magic that blocks, banishes, or protects.</li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Conjuration</td>
-                                 <td >
-                                     <ul>
-                                         <li>The School of Conjuration deals with creating objects and creatures, or making them disappear. </li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Divination</td>
-                                 <td >
-                                     <ul>
-                                         <li>The magical School of Divination is centered around revealing and granting knowledge and information to the caster. Useful for reading ancient scripts, identifying magical items, and seeing invisible enemies.</li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Enchantment</td>
-                                 <td >
-                                     <ul>
-                                         <li>Spells within the School of Enchantment are designed to manipulate the mental state of the target. This entire school is very similar to hypnotism, where the affected creature may act completely differently than how they normally behave.</li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Evocation</td>
-                                 <td >
-                                     <ul>
-                                         <li>Casters within the school of evocation unleash a raw magical energy upon their enemies. Whether it be flames, ice, or pure arcane energy. </li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Illusion</td>
-                                 <td >
-                                     <ul>
-                                         <li>The School of Illusion is concerned with manipulating the various senses of people and creatures. This could be vision, hearing, or other various senses such as body temperature. </li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Necromancy</td>
-                                 <td >
-                                     <ul>
-                                         <li>In general, think of spells within the School of Necromancy as manipulating the ebb and flow of different creatures life energy, or the balance of energy between life and death. This can come across in the form of helping resurrection, or draining necrotic damage. </li>
-                                     </ul>
-                                 </td>
-                             </tr>
-                             <tr>
-                                 <td >Transmutation</td>
-                                 <td >
-                                     <ul>
-                                         <li>Casters who study within the School of Transmutation are able to manipulate the physical properties of both items and people. This could be something simple such as turning copper into gold or could be an advanced spell that turns you into a newt </li>
-                                     </ul>
-                                 </td>
-                             </tr>
                          </tbody>
                      </table>
                  </div>
      
                  <!-- Travel Table -->
-                 <div id="travel" class="dmTable">
-                     <!-- <button class="table-row-button">Add Row</button> -->
-                     <h2>Travel Pace</h2>
-                     <table>
+                 <div id="travelSection" class="dmTable">
+                     <h2 id="travelTableHeader">Travel Pace</h2>
+                     <table id="travelTable">
                          <thead>
                              <tr>
-                                 <th>Pace</th>
-                                 <th>Per Minute</th>
-                                 <th>Per Hour</th>
-                                 <th>Per Day</th>
-                                 <th>Per effect</th>
+                                 <th id="travelTableHeader01">Pace</th>
+                                 <th id="travelTableHeader02">Effects</th>
                              </tr>
                          </thead>
                          <tbody>
-                             <tr>
-                                 <td >Fast</td>
-                                 <td >400 feet</td>
-                                 <td >4 miles</td>
-                                 <td >30 miles</td>
-                                 <td >-5 penalty to passive Wisdom (Perception) scores</td>                            
-                             </tr>
-                             <tr>
-                                 <td >Normal</td>
-                                 <td >300 feet</td>
-                                 <td >3 miles</td>
-                                 <td >24 miles</td>
-                                 <td >-</td>                            
-                             </tr>
-                             <tr>
-                                 <td >Slow</td>
-                                 <td >200 feet</td>
-                                 <td >2 miles</td>
-                                 <td >18 miles</td>
-                                 <td >Able to use stealth</td>                            
-                             </tr>
+                            <td>
+
+                            </td>
                          </tbody>
                      </table>
                      <br>
                      <hr>
                      <br>
                      <div id="travel-1" class="dmTable">
-                         <!-- <button class="table-row-button">Add Row</button> -->
-                        <h2>Transportation; Travel Services</h2>
-                        <table> 
+                        <h2 id="travelCostTableHeader">Transportation; Travel Services</h2>
+                        <table id="travelCostTable"> 
                             <thead>
                                 <tr>
-                                    <th>Service</th>
-                                    <th>Cost</th>
-                                    <th>Speed</th>
+                                    <th id="travelCostTableHeader01">Service</th>
+                                    <th id="travelCostTableHeader02">Cost</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td contenteditable="true">Airship</td>
-                                    <td contenteditable="true">1 gp per mile</td>
-                                    <td contenteditable="true">20 mph</td>                         
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true">Galleon</td>
-                                    <td contenteditable="true">5 sp per mile</td>
-                                    <td contenteditable="true">10 mph</td>                       
-                                </tr>
-                                <tr>
-                                    <td contenteditable="true">Coach</td>
-                                    <td contenteditable="true">2 sp per mile</td>
-                                    <td contenteditable="true">30 mph</td>                          
-                                </tr>
-                                <tr>                            
-                                    <td contenteditable="true">Teleportation circle</td>
-                                    <td contenteditable="true">2,500 gp</td>
-                                    <td contenteditable="true">Instant</td>   
-                                </tr>
+                               
                             </tbody>
                         </table>
                      </div>
@@ -491,7 +383,6 @@
      
                  <!-- Random NPC List -->
                  <div id="npcList" class="dmTable">
-                     <!-- <button class="table-row-button">Add Row</button> -->
                      <table>
                          <tr>
                              <th>Name</th>
@@ -830,36 +721,53 @@
                      </table>
                  </div>
      
-                 <!-- Jumping Rules -->
-                 <div id="jumpingRules" class="dmTable">
-                    <h2>Jump Calculator</h2>
+                <!-- Jumping Rules -->
+                <div id="jumpingRules" class="dmTable">
+                    <h2 id="jumpCalculatorTitle">Jump Calculator</h2>
                     <br>
-                    <label for="strength">What is your Strength score?</label>
+                    <label id="strengthLabel" for="strength">What is your Strength score?</label>
                     <input type="number" id="strength" class="jumpInput" name="strength" min="1" value="10" max="30" required>
                     <br>
-                
-                    <label for="height">How tall are you?</label>
-                    <input type="number" id="feet" class="jumpInput" name="feet" min="0" value ="6"required> feet
-                    <input type="number" id="inches" class="jumpInput" name="inches" min="0" value ="0"max="11" required> inches
+                    
+                    <label id="heightLabel" for="height">How tall are you?</label>
+                    <input type="number" id="feet" class="jumpInput" name="feet" min="0" value="6" required>
+                    <span id="feetLabel"> feet</span>
+                    <input type="number" id="inches" class="jumpInput" name="inches" min="0" value="0" max="11" required>
+                    <span id="inchesLabel"> inches</span>
                     <br>
-    
-                    <label for="jumpMultiplier">Multiply your results by</label>
+
+                    <label id="multiplierLabel" for="jumpMultiplier">Multiply your results by</label>
                     <input type="number" id="jumpMultiplier" class="jumpInput" name="jumpMultiplier" min="1" value="1" max="30" required>
                     <br>
                     <hr>
-                    <h3>With a running start (10 feet of movement)</h3>
+                    <h3 id="runningHeader">With a running start (10 feet of movement)</h3>
                     <br>
-                    <p>Your long jump is <span id="runningStartLongJump">10.00 feet horizontally.</span></p>
-                    <p>Your high jump is <span id="runningStartHighJump">3.00 feet off the ground.</span></p>
-                    <p>You can reach up and grab something <span id="runningStartReach">12.00 feet off the ground.</span></p>
+                    <span id="runningLongLabel">Your long jump is </span>
+                    <span id="runningStartLongJump">10.00</span>
+                    <span id="runningLongUnit"> feet</span>
+                    <br>
+                    <span id="runningHighLabel">Your high jump is </span>
+                    <span id="runningStartHighJump">3.00</span>
+                    <span id="runningHighUnit"> feet</span>
+                    <br>
+                    <span id="runningReachLabel">You can reach up and grab something </span>
+                    <span id="runningStartReach">12.00</span>
+                    <span id="runningReachUnit"> feet away</span>
                     <hr>
-                    <h3>Without a running start</h3>
+                    <h3 id="standingHeader">Without a running start</h3>
                     <br>
-                    <p>Your long jump is <span id="noRunningStartLongJump">5.00 feet horizontally.</span></p>
-                    <p>Your high jump is <span id="noRunningStartHighJump">1.50 feet off the ground.</span></p>
-                    <p>You can reach up and grab something <span id="noRunningStartReach">10.50 feet off the ground.</span></p>
-                 </div>
-     
+                    <span id="standingLongLabel">Your long jump is </span>
+                    <span id="noRunningStartLongJump">5.00</span>
+                    <span id="standingLongUnit"> feet</span>
+                    <br>
+                    <span id="standingHighLabel">Your high jump is </span>
+                    <span id="noRunningStartHighJump">1.50</span>
+                    <span id="standingHighUnit"> feet</span>
+                    <br>
+                    <span id="standingReachLabel">You can reach up and grab something </span>
+                    <span id="noRunningStartReach">10.50</span>
+                    <span id="standingReachUnit"> feet away</span>
+                </div>
                  <div id="Random">
                      <!-- Encounters Table -->
                      <div id="encounters" class="dmTable">
@@ -988,10 +896,10 @@
 
             
             <section id="checklists">
-                <h2>Checklists</h2>
+                <h2 id="checklistHeader">Checklists</h2>
                 <div class="checklist">
                     <div class="checklistContainer">
-                        <button onclick="addItem()">Add</button>
+                        <button onclick="addItem()" id="addChecklistbutton">Add</button>
                         <input type="text" id="checklistItem" placeholder="Add a new task">
                     </div>
                     <ul id="items">
@@ -1042,200 +950,199 @@
         <div class="monster-modal-background">
             <span id="closeMonsterForm" class="close">&times;</span>
             <form id="monsterCreationForm">
-                <h2>Create Custom Monster</h2>
+                <h2 id="monsterFormTitle">Create Custom Monster</h2>
                 <!-- Basic Monster Details -->
                 <div class="form-row">
-                    <label for="monsterFormName">Name:</label>
-                    <input type="text" id="monsterFormName" name="monsterFormName" required="true">
+                    <label id="monsterNameLabel" for="monsterFormName">Name:</label>
+                    <input type="text" id="monsterFormName" name="monsterFormName" required>
                 </div>
                 
                 <div class="form-row">
-                    <label for="monsterFormType">Type:</label>
+                    <label id="monsterTypeLabel" for="monsterFormType">Type:</label>
                     <input type="text" id="monsterFormType" name="monsterFormType" placeholder="e.g., Large Aberration, Lawful Evil">
                 </div>
 
                 <div class="form-row">
-                    <label for="monsterFormCR">CR Value:</label>
+                    <label id="monsterCRLabel" for="monsterFormCR">CR Value:</label>
                     <input type="number" id="monsterFormCR" name="monsterFormCR" step="any"> 
                 </div>
         
                 <div class="form-row">
-                    <label for="monsterFormSource">Source:</label>
+                    <label id="monsterSourceLabel" for="monsterFormSource">Source:</label>
                     <input type="text" id="monsterFormSource" name="monsterFormSource" placeholder="e.g., Monster Manual">
                 </div>
 
         
                 <!-- HP and AC -->
                 <div class="form-row">
-                    <label for="monsterFormHPValue">HP Value:</label>
+                    <label id="monsterHPLabel" for="monsterFormHPValue">HP Value:</label>
                     <input type="number" id="monsterFormHPValue" name="monsterFormHPValue">
                 </div>
         
                 <div class="form-row">
-                    <label for="monsterFormHPNotes">HP Notes:</label>
+                    <label id="monsterHPNotesLabel" for="monsterFormHPNotes">HP Notes:</label>
                     <input type="text" id="monsterFormHPNotes" name="monsterFormHPNotes" placeholder="e.g., (18d10+36)">
                 </div>
         
                 <div class="form-row">
-                    <label for="monsterFormACValue">AC Value:</label>
+                    <label id="monsterACLabel" for="monsterFormACValue">AC Value:</label>
                     <input type="number" id="monsterFormACValue" name="monsterFormACValue">
                 </div>
         
                 <div class="form-row">
-                    <label for="monsterFormACNotes">AC Notes:</label>
+                    <label id="monsterACNotesLabel" for="monsterFormACNotes">AC Notes:</label>
                     <input type="text" id="monsterFormACNotes" name="monsterFormACNotes" placeholder="e.g., Natural Armor">
                 </div>
 
                 <div class="form-row">
-                    <label for="monsterFormInitiativeModifier">Initiative Value:</label>
+                    <label id="monsterInitiativeLabel" for="monsterFormInitiativeModifier">Initiative Value:</label>
                     <input type="number" id="monsterFormInitiativeModifier" name="monsterFormInitiativeModifier">
                 </div>
         
                 <!-- Speed -->
                 <div class="form-row">
-                    <label for="monsterFormSpeed">Speed:</label>
+                    <label id="monsterSpeedLabel" for="monsterFormSpeed">Speed:</label>
                     <textarea id="monsterFormSpeed" name="monsterFormSpeed" placeholder="e.g., 40 ft., fly 80 ft., swim 40 ft."></textarea>
                 </div>
                 <div class="form-row">
-                    <label for="monsterFormSenses">Senses:</label>
+                    <label id="monsterSensesLabel" for="monsterFormSenses">Senses:</label>
                     <textarea id="monsterFormSenses" name="monsterFormSenses" placeholder="e.g.,Darkvision 150ft., TremorSense 30ft., Truesight 150ft."></textarea>
                 </div>
                 <div class="form-row">
-                    <label for="monsterFormLanguages">Languages:</label>
+                    <label id="monsterLanguagesLabel" for="monsterFormLanguages">Languages:</label>
                     <textarea id="monsterFormLanguages" name="monsterFormLanguages" placeholder="e.g., Common, Elvish, Dwarvish"></textarea>
                 </div>
         
                 <!-- Abilities -->
                 <fieldset class ="monster-ability-fieldset form-fieldset">
-                    <legend>Abilities</legend>
+                    <legend id="abilitiesLegend">Abilities</legend>
                     <div class="form-row">
-                        <label for="monsterFormStr">STR:</label>
+                        <label id="monsterStrLabel" for="monsterFormStr">STR:</label>
                         <input type="number" id="monsterFormStr" name="monsterStr">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormDex">DEX:</label>
+                        <label id="monsterDexLabel" for="monsterFormDex">DEX:</label>
                         <input type="number" id="monsterFormDex" name="monsterDex">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormCon">CON:</label>
+                        <label id="monsterConLabel" for="monsterFormCon">CON:</label>
                         <input type="number" id="monsterFormCon" name="monsterCon">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormInt">INT:</label>
+                        <label id="monsterIntLabel" for="monsterFormInt">INT:</label>
                         <input type="number" id="monsterFormInt" name="monsterInt">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormWis">WIS:</label>
+                        <label id="monsterWisLabel" for="monsterFormWis">WIS:</label>
                         <input type="number" id="monsterFormWis" name="monsterWis">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormCha">CHA:</label>
+                        <label id="monsterChaLabel" for="monsterFormCha">CHA:</label>
                         <input type="number" id="monsterFormCha" name="monsterCha">
                     </div>
                 </fieldset>
 
                 <fieldset class ="monster-ability-fieldset form-fieldset">
-                    <legend>Saves</legend>
+                    <legend id="savesLegend">Saves</legend>
                     <div class="form-row">
-                        <label for="monsterFormStrSave">STR:</label>
+                        <label id="monsterStrSaveLabel" for="monsterFormStrSave">STR:</label>
                         <input type="number" id="monsterFormStrSave" name="monsterStrSave">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormDexSave">DEX:</label>
+                        <label id="monsterDexSaveLabel" for="monsterFormDexSave">DEX:</label>
                         <input type="number" id="monsterFormDexSave" name="monsterDexSave">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormConSave">CON:</label>
+                        <label id="monsterConSaveLabel" for="monsterFormConSave">CON:</label>
                         <input type="number" id="monsterFormConSave" name="monsterConSave">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormIntSave">INT:</label>
+                        <label id="monsterIntSaveLabel" for="monsterFormIntSave">INT:</label>
                         <input type="number" id="monsterFormIntSave" name="monsterIntSave">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormWisSave">WIS:</label>
+                        <label id="monsterWisSaveLabel" for="monsterFormWisSave">WIS:</label>
                         <input type="number" id="monsterFormWisSave" name="monsterWisSave">
                     </div>
                     <div class="form-row">
-                        <label for="monsterFormChaSave">CHA:</label>
+                        <label id="monsterChaSaveLabel" for="monsterFormChaSave">CHA:</label>
                         <input type="number" id="monsterFormChaSave" name="monsterChaSave">
                     </div>
-                    
                 </fieldset>
 
                 <!-- Skills -->
                 <fieldset class="monster-skill-fieldset form-fieldset">
-                    <legend>Skills</legend>
+                    <legend id="skillsLegend">Skills</legend>
                     <div class="form-row">
-                        <label for="monsterAcrobatics">Acrobatics (DEX):</label>
+                        <label id="monsterAcrobaticsLabel" for="monsterAcrobatics">Acrobatics (DEX):</label>
                         <input type="number" id="monsterAcrobatics" name="monsterAcrobatics">
                     </div>
                     <div class="form-row">
-                        <label for="monsterAnimalHandling">Animal Handling (WIS):</label>
+                        <label id="monsterAnimalHandlingLabel" for="monsterAnimalHandling">Animal Handling (WIS):</label>
                         <input type="number" id="monsterAnimalHandling" name="monsterAnimalHandling">
                     </div>
                     <div class="form-row">
-                        <label for="monsterArcana">Arcana (INT):</label>
+                        <label id="monsterArcanaLabel" for="monsterArcana">Arcana (INT):</label>
                         <input type="number" id="monsterArcana" name="monsterArcana">
                     </div>
                     <div class="form-row">
-                        <label for="monsterAthletics">Athletics (STR):</label>
+                        <label id="monsterAthleticsLabel" for="monsterAthletics">Athletics (STR):</label>
                         <input type="number" id="monsterAthletics" name="monsterAthletics">
                     </div>
                     <div class="form-row">
-                        <label for="monsterDeception">Deception (CHA):</label>
+                        <label id="monsterDeceptionLabel" for="monsterDeception">Deception (CHA):</label>
                         <input type="number" id="monsterDeception" name="monsterDeception">
                     </div>
                     <div class="form-row">
-                        <label for="monsterHistory">History (INT):</label>
+                        <label id="monsterHistoryLabel" for="monsterHistory">History (INT):</label>
                         <input type="number" id="monsterHistory" name="monsterHistory">
                     </div>
                     <div class="form-row">
-                        <label for="monsterInsight">Insight (WIS):</label>
+                        <label id="monsterInsightLabel" for="monsterInsight">Insight (WIS):</label>
                         <input type="number" id="monsterInsight" name="monsterInsight">
                     </div>
                     <div class="form-row">
-                        <label for="monsterIntimidation">Intimidation (CHA):</label>
+                        <label id="monsterIntimidationLabel" for="monsterIntimidation">Intimidation (CHA):</label>
                         <input type="number" id="monsterIntimidation" name="monsterIntimidation">
                     </div>
                     <div class="form-row">
-                        <label for="monsterInvestigation">Investigation (INT):</label>
+                        <label id="monsterInvestigationLabel" for="monsterInvestigation">Investigation (INT):</label>
                         <input type="number" id="monsterInvestigation" name="monsterInvestigation">
                     </div>
                     <div class="form-row">
-                        <label for="monsterMedicine">Medicine (WIS):</label>
+                        <label id="monsterMedicineLabel" for="monsterMedicine">Medicine (WIS):</label>
                         <input type="number" id="monsterMedicine" name="monsterMedicine">
                     </div>
                     <div class="form-row">
-                        <label for="monsterNature">Nature (INT):</label>
+                        <label id="monsterNatureLabel" for="monsterNature">Nature (INT):</label>
                         <input type="number" id="monsterNature" name="monsterNature">
                     </div>
                     <div class="form-row">
-                        <label for="monsterPerception">Perception (WIS):</label>
+                        <label id="monsterPerceptionLabel" for="monsterPerception">Perception (WIS):</label>
                         <input type="number" id="monsterPerception" name="monsterPerception">
                     </div>
                     <div class="form-row">
-                        <label for="monsterPerformance">Performance (CHA):</label>
+                        <label id="monsterPerformanceLabel" for="monsterPerformance">Performance (CHA):</label>
                         <input type="number" id="monsterPerformance" name="monsterPerformance">
                     </div>
                     <div class="form-row">
-                        <label for="monsterPersuasion">Persuasion (CHA):</label>
+                        <label id="monsterPersuasionLabel" for="monsterPersuasion">Persuasion (CHA):</label>
                         <input type="number" id="monsterPersuasion" name="monsterPersuasion">
                     </div>
                     <div class="form-row">
-                        <label for="monsterReligion">Religion (INT):</label>
+                        <label id="monsterReligionLabel" for="monsterReligion">Religion (INT):</label>
                         <input type="number" id="monsterReligion" name="monsterReligion">
                     </div>
                     <div class="form-row">
-                        <label for="monsterSleightOfHand">Sleight of Hand (DEX):</label>
+                        <label id="monsterSleightOfHandLabel" for="monsterSleightOfHand">Sleight of Hand (DEX):</label>
                         <input type="number" id="monsterSleightOfHand" name="monsterSleightOfHand">
                     </div>
                     <div class="form-row">
-                        <label for="monsterStealth">Stealth (DEX):</label>
+                        <label id="monsterStealthLabel" for="monsterStealth">Stealth (DEX):</label>
                         <input type="number" id="monsterStealth" name="monsterStealth">
                     </div>
                     <div class="form-row">
-                        <label for="monsterSurvival">Survival (WIS):</label>
+                        <label id="monsterSurvivalLabel" for="monsterSurvival">Survival (WIS):</label>
                         <input type="number" id="monsterSurvival" name="monsterSurvival">
                     </div>
                 </fieldset>
@@ -1243,57 +1150,57 @@
         
                 <!-- Damage Vulnerabilities, Resistances, Immunities -->
                 <fieldset class="form-fieldset">
-                    <legend>Damage Vulnerabilities</legend>
+                    <legend id="vulnerabilitiesLegend">Damage Vulnerabilities</legend>
                     <div id="monsterFormVulnerabilities"></div>
                 </fieldset>
                 
         
                 <fieldset class="form-fieldset">
-                    <legend>Damage Resistances</legend>
+                    <legend id="resistancesLegend">Damage Resistances</legend>
                     <div id="monsterFormResistances"></div>
                 </fieldset>
         
                 <fieldset class="form-fieldset">
-                    <legend>Damage Immunities</legend>
+                    <legend id="immunitiesLegend">Damage Immunities</legend>
                     <div id="monsterFormImmunities"></div>
                 </fieldset>
         
                 <fieldset class="form-fieldset">
-                    <legend>Condition Immunities</legend>
+                    <legend id="conditionImmunitiesLegend">Condition Immunities</legend>
                     <div id="monsterFormConditionImmunities"></div>
                 </fieldset>
 
         
                 <!-- Traits, Actions, and Reactions -->
                 <fieldset id="monsterFormQuickActions">
-                    <legend>Quick Actions</legend>
+                    <legend id="quickActionsLegend">Quick Actions</legend>
                 </fieldset>
 
                 <fieldset id="monsterFormTraits">
-                    <legend>Traits</legend>
+                    <legend id="traitsLegend">Traits</legend>
                     <button type="button" id="addTraitButton" class="nonRollButton">Add Trait</button>
                 </fieldset>
         
                 <fieldset id="monsterFormActions">
-                    <legend>Actions</legend>
+                    <legend id="actionsLegend">Actions</legend>
                     <button type="button" id="addActionButton" class="nonRollButton">Add Action</button>
                 </fieldset>
         
                 <fieldset id="monsterFormReactions">
-                    <legend>Reactions</legend>
+                    <legend id="reactionsLegend">Reactions</legend>
                     <button type="button" id="addReactionButton" class="nonRollButton">Add Reaction</button>
                 </fieldset>
 
                 <fieldset id="monsterFormLegendaryActions">
-                    <legend>Legendary Actions</legend>
+                    <legend id="legendaryActionsLegend">Legendary Actions</legend>
                     <button type="button" id="addLegendaryActionsButton" class="nonRollButton">Add Legendary Actions</button>
                 </fieldset>
         
-                <button type="submit" class="nonRollButton" >Save Monster</button>
+                <button type="submit" class="nonRollButton" id="saveMonsterButton">Save Monster</button>
             </form>
         </div>
     </div>
-
+    
     <div id="spellFormModal" style="display: none;">
         <div class="spell-modal-background">
             <span id="closeSpellForm" class="close">&times;</span>

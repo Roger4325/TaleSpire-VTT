@@ -1086,6 +1086,7 @@ margin: 2px;
     border-radius: 5px;
     z-index: 10;
     position: relative;
+    margin-bottom: 160px; /* Ensure the modal doesn't cover the footer */
 }
 
 #spellForm {
