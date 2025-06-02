@@ -919,8 +919,8 @@
             </section>
 
             <section id="Docs">
-                <h2>DM Notes</h2>
-                <button class="add-notes-group-button nonRollButton">+ Add Group</button>
+                <h2 id="DocsHeader">DM Notes</h2>
+                <button id="DocsAddButton" class="add-notes-group-button nonRollButton">+ Add Group</button>
             </section>
 
             <section id="GoogleDocs">
@@ -1173,7 +1173,7 @@
         
                 <!-- Traits, Actions, and Reactions -->
                 <fieldset id="monsterFormQuickActions">
-                    <legend id="quickActionsLegend">Quick Actions</legend>
+                    <legend id="quickActionsLegend">Quick Actions Testing</legend>
                 </fieldset>
 
                 <fieldset id="monsterFormTraits">
@@ -1206,30 +1206,30 @@
             <span id="closeSpellForm" class="close">&times;</span>
             <form id="spellForm">
                 <div></div>
-                <h2>Create a Spell</h2>
+                <h2 id="spellFormTitle">Create a Spell</h2>
                 
                 <div class="form-row">
-                    <label for="spellFormName">Spell Name:</label>
+                    <label id="spellNameLabel" for="spellFormName">Spell Name:</label>
                     <input type="text" id="spellFormName" placeholder="e.g., FireBall." required>
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellFormDesc">Spell Description:</label>
-                    <textarea id="spellFormDesc" rows="5" placeholder="Describe effects when cast at higher levels" required></textarea>
+                    <label id="spellDescLabel" for="spellFormDesc">Spell Description:</label>
+                    <textarea id="spellFormDesc" rows="5" placeholder="Describe effects when a spell is cast" required></textarea>
                 </div>
                 
                 <div class="form-row">
-                    <label for="higherLevelForm">Higher Level Casting Description:</label>
+                    <label id="higherLevelLabel" for="higherLevelForm">Higher Level Casting Description:</label>
                     <textarea id="higherLevelForm" rows="3" placeholder="Describe effects when cast at higher levels"></textarea>
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellFormRange">Spell Range:</label>
+                    <label id="spellRangeLabel" for="spellFormRange">Spell Range:</label>
                     <input type="text" id="spellFormRange" placeholder="e.g., 300ft" required>
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellFormComponents">Spell Components:</label>
+                    <label id="spellComponentsLabel" for="spellFormComponents">Spell Components:</label>
                     <div id="spellFormComponents">
                         <label>
                             <input type="checkbox" id="componentVerbal" name="class" value="V">
@@ -1247,92 +1247,92 @@
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellFormMaterials">Spell Materials:</label>
+                    <label id="spellMaterialsLabel" for="spellFormMaterials">Spell Materials:</label>
                     <input type="text" id="spellFormMaterials" placeholder="e.g., 300g worth of diamonds" required>
                 </div>
                 
                 <div class="form-row">
-                    <label for="ritualForm">Ritual Spell:</label>
+                    <label id="ritualLabel" for="ritualForm">Ritual Spell:</label>
                     <select id="ritualForm">
-                        <option value="">No</option>
-                        <option value="yes">Yes</option>
+                        <option id="ritualLabelOptionNo" value="No">No</option>
+                        <option id="ritualLabelOptionYes" value="yes">Yes</option>
                     </select>
                 </div>
-               
+            
         
                 <div class="form-row">
-                    <label for="spellFormDuration">Duration:</label>
+                    <label id="durationLabel" for="spellFormDuration">Duration:</label>
                     <select id="spellFormDuration" required>
-                        <option value="Instantaneous">Instantaneous</option>
-                        <option value="1 Round">1 Round</option>
-                        <option value="1 Minute">1 Minute</option>
-                        <option value="10 Minutes">10 Minutes</option>
-                        <option value="1 Hour">1 Hour</option>
-                        <option value="8 Hours">8 Hours</option>
-                        <option value="12 Hours">12 Hours</option>
-                        <option value="24 Hours">24 Hours</option>
-                        <option value="Until Dispelled">Until Dispelled</option>
-                        <option value="Until Triggered">Until Triggered</option>
+                        <option id="durationLabelOptionInst" value="Instantaneous">Instantaneous</option>
+                        <option id="durationLabelOption1R" value="1 Round">1 Round</option>
+                        <option id="durationLabelOption1M" value="1 Minute">1 Minute</option>
+                        <option id="durationLabelOption10M" value="10 Minutes">10 Minutes</option>
+                        <option id="durationLabelOption1hr" value="1 Hour">1 Hour</option>
+                        <option id="durationLabelOption8hr" value="8 Hours">8 Hours</option>
+                        <option id="durationLabelOption12hr" value="12 Hours">12 Hours</option>
+                        <option id="durationLabelOption24hr" value="24 Hours">24 Hours</option>
+                        <option id="durationLabelOptionUD" value="Until Dispelled">Until Dispelled</option>
+                        <option id="durationLabelOptionUT" value="Until Triggered">Until Triggered</option>
                     </select>
                 </div>
-    
+
                 <div class="form-row">
-                    <label for="concentrationForm">Concentration:</label>
+                    <label id="concentrationLabel" for="concentrationForm">Concentration:</label>
                     <select id="concentrationForm">
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        <option id="concentrationLabelOptionNo" value="no">No</option>
+                        <option id="concentrationLabelOptionYes" value="yes">Yes</option>
                     </select>
                 </div>
-    
+
                 
                 <div class="form-row">
-                    <label for="castingTimeForm">Casting Time:</label>
+                    <label id="castingTimeLabel" for="castingTimeForm">Casting Time:</label>
                     <select id="castingTimeForm" required>
-                        <option value="1A">1 Action</option>
-                        <option value="1BA">1 Bonus Action</option>
-                        <option value="1R">1 Reaction</option>
-                        <option value="1M">1 Minute</option>
-                        <option value="10M">10 Minutes</option>
-                        <option value="1Hr">1 Hour</option>
-                        <option value="8Hr">8 Hours</option>
-                        <option value="12Hr">12 Hours</option>
-                        <option value="24Hr">24 Hours</option>
+                        <option id="castingLabelOption1A" value="1A">1 Action</option>
+                        <option id="castingLabelOption1BA" value="1BA">1 Bonus Action</option>
+                        <option id="castingLabelOption1R" value="1R">1 Reaction</option>
+                        <option id="castingLabelOption1M" value="1M">1 Minute</option>
+                        <option id="castingLabelOption10M" value="10M">10 Minutes</option>
+                        <option id="castingLabelOption1Hr" value="1Hr">1 Hour</option>
+                        <option id="castingLabelOption8Hr" value="8Hr">8 Hours</option>
+                        <option id="castingLabelOption12Hr" value="12Hr">12 Hours</option>
+                        <option id="castingLabelOption24Hr" value="24Hr">24 Hours</option>
                     </select>
                 </div>
                 
                 
                 <div class="form-row">
-                    <label for="spellFormLevel">Spell's Level:</label>
+                    <label id="spellLevelLabel" for="spellFormLevel">Spell's Level:</label>
                     <select id="spellFormLevel" required>
-                        <option value="Cantrip">Cantrip</option>
-                        <option value="1st-level">Level 1</option>
-                        <option value="2nd-level">Level 2</option>
-                        <option value="3rd-level">Level 3</option>
-                        <option value="4th-level">Level 4</option>
-                        <option value="5th-level">Level 5</option>
-                        <option value="6th-level">Level 6</option>
-                        <option value="7th-level">Level 7</option>
-                        <option value="8th-level">Level 8</option>
-                        <option value="9th-level">Level 9</option>
+                        <option id="spellLevelLabelOptionC" value="Cantrip">Cantrip</option>
+                        <option id="spellLevelLabelOption1" value="1st-level">Level 1</option>
+                        <option id="spellLevelLabelOption2" value="2nd-level">Level 2</option>
+                        <option id="spellLevelLabelOption3" value="3rd-level">Level 3</option>
+                        <option id="spellLevelLabelOption4" value="4th-level">Level 4</option>
+                        <option id="spellLevelLabelOption5" value="5th-level">Level 5</option>
+                        <option id="spellLevelLabelOption6" value="6th-level">Level 6</option>
+                        <option id="spellLevelLabelOption7" value="7th-level">Level 7</option>
+                        <option id="spellLevelLabelOption8" value="8th-level">Level 8</option>
+                        <option id="spellLevelLabelOption9" value="9th-level">Level 9</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="schoolForm">Spell School:</label>
+                    <label id="schoolLabel" for="schoolForm">Spell School:</label>
                     <select id="schoolForm">
-                        <option value="Abjuration">Abjuration</option>
-                        <option value="Conjuration">Conjuration</option>
-                        <option value="Divination">Divination</option>
-                        <option value="Enchantment">Enchantment</option>
-                        <option value="Evocation">Evocation</option>
-                        <option value="Illusion">Illusion</option>
-                        <option value="Necromancy">Necromancy</option>
-                        <option value="Transmutation">Transmutation</option>
+                        <option id="schoolLabelOptionA" value="Abjuration">Abjuration</option>
+                        <option id="schoolLabelOptionC" value="Conjuration">Conjuration</option>
+                        <option id="schoolLabelOptionD" value="Divination">Divination</option>
+                        <option id="schoolLabelOptionEn" value="Enchantment">Enchantment</option>
+                        <option id="schoolLabelOptionEv" value="Evocation">Evocation</option>
+                        <option id="schoolLabelOptionI" value="Illusion">Illusion</option>
+                        <option id="schoolLabelOptionN" value="Necromancy">Necromancy</option>
+                        <option id="schoolLabelOptionT" value="Transmutation">Transmutation</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellFormClass">Spell Classes:</label>
+                    <label id="spellClassesLabel" for="spellFormClass">Spell Classes:</label>
                     <div id="spellFormClass">
                         <label>
                             <input type="checkbox" id="classBarbarian" name="class" value="Barbarian">
@@ -1388,48 +1388,47 @@
                         </label>
                     </div>
                 </div>
-    
+
                 <div class="form-row">
-                    <label for="toHitOrDC">To Hit or DC:</label>
+                    <label id="toHitOrDCLabel" for="toHitOrDC">To Hit or DC:</label>
                     <select id="toHitOrDC">
-                        <option value="toHit">To Hit</option>
-                        <option value="DC">DC</option>
-                        <option value="">N/A</option>
+                        <option id="toHitOptionTH" value="toHit">To Hit</option>
+                        <option id="toHitOptionDC" value="DC">DC</option>
+                        <option id="toHitOptionNA" value="">N/A</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="damageDiceForm">Damage Dice:</label>
+                    <label id="damageDiceLabel" for="damageDiceForm">Damage Dice:</label>
                     <input type="text" id="damageDiceForm" placeholder="2d8/2d4 would roll as two groups 2d8+2d4 would roll as one.">
                 </div>
                 
                 <div class="form-row">
-                    <label for="damageDiceUpcastForm">Damage Dice (Upcast):</label>
+                    <label id="damageDiceUpcastLabel" for="damageDiceUpcastForm">Damage Dice (Upcast):</label>
                     <input type="text" id="damageDiceUpcastForm" placeholder="e.g., 1d8 (Increase per spell level)">
                 </div>
         
                 <div class="form-row">
-                    <label for="saveDCType">Spell Save DC:</label>
+                    <label id="saveDCTypeLabel" for="saveDCType">Spell Save DC:</label>
                     <select id="saveDCType" required>
                         <option value="">N/A</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="abilityModifier">Should spell add Ability Modifier:</label>
+                    <label id="abilityModifierLabel" for="abilityModifier">Should spell add Ability Modifier:</label>
                     <select id="abilityModifier">
-                        <option value="no">No</option>
-                        <option value="yes">Yes</option>
+                        <option id="abilityOptionNo" value="no">No</option>
+                        <option id="abilityOptionYes" value="yes">Yes</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="spellDamageType01">Damage Type:</label>
+                    <label id="spellDamageTypeLabel" for="spellDamageType01">Damage Type:</label>
                     <select id="spellDamageType01" required>
                     </select>
                 </div>
                 
-    
         
                 <button type="button" id="saveSpell" class="nonRollButton">Save Spell</button>
             </form>
@@ -1440,9 +1439,9 @@
         <div class="shop-modal-background">
             <span id="closeShopForm" class="close">&times;</span>
             <form id="shopForm">
-                <h2>Create Custom Shops</h2>
+                <h2 id="shopFormTitle">Create Custom Shops</h2>
                 <div class="form-group-header">
-                    <label for="shopName">Shop Name : </label>
+                    <label id="shopNameLabel" for="shopName">Shop Name : </label>
                     <input type="text" id="shopName" placeholder="e.g., blacksmith/Armory">
                 </div>
                 <div id="groupsContainer">
@@ -1451,74 +1450,68 @@
                             <button id="addshopItem" type="button" class="nonRollButton">Add Item to Group</button>
                         </div>
                         <div>
-                            <label for="shopGroupName">Group Name:</label>
+                            <label id="shopGroupNameLabel" for="shopGroupName">Group Name:</label>
                             <input type="text" id="shopGroupName" class="shopGroupName" placeholder="e.g., Heavy Armor">
                         </div>
                         <div id="itemInputsContainer">
                             <div class="item-input">
-                                <label for="shopItemName">Item Name:</label>
+                                <label id="shopItemNameLabel" for="shopItemName">Item Name:</label>
                                 <input type="text" id="shopItemName" class="shop-item-input" placeholder="e.g., plate-armor">
                                 <div id="customShopDropdown" class="dropdown"></div>
                             </div>
                         </div>
-                        
                     </div>
-                    
-                    
                 </div>
                 <div class="form-group">
                     <button id="addShopGroup" type="button" class="nonRollButton">Add Group to Shop</button>
-                    
                 </div>
-
                 <button id="createShop" type="button" class="nonRollButton">Create/Update Shop</button>
-                
             </form>
         </div>
-    </div>   
+    </div>
     
     <div id="itemFormModal" style="display: none;">
         <div class="item-modal-background">
             <span id="closeItemForm" class="close">&times;</span>
             <form id="itemForm">
-                <h2>Create Equipment</h2>
+                <h2 id="itemFormTitle">Create Equipment</h2>
             
                 <!-- General Fields -->
                 <div class="form-row">
-                    <label for="equipment-name">Name:</label>
+                    <label id="equipmentNameLabel" for="equipment-name">Name:</label>
                     <input type="text" id="equipment-name" placeholder="Equipment Name" required />
                 </div>
-    
+
                 <!-- Description -->
                 <div class="form-row">
-                    <label for="equipment-description">Description:</label>
+                    <label id="equipmentDescriptionLabel" for="equipment-description">Description:</label>
                     <textarea id="equipment-description" rows="15" placeholder="Description"></textarea>
                 </div>
                 
                 <div class="form-row">
-                    <label for="equipment-category">Category:</label>
+                    <label id="equipmentCategoryLabel" for="equipment-category">Category:</label>
                     <select id="equipment-category" required>
-                        <option value="weapon">Weapon</option>
-                        <option value="armor">Armor</option>
-                        <option value="wondrous-item">Wonderous Item</option>
-                        <option value="potion">Potion</option>
-                        <option value="adventuring-gear">Adventuring Gear</option>
+                        <option value="weapon" id="equipmentCategoryOptionWeapon">Weapon</option>
+                        <option value="armor" id="equipmentCategoryOptionArmor">Armor</option>
+                        <option value="wondrous-item" id="equipmentCategoryOptionWonderous">Wonderous Item</option>
+                        <option value="potion" id="equipmentCategoryOptionPotion">Potion</option>
+                        <option value="adventuring-gear" id="equipmentCategoryOptionAdventuring">Adventuring Gear</option>
                     </select>
                 </div>
                 
                 <div class="form-row">
-                    <label for="equipment-rarity">Rarity:</label>
+                    <label id="equipmentRarityLabel" for="equipment-rarity">Rarity:</label>
                     <select id="equipment-rarity">
-                        <option value="common">Common</option>
-                        <option value="uncommon">Uncommon</option>
-                        <option value="rare">Rare</option>
-                        <option value="very-rare">Very Rare</option>
-                        <option value="legendary">Legendary</option>
+                        <option value="common" id="equipmentRarityOptionCommon">Common</option>
+                        <option value="uncommon" id="equipmentRarityOptionUncommon">Uncommon</option>
+                        <option value="rare" id="equipmentRarityOptionRare">Rare</option>
+                        <option value="very-rare" id="equipmentRarityOptionVery">Very Rare</option>
+                        <option value="legendary" id="equipmentRarityOptionLegendary">Legendary</option>
                     </select>
                 </div>
-    
+
                 <div class="form-row">
-                    <label for="equipment-cost">Cost:</label>
+                    <label id="equipmentCostLabel" for="equipment-cost">Cost:</label>
                     <input type="number" id="equipment-cost" placeholder="Cost" required />
                     <select id="equipment-cost-unit">
                         <option value="cp">cp</option>
@@ -1529,7 +1522,7 @@
                 </div>
                 
                 <div class="form-row">
-                    <label for="equipment-weight">Weight:</label>
+                    <label id="equipmentWeightLabel" for="equipment-weight">Weight:</label>
                     <input type="number" id="equipment-weight" placeholder="Weight" required />
                 </div>
                 
@@ -1537,10 +1530,10 @@
                 <!-- Additional Fields (Dynamic based on category) -->
                 <div id="additional-fields"></div>
                 
-    
+
                 
                 <!-- Submit -->
-                <button type="submit" class="nonRollButton">Create Equipment</button>
+                <button type="submit" class="nonRollButton" id="createEquipmentButton">Create Equipment</button>
             </form>
             
         </div>
@@ -1574,21 +1567,21 @@
         <div class="homebrew-modal-background">
             <div class="homebrew-modal-content">
                 <span id="close-homebrew-modal-button" class="close">&times;</span>
-                <h2>Homebrew Creator</h2>
+                <h2 id="homebrewModalTitle">Homebrew Creator</h2>
                 <div id="homebrewModalSubsectionStorage">
                     <div>
-                        <span>Local Storage - </span><span id="localStorageUsageText">0 KB / 5120 KB</span>
+                        <span id="localStorageLabel">Local Storage - </span>
+                        <span id="localStorageUsageText">0 KB / 5120 KB</span>
                         <div class="progress-bar-container">
                             <div id="localStorageProgress" class="progress-bar"></div>
                         </div>
-                        
                     </div>
                     <div>
-                        <span>Global Storage - </span><span id="globalStorageUsageText">0 KB / 5120 KB</span>
+                        <span id="globalStorageLabel">Global Storage - </span>
+                        <span id="globalStorageUsageText">0 KB / 5120 KB</span>
                         <div class="progress-bar-container">
                             <div id="globalStorageProgress" class="progress-bar"></div>
                         </div>
-                        
                     </div>    
                     <div id="homebrewModalSubsectionEditor">
                         <hr>
@@ -1598,14 +1591,13 @@
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
-                                    <label for="customMonsterSelect">Select Monster to Delete/Edit:</label>
+                                    <label id="customMonsterSelectLabel" for="customMonsterSelect">Select Monster to Delete/Edit:</label>
                                     <button id="deleteCustomMonsters" class="nonRollButton">Delete Monster</button>
                                     <button id="editCustomMonsters" class="nonRollButton">Edit Monster</button>
                                 </div>
                                 <div id="customMonsterSelectDiv">
                                     <select id="customMonsterSelect"></select>
                                 </div>
-                                
                             </div>
                         </div>
                         <hr>
@@ -1616,7 +1608,7 @@
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
-                                    <label for="customSpellSelect">Select Spell to Delete/Edit:</label>
+                                    <label id="customSpellSelectLabel" for="customSpellSelect">Select Spell to Delete/Edit:</label>
                                     <button id="deleteCustomSpells" class="nonRollButton">Delete Spell</button>
                                     <button id="editCustomSpells" class="nonRollButton">Edit Spell</button>
                                     <button id="exportCustomSpell" class="nonRollButton">Export Spell</button>
@@ -1628,11 +1620,11 @@
                         <div class="monsterEditorSubsection">
                             <div>
                                 <button id="customItems" class="nonRollButton">Create Item</button>
-                                <buton id="importCustomItem" class="nonRollButton">Import Item</button>
+                                <button id="importCustomItem" class="nonRollButton">Import Item</button>
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
-                                    <label for="customItemSelect">Select Item to Delete/Edit:</label>
+                                    <label id="customItemSelectLabel" for="customItemSelect">Select Item to Delete/Edit:</label>
                                     <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
                                     <button id="editCustomItems" class="nonRollButton">Edit Item</button>
                                     <button id="exportCustomItem" class="nonRollButton">Export Item</button>
@@ -1647,8 +1639,7 @@
                             </div>
                             <div class="deleteMonster">
                                 <div class="deleteMonster-header">
-                                    <label for="customShopSelect">Select Item to Delete/Edit:</label>
-                                    <!-- <button id="editCustomShops" class="nonRollButton">Edit Shop</button> -->
+                                    <label id="customShopSelectLabel" for="customShopSelect">Select Item to Delete/Edit:</label>
                                     <button id="deleteCustomShops" class="nonRollButton">Delete Shop</button>
                                 </div>
                                 <select id="customShopSelect"></select>

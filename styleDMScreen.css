@@ -165,16 +165,7 @@
     max-width: 40px;
 }
 
-/* Custom dropdown styling when expanded */
-#spellDamageType01.expanded {
-  position: absolute;
-  width: auto; /* Adjust width as needed */
-  height: auto;
-  max-height: 200px; /* Limit max height to prevent going off-screen */
-  overflow-y: auto; /* Enable vertical scrolling */
-  background: white; /* Match your theme */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Optional styling */
-}
+
 
 .player-info label {
     font-weight: bold;
@@ -223,10 +214,6 @@
     border-radius: 4px;
     background-color: rgb(2, 2, 2);
     cursor: text;
-}
-
-.hp-current:focus, .hp-max:focus {
-
 }
 
 

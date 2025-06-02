@@ -537,18 +537,73 @@ const translations = {
         docsSectionGroupButton: "+ Add Group",
         docsSectionNoteButton: "+ Add Note",
 
-        damage: {
+        characterAbilityScores: {
+            str: "Strength (STR)",
+            dex: "Dexterity (DEX)",
+            con: "Constution (CON)",
+            int: "Intelligence (INT)",
+            wis: "Wisdom (WIS)",
+            cha: "Charisma (CHA)"
+        },
+
+        damageTypesTranslate: {
             na: "N/A",
             slashing: "Slashing",
             piercing: "Piercing",
-            // ... all damage types
+            bludgeoning: "Bludgeoning",
+            fire: "Fire",
+            cold: "Cold",
+            lightning: "Lightning",
+            thunder: "Thunder",
+            acid: "Acid",
+            poison: "Poison",
+            psychic: "Psychic",
+            radiant: "Radiant",
+            necrotic: "Necrotic",
+            force: "Force",
+            healing: "Healing"
         },
-        resistance: {
+        resistanceTypesTranslate: {
             slashing: "Slashing",
             piercing: "Piercing",
-            // ... all resistance types
-            bludgeoning_non_magical: "Bludgeoning (Non-magical)"
+            bludgeoning: "Bludgeoning",
+            fire: "Fire",
+            cold: "Cold",
+            lightning: "Lightning",
+            thunder: "Thunder",
+            acid: "Acid",
+            poison: "Poison",
+            psychic: "Psychic",
+            radiant: "Radiant",
+            necrotic: "Necrotic",
+            force: "Force",
+            non_magical_damage: "Non-magical damage",
+            silvered_weapons: "Silvered weapons",
+            magical_weapons: "Magical weapons",
+            bludgeoning_non_magical: "Bludgeoning (Non-magical)",
+            slashing_non_magical: "Slashing (Non-magical)",
+            piercing_non_magical: "Piercing (Non-magical)"
         },
+
+        conditionTypesTranslated: {
+            blinded: "Blinded",
+            charmed: "Charmed",
+            deafened: "Deafened",
+            frightened: "Frightened",
+            grappled: "Grappled",
+            incapacitated: "Incapacitated",
+            invisible: "Invisible",
+            paralyzed: "Paralyzed",
+            petrified: "Petrified",
+            poisoned: "Poisoned",
+            prone: "Prone",
+            restrained: "Restrained",
+            stunned: "Stunned",
+            unconscious: "Unconscious",
+            exhaustion: "Exhaustion"
+        },
+
+
         conditions: {
             blinded: {
                 name: "Blinded",
@@ -1132,6 +1187,262 @@ const translations = {
         checklistHeader: "Checklists",
         addChecklistbutton: "Add",
 
+        monsterFormTitle: "Create Custom Monster",
+        monsterNameLabel: "Name:",
+        monsterTypeLabel: "Type:",
+        monsterCRLabel: "CR Value:",
+        monsterSourceLabel: "Source:",
+        monsterHPLabel: "HP Value:",
+        monsterHPNotesLabel: "HP Notes:",
+        monsterACLabel: "AC Value:",
+        monsterACNotesLabel: "AC Notes:",
+        monsterInitiativeLabel: "Initiative Value:",
+        monsterSpeedLabel: "Speed:",
+        monsterSensesLabel: "Senses:",
+        monsterLanguagesLabel: "Languages:",
+        abilitiesLegend: "Abilities",
+        monsterStrLabel: "STR:",
+        monsterDexLabel: "DEX:",
+        monsterConLabel: "CON:",
+        monsterIntLabel: "INT:",
+        monsterWisLabel: "WIS:",
+        monsterChaLabel: "CHA:",
+        savesLegend: "Saves",
+        monsterStrSaveLabel: "STR:",
+        monsterDexSaveLabel: "DEX:",
+        monsterConSaveLabel: "CON:",
+        monsterIntSaveLabel: "INT:",
+        monsterWisSaveLabel: "WIS:",
+        monsterChaSaveLabel: "CHA:",
+        skillsLegend: "Skills",
+        monsterAcrobaticsLabel: "Acrobatics (DEX):",
+        monsterAnimalHandlingLabel: "Animal Handling (WIS):",
+        monsterArcanaLabel: "Arcana (INT):",
+        monsterAthleticsLabel: "Athletics (STR):",
+        monsterDeceptionLabel: "Deception (CHA):",
+        monsterHistoryLabel: "History (INT):",
+        monsterInsightLabel: "Insight (WIS):",
+        monsterIntimidationLabel: "Intimidation (CHA):",
+        monsterInvestigationLabel: "Investigation (INT):",
+        monsterMedicineLabel: "Medicine (WIS):",
+        monsterNatureLabel: "Nature (INT):",
+        monsterPerceptionLabel: "Perception (WIS):",
+        monsterPerformanceLabel: "Performance (CHA):",
+        monsterPersuasionLabel: "Persuasion (CHA):",
+        monsterReligionLabel: "Religion (INT):",
+        monsterSleightOfHandLabel: "Sleight of Hand (DEX):",
+        monsterStealthLabel: "Stealth (DEX):",
+        monsterSurvivalLabel: "Survival (WIS):",
+        vulnerabilitiesLegend: "Damage Vulnerabilities",
+        resistancesLegend: "Damage Resistances",
+        immunitiesLegend: "Damage Immunities",
+        conditionImmunitiesLegend: "Condition Immunities",
+        quickActionsLegend: "Quick Actions",
+        traitsLegend: "Traits",
+        actionsLegend: "Actions",
+        reactionsLegend: "Reactions",
+        legendaryActionsLegend: "Legendary Actions",
+        saveMonsterButton: "Save Monster",
+        addTraitButton: "Add Trait",
+        addActionButton: "Add Action",
+        addReactionButton: "Add Reaction",
+        addLegendaryActionsButton: "Add Legendary Actions",
+
+        dynamicSections: {
+            monsterFormTraits: "Traits",
+            monsterFormActions: "Actions",
+            monsterFormReactions: "Reactions",
+            monsterFormLegendaryActions: "Legendary Actions",
+            monsterFormQuickActions: "Quick Actions"
+        },
+
+        monsterFormAdd: "Add",
+        monsterFormRemove: "Remove",
+
+        spellFormTitle: "Create a Spell",
+        spellNameLabel: "Spell Name:",
+        spellDescLabel: "Spell Description:",
+        higherLevelLabel: "Higher Level Casting Description:",
+        spellRangeLabel: "Spell Range:",
+        spellComponentsLabel: "Spell Components:",
+        labelVerbal: "Verbal",
+        labelSomatic: "Somatic",
+        labelMaterial: "Material",
+        spellMaterialsLabel: "Spell Materials:",
+        ritualLabel: "Ritual Spell:",
+        durationLabel: "Duration:",
+        concentrationLabel: "Concentration:",
+        castingTimeLabel: "Casting Time:",
+        spellLevelLabel: "Spell's Level:",
+        schoolLabel: "Spell School:",
+        spellClassesLabel: "Spell Classes:",
+        labelBarbarian: "Barbarian",
+        labelBard: "Bard",
+        labelCleric: "Cleric",
+        labelDruid: "Druid",
+        labelFighter: "Fighter",
+        labelMonk: "Monk",
+        labelPaladin: "Paladin",
+        labelRanger: "Ranger",
+        labelRogue: "Rogue",
+        labelSorcerer: "Sorcerer",
+        labelWarlock: "Warlock",
+        labelWizard: "Wizard",
+        labelArtificer: "Artificer",
+        toHitOrDCLabel: "To Hit or DC:",
+        damageDiceLabel: "Damage Dice:",
+        damageDiceUpcastLabel: "Damage Dice (Upcast):",
+        saveDCTypeLabel: "Spell Save DC:",
+        abilityModifierLabel: "Should spell add Ability Modifier:",
+        spellDamageTypeLabel: "Damage Type:",
+        saveSpell: "Save Spell",
+        equipmentCategoryOptionWeapon: "Weapon",
+        equipmentCategoryOptionArmor: "Armor",
+        equipmentCategoryOptionWonderous: "Wonderous Item",
+        equipmentCategoryOptionPotion: "Potion",
+        equipmentCategoryOptionAdventuring: "Adventuring Gear",
+        equipmentRarityOptionCommon: "Common",
+        equipmentRarityOptionUncommon: "Uncommon",
+        equipmentRarityOptionRare: "Rare",
+        equipmentRarityOptionVery: "Very Rare",
+        equipmentRarityOptionLegendary: "Legendary",
+
+        shopFormTitle: "Create Custom Shops",
+        shopNameLabel: "Shop Name : ",
+        addshopItem: "Add Item to Group",
+        shopGroupNameLabel: "Group Name:",
+        shopItemNameLabel: "Item Name:",
+        addShopGroup: "Add Group to Shop",
+        createShop: "Create/Update Shop",
+
+        itemFormTitle: "Create Equipment",
+        equipmentNameLabel: "Name:",
+        equipmentDescriptionLabel: "Description:",
+        equipmentCategoryLabel: "Category:",
+        equipmentRarityLabel: "Rarity:",
+        equipmentCostLabel: "Cost:",
+        equipmentWeightLabel: "Weight:",
+        createEquipmentButton: "Create Equipment",
+        addItemtoGroupButton: "Add Item to Group",
+        groupNameLabel: "Group Name:",
+        itemNameLabel: "Item Name:",
+        addItemtoGroupButton:    "Add Item to Group",
+        groupNameLabel:          "Group Name:",
+        itemNameLabel:           "Item Name:",
+
+        addMagicBonusButton:     "Add Magic Bonus",
+        magicBonusesLabel:       "Magic Bonuses:",
+
+        weaponTypeLabel:         "Weapon Type:",
+        optionSimple:            "Simple",
+        optionMartial:           "Martial",
+
+        attackStyleLabel:        "Attack Style:",
+        optionMelee:             "Melee",
+        optionRanged:            "Ranged",
+        optionMeleeThrown:       "Melee and Thrown",
+        rangeLabel:              "Range:",
+
+        weaponPropertiesLabel:   "Weapon Properties:",
+        labelFinesse:            "Finesse",
+        labelVersatile:          "Versatile",
+        labelHeavy:              "Heavy",
+        labelLight:              "Light",
+        labelLoading:            "Loading",
+        labelReach:              "Reach",
+        labelThrown:             "Thrown",
+        labelTwoHanded:          "Two-Handed",
+        labelSilvered:           "Silvered",
+        labelSpecial:            "Special",
+        labelAmmunition:         "Ammunition",
+        attunementLabel:         "Attunement",
+        hasChargesLabel:         "Has Charges",
+
+        damageDiceLabel:         "Damage Dice:",
+        damageTypeLabel:         "Damage Type:",
+
+        chargeResetLabel:        "When does it reset?",
+        optionLongRest:          "Long Rest",
+        optionShortRest:         "Short Rest",
+        optionAtDawn:            "At Dawn",
+        maxChargesLabel:         "Maximum Charges:",
+
+        weaponToHitBonusLabel:   "Magical to Hit Bonus:",
+        weaponDamageBonusLabel:  "Magical Damage Bonus:",
+
+        armorTypeLabel:          "Armor Type:",
+        optionLightArmor:        "Light",
+        optionMediumArmor:       "Medium",
+        optionHeavyArmor:        "Heavy",
+        optionShield:            "Shield",
+
+        armorClassLabel:         "Base Armor Class:",
+        strMinimumLabel:         "Strength Requirement:",
+        stealthDisadvantageLabel: "Stealth Disadvantage:",
+        requiresAttunementLabel: "Requires Attunement:",
+
+        gearCategoryLabel:       "Gear Category:",
+
+        potionEffectTypeLabel:   "Potion Effect Type:",
+        optionHealing:           "Healing",
+        optionSpell:             "Spell",
+        optionOther:             "Other",
+        healingFormulaLabel:     "Healing Formula:",
+        spellNameLabel:          "Spell Name:",
+        spellDurationLabel:      "Duration:",
+        noConcentrationLabel:    "No Concentration:",
+        
+
+
+        homebrewModalTitle: "Homebrew Creator",
+        localStorageLabel: "Local Storage - ",
+        globalStorageLabel: "Global Storage - ",
+        customMonsters: "Create Monster",
+        customMonsterSelectLabel: "Select Monster to Delete/Edit:",
+        deleteCustomMonsters: "Delete Monster",
+        editCustomMonsters: "Edit Monster",
+        customSpells: "Create Spell",
+        importCustomSpell: "Import Spell",
+        customSpellSelectLabel: "Select Spell to Delete/Edit:",
+        deleteCustomSpells: "Delete Spell",
+        editCustomSpells: "Edit Spell",
+        exportCustomSpell: "Export Spell",
+        customItems: "Create Item",
+        importCustomItem: "Import Item",
+        customItemSelectLabel: "Select Item to Delete/Edit:",
+        deleteCustomItems: "Delete Item",
+        editCustomItems: "Edit Item",
+        exportCustomItem: "Export Item",
+        createCustomShops: "Create Shop",
+        customShopSelectLabel: "Select Item to Delete/Edit:",
+        deleteCustomShops: "Delete Shop",
+        importCharacterData: "Import Character Data",
+        customCharacterSelectLabel: "Select a character to Export:",
+        exportCharacterData: "Export Character",
+        deleteCharacter: "Delete Character",
+
+
+        shopHeadersTranslate: {
+            item: "Item",
+            cost: "Cost",
+            weight: "Weight",
+            category: "Category"
+        },
+        spellDetailsTranslate: {
+            level: "Level",
+            range: "Range",
+            duration: "Duration",
+            concentration: "Concentration",
+            ritual: "Ritual",
+            components: "Components",
+            material: "Material Components",
+            casting_time: "Casting Time",
+            class: "Classes",
+            school: "School",
+            description: "Description",
+            higher_level: "Higher Level"
+        }
+
     },
     es: {
         //Spell Section
@@ -1299,20 +1610,72 @@ const translations = {
         docsSectionGroupButton: "+ Agregar Grupo",
         docsSectionNoteButton: "+ Añadir Nota",
 
-        damage: {
+        characterAbilityScores: {
+            str: "Fuerza (FUE)",
+            dex: "Destreza (DES)",
+            con: "Constitución (CON)",
+            int: "Inteligencia (INT)",
+            wis: "Sabiduría (SAB)",
+            cha: "Carisma (CAR)"
+        },
+
+        damageTypesTranslate: {
             na: "N/A",
             slashing: "Cortante",
             piercing: "Perforante",
             bludgeoning: "Contundente",
             fire: "Fuego",
-            // ... translated damage types
+            cold: "Frío",
+            lightning: "Relámpago",
+            thunder: "Trueno",
+            acid: "Ácido",
+            poison: "Veneno",
+            psychic: "Psíquico",
+            radiant: "Radiante",
+            necrotic: "Necrótico",
+            force: "Fuerza",
+            healing: "Curación"
         },
-        resistance: {
+
+        resistanceTypesTranslate: {
             slashing: "Cortante",
             piercing: "Perforante",
-            bludgeoning_non_magical: "Contundente (No mágico)"
-            // ... translated resistance types
-          },
+            bludgeoning: "Contundente",
+            fire: "Fuego",
+            cold: "Frío",
+            lightning: "Relámpago",
+            thunder: "Trueno",
+            acid: "Ácido",
+            poison: "Veneno",
+            psychic: "Psíquico",
+            radiant: "Radiante",
+            necrotic: "Necrótico",
+            force: "Fuerza",
+            non_magical_damage: "Daño no mágico",
+            silvered_weapons: "Armas plateadas",
+            magical_weapons: "Armas mágicas",
+            bludgeoning_non_magical: "Contundente (No mágico)",
+            slashing_non_magical: "Cortante (No mágico)",
+            piercing_non_magical: "Perforante (No mágico)"
+        },
+        conditionTypesTranslated: {
+            blinded: "Cegado",
+            charmed: "Hechizado",
+            deafened: "Ensordecido",
+            frightened: "Asustado",
+            grappled: "Agarrado",
+            incapacitated: "Incapacitado",
+            invisible: "Invisible",
+            paralyzed: "Paralizado",
+            petrified: "Petrificado",
+            poisoned: "Envenenado",
+            prone: "Derribado",
+            restrained: "Restringido",
+            stunned: "Aturdido",
+            unconscious: "Inconsciente",
+            exhaustion: "Agotamiento"
+        },
+
         conditions: {
             blinded: {
                 name: "Cegado",
@@ -1811,8 +2174,8 @@ const translations = {
         travelCostTableHeader02: "Costo / Velocidad",
 
         jumpCalculatorTitle: "Calculadora de Salto",
-        strengthLabel: "¿Cuál es tu puntuación de fuerza?",
-        heightLabel: "¿Que tan alto eres?",
+        strengthLabel: "Cuál es tu puntuación de fuerza",
+        heightLabel: "Que tan alto eres",
         feetLabel: "pies",
         inchesLabel: "pulgadas",
         multiplierLabel: "Multiplica tus resultados por",
@@ -1821,81 +2184,327 @@ const translations = {
         runningLongUnit: "pies",
         runningHighLabel: "La altura del salto es ",
         runningHighUnit: "pies",
-        runningReachLabel: "Puedes alcanzar y agarrar algo ",
-        runningReachUnit: "a pies de distancia",
+        runningReachLabel: "Agarrar algo a ",
+        runningReachUnit: "pies de distancia",
         standingHeader: "Sin comenzar corriendo ",
         standingLongLabel: "Tu longitud del salto es ",
         standingLongUnit: "pies",
         standingHighLabel: "La altura del salto es ",
         standingHighUnit: "pies",
-        standingReachLabel: "Puedes alcanzar y agarrar algo ",
-        standingReachUnit: "a pies de distancia",
+        standingReachLabel: "Agarrar algo a",
+        standingReachUnit: "pies de distancia",
 
-        checklistHeader: "Checklists",
-        addChecklistbutton: "Add",
+        checklistHeader: "Listas de Verificación",
+        addChecklistbutton: "Agregar",
+
+        DocsHeader: "Notas del DM",
+        DocsAddButton: "+ Agregar Grupo",
 
 
-        monsterFormTitle: "Create Custom Monster",
-        monsterNameLabel: "Name:",
-        monsterTypeLabel: "Type:",
-        monsterCRLabel: "CR Value:",
-        monsterSourceLabel: "Source:",
-        monsterHPLabel: "HP Value:",
-        monsterHPNotesLabel: "HP Notes:",
-        monsterACLabel: "AC Value:",
-        monsterACNotesLabel: "AC Notes:",
-        monsterInitiativeLabel: "Initiative Value:",
-        monsterSpeedLabel: "Speed:",
-        monsterSensesLabel: "Senses:",
-        monsterLanguagesLabel: "Languages:",
-        abilitiesLegend: "Abilities",
-        monsterStrLabel: "STR:",
-        monsterDexLabel: "DEX:",
+
+
+        //Custom things section for both Dm Screen and Player Sheet. 
+        monsterFormTitle: "Crear Monstruo Personalizado",
+        monsterNameLabel: "Nombre:",
+        monsterTypeLabel: "Tipo:",
+        monsterCRLabel: "Valor de ND:",
+        monsterSourceLabel: "Fuente:",
+        monsterHPLabel: "Valor de PV:",
+        monsterHPNotesLabel: "Notas de PV:",
+        monsterACLabel: "Valor de CA:",
+        monsterACNotesLabel: "Notas de CA:",
+        monsterInitiativeLabel: "Valor de Iniciativa:",
+        monsterSpeedLabel: "Velocidad:",
+        monsterSensesLabel: "Sentidos:",
+        monsterLanguagesLabel: "Idiomas:",
+        abilitiesLegend: "Habilidades",
+        monsterStrLabel: "FUE:",
+        monsterDexLabel: "DES:",
         monsterConLabel: "CON:",
         monsterIntLabel: "INT:",
-        monsterWisLabel: "WIS:",
-        monsterChaLabel: "CHA:",
-        savesLegend: "Saves",
-        monsterStrSaveLabel: "STR:",
-        monsterDexSaveLabel: "DEX:",
+        monsterWisLabel: "SAB:",
+        monsterChaLabel: "CAR:",
+        savesLegend: "Salvaciones",
+        monsterStrSaveLabel: "FUE:",
+        monsterDexSaveLabel: "DES:",
         monsterConSaveLabel: "CON:",
         monsterIntSaveLabel: "INT:",
-        monsterWisSaveLabel: "WIS:",
-        monsterChaSaveLabel: "CHA:",
-        skillsLegend: "Skills",
-        monsterAcrobaticsLabel: "Acrobatics (DEX):",
-        monsterAnimalHandlingLabel: "Animal Handling (WIS):",
-        monsterArcanaLabel: "Arcana (INT):",
-        monsterAthleticsLabel: "Athletics (STR):",
-        monsterDeceptionLabel: "Deception (CHA):",
-        monsterHistoryLabel: "History (INT):",
-        monsterInsightLabel: "Insight (WIS):",
-        monsterIntimidationLabel: "Intimidation (CHA):",
-        monsterInvestigationLabel: "Investigation (INT):",
-        monsterMedicineLabel: "Medicine (WIS):",
-        monsterNatureLabel: "Nature (INT):",
-        monsterPerceptionLabel: "Perception (WIS):",
-        monsterPerformanceLabel: "Performance (CHA):",
-        monsterPersuasionLabel: "Persuasion (CHA):",
-        monsterReligionLabel: "Religion (INT):",
-        monsterSleightOfHandLabel: "Sleight of Hand (DEX):",
-        monsterStealthLabel: "Stealth (DEX):",
-        monsterSurvivalLabel: "Survival (WIS):",
-        vulnerabilitiesLegend: "Damage Vulnerabilities",
-        resistancesLegend: "Damage Resistances",
-        immunitiesLegend: "Damage Immunities",
-        conditionImmunitiesLegend: "Condition Immunities",
-        quickActionsLegend: "Quick Actions",
-        traitsLegend: "Traits",
-        actionsLegend: "Actions",
-        reactionsLegend: "Reactions",
-        legendaryActionsLegend: "Legendary Actions",
-        saveMonsterButton: "Save Monster",
-        addTraitButton: "Add Trait",
-        addActionButton: "Add Action",
-        addReactionButton: "Add Reaction",
-        addLegendaryActionsButton: "Add Legendary Actions",
+        monsterWisSaveLabel: "SAB:",
+        monsterChaSaveLabel: "CAR:",
+        skillsLegend: "Habilidades",
+        monsterAcrobaticsLabel: "Acrobacias (DES):",
+        monsterAnimalHandlingLabel: "Manejo de Animales (SAB):",
+        monsterArcanaLabel: "Arcanos (INT):",
+        monsterAthleticsLabel: "Atletismo (FUE):",
+        monsterDeceptionLabel: "Engaño (CAR):",
+        monsterHistoryLabel: "Historia (INT):",
+        monsterInsightLabel: "Perspicacia (SAB):",
+        monsterIntimidationLabel: "Intimidación (CAR):",
+        monsterInvestigationLabel: "Investigación (INT):",
+        monsterMedicineLabel: "Medicina (SAB):",
+        monsterNatureLabel: "Naturaleza (INT):",
+        monsterPerceptionLabel: "Percepción (SAB):",
+        monsterPerformanceLabel: "Interpretación (CAR):",
+        monsterPersuasionLabel: "Persuasión (CAR):",
+        monsterReligionLabel: "Religión (INT):",
+        monsterSleightOfHandLabel: "Juego de Manos (DES):",
+        monsterStealthLabel: "Sigilo (DES):",
+        monsterSurvivalLabel: "Supervivencia (SAB):",
+        vulnerabilitiesLegend: "Vulnerabilidades al Daño",
+        resistancesLegend: "Resistencias al Daño",
+        immunitiesLegend: "Inmunidades al Daño",
+        conditionImmunitiesLegend: "Inmunidades a Condiciones",
+        quickActionsLegend: "Acciones Rápidas",
+        traitsLegend: "Rasgos",
+        actionsLegend: "Acciones",
+        reactionsLegend: "Reacciones",
+        legendaryActionsLegend: "Acciones Legendarias",
+        saveMonsterButton: "Guardar Monstruo",
+        addTraitButton: "Agregar Rasgo",
+        addActionButton: "Agregar Acción",
+        addReactionButton: "Agregar Reacción",
+        addLegendaryActionsButton: "Agregar Acciones Legendarias",
+
+        dynamicSections: {
+            monsterFormTraits: "Rasgos",
+            monsterFormActions: "Acciones",
+            monsterFormReactions: "Reacciones",
+            monsterFormLegendaryActions: "Acciones Legendarias",
+            monsterFormQuickActions: "Acciones Rápidas"
+        },
+
+        monsterFormAdd: "Agregar",
+        monsterFormRemove: "Eliminar",
+
+
+
+        spellFormTitle: "Crear un Hechizo",
+        spellNameLabel: "Nombre del Hechizo:",
+        spellDescLabel: "Descripción del Hechizo:",
+        higherLevelLabel: "Descripción de Lanzamiento a Nivel Superior:",
+        spellRangeLabel: "Alcance del Hechizo:",
+        spellComponentsLabel: "Componentes del Hechizo:",
+        labelVerbal: "Verbal",
+        labelSomatic: "Somático",
+        labelMaterial: "Material",
+        spellMaterialsLabel: "Materiales del Hechizo:",
+        ritualLabel: "Hechizo Ritual:",
+        ritualLabelOptionYes: "Sí",
+        ritualLabelOptionNo: "No",
+        durationLabel: "Duración:",
+        durationLabelOptionInst: "Instantáneo",
+        durationLabelOption1R: "1 Ronda",
+        durationLabelOption1M: "1 Minuto",
+        durationLabelOption10M: "10 Minutos",
+        durationLabelOption1H: "1 Hora",
+        durationLabelOption8H: "8 Horas",
+        durationLabelOption12hr: "12 Horas",
+        durationLabelOption24H: "24 Horas",
+        durationLabelOptionUD: "Duración Indefinida",
+        durationLabelOptionUT: "Hasta Destrucción",
+        concentrationLabel: "Concentración:",
+        concentrationLabelOptionNo: "No",
+        concentrationLabelOptionYes: "Sí",
+        castingTimeLabel: "Tiempo de Lanzamiento:",
+        castingLabelOption1A: "1 Acción",
+        castingLabelOption1BA: "1 Bonificación",
+        castingLabelOption1R: "1 Reacción",
+        castingLabelOption1M: "1 Minuto",
+        castingLabelOption10M: "10 Minutos",
+        castingLabelOption1H: "1 Hora",
+        castingLabelOption8H: "8 Horas",
+        castingLabelOption12hr: "12 Horas",
+        castingLabelOption24H: "24 Horas",
+        spellLevelLabel: "Nivel del Hechizo:",
+        spellLevelLabelOptionC: "Truco",
+        spellLevelLabelOption1: "Nivel 1",
+        spellLevelLabelOption2: "Nivel 2",
+        spellLevelLabelOption3: "Nivel 3",
+        spellLevelLabelOption4: "Nivel 4",
+        spellLevelLabelOption5: "Nivel 5",
+        spellLevelLabelOption6: "Nivel 6",
+        spellLevelLabelOption7: "Nivel 7",
+        spellLevelLabelOption8: "Nivel 8",
+        spellLevelLabelOption9: "Nivel 9",
+        schoolLabel: "Escuela de Magia:",
+        schoolLabelOptionA: "Abjuración",
+        schoolLabelOptionC: "Conjuración",
+        schoolLabelOptionD: "Adivinación",
+        schoolLabelOptionEn: "Encantamiento",
+        schoolLabelOptionEv: "Evocación",
+        schoolLabelOptionI: "Ilusión",
+        schoolLabelOptionN: "Nigromancia",
+        schoolLabelOptionT: "Transmutación",
+        spellClassesLabel: "Clases que Pueden Usarlo:",
+        labelBarbarian: "Bárbaro",
+        labelBard: "Bardo",
+        labelCleric: "Clérigo",
+        labelDruid: "Druida",
+        labelFighter: "Guerrero",
+        labelMonk: "Monje",
+        labelPaladin: "Paladín",
+        labelRanger: "Explorador",
+        labelRogue: "Pícaro",
+        labelSorcerer: "Hechicero",
+        labelWarlock: "Brujo",
+        labelWizard: "Mago",
+        labelArtificer: "Artífice",
+        toHitOrDCLabel: "Ataque o CD:",
+        toHitOptionTH: "Tirada de Ataque",
+        toHitOptionDC: "CD de Salvación",
+        damageDiceLabel: "Dados de Daño:",
+        damageDiceUpcastLabel: "Dados de Daño (Nivel Superior):",
+        saveDCTypeLabel: "CD de Salvación del Hechizo:",
+        abilityModifierLabel: "Agregar Modificador de Habilidad:",
+        abilityOptionNo: "No",
+        abilityOptionYes: "Sí",
+        spellDamageTypeLabel: "Tipo de Daño:",
+        saveSpell: "Guardar Hechizo",
+
+        shopFormTitle: "Crear Tiendas Personalizadas",
+        shopNameLabel: "Nombre de la Tienda: ",
+        addshopItem: "Agregar Objeto al Grupo",
+        shopGroupNameLabel: "Nombre del Grupo:",
+        shopItemNameLabel: "Nombre del Objeto:",
+        addShopGroup: "Agregar Grupo a la Tienda",
+        createShop: "Crear/Actualizar Tienda",
+
+        itemFormTitle: "Crear Equipamiento",
+        equipmentNameLabel: "Nombre:",
+        equipmentDescriptionLabel: "Descripción:",
+        equipmentCategoryLabel: "Categoría:",
+        equipmentRarityLabel: "Rareza:",
+        equipmentCostLabel: "Costo:",
+        equipmentWeightLabel: "Peso:",
+        createEquipmentButton: "Crear Equipamiento",
+        addItemtoGroupButton: "Agregar ítem al grupo",
+        groupNameLabel: "Nombre del grupo:",
+        itemNameLabel: "Nombre del ítem:",
+        addItemtoGroupButton:    "Agregar ítem al grupo",
+        groupNameLabel:          "Nombre del grupo:",
+        itemNameLabel:           "Nombre del ítem:",
+        equipmentCategoryOptionWeapon: "Arma",
+        equipmentCategoryOptionArmor: "Armadura",
+        equipmentCategoryOptionWonderous: "Objeto Maravilloso",
+        equipmentCategoryOptionPotion: "Poción",
+        equipmentCategoryOptionAdventuring: "Equipo de Aventurero",
+        equipmentRarityOptionCommon: "Común",
+        equipmentRarityOptionUncommon: "Poco Común",
+        equipmentRarityOptionRare: "Raro",
+        equipmentRarityOptionVery: "Muy Raro",
+        equipmentRarityOptionLegendary: "Legendario",
+
+        addMagicBonusButton:     "Agregar bono mágico",
+        magicBonusesLabel:       "Bonos mágicos:",
+
+        weaponTypeLabel:         "Tipo de arma:",
+        optionSimple:            "Simple",
+        optionMartial:           "Marcial",
+
+        attackStyleLabel:        "Estilo de ataque:",
+        optionMelee:             "Cuerpo a cuerpo",
+        optionRanged:            "A distancia",
+        optionMeleeThrown:       "Cuerpo a cuerpo y Arrojadiza",
+        rangeLabel:              "Alcance:",
+
+        weaponPropertiesLabel:   "Propiedades del arma:",
+        labelFinesse:            "Finesa",
+        labelVersatile:          "Versátil",
+        labelHeavy:              "Pesado",
+        labelLight:              "Ligero",
+        labelLoading:            "Carga",
+        labelReach:              "Alcance",
+        labelThrown:             "Arrojadiza",
+        labelTwoHanded:          "A dos manos",
+        labelSilvered:           "Plateado",
+        labelSpecial:            "Especial",
+        labelAmmunition:         "Munición",
+        attunementLabel:         "Afinación",
+        hasChargesLabel:         "Tiene cargas",
+
+        damageDiceLabel:         "Dados de daño:",
+        damageTypeLabel:         "Tipo de daño:",
+
+        chargeResetLabel:        "¿Cuándo se reinicia?",
+        optionLongRest:          "Descanso largo",
+        optionShortRest:         "Descanso corto",
+        optionAtDawn:            "Al amanecer",
+        maxChargesLabel:         "Cargas máximas:",
+
+        weaponToHitBonusLabel:   "Bonificación mágica al ataque:",
+        weaponDamageBonusLabel:  "Bonificación mágica de daño:",
+
+        armorTypeLabel:          "Tipo de armadura:",
+        optionLightArmor:        "Ligera",
+        optionMediumArmor:       "Media",
+        optionHeavyArmor:        "Pesada",
+        optionShield:            "Escudo",
+
+        armorClassLabel:         "Clase de armadura base:",
+        strMinimumLabel:         "Requisito de fuerza:",
+        stealthDisadvantageLabel: "Desventaja de sigilo:",
+        requiresAttunementLabel: "Requiere afinación:",
+
+        gearCategoryLabel:       "Categoría de equipo:",
+
+        potionEffectTypeLabel:   "Tipo de efecto de poción:",
+        optionHealing:           "Curación",
+        optionSpell:             "Hechizo",
+        optionOther:             "Otro",
+        healingFormulaLabel:     "Fórmula de curación:",
+        spellNameLabel:          "Nombre del hechizo:",
+        spellDurationLabel:      "Duración:",
+        noConcentrationLabel:    "Sin concentración:",
+
+        homebrewModalTitle: "Creador de Homebrew",
+        localStorageLabel: "Almacenamiento Local - ",
+        globalStorageLabel: "Almacenamiento Global - ",
+        customMonsters: "Crear Monstruo",
+        customMonsterSelectLabel: "Seleccionar Monstruo para Eliminar/Editar:",
+        deleteCustomMonsters: "Eliminar Monstruo",
+        editCustomMonsters: "Editar Monstruo",
+        customSpells: "Crear Hechizo",
+        importCustomSpell: "Importar Hechizo",
+        customSpellSelectLabel: "Seleccionar Hechizo para Eliminar/Editar:",
+        deleteCustomSpells: "Eliminar Hechizo",
+        editCustomSpells: "Editar Hechizo",
+        exportCustomSpell: "Exportar Hechizo",
+        customItems: "Crear Objeto",
+        importCustomItem: "Importar Objeto",
+        customItemSelectLabel: "Seleccionar Objeto para Eliminar/Editar:",
+        deleteCustomItems: "Eliminar Objeto",
+        editCustomItems: "Editar Objeto",
+        exportCustomItem: "Exportar Objeto",
+        createCustomShops: "Crear Tienda",
+        customShopSelectLabel: "Seleccionar Objeto para Eliminar/Editar:",
+        deleteCustomShops: "Eliminar Tienda",
+        importCharacterData: "Importar Datos del Personaje",
+        customCharacterSelectLabel: "Selecciona un personaje para Exportar:",
+        exportCharacterData: "Exportar Personaje",
+        deleteCharacter: "Eliminar Personaje",
+
+        shopHeadersTranslate: {
+            item: "Objeto",
+            cost: "Costo",
+            weight: "Peso",
+            category: "Categoría"
+        },
+        spellDetailsTranslate: {
+            level: "Nivel",
+            range: "Alcance",
+            duration: "Duración",
+            concentration: "Concentración",
+            ritual: "Ritual",
+            components: "Componentes",
+            material: "Componentes Materiales",
+            casting_time: "Tiempo de lanzamiento",
+            class: "Clases",
+            school: "Escuela",
+            description: "Descripción",
+            higher_level: "A Niveles Superiores"
+        }
         
+
     }
 };
 
@@ -3666,6 +4275,8 @@ if(customSpellsButton){
         resetSpellForm()
         spellFormModal.style.display = 'block';
         homebrewModal.style.display = 'none';
+        damageSelectElement = document.getElementById("spellDamageType01")
+        populateDamageTypeDropdown(damageSelectElement);
     });
     
     // Close the form
@@ -3728,28 +4339,34 @@ document.getElementById('damageDiceForm').addEventListener('blur', validateDiceI
 document.getElementById('damageDiceUpcastForm').addEventListener('blur', validateDiceInput);
 
 document.getElementById('toHitOrDC').addEventListener('change', function () {
-    const toHitOrDCValue = this.value; // Get the value of the first dropdown
+    const toHitOrDCValue = this.value;
     const saveDCTypeSelect = document.getElementById('saveDCType');
-
+    
     // Clear all options first
     saveDCTypeSelect.innerHTML = '';
 
     if (toHitOrDCValue === 'DC') {
-        // Add all options for DC
-        saveDCTypeSelect.innerHTML = `
-            <option value="str">Strength (STR)</option>
-            <option value="dex">Dexterity (DEX)</option>
-            <option value="con">Constitution (CON)</option>
-            <option value="int">Intelligence (INT)</option>
-            <option value="wis">Wisdom (WIS)</option>
-            <option value="cha">Charisma (CHA)</option>
-        `;
+        // Get the ability scores translations
+        const abilityOptions = translations[savedLanguage].characterAbilityScores;
+
+        // Create options for each ability score
+        for (const key in abilityOptions) {
+            const option = document.createElement("option");
+            option.value = key;  // English key (str, dex, etc.)
+            option.textContent = abilityOptions[key];  // Translated label
+            saveDCTypeSelect.appendChild(option);
+        }
+        
     } else {
-        // Add only the N/A option if not DC
-        saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`;
+        // Add N/A option using translation
+        const naOption = translations[savedLanguage].damageTypesTranslate.na;
+        const option = document.createElement("option");
+        option.value = "";
+        option.textContent = naOption;
+        saveDCTypeSelect.appendChild(option);
     }
 
-    // Reset to N/A as default
+    // Reset to first option
     saveDCTypeSelect.selectedIndex = 0;
 });
 
@@ -3772,9 +4389,9 @@ saveSpellButton.addEventListener('click', async () => {
         material: document.getElementById("spellFormMaterials").value.trim(),
         range: document.getElementById('spellFormRange').value.trim(),
         components: selectedComponents,
-        ritual: document.getElementById('ritualForm').checked ? ", R" : "",
+        ritual: document.getElementById('ritualForm').value.trim() ? ", R" : "",
         duration: document.getElementById('spellFormDuration').value.trim(),
-        concentration: document.getElementById('concentrationForm').checked ? "yes" : "no",
+        concentration: document.getElementById('concentrationForm').value.trim() ? "yes" : "no",
         casting_time: document.getElementById('castingTimeForm').value.trim(),
         level: document.getElementById('spellFormLevel').value,
         school: document.getElementById('schoolForm').value.trim(),
@@ -3788,7 +4405,7 @@ saveSpellButton.addEventListener('click', async () => {
     };
 
     spells.push(spell); // Add spell to the array
-    console.log(spells); // Log the spells for debugging
+    console.log(document.getElementById('ritualForm').checked); // Log the spells for debugging
 
     try {
         // Save and wait for completion
@@ -3804,22 +4421,28 @@ saveSpellButton.addEventListener('click', async () => {
 });
 
 // Function to populate a dropdown with damage types
-function populateDamageTypeDropdown(selectElement) {
+function populateDamageTypeDropdown(selectElement, savedType) {
     // Clear existing options
     selectElement.innerHTML = "";
 
-    // Populate options dynamically from the damageTypes array
-    damageTypes.forEach(type => {
+    // Get damage types for the CURRENT language
+    const damageTypes = translations[savedLanguage].damageTypesTranslate;
+
+    // Populate options dynamically using the damageTypes object
+    for (const key in damageTypes) {
         const option = document.createElement("option");
-        option.value = type;
-        option.textContent = type;
+        option.value = key; // Use the damage type key (e.g., 'slashing')
+        option.textContent = damageTypes[key]; // Translated name (e.g., 'Slashing')
         selectElement.appendChild(option);
-    });
+
+        if (savedType && savedType === key) {
+            option.selected = true; // Set the saved type as selected
+        }
+    }
+
 }
 
-document.querySelectorAll('select[id^="spellDamageType01"]').forEach(selectElement => {
-    populateDamageTypeDropdown(selectElement);
-});
+
 
 function validateDiceInput(event) {
     const newValue = event.target.value.trim();
@@ -3891,21 +4514,25 @@ function populateSpellForm(spell) {
 
     // Populate Save DC Type
     const saveDCTypeSelect = document.getElementById('saveDCType');
-    const dcTypes = ['str', 'dex', 'con', 'int', 'wis', 'cha']; // Common DC attributes
+    const abilityOptions = translations[savedLanguage].characterAbilityScores; // Common DC attributes
     saveDCTypeSelect.innerHTML = `<option value="">N/A</option>`; // Default option
-    dcTypes.forEach(type => {
-        const option = document.createElement('option');
-        option.value = type;
-        option.textContent = type.toUpperCase();
-        if (type === spell.spell_save_dc_type) {
-            option.selected = true;
+    for (const key in abilityOptions) {
+            const option = document.createElement("option");
+            option.value = key;  // English key (str, dex, etc.)
+            option.textContent = abilityOptions[key];  // Translated label
+            if (key === spell.spell_save_dc_type) {
+            option.selected = true;            
         }
         saveDCTypeSelect.appendChild(option);
-    });
+    }
 
     // Populate Ability Modifier
     const abilityModifierSelect = document.getElementById('abilityModifier');
     abilityModifierSelect.value = spell.ability_modifier || 'no';
+
+    damageSelectElement = document.getElementById("spellDamageType01")
+    savedType = spell.damage_type_01 || "";
+    populateDamageTypeDropdown(damageSelectElement, savedType);
 }
 
 
@@ -4026,86 +4653,136 @@ async function saveCustomEquipment(equipmentData){
 
 // Function to update dynamic fields
 function updateDynamicFields(category) {
-const additionalFields = document.getElementById("additional-fields");
-additionalFields.innerHTML = ""; // Clear existing fields
+    const additionalFields = document.getElementById("additional-fields");
+    additionalFields.innerHTML = ""; // Clear existing content
 
-let magicBonusSection = `
-        <button type="button" id="add-magic-bonus" class="nonRollButton">Add Magic Bonus</button>
+    // Always pull “Add Magic Bonus” and its container from translations:
+    const addMagicBonusButtonText = translations[savedLanguage].addMagicBonusButton;
+    const magicBonusesLabelText = translations[savedLanguage].magicBonusesLabel;
+    let magicBonusSection = `
+        <button type="button" id="add-magic-bonus" class="nonRollButton">
+          ${addMagicBonusButtonText}
+        </button>
         <div>
-            <label for="magic-bonuses">Magic Bonuses:</label>
+            <label for="magic-bonuses">${magicBonusesLabelText}</label>
             <div id="magic-bonus-container"></div>
         </div>
     `;
 
     if (category === "weapon") {
+        // Weapon Type dropdown
+        const weaponTypeLabel     = translations[savedLanguage].weaponTypeLabel;
+        const optionSimpleText    = translations[savedLanguage].optionSimple;
+        const optionMartialText   = translations[savedLanguage].optionMartial;
+
+        // Attack Style dropdown
+        const attackStyleLabel    = translations[savedLanguage].attackStyleLabel;
+        const optionMeleeText     = translations[savedLanguage].optionMelee;
+        const optionRangedText    = translations[savedLanguage].optionRanged;
+        const optionMeleeThrownText = translations[savedLanguage].optionMeleeThrown;
+
+        // Range label (initially only Melee shown)
+        const rangeLabelText      = translations[savedLanguage].rangeLabel;
+
+        // Weapon Properties labels
+        const weaponPropertiesLabel = translations[savedLanguage].weaponPropertiesLabel;
+        const labelFinesseText      = translations[savedLanguage].labelFinesse;
+        const labelVersatileText    = translations[savedLanguage].labelVersatile;
+        const labelHeavyText        = translations[savedLanguage].labelHeavy;
+        const labelLightText        = translations[savedLanguage].labelLight;
+        const labelLoadingText      = translations[savedLanguage].labelLoading;
+        const labelReachText        = translations[savedLanguage].labelReach;
+        const labelThrownText       = translations[savedLanguage].labelThrown;
+        const labelTwoHandedText    = translations[savedLanguage].labelTwoHanded;
+        const labelSilveredText     = translations[savedLanguage].labelSilvered;
+        const labelSpecialText      = translations[savedLanguage].labelSpecial;
+        const labelAmmunitionText   = translations[savedLanguage].labelAmmunition;
+        const attunementLabelText   = translations[savedLanguage].attunementLabel;
+        const hasChargesLabelText   = translations[savedLanguage].hasChargesLabel;
+
+        // Damage Dice & Type
+        const damageDiceLabelText = translations[savedLanguage].damageDiceLabel;
+        const damageTypeLabelText = translations[savedLanguage].damageTypeLabel;
+
+        // Charges reset
+        const chargeResetLabelText = translations[savedLanguage].chargeResetLabel;
+        const optionLongRestText   = translations[savedLanguage].optionLongRest;
+        const optionShortRestText  = translations[savedLanguage].optionShortRest;
+        const optionAtDawnText     = translations[savedLanguage].optionAtDawn;
+        const maxChargesLabelText  = translations[savedLanguage].maxChargesLabel;
+
+        // Magical bonuses
+        const toHitLabelText     = translations[savedLanguage].weaponToHitBonusLabel;
+        const damageBonusLabelText = translations[savedLanguage].weaponDamageBonusLabel;
+
         additionalFields.innerHTML = `
             <div class="form-row">
-                <label for="weapon-category">Weapon Type:</label>
+                <label for="weapon-category">${weaponTypeLabel}</label>
                 <select id="weapon-category">
-                    <option value="simple">Simple</option>
-                    <option value="martial">Martial</option>
+                    <option value="simple">${optionSimpleText}</option>
+                    <option value="martial">${optionMartialText}</option>
                 </select>
             </div>
 
             <div id="weapon-configurator" class="form-row">
-                <label for="attack-style">Attack Style:</label>
+                <label for="attack-style">${attackStyleLabel}</label>
                 <select id="attack-style">
-                    <option value="Melee">Melee</option>
-                    <option value="Ranged">Ranged</option>
-                    <option value="Melee-thrown">Melee and Thrown</option>
+                    <option value="Melee">${optionMeleeText}</option>
+                    <option value="Ranged">${optionRangedText}</option>
+                    <option value="Melee-thrown">${optionMeleeThrownText}</option>
                 </select>
                 <div id="range-inputs">
-                    <label for="melee-range" class="range-label">Range:</label>
+                    <label for="melee-range" class="range-label">${rangeLabelText}</label>
                     <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
                 </div>
             </div>
 
             <div class="form-row">
-                <label for="weaponProperties">Weapon Properties:</label>
+                <label for="weaponProperties">${weaponPropertiesLabel}</label>
                 <div id="weaponProperties">
                     <label>
                         <input type="checkbox" id="propertyFinesse" name="property" value="Finesse">
-                        <span id="labelFinesse">Finesse</span>
+                        <span id="labelFinesse">${labelFinesseText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyVersatile" name="property" value="Versatile">
-                        <span id="labelVersatile">Versatile</span>
+                        <span id="labelVersatile">${labelVersatileText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyHeavy" name="property" value="Heavy">
-                        <span id="labelHeavy">Heavy</span>
+                        <span id="labelHeavy">${labelHeavyText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyLight" name="property" value="Light">
-                        <span id="labelLight">Light</span>
+                        <span id="labelLight">${labelLightText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyLoading" name="property" value="Loading">
-                        <span id="labelLoading">Loading</span>
+                        <span id="labelLoading">${labelLoadingText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyReach" name="property" value="Reach">
-                        <span id="labelReach">Reach</span>
+                        <span id="labelReach">${labelReachText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyThrown" name="property" value="Thrown">
-                        <span id="labelThrown">Thrown</span>
+                        <span id="labelThrown">${labelThrownText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyTwoHanded" name="property" value="Two-Handed">
-                        <span id="labelTwoHanded">Two-Handed</span>
+                        <span id="labelTwoHanded">${labelTwoHandedText}</span>
                     </label>
-                     <label>
+                    <label>
                         <input type="checkbox" id="propertySilvered" name="property" value="Silvered">
-                        <span id="labelSilvered">Silvered</span>
+                        <span id="labelSilvered">${labelSilveredText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertySpecial" name="property" value="Special">
-                        <span id="labelSpecial">Special</span>
+                        <span id="labelSpecial">${labelSpecialText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyAmmunition" name="property" value="Ammunition">
-                        <span id="labelAmmunition">Ammunition</span>
+                        <span id="labelAmmunition">${labelAmmunitionText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="propertyImprovised" name="property" value="Improvised">
@@ -4113,234 +4790,259 @@ let magicBonusSection = `
                     </label>
                     <label>
                         <input type="checkbox" id="itemFormAttunement" name="property" value="attunement">
-                        <span id="attunement">Attunement</span>
+                        <span id="attunement">${attunementLabelText}</span>
                     </label>
                     <label>
                         <input type="checkbox" id="has-charges" name="property" value="Has Charges">
-                        <span id="has-charges">Has Charges</span>
+                        <span id="has-charges">${hasChargesLabelText}</span>
                     </label>
                 </div>
             </div>
     
             <div class="form-row">
-                <label for="damage-dice">Damage Dice:</label>
+                <label for="damage-dice">${damageDiceLabelText}</label>
                 <input type="text" id="damage-dice" placeholder="e.g., 1d8" />
             </div>
             
             <div class="form-row">
-                <label for="damage-type">Damage Type:</label>
-                <select id="damage-type">
-                    ${damageTypes.map(type => `<option value="${type}">${type}</option>`).join("")}
-                </select>
+            <label for="damage-type">${damageTypeLabelText}</label>
+            <select id="damage-type">
+                ${Object.entries(translations[savedLanguage].damageTypesTranslate)
+                .map(([key, translated]) => `<option value="${key}">${translated}</option>`)
+                .join("")}
+            </select>
             </div>
     
             <div id="charges-options" style="display: none; margin-left: 20px;">
                 <div class="form-row">
-                    <label for="charge-reset">When does it reset?</label>
+                    <label for="charge-reset">${chargeResetLabelText}</label>
                     <select id="charge-reset">
-                        <option value="long-rest">Long Rest</option>
-                        <option value="short-rest">Short Rest</option>
-                        <option value="at-dawn">At Dawn</option>
+                        <option value="long-rest">${optionLongRestText}</option>
+                        <option value="short-rest">${optionShortRestText}</option>
+                        <option value="at-dawn">${optionAtDawnText}</option>
                     </select>
                 </div>
 
                 <div class="form-row">
-                    <label for="max-charges">Maximum Charges:</label>
+                    <label for="max-charges">${maxChargesLabelText}</label>
                     <input type="number" id="max-charges" placeholder="e.g., 3" min="1"/>
                 </div>
             </div>
 
             <div class="form-row">
-                <label for="weapon-to-hit-bonus">Magical to Hit Bonus:</label>
+                <label for="weapon-to-hit-bonus">${toHitLabelText}</label>
                 <input type="number" id="weapon-to-hit-bonus" placeholder="e.g., 1"/>
             </div>
 
             <div class="form-row">
-                <label for="weapon-damage-bonus">Magical Damage Bonus</label>
+                <label for="weapon-damage-bonus">${damageBonusLabelText}</label>
                 <input type="number" id="weapon-damage-bonus" placeholder="e.g., 1"/>
             </div>
 
             ${magicBonusSection}
         `;
-        // JavaScript logic to toggle visibility
+
+        // Toggle “Charges” section visibility:
         const hasChargesCheckbox = document.getElementById("has-charges");
         const chargesOptions = document.getElementById("charges-options");
-
         hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
+            chargesOptions.style.display = hasChargesCheckbox.checked ? "block" : "none";
         });
 
+        // Listen for Attack Style changes:
         document.getElementById('attack-style').addEventListener('change', function () {
             const attackStyle = this.value;
             const rangeInputs = document.getElementById('range-inputs');
-          
-            // Clear existing inputs
-            rangeInputs.innerHTML = '';
-          
-            // Generate inputs based on the selected attack style
+            rangeInputs.innerHTML = ''; // clear existing
+
             if (attackStyle === 'Melee') {
               rangeInputs.innerHTML = `
-                <label for="melee-range" class="range-label">Range:</label>
+                <label for="melee-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
               `;
             } else if (attackStyle === 'Ranged') {
               rangeInputs.innerHTML = `
-                <label for="short-range" class="range-label">Short Range:</label>
+                <label for="short-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 30" />
-                <label for="long-range" class="range-label">Long Range:</label>
+                <label for="long-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 120" />
               `;
             } else if (attackStyle === 'Melee-thrown') {
               rangeInputs.innerHTML = `
-                <label for="melee-range" class="range-label">Melee Range:</label>
+                <label for="melee-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="melee-range" class="range-input" name="melee-range" placeholder="e.g., 5" />
-                <label for="short-range" class="range-label">Short Range:</label>
+                <label for="short-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="short-range" class="range-input" name="short-range" placeholder="e.g., 20" />
-                <label for="long-range" class="range-label">Long Range:</label>
+                <label for="long-range" class="range-label">${rangeLabelText}</label>
                 <input type="number" id="long-range" class="range-input" name="long-range" placeholder="e.g., 60" />
               `;
             }
-          });
-          setupMagicBonusSelection();
+        });
+
+        setupMagicBonusSelection();
+
     } else if (category === "armor") {
+        const armorTypeLabelText     = translations[savedLanguage].armorTypeLabel;
+        const optionLightArmorText   = translations[savedLanguage].optionLightArmor;
+        const optionMediumArmorText  = translations[savedLanguage].optionMediumArmor;
+        const optionHeavyArmorText   = translations[savedLanguage].optionHeavyArmor;
+        const optionShieldText       = translations[savedLanguage].optionShield;
+
+        const armorClassLabelText        = translations[savedLanguage].armorClassLabel;
+        const strMinimumLabelText        = translations[savedLanguage].strMinimumLabel;
+        const stealthDisadvantageText    = translations[savedLanguage].stealthDisadvantageLabel;
+        const requiresAttunementText     = translations[savedLanguage].requiresAttunementLabel;
+        const hasChargesLabelText        = translations[savedLanguage].hasChargesLabel;
+
         additionalFields.innerHTML = `
         <div class="form-row">
-            <label for="armor-category">Armor Type:</label>
+            <label for="armor-category">${armorTypeLabelText}</label>
             <select id="armor-category">
-                <option value="Light">Light</option>
-                <option value="Medium">Medium</option>
-                <option value="Heavy">Heavy</option>
-                <option value="Shield">Shield</option>
+                <option value="Light">${optionLightArmorText}</option>
+                <option value="Medium">${optionMediumArmorText}</option>
+                <option value="Heavy">${optionHeavyArmorText}</option>
+                <option value="Shield">${optionShieldText}</option>
             </select>
         </div>
         
         <div class="form-row">
-            <label for="armor-class">Base Armor Class:</label>
+            <label for="armor-class">${armorClassLabelText}</label>
             <input type="number" id="armor-class" placeholder="e.g., 15" />
         </div>
         
         <div class="form-row">
-            <label for="str-minimum">Strength Requirement:</label>
+            <label for="str-minimum">${strMinimumLabelText}</label>
             <input type="number" id="str-minimum" placeholder="e.g., 15" />
         </div>
         
         <div class="form-row">
-            <label for="stealth-disadvantage">Stealth Disadvantage:</label>
+            <label for="stealth-disadvantage">${stealthDisadvantageText}</label>
             <input type="checkbox" id="stealth-disadvantage" />
-            <label for="itemFormAttunement">Requires Attunement:</label>
+            <label for="itemFormAttunement">${requiresAttunementText}</label>
             <input type="checkbox" id="itemFormAttunement" />
-            <label for="has-charges">Has Charges</label>
+            <label for="has-charges">${hasChargesLabelText}</label>
             <input type="checkbox" id="has-charges" />
         </div>
     
         <div id="charges-options" style="display: none; margin-left: 20px;">
             <div class="form-row">
-                <label for="charge-reset">When does it reset?</label>
+                <label for="charge-reset">${chargeResetLabelText}</label>
                 <select id="charge-reset">
-                    <option value="long-rest">Long Rest</option>
-                    <option value="short-rest">Short Rest</option>
-                    <option value="at-dawn">At Dawn</option>
+                    <option value="long-rest">${optionLongRestText}</option>
+                    <option value="short-rest">${optionShortRestText}</option>
+                    <option value="at-dawn">${optionAtDawnText}</option>
                 </select>
             </div>
             <div class="form-row">
-                <label for="max-charges">Maximum Charges:</label>
+                <label for="max-charges">${maxChargesLabelText}</label>
                 <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
             </div>
         </div>
         ${magicBonusSection}
         `;
-        // JavaScript logic to toggle visibility
+
         const hasChargesCheckbox = document.getElementById("has-charges");
         const chargesOptions = document.getElementById("charges-options");
-
         hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
+            chargesOptions.style.display = hasChargesCheckbox.checked ? "block" : "none";
         });
         setupMagicBonusSelection();
+
     } else if (category === "adventuring-gear") {
+        const gearCategoryLabelText = translations[savedLanguage].gearCategoryLabel;
+
         additionalFields.innerHTML = `
         <div class="form-row">
-            <label for="gear-category">Gear Category:</label>
+            <label for="gear-category">${gearCategoryLabelText}</label>
             <input type="text" id="gear-category" placeholder="e.g., Standard Gear" />
         </div>
         `;
+
     } else if (category === "wondrous-item") {
+        const requiresAttunementText = translations[savedLanguage].requiresAttunementLabel;
+        const hasChargesLabelText   = translations[savedLanguage].hasChargesLabel;
+
         additionalFields.innerHTML = `
         <div class="form-row">
-            <label for="itemFormAttunement">Requires Attunement:</label>
+            <label for="itemFormAttunement">${requiresAttunementText}</label>
             <input type="checkbox" id="itemFormAttunement"/>
-            <label for="has-charges">Has Charges</label>
+            <label for="has-charges">${hasChargesLabelText}</label>
             <input type="checkbox" id="has-charges" />
         </div>
     
         <div id="charges-options" style="display: none; margin-left: 20px;">
             <div class="form-row">
-                <label for="charge-reset">When does it reset?</label>
+                <label for="charge-reset">${chargeResetLabelText}</label>
                 <select id="charge-reset">
-                    <option value="long-rest">Long Rest</option>
-                    <option value="short-rest">Short Rest</option>
-                    <option value="at-dawn">At Dawn</option>
+                    <option value="long-rest">${optionLongRestText}</option>
+                    <option value="short-rest">${optionShortRestText}</option>
+                    <option value="at-dawn">${optionAtDawnText}</option>
                 </select>
             </div>
             <div class="form-row">
-                <label for="max-charges">Maximum Charges:</label>
+                <label for="max-charges">${maxChargesLabelText}</label>
                 <input type="number" id="max-charges" placeholder="e.g., 3" min="1" />
             </div>
         </div>
         ${magicBonusSection}
         `;
-        // JavaScript logic to toggle visibility
+
         const hasChargesCheckbox = document.getElementById("has-charges");
         const chargesOptions = document.getElementById("charges-options");
-
         hasChargesCheckbox.addEventListener("change", () => {
-            if (hasChargesCheckbox.checked) {
-                chargesOptions.style.display = "block";
-            } else {
-                chargesOptions.style.display = "none";
-            }
+            chargesOptions.style.display = hasChargesCheckbox.checked ? "block" : "none";
         });
         setupMagicBonusSelection();
-    }
-    else if (category === "potion") {
+
+    } else if (category === "potion") {
+        const potionEffectTypeLabelText = translations[savedLanguage].potionEffectTypeLabel;
+        const optionHealingText         = translations[savedLanguage].optionHealing;
+        const optionSpellText           = translations[savedLanguage].optionSpell;
+        const optionOtherText           = translations[savedLanguage].optionOther;
+        const healingFormulaLabelText   = translations[savedLanguage].healingFormulaLabel;
+        const spellNameLabelText        = translations[savedLanguage].spellNameLabel;
+        const spellDurationLabelText    = translations[savedLanguage].spellDurationLabel;
+        const noConcentrationLabelText  = translations[savedLanguage].noConcentrationLabel;
+
         additionalFields.innerHTML = `
           <div class="form-row">
-            <label>Potion Effect Type:</label>
-            <label><input type="radio" name="potion-effect" value="healing" checked> Healing</label>
-            <label><input type="radio" name="potion-effect" value="spell"> Spell</label>
-            <label><input type="radio" name="potion-effect" value="other"> Other</label>
+            <label>${potionEffectTypeLabelText}</label>
+            <label>
+              <input type="radio" name="potion-effect" value="healing" checked>
+              ${optionHealingText}
+            </label>
+            <label>
+              <input type="radio" name="potion-effect" value="spell">
+              ${optionSpellText}
+            </label>
+            <label>
+              <input type="radio" name="potion-effect" value="other">
+              ${optionOtherText}
+            </label>
           </div>
           <div id="healing-effect" class="potion-effect-section">
             <div class="form-row">
-              <label for="healing-dice">Healing Formula:</label>
+              <label for="healing-dice">${healingFormulaLabelText}</label>
               <input type="text" id="healing-dice" placeholder="e.g., 2d4+2" />
             </div>
           </div>
           <div id="spell-effect" class="potion-effect-section" style="display: none;">
             <div class="form-row">
-              <label for="spell-name">Spell Name:</label>
+              <label for="spell-name">${spellNameLabelText}</label>
               <input type="text" id="spell-name" placeholder="e.g., Clairvoyance" />
             </div>
             <div class="form-row">
-              <label for="spell-duration">Duration:</label>
+              <label for="spell-duration">${spellDurationLabelText}</label>
               <input type="text" id="spell-duration" placeholder="e.g., 1 hour" />
             </div>
             <div class="form-row">
-              <label for="no-concentration">No Concentration:</label>
+              <label for="no-concentration">${noConcentrationLabelText}</label>
               <input type="checkbox" id="no-concentration" />
             </div>
           </div>
         `;
     
-        // Toggle between healing and spell effects
+        // Toggle between healing and spell sections
         document.querySelectorAll('input[name="potion-effect"]').forEach(radio => {
           radio.addEventListener('change', function() {
             document.querySelectorAll('.potion-effect-section').forEach(div => {
@@ -4350,9 +5052,10 @@ let magicBonusSection = `
           });
         });
     }
-    // Attach event listeners to the Magic Bonus section
-    
+
+    // Any additional event listeners for Magic Bonus, etc.
 }
+
 
 // Function to gather form data
 function gatherFormData() {

@@ -1485,22 +1485,22 @@
     <div class="homebrew-modal-background">
         <div class="homebrew-modal-content">
             <span id="close-homebrew-modal-button" class="close">&times;</span>
-            <h2>Homebrew Creator</h2>
+            <h2 id="homebrewModalTitle">Homebrew Creator</h2>
             <div id="homebrewModalSubsectionStorage">
                 <div>
-                    <span>Local Storage - </span><span id="localStorageUsageText">0 KB / 5120 KB</span>
+                    <span id="localStorageLabel">Local Storage - </span>
+                    <span id="localStorageUsageText">0 KB / 5120 KB</span>
                     <div class="progress-bar-container">
                         <div id="localStorageProgress" class="progress-bar"></div>
                     </div>
-                    
                 </div>
                 <div>
-                    <span>Global Storage - </span><span id="globalStorageUsageText">0 KB / 5120 KB</span>
+                    <span id="globalStorageLabel">Global Storage - </span>
+                    <span id="globalStorageUsageText">0 KB / 5120 KB</span>
                     <div class="progress-bar-container">
                         <div id="globalStorageProgress" class="progress-bar"></div>
                     </div>
-                    
-                </div>    
+                </div>     
                 <div id="homebrewModalSubsectionEditor">
                     <hr>
                     <!-- <div class="monsterEditorSubsection">
@@ -1527,7 +1527,7 @@
                         </div>
                         <div class="deleteMonster">
                             <div class="deleteMonster-header">
-                                <label for="customSpellSelect">Select Spell to Delete/Edit:</label>
+                                <label id="customSpellSelectLabel" for="customSpellSelect">Select Spell to Delete/Edit:</label>
                                 <button id="deleteCustomSpells" class="nonRollButton">Delete Spell</button>
                                 <button id="editCustomSpells" class="nonRollButton">Edit Spell</button>
                                 <button id="exportCustomSpell" class="nonRollButton">Export Spell</button>
@@ -1539,11 +1539,11 @@
                     <div class="monsterEditorSubsection">
                         <div>
                             <button id="customItems" class="nonRollButton">Create Item</button>
-                            <buton id="importCustomItem" class="nonRollButton">Import Item</button>
+                            <button id="importCustomItem" class="nonRollButton">Import Item</button>
                         </div>
                         <div class="deleteMonster">
                             <div class="deleteMonster-header">
-                                <label for="customItemSelect">Select Item to Delete/Edit:</label>
+                                <label id="customItemSelectLabel" for="customItemSelect">Select Item to Delete/Edit:</label>
                                 <button id="deleteCustomItems" class="nonRollButton">Delete Item</button>
                                 <button id="editCustomItems" class="nonRollButton">Edit Item</button>
                                 <button id="exportCustomItem" class="nonRollButton">Export Item</button>
@@ -1558,7 +1558,7 @@
                         </div>
                         <div class="deleteMonster">
                             <div class="deleteMonster-header">
-                                <label for="customCharacterSelect">Select a character to Export:</label>
+                                <label id="customCharacterSelectLabel" for="customCharacterSelect">Select a character to Export:</label>
                                 <button id="exportCharacterData" class="nonRollButton">Export Character</button>
                                 <button id="deleteCharacter" class="nonRollButton">Delete Character</button>
                             </div>

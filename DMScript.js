@@ -2310,16 +2310,19 @@ const customMonsterButton = document.getElementById('customMonsters');
 const monsterForm = document.getElementById("monsterCreationForm");
 const monsterFormModal = document.getElementById("monsterFormModal");
 const closeMonsterFormButton = document.getElementById('closeMonsterForm');
+let quickActionsLabel = 
 
 // Open the form
 customMonsterButton.addEventListener('click', () => {
+    quickActionsLabel = translations[savedLanguage].dynamicSections.monsterFormQuickActions;
+    console.warn(quickActionsLabel)
     monsterForm.reset()
     resetMonsterForm()
     monsterFormModal.style.display = 'block';
-    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability");
-    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance");
-    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity");
-    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
+    populateCheckboxes("monsterFormVulnerabilities", translations[savedLanguage].resistanceTypesTranslate, "vulnerability");
+    populateCheckboxes("monsterFormResistances", translations[savedLanguage].resistanceTypesTranslate, "resistance");
+    populateCheckboxes("monsterFormImmunities", translations[savedLanguage].resistanceTypesTranslate, "immunity");
+    populateCheckboxes("monsterFormConditionImmunities", translations[savedLanguage].conditionTypesTranslated, "conditionImmunity");
     homebrewModal.style.display = 'none';
 });
 
@@ -2366,33 +2369,35 @@ function resetMonsterForm() {
             container.innerHTML = ""; // Clear any dynamically populated checkboxes
         }
     });
-    // Reset dynamic sections
-    const dynamicSections = [
-        "monsterFormTraits",
-        "monsterFormActions",
-        "monsterFormReactions",
-        "monsterFormLegendaryActions",
-        "monsterFormQuickActions"
-    ];
 
-    dynamicSections.forEach(sectionId => {
+    Object.keys(translations[savedLanguage].dynamicSections).forEach(sectionId => {
         const section = document.getElementById(sectionId);
-        // Clear existing content
-        const addButtonHtml = sectionId === "monsterFormQuickActions" 
+        if (!section) return; // Skip if that element ID does not exist
+
+        const sectionName = translations[savedLanguage].dynamicSections[sectionId];
+
+        // Check if this section’s translated name is the “Quick Actions” label
+        const isQuick = (sectionName === quickActionsLabel);
+
+        // Only render an “Add” button if it’s not the Quick Actions section
+        const addButtonHtml = isQuick
             ? "" 
-            : '<button type="button" class="nonRollButton">Add</button>';
-        
+            : `<button type="button" class="nonRollButton">
+                ${translations[savedLanguage].monsterFormAdd}
+            </button>`;
+
         section.innerHTML = `
-            <h3>${sectionId.replace("monsterForm", "")}</h3>
+            <legend>${sectionName}</legend>
             ${addButtonHtml}
         `;
 
-        // Only add event listener for non-QuickAction sections
-        if (sectionId !== "monsterFormQuickActions") {
-            section.querySelector("button").addEventListener("click", () => addDynamicField(sectionId));
+        // If it’s not “Quick Actions,” hook up the Add‐button listener:
+        if (!isQuick) {
+            section.querySelector("button")
+                ?.addEventListener("click", () => addDynamicField(sectionId));
         }
 
-        // Add initial empty entry
+        // Always add one initial empty entry
         addDynamicField(sectionId);
     });
 }
@@ -2466,8 +2471,11 @@ async function saveMonsterData(monsterData){
 function collectDynamicFields(sectionId) {
     const section = document.getElementById(sectionId);
     const items = [...section.querySelectorAll(".dynamic-entry")];
+
+    console.warn
     
     if (sectionId === "monsterFormQuickActions") {
+        console.warn("Collecting Quick Actions");
         return items.map(item => ({
             Name: item.querySelector(".entry-name").value,
             ToHit: item.querySelector(".entry-tohit").value,
@@ -2475,6 +2483,7 @@ function collectDynamicFields(sectionId) {
             DamageType: item.querySelector(".entry-damagetype").value
         }));
     } else {
+        console.log
         return items.map(item => ({
             Name: item.querySelector(".entry-name").value,
             Content: item.querySelector(".entry-content").value,
@@ -2485,12 +2494,21 @@ function collectDynamicFields(sectionId) {
 // Add dynamic fields
 function addDynamicField(sectionId, entry = null) {
     const section = document.getElementById(sectionId);
+    if (!section) return;
+
+    console.warn(`Adding dynamic field to section: ${sectionId}, ${entry ? "with existing data" : "no existing data"}`);
+
+    // Determine if this is the “Quick Actions” section in the current language
+    const sectionName = translations[savedLanguage].dynamicSections[sectionId];
+    const quickActionsLabel = translations[savedLanguage].dynamicSections.monsterFormQuickActions;
+    const isQuick = (sectionName === quickActionsLabel);
+
     const div = document.createElement("div");
     div.classList.add("dynamic-entry");
 
     let html;
-    if (sectionId === "monsterFormQuickActions") {
-        // Quick Actions without remove button
+    if (isQuick) {
+        // Quick Actions: no Remove button
         html = `
             <div>
                 <input type="text" class="entry-name" placeholder="Action Name" value="${entry?.Name || ""}">
@@ -2500,11 +2518,13 @@ function addDynamicField(sectionId, entry = null) {
             </div>
         `;
     } else {
-        // Other sections with remove button
+        // All other sections: include a Remove button using the translated label
         html = `
             <div>
                 <input type="text" class="entry-name" placeholder="Name" value="${entry?.Name || ""}">
-                <button type="button" class="removeEntry nonRollButton">Remove</button>
+                <button type="button" class="removeEntry nonRollButton">
+                  ${translations[savedLanguage].monsterFormRemove}
+                </button>
             </div>
             <textarea class="entry-content" placeholder="Content">${entry?.Content || ""}</textarea>
         `;
@@ -2512,29 +2532,38 @@ function addDynamicField(sectionId, entry = null) {
 
     div.innerHTML = html;
     section.appendChild(div);
-    
-    // Only add remove listener for non-QuickAction sections
-    if (sectionId !== "monsterFormQuickActions") {
-        div.querySelector(".removeEntry")?.addEventListener("click", () => div.remove());
+
+    // Only hook up the Remove listener if not “Quick Actions”
+    if (!isQuick) {
+        div.querySelector(".removeEntry") ?.addEventListener("click", () => div.remove());
     }
 }
 
+
 function populateDynamicFields(sectionId, data) {
     const section = document.getElementById(sectionId);
-    const addButtonHtml = sectionId === "monsterFormQuickActions" ? "" : "<button type='button' class='nonRollButton'>Add</button>";
-    
-    section.innerHTML = `
-        <h3>${sectionId.replace("monsterForm", "")}</h3>
-        ${addButtonHtml}
-    `;
+    if (!section) return; // Safety check
 
-    // Only add click listener if add button exists
-    if (sectionId !== "monsterFormQuickActions") {
-        section.querySelector("button")?.addEventListener("click", () => addDynamicField(sectionId));
+    // Look up the translated title for this sectionId
+    const sectionName = translations[savedLanguage].dynamicSections[sectionId] || sectionId.replace("monsterForm", "");
+    const quickActionsLabel = translations[savedLanguage].dynamicSections.monsterFormQuickActions;
+    const isQuick = (sectionName === quickActionsLabel);
+
+    // If it's not Quick Actions, show an “Add” button
+    const addButtonHtml = isQuick ? "" : `<button type='button' class='nonRollButton'> ${translations[savedLanguage].monsterFormAdd}</button>`;
+
+    section.innerHTML = `<legend>${sectionName}</legend>${addButtonHtml}`;
+
+    // Hook up the Add‐button click only if it's not Quick Actions
+    if (!isQuick) {section.querySelector("button")?.addEventListener("click", () => addDynamicField(sectionId));}
+
+    // 1) If there are existing entries in data, render each with addDynamicField(...)
+    // 2) If data is null/undefined or length === 0, then ALWAYS add one empty entry
+    if (Array.isArray(data) && data.length > 0) {data.forEach(entry => addDynamicField(sectionId, entry));
+    } else {
+        // Guarantee at least one blank field for Quick Actions (and the others too)
+        addDynamicField(sectionId);
     }
-
-    // Populate existing data
-    data?.forEach(entry => addDynamicField(sectionId, entry));
 }
 
 
@@ -2544,38 +2573,38 @@ document.getElementById("addActionButton").addEventListener("click", () => addDy
 document.getElementById("addReactionButton").addEventListener("click", () => addDynamicField("monsterFormReactions"));
 document.getElementById("addLegendaryActionsButton").addEventListener("click", () => addDynamicField("monsterFormLegendaryActions"));
 
-function populateCheckboxes(containerId, types, namePrefix, checkedValues = []) {
-    const container = document.getElementById(containerId);
-    container.innerHTML = ""; // Clear container before populating (if re-used)
+function populateCheckboxes(containerId, typesMap, namePrefix, checkedValues = []) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = ""; // Clear container before populating
 
-    types.forEach(type => {
-        const label = document.createElement("label");
-        const checkbox = document.createElement("input");
-        const span = document.createElement("span");
+  // Iterate over your object’s entries ([typeKey, typeLabel])
+  Object.entries(typesMap).forEach(([typeKey, typeLabel]) => {
+    const label = document.createElement("label");
+    const checkbox = document.createElement("input");
+    const span = document.createElement("span");
 
-        // Configure the checkbox
-        checkbox.type = "checkbox";
-        checkbox.id = `${namePrefix}${type}`;
-        checkbox.name = namePrefix;
-        checkbox.value = type;
+    // Configure the checkbox
+    checkbox.type = "checkbox";
+    checkbox.id = `${namePrefix}${typeKey}`;
+    checkbox.name = namePrefix;
+    checkbox.value = typeKey;
 
-        // Check the box if the type exists in the checkedValues array
-        if (checkedValues.includes(type)) {
-            checkbox.checked = true;
-        }
+    // Pre-check if applicable
+    if (checkedValues.includes(typeKey)) {
+      checkbox.checked = true;
+    }
 
-        // Configure the span label
-        span.id = `label${type}`;
-        span.textContent = type;
+    // Configure the visible label
+    span.id = `label${typeKey}`;
+    span.textContent = typeLabel;
 
-        // Append the checkbox and span to the label
-        label.appendChild(checkbox);
-        label.appendChild(span);
-
-        // Add the label to the container
-        container.appendChild(label);
-    });
+    // Assemble and attach
+    label.appendChild(checkbox);
+    label.appendChild(span);
+    container.appendChild(label);
+  });
 }
+
 
 
 function getCheckedValues(containerId) {
@@ -2654,10 +2683,10 @@ document.getElementById("editCustomMonsters").addEventListener("click", async() 
                 if (monsterData) {
                     // Populate the edit form or interface with the monster's data
                     monsterFormModal.style.display = 'block';
-                    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability");
-                    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance");
-                    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity");
-                    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity");
+                    populateCheckboxes("monsterFormVulnerabilities", translations[savedLanguage].resistanceTypesTranslate, "vulnerability");
+                    populateCheckboxes("monsterFormResistances", translations[savedLanguage].resistanceTypesTranslate, "resistance");
+                    populateCheckboxes("monsterFormImmunities", translations[savedLanguage].resistanceTypesTranslate, "immunity");
+                    populateCheckboxes("monsterFormConditionImmunities", translations[savedLanguage].conditionTypesTranslated, "conditionImmunity");
                     homebrewModal.style.display = 'none';
                     populateMonsterForm(monsterData);
                 } else {
@@ -2763,10 +2792,10 @@ function populateMonsterForm(monster) {
         document.getElementById(skillElement.id).value = skill ? skill.Modifier : "";
     });
 
-    populateCheckboxes("monsterFormVulnerabilities", resistanceTypes, "vulnerability", monster.DamageVulnerabilities || []);
-    populateCheckboxes("monsterFormResistances", resistanceTypes, "resistance", monster.DamageResistances || []);
-    populateCheckboxes("monsterFormImmunities", resistanceTypes, "immunity", monster.DamageImmunities || []);
-    populateCheckboxes("monsterFormConditionImmunities", conditionTypes, "conditionImmunity", monster.ConditionImmunities || []);
+    populateCheckboxes("monsterFormVulnerabilities", translations[savedLanguage].resistanceTypesTranslate, "vulnerability", monster.DamageVulnerabilities || []);
+    populateCheckboxes("monsterFormResistances", translations[savedLanguage].resistanceTypesTranslate, "resistance", monster.DamageResistances || []);
+    populateCheckboxes("monsterFormImmunities", translations[savedLanguage].resistanceTypesTranslate, "immunity", monster.DamageImmunities || []);
+    populateCheckboxes("monsterFormConditionImmunities", translations[savedLanguage].conditionTypesTranslated, "conditionImmunity", monster.ConditionImmunities || []);
 
 
     populateDynamicFields("monsterFormTraits", monster.Traits);
@@ -3231,18 +3260,14 @@ function updateChecklistUI(checklistData) {
 function populateTable(tableId, dataKey) {
     const tableBody = document.querySelector(`#${tableId} tbody`);
 
-    console.warn(tableId, dataKey)
     tableBody.innerHTML = ""; // Clear existing rows
 
     // Get the data object and its keys
     const dataObj = translations[savedLanguage][dataKey];
     const dataKeys = Object.keys(dataObj);
 
-    console.log(dataKeys)
-
     // Sort the keys alphabetically by the name
     dataKeys.sort((a, b) => {
-        console.warn(dataObj[a])
         const nameA = dataObj[a].name.toLowerCase();
         const nameB = dataObj[b].name.toLowerCase();
         return nameA.localeCompare(nameB);
@@ -3340,14 +3365,15 @@ function updateShopTable() {
 
     // Add table header
     const headerRow = document.createElement('tr');
-    const headers = ['Item', 'Cost', 'Weight', 'Category'];
-    headers.forEach(headerText => {
+    const headerKeys = ['item', 'cost', 'weight', 'category'];
+
+    headerKeys.forEach(key => {
         const th = document.createElement('th');
-        th.textContent = headerText;
+        th.textContent = translations[savedLanguage].shopHeadersTranslate[key];
         headerRow.appendChild(th);
     });
-    table.appendChild(headerRow);
 
+    table.appendChild(headerRow);
     // Get the items for the selected shop (with categories)
     const categoryGroups = getShopItems(selectedShop);
 
@@ -3753,21 +3779,23 @@ function updateSpellDetails(selectedSpell) {
     // Clear the existing spell details
     spellList.innerHTML = '';
 
+    const t = translations[savedLanguage].spellDetailsTranslate;
+
     // Create list items to display the selected spell's details
     const spellDetails = `
         <h3 class="monsterSubHeadings">${selectedSpell.name}</h3>
-        <p>Level: <span class="monsterContent">${selectedSpell.level}</span></p>
-        <p>Range: <span class="monsterContent">${selectedSpell.range}</span></p>
-        <p>Duration: <span class="monsterContent">${selectedSpell.duration}</span></p>
-        <p>Concentration: <span class="monsterContent"> ${selectedSpell.concentration}</span></p>
-        <p>Ritual: <span class="monsterContent"> ${selectedSpell.ritual}</span></p>
-        <p>Components: <span class="monsterContent">${selectedSpell.components}</span></p>
-        <p>Material Components: <span class="monsterContent">${selectedSpell.material}</span></p>
-        <p>Casting Time: <span class="monsterContent">${selectedSpell.casting_time}</span></p>
-        <p>Classes: <span class="monsterContent">${selectedSpell.class}</span></p>
-        <p>School: <span class="monsterContent"> ${selectedSpell.school}</span></p>
-        <p>Description: <span class="monsterContent" id="descriptionSpan">${selectedSpell.desc}</span></p>
-        <p>Higher Level: <span class="monsterContent" id="higherLevelSpan">${selectedSpell.higher_level}</span></p>
+        <p>${t.level}: <span class="monsterContent">${selectedSpell.level}</span></p>
+        <p>${t.range}: <span class="monsterContent">${selectedSpell.range}</span></p>
+        <p>${t.duration}: <span class="monsterContent">${selectedSpell.duration}</span></p>
+        <p>${t.concentration}: <span class="monsterContent">${selectedSpell.concentration}</span></p>
+        <p>${t.ritual}: <span class="monsterContent">${selectedSpell.ritual}</span></p>
+        <p>${t.components}: <span class="monsterContent">${selectedSpell.components}</span></p>
+        <p>${t.material}: <span class="monsterContent">${selectedSpell.material}</span></p>
+        <p>${t.casting_time}: <span class="monsterContent">${selectedSpell.casting_time}</span></p>
+        <p>${t.class}: <span class="monsterContent">${selectedSpell.class}</span></p>
+        <p>${t.school}: <span class="monsterContent">${selectedSpell.school}</span></p>
+        <p>${t.description}: <span class="monsterContent" id="descriptionSpan">${selectedSpell.desc}</span></p>
+        <p>${t.higher_level}: <span class="monsterContent" id="higherLevelSpan">${selectedSpell.higher_level}</span></p>
     `;
 
     // Append the selected spell details to the 'spell-list' ul
@@ -4182,10 +4210,6 @@ function attachDropdownBehavior(input, dropdown) {
 
 
 
-
-
-
-
 document.getElementById("addShopGroup").addEventListener("click", function () {
     // Get the container for all groups
     const groupsContainer = document.getElementById("groupsContainer");
@@ -4203,13 +4227,13 @@ document.getElementById("addShopGroup").addEventListener("click", function () {
     const addItemButton = document.createElement("button");
     addItemButton.type = "button";
     addItemButton.classList.add("nonRollButton", "addshopItem");
-    addItemButton.textContent = "Add Item to Group";
+    addItemButton.textContent = `${translations[savedLanguage].addItemtoGroupButton}`;
     addItemButtonDiv.appendChild(addItemButton);
     newGroup.appendChild(addItemButtonDiv);
 
     // Create the group name input
     const groupNameLabel = document.createElement("label");
-    groupNameLabel.textContent = "Group Name: ";
+    groupNameLabel.textContent = `${translations[savedLanguage].groupNameLabel}`;
     const groupNameInput = document.createElement("input");
     groupNameInput.type = "text";
     groupNameInput.classList.add("shopGroupName");
@@ -4239,17 +4263,10 @@ document.getElementById("createShop").addEventListener("click", function () {
     const shopData = gatherShopData();
 
     if (shopData) {
-        // Extract shop title and the rest of the shop data
         const [shopTitle, restOfShopData] = Object.entries(shopData)[0];
 
-        console.log("Shop Title:", shopTitle);
-        console.log("Rest of Shop Data:", restOfShopData);
-
-        // Now you can pass them separately to saveToCampaignStorage
         saveToGlobalStorage("Shop Data", shopTitle, restOfShopData);
-
         addShopToCategoryGroups(shopTitle, shopData)
-
         showErrorModal(`Created: ${shopTitle}`)
     }
     
@@ -4357,7 +4374,7 @@ function createItemInput() {
     itemInputGroup.classList.add("item-input");
 
     const label = document.createElement("label");
-    label.textContent = "Item Name: ";
+    label.textContent = `${translations[savedLanguage].itemNameLabel}`;
     itemInputGroup.appendChild(label);
 
     const input = document.createElement("input");
@@ -4459,8 +4476,6 @@ function addShopToCategoryGroups(shopTitle, shopData) {
         // Merge items with the existing ones
         categoryGroups[shopTitle][groupName] = [...categoryGroups[shopTitle][groupName], ...itemsArray];
     }
-
-    console.log(categoryGroups);
 }
 
 
@@ -4468,12 +4483,9 @@ function removeShopFromCategoryGroups(shopTitle) {
     // Check if the shop title exists in categoryGroups
     if (categoryGroups[shopTitle]) {
         delete categoryGroups[shopTitle]; // Remove the shop and its associated data
-        console.log(`Shop "${shopTitle}" has been removed.`);
     } else {
         console.log(`Shop "${shopTitle}" does not exist.`);
     }
-
-    console.log(categoryGroups); // Log the updated categoryGroups for verification
 }
 
 function populateShopSelect() {
