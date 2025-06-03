@@ -528,6 +528,7 @@ async function playerSetUP(){
 
     populateConditionSelect();
     populateProficiencyDropdowns();
+    updateWeight();
 }  
 
 // Function to format numbers with commas
@@ -4650,18 +4651,19 @@ function showSpellCardDetails(spellName) {
         };
 
         // Populate the spell card with data
+        const t = translations[savedLanguage].spellDetailsTranslate;
         document.getElementById('spellName').textContent = spell.name;
-        populateField('spellLevel', 'Level', spell.level);
-        populateField('spellSchool', 'School', spell.school);
-        populateField('spellCastingTime', 'Casting Time', spell.casting_time);
-        populateField('spellRange', 'Range', spell.range);
-        populateField('spellComponents', 'Components', spell.components);
-        populateField('spellDuration', 'Duration', spell.duration);
-        populateField('spellDescription', 'Description', spell.desc);
-        populateField('spellMaterials', 'Materials', spell.material)
-        populateField('spellHigherLevel', 'Up Cast', spell.higher_level);
-        populateField('spellToHitOrDC', spell.toHitOrDC === 'toHit' ? 'Spell Attack' : 'Spell Save DC', spell.toHitOrDC === 'toHit' ? 'Spell Attack' : spell.spell_save_dc_type);
-        populateField('spellDamageDice', 'Damage', spell.damage_dice);
+        populateField('spellLevel', `${t.level}`, spell.level);
+        populateField('spellSchool', `${t.school}`, spell.school);
+        populateField('spellCastingTime', `${t.casting_time}`, spell.casting_time);
+        populateField('spellRange', `${t.range}`, spell.range);
+        populateField('spellComponents', `${t.components}`, spell.components);
+        populateField('spellDuration', `${t.duration}`, spell.duration);
+        populateField('spellDescription', `${t.description}`, spell.desc);
+        populateField('spellMaterials', `${t.material}`, spell.material)
+        populateField('spellHigherLevel', `${t.higher_level}`, spell.higher_level);
+        populateField('spellToHitOrDC', spell.toHitOrDC === 'toHit' ? `${t.spellattack}` : `${t.dc}`, spell.toHitOrDC === 'toHit' ? 'Spell Attack' : spell.spell_save_dc_type);
+        populateField('spellDamageDice', `${t.damage_type}`, spell.damage_dice);
 
         // Show the spell card with the slide-in animation
         const spellCardContainer = document.getElementById('spellCardContainer');
@@ -4900,7 +4902,32 @@ function updateWeight() {
 
     // Update the weight displayed on the page
     document.getElementById('weight-carried').innerText = totalWeight.toFixed(2); // Display to 2 decimal places
+    checkEncumbrance(totalWeight);
 }
+
+function checkEncumbrance(currentWeight) {
+    const strengthScoreTest = parseInt(document.getElementById("strengthScore").textContent, 10);
+    let baseCarry = strengthScoreTest * 15;
+
+    // Check for any bonus carry weight in stat bonuses (you can adjust this location if needed)
+    let carryBonus = 0;
+
+    if (characterStatBonuses.combatStats.CarryWeightBonus) {        
+        carryBonus = characterStatBonuses.combatStats.CarryWeightBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
+    }
+
+    console.log(`Base Carry: ${baseCarry}, Carry Bonus: ${carryBonus}`);
+
+    const maxCarry = baseCarry + carryBonus;
+
+    const statusElement = document.getElementById('weight-status');
+    if (currentWeight > maxCarry) {
+        statusElement.innerText = `${translations[savedLanguage].inventoryWeightStatusOverEncumbered}`;
+    } else {
+        statusElement.innerText = `${translations[savedLanguage].inventoryWeightStatusEncumbered}`;
+    }
+}
+
   
 function addItemToInventory(item, group) {
     const list = document.getElementById(`${group}-list`);
@@ -5128,9 +5155,9 @@ function addItemToInventory(item, group) {
             unequipWeapon(item);
         }
         
-        updateWeight(); // Update the total weight
         updateContent(); // Save inventory changes
         list.removeChild(itemDiv); // Remove the item from the list
+        updateWeight();
     });
 
     if (item.equipped) {

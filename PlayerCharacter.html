@@ -861,7 +861,7 @@
             <div id="inventory-container">
                 <div id="inventory-header">
                 <h2 id="inventoryHeaderTitle">Inventory</h2>
-                <p>Weight Carried: <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>   
+                <p><span id="inventoryWeightCarried">Weight Carried:</span> <span id="weight-carried">0</span> lbs. (<span id="weight-status">Unencumbered</span>)</p>   
                 <hr>
 
                 <div class="inventory-group" id="equipment">
@@ -1085,311 +1085,309 @@
 
 
 <div id="spellFormModal" style="display: none;">
-    <div class="spell-modal-background">
-        <span id="closeSpellForm" class="close">&times;</span>
-        <form id="spellForm">
-            <div></div>
-            <h2>Create a Spell</h2>
-            
-            <div class="form-row">
-                <label for="spellFormName">Spell Name:</label>
-                <input type="text" id="spellFormName" placeholder="e.g., FireBall." required>
-            </div>
-            
-            <div class="form-row">
-                <label for="spellFormDesc">Spell Description:</label>
-                <textarea id="spellFormDesc" rows="5" placeholder="Describe effects when cast at higher levels" required></textarea>
-            </div>
-            
-            <div class="form-row">
-                <label for="higherLevelForm">Higher Level Casting Description:</label>
-                <textarea id="higherLevelForm" rows="3" placeholder="Describe effects when cast at higher levels"></textarea>
-            </div>
-            
-            <div class="form-row">
-                <label for="spellFormRange">Spell Range:</label>
-                <input type="text" id="spellFormRange" placeholder="e.g., 300ft" required>
-            </div>
-            
-            <div class="form-row">
-                <label for="spellFormComponents">Spell Components:</label>
-                <div id="spellFormComponents">
-                    <label>
-                        <input type="checkbox" id="componentVerbal" name="class" value="V">
-                        <span id="labelVerbal">Verbal</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="componentSomatic" name="class" value="S">
-                        <span id="labelSomatic">Somatic</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="componentMaterial" name="class" value="M">
-                        <span id="labelMaterial">Material</span>
-                    </label>
+        <div class="spell-modal-background">
+            <span id="closeSpellForm" class="close">&times;</span>
+            <form id="spellForm">
+                <div></div>
+                <h2 id="spellFormTitle">Create a Spell</h2>
+                
+                <div class="form-row">
+                    <label id="spellNameLabel" for="spellFormName">Spell Name:</label>
+                    <input type="text" id="spellFormName" placeholder="e.g., FireBall." required>
                 </div>
-            </div>
+                
+                <div class="form-row">
+                    <label id="spellDescLabel" for="spellFormDesc">Spell Description:</label>
+                    <textarea id="spellFormDesc" rows="5" placeholder="Describe effects when a spell is cast" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label id="higherLevelLabel" for="higherLevelForm">Higher Level Casting Description:</label>
+                    <textarea id="higherLevelForm" rows="3" placeholder="Describe effects when cast at higher levels"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label id="spellRangeLabel" for="spellFormRange">Spell Range:</label>
+                    <input type="text" id="spellFormRange" placeholder="e.g., 300ft" required>
+                </div>
+                
+                <div class="form-row">
+                    <label id="spellComponentsLabel" for="spellFormComponents">Spell Components:</label>
+                    <div id="spellFormComponents">
+                        <label>
+                            <input type="checkbox" id="componentVerbal" name="class" value="V">
+                            <span id="labelVerbal">Verbal</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="componentSomatic" name="class" value="S">
+                            <span id="labelSomatic">Somatic</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="componentMaterial" name="class" value="M">
+                            <span id="labelMaterial">Material</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <label id="spellMaterialsLabel" for="spellFormMaterials">Spell Materials:</label>
+                    <input type="text" id="spellFormMaterials" placeholder="e.g., 300g worth of diamonds" required>
+                </div>
+                
+                <div class="form-row">
+                    <label id="ritualLabel" for="ritualForm">Ritual Spell:</label>
+                    <select id="ritualForm">
+                        <option id="ritualLabelOptionNo" value="No">No</option>
+                        <option id="ritualLabelOptionYes" value="yes">Yes</option>
+                    </select>
+                </div>
             
-            <div class="form-row">
-                <label for="spellFormMaterials">Spell Materials:</label>
-                <input type="text" id="spellFormMaterials" placeholder="e.g., 300g worth of diamonds" required>
-            </div>
-            
-            <div class="form-row">
-                <label for="ritualForm">Ritual Spell:</label>
-                <select id="ritualForm">
-                    <option value="">No</option>
-                    <option value="yes">Yes</option>
-                </select>
-            </div>
-           
-    
-            <div class="form-row">
-                <label for="spellFormDuration">Duration:</label>
-                <select id="spellFormDuration" required>
-                    <option value="Instantaneous">Instantaneous</option>
-                    <option value="1 Round">1 Round</option>
-                    <option value="1 Minute">1 Minute</option>
-                    <option value="10 Minutes">10 Minutes</option>
-                    <option value="1 Hour">1 Hour</option>
-                    <option value="8 Hours">8 Hours</option>
-                    <option value="12 Hours">12 Hours</option>
-                    <option value="24 Hours">24 Hours</option>
-                    <option value="Until Dispelled">Until Dispelled</option>
-                    <option value="Until Triggered">Until Triggered</option>
-                </select>
-            </div>
-
-            <div class="form-row">
-                <label for="concentrationForm">Concentration:</label>
-                <select id="concentrationForm">
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                </select>
-            </div>
-
-            
-            <div class="form-row">
-                <label for="castingTimeForm">Casting Time:</label>
-                <select id="castingTimeForm" required>
-                    <option value="1A">1 Action</option>
-                    <option value="1BA">1 Bonus Action</option>
-                    <option value="1R">1 Reaction</option>
-                    <option value="1M">1 Minute</option>
-                    <option value="10M">10 Minutes</option>
-                    <option value="1Hr">1 Hour</option>
-                    <option value="8Hr">8 Hours</option>
-                    <option value="12Hr">12 Hours</option>
-                    <option value="24Hr">24 Hours</option>
-                </select>
-            </div>
-            
-            
-            <div class="form-row">
-                <label for="spellFormLevel">Spell's Level:</label>
-                <select id="spellFormLevel" required>
-                    <option value="Cantrip">Cantrip</option>
-                    <option value="1st-level">Level 1</option>
-                    <option value="2nd-level">Level 2</option>
-                    <option value="3rd-level">Level 3</option>
-                    <option value="4th-level">Level 4</option>
-                    <option value="5th-level">Level 5</option>
-                    <option value="6th-level">Level 6</option>
-                    <option value="7th-level">Level 7</option>
-                    <option value="8th-level">Level 8</option>
-                    <option value="9th-level">Level 9</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="schoolForm">Spell School:</label>
-                <select id="schoolForm">
-                    <option value="Abjuration">Abjuration</option>
-                    <option value="Conjuration">Conjuration</option>
-                    <option value="Divination">Divination</option>
-                    <option value="Enchantment">Enchantment</option>
-                    <option value="Evocation">Evocation</option>
-                    <option value="Illusion">Illusion</option>
-                    <option value="Necromancy">Necromancy</option>
-                    <option value="Transmutation">Transmutation</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <!-- <label for="spellFormClass">Spell Classes:</label> -->
-                <fieldset id="spellFormClass">
-                    <legend>Spell Classes</legend>
-                    <label>
-                        <input type="checkbox" id="classBarbarian" name="class" value="Barbarian">
-                        <span id="labelBarbarian">Barbarian</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classBard" name="class" value="Bard">
-                        <span id="labelBard">Bard</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classCleric" name="class" value="Cleric">
-                        <span id="labelCleric">Cleric</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classDruid" name="class" value="Druid">
-                        <span id="labelDruid">Druid</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classFighter" name="class" value="Fighter">
-                        <span id="labelFighter">Fighter</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classMonk" name="class" value="Monk">
-                        <span id="labelMonk">Monk</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classPaladin" name="class" value="Paladin">
-                        <span id="labelPaladin">Paladin</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classRanger" name="class" value="Ranger">
-                        <span id="labelRanger">Ranger</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classRogue" name="class" value="Rogue">
-                        <span id="labelRogue">Rogue</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classSorcerer" name="class" value="Sorcerer">
-                        <span id="labelSorcerer">Sorcerer</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classWarlock" name="class" value="Warlock">
-                        <span id="labelWarlock">Warlock</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classWizard" name="class" value="Wizard">
-                        <span id="labelWizard">Wizard</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" id="classArtificer" name="class" value="Artificer">
-                        <span id="labelArtificer">Artificer</span>
-                    </label>
-                </fieldset>
-            </div>
-
-            <div class="form-row">
-                <label for="toHitOrDC">To Hit or DC:</label>
-                <select id="toHitOrDC">
-                    <option value="toHit">To Hit</option>
-                    <option value="DC">DC</option>
-                    <option value="">N/A</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="damageDiceForm">Damage Dice:</label>
-                <input type="text" id="damageDiceForm" placeholder="2d8/2d4 would roll as two groups 2d8+2d4 would roll as one.">
-            </div>
-            
-            <div class="form-row">
-                <label for="damageDiceUpcastForm">Damage Dice (Upcast):</label>
-                <input type="text" id="damageDiceUpcastForm" placeholder="e.g., 1d8 (Increase per spell level)">
-            </div>
-    
-            <div class="form-row">
-                <label for="saveDCType">Spell Save DC:</label>
-                <select id="saveDCType" required>
-                    <option value="">N/A</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="abilityModifier">Should spell add Ability Modifier:</label>
-                <select id="abilityModifier">
-                    <option value="no">No</option>
-                    <option value="yes">Yes</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="spellDamageType01">Damage Type:</label>
-                <select id="spellDamageType01" required>
-                </select>
-            </div>
-            
-
-    
-            <button type="button" id="saveSpell" class="nonRollButton">Save Spell</button>
-        </form>
-    </div>
-</div>
-
-
-
-<div id="itemFormModal" style="display: none;">
-    <div class="item-modal-background">
-        <span id="closeItemForm" class="close">&times;</span>
-        <form id="itemForm">
-            <h2>Create Equipment</h2>
         
-            <!-- General Fields -->
-            <div class="form-row">
-                <label for="equipment-name">Name:</label>
-                <input type="text" id="equipment-name" placeholder="Equipment Name" required />
-            </div>
+                <div class="form-row">
+                    <label id="durationLabel" for="spellFormDuration">Duration:</label>
+                    <select id="spellFormDuration" required>
+                        <option id="durationLabelOptionInst" value="Instantaneous">Instantaneous</option>
+                        <option id="durationLabelOption1R" value="1 Round">1 Round</option>
+                        <option id="durationLabelOption1M" value="1 Minute">1 Minute</option>
+                        <option id="durationLabelOption10M" value="10 Minutes">10 Minutes</option>
+                        <option id="durationLabelOption1hr" value="1 Hour">1 Hour</option>
+                        <option id="durationLabelOption8hr" value="8 Hours">8 Hours</option>
+                        <option id="durationLabelOption12hr" value="12 Hours">12 Hours</option>
+                        <option id="durationLabelOption24hr" value="24 Hours">24 Hours</option>
+                        <option id="durationLabelOptionUD" value="Until Dispelled">Until Dispelled</option>
+                        <option id="durationLabelOptionUT" value="Until Triggered">Until Triggered</option>
+                    </select>
+                </div>
 
-            <!-- Description -->
-            <div class="form-row">
-                <label for="equipment-description">Description:</label>
-                <textarea id="equipment-description" rows="15" placeholder="Description"></textarea>
-            </div>
-            
-            <div class="form-row">
-                <label for="equipment-category">Category:</label>
-                <select id="equipment-category" required>
-                    <option value="weapon">Weapon</option>
-                    <option value="armor">Armor</option>
-                    <option value="wondrous-item">Wonderous Item</option>
-                    <option value="potion">Potion</option>
-                    <option value="adventuring-gear">Adventuring Gear</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="equipment-rarity">Rarity:</label>
-                <select id="equipment-rarity">
-                    <option value="common">Common</option>
-                    <option value="uncommon">Uncommon</option>
-                    <option value="rare">Rare</option>
-                    <option value="very-rare">Very Rare</option>
-                    <option value="legendary">Legendary</option>
-                </select>
-            </div>
+                <div class="form-row">
+                    <label id="concentrationLabel" for="concentrationForm">Concentration:</label>
+                    <select id="concentrationForm">
+                        <option id="concentrationLabelOptionNo" value="no">No</option>
+                        <option id="concentrationLabelOptionYes" value="yes">Yes</option>
+                    </select>
+                </div>
 
-            <div class="form-row">
-                <label for="equipment-cost">Cost:</label>
-                <input type="number" id="equipment-cost" placeholder="Cost" required />
-                <select id="equipment-cost-unit">
-                    <option value="cp">cp</option>
-                    <option value="sp">sp</option>
-                    <option value="gp">gp</option>
-                    <option value="pp">pp</option>
-                </select>
-            </div>
-            
-            <div class="form-row">
-                <label for="equipment-weight">Weight:</label>
-                <input type="number" id="equipment-weight" placeholder="Weight" required />
-            </div>
-            
-            
-            <!-- Additional Fields (Dynamic based on category) -->
-            <div id="additional-fields"></div>
-            
+                
+                <div class="form-row">
+                    <label id="castingTimeLabel" for="castingTimeForm">Casting Time:</label>
+                    <select id="castingTimeForm" required>
+                        <option id="castingLabelOption1A" value="1A">1 Action</option>
+                        <option id="castingLabelOption1BA" value="1BA">1 Bonus Action</option>
+                        <option id="castingLabelOption1R" value="1R">1 Reaction</option>
+                        <option id="castingLabelOption1M" value="1M">1 Minute</option>
+                        <option id="castingLabelOption10M" value="10M">10 Minutes</option>
+                        <option id="castingLabelOption1Hr" value="1Hr">1 Hour</option>
+                        <option id="castingLabelOption8Hr" value="8Hr">8 Hours</option>
+                        <option id="castingLabelOption12Hr" value="12Hr">12 Hours</option>
+                        <option id="castingLabelOption24Hr" value="24Hr">24 Hours</option>
+                    </select>
+                </div>
+                
+                
+                <div class="form-row">
+                    <label id="spellLevelLabel" for="spellFormLevel">Spell's Level:</label>
+                    <select id="spellFormLevel" required>
+                        <option id="spellLevelLabelOptionC" value="Cantrip">Cantrip</option>
+                        <option id="spellLevelLabelOption1" value="1st-level">Level 1</option>
+                        <option id="spellLevelLabelOption2" value="2nd-level">Level 2</option>
+                        <option id="spellLevelLabelOption3" value="3rd-level">Level 3</option>
+                        <option id="spellLevelLabelOption4" value="4th-level">Level 4</option>
+                        <option id="spellLevelLabelOption5" value="5th-level">Level 5</option>
+                        <option id="spellLevelLabelOption6" value="6th-level">Level 6</option>
+                        <option id="spellLevelLabelOption7" value="7th-level">Level 7</option>
+                        <option id="spellLevelLabelOption8" value="8th-level">Level 8</option>
+                        <option id="spellLevelLabelOption9" value="9th-level">Level 9</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="schoolLabel" for="schoolForm">Spell School:</label>
+                    <select id="schoolForm">
+                        <option id="schoolLabelOptionA" value="Abjuration">Abjuration</option>
+                        <option id="schoolLabelOptionC" value="Conjuration">Conjuration</option>
+                        <option id="schoolLabelOptionD" value="Divination">Divination</option>
+                        <option id="schoolLabelOptionEn" value="Enchantment">Enchantment</option>
+                        <option id="schoolLabelOptionEv" value="Evocation">Evocation</option>
+                        <option id="schoolLabelOptionI" value="Illusion">Illusion</option>
+                        <option id="schoolLabelOptionN" value="Necromancy">Necromancy</option>
+                        <option id="schoolLabelOptionT" value="Transmutation">Transmutation</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="spellClassesLabel" for="spellFormClass">Spell Classes:</label>
+                    <div id="spellFormClass">
+                        <label>
+                            <input type="checkbox" id="classBarbarian" name="class" value="Barbarian">
+                            <span id="labelBarbarian">Barbarian</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classBard" name="class" value="Bard">
+                            <span id="labelBard">Bard</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classCleric" name="class" value="Cleric">
+                            <span id="labelCleric">Cleric</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classDruid" name="class" value="Druid">
+                            <span id="labelDruid">Druid</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classFighter" name="class" value="Fighter">
+                            <span id="labelFighter">Fighter</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classMonk" name="class" value="Monk">
+                            <span id="labelMonk">Monk</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classPaladin" name="class" value="Paladin">
+                            <span id="labelPaladin">Paladin</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classRanger" name="class" value="Ranger">
+                            <span id="labelRanger">Ranger</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classRogue" name="class" value="Rogue">
+                            <span id="labelRogue">Rogue</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classSorcerer" name="class" value="Sorcerer">
+                            <span id="labelSorcerer">Sorcerer</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classWarlock" name="class" value="Warlock">
+                            <span id="labelWarlock">Warlock</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classWizard" name="class" value="Wizard">
+                            <span id="labelWizard">Wizard</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" id="classArtificer" name="class" value="Artificer">
+                            <span id="labelArtificer">Artificer</span>
+                        </label>
+                    </div>
+                </div>
 
-            
-            <!-- Submit -->
-            <button type="submit" class="nonRollButton">Create Equipment</button>
-        </form>
+                <div class="form-row">
+                    <label id="toHitOrDCLabel" for="toHitOrDC">To Hit or DC:</label>
+                    <select id="toHitOrDC">
+                        <option id="toHitOptionTH" value="toHit">To Hit</option>
+                        <option id="toHitOptionDC" value="DC">DC</option>
+                        <option id="toHitOptionNA" value="">N/A</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="damageDiceLabel" for="damageDiceForm">Damage Dice:</label>
+                    <input type="text" id="damageDiceForm" placeholder="2d8/2d4 would roll as two groups 2d8+2d4 would roll as one.">
+                </div>
+                
+                <div class="form-row">
+                    <label id="damageDiceUpcastLabel" for="damageDiceUpcastForm">Damage Dice (Upcast):</label>
+                    <input type="text" id="damageDiceUpcastForm" placeholder="e.g., 1d8 (Increase per spell level)">
+                </div>
         
+                <div class="form-row">
+                    <label id="saveDCTypeLabel" for="saveDCType">Spell Save DC:</label>
+                    <select id="saveDCType" required>
+                        <option value="">N/A</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="abilityModifierLabel" for="abilityModifier">Should spell add Ability Modifier:</label>
+                    <select id="abilityModifier">
+                        <option id="abilityOptionNo" value="no">No</option>
+                        <option id="abilityOptionYes" value="yes">Yes</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="spellDamageTypeLabel" for="spellDamageType01">Damage Type:</label>
+                    <select id="spellDamageType01" required>
+                    </select>
+                </div>
+                
+        
+                <button type="button" id="saveSpell" class="nonRollButton">Save Spell</button>
+            </form>
+        </div>
     </div>
-</div>
+
+
+
+    <div id="itemFormModal" style="display: none;">
+        <div class="item-modal-background">
+            <span id="closeItemForm" class="close">&times;</span>
+            <form id="itemForm">
+                <h2 id="itemFormTitle">Create Equipment</h2>
+            
+                <!-- General Fields -->
+                <div class="form-row">
+                    <label id="equipmentNameLabel" for="equipment-name">Name:</label>
+                    <input type="text" id="equipment-name" placeholder="Equipment Name" required />
+                </div>
+
+                <!-- Description -->
+                <div class="form-row">
+                    <label id="equipmentDescriptionLabel" for="equipment-description">Description:</label>
+                    <textarea id="equipment-description" rows="15" placeholder="Description"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <label id="equipmentCategoryLabel" for="equipment-category">Category:</label>
+                    <select id="equipment-category" required>
+                        <option value="weapon" id="equipmentCategoryOptionWeapon">Weapon</option>
+                        <option value="armor" id="equipmentCategoryOptionArmor">Armor</option>
+                        <option value="wondrous-item" id="equipmentCategoryOptionWonderous">Wonderous Item</option>
+                        <option value="potion" id="equipmentCategoryOptionPotion">Potion</option>
+                        <option value="adventuring-gear" id="equipmentCategoryOptionAdventuring">Adventuring Gear</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="equipmentRarityLabel" for="equipment-rarity">Rarity:</label>
+                    <select id="equipment-rarity">
+                        <option value="common" id="equipmentRarityOptionCommon">Common</option>
+                        <option value="uncommon" id="equipmentRarityOptionUncommon">Uncommon</option>
+                        <option value="rare" id="equipmentRarityOptionRare">Rare</option>
+                        <option value="very-rare" id="equipmentRarityOptionVery">Very Rare</option>
+                        <option value="legendary" id="equipmentRarityOptionLegendary">Legendary</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <label id="equipmentCostLabel" for="equipment-cost">Cost:</label>
+                    <input type="number" id="equipment-cost" placeholder="Cost" required />
+                    <select id="equipment-cost-unit">
+                        <option value="cp">cp</option>
+                        <option value="sp">sp</option>
+                        <option value="gp">gp</option>
+                        <option value="pp">pp</option>
+                    </select>
+                </div>
+                
+                <div class="form-row">
+                    <label id="equipmentWeightLabel" for="equipment-weight">Weight:</label>
+                    <input type="number" id="equipment-weight" placeholder="Weight" required />
+                </div>
+                
+                
+                <!-- Additional Fields (Dynamic based on category) -->
+                <div id="additional-fields"></div>
+                
+
+                
+                <!-- Submit -->
+                <button type="submit" class="nonRollButton" id="createEquipmentButton">Create Equipment</button>
+            </form>
+            
+        </div>
+    </div>
 
 <!-- Long Rest Modal -->
 <div id="longRestModal" class="long-rest-modal hidden">

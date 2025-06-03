@@ -117,6 +117,7 @@ const characterStatBonuses = {
         SpellAttackandSave: { bonuses: [] },
         // HitPoints: { bonuses: [] },
         // Speed: { bonuses: [] },
+        CarryWeightBonus:{ bonuses: [] },
     },
     senses: {
         PassivePerception: { bonuses: [] },
@@ -1106,6 +1107,9 @@ const translations = {
         inventoryGroupBackpack: "Backpack",
         inventoryGroupOtherPossessions: "Other Possessions",
         inventoryGroupAttunement: "Attunement",
+        inventoryWeightCarried: "Weight Carried:",
+        inventoryWeightStatusEncumbered: "Unencumbered",
+        inventoryWeightStatusOverEncumbered: "Over Encumbered",
 
 
 
@@ -1440,7 +1444,10 @@ const translations = {
             class: "Classes",
             school: "School",
             description: "Description",
-            higher_level: "Higher Level"
+            higher_level: "Higher Level",
+            spellattack: "Spell Attack",
+            damage_type: "Damage Type",
+            dc: "DC",
         }
 
     },
@@ -2119,6 +2126,9 @@ const translations = {
         inventoryGroupBackpack: "Mochila",
         inventoryGroupOtherPossessions: "Otras Posesiones ",
         inventoryGroupAttunement: " Sintonización",
+        inventoryWeightCarried: "Peso Cargado:",
+        inventoryWeightStatusEncumbered: "Cargado",
+        inventoryWeightStatusOverEncumbered: "Sobrecargado",
 
 
 
@@ -2408,7 +2418,7 @@ const translations = {
         rangeLabel:              "Alcance:",
 
         weaponPropertiesLabel:   "Propiedades del arma:",
-        labelFinesse:            "Finesa",
+        labelFinesse:            "Sutil",
         labelVersatile:          "Versátil",
         labelHeavy:              "Pesado",
         labelLight:              "Ligero",
@@ -2419,13 +2429,13 @@ const translations = {
         labelSilvered:           "Plateado",
         labelSpecial:            "Especial",
         labelAmmunition:         "Munición",
-        attunementLabel:         "Afinación",
+        attunementLabel:         "Sintonización",
         hasChargesLabel:         "Tiene cargas",
 
         damageDiceLabel:         "Dados de daño:",
         damageTypeLabel:         "Tipo de daño:",
 
-        chargeResetLabel:        "¿Cuándo se reinicia?",
+        chargeResetLabel:        "Cuándo se reinicia",
         optionLongRest:          "Descanso largo",
         optionShortRest:         "Descanso corto",
         optionAtDawn:            "Al amanecer",
@@ -2443,7 +2453,7 @@ const translations = {
         armorClassLabel:         "Clase de armadura base:",
         strMinimumLabel:         "Requisito de fuerza:",
         stealthDisadvantageLabel: "Desventaja de sigilo:",
-        requiresAttunementLabel: "Requiere afinación:",
+        requiresAttunementLabel: "Requiere sintonización:",
 
         gearCategoryLabel:       "Categoría de equipo:",
 
@@ -2501,7 +2511,10 @@ const translations = {
             class: "Clases",
             school: "Escuela",
             description: "Descripción",
-            higher_level: "A Niveles Superiores"
+            higher_level: "A Niveles Superiores",
+            spellattack: "Ataque de conjuro",
+            damage_type: "Tipo de daño",
+            dc: "CD de salvación de conjuro",
         }
         
 
