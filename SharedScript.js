@@ -1448,7 +1448,165 @@ const translations = {
             spellattack: "Spell Attack",
             damage_type: "Damage Type",
             dc: "DC",
-        }
+        },
+        monsterStatsLabels: {
+            AC: "AC",
+            HP: "HP",
+            Speed: "Speed",
+            Languages: "Languages",
+            Vulnerabilities: "Vulnerabilities",
+            Resistances: "Resistances",
+            Immunities: "Immunities",
+            "Condition Immunities": "Condition Immunities",
+            Senses: "Senses",
+            CR: "CR"
+        },
+        monsterCardSavesContainerLabel: "Saves:",
+        monsterCardSkillsContainerLabel: "Skills:",
+        npcListHeadingName: "Name",
+        npcListHeadingRace: "Race",
+        npcListHeadingDescription: "Description",
+        npcListHeadingQuirk: "Quirk",
+        randomHeadingDetails: "Details",
+        lootHeadingDetails: "Details",
+        miscHeadingDetails: "Details",
+        randomEncountersAddRowButton: "Add Row",
+        randomEncountersGetRandomButton: "Get Random",
+        randomLootAddRowButton: "Add Row",
+        randomLootGetRandomButton: "Get Random",
+        randomMiscAddRowButton: "Add Row",
+        randomMiscGetRandomButton: "Get Random",
+
+        categoryLabels: {
+            shopNames: {
+                "CazadorTrabajadordeCuero": "hunterLeatherworker",
+                "Armeríadelherrero": "blacksmithArmory",
+                "TiendaGeneral": "generalStore",
+                "SuministrosdeAventura": "adventuringSupplies",
+                "AlquimistaHerbolario": "alchemistHerbalist",
+                "Jollero": "jeweler",
+                "BibliotecaLibrería": "libraryBookstore"
+            },
+            categoryLabels: {
+                "Armadura Ligera": "Light Armor",
+                "Armadura Media": "Medium Armor",
+                "Armadura Pesada": "Heavy Armor",
+                "Armas Simples Cuerpo a Cuerpo": "Simple Melee Weapons",
+                "Armas Simples a Distancia": "Simple Ranged Weapons",
+                "Armas Marciales Cuerpo a Cuerpo": "Martial Melee Weapons",
+                "Armas Marciales a Distancia": "Martial Ranged Weapons",
+                "Munición": "Ammunition",
+                "Herramientas": "Tools",
+                "Herramientas de Artesano": "Artisan's Tools",
+                "Equipo de Aventura": "Adventuring Gear",
+                "Comida y Bebida": "Food and Drink",
+                "Ropa": "Clothing",
+                "Herramientas Básicas": "Basic Tools",
+                "Otros": "Other",
+                "Varios": "Miscellaneous",
+                "Sillas de Montar": "Saddle",
+                "De Alquimia": "Alchemical",
+                "Otros Objetos": "Other Items"
+            }
+        },
+        characterStatCategoryLabels: {
+            None: "None",
+            skills: "Skills",
+            saves: "Saves",
+            // attributes: "Attributes",
+            combatStats: "Combat Stats",
+            senses: "Senses",
+        },
+        characterStatBonuses: {
+            None: { 
+
+            },
+            skills: {
+                Acrobatics: "Acrobatics",
+                AnimalHandling: "Animal Handling",
+                Arcana: "Arcana",
+                Athletics: "Athletics",
+                Deception: "Deception",
+                History: "History",
+                Initiative: "Initiative",
+                Insight: "Insight",
+                Intimidation: "Intimidation",
+                Investigation: "Investigation",
+                Medicine: "Medicine",
+                Nature: "Nature",
+                Perception: "Perception",
+                Performance: "Performance",
+                Persuasion: "Persuasion",
+                Religion: "Religion",
+                SleightOfHand: "Sleight of Hand",
+                Stealth: "Stealth",
+                Survival: "Survival",
+                All: "All",
+            },
+            saves: {
+                STR: "STR",
+                DEX: "DEX",
+                CON: "CON",
+                INT: "INT",
+                WIS: "WIS",
+                CHA: "CHA",
+                All: "All",
+            },
+            // attributes: {
+            //     STR: { bonuses: [] },
+            //     DEX: { bonuses: [] },
+            //     CON: { bonuses: [] },
+            //     INT: { bonuses: [] },
+            //     WIS: { bonuses: [] },
+            //     CHA: { bonuses: [] },
+            // },
+
+            combatStats: {
+                AC: "AC",
+                // toHitBonus: "toHitBonus",
+                // damageBonus: "damageBonus",
+                // AttackandDamage: "AttackandDamage",
+                // MeleeAttackRolls: "MeleeAttackRolls",
+                // MeleeDamageRolls: "MeleeDamageRolls",
+                RangedAttackRolls: "RangedAttackRolls",
+                RageDamageBonus: "RageDamageBonus",
+                RangedDamageRolls: "RangedDamageRolls",
+                // SpellDamageRolls: "SpellDamageRolls",
+                EldritchBlastDamage: "EldritchBlastDamage",
+                SpellSaveDC: "SpellSaveDC",
+                SpellAttackModifier: "SpellAttackModifier",
+                SpellAttackandSave: "SpellAttackandSave",
+                // HitPoints: "HitPoints",
+                // Speed: "Speed",
+                CarryWeightBonus: "CarryWeightBonus",
+            },
+            senses: {
+                PassivePerception: "Passive Perception",
+                PassiveInsight: "Passive Insight",
+                PassiveInvestigation: "Passive Investigation",
+                // Darkvision: "Darkvision",
+                // Tremorsense: "Tremorsense",
+                // Blindsight: "Blindsight",
+                // Truesight: "Truesight",
+            },  
+        },
+        abilityScoreLabels: {
+            NONE: "None",
+            STR: "Strength",
+            DEX: "Dexterity",
+            CON: "Constitution",
+            INT: "Intelligence",
+            WIS: "Wisdom",
+            CHA: "Charisma",
+            Proficiency: "Proficiency"
+        },
+
+        selectCategoryText: "Select Category",
+        selectBonusText: "Select Bonus",
+        bonusTypeValue: "Value",
+        bonusTypeStat: "Ability Score",
+        removeButtonText: "Remove",
+
 
     },
     es: {
@@ -1606,7 +1764,7 @@ const translations = {
         featuresUsesText: "Usos",
         featuresCategoryText: "Categoría:",
         featuresSubcategoryText: "Subcategoría:",
-        featuresAbilityScoreText: "Puntuación de habilidad que se utilizará para el valor de ajuste",
+        featuresAbilityScoreText: "Puntuación de habilidad que se utilizara para ajustar el valor:",
         featuresAdjustmentText: "Ajustar Valor:",
         featuresNumberUsesText: "Número de Usos:",
         featuresResetText: "Recuperar Cuando:",
@@ -2217,7 +2375,7 @@ const translations = {
         monsterFormTitle: "Crear Monstruo Personalizado",
         monsterNameLabel: "Nombre:",
         monsterTypeLabel: "Tipo:",
-        monsterCRLabel: "Valor de ND:",
+        monsterCRLabel: "Valor de Desafio:",
         monsterSourceLabel: "Fuente:",
         monsterHPLabel: "Valor de PV:",
         monsterHPNotesLabel: "Notas de PV:",
@@ -2515,7 +2673,164 @@ const translations = {
             spellattack: "Ataque de conjuro",
             damage_type: "Tipo de daño",
             dc: "CD de salvación de conjuro",
-        }
+        },
+        monsterStatsLabels: {
+            AC: "CA",
+            HP: "PG",
+            Speed: "Velocidad",
+            Languages: "Idiomas",
+            Vulnerabilities: "Vulnerabilidades",
+            Resistances: "Resistencias",
+            Immunities: "Inmunidades",
+            "Condition Immunities": "Inmunidades a Condiciones",
+            Senses: "Sentidos",
+            CR: "Desafio",
+            DC:"CD",
+        },
+        monsterCardSavesContainerLabel: "Salvaciones:",
+        monsterCardSkillsContainerLabel: "Habilidades:",
+        npcListHeadingName: "Nombre",
+        npcListHeadingRace: "Raza",
+        npcListHeadingDescription: "Descripción",
+        npcListHeadingQuirk: "Rasgo",
+        randomHeadingDetails: "Detalles",
+        lootHeadingDetails: "Detalles",
+        miscHeadingDetails: "Detalles",
+        randomEncountersAddRowButton: "Añadir fila",
+        randomEncountersGetRandomButton: "Obtener Aleatorio",
+        randomLootAddRowButton: "Añadir fila",
+        randomLootGetRandomButton: "Obtener Aleatorio",
+        randomMiscAddRowButton: "Añadir fila",
+        randomMiscGetRandomButton: "Obtener Aleatorio",
+
+        categoryLabels: {
+            shopNames: {
+            "hunterLeatherworker": "CazadorTrabajadordeCuero",
+            "blacksmithArmory": "Armeríadelherrero",
+            "generalStore": "TiendaGeneral",
+            "adventuringSupplies": "SuministrosdeAventura",
+            "alchemistHerbalist": "AlquimistaHerbolario",
+            "jeweler": "Jollero",
+            "libraryBookstore": "BibliotecaLibrería"
+            },
+            categoryLabels: {
+                "Light Armor": "Armadura Ligera",
+                "Medium Armor": "Armadura Media",
+                "Heavy Armor": "Armadura Pesada",
+                "Simple Melee Weapons": "Armas Simples Cuerpo a Cuerpo",
+                "Simple Ranged Weapons": "Armas Simples a Distancia",
+                "Martial Melee Weapons": "Armas Marciales Cuerpo a Cuerpo",
+                "Martial Ranged Weapons": "Armas Marciales a Distancia",
+                "Ammunition": "Munición",
+                "Tools": "Herramientas",
+                "Artisan's Tools": "Herramientas de Artesano",
+                "Adventuring Gear": "Equipo de Aventura",
+                "Food and Drink": "Comida y Bebida",
+                "Clothing": "Ropa",
+                "Basic Tools": "Herramientas Básicas",
+                "Other": "Otros",
+                "Miscellaneous": "Varios",
+                "Saddle": "Sillas de Montar",
+                "Alchemical": "De Alquimia",
+                "Other Items": "Otros Objetos"
+            },
+        },
+        characterStatCategoryLabels: {
+            None: "Ninguno",
+            skills: "Habilidades",
+            saves: "Tiradas de Salvación",
+            combatStats: "Estadísticas de Combate",
+            senses: "Sentidos",
+        },
+        characterStatBonuses: {
+            None: { 
+
+            },
+            skills: {
+                Acrobatics: "Acrobacias",
+                AnimalHandling: "T.con Animales",
+                Arcana: "C. Arcano",
+                Athletics: "Atletismo",
+                Deception: "Engaño",
+                History: "Historia",
+                Initiative: "Iniciativa",
+                Insight: "Perspicacia",
+                Intimidation: "Intimidación",
+                Investigation: "Investigación",
+                Medicine: "Medicina",
+                Nature: "Naturaleza",
+                Perception: "Percepción",
+                Performance: "Interpretación",
+                Persuasion: "Persuasión",
+                Religion: "Religión",
+                SleightOfHand: "Juego de Manos",
+                Stealth: "Sigilo",
+                Survival: "Supervivencia",
+                All: "Todos",
+            },
+            saves: {
+                STR: "FUE",
+                DEX: "DES",
+                CON: "CON",
+                INT: "INT",
+                WIS: "SAB",
+                CHA: "CAR",
+                All: "Todo",
+            },
+            // attributes: {
+            //     STR: { bonuses: [] },
+            //     DEX: { bonuses: [] },
+            //     CON: { bonuses: [] },
+            //     INT: { bonuses: [] },
+            //     WIS: { bonuses: [] },
+            //     CHA: { bonuses: [] },
+            // },
+
+            combatStats: {
+                AC: "CA",
+                // toHitBonus: "Bono Atque",
+                // damageBonus: "Bono Daño",
+                // AttackandDamage: "Ataque y Daño",
+                // MeleeAttackRolls: "Atque C.C.",
+                // MeleeDamageRolls: "Daño C.C.",
+                RangedAttackRolls: "Atque Dist.",
+                RageDamageBonus: "Bono Furia",
+                RangedDamageRolls: "Daño Dist.",
+                // SpellDamageRolls: "Daño Hech",
+                EldritchBlastDamage: "EldritchBlastDaño",
+                SpellSaveDC: "CD Hechizo",
+                SpellAttackModifier: "Mod Atque Hechizo",
+                SpellAttackandSave: "Atque+CD Hechizo",
+                // HitPoints: "PuntosdeGolpe",
+                // Speed: "Velocidad",
+                CarryWeightBonus: "Bono Carga",
+            },
+            senses: {
+                PassivePerception: "Percepción Pasiva",
+                PassiveInsight: "Pasiva Perspicacia",
+                PassiveInvestigation: "Pasiva Investigación",
+                // Darkvision: "Visión Oscura",
+                // Tremorsense: "Sentido T.emblor",
+                // Blindsight: "Visión Ciega",
+                // Truesight: "Visión Verdadera",
+            },  
+        },
+        abilityScoreLabels: {
+            NONE: "Ninguna",
+            STR: "FUE",
+            DEX: "DES",
+            CON: "Con",
+            INT: "Int",
+            WIS: "SAB",
+            CHA: "CAR",
+            Proficiency: "Competencia"
+        },
+        selectCategoryText: "Categoría",
+        selectBonusText: "Bono",
+        bonusTypeValue: "Valor",
+        bonusTypeStat: "Estadística",
+        removeButtonText: "Eliminar"
+     
         
 
     }
@@ -5291,45 +5606,43 @@ function setupMagicBonusSelection() {
         // Create the first dropdown for category selection
         const categorySelect = document.createElement("select");
         categorySelect.className = "magic-category-select";
-        categorySelect.innerHTML = `<option>Select Category</option>`;
+        categorySelect.innerHTML = `<option value="">${translations[savedLanguage].selectCategoryText || "Select Category"}</option>`;
 
         Object.keys(characterStatBonuses).forEach(category => {
             const option = document.createElement("option");
             option.value = category;
-            option.textContent = category;
+            option.textContent = translations[savedLanguage].characterStatCategoryLabels?.[category] || category;
             categorySelect.appendChild(option);
         });
 
-        // Create the second dropdown for specific bonus options (initially empty)
+        // Bonus Dropdown (Subcategories)
         const bonusSelect = document.createElement("select");
         bonusSelect.className = "magic-bonus-select";
-        bonusSelect.disabled = true; // Disabled until a category is selected
+        bonusSelect.disabled = true;
+        bonusSelect.innerHTML = `<option value="None">${translations[savedLanguage].selectBonusText || "Select Bonus"}</option>`;
 
-        // Populate the second dropdown based on the selected category
         categorySelect.addEventListener("change", () => {
             const selectedCategory = categorySelect.value;
+            const subCategories = characterStatBonuses[selectedCategory] || {};
+            const translationSubCats = translations[savedLanguage].characterStatBonuses?.[selectedCategory] || {};
 
-            // Clear previous options
-            bonusSelect.innerHTML = `<option value="None">Select Bonus</option>`;
+            bonusSelect.innerHTML = `<option value="None">${translations[savedLanguage].selectBonusText || "Select Bonus"}</option>`;
             bonusSelect.disabled = selectedCategory === "None";
 
-            // Populate with options from the selected category
-            if (characterStatBonuses[selectedCategory]) {
-                Object.keys(characterStatBonuses[selectedCategory]).forEach(bonus => {
-                    const option = document.createElement("option");
-                    option.value = bonus;
-                    option.textContent = bonus;
-                    bonusSelect.appendChild(option);
-                });
-            }
+            Object.keys(subCategories).forEach(bonus => {
+                const option = document.createElement("option");
+                option.value = bonus;
+                option.textContent = translationSubCats[bonus] || bonus;
+                bonusSelect.appendChild(option);
+            });
         });
 
-        // Create a dropdown to toggle between value or ability score
+        // Value or Stat Dropdown
         const valueOrStatSelect = document.createElement("select");
         valueOrStatSelect.className = "value-or-stat-select";
         valueOrStatSelect.innerHTML = `
-            <option value="value">Value</option>
-            <option value="stat">Ability Score</option>
+            <option value="value">${translations[savedLanguage].bonusTypeValue || "Value"}</option>
+            <option value="stat">${translations[savedLanguage].bonusTypeStat || "Ability Score"}</option>
         `;
 
         // Create a numeric input for the bonus value (default)
@@ -5345,7 +5658,7 @@ function setupMagicBonusSelection() {
         ["STR", "DEX", "CON", "INT", "WIS", "CHA"].forEach(stat => {
             const option = document.createElement("option");
             option.value = stat;
-            option.textContent = stat;
+            option.textContent = translations[savedLanguage].abilityScoreLabels?.[stat] || stat;
             statSelect.appendChild(option);
         });
 
@@ -5362,7 +5675,7 @@ function setupMagicBonusSelection() {
 
         // Create a remove button to delete the bonus row
         const removeButton = document.createElement("button");
-        removeButton.textContent = "Remove";
+        removeButton.textContent = translations[savedLanguage].removeButtonText || "Remove";
         removeButton.className = "remove-magic-bonus nonRollButton";
 
         removeButton.addEventListener("click", () => {

@@ -369,14 +369,14 @@ function updateMonsterCard(card, monster) {
     
     const statsSpan = document.createElement('span');
     statsSpan.classList.add('non-editable');
-    const acText = document.createTextNode(`AC: ${selectedMonsterData.AC.Value} | `);
-    const speedText = document.createTextNode(` Speed: ${selectedMonsterData.Speed}`);
+    const acText = document.createTextNode(`${translations[savedLanguage].monsterStatsLabels.AC}: ${selectedMonsterData.AC.Value} | `);
+    const speedText = document.createTextNode(` ${translations[savedLanguage].monsterStatsLabels.Speed}: ${selectedMonsterData.Speed}`);
     statsSpan.appendChild(acText);
     // Add Spell Save DC to the stats section if found
     if (spellDC) {
         const dcSpan = document.createElement('span');
         dcSpan.classList.add('spell-dc');
-        dcSpan.textContent = `DC: ${spellDC} | `;
+        dcSpan.textContent = `${translations[savedLanguage].monsterStatsLabels.DC}: ${spellDC} | `;
         statsSpan.appendChild(dcSpan);
     }
     statsSpan.appendChild(initiativeButton);
@@ -839,17 +839,16 @@ function populateMonsterFields(monster) {
     // Populate basic monster info
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
-    populateField('monsterAC', 'AC', monster.AC?.Value, false);
-    console.log(monster.AC?.Value)
-    populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
-    populateField('monsterSpeed', 'Speed', monster.Speed);
-    populateField('monsterLanguages', 'Languages', monster.Languages, false);
-    populateField('monsterDamageVulnerabilities', 'Vulnerabilities', monster.DamageVulnerabilities, false);
-    populateField('monsterDamageResistances', 'Resistances', monster.DamageResistances, false);
-    populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
-    populateField('monsterConditionImmunities', 'Condition Immunities', monster.ConditionImmunities, false);
-    populateField('monsterSenses', 'Senses', monster.Senses, false);
-    populateField('monsterChallenge', 'CR', monster.Challenge||monster.CR, false);
+    populateField('monsterAC', `${translations[savedLanguage].monsterStatsLabels["AC"]}`, monster.AC?.Value, false);
+    populateField('monsterHP', `${translations[savedLanguage].monsterStatsLabels["HP"]}`, `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
+    populateField('monsterSpeed', `${translations[savedLanguage].monsterStatsLabels["Speed"]}`, monster.Speed);
+    populateField('monsterLanguages', `${translations[savedLanguage].monsterStatsLabels["Languages"]}`, monster.Languages, false);
+    populateField('monsterDamageVulnerabilities', `${translations[savedLanguage].monsterStatsLabels["Vulnerabilities"]}`, monster.DamageVulnerabilities, false);
+    populateField('monsterDamageResistances', `${translations[savedLanguage].monsterStatsLabels["Resistances"]}`, monster.DamageResistances, false);
+    populateField('monsterDamageImmunities', `${translations[savedLanguage].monsterStatsLabels["Immunities"]}`, monster.DamageImmunities, false);
+    populateField('monsterConditionImmunities', `${translations[savedLanguage].monsterStatsLabels["Condition Immunities"]}`, monster.ConditionImmunities, false);
+    populateField('monsterSenses', `${translations[savedLanguage].monsterStatsLabels["Senses"]}`, monster.Senses, false);
+    populateField('monsterChallenge', `${translations[savedLanguage].monsterStatsLabels["CR"]}`, monster.Challenge||monster.CR, false);
 
     function checkAndPopulateSection(elementId, data, type) {
         const container = document.getElementById(elementId);
@@ -1183,6 +1182,24 @@ async function updatePlayerCard(card, player) {
         const playerHeader = document.createElement('div');
         playerHeader.classList.add('player-header'); // New class for header
 
+        const conditionContainer = document.createElement('span');
+        conditionContainer.classList.add('conditions-trackers');
+        conditionContainer.style.display = 'flex';
+        conditionContainer.style.flexWrap = 'wrap';
+        conditionContainer.style.gap = '3px';
+        conditionContainer.style.marginTop = '5px';
+
+        // Add conditions to container
+        player.conditions?.forEach(conditionKey => {
+            const conditionPill = createConditionPill(conditionKey, player.language);
+            conditionContainer.appendChild(conditionPill);
+        });
+
+        // Add condition container to card
+        if (player.name !== "Custom" && !player.isCustom) {
+            playerHeader.appendChild(conditionContainer);
+        }
+
         // Append player name to the header
         playerHeader.appendChild(playerName);
 
@@ -1245,6 +1262,30 @@ async function updatePlayerCard(card, player) {
 }
 
 
+function createConditionPill(conditionKey, language) {
+    // Get translation data
+    const conditionData = translations[language]?.conditions?.[conditionKey] ||
+                          translations[language]?.effects?.[conditionKey];
+    
+    const displayName = conditionData?.name || conditionKey;
+    const description = conditionData?.description || '';
+
+    // Create pill element
+    const pill = document.createElement('div');
+    pill.classList.add('condition-pill');
+    
+    pill.innerHTML = `
+        <span>${displayName}</span>
+    `;
+
+    // Add tooltip if description exists
+    if (description) {
+        pill.addEventListener('mouseenter', showTooltip);
+        pill.addEventListener('mouseleave', hideTooltip);
+    }
+
+    return pill;
+}
 
 
 
@@ -2226,7 +2267,22 @@ async function handleSyncEvents(event) {
 }
 
 
+function decodeConditionIndices(indices, language) {
+    if (!indices || !language) return [];
+    
+    // Get condition/effect keys for the specified language
+    const conditionKeys = [
+        ...Object.keys(translations[language]?.conditions || {}),
+        ...Object.keys(translations[language]?.effects || {})
+    ].sort();
 
+    return indices.map(idx => {
+        if (idx >= 0 && idx < conditionKeys.length) {
+            return conditionKeys[idx];
+        }
+        return null;
+    }).filter(Boolean);
+}
 
 
 
@@ -2245,6 +2301,12 @@ function handleRequestedStats(parsedMessage, fromClient) {
     console.log(parsedMessage)
     const playerData = parsedMessage.data; // Assuming data contains stats like HP, AC, etc.
     const playerId = parsedMessage.playerId.id; // Assume fromClient is the unique player ID (client.id)
+
+    // Decode condition indices
+    playerData.conditions = decodeConditionIndices(
+        playerData.conditions, 
+        playerData.language
+    );
  
     // Get all the player cards from the DOM
     const playerCards = document.querySelectorAll('.player-card');
@@ -3381,7 +3443,7 @@ function updateShopTable() {
     for (const category in categoryGroups) {
         // Add a subheading row for the category
         const subheadingRow = document.createElement('tr');
-        subheadingRow.innerHTML = `<td class="tableSpacer" colspan="4">${category}</td>`;
+        subheadingRow.innerHTML = `<td class="tableSpacer" colspan="4">${translations[savedLanguage].categoryLabels.categoryLabels[category] || category}</td>`;
         table.appendChild(subheadingRow);
 
         // Loop through the items in this category and create rows
@@ -4498,8 +4560,7 @@ function populateShopSelect() {
         if (categoryGroups.hasOwnProperty(shopTitle)) {
             const option = document.createElement('option');
             option.value = shopTitle;
-            option.textContent = shopTitle;
-
+            option.textContent = translations[savedLanguage].categoryLabels.shopNames[shopTitle] || shopTitle; // Need the fallback for custom shops created by the user. 
             // Append the option to the select element
             shopSelect.appendChild(option);
         }

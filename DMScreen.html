@@ -99,9 +99,9 @@
                                 <div class="monster-stat">CHA 8 (-1)</div>
                             </div>
                             <hr id ="abilityScoreDivider01" class="monsterStatsDividerVert">
-                            <div><u><strong>Saves:</strong></u><div id="monsterSaves" class="monster-section"></div></div>
+                            <div><u><strong id="monsterCardSavesContainerLabel">Saves:</strong></u><div id="monsterSaves" class="monster-section"></div></div>
                             <hr id ="abilityScoreDivider02" class="monsterStatsDividerVert">
-                            <div><u><strong>Skills:</strong></u><div id="monsterSkills" class="monster-section"></div></div>
+                            <div><u><strong id="monsterCardSkillsContainerLabel">Skills:</strong></u><div id="monsterSkills" class="monster-section"></div></div>
                             
                             
                         </div>
@@ -226,7 +226,6 @@
                         <li><a href="#shops" id="shopsSectionLink" data-target="shops">Shops</a></li>
                         <li><a href="#travelSection" id="travelSectionLink" data-target="travelSection">Travel</a></li>
                         <li><a href="#npcList" id="npcListSectionLink" data-target="npcList">NPCs</a></li>
-                        <li><a href="#skillsTable" id="skillsTableSectionLink" data-target="skillsTable">Skills</a></li>
                         <li><a href="#jumpingRules" id="jumpingRulesSectionLink" data-target="jumpingRules">Jumping</a></li>
                         <li><a href="#Random" id="RandomSectionLink" data-target="Random">Random Table</a></li>
                     </ul>
@@ -385,10 +384,10 @@
                  <div id="npcList" class="dmTable">
                      <table>
                          <tr>
-                             <th>Name</th>
-                             <th>Race</th>
-                             <th>Description</th>
-                             <th>Quirk</th>
+                             <th id="npcListHeadingName">Name</th>
+                             <th id="npcListHeadingRace">Race</th>
+                             <th id="npcListHeadingDescription">Description</th>
+                             <th id="npcListHeadingQuirk">Quirk</th>
                          </tr>
                          <tr>
                              <td contenteditable="true">Thrain Ironforge</td>
@@ -567,160 +566,6 @@
                      </table>
                  </div>
      
-                 <!-- Skills Table -->
-                 <div id="skillsTable" class="dmTable">
-                     <table>
-                         <thead>
-                             <tr>
-                                 <th>Ability</th>
-                                 <th>Skill</th>
-                                 <th>Scenario 1</th>
-                                 <th>Scenario 2</th>
-                                 <th>Scenario 3</th>
-                             </tr>
-                         </thead>
-                         <tbody>
-                             <tr>
-                                 <td rowspan="2">Strength</td>
-                             </tr>
-                             <tr>
-                                 <td >Athletics</td>
-                                 <td >Climbing a sheer cliff DC 10+</td>
-                                 <td >Breaking down a sturdy door DC 12+</td>
-                                 <td >Grappling an opponent to restrain them DC Contested</td>
-                             </tr>
-                             
-                             <!-- Dexterity -->
-                             <tr>
-                                 <td rowspan="4">Dexterity</td>
-                             </tr>
-                             <tr>
-                                 <td >Acrobatics</td>
-                                 <td >Swinging from a rope onto a tree branch DC 10+</td>
-                                 <td >Performing a somersault over a pit DC 15+</td>
-                                 <td >Dodging a series of traps while navigating a maze DC 10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Sleight of Hand</td>
-                                 <td >Picking a lock quietly DC 10+</td>
-                                 <td >Planting a small item on someone without notice DC 15+ </td>
-                                 <td >Stealing a valuable item without getting caught DC 20+</td>
-                             </tr>
-                             <tr>
-                                 <td >Stealth</td>
-                                 <td >Sneaking past guards unnoticed DC 10+</td>
-                                 <td >Hiding in the shadows during a pursuit DC 15+</td>
-                                 <td >Moving silently through a creaky wooden floor DC 10+</td>
-                             </tr>
-                 
-                             <!-- Constitution -->
-                             <tr>
-                                 <td >Constitution</td>
-                                 <td colspan="4">Enduring extreme temperatures without ill effects, Resisting the effects of a poison, Holding your breath underwater for an extended time DC 10+</td>
-                             </tr>
-                 
-                             <!-- Intelligence -->
-                             <tr>
-                                 <td rowspan="6">Intelligence</td>
-                             </tr>
-                             <tr>
-                                 <td >Arcana</td>
-                                 <td >Identifying the properties of a magical artifact DC 15+</td>
-                                 <td >Deciphering a magical rune inscription DC 12+</td>
-                                 <td >Recognizing the signs of a magical trap DC 15+</td>
-                             </tr>
-                             <tr>
-                                 <td >History</td>
-                                 <td >Recalling historical events accurately DC 10+</td>
-                                 <td >Identifying the origin of an ancient relic DC 17+</td>
-                                 <td >Understanding the political history of a region DC 10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Investigation</td>
-                                 <td >Finding hidden clues at a crime scene DC 12+</td>
-                                 <td >Determining the mechanism of a complex lock DC 17+</td>
-                                 <td >Deciphering a code or cipher DC 15+</td>
-                             </tr>
-                             <tr>
-                                 <td >Nature</td>
-                                 <td >Identifying various plants and their uses DC 10+</td>
-                                 <td >Tracking the path of a woodland creature DC 15+</td>
-                                 <td >Recognizing signs of an approaching natural disaster DC10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Religion</td>
-                                 <td >Recognizing symbols associated with a deity DC 10+</td>
-                                 <td >Recalling rituals associated with a specific faith DC 15+</td>
-                                 <td >Identifying undead creatures and their weaknesses DC 10+</td>
-                             </tr>
-                 
-                             <!-- Wisdom -->
-                             <tr>
-                                 <td rowspan="6">Wisdom</td>
-                             </tr>
-                             <tr>
-                                 <td >Animal Handling</td>
-                                 <td >Calming a frightened horse DC 10+</td>
-                                 <td >Training a pack of dogs to follow commands DC 15+</td>
-                                 <td >Understanding the body language of a wild creature DC 10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Insight</td>
-                                 <td >Determining if someone is lying DC 10+</td>
-                                 <td >Reading the emotions of a crowd DC 15+</td>
-                                 <td >Sensing the hidden motives of a suspicious individual DC 10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Medicine</td>
-                                 <td >Stabilizing a dying companion DC 12</td>
-                                 <td >Identifying a rare herb with healing properties DC 15+</td>
-                                 <td >Diagnosing a mysterious illness DC 17+</td>
-                             </tr>
-                             <tr>
-                                 <td >Perception</td>
-                                 <td >Spotting a hidden trap in a dungeon DC 10+</td>
-                                 <td >Noticing a concealed enemy in the shadows DC 15+</td>
-                                 <td >Observing distant details in a landscape DC 15+</td>
-                             </tr>
-                             <tr>
-                                 <td >Survival</td>
-                                 <td >Navigating through a dense forest DC 10+</td>
-                                 <td >Finding fresh water in a barren desert DC 17+</td>
-                                 <td >Building a shelter in the wilderness DC 10+</td>
-                             </tr>
-                 
-                             <!-- Charisma -->
-                             <tr>
-                                 <td rowspan="5">Charisma</td>
-                             </tr>
-                             <tr>
-                                 <td >Deception</td>
-                                 <td >Convincing a guard that you belong in a restricted area DC 15+</td>
-                                 <td >Disguising your true intentions during negotiations DC 12+</td>
-                                 <td >Impersonating a specific individual convincingly DC 17+</td>
-                             </tr>
-                             <tr>
-                                 <td >Intimidation</td>
-                                 <td >Frightening away a group of thugs DC 12+</td>
-                                 <td >Interrogating a captured enemy effectively DC 15+</td>
-                                 <td >Imposing your will on a crowd to disperse DC 10+</td>
-                             </tr>
-                             <tr>
-                                 <td >Performance</td>
-                                 <td >Entertaining a noble audience with a musical performance DC 15+</td>
-                                 <td >Winning a crowd over with a dramatic monologue DC 10+</td>
-                                 <td >Mimicking the mannerisms of a famous actor DC 17+</td>
-                             </tr>
-                             <tr>
-                                 <td >Persuasion</td>
-                                 <td >Convincing a shopkeeper to lower prices DC 15+</td>
-                                 <td >Negotiating a truce between two feuding factions DC 25+</td>
-                                 <td >Persuading a king to grant a pardon DC 20+</td>
-                             </tr>
-                         </tbody>
-                     </table>
-                 </div>
-     
                 <!-- Jumping Rules -->
                 <div id="jumpingRules" class="dmTable">
                     <h2 id="jumpCalculatorTitle">Jump Calculator</h2>
@@ -771,13 +616,13 @@
                  <div id="Random">
                      <!-- Encounters Table -->
                      <div id="encounters" class="dmTable">
-                         <button class="table-row-button nonRollButton">Add Row</button>
-                         <button class="randomButton nonRollButton">Get Random</button>
+                         <button class="table-row-button nonRollButton" id="randomEncountersAddRowButton">Add Row</button>
+                         <button class="randomButton nonRollButton" id="randomEncountersGetRandomButton">Get Random</button>
                          <table>
                              <thead>
                                  <tr>
                                      <th>#</th>
-                                     <th>Details</th>
+                                     <th id="randomHeadingDetails">Details</th>
                                  </tr>
                              </thead>
                              <tbody>
@@ -811,13 +656,13 @@
          
                      <!-- Loot Table -->
                      <div id="loot" class="dmTable">
-                         <button class="table-row-button nonRollButton">Add Row</button>
-                         <button class="randomButton nonRollButton">Get Random</button>
+                         <button class="table-row-button nonRollButton" id="randomLootAddRowButton">Add Row</button>
+                         <button class="randomButton nonRollButton" id="randomLootGetRandomButton">Get Random</button>
                          <table>
                              <thead>
                                  <tr>
                                      <th>#</th>
-                                     <th>Details</th>
+                                     <th id="lootHeadingDetails">Details</th>
                                  </tr>
                              </thead>
                              <tbody>
@@ -851,13 +696,13 @@
          
                      <!-- Misc Table -->
                      <div id="misc" class="dmTable">
-                         <button class="table-row-button nonRollButton">Add Row</button>
-                         <button class="randomButton nonRollButton">Get Random</button>
+                         <button class="table-row-button nonRollButton" id="randomMiscAddRowButton">Add Row</button>
+                         <button class="randomButton nonRollButton" id="randomMiscGetRandomButton">Get Random</button>
                          <table>
                              <thead>
                                  <tr>
                                      <th>#</th>
-                                     <th>Details</th>
+                                     <th id="miscHeadingDetails">Details</th>
                                  </tr>
                              </thead>
                              <tbody>

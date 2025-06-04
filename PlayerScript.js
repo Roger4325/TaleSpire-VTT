@@ -6244,35 +6244,45 @@ function addNewTrait(groupContainer, traitData = null) {
     const checkboxesContainerMain = document.createElement('div');
     checkboxesContainerMain.classList.add('trait-checkboxes-main');
 
-    function updateCheckboxes() {
-        const numberOfUses = parseInt(usesInput.value) || 0;
-        checkboxesContainerMain.innerHTML = '';
+        function updateCheckboxes() {
+            const numberOfUses = parseInt(usesInput.value) || 0;
+            checkboxesContainerMain.innerHTML = ''; // Clear container once
 
-        // Maintain checkboxStates array
-        if (!traitItem.traitDataStore.checkboxStates) {
-            traitItem.traitDataStore.checkboxStates = [];
-        } 
+            // Initialize and synchronize checkboxStates
+            if (!traitItem.traitDataStore.checkboxStates) {
+                traitItem.traitDataStore.checkboxStates = [];
+            }
+            
+            // Adjust array length to match current number of uses
+            const currentLength = traitItem.traitDataStore.checkboxStates.length;
+            if (numberOfUses > currentLength) {
+                // Add new unchecked boxes
+                const diff = numberOfUses - currentLength;
+                traitItem.traitDataStore.checkboxStates.push(...Array(diff).fill(false));
+            } else if (numberOfUses < currentLength) {
+                // Remove extra boxes
+                traitItem.traitDataStore.checkboxStates = traitItem.traitDataStore.checkboxStates.slice(0, numberOfUses);
+            }
+            const label = document.createElement('span');
+            label.textContent = `${translations[savedLanguage].featuresUsesText}: `;
+            checkboxesContainerMain.appendChild(label);
+                
+            if (numberOfUses <= 10) {
+                // Create label INSIDE checkbox mode
 
-        // Create label
-        const label = document.createElement('span');
-        label.textContent = `${translations[savedLanguage].featuresUsesText}: `;
-        checkboxesContainerMain.appendChild(label);
 
-        if (numberOfUses <= 10) {
-            // Checkbox mode
-            checkboxesContainerMain.innerHTML = '';
-    
-            // Create new checkboxes from stored data
-            traitItem.traitDataStore.checkboxStates.forEach((state, i) => {
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.checked = state;
-                checkbox.classList.add('trait-checkbox-main');
-                checkbox.addEventListener('change', () => {
-                    traitItem.traitDataStore.checkboxStates[i] = checkbox.checked;
+                // Generate checkboxes from synchronized states
+                traitItem.traitDataStore.checkboxStates.forEach((state, i) => {
+                    const checkbox = document.createElement('input');
+                    checkbox.type = 'checkbox';
+                    checkbox.checked = state;
+                    checkbox.classList.add('trait-checkbox-main');
+                    checkbox.addEventListener('change', () => {
+                        traitItem.traitDataStore.checkboxStates[i] = checkbox.checked;
+                        updateContent(); // Update UI if needed
+                    });
+                    checkboxesContainerMain.appendChild(checkbox);
                 });
-                checkboxesContainerMain.appendChild(checkbox);
-            });
         } else {
             // Numeric control mode
             const container = document.createElement('div');
@@ -6401,7 +6411,7 @@ function addNewTrait(groupContainer, traitData = null) {
     Object.keys(characterStatBonuses).forEach(category => {
         const option = document.createElement('option');
         option.value = category;
-        option.textContent = category;
+        option.textContent = translations[savedLanguage]?.characterStatCategoryLabels?.[category] || category;
         if (traitData?.adjustmentCategory === category) option.selected = true;
         categorySelect.appendChild(option);
     });
@@ -6418,10 +6428,11 @@ function addNewTrait(groupContainer, traitData = null) {
     subCategorySelect.classList.add('subcategory-select');
     if (traitData?.adjustmentCategory) {
         const subCategories = characterStatBonuses[traitData.adjustmentCategory];
+        const translationSubCats = translations[savedLanguage]?.characterStatBonuses?.[traitData.adjustmentCategory] || {};
         Object.keys(subCategories).forEach(subCategory => {
             const option = document.createElement('option');
             option.value = subCategory;
-            option.textContent = subCategory;
+            option.textContent = translationSubCats?.[subCategory] || subCategory;
             if (traitData?.adjustmentSubCategory === subCategory) option.selected = true;
             subCategorySelect.appendChild(option);
         });
@@ -6440,7 +6451,8 @@ function addNewTrait(groupContainer, traitData = null) {
     const abilities = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'Proficiency'];
     abilities.forEach(ability => {
         const option = document.createElement('option');
-        option.textContent = ability;
+        option.value = ability;
+        option.textContent = translations[savedLanguage].abilityScoreLabels?.[ability] || ability;
         if (traitData?.adjustmentAbility === ability) option.selected = true;
         abilitySelect.appendChild(option);
     });
@@ -6481,14 +6493,18 @@ function addNewTrait(groupContainer, traitData = null) {
     // Event listener to update subcategories when category changes
     categorySelect.addEventListener('change', () => {
         subCategorySelect.innerHTML = '';
+
         const selectedCategory = categorySelect.value;
-        const subCategories = characterStatBonuses[selectedCategory];
+        const subCategories = characterStatBonuses[selectedCategory] || {};
+        const translationSubCats = translations[savedLanguage]?.characterStatBonuses?.[selectedCategory] || {};
+
         Object.keys(subCategories).forEach(subCategory => {
             const option = document.createElement('option');
             option.value = subCategory;
-            option.textContent = subCategory;
+            option.textContent = translationSubCats[subCategory] || subCategory;
             subCategorySelect.appendChild(option);
         });
+
         updateContent();
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
     });
@@ -7142,11 +7158,23 @@ async function sendDMUpdatedStatsDebounced() {
     }, 1000); // Set the debounce delay to 1 seconds
 }
 
-
 async function sendDMUpdatedStats() {
     // Construct the message object with player stats
     if (gmClient !== null) {
         const playerStats = getPlayerData();
+        const conditionTrackerDiv = document.getElementById('conditionTracker');
+        const conditionsSet = conditionsMap.get(conditionTrackerDiv) || new Set();
+        
+        // Create combined list of all condition/effect keys
+        const conditionKeys = [
+            ...Object.keys(translations[savedLanguage].conditions),
+            ...Object.keys(translations[savedLanguage].effects)
+        ].sort();
+        
+        // Convert conditions to indices
+        const conditionIndices = Array.from(conditionsSet).map(cond => {
+            return conditionKeys.indexOf(cond.value);
+        }).filter(idx => idx !== -1);
 
         // Construct the message object with player stats
         const message = {
@@ -7161,7 +7189,9 @@ async function sendDMUpdatedStats() {
                 tempHp: playerStats.hp.current.toString(),
                 ac: playerStats.ac.toString(), // Ensure AC is a string
                 passivePerception: playerStats.passivePerception.toString(), // Ensure passive perception is a string
-                spellSave: playerStats.spellSave.toString() // Ensure spell save is a string
+                spellSave: playerStats.spellSave.toString(), // Ensure spell save is a string
+                conditions: conditionIndices,  // Send indices array
+                language: savedLanguage        // Send player's language
             }
         };
 
@@ -7863,17 +7893,16 @@ function populateMonsterFields(monster) {
     // Populate basic monster info
     populateField('monsterName', '', monster.Name);
     populateField('monsterType', '', monster.Type, false);
-    populateField('monsterAC', 'Armor Class', monster.AC?.Value, false);
-    console.log(monster.AC?.Value)
-    populateField('monsterHP', 'HP', `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
-    populateField('monsterSpeed', 'Speed', monster.Speed);
-    populateField('monsterLanguages', 'Languages', monster.Languages, false);
-    populateField('monsterDamageVulnerabilities', 'Vulnerabilities', monster.DamageVulnerabilities, false);
-    populateField('monsterDamageResistances', 'Resistances', monster.DamageResistances, false);
-    populateField('monsterDamageImmunities', 'Immunities', monster.DamageImmunities, false);
-    populateField('monsterConditionImmunities', 'Condition Immunities', monster.ConditionImmunities, false);
-    populateField('monsterSenses', 'Senses', monster.Senses, false);
-    populateField('monsterChallenge', 'CR', monster.Challenge||monster.CR, false);
+    populateField('monsterAC', `${translations[savedLanguage].monsterStatsLabels["AC"]}`, monster.AC?.Value, false);
+    populateField('monsterHP', `${translations[savedLanguage].monsterStatsLabels["HP"]}`, `${monster.HP?.Value} ${monster.HP?.Notes}`, true);
+    populateField('monsterSpeed', `${translations[savedLanguage].monsterStatsLabels["Speed"]}`, monster.Speed);
+    populateField('monsterLanguages', `${translations[savedLanguage].monsterStatsLabels["Languages"]}`, monster.Languages, false);
+    populateField('monsterDamageVulnerabilities', `${translations[savedLanguage].monsterStatsLabels["Vulnerabilities"]}`, monster.DamageVulnerabilities, false);
+    populateField('monsterDamageResistances', `${translations[savedLanguage].monsterStatsLabels["Resistances"]}`, monster.DamageResistances, false);
+    populateField('monsterDamageImmunities', `${translations[savedLanguage].monsterStatsLabels["Immunities"]}`, monster.DamageImmunities, false);
+    populateField('monsterConditionImmunities', `${translations[savedLanguage].monsterStatsLabels["Condition Immunities"]}`, monster.ConditionImmunities, false);
+    populateField('monsterSenses', `${translations[savedLanguage].monsterStatsLabels["Senses"]}`, monster.Senses, false);
+    populateField('monsterChallenge', `${translations[savedLanguage].monsterStatsLabels["CR"]}`, monster.Challenge||monster.CR, false);
 
     function checkAndPopulateSection(elementId, data, type) {
         const container = document.getElementById(elementId);
