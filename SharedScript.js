@@ -502,6 +502,7 @@ const translations = {
         addItemModalDropdownText: "Select Item:",
         'confirm-add-item': "Add Item",
         'close-modal': "Cancel",
+        spellScrollText: "Spell Scroll",
 
         conditionPlayerAddButton: "Add Condition",
         hitDiceOpenModalButton: "Hit Dice",
@@ -1333,6 +1334,7 @@ const translations = {
         addItemtoGroupButton:    "Add Item to Group",
         groupNameLabel:          "Group Name:",
         itemNameLabel:           "Item Name:",
+        chargeResetLabelText: "When does it reset?",
 
         addMagicBonusButton:     "Add Magic Bonus",
         magicBonusesLabel:       "Magic Bonuses:",
@@ -1738,6 +1740,7 @@ const translations = {
         addItemModalDropdownText: "Seleccionar Objeto:",
         'confirm-add-item': "Agregar Objeto",
         'close-modal': "Cancelar",
+        spellScrollText: "Pergamino de Hechizo",
 
         conditionPlayerAddButton: "Añadir Condición",
         hitDiceOpenModalButton: "Dados de Golpe",
@@ -2561,6 +2564,7 @@ const translations = {
         equipmentRarityOptionRare: "Raro",
         equipmentRarityOptionVery: "Muy Raro",
         equipmentRarityOptionLegendary: "Legendario",
+        chargeResetLabelText: "Cuándo se reinicia?",
 
         addMagicBonusButton:     "Agregar bono mágico",
         magicBonusesLabel:       "Bonos mágicos:",
@@ -4717,7 +4721,7 @@ saveSpellButton.addEventListener('click', async () => {
         material: document.getElementById("spellFormMaterials").value.trim(),
         range: document.getElementById('spellFormRange').value.trim(),
         components: selectedComponents,
-        ritual: document.getElementById('ritualForm').value.trim() ? ", R" : "",
+        ritual: document.getElementById('ritualForm').value.trim() === "yes" ? ", R" : "",
         duration: document.getElementById('spellFormDuration').value.trim(),
         concentration: document.getElementById('concentrationForm').value.trim() ? "yes" : "no",
         casting_time: document.getElementById('castingTimeForm').value.trim(),
@@ -4806,7 +4810,7 @@ function populateSpellForm(spell) {
     document.getElementById("spellFormMaterials").value = spell.material || "";
 
     // Ritual
-    document.getElementById("ritualForm").value = spell.ritual || "";
+    document.getElementById("ritualForm").value = spell.ritual === ", R" ? "yes" : "no";
 
     // Duration
     document.getElementById("spellFormDuration").value = spell.duration || "Instantaneous";
@@ -5221,6 +5225,12 @@ function updateDynamicFields(category) {
         const stealthDisadvantageText    = translations[savedLanguage].stealthDisadvantageLabel;
         const requiresAttunementText     = translations[savedLanguage].requiresAttunementLabel;
         const hasChargesLabelText        = translations[savedLanguage].hasChargesLabel;
+                // Charges reset
+        const chargeResetLabelText = translations[savedLanguage].chargeResetLabel;
+        const optionLongRestText   = translations[savedLanguage].optionLongRest;
+        const optionShortRestText  = translations[savedLanguage].optionShortRest;
+        const optionAtDawnText     = translations[savedLanguage].optionAtDawn;
+        const maxChargesLabelText  = translations[savedLanguage].maxChargesLabel;
 
         additionalFields.innerHTML = `
         <div class="form-row">
@@ -5289,6 +5299,12 @@ function updateDynamicFields(category) {
     } else if (category === "wondrous-item") {
         const requiresAttunementText = translations[savedLanguage].requiresAttunementLabel;
         const hasChargesLabelText   = translations[savedLanguage].hasChargesLabel;
+                // Charges reset
+        const chargeResetLabelText = translations[savedLanguage].chargeResetLabel;
+        const optionLongRestText   = translations[savedLanguage].optionLongRest;
+        const optionShortRestText  = translations[savedLanguage].optionShortRest;
+        const optionAtDawnText     = translations[savedLanguage].optionAtDawn;
+        const maxChargesLabelText  = translations[savedLanguage].maxChargesLabel;
 
         additionalFields.innerHTML = `
         <div class="form-row">
@@ -5448,17 +5464,18 @@ function gatherFormData() {
         // Get the weapon range based on the selected attack style
         const attackStyle = document.getElementById("attack-style").value;
         equipmentData.weapon_range = document.getElementById("attack-style").value;
+        console.log("Attack Style:", attackStyle);
 
-        if (attackStyle === "melee") {
+        if (attackStyle.toLowerCase() === "melee") {
             equipmentData.range = {
                 normal: parseInt(document.getElementById("melee-range").value) || 5
             };
-        } else if (attackStyle === "ranged") {
+        } else if (attackStyle.toLowerCase() === "ranged") {
             equipmentData.range = {
                 normal: parseInt(document.getElementById("short-range").value) || 30,
                 long: parseInt(document.getElementById("long-range").value) || 120
             };
-        } else if (attackStyle === "melee-thrown") {
+        } else if (attackStyle.toLowerCase() === "melee-thrown") {
             equipmentData.range = {
                 normal: parseInt(document.getElementById("melee-range").value) || 5,
             };
@@ -5958,12 +5975,27 @@ function addMagicBonusRow(bonus) {
     // Generate category options
     const categoryOptions = Object.keys(characterStatBonuses)
         .filter(c => c !== 'None') // Exclude None category
-        .map(c => `<option value="${c}" ${c === bonus.category ? 'selected' : ''}>${c}</option>`)
+        .map(c => {const translatedLabel = translations[savedLanguage].characterStatCategoryLabels?.[c] || c;
+            return `<option value="${c}" ${c === bonus.category ? 'selected' : ''}>${translatedLabel}</option>`;
+        })
         .join('');
 
-    // Generate stat options
+    // Generate value/stat dropdown with translations
+    const valueStatOptions = `
+        <option value="value" ${typeof bonus.value === 'number' ? 'selected' : ''}>
+            ${translations[savedLanguage].bonusTypeValue || "Value"}
+        </option>
+        <option value="stat" ${typeof bonus.value === 'string' ? 'selected' : ''}>
+            ${translations[savedLanguage].bonusTypeStat || "Ability Score"}
+        </option>
+    `;
+
+    // Generate ability score options with translations
     const statOptions = ['STR','DEX','CON','INT','WIS','CHA']
-        .map(s => `<option value="${s}" ${s === bonus.value ? 'selected' : ''}>${s}</option>`)
+        .map(s => {
+            const translatedLabel = translations[savedLanguage].abilityScoreLabels?.[s] || s;
+            return `<option value="${s}" ${s === bonus.value ? 'selected' : ''}>${translatedLabel}</option>`;
+        })
         .join('');
 
     row.innerHTML = `
@@ -5972,8 +6004,7 @@ function addMagicBonusRow(bonus) {
         </select>
         <select class="magic-bonus-select"></select>
         <select class="value-or-stat-select">
-            <option value="value" ${typeof bonus.value === 'number' ? 'selected' : ''}>Value</option>
-            <option value="stat" ${typeof bonus.value === 'string' ? 'selected' : ''}>Stat</option>
+            ${valueStatOptions}
         </select>
         <input type="number" class="magic-bonus-value" 
                value="${typeof bonus.value === 'number' ? bonus.value : ''}"
@@ -5982,20 +6013,33 @@ function addMagicBonusRow(bonus) {
                 style="${typeof bonus.value === 'number' ? 'display: none;' : ''}">
             ${statOptions}
         </select>
-        <button class="remove-magic-bonus nonRollButton">Remove</button>
+        <button class="remove-magic-bonus nonRollButton">
+            ${translations[savedLanguage].removeButtonText || "Remove"}
+        </button>
     `;
 
     // Initialize bonus select
     const categorySelect = row.querySelector('.magic-category-select');
     const bonusSelect = row.querySelector('.magic-bonus-select');
     
-    // Populate bonus options based on initial category
+    // Populate bonus options with translations
     const populateBonusOptions = () => {
         bonusSelect.innerHTML = '';
         const category = categorySelect.value;
+        
+        // Add default option with translation
+        const defaultOption = new Option(
+            translations[savedLanguage].selectBonusText || "Select Bonus", 
+            "None"
+        );
+        bonusSelect.add(defaultOption);
+        
         if (characterStatBonuses[category]) {
+            const translationSubCats = translations[savedLanguage].characterStatBonuses?.[category] || {};
+            
             Object.keys(characterStatBonuses[category]).forEach(key => {
-                const option = new Option(key, key);
+                const translatedLabel = translationSubCats[key] || key;
+                const option = new Option(translatedLabel, key);
                 option.selected = key === bonus.key;
                 bonusSelect.add(option);
             });

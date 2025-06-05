@@ -920,7 +920,7 @@ function handleAbilityScoreChange(event) {
 
 function addBonus(category, key, value) {
 
-    console.log(value.value)
+    console.log(`Adding bonus: ${category} -> ${key}`, value);
 
     if (typeof value.value === "string") {
         const abilityScoreLabel = findAbilityScoreLabel(value.value);
@@ -1204,8 +1204,9 @@ function playerConditions(condition) {
         conditionsSet.add({ text: selectedConditionText, value: selectedCondition });
         const conditionPillsContainer = document.getElementById('conditionTracker');
         conditionPillsContainer.appendChild(conditionPill);
-        calculateActionDamageDice()
-        updateContent()
+        calculateActionDamageDice();
+        sendDMUpdatedStatsDebounced();
+        updateContent();
     }
 }
 
@@ -1219,8 +1220,9 @@ function removeConditionPill(condition) {
             break;
         }
     }
-    calculateActionDamageDice()
+    calculateActionDamageDice();
     updateContent();
+    sendDMUpdatedStatsDebounced();
 }
 
 
@@ -4875,7 +4877,7 @@ function filterSpellsByLevel(selectedLevel) {
 
 // Define item type libraries
 const equipableItems = new Set(['weapon', 'armor', 'equipment','shield', 'wondrous-item']); // Can be expanded in the future. This will be used to create checkbox that allow equipping of an item. 
-const useableItems = new Set(['potion']); // Can be expanded in the future. This will be used to create use buttons next to the item
+const useableItems = new Set(['potion', 'spell-scroll']); // Can be expanded in the future. This will be used to create use buttons next to the item
 
 
 //Player character inventory section start
@@ -4930,6 +4932,7 @@ function checkEncumbrance(currentWeight) {
 
   
 function addItemToInventory(item, group) {
+    console.warn(group)
     const list = document.getElementById(`${group}-list`);
 
     if (!item.uniqueId) {
@@ -4956,18 +4959,25 @@ function addItemToInventory(item, group) {
 
 
 
-    // Check for notes and format appropriately
-    let notes = item.properties ? item.properties.map(p => p.name).join(', ') : '';
+    let notes = '';
+    if (item.equipment_category.index === "spell-scroll") {
+        // For spell scrolls: show level and school
+        if (item.spellData) {
+            notes = `${item.spellData.level} ${item.spellData.school}`;
+        }
+    } else {
+        // Original notes handling for other items
+        notes = item.properties ? item.properties.map(p => p.name).join(', ') : '';
 
-    // Add Armor Class (AC) to notes if it exists
-    if (item.armor_class && item.armor_class.base) {
-        notes += (notes ? ', ' : '') + `AC: ${item.armor_class.base}`;
+        if (item.armor_class && item.armor_class.base) {
+            notes += (notes ? ', ' : '') + `AC: ${item.armor_class.base}`;
+        }
+
+        if (item.stealth_disadvantage) {
+            notes += (notes ? ', ' : '') + `Stealth: D`;
+        }
     }
 
-    // Add Stealth disadvantage if applicable
-    if (item.stealth_disadvantage) {
-        notes += (notes ? ', ' : '') + `Stealth: D`;
-    }
 
 
     // Determine the interactive element based on item type
@@ -4983,17 +4993,17 @@ function addItemToInventory(item, group) {
     }
 
     itemDiv.innerHTML = `
-    ${interactiveElement}
-    <span class="item-name "><button class="item-info-button">${item.name}</button></span>
-    <span class="item-weight">${item.weight || 0} lbs.</span>
-    <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
-    <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>
-    <span class="item-notes"></span> <!-- Placeholder for notes -->
-    ${chargesHTML}
-    <span><button class="delete-item-button nonRollButton">X</button></span>
+        ${interactiveElement}
+        <span class="item-name "><button class="item-info-button">${item.name}</button></span>
+        <span class="item-weight">${item.weight || 0} lbs.</span>
+        <input type="number" class="item-quantity" value="${itemQuantity}" min="1">
+        <span class="item-cost">${item.cost.quantity || 0} ${item.cost.unit || 'gp'}</span>
+        <span class="item-notes"></span> <!-- Placeholder for notes -->
+        ${chargesHTML}
+        <span><button class="delete-item-button nonRollButton">X</button></span>
     `;
 
-   
+   console.warn(itemDiv)
 
     // Append the itemDiv to the list
     list.appendChild(itemDiv);
@@ -5106,29 +5116,26 @@ function addItemToInventory(item, group) {
     // Add event listener for usable items
     if (useableItems.has(item.equipment_category.index)) {
         itemDiv.querySelector('.use-item-button').addEventListener('click', () => {
-            console.log("here")
-            const actionButton = itemDiv.querySelector('.actionButton'); // Locate the actionButton in the same row
-            
-            // Simulate clicking the actionButton if it exists
-            if (actionButton) {
-                actionButton.click();
+            if (item.equipment_category.index === "spell-scroll") {
+                // Show spell card when "Use" is clicked for scrolls
+                showSpellCardDetails(item.spellData.name);
+            } else if (item.equipment_category.index === "potion") {
+                // Original potion behavior
+                const actionButton = itemDiv.querySelector('.actionButton');
+                if (actionButton) actionButton.click();
+                
+                const quantityInput = itemDiv.querySelector('.item-quantity');
+                let currentQuantity = parseInt(quantityInput.value, 10);
+                
+                if (currentQuantity > 1) {
+                    quantityInput.value = currentQuantity - 1;
+                } else {
+                    itemDiv.remove();
+                }
+                
+                updateWeight();
+                updateContent();
             }
-
-            // Reduce the quantity of the item by 1
-            const quantityInput = itemDiv.querySelector('.item-quantity');
-            let currentQuantity = parseInt(quantityInput.value, 10);
-
-            if (currentQuantity > 1) {
-                quantityInput.value = currentQuantity - 1; // Decrement the quantity
-            } else {
-                // Remove the row entirely if quantity is 0
-                const list = itemDiv.parentElement; // Get the parent list container
-                list.removeChild(itemDiv); // Remove the current item row
-            }
-
-            // Update the total weight and save the updated inventory state
-            updateWeight();
-            updateContent();
         });
     }
 
@@ -5685,99 +5692,138 @@ function removeFromAttunementList(item) {
 let activeInfoButton = null; // Keeps track of the currently active button for the inventory notes panel. 
 
 function showNotesPanel(item) {
-    // Get the item card container
     const notesPanel = document.querySelector('.item-card-container');
     notesPanel.classList.remove('hidden');
     notesPanel.classList.add('visible');
     
-    // Populate the item details with HTML for names
-    notesPanel.querySelector('#itemName').innerHTML = item.name 
-        ? `<strong>${item.name}</strong>` 
-        : '<strong>Unknown Item</strong>';
+    if (item.equipment_category.index === "spell-scroll") {
+        // Special handling for spell scrolls
+        const spell = item.spellData;
+        notesPanel.querySelector('#itemName').innerHTML = `<strong>${item.name}</strong>`;
+        
+        // Clear fields that don't apply to spell scrolls
+        notesPanel.querySelector('#itemProperties').innerHTML = '';
+        notesPanel.querySelector('#itemArmorCategory').innerHTML = '';
+        notesPanel.querySelector('#itemArmorAC').innerHTML = '';
+        notesPanel.querySelector('#itemArmorStealth').innerHTML = '';
+        notesPanel.querySelector('#itemAttackType').innerHTML = '';
+        notesPanel.querySelector('#itemDamage').innerHTML = '';
+        notesPanel.querySelector('#itemRange').innerHTML = '';
+        
+        // Populate spell-specific fields
+        notesPanel.querySelector('#itemDesc').innerHTML = spell.desc || 'No description available.';
+        
+        notesPanel.querySelector('#itemEquipmentCategory').innerHTML = 
+            `<strong>Spell Level:</strong> ${spell.level}`;
+        
+        const spellDetails = [];
+        if (spell.school) spellDetails.push(`<strong>School:</strong> ${spell.school}`);
+        if (spell.casting_time) spellDetails.push(`<strong>Casting Time:</strong> ${spell.casting_time}`);
+        if (spell.range) spellDetails.push(`<strong>Range:</strong> ${spell.range}`);
+        if (spell.components) spellDetails.push(`<strong>Components:</strong> ${spell.components}`);
+        if (spell.material) spellDetails.push(`<strong>Material:</strong> ${spell.material}`);
+        if (spell.duration) spellDetails.push(`<strong>Duration:</strong> ${spell.duration}`);
+        if (spell.higher_level) spellDetails.push(`<strong>At Higher Levels:</strong> ${spell.higher_level}`);
+        
+        notesPanel.querySelector('#itemProperties').innerHTML = spellDetails.join('<br>');
+        
+        notesPanel.querySelector('#itemWeight').innerHTML = 
+            `<strong>Weight:</strong> ${item.weight || 0} lbs.`;
+        
+        notesPanel.querySelector('#itemCost').innerHTML = 
+            item.cost ? `<strong>Cost:</strong> ${item.cost.quantity} ${item.cost.unit}` : 
+            '<strong>Cost:</strong> Unknown';
+    } else {
+        // Original handling for regular items
+        notesPanel.querySelector('#itemName').innerHTML = item.name 
+            ? `<strong>${item.name}</strong>` 
+            : '<strong>Unknown Item</strong>';
 
-    notesPanel.querySelector('#itemDesc').innerHTML = item.description || 'No description available.';
+        notesPanel.querySelector('#itemDesc').innerHTML = item.description || 'No description available.';
 
-    notesPanel.querySelector('#itemProperties').innerHTML = 
-    item.properties && item.properties.length > 0
-        ? `<strong>Properties:</strong> ${item.properties.map(prop => prop.name).join(', ')}`
-        : ``;
+        notesPanel.querySelector('#itemProperties').innerHTML = 
+        item.properties && item.properties.length > 0
+            ? `<strong>Properties:</strong> ${item.properties.map(prop => prop.name).join(', ')}`
+            : ``;
 
-    notesPanel.querySelector('#itemEquipmentCategory').innerHTML = 
-    item.equipment_category 
-        ? `<strong>Equipment Type:</strong> ${item.equipment_category.name}` 
-        : ``;
+        notesPanel.querySelector('#itemEquipmentCategory').innerHTML = 
+        item.equipment_category 
+            ? `<strong>Equipment Type:</strong> ${item.equipment_category.name}` 
+            : ``;
 
-    notesPanel.querySelector('#itemArmorCategory').innerHTML = 
-    item.armor_category
-        ? `<strong>Armor Type:</strong> ${item.armor_category} Armor` 
-        : ``;
+        notesPanel.querySelector('#itemArmorCategory').innerHTML = 
+        item.armor_category
+            ? `<strong>Armor Type:</strong> ${item.armor_category} Armor` 
+            : ``;
 
-    notesPanel.querySelector('#itemArmorAC').innerHTML = 
-    item.armor_class
-        ? `<strong>Armor Class:</strong> ${item.armor_class.base}` 
-        : ``;
+        notesPanel.querySelector('#itemArmorAC').innerHTML = 
+        item.armor_class
+            ? `<strong>Armor Class:</strong> ${item.armor_class.base}` 
+            : ``;
 
-    notesPanel.querySelector('#itemArmorStealth').innerHTML = 
-    item.stealth_disadvantage
-        ? `<strong>Stealth Disadvantage:</strong> ${item.stealth_disadvantage}` 
-        : ``;
+        notesPanel.querySelector('#itemArmorStealth').innerHTML = 
+        item.stealth_disadvantage
+            ? `<strong>Stealth Disadvantage:</strong> ${item.stealth_disadvantage}` 
+            : ``;
 
-    notesPanel.querySelector('#itemAttackType').innerHTML = 
-    item.weapon_range 
-        ? `<strong>Attack Type:</strong> ${item.weapon_range}` 
-        : ``;
+        notesPanel.querySelector('#itemAttackType').innerHTML = 
+        item.weapon_range 
+            ? `<strong>Attack Type:</strong> ${item.weapon_range}` 
+            : ``;
 
-    notesPanel.querySelector('#itemWeight').innerHTML = 
-        `<strong>Weight:</strong> ${item.weight || 0} lbs.`;
+        notesPanel.querySelector('#itemWeight').innerHTML = 
+            `<strong>Weight:</strong> ${item.weight || 0} lbs.`;
 
-    notesPanel.querySelector('#itemCost').innerHTML = 
-        item.cost 
-        ? `<strong>Cost:</strong> ${item.cost.quantity} ${item.cost.unit}` 
-        : '<strong>Cost:</strong> Unknown';
+        notesPanel.querySelector('#itemCost').innerHTML = 
+            item.cost 
+            ? `<strong>Cost:</strong> ${item.cost.quantity} ${item.cost.unit}` 
+            : '<strong>Cost:</strong> Unknown';
 
-    notesPanel.querySelector('#itemDamage').innerHTML = (() => {
-        if (item.damage) {
-            const damageText = `<strong>Damage:</strong> ${item.damage.damage_dice} ${item.damage.damage_type.name}`;
-            
-            // Check if the weapon has the versatile property
-            const hasVersatile = item.properties && item.properties.some(prop => prop.index === 'versatile');
-            
-            if (hasVersatile && item.two_handed_damage) {
-                const oneHandedDamage = `${item.damage.damage_dice} ${item.damage.damage_type.name}`;
-                const twoHandedDamage = `${item.two_handed_damage.damage_dice} ${item.two_handed_damage.damage_type.name}`;
-                return `<strong>Damage:</strong> One-Handed: ${oneHandedDamage} <br> Two-Handed: ${twoHandedDamage}`;
+        notesPanel.querySelector('#itemDamage').innerHTML = (() => {
+            if (item.damage) {
+                const damageText = `<strong>Damage:</strong> ${item.damage.damage_dice} ${item.damage.damage_type.name}`;
+                
+                // Check if the weapon has the versatile property
+                const hasVersatile = item.properties && item.properties.some(prop => prop.index === 'versatile');
+                
+                if (hasVersatile && item.two_handed_damage) {
+                    const oneHandedDamage = `${item.damage.damage_dice} ${item.damage.damage_type.name}`;
+                    const twoHandedDamage = `${item.two_handed_damage.damage_dice} ${item.two_handed_damage.damage_type.name}`;
+                    return `<strong>Damage:</strong> One-Handed: ${oneHandedDamage} <br> Two-Handed: ${twoHandedDamage}`;
+                }
+                
+                return damageText; // Return normal damage if not versatile
             }
-            
-            return damageText; // Return normal damage if not versatile
-        }
-        return ''; // Return empty string if no damage information
-    })();
+            return ''; // Return empty string if no damage information
+        })();
 
-    notesPanel.querySelector('#itemRange').innerHTML = (() => {
-        if (item.range && item.throw_range) {
-            const meleeRange = item.range.normal || 0;
-            const normalThrowRange = item.throw_range.normal || 0;
-            const longThrowRange = item.throw_range.long || null;
-            return longThrowRange
-                ? `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
-                : `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
-        } else if (item.range) {
-            const normalRange = item.range.normal || 0;
-            const longRange = item.range.long || null;
-            return longRange
-                ? `<strong>Range:</strong> ${normalRange} / ${longRange} ft.`
-                : `<strong>Range:</strong> ${normalRange} ft.`;
-        } else if (item.throw_range) {
-            const normalThrowRange = item.throw_range.normal || 0;
-            const longThrowRange = item.throw_range.long || null;
-            return longThrowRange
-                ? `<strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
-                : `<strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
-        } else {
-            return ``;
-        }
-    })();
+        notesPanel.querySelector('#itemRange').innerHTML = (() => {
+            if (item.range && item.throw_range) {
+                const meleeRange = item.range.normal || 0;
+                const normalThrowRange = item.throw_range.normal || 0;
+                const longThrowRange = item.throw_range.long || null;
+                return longThrowRange
+                    ? `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
+                    : `<strong>Melee Range:</strong> ${meleeRange} ft., <br><strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
+            } else if (item.range) {
+                const normalRange = item.range.normal || 0;
+                const longRange = item.range.long || null;
+                return longRange
+                    ? `<strong>Range:</strong> ${normalRange} / ${longRange} ft.`
+                    : `<strong>Range:</strong> ${normalRange} ft.`;
+            } else if (item.throw_range) {
+                const normalThrowRange = item.throw_range.normal || 0;
+                const longThrowRange = item.throw_range.long || null;
+                return longThrowRange
+                    ? `<strong>Thrown Range:</strong> ${normalThrowRange} / ${longThrowRange} ft.`
+                    : `<strong>Thrown Range:</strong> ${normalThrowRange} ft.`;
+            } else {
+                return ``;
+            }
+        })();
+    }
 }
+
 
 
 function hideNotesPanel() {
@@ -5793,13 +5839,23 @@ function populateItemDropdown(filter = "") {
     let itemSelect = document.getElementById('item-select');
     itemSelect.innerHTML = ""; // Clear existing items
 
-    // Filter items based on the search
-    let filteredItems = AppData.equipmentLookupInfo.equipmentNames
+    // Get all spell names
+    const spellNames = AppData.spellLookupInfo.spellsData.map(spell => 
+        `${translations[savedLanguage].spellScrollText}: ${spell.name}`
+    );
+
+    // Combine equipment and spell scrolls
+    const allItems = [
+        ...AppData.equipmentLookupInfo.equipmentNames,
+        ...spellNames
+    ];
+
+    // Filter items based on search
+    let filteredItems = allItems
         .filter(name => name.toLowerCase().includes(filter.toLowerCase()))
-        .sort((a, b) => a.localeCompare(b)); // Sort alphabetically
+        .sort((a, b) => a.localeCompare(b));
 
-
-    // Populate dropdown with filtered item names
+    // Populate dropdown
     filteredItems.forEach(name => {
         let option = document.createElement('option');
         option.value = name;
@@ -5807,6 +5863,28 @@ function populateItemDropdown(filter = "") {
         itemSelect.appendChild(option);
     });
 }
+
+// 3. Create a function to generate spell scroll items
+function createSpellScrollItem(spellName) {
+    const spell = AppData.spellLookupInfo.spellsData.find(s => s.name === spellName);
+    
+    if (!spell) return null;
+
+    return {
+        name: `${translations[savedLanguage].spellScrollText}: ${spell.name}`,
+        equipment_category: { index: "spell-scroll" },
+        cost: { quantity: 0, unit: "gp" },
+        weight: 0.1,
+        quantity: 1,
+        spellData: spell,  // Store full spell data
+        desc: spell.desc,   // For display in notes
+        uniqueId: generateUniqueId()
+    };
+}
+
+
+
+
 
   
 // Open modal to add item
@@ -5828,17 +5906,26 @@ document.getElementById('item-search').addEventListener('input', function() {
 
 // Confirm adding the item to inventory
 document.getElementById('confirm-add-item').addEventListener('click', function() {
-    let selectedItemName = document.getElementById('item-select').value;
+    const itemName = document.getElementById('item-select').value;
     let selectedBag = document.getElementById('bag-select').value;
+    let item;
 
-    // Find the selected item in the equipment lookup info
-    let selectedItem = AppData.equipmentLookupInfo.equipmentData.find(item => item.name === selectedItemName);
+    // Check if it's a spell scroll
+    console.warn(itemName)
+    if (itemName.startsWith(`${translations[savedLanguage].spellScrollText}: `)) {
+        const spellName = itemName.replace(`${translations[savedLanguage].spellScrollText}: `, "");
+        console.warn(spellName)
+        item = createSpellScrollItem(spellName);
+    } else {
+        item = AppData.equipmentLookupInfo.equipmentData.find(eq => eq.name === itemName);
+    }
 
-    if (selectedItem) {
-        addItemToInventory(selectedItem, selectedBag);
-        document.getElementById('add-item-modal').style.display = 'none'; // Close modal after adding
+    if (item) {
+        addItemToInventory(item, selectedBag);
+        document.getElementById('add-item-modal').style.display = 'none';
     }
 });
+
 
 
   
@@ -5935,20 +6022,35 @@ function loadInventoryData(characterInventoryData) {
         if (Array.isArray(items) && items.length > 0) {
             items.forEach(item => {
                 // Find the item details in the new equipment data
-                const foundItem = AppData.equipmentLookupInfo.equipmentData.find(i => i.name === item.name);
+                let newItem; 
+                if (item.name.startsWith("Spell Scroll: ")) {
+                    const spellName = item.name.replace("Spell Scroll: ", "").trim();
+                    const spellScroll = createSpellScrollItem(spellName);
+                    
+                    if (spellScroll) {
+                        newItem = {
+                            ...spellScroll,
+                            quantity: item.quantity,
+                            uniqueId: item.uniqueId,
+                            useable: item.useable,
+                            currentCharges: item.currentCharges
+                        };
+                    }
+                } else {
+                    const foundItem = AppData.equipmentLookupInfo.equipmentData.find(i => i.name === item.name);
+                    if (foundItem) {
+                        newItem = {
+                            ...foundItem,
+                            quantity: item.quantity,
+                            equipped: item.equipped,
+                            uniqueId: item.uniqueId,
+                            attuned: item.attuned,
+                            currentCharges: item.currentCharges
+                        };
+                    }
+                }
 
-                if (foundItem) {
-                    // Create a new item object by spreading foundItem and adding quantity and equipped
-                    const newItem = {
-                        ...foundItem, // Spread the foundItem properties
-                        quantity: item.quantity, // Add the quantity from characterInventoryData
-                        equipped: item.equipped, // Add the equipped status from characterInventoryData
-                        uniqueId: item.uniqueId, // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
-                        attuned: item.attuned, // Add the unique Id of the item from characterInventoryData so that it links correctly to the action table items. 
-                        currentCharges: item.currentCharges
-                    };
-
-                    // Add each item to the corresponding inventory group
+                if (newItem) {
                     addItemToInventory(newItem, group);
                 }
             });
@@ -6486,7 +6588,7 @@ function addNewTrait(groupContainer, traitData = null) {
             const profBonus = document.getElementById('profBonus').textContent;
             adjustmentValueInput.value = parseInt(profBonus);
         }
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
         updateContent();
     });
 
@@ -6506,11 +6608,11 @@ function addNewTrait(groupContainer, traitData = null) {
         });
 
         updateContent();
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
     });
 
     subCategorySelect.addEventListener('change', () => {
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
         updateContent();
     });
 
@@ -6538,7 +6640,7 @@ function addNewTrait(groupContainer, traitData = null) {
             
         }
 
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
     });
     
     // Delete Trait Button
@@ -6588,7 +6690,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
 
-    handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState)
+    handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value)
     updateContent();
 }
 
@@ -6612,7 +6714,7 @@ addGroupButton.addEventListener('click', createNewGroup);
 
 
 
-function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState) {
+function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName) {
     // Function to apply or update the bonus when a field changes
     function applyBonus() {
         const category = categorySelect.value;
@@ -6630,7 +6732,7 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
         // Only add the new bonus if value is valid and non-zero
         if (category && subCategory && !isNaN(value) && value !== 0) {
             addBonus(category, subCategory, {
-                source: "trait", // Add a unique identifier if needed
+                source: "trait: " + traitName, // Add a unique identifier if needed
                 value: value,
             });
 

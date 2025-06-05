@@ -93,6 +93,31 @@
     font-size: 10px;
 }
 
+/* Condition pill container */
+.conditions-trackers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-top: 8px;
+    padding: 4px 0;
+}
+
+/* Individual condition pill */
+.condition-pill-player {
+    display: inline-flex;
+    align-items: center;
+    background-color: #4a5568;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.6rem;
+    margin-left: 5px;
+    transition: background-color 0.2s ease;
+    cursor: default;
+    white-space: nowrap;
+}
+
+
 
 /*Playe Card Syling*/
 

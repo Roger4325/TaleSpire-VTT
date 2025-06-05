@@ -1181,6 +1181,8 @@ async function updatePlayerCard(card, player) {
         // Create a new div to hold the player header (name and health)
         const playerHeader = document.createElement('div');
         playerHeader.classList.add('player-header'); // New class for header
+        // Append player name to the header
+        playerHeader.appendChild(playerName);
 
         const conditionContainer = document.createElement('span');
         conditionContainer.classList.add('conditions-trackers');
@@ -1200,8 +1202,7 @@ async function updatePlayerCard(card, player) {
             playerHeader.appendChild(conditionContainer);
         }
 
-        // Append player name to the header
-        playerHeader.appendChild(playerName);
+
 
         // Create the player health div
         const playerHealthDiv = document.createElement('div');
@@ -1264,26 +1265,17 @@ async function updatePlayerCard(card, player) {
 
 function createConditionPill(conditionKey, language) {
     // Get translation data
-    const conditionData = translations[language]?.conditions?.[conditionKey] ||
-                          translations[language]?.effects?.[conditionKey];
+    const conditionData = translations[savedLanguage]?.conditions?.[conditionKey] || translations[savedLanguage]?.effects?.[conditionKey];
     
     const displayName = conditionData?.name || conditionKey;
-    const description = conditionData?.description || '';
 
     // Create pill element
     const pill = document.createElement('div');
-    pill.classList.add('condition-pill');
+    pill.classList.add('condition-pill-player');
     
     pill.innerHTML = `
         <span>${displayName}</span>
     `;
-
-    // Add tooltip if description exists
-    if (description) {
-        pill.addEventListener('mouseenter', showTooltip);
-        pill.addEventListener('mouseleave', hideTooltip);
-    }
-
     return pill;
 }
 
