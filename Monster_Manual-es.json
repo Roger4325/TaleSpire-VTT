@@ -85,6 +85,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Consumir vida.",
+            "ToHit": "+6",
+            "Damage": "4d8+3",
+            "DamageType": "necrótico"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -448,6 +454,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cimitarra.",
+            "ToHit": "+9",
+            "Damage": "2d6+5/1d6",
+            "DamageType": "dañocortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -516,6 +528,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+3",
+            "Damage": "1d6+5",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -715,6 +733,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Toque paralizante.",
+            "ToHit": "+12",
+            "Damage": "3d6",
+            "DamageType": "frío"
+        }],
         "Reactions": [],
         "LegendaryActions": [
             {
@@ -1098,6 +1122,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -1259,6 +1289,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordiscos",
+            "ToHit": "+2",
+            "Damage": "5d6",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -1358,6 +1394,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordiscos",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d6",
+            "DamageType": "perforante/veneno"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -1445,6 +1487,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garra",
+            "ToHit": "+7",
+            "Damage": "2d6+2",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2117,6 +2165,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2183,6 +2237,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Lanza",
+            "ToHit": "+2",
+            "Damage": "1d6/1d8",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2341,6 +2401,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Toque putrefacto",
+            "ToHit": "+2",
+            "Damage": "1d8",
+            "DamageType": "necrótico"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2525,6 +2591,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Aguijón",
+            "ToHit": "+5",
+            "Damage": "1d4+3",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2828,6 +2900,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Toque",
+            "ToHit": "+6",
+            "Damage": "2d6+3",
+            "DamageType": "fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -2943,6 +3021,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+6",
+            "Damage": "2d8+4",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3003,6 +3087,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cascos",
+            "ToHit": "+6",
+            "Damage": "2d6+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3082,6 +3172,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Martillo de guerra",
+            "ToHit": "+5",
+            "Damage": "2d8+3/1d10+3",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3253,7 +3349,7 @@
             },
             {
                 "Name": "Golpe",
-                "Content": "Ataque con arma cuerpo a cuerpo: +10 a impactar, alcance 5 pies, un objetivo. Impacto: 19 (3d8 + 6) de dañocontundente.",
+                "Content": "Ataque con arma cuerpo a cuerpo: +10 a impactar, alcance 5 pies, un objetivo. Impacto: 19 (3d8 + 6) de daño contundente.",
                 "Usage": ""
             },
             {
@@ -3262,6 +3358,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+10",
+            "Damage": "3d8+6",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3564,6 +3666,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudópodo",
+            "ToHit": "+5",
+            "Damage": "1d8+3",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3638,6 +3746,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cascos",
+            "ToHit": "+6",
+            "Damage": "2d6+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -3792,6 +3906,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+2",
+            "Damage": "1d4/1d4",
+            "DamageType": "contundente/fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4078,6 +4198,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+4",
+            "Damage": "1d10+2",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4263,6 +4389,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco/Garras",
+            "ToHit": "+3",
+            "Damage": "1d4+1",
+            "DamageType": "perforante/cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4471,6 +4603,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+11",
+            "Damage": "6d10+7/3d6",
+            "DamageType": "perforante/fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4617,6 +4755,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Toque",
+            "ToHit": "+4",
+            "Damage": "2d6",
+            "DamageType": "fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4841,6 +4985,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+6",
+            "Damage": "1d10+4",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4916,6 +5066,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Puñetazo",
+            "ToHit": "+3",
+            "Damage": "1d4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -4988,6 +5144,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Daga/Honda",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "perforante/contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -5073,6 +5235,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+8",
+            "Damage": "1d10+5",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -5168,6 +5336,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+3",
+            "Damage": "1d4+1/1d4",
+            "DamageType": "cortante/fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -5369,6 +5543,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Puño putrefacto",
+            "ToHit": "+9",
+            "Damage": "3d6+4/6d6",
+            "DamageType": "contundente/necrótico"
+        }],
         "Reactions": [],
         "LegendaryActions": [
             {
@@ -5487,6 +5667,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -5822,6 +6008,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cascos",
+            "ToHit": "+6",
+            "Damage": "2d8+4/2d6",
+            "DamageType": "contundente/fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -5908,6 +6100,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+8",
+            "Damage": "2d8+5",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -6071,6 +6269,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+3",
+            "Damage": "1d4+1",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -6140,6 +6344,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+3",
+            "Damage": "1d8+1",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -6243,6 +6453,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garra",
+            "ToHit": "+8",
+            "Damage": "2d8+4",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [
             {
@@ -6890,6 +7106,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+6",
+            "Damage": "1d10+4/1d6",
+            "DamageType": "perforante/fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -6970,6 +7192,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Asfixiar",
+            "ToHit": "+5",
+            "Damage": "2d6+3",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -7051,6 +7279,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco/Garras",
+            "ToHit": "+4",
+            "Damage": "1d6+2",
+            "DamageType": "perforante/cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -7151,6 +7385,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+3",
+            "Damage": "1d4+1/1d4",
+            "DamageType": "cortante/frío"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -7408,6 +7648,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+5",
+            "Damage": "2d6+3",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -7627,6 +7873,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Puñetazo",
+            "ToHit": "+7",
+            "Damage": "2d6+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [
             {
                 "Name": "Escudar",
@@ -7908,6 +8160,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+3",
+            "Damage": "2d4+1",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -8007,7 +8265,7 @@
             },
             {
                 "Name": "Cuja",
-                "Content": "Ataque con arma cuerpo a cuerpo: +5 a impactar, alcance 10 pies, un objetivo. Impacto: 8 (ldl O + 3) de daño cortante. Si el objetivo es una criatura que no sea ni un autómata ni un muerto viviente, deberá superar una tirada de salvación de Constitución CD 12 o, debido a una herida infernal, perderá 5 (1d10) puntos de golpe al principio de cada uno de sus turnos. Cada vez que el diablo impacte con este ataque al objetivo herido, el daño causado por la herida aumentará en 5 (1d10). Cualquier criatura puede utilizar una acción para intentar restañar la herida, teniendo éxito si supera una prueba de Sabiduría (Medicina) CD 12. La herida también se cerrará si el objetivo recibe curación mágica.",
+                "Content": "Ataque con arma cuerpo a cuerpo: +5 a impactar, alcance 10 pies, un objetivo. Impacto: 8 (ldlO + 3) de daño cortante. Si el objetivo es una criatura que no sea ni un autómata ni un muerto viviente, deberá superar una tirada de salvación de Constitución CD 12 o, debido a una herida infernal, perderá 5 (1d10) puntos de golpe al principio de cada uno de sus turnos. Cada vez que el diablo impacte con este ataque al objetivo herido, el daño causado por la herida aumentará en 5 (1d10). Cualquier criatura puede utilizar una acción para intentar restañar la herida, teniendo éxito si supera una prueba de Sabiduría (Medicina) CD 12. La herida también se cerrará si el objetivo recibe curación mágica.",
                 "Usage": ""
             }
         ],
@@ -8154,6 +8412,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Espada larga",
+            "ToHit": "+3",
+            "Damage": "1d8+1",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -8250,6 +8514,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+4",
+            "Damage": "1d4+3/2d4",
+            "DamageType": "perforante/veneno"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -8347,6 +8617,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d4",
+            "DamageType": "perforante/ácido"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -8759,6 +9035,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudópodo",
+            "ToHit": "+4",
+            "Damage": "2d6+2/1d6",
+            "DamageType": "contundente/ácido"
+        }],
         "Reactions": [
             {
                 "Name": "Dividirse",
@@ -8840,6 +9122,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Aplastar",
+            "ToHit": "+5",
+            "Damage": "1d6+3",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -8997,6 +9285,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cola",
+            "ToHit": "+7",
+            "Damage": "4d6+4",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -9232,12 +9526,18 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Maza",
+            "ToHit": "+8",
+            "Damage": "1d6+4/4d8",
+            "DamageType": "contundente/radiante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
         "Version": "1.8.2",
-        "ImageURL": "https://i.pinimg.com/originals/0b/3a/6c/0b3a6c81b60be6af35458f8409969327.jpg"
+        "ImageURL": ""
     },
     "Saga De La Noche": {
         "Id": "Saga De La Noche",
@@ -9360,6 +9660,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garras",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -9539,6 +9845,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+4",
+            "Damage": "1d4+2",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -9788,12 +10100,18 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Chupar sangre",
+            "ToHit": "+5",
+            "Damage": "1d4+3",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
         "Version": "1.5.6",
-        "ImageURL": "https://vignette.wikia.nocookie.net/forgottenrealms/images/8/86/Stirge-5e.png/revision/latest?cb=20171011140457"
+        "ImageURL": ""
     },
     "Cubo Gelatinoso": {
         "Id": "Cubo Gelatinoso",
@@ -9864,6 +10182,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudópodo",
+            "ToHit": "+4",
+            "Damage": "3d6",
+            "DamageType": "ácido"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -10411,6 +10735,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+8",
+            "Damage": "2d10+5",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -10614,6 +10944,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Consumir vida",
+            "ToHit": "+4",
+            "Damage": "3d6",
+            "DamageType": "necrótico"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -10997,6 +11333,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+6",
+            "Damage": "3d6+4",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -11291,6 +11633,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+6",
+            "Damage": "2d6+3",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -11479,6 +11827,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+8",
+            "Damage": "2d8+5",
+            "DamageType": "contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -11593,6 +11947,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Espadón",
+            "ToHit": "+12",
+            "Damage": "4d6+7/5d8",
+            "DamageType": "cortante/radiante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -11662,7 +12022,7 @@
         "Description": "",
         "Player": "",
         "Version": "1.5.6",
-        "ImageURL": "https://vignette.wikia.nocookie.net/forgottenrealms/images/8/8f/Ghoul-lmp-5e.png/revision/latest?cb=20180212162520"
+        "ImageURL": ""
     },
     "Minotauro Esqueleto": {
         "Id": "Minotauro Esqueleto",
@@ -12140,6 +12500,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garra",
+            "ToHit": "+12",
+            "Damage": "2d10+6",
+            "DamageType": "cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [
             {
@@ -12618,6 +12984,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+5",
+            "Damage": "1d10+3",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -13059,6 +13431,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+4",
+            "Damage": "1d10+2",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -13156,6 +13534,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+6",
+            "Damage": "1d10+4",
+            "DamageType": "perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -13886,6 +14270,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garrote",
+            "ToHit": "+5",
+            "Damage": "1d4+3/1d4",
+            "DamageType": "Contundente/Perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -13972,12 +14362,18 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudópodo",
+            "ToHit": "+3",
+            "Damage": "1d6+1/2d6",
+            "DamageType": "Contundente/Ácido"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
         "Version": "2.4.0",
-        "ImageURL": "https://i.pinimg.com/originals/1c/c2/a1/1cc2a1d19cf403324cdd667e1a98be8e.png"
+        "ImageURL": ""
     },
     "Dríade": {
         "Id": "Dríade",
@@ -14063,6 +14459,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Garrote",
+            "ToHit": "++6",
+            "Damage": "1d8+4",
+            "DamageType": "Contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -14168,11 +14570,17 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Cadena",
+            "ToHit": "+8",
+            "Damage": "2d6+4/2d6",
+            "DamageType": "Cortante/Perforante"
+        }],
         "LegendaryActions": [],
         "Description": "",
         "Player": "",
         "Version": "2.4.1",
-        "ImageURL": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/235/1000/1000/636252766618069332.jpeg"
+        "ImageURL": ""
     },
     "Lacero": {
         "Id": "Lacero",
@@ -14321,6 +14729,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+5",
+            "Damage": "2d6+3/1d6",
+            "DamageType": "Cortante/Ácido"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -14482,7 +14896,7 @@
         "Description": "Los tiránicos duergars, también conocidos como enanos grises, viven en fantásticas ciudades en lo más profundo del Underdark. Trabajan sin descanso para ampliar sus reinos subterráneos mediante el antiguo conocimiento de los enanos y miríadas de esclavos.\n\nLa mayoría de duergars (incluyendo las hembras) son calvos y de piel cenicienta. Visten ropa de colores apagados diseñada especialmente para mimetizarse con la piedra y se adornan con joyería simple que refleja su comportamiento pragmático y severo.\n\nEsclavos para esclavistas. Los duergars fueron enanos en otro tiempo, antes de que su avaricia y sus constantes expediciones en las profundidades de la tierra los llevara a contactar con los azotamentes. Cautivos durante generaciones por los ilícidos, estos enanos consiguieron su independencia gracias a la ayuda  del dios malvado Laduguer. No obstante, la esclavitud les cambió para siempre, ya que oscureció sus espíritus y los convirtió en criaturas tan malvadas como los tiranos de los que escaparon. Pese a haberse ganado su libertad, los duergars son criaturas hoscas, pesimistas y desconfiadas, que se quejan constantemente y trabajan duramente, incapaces de recordar lo que significa estar satisfechos o felices. Su artesanía y logros se mantienen durante largos años, pero carecen de calidez u ornamentos\n\nLos duergars están en guerra con sus hermanos enanos y con todas las razas subterráneas. Forjan alianzas cuando les conviene, y las rompen cuando no tienen nada más que ganar de ellas. Capturan y usan a esclavos para que trabajen tan duro como ellos en el Underdark, y los consideran fuerza de trabajo gratuita y moneda de cambio.\n\nDuros como la piedra. De la misma manera que los enanos, los duergars son de constitución fuerte. Además de su resistencia física, poseen una fortaleza mental increíble producto de sus años como esclavos de los ilícidos. La\u2019s mente de un duergar es una fortaleza, capaz de deshacer ilusiones, hechizos y otros conjuros.\n\nNacidos de la oscuridad. El Underdark está saturado de un poder mágico extraño, que los duergars han absorbido tras generaciones de cautiverio. Por ello, los duergars son capaces de aumentar su tamaño y fuerza por un lapso corto de tiempo, convirtiéndose en poderosos guerreros del tamaño de ogros. Además, si se enfrentan a enemigos que no pueden\u2019t derrotar, o si están espiando a criaturas que se acercan a sus territorios, pueden simplemente volverse invisibles para escapar en la oscuridad.\n\nn simplemente volverse invisibles para escaparen la oscuridad. Los eones que han permanecido en el Underdark también han provocado que se les haya agudizado su visión en la oscuridad, lo que les permite ver dos veces más lejos que otros enanos en ella. Sin embargo, esto ha producido que\u2019s su visión a la luz del día no sea tan buena como antes.\n\nSeñor infernal. Se sabe que Asmodeo, el señor de los Nueve Infiernos, ha tomado la forma de dioses duergars para cultivar el mal que crece en los corazones de los enanos grises. Hace de guía divino y se venga de los enemigos de estos enanos al mismo tiempo que los incita a cometer actos de tiranía cada vez mayores, mientras oculta su verdadera identidad. ",
         "Player": "",
         "Version": "2.1.5",
-        "ImageURL": "https://1d4chan.org/images/thumb/8/8c/Duergar 5e.jpg/400px-Duergar 5e.jpg"
+        "ImageURL": ""
     },
     "Xorn": {
         "Id": "Xorn",
@@ -14576,7 +14990,7 @@
         "Description": "",
         "Player": "",
         "Version": "1.7.4",
-        "ImageURL": "https://media-waterdeep.cursecdn.com/avatars/thumbnails/0/46/1000/1000/636252723241554579.jpeg"
+        "ImageURL": ""
     },
     "Guiverno": {
         "Id": "Guiverno",
@@ -14879,6 +15293,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Hacha de guerra",
+            "ToHit": "+7",
+            "Damage": "2d8+5",
+            "DamageType": "Cortante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -15703,6 +16123,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Golpe",
+            "ToHit": "+7",
+            "Damage": "2d8+4",
+            "DamageType": "Contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -15961,6 +16387,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+4",
+            "Damage": "1d10+2/1d4",
+            "DamageType": "Perforante/Frío"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -16122,6 +16554,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Tenaza",
+            "ToHit": "+6",
+            "Damage": "2d6+4",
+            "DamageType": "Contundente"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -16603,6 +17041,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+5",
+            "Damage": "1d8+3/2d6",
+            "DamageType": "Perforante/Fuego"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -16685,6 +17129,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Pseudópodo",
+            "ToHit": "+5",
+            "Damage": "1d6+3/4d8",
+            "DamageType": "Contundente/Ácido"
+        }],
         "Reactions": [
             {
                 "Name": "Dividirse",
@@ -16951,6 +17401,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+5",
+            "Damage": "1d10+3/1d6",
+            "DamageType": "Perforante/Relámpago"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -17018,6 +17474,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Espada corta",
+            "ToHit": "+4",
+            "Damage": "1d6+2",
+            "DamageType": "Perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -17280,6 +17742,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Mordisco",
+            "ToHit": "+7",
+            "Damage": "4d12+4",
+            "DamageType": "Perforante"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -17364,6 +17832,12 @@
                 "Usage": ""
             }
         ],
+        "QuickAction": [{
+            "Name": "Puño putrefacto",
+            "ToHit": "+5",
+            "Damage": "2d6+3/3d6",
+            "DamageType": "Contundente/Necrotico"
+        }],
         "Reactions": [],
         "LegendaryActions": [],
         "Description": "",
@@ -17739,179 +18213,179 @@
         "InitiativeModifier": 4,
         "InitiativeAdvantage": false,
         "Speed": [
-        "40 ft.",
-        "fly 40 ft. (in darkness)"
+            "40 ft.",
+            "fly 40 ft. (in darkness)"
         ],
         "Abilities": {
-        "Str": 22,
-        "Dex": 18,
-        "Con": 18,
-        "Int": 18,
-        "Wis": 16,
-        "Cha": 20
+            "Str": 22,
+            "Dex": 18,
+            "Con": 18,
+            "Int": 18,
+            "Wis": 16,
+            "Cha": 20
         },
         "DamageVulnerabilities": [],
         "DamageResistances": [
-        "necrotic",
-        "bludgeoning",
-        "piercing",
-        "slashing"
+            "necrotic",
+            "bludgeoning",
+            "piercing",
+            "slashing"
         ],
         "DamageImmunities": [],
         "ConditionImmunities": [
-        "charmed",
-        "frightened",
-        "restrained",
-        "stunned"
+            "charmed",
+            "frightened",
+            "restrained",
+            "stunned"
         ],
         "Saves": [
-        {
-            "Name": "Dex",
-            "Modifier": 8
-        },
-        {
-            "Name": "Int",
-            "Modifier": 8
-        },
-        {
-            "Name": "Cha",
-            "Modifier": 9
-        },
-        {
-            "Name": "Con",
-            "Modifier": 8
-        }
+            {
+                "Name": "Dex",
+                "Modifier": 8
+            },
+            {
+                "Name": "Int",
+                "Modifier": 8
+            },
+            {
+                "Name": "Cha",
+                "Modifier": 9
+            },
+            {
+                "Name": "Con",
+                "Modifier": 8
+            }
         ],
         "Skills": [
-        {
-            "Name": "Arcana",
-            "Modifier": 8
-        },
-        {
-            "Name": "Deception",
-            "Modifier": 9
-        },
-        {
-            "Name": "Insight",
-            "Modifier": 7
-        },
-        {
-            "Name": "Performance",
-            "Modifier": 9
-        },
-        {
-            "Name": "Perception",
-            "Modifier": 7
-        }
+            {
+                "Name": "Arcana",
+                "Modifier": 8
+            },
+            {
+                "Name": "Deception",
+                "Modifier": 9
+            },
+            {
+                "Name": "Insight",
+                "Modifier": 7
+            },
+            {
+                "Name": "Performance",
+                "Modifier": 9
+            },
+            {
+                "Name": "Perception",
+                "Modifier": 7
+            }
         ],
         "Senses": [
-        "darkvision 120 ft.",
-        "passive perception 17"
+            "darkvision 120 ft.",
+            "passive perception 17"
         ],
         "Languages": [
-        "Common",
-        "Infernal"
+            "Common",
+            "Infernal"
         ],
         "Challenge": "15",
         "Traits": [
-        {
-            "Name": "Legendary Resistances (3/Day)",
-            "Content": "If Dorian fails a saving throw, he can choose to add a +7 to it if it would cause him to succeed.",
-            "Usage": ""
-        },
-        {
-            "Name": "Mist Form",
-            "Content": "As a bonus action, Dorian can transform into mist. In this form, he cannot attack or cast spells, can move through small openings, and is immune to all damage except force and thunder damage. If he activates Umbral Form while in mist, he emits magical darkness in a 5-foot radius and gains resistance to all damage except radiant.",
-            "Usage": ""
-        },
-        {
-            "Name": "Aura of Shadow",
-            "Content": "At the start of each of Dorian’s turns, he can convert bright light or dim light within a 10-foot radius into non-magical darkness until the end of his next turn. This ability does not affect sunlight.",
-            "Usage": ""
-        },
-        {
-            "Name": "Shadow Wings",
-            "Content": "While in darkness, Dorian gains a flying speed equal to his walking speed.",
-            "Usage": ""
-        },
-        {
-            "Name": "Umbral Evasion",
-            "Content": "While in darkness, whenever Dorian is forced to make a saving throw against an effect that targets only him, he takes half damage on a failed saving throw and none on a successful save. This feature has no effect on area effects.",
-            "Usage": ""
-        },
-        {
-            "Name": "Master of the Stage",
-            "Content": "Dorian is immune to being frightened or charmed and has advantage on saving throws against being paralyzed or stunned.",
-            "Usage": ""
-        }
+            {
+                "Name": "Legendary Resistances (3/Day)",
+                "Content": "If Dorian fails a saving throw, he can choose to add a +7 to it if it would cause him to succeed.",
+                "Usage": ""
+            },
+            {
+                "Name": "Mist Form",
+                "Content": "As a bonus action, Dorian can transform into mist. In this form, he cannot attack or cast spells, can move through small openings, and is immune to all damage except force and thunder damage. If he activates Umbral Form while in mist, he emits magical darkness in a 5-foot radius and gains resistance to all damage except radiant.",
+                "Usage": ""
+            },
+            {
+                "Name": "Aura of Shadow",
+                "Content": "At the start of each of Dorian’s turns, he can convert bright light or dim light within a 10-foot radius into non-magical darkness until the end of his next turn. This ability does not affect sunlight.",
+                "Usage": ""
+            },
+            {
+                "Name": "Shadow Wings",
+                "Content": "While in darkness, Dorian gains a flying speed equal to his walking speed.",
+                "Usage": ""
+            },
+            {
+                "Name": "Umbral Evasion",
+                "Content": "While in darkness, whenever Dorian is forced to make a saving throw against an effect that targets only him, he takes half damage on a failed saving throw and none on a successful save. This feature has no effect on area effects.",
+                "Usage": ""
+            },
+            {
+                "Name": "Master of the Stage",
+                "Content": "Dorian is immune to being frightened or charmed and has advantage on saving throws against being paralyzed or stunned.",
+                "Usage": ""
+            }
         ],
         "Actions": [
-        {
-            "Name": "Multiattack",
-            "Content": "Dorian can make three Blood Blade attacks when he takes the attack action. He may also use Spot Lights or Curtain Call before making these attacks.",
-            "Usage": ""
-        },
-        {
-            "Name": "Blood Blade",
-            "Content": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 24 (4d8 + 6) necrotic damage.",
-            "Usage": ""
-        },
-        {
-            "Name": "Bloodsiphon",
-            "Content": "Recharge 5–6 1d6. Dorian targets one creature within 30 feet that he can see. The target must succeed on a DC 17 Constitution saving throw or take 45 (8d8) necrotic damage, and Dorian regains hit points equal to the necrotic damage dealt.",
-            "Usage": ""
-        },
-        {
-            "Name": "Spot Lights",
-            "Content": "Dorian calls forth ghostly stage lights to illuminate and expose his enemies. He targets all creatures within a 60-foot cone of light, forcing them to make a DC 17 Dexterity saving throw. On a failure, the target is outlined in ghostly light, has disadvantage on Dexterity saving throws, and Stealth checks until the end of Dorian’s next turn and is under the effects of Faerie Fire.",
-            "Usage": ""
-        },
-        {
-            "Name": "Curtain Call",
-            "Content": "Dorian conjures spectral ropes to pull a target towards him like a puppet. One creature within 60 feet must succeed on a DC 17 Strength saving throw or be pulled 30 feet towards Dorian and restrained until the end of their next turn.",
-            "Usage": ""
-        },
-        {
-            "Name": "Shadow Blood",
-            "Content": "Once per turn, if Dorian is in darkness, he can increase his next attack’s damage by 10 necrotic damage and gains advantage on that attack.",
-            "Usage": "Bonus Action"
-        }
+            {
+                "Name": "Multiattack",
+                "Content": "Dorian can make three Blood Blade attacks when he takes the attack action. He may also use Spot Lights or Curtain Call before making these attacks.",
+                "Usage": ""
+            },
+            {
+                "Name": "Blood Blade",
+                "Content": "Melee Weapon Attack: +11 to hit, reach 5 ft., one target. Hit: 24 (4d8 + 6) necrotic damage.",
+                "Usage": ""
+            },
+            {
+                "Name": "Bloodsiphon",
+                "Content": "Recharge 5–6 1d6. Dorian targets one creature within 30 feet that he can see. The target must succeed on a DC 17 Constitution saving throw or take 45 (8d8) necrotic damage, and Dorian regains hit points equal to the necrotic damage dealt.",
+                "Usage": ""
+            },
+            {
+                "Name": "Spot Lights",
+                "Content": "Dorian calls forth ghostly stage lights to illuminate and expose his enemies. He targets all creatures within a 60-foot cone of light, forcing them to make a DC 17 Dexterity saving throw. On a failure, the target is outlined in ghostly light, has disadvantage on Dexterity saving throws, and Stealth checks until the end of Dorian’s next turn and is under the effects of Faerie Fire.",
+                "Usage": ""
+            },
+            {
+                "Name": "Curtain Call",
+                "Content": "Dorian conjures spectral ropes to pull a target towards him like a puppet. One creature within 60 feet must succeed on a DC 17 Strength saving throw or be pulled 30 feet towards Dorian and restrained until the end of their next turn.",
+                "Usage": ""
+            },
+            {
+                "Name": "Shadow Blood",
+                "Content": "Once per turn, if Dorian is in darkness, he can increase his next attack’s damage by 10 necrotic damage and gains advantage on that attack.",
+                "Usage": "Bonus Action"
+            }
         ],
         "Reactions": [
-        {
-            "Name": "Shadow Shield",
-            "Content": "When Dorian takes damage, he can use his reaction to halve the damage. He can only benefit from this feature while in dim light or darkness.",
-            "Usage": ""
-        }
+            {
+                "Name": "Shadow Shield",
+                "Content": "When Dorian takes damage, he can use his reaction to halve the damage. He can only benefit from this feature while in dim light or darkness.",
+                "Usage": ""
+            }
         ],
         "LegendaryActions": [
-        {
-            "Name": "Legendary Actions",
-            "Content": "Dorian can use 3 legendary actions per round and can only use these after a players turn. He regains all legendary actions at the start of his turn.",
-            "Usage": ""
-        },
-        {
-            "Name": "Misty Escape",
-            "Content": "(1 Action) Dorian uses his Mist Form ability, moving up to 60 feet before reverting to his normal form.",
-            "Usage": ""
-        },
-        {
-            "Name": "Command the Puppets",
-            "Content": "(1 Action) Dorian commands one of his mannequins to make an attack and move up to 30 feet.",
-            "Usage": ""
-        },
-        {
-            "Name": "Unholy Command",
-            "Cost": 2,
-            "Content": "(2 Action) Dorian targets one creature within 30 feet. The target must succeed on a DC 17 Wisdom saving throw or be frightened until the end of Dorian’s next turn.",
-            "Usage": ""
-        },
-        {
-            "Name": "Final Curtain",
-            "Cost": 3,
-            "Content": "(2 Action) Dorian summons shadows to engulf the area around him. Each creature within 30 feet of him must succeed on a DC 17 Dexterity saving throw or take 44 (10d8) necrotic damage and be restrained by shadows until the end of their next turn. Creatures take half as much damage on a success.",
-            "Usage": ""
-        }
+            {
+                "Name": "Legendary Actions",
+                "Content": "Dorian can use 3 legendary actions per round and can only use these after a players turn. He regains all legendary actions at the start of his turn.",
+                "Usage": ""
+            },
+            {
+                "Name": "Misty Escape",
+                "Content": "(1 Action) Dorian uses his Mist Form ability, moving up to 60 feet before reverting to his normal form.",
+                "Usage": ""
+            },
+            {
+                "Name": "Command the Puppets",
+                "Content": "(1 Action) Dorian commands one of his mannequins to make an attack and move up to 30 feet.",
+                "Usage": ""
+            },
+            {
+                "Name": "Unholy Command",
+                "Cost": 2,
+                "Content": "(2 Action) Dorian targets one creature within 30 feet. The target must succeed on a DC 17 Wisdom saving throw or be frightened until the end of Dorian’s next turn.",
+                "Usage": ""
+            },
+            {
+                "Name": "Final Curtain",
+                "Cost": 3,
+                "Content": "(2 Action) Dorian summons shadows to engulf the area around him. Each creature within 30 feet of him must succeed on a DC 17 Dexterity saving throw or take 44 (10d8) necrotic damage and be restrained by shadows until the end of their next turn. Creatures take half as much damage on a success.",
+                "Usage": ""
+            }
         ],
         "LairActions": [],
         "Description": "",
@@ -18016,196 +18490,6 @@
             "Content": "Recharge 5–6. Draven can use his bonus action to command one allied vampire spawn within 60 feet to make an additional attack immediately. The vampire spawn also gains advantage on its next attack roll.",
             "Usage": ""
             }
-        ],
-        "LegendaryActions": [],
-        "LairActions": [],
-        "Description": "",
-        "Player": "",
-        "Version": "1.0.0",
-        "ImageURL": ""
-    },
-    "Dorian de Nocte - Lair": {
-        "Id": "Dorian_de_Nocte_Lair",
-        "Name": "Dorian de Nocte - Lair",
-        "Type": "Medium Undead",
-        "Alignment": "Neutral Evil",
-        "HP": {
-            "Value": 230,
-            "Notes": "(17d8 + 68)"
-        },
-        "AC": {
-            "Value": 18,
-            "Notes": "(natural armor)"
-        },
-        "InitiativeModifier": 4,
-        "InitiativeAdvantage": false,
-        "Speed": [
-            "40 ft.",
-            "fly 40 ft. (in darkness)"
-        ],
-        "Abilities": {
-            "Str": 22,
-            "Dex": 18,
-            "Con": 18,
-            "Int": 18,
-            "Wis": 16,
-            "Cha": 20
-        },
-        "SavingThrows": [
-            {
-            "Name": "Dexterity",
-            "Modifier": 8
-            },
-            {
-            "Name": "Intelligence",
-            "Modifier": 8
-            },
-            {
-            "Name": "Charisma",
-            "Modifier": 9
-            },
-            {
-            "Name": "Constitution",
-            "Modifier": 8
-            }
-        ],
-        "Skills": [
-            {
-            "Name": "Arcana",
-            "Modifier": 8
-            },
-            {
-            "Name": "Deception",
-            "Modifier": 9
-            },
-            {
-            "Name": "Insight",
-            "Modifier": 7
-            },
-            {
-            "Name": "Performance",
-            "Modifier": 9
-            },
-            {
-            "Name": "Perception",
-            "Modifier": 7
-            }
-        ],
-        "DamageResistances": [
-            "necrotic",
-            "bludgeoning",
-            "piercing",
-            "slashing"
-        ],
-        "Senses": [
-            "darkvision 120 ft.",
-            "passive perception 17"
-        ],
-        "Languages": [
-            "Common",
-            "Infernal"
-        ],
-        "Challenge": "11",
-        "XP": 7200,
-        "Actions": [
-            {
-            "Name": "Mannequin Performance",
-            "Content": "Dorian animates two mannequins on stage, which attack any intruders. Each mannequin has AC 14, 20 hit points, and deals +8 to hit, 1d10 + 3 slashing damage. They remain animated for 1 minute or until destroyed."
-            },
-            {
-            "Name": "Trapdoor Exit",
-            "Content": "A hidden trapdoor opens beneath one creature Dorian can see within 60 feet. The creature must succeed on a DC 15 Dexterity saving throw or fall 30 feet, taking 3d6 bludgeoning damage and landing prone."
-            },
-            {
-            "Name": "Phantom Applause",
-            "Content": "A haunting, ghostly applause fills the room. Each enemy within 30 feet of Dorian must succeed on a DC 17 Wisdom saving throw or become disoriented, gaining disadvantage on attack rolls and saving throws until the end of Dorian’s next turn."
-            },
-            {
-            "Name": "Lights, Shadows, Action!",
-            "Content": "Dorian summons ghostly stage lights and moving shadows. The area within 30 feet of Dorian becomes dimly lit and filled with illusions of moving scenery. Enemies in this area have disadvantage on perception checks and ranged attacks."
-            }
-        ],
-        "LegendaryActions": [],
-        "LairActions": [],
-        "Description": "",
-        "Player": "",
-        "Version": "1.0.0",
-        "ImageURL": ""
-    },
-    "Mannequin Minion": {
-        "Id": "Dorian_Mannequin_Minion",
-        "Name": "Mannequin Minion",
-        "Type": "Medium Construct",
-        "Alignment": "Neutral Evil",
-        "HP": {
-        "Value": 20,
-        "Notes": "(4d8 + 2)"
-        },
-        "AC": {
-        "Value": 14,
-        "Notes": ""
-        },
-        "InitiativeModifier": 0,
-        "InitiativeAdvantage": false,
-        "Speed": [
-        "30 ft."
-        ],
-        "Abilities": {
-        "Str": 16,
-        "Dex": 10,
-        "Con": 12,
-        "Int": 3,
-        "Wis": 8,
-        "Cha": 5
-        },
-        "SavingThrows": [],
-        "Skills": [],
-        "DamageResistances": [
-        "bludgeoning, piercing, and slashing from nonmagical attacks"
-        ],
-        "DamageImmunities": [
-        "poison",
-        "psychic"
-        ],
-        "ConditionImmunities": [
-        "charmed",
-        "exhaustion",
-        "frightened",
-        "paralyzed",
-        "poisoned"
-        ],
-        "Senses": [
-        "darkvision 60 ft.",
-        "passive perception 9"
-        ],
-        "Languages": [
-        "understands Common but cannot speak"
-        ],
-        "Challenge": "2",
-        "XP": 450,
-        "Traits": [
-        {
-            "Name": "Unwavering Performer",
-            "Content": "As long as Dorian is within 120 feet, the Mannequin Minion has advantage on saving throws against effects that would turn it."
-        },
-        {
-            "Name": "Stage Puppet",
-            "Content": "When the Mannequin takes damage, Dorian can use his reaction to make the minion immune to that instance of damage if it was caused by a critical hit."
-        }
-        ],
-        "Actions": [
-        {
-            "Name": "Multiattack",
-            "Content": "The Mannequin Minion makes two Slashing Hand attacks."
-        },
-        {
-            "Name": "Slashing Hand",
-            "Content": "Melee Weapon Attack: +8 to hit, reach 5 ft., one target. Hit: 8 (1d10 + 3) slashing damage."
-        },
-        {
-            "Name": "Grappling Grasp",
-            "Content": "Recharge 5–6. The Mannequin attempts to grapple a creature within 5 feet. The target must succeed on a DC 13 Strength saving throw or become grappled (escape DC 13) until the start of the Mannequin’s next turn. While grappled, the target has disadvantage on attack rolls against any creature except the Mannequin Minion."
-        }
         ],
         "LegendaryActions": [],
         "LairActions": [],

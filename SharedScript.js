@@ -31,20 +31,45 @@ function setupNav(){
         });
     });
 
-        // Display the initial section (e.g., Player Stats)
-        const initialTab = tabs[0];
-        initialTab.click();
+    // Display the initial section (e.g., Player Stats)
+    const initialTab = tabs[0];
+    initialTab.click(); 
 
 }
 
-    //Adding event listeners to the toggle buttons for Adv and Disadv
-    const toggleButtons = document.querySelectorAll('.toggle-button');
-    toggleButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            toggleButtons.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-        });
+
+async function setVersionToggle() {
+    const versionData = await loadDataFromGlobalStorage("D&DVersion");
+    const versionSetting = versionData?.Version || '2014';
+    setActiveVersionButton(versionSetting);
+}
+
+
+
+document.querySelectorAll('.version-option').forEach(button => {
+    button.addEventListener('click', function() {
+        const value = this.dataset.value;
+        setActiveVersionButton(value);
+        saveToGlobalStorage("D&DVersion", "Version", value, false)
+        loadSpellDataFiles()
     });
+});
+
+function setActiveVersionButton(value) {
+    console.warn("Setting version toggle to: " + value);
+    document.querySelectorAll('.version-option').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.value === value);
+    });
+}
+
+//Adding event listeners to the toggle buttons for Adv and Disadv
+const toggleButtons = document.querySelectorAll('.toggle-button');
+toggleButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        toggleButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    });
+});
 
 
 function generateUUID() {
@@ -1740,7 +1765,7 @@ const translations = {
         addItemModalDropdownText: "Seleccionar Objeto:",
         'confirm-add-item': "Agregar Objeto",
         'close-modal': "Cancelar",
-        spellScrollText: "Pergamino de Hechizo",
+        spellScrollText: "Pergamino Mágico",
 
         conditionPlayerAddButton: "Añadir Condición",
         hitDiceOpenModalButton: "Dados de Golpe",
@@ -2870,22 +2895,51 @@ async function setLanguage(language) {
 
 
 // Event listeners for language buttons
-const languageEngButton = document.getElementById('languageEngButton');
-const languageEspButton = document.getElementById('languageEspButton');
+// const languageEngButton = document.getElementById('languageEngButton');
+// const languageEspButton = document.getElementById('languageEspButton');
 
-if (languageEngButton) {
-    languageEngButton.addEventListener('click', async () => {
-        await setLanguage('eng');
+// if (languageEngButton) {
+//     languageEngButton.addEventListener('click', async () => {
+//         await setLanguage('eng');
+//         location.reload();
+//     });
+// }
+
+// if (languageEspButton) {
+//     languageEspButton.addEventListener('click', async () => {
+//         await setLanguage('es');
+//         location.reload();
+//     });
+// }
+
+async function setupLanguageSelector() {
+    const languageSelect = document.getElementById('languageSelect');
+    const savedLang = savedLanguage || 'eng'; // Default to English if no saved language
+
+    // Clear existing options (if re-running)
+    languageSelect.innerHTML = '';
+
+    // Populate dropdown with available languages
+    for (const langCode in translations) {
+        const option = document.createElement('option');
+        option.value = langCode;
+        option.textContent = langCode === 'eng' ? 'English' : 
+                             langCode === 'es' ? 'Español' :
+                             langCode; // Fallback to code if no label defined
+        if (langCode === savedLang) option.selected = true;
+        languageSelect.appendChild(option);
+    }
+
+    // On change, set and reload
+    languageSelect.addEventListener('change', async (e) => {
+        await setLanguage(e.target.value);
         location.reload();
     });
 }
 
-if (languageEspButton) {
-    languageEspButton.addEventListener('click', async () => {
-        await setLanguage('es');
-        location.reload();
-    });
-}
+
+
+
 
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
@@ -3121,7 +3175,10 @@ async function onInit() {
         savedLanguage = "eng"; // Default to "eng" if not valid
     }
 
+    await setupLanguageSelector()
+
     //Initialize spell List
+    await setVersionToggle()
     await loadSpellDataFiles();
     AppData.monsterLookupInfo = await readMonsterJsonList();
     AppData.equipmentLookupInfo = await readEquipmentJson();
@@ -4076,39 +4133,58 @@ function errorModal(modalText){
 // read the JSON file spells.json and save the data and names to variables
 async function readSpellJson() {
     try {
-        const allSpellData = await loadDataFromGlobalStorage("Custom Spells"); // Load data from global storage
-        console.log(allSpellData)
+        const allSpellData = await loadDataFromGlobalStorage("Custom Spells");
         const isGlobalDataAnObject = typeof allSpellData === 'object';
 
-        
-
-        // Fetch the data from the JSON file
         const response = await fetch(`spells-${savedLanguage}.json`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
+        if (!response.ok) throw new Error('Network response was not ok');
         const spellsData = await response.json();
 
-        let combinedData;
-
-        if (isGlobalDataAnObject) {
-            // If global data is an object, convert it into an array
-            combinedData = Object.values(allSpellData);
-        } else {
-            // If global data is already an array, use it as is
-            combinedData = allSpellData;
-        }
-
-        // Combine the data from global storage and the JSON file
+        let combinedData = isGlobalDataAnObject 
+            ? Object.values(allSpellData)
+            : allSpellData;
+        
         combinedData = [...combinedData, ...spellsData];
 
-        // Extract spell names from the combined data
-        const spellNames = combinedData.map(spell => spell.name);
-        console.log('returning from readSpellJSON');
+        const versionData = await loadDataFromGlobalStorage("D&DVersion");
+        const versionSetting = versionData?.Version || '2014';
+        
+        // Add version filtering
+        let filteredData = combinedData.filter(spell => {
+            const spellYear = spell.year || '2014';
+            if (versionSetting === 'both') return true;
+            return spellYear === versionSetting;
+        });
+
+        // Modify spell objects when both versions are selected
+        if (versionSetting === 'both') {
+            // Create a map to track spell name occurrences
+            const spellCountMap = {};
+            
+            filteredData = filteredData.map(spell => {
+                // Create a copy of the spell object to avoid mutation
+                const modifiedSpell = {...spell};
+                
+                const year = modifiedSpell.year || '2014';
+                const symbol = year === '2014' ? '' : ' 🜁';
+                
+                // Count occurrences to handle duplicates
+                const count = spellCountMap[modifiedSpell.name] || 0;
+                spellCountMap[modifiedSpell.name] = count + 1;
+                
+                // Append symbol to the spell name
+                modifiedSpell.name += symbol;
+                
+                return modifiedSpell;
+            });
+        }
+
+        // Extract spell names from the modified/filtered data
+        const spellNames = filteredData.map(spell => spell.name);
 
         return {
             spellNames: spellNames,
-            spellsData: combinedData
+            spellsData: filteredData
         };
         
     } catch (error) {
@@ -4204,8 +4280,11 @@ async function readEquipmentJson() {
     }
 }
 
-document.getElementById('settings-button').addEventListener('click', function () {
-    const dropdown = document.getElementById('settings-option-dropdown');
+const settingsButton = document.getElementById('settings-button');
+const dropdown = document.getElementById('settings-option-dropdown');
+
+// Toggle dropdown when button is clicked
+settingsButton.addEventListener('click', function () {
     if (dropdown.style.display === 'none' || dropdown.style.display === '') {
         dropdown.style.display = 'block';
     } else {
@@ -4213,13 +4292,12 @@ document.getElementById('settings-button').addEventListener('click', function ()
     }
 });
 
-document.getElementById('settings-button').addEventListener('blur', function () {
-    const dropdown = document.getElementById('settings-option-dropdown');
-    hideDropdownTimeout = setTimeout(function () {
-        if (dropdown.style.display === 'block') {
-            dropdown.style.display = 'none';
-        }
-    }, 200); // Delay in milliseconds (e.g., 300ms)
+// Hide dropdown if clicking outside
+document.addEventListener('click', function (event) {
+    const isClickInside = settingsButton.contains(event.target) || dropdown.contains(event.target);
+    if (!isClickInside) {
+        dropdown.style.display = 'none';
+    }
 });
 
 

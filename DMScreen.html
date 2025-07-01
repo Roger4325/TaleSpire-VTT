@@ -42,21 +42,35 @@
                     <li><a href="#Docs" id="DocsLinkInit">Notes</a></li>
                     <li><a href="#GoogleDocs" id="GoogleDocsLinkInit">Google Docs</a></li>
                     <li>
-                        <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
-                        <div id="settings-option-dropdown" style="display: none; position: absolute;">
-                            <ul>
-                                <li>
-                                    <div>experimental</div>
-                                    <div id="languageButtons">
-                                        <button id="languageEngButton" class="nonRollButton">English</button>
-                                        <button id="languageEspButton" class="nonRollButton">Espanol</button>
-                                    </div>
-                                </li>
-                                <li>
-                                    <button id="openModal" class="open-modal nonRollButton">Change Theme</button>
-                                 </li>
-                                <!-- Add more options as needed -->
-                            </ul>
+                        <div class="settings-dropdown-wrapper">
+                            <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
+                            <div id="settings-option-dropdown">
+                                <ul>
+                                    <li>
+                                        <h3 id="settingsHeading">Experimental</h3>
+                                        <div id="languageSelectorContainer">
+                                            <label for="languageSelect">Language:</label>
+                                            <select id="languageSelect" class="nonRollButton"></select>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <button id="openModal" class="open-modal nonRollButton">Change Theme</button>
+                                    </li>
+                                    <li>
+                                        <label><span>Exahustion Homebrew</span> <input type="checkbox" id="exhaustionHomebrew"></label>
+                                        
+                                    </li>
+                                    <li>
+                                        <label>D&D Version</label>
+                                        <div class="version-toggle">
+                                            <button class="version-option active" data-value="2014">2014</button>
+                                            <button class="version-option" data-value="both">Both</button>
+                                            <button class="version-option" data-value="2024">2024  🜁</button>
+                                        </div>
+                                    </li>
+                                    <!-- Add more options as needed -->
+                                </ul>
+                            </div>
                         </div>
                     </li>
                 </ul>

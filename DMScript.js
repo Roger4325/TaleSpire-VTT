@@ -1259,7 +1259,9 @@ async function updatePlayerCard(card, player) {
     if (dropdownContainer) {
         card.appendChild(dropdownContainer);
     }
-    debouncedSendInitiativeListToPlayer()
+    debouncedSendInitiativeListToPlayer();
+    saveMonsterCardsAsEncounter("AutoSaveTemporary");
+    reorderCards();
 }
 
 
@@ -1356,6 +1358,7 @@ function reorderCards() {
     highlightCurrentTurn();
 
     debouncedSendInitiativeListToPlayer();
+    saveMonsterCardsAsEncounter("AutoSaveTemporary")
 }
 
 const debouncedSendInitiativeListToPlayer = debounce(sendInitiativeListToPlayer, 1000);
@@ -1439,6 +1442,7 @@ function nextTurn() {
     }
 
     highlightCurrentTurn(); // Highlight the current card
+    saveMonsterCardsAsEncounter("AutoSaveTemporary")
 }
 
 function previousTurn() {
@@ -1455,7 +1459,7 @@ function previousTurn() {
         highlightCurrentTurn(); // Highlight the current card
     }
 
-    
+    saveMonsterCardsAsEncounter("AutoSaveTemporary")
 }
 
 function makeRoundEditable() {
@@ -1645,6 +1649,7 @@ function monsterConditions(condition) {
     else{
         showErrorModal("No monster currently slected. Please click on the monster you would like to apply a condition to.")
     }
+    saveMonsterCardsAsEncounter("AutoSaveTemporary")
 }
 
 // Function to remove a condition pill
@@ -1679,6 +1684,7 @@ function removeMonsterCondition(condition) {
         }
     }
     debouncedSendInitiativeListToPlayer()
+    saveMonsterCardsAsEncounter("AutoSaveTemporary")
 }
 
 

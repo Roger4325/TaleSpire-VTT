@@ -180,7 +180,7 @@ async function playerSetUP(){
         element.addEventListener('mouseenter', () => {
             showTimeout = setTimeout(() => {
                 const rect = element.getBoundingClientRect();
-                tooltip.style.top = `${rect.top - tooltip.offsetHeight - 2}px`;
+                tooltip.style.top = `2%`;
                 tooltip.style.left = `${rect.left + rect.width - 20}px`;
                 tooltip.classList.add('show');
 
@@ -739,10 +739,31 @@ function updateAC() {
         finalAC = baseAC + dexScore + shieldMod ;
     }
 
+    let conditionsSet
+    let HasteBonus = 0
+    conditionTrackerDiv = document.getElementById('conditionTracker');
+    const conditionSpans = conditionTrackerDiv.querySelectorAll('.condition-pill span');
+
+    conditionsSet = new Set();
+    // Create a map of condition values
+    conditionSpans.forEach(span => {
+        const value = span.getAttribute('value');
+        if (value) {
+            conditionsSet.add(value)
+        }
+    });
+    
+    if (conditionsSet) {
+        console.log(conditionsSet)
+        if (conditionsSet.has('haste')){
+            HasteBonus = 2;
+        }             
+    }
+    
     // Add AC bonuses from characterStatBonuses
     const acBonuses = characterStatBonuses.combatStats.AC.bonuses || [];
     const acBonusTotal = acBonuses.reduce((total, bonus) => total + bonus.value, 0);
-    finalAC += acBonusTotal;
+    finalAC += acBonusTotal + HasteBonus;
 
     // Update the AC display
 
@@ -1205,6 +1226,7 @@ function playerConditions(condition) {
         const conditionPillsContainer = document.getElementById('conditionTracker');
         conditionPillsContainer.appendChild(conditionPill);
         calculateActionDamageDice();
+        updateAC();
         sendDMUpdatedStatsDebounced();
         updateContent();
     }
@@ -1221,6 +1243,7 @@ function removeConditionPill(condition) {
         }
     }
     calculateActionDamageDice();
+    updateAC();
     updateContent();
     sendDMUpdatedStatsDebounced();
 }
@@ -3351,7 +3374,8 @@ function calculateActionDamageDice() {
         });
         
         if (conditionsSet) {
-            if (conditionsSet.has('Raging') && 
+            console.log(conditionsSet)
+            if (conditionsSet.has('raging') && 
             selectedWeaponType === translations[savedLanguage].meleeWeapon && 
             abilityDropdown.value === translations[savedLanguage].characterAbilityStr) {        
                     rageDamageBonus = characterStatBonuses.combatStats.RageDamageBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
@@ -3767,8 +3791,13 @@ function createSpellRow(spell,spellLevel) {
         const spellDataObject = AppData.spellLookupInfo;
         const spellDataArray = spellDataObject.spellsData;
         
+        console.warn(spellDataObject)
+        console.warn(spellDataArray)
+        
         // First, filter spells based on level
         const filteredSpells = spellDataArray.filter(spell => spell.level === level);
+
+        console.warn(filteredSpells)
 
         // Further filter spells based on the user's input if they are typing
         const filteredSpellNames = filteredSpells
@@ -3951,6 +3980,8 @@ document.querySelectorAll('.add-spell-button').forEach(button => {
 function populateListWithAllSpells(spellsData, inputRef, row, dropdownContainer) {
     // Sort spell names alphabetically
     spellsData.sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' }));
+
+    console.warn(spellsData)
 
     const spellList = inputRef;
 
@@ -4754,6 +4785,7 @@ function processSpellData() {
 
 
 function loadSpellData(spellData) {
+
     // Set the selected spellcasting modifier
     const spellcastingDropdown = document.querySelector('.spellcasting-dropdown');
     if (spellcastingDropdown && spellData.spellcastingModifier) {
@@ -4918,8 +4950,6 @@ function checkEncumbrance(currentWeight) {
         carryBonus = characterStatBonuses.combatStats.CarryWeightBonus.bonuses.reduce((total, bonus) => total + bonus.value, 0);
     }
 
-    console.log(`Base Carry: ${baseCarry}, Carry Bonus: ${carryBonus}`);
-
     const maxCarry = baseCarry + carryBonus;
 
     const statusElement = document.getElementById('weight-status');
@@ -4932,7 +4962,6 @@ function checkEncumbrance(currentWeight) {
 
   
 function addItemToInventory(item, group) {
-    console.warn(group)
     const list = document.getElementById(`${group}-list`);
 
     if (!item.uniqueId) {
@@ -4950,6 +4979,7 @@ function addItemToInventory(item, group) {
 
     let chargesHTML = '<div class="item-charges-container no-charges"></div>';
     if (item.hasCharges && item.chargesOptions) {
+        console.warn(item.hasCharges)
         chargesHTML = `
             <div class="item-charges-container" data-charge-reset="${item.chargesOptions.chargeReset || 'unknown'}">
                 <input type="number" id="item-charges-${item.uniqueId}" class="item-charges" 
@@ -4963,7 +4993,7 @@ function addItemToInventory(item, group) {
     if (item.equipment_category.index === "spell-scroll") {
         // For spell scrolls: show level and school
         if (item.spellData) {
-            notes = `${item.spellData.level} ${item.spellData.school}`;
+            notes = `${item.spellData.damage_dice}`;
         }
     } else {
         // Original notes handling for other items
@@ -5003,8 +5033,6 @@ function addItemToInventory(item, group) {
         <span><button class="delete-item-button nonRollButton">X</button></span>
     `;
 
-   console.warn(itemDiv)
-
     // Append the itemDiv to the list
     list.appendChild(itemDiv);
 
@@ -5019,14 +5047,15 @@ function addItemToInventory(item, group) {
     const itemNotes = itemDiv.querySelector('.item-notes');
     const itemChargesContainer = itemDiv.querySelector('.item-charges-container');
 
-    // If there are no charges, expand item-notes into the charges column
-    if (itemChargesContainer && !itemChargesContainer.innerHTML) {
-        itemNotes.style.gridColumn = '6 / 8';  // Expanding to take up extra space
-        itemChargesContainer.style.width = '1px';
-    } else {
-        // Otherwise, keep the default style
-        itemNotes.style.gridColumn = 'auto'; // Default behavior
-        itemChargesContainer.style.width = ''
+    // Use class check instead of innerHTML
+    if (itemChargesContainer) {
+        if (itemChargesContainer.classList.contains('no-charges')) {
+            itemNotes.style.gridColumn = '6 / 8';  // Expand notes into charges column
+            itemChargesContainer.style.width = '1px';
+        } else {
+            itemNotes.style.gridColumn = 'auto'; // Default layout
+            itemChargesContainer.style.width = '';
+        }
     }
 
 
@@ -5178,8 +5207,6 @@ function addItemToInventory(item, group) {
             console.log("other item equipped automatically on load");
         }
     }
-
-    console.log(item)
 
     if (item.attuned) {
         const attunementToggle = document.querySelector(`#attune-${item.uniqueId}`);
@@ -5904,28 +5931,58 @@ document.getElementById('item-search').addEventListener('input', function() {
     populateItemDropdown(filter); // Update dropdown based on the search
 });
 
-// Confirm adding the item to inventory
 document.getElementById('confirm-add-item').addEventListener('click', function() {
     const itemName = document.getElementById('item-select').value;
     let selectedBag = document.getElementById('bag-select').value;
     let item;
 
-    // Check if it's a spell scroll
-    console.warn(itemName)
+    // Handle spell scroll creation
     if (itemName.startsWith(`${translations[savedLanguage].spellScrollText}: `)) {
         const spellName = itemName.replace(`${translations[savedLanguage].spellScrollText}: `, "");
-        console.warn(spellName)
         item = createSpellScrollItem(spellName);
     } else {
         item = AppData.equipmentLookupInfo.equipmentData.find(eq => eq.name === itemName);
     }
 
     if (item) {
-        addItemToInventory(item, selectedBag);
+        // Unpack items if they have contents
+        const itemsToAdd = unpackItem(item, 1);
+        
+        // Add all unpacked items to inventory
+        itemsToAdd.forEach(itemToAdd => {
+            addItemToInventory(itemToAdd, selectedBag);
+        });
+
         document.getElementById('add-item-modal').style.display = 'none';
     }
 });
 
+function unpackItem(item, multiplier = 1) {
+    if (item.contents && Array.isArray(item.contents)) {
+        let unpackedItems = [];
+        item.contents.forEach(content => {
+            // Find the full item data for the content
+            const containedItem = AppData.equipmentLookupInfo.equipmentData.find(
+                eq => eq.index === content.item.index
+            );
+            if (containedItem) {
+                // Recursively unpack contained items
+                const itemsFromContent = unpackItem(
+                    containedItem,
+                    multiplier * content.quantity
+                );
+                unpackedItems = unpackedItems.concat(itemsFromContent);
+            }
+        });
+        return unpackedItems;
+    } else {
+        // Base case: return the item with multiplied quantity
+        return [{
+            ...item,
+            quantity: multiplier * (item.quantity || 1)
+        }];
+    }
+}
 
 
   
@@ -6637,9 +6694,8 @@ function addNewTrait(groupContainer, traitData = null) {
             // Reset to 0 if invalid
             showErrorModal(`Invalid Input: "${value}". The value must be a number.`)
             adjustmentValueInput.value = 0;
-            
+            return; 
         }
-
         handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
     });
     
@@ -6658,7 +6714,7 @@ function addNewTrait(groupContainer, traitData = null) {
 
         if (category && subCategory && !isNaN(value) && value !== 0) {
             removeBonus(category, subCategory, {
-                source: "trait", // Add a unique identifier if needed
+                source: "trait: " + traitName.value, // Add a unique identifier if needed
                 value: value,
             });
         }
@@ -6689,8 +6745,10 @@ function addNewTrait(groupContainer, traitData = null) {
 
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
-
-    handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value)
+    if(traitName.value){
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value)
+    }
+    
     updateContent();
 }
 
@@ -6724,7 +6782,7 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
         // Remove the previous bonus if it exists
         if (previousState.category && previousState.subCategory && previousState.value !== null) {
             removeBonus(previousState.category, previousState.subCategory, {
-                source: "trait", // Add a unique identifier if needed
+                source: "trait: " + traitName ,
                 value: previousState.value,
             });
         }
@@ -6732,7 +6790,7 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
         // Only add the new bonus if value is valid and non-zero
         if (category && subCategory && !isNaN(value) && value !== 0) {
             addBonus(category, subCategory, {
-                source: "trait: " + traitName, // Add a unique identifier if needed
+                source: "trait: " + traitName,
                 value: value,
             });
 

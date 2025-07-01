@@ -16,16 +16,37 @@
     margin: 3px;
 }
 
-#settings-container {
-    position: absolute;
-    top: 65px;
-    left: 5px;
-    display: flex;
-    align-items: center;
-    color: #fff;
-    padding: 5px;
-    z-index: 8; /* Ensure it's above other content */
+#settingAndLinkContainer{
+    display : grid;
+    grid-template-columns: .5fr 1fr;
 }
+
+#settings-container {
+    position: relative;
+}
+
+#settings-dropdown {
+    position: absolute;
+    top: 100%; /* appears just below the toggle */
+    left: 0%;/* Move to the center of the toggle */
+
+    display: none;
+    white-space: nowrap; /* Prevents items from wrapping */
+    width: max-content;  /* Ensures it grows to fit all content */
+    background-color: black;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+    z-index: 8;
+    font-size: 12px;
+}
+
+#settings-container.active #settings-dropdown {
+    display: block;
+}
+
+
 
 
 .characterPicture{
@@ -113,6 +134,12 @@
     gap: 10px;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
     
+}
+
+.abilityNumberScores{
+    display:grid;
+    gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #inspiration {
@@ -213,10 +240,10 @@
 }
 
 .deathSaves-label {
-    min-width: 70px; /* Set a minimum width for both labels so they take up the same space */
-    text-align: left; /* Optional: you can center the text inside the space, or leave it aligned left */
+    min-width: 70px; 
+    text-align: left; 
     font-size: 16px;
-    margin-right: 10px; /* Adds a gap between the label and buttons */
+    margin-right: 10px; 
 }
 
 .buttons-wrapper {
@@ -414,15 +441,41 @@ tr.spell-row {
     margin: 4px;
 }
 
+@media screen and (max-height: 1080px) {
+    .abilityNumberScores > .abilitybox {
+        font-size: 12px;
+        text-align: center;
+        display: block;
+        padding: 1px;
+        padding-top: 2px;
+        border: solid 1px var(--border-outline-color);
+        border-radius: 5px;
+        margin: 1px;
+    }
+
+    .abilityNumberScores > .abilitybox > hr{
+        margin: 2px;
+    }
+
+    .abilityScore{
+        height: 14px;
+        padding-top: 3px;
+        font-size: 20px;
+    }
+}
+
+
+
 #playerHealth{
     display:grid;
     grid-template-columns: 1fr 3fr 1fr;
     border: solid 1px var(--border-outline-color);
     min-width: 220px;
-    height: 90px;
+    height: 83px;
     border-radius: 5px;
     padding: .2rem;
     max-width: 98%;
+    margin-bottom: 2px;
 }
 
 .playerHealth{
@@ -538,8 +591,94 @@ tr.spell-row {
 }
 
 
+/*Media query to reduce the header overall height so all content fits on screen better. */
+@media screen and (max-height: 1080px) {
+    .deathSaves-label {
+        min-width: 70px; 
+        text-align: left; 
+        font-size: 14px;
+        margin-right: 10px; 
+    }
+
+    #inspiration {
+        font-size: 13px;
+        text-align: center;
+        margin: 0;
+        margin-top: 7px;
+        width: 125px; 
+        height: auto; 
+    }
+
+    .star-container {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff; /* White text */
+        font-weight: bold;
+        padding: 5px 5px;
+        border-radius: 50px; /* Rounded pill shape */
+        background-color: #d4af37; /* Gold color for D&D feel */
+        border: 3px solid #7f5a20; /* Darker gold border */
+        height: 16px;
+        width: 40px;
+        font-size: 18px;
+        color: #f5f5f5; /* Slightly lighter star color */
+        border-color: transparent;
+    }
+
+    #deathSaves {
+        font-size: 15px;
+    }
+
+    #deathSaves.abilitybox, #inspiration.abilitybox, #prof.abilitybox, #characterLevelContainer.abilitybox, #characterInit.abilitybox,
+        #armorClass.abilitybox, #walkingSpeed.abilitybox{
+        padding-top: 2px;
+    }
+
+    #prof, #characterLevel, #characterInit, #armorClass, #walkingSpeed{
+        font-size: 13px;
+    }
 
 
+    .characterPicture{
+        min-height: 0px;
+        flex-grow: 1;
+    }
+
+    #playerPictureContainer{
+        display: flex;
+        flex-direction: column; /* or row, depending on layout */
+        height: 100%; /* or any fixed height */
+    }
+
+    #get-selection-button {
+        width: fit-content;
+        align-self: center;
+    }
+    
+    #playerCharacterInput{
+        padding: 2px;
+        margin-bottom: 3px;
+        font-size: 17px;
+    }
+
+    #playerAuxStats{
+        min-height: 0;
+        margin-bottom: 0px;
+    }
+
+    .playerStats, #levelText, #characterLevel, #playerXP{
+        font-size: 13px;
+    }
+
+    #playerInformation{
+        min-height: 0px; /* Reduced height */
+    }
+
+    #initiativeButton{
+        margin: 0px;
+    }
+}
 
 
 
@@ -553,8 +692,7 @@ tr.spell-row {
     gap: 0px 10px;
     font-size: 13px;
     margin-bottom: 30px;
-    margin-top: 25px;
-
+    margin-top: 1rem;
 }
 
 .rightBottomStatsContainer{
@@ -571,7 +709,7 @@ tr.spell-row {
 
 /* Skills Div */
 .skill-container {
-    padding: 5px 5px;
+    padding: 2px 2px;
     width: 295px;
     display: grid;
     gap: 4px;
@@ -590,7 +728,7 @@ tr.spell-row {
 .skill-row{
     display: grid;
     gap: 3px;
-    font-size: 15px;
+    font-size: 13px;
     grid-template-columns: 1fr 2fr 10fr;
     align-items: center;
 }
@@ -1180,6 +1318,7 @@ tr.spell-row {
 
 
 .spell-name-input{
+    position: relative;
     color: white;
     background-color: var(--ts-background-secondary);
     border: 1px solid var(--border-outline-color);
@@ -1201,7 +1340,10 @@ tr.spell-row {
 .dropdown-list{
     color: white;
     background-color: var(--ts-background-secondary);
-    position: relative;
+    position: absolute;
+    top: 100%; /* Position below the input */
+    left: 0;
+    right: 0;
     width: 100%;
     border: 1px solid var(--border-outline-color);
     cursor: pointer;
@@ -1847,7 +1989,7 @@ tr.spell-row {
 
 .inventory-item {
     display: grid;
-    grid-template-columns: .6fr 1.8fr 1.2fr .2fr 1fr 2.2fr 1fr .05fr .05fr;
+    grid-template-columns: .6fr 3.0fr 1.2fr .2fr 1fr .8fr 1fr .05fr .05fr;
     align-items: center;
     padding: 5px 0;
     border-bottom: 1px solid #333;

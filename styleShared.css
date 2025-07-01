@@ -180,6 +180,15 @@ vuplex-dropdown-option {
     }
 
 
+    #settings-dropdown ul {
+    list-style: none;
+    padding: 0;
+}
+
+    #settings-dropdown li {
+        margin: 5px 0;
+        cursor: pointer;
+    }
 
 /* Settings menu styling */
 /* Styling for the settings menu and icon */
@@ -188,28 +197,7 @@ vuplex-dropdown-option {
     cursor: pointer;
 }
 
-#settings-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: black;
-    border: 1px solid var(--border-outline-color);
-    border-radius: 5px;
-    color: white;
-    padding: 5px;
-    z-index: 8;
-}
 
-#settings-dropdown ul {
-    list-style: none;
-    padding: 0;
-}
-
-#settings-dropdown li {
-    margin: 5px 0;
-    cursor: pointer;
-}
 
 /* #settings-dropdown li:hover {
     background-color: var(--button-color-hover);
@@ -234,22 +222,51 @@ vuplex-dropdown-option {
     display: block; /* Show the menu when active */
 }
 
-#settings-option-dropdown {
+.settings-dropdown-wrapper {
     position: relative;
+    display: inline-block; /* Ensure the size wraps the button */
+}
+
+#settings-option-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transform: translateX(0);
+
+    display: none;
+    white-space: nowrap; /* Allow text to wrap */
+    overflow-x: auto;
+    text-align: center; /* Center content inside the box */
+    width: max-content;
+
     background-color: black;
     border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     color: white;
     padding: 5px;
     z-index: 8;
-    top: 5%;
-    left: 80%;
+    font-size: 12px;
+}
+
+#settingsHeading{
+    margin-bottom: 3px;
 }
 
 #settings-option-dropdown ul {
-    list-style: none; /* Remove bullet points */
-    margin: 0;
+    list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Space between items */
+    align-items: center; /* Center li contents horizontally */
+}
+
+#settings-option-dropdown li {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 
@@ -1296,4 +1313,25 @@ margin: 2px;
     border: 1px solid var(--border-outline-color);
     border-radius: 5px;
     margin: 0 auto; /* Keeps alignment consistent */
+}
+
+.version-toggle {
+    display: flex;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.version-option {
+    flex: 1;
+    padding: 5px 10px;
+    border: none;
+    background-color: rgb(2, 2, 2);
+    cursor: pointer;
+    color: white;
+}
+
+.version-option.active {
+    background-color: var(--action-button-color);
+    color: white;
 }

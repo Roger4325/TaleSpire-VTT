@@ -16,28 +16,6 @@
     </head>
 <body>
     <header>
-        <div id="settings-container">
-            <div id="settings-dropdown">
-                <ul>
-                    <li>
-                        <div id="HomebrewButton">
-                            <button id="openHomebrew" class="nonRollButton">Homebrew</button>
-                        </div>
-                    </li>
-                    <li>
-                        <label>
-                            <input type="checkbox" id="showUpcastSpells" checked>Show Upcast Spells
-                        </label>    
-                    </li>
-                    
-                    <!-- Add more options as needed -->
-                </ul>
-            </div>
-            <div id="settings-toggle">
-                <i class="fa fa-bars" id="settings-icon"></i>
-            </div>
-        </div>
-        <h1>Talespire Character Sheet</h1>
         
         <nav class="tabs">
             <ul>
@@ -50,25 +28,35 @@
                 <li><a href="#Extras" id="extrasHeader" data-title="Used to track pet's, wildshaps or polymorphs">Extra</a></li>
                 <li><a href="#Init" id="initHeader" data-title="View the initiative list when actively in Initiative.">Init List</a></li>
                 <li>
-                    <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
-                    <div id="settings-option-dropdown" style="display: none; position: absolute;">
-                        <ul>
-                            <li>
-                                <div>experimental</div>
-                                <div id="languageButtons">
-                                    <button id="languageEngButton" class="nonRollButton">English</button>
-                                    <button id="languageEspButton" class="nonRollButton">Espanol</button>
-                                </div>
-                            </li>
-                             <li>
-                                <button id="openModal" class="open-modal nonRollButton">Change Theme</button>
-                             </li>
-                             <li>
-                                <label>Exahustion Homebrew</label>
-                                <input type="checkbox" id="exhaustionHomebrew">
-                             </li>
-                            <!-- Add more options as needed -->
-                        </ul>
+                    <div class="settings-dropdown-wrapper">
+                        <button class="nonRollButton" id="settings-button"><i class="fa fa-cog" id="settings-gear-icon"></i></button>
+                        <div id="settings-option-dropdown">
+                            <ul>
+                                <li>
+                                    <h3 id="settingsHeading">Experimental</h3>
+                                    <div id="languageSelectorContainer">
+                                        <label for="languageSelect">Language:</label>
+                                        <select id="languageSelect" class="nonRollButton"></select>
+                                    </div>
+                                </li>
+                                <li>
+                                    <button id="openModal" class="open-modal nonRollButton">Change Theme</button>
+                                </li>
+                                <li>
+                                    <label><span>Exahustion Homebrew</span> <input type="checkbox" id="exhaustionHomebrew"></label>
+                                    
+                                </li>
+                                <li>
+                                    <label>D&D Version</label>
+                                    <div class="version-toggle">
+                                        <button class="version-option active" data-value="2014">2014</button>
+                                        <button class="version-option" data-value="both">Both</button>
+                                        <button class="version-option" data-value="2024">2024  🜁</button>
+                                    </div>
+                                </li>
+                                <!-- Add more options as needed -->
+                            </ul>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -78,7 +66,31 @@
         
         <div id="playerInformation">
             <div id="playerPictureContainer"> 
-                <button id="get-selection-button" class="nonRollButton" data-title="Link a specific mini's thumbnail. This doesn't work on modded minis">Link mini</button>
+                <div id="settingAndLinkContainer">
+                    <div id="settings-container">
+                        <div id="settings-dropdown">
+                            <ul>
+                                <li>
+                                    <div id="HomebrewButton">
+                                        <button id="openHomebrew" class="nonRollButton">Homebrew</button>
+                                    </div>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="checkbox" id="showUpcastSpells" checked>Show Upcast Spells
+                                    </label>    
+                                </li>
+                                
+                                <!-- Add more options as needed -->
+                            </ul>
+                        </div>
+                        <div id="settings-toggle">
+                            <i class="fa fa-bars" id="settings-icon"></i>
+                        </div>
+                    </div>
+                    <button id="get-selection-button" class="nonRollButton" data-title="Link a specific mini's thumbnail. This doesn't work on modded minis">Link mini</button>
+                </div>
+                
                 <div id="characterPicture" class="characterPicture"></div>
                 
                 <div id="toggleContainer" class="toggle-container">
@@ -131,7 +143,7 @@
                             </div>
                     </div>
                 </div>
-                <div id="playerStates" class="abilityScores PlayerStates">
+                <div id="playerStates" class="PlayerStates">
                     <div id="deathSaves" class="abilitybox">Death Saves
                         <hr>
                         <div id="successes" class="deathSaves">
@@ -214,7 +226,7 @@
     </header>
     <main>
         <section id="playerStats">
-            <div id="playerAbilityScores" class="abilityScores">
+            <div id="playerAbilityScores" class="abilityNumberScores">
                 <div id="characterAbilityStr" class="abilitybox">STR
                     <hr>
                     <div id="strengthScore" class="abilityScore" contenteditable="true"> 20</div>
