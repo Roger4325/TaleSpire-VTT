@@ -1721,13 +1721,21 @@ function updateSkillModifier() {
         const skillNameElement = skillRow.querySelector('.skillName');
         const skillName = skillNameElement.textContent.trim();
 
+        const skillButton = abilityModElement.parentElement.querySelector('.actionButton.skillbuttonstyler');
+        const skillLabel = abilityModElement.parentElement.querySelector('.actionButtonLabel');
+        skillLabel.classList.remove('advantage', 'disadvantage');
+
         // Start with the base skill modifier (ability mod + proficiency)
         let skillModifier = Math.floor(abilityScoreValue + (proficiencyBonus * parseFloat(proficiencyButton.value)));
+        let hasAdvantage = false;
+        let hasDisadvantage = false;
 
         // Check for individual skill bonuses
         if (characterStatBonuses.skills && characterStatBonuses.skills[skillName]) {
             characterStatBonuses.skills[skillName].bonuses.forEach(bonus => {
                 skillModifier += bonus.value;  // Apply each bonus to the skill modifier
+                if (bonus.advantage) hasAdvantage = true;
+                if (bonus.disadvantage) hasDisadvantage = true;
             });
         }
 
@@ -1735,12 +1743,18 @@ function updateSkillModifier() {
         if (characterStatBonuses.skills && characterStatBonuses.skills.All) {
             characterStatBonuses.skills.All.bonuses.forEach(bonus => {
                 skillModifier += bonus.value;  // Apply each global bonus to the skill modifier
+                if (bonus.advantage) hasAdvantage = true;
+                if (bonus.disadvantage) hasDisadvantage = true;
             });
         }
 
-        // Update the skill button and label with the new skill modifier
-        const skillButton = abilityModElement.parentElement.querySelector('.actionButton.skillbuttonstyler');
-        const skillLabel = abilityModElement.parentElement.querySelector('.actionButtonLabel');
+        // Apply visual indicator
+        if (hasAdvantage) {
+            skillLabel.classList.add('advantage');
+        } 
+        if (hasDisadvantage) {
+            skillLabel.classList.add('disadvantage');
+        }
         
         skillButton.textContent = skillModifier > 0 ? `+${skillModifier}` : `${skillModifier}`;
         skillLabel.setAttribute('value', skillModifier);
@@ -1760,11 +1774,16 @@ function updateInitiative() {
 
     // Get any initiative bonuses (e.g., magical items or abilities)
     let initiativeBonus = 0;
+    let hasAdvantage = false;
+    let hasDisadvantage = false;
+    initiativeLabel.classList.remove('advantage', 'disadvantage');
 
     // Check for individual skill bonuses
     if (characterStatBonuses.skills && characterStatBonuses.skills.Initiative) {
         characterStatBonuses.skills.Initiative.bonuses.forEach(bonus => {
             initiativeBonus += bonus.value;  // Apply each bonus to the skill modifier
+            if (bonus.advantage) hasAdvantage = true;
+            if (bonus.disadvantage) hasDisadvantage = true;
         });
     }
 
@@ -1772,11 +1791,21 @@ function updateInitiative() {
     if (characterStatBonuses.skills && characterStatBonuses.skills.All) {
         characterStatBonuses.skills.All.bonuses.forEach(bonus => {
             initiativeBonus += bonus.value;  // Apply each global bonus to the skill modifier
+            if (bonus.advantage) hasAdvantage = true;
+            if (bonus.disadvantage) hasDisadvantage = true;
         });
     }
     
     // Calculate total initiative modifier
     const initiativeModifier = dexScore + initiativeBonus;
+
+     // Apply visual indicator
+    if (hasAdvantage) {
+        initiativeLabel.classList.add('advantage');
+    } 
+    if (hasDisadvantage) {
+        initiativeLabel.classList.add('disadvantage');
+    }
 
     // Update the label and button text with the new initiative modifier
     initiativeLabel.setAttribute('value', initiativeModifier);
@@ -1811,6 +1840,36 @@ function updateSaveModifier() {
 
         const saveButton = saveNameElement.parentElement.querySelector('.actionButton.skillbuttonstyler');
         const saveLabel = saveNameElement.parentElement.querySelector('.actionButtonLabel');
+
+        saveLabel.classList.remove('advantage', 'disadvantage');
+
+        let hasAdvantage = false;
+        let hasDisadvantage = false;
+
+        // 1. Check specific save bonuses (e.g., "STR")
+        if (characterStatBonuses.saves && characterStatBonuses.saves[abilityMod]) {
+            characterStatBonuses.saves[abilityMod].bonuses.forEach(bonus => {
+                console.warn("HERE")
+                if (bonus.advantage) hasAdvantage = true;
+                if (bonus.disadvantage) hasDisadvantage = true;
+            });
+        }
+
+        // 2. Check global "All" saves bonuses
+        if (characterStatBonuses.saves && characterStatBonuses.saves.All) {
+            characterStatBonuses.saves.All.bonuses.forEach(bonus => {
+                if (bonus.advantage) hasAdvantage = true;
+                if (bonus.disadvantage) hasDisadvantage = true;
+            });
+        }
+
+        // Apply visual indicators
+        if (hasAdvantage) {
+            saveLabel.classList.add('advantage');
+        }
+        if (hasDisadvantage) {
+            saveLabel.classList.add('disadvantage');
+        }
 
         // Update the UI
         saveButton.textContent = saveModifier > 0 ? `+${saveModifier}` : `${saveModifier}`;
@@ -2523,6 +2582,7 @@ function updateCharacterUI(characterData, characterName) {
     conditionsSet.forEach((condition) => {
         playerConditions(condition)
     });
+    updateAC()
 }
 
 async function loadAndSetLanguage(){
@@ -6645,7 +6705,7 @@ function addNewTrait(groupContainer, traitData = null) {
             const profBonus = document.getElementById('profBonus').textContent;
             adjustmentValueInput.value = parseInt(profBonus);
         }
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value, advCheckbox, disCheckbox);
         updateContent();
     });
 
@@ -6664,12 +6724,21 @@ function addNewTrait(groupContainer, traitData = null) {
             subCategorySelect.appendChild(option);
         });
 
+        // Show or hide the adv/dis UI
+        if (selectedCategory === "skills" || selectedCategory === "saves") {
+            adjustmentContainer.appendChild(advDisWrapper);
+        } else {
+            if (adjustmentContainer.contains(advDisWrapper)) {
+                adjustmentContainer.removeChild(advDisWrapper);
+            }
+        }
+
         updateContent();
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value, advCheckbox, disCheckbox);
     });
 
     subCategorySelect.addEventListener('change', () => {
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value, advCheckbox, disCheckbox);
         updateContent();
     });
 
@@ -6681,6 +6750,34 @@ function addNewTrait(groupContainer, traitData = null) {
     adjustmentContainer.appendChild(abilityWrapper);
     adjustmentContainer.appendChild(adjustmentValueLabel);
     adjustmentContainer.appendChild(adjustmentValueInput);
+
+    // Advantage / Disadvantage Toggle (only for skills)
+    const advDisWrapper = document.createElement('div');
+    advDisWrapper.classList.add('adv-dis-wrapper');
+
+    const advLabel = document.createElement('label');
+    advLabel.textContent = 'Advantage';
+    const advCheckbox = document.createElement('input');
+    advCheckbox.type = 'checkbox';
+    advCheckbox.classList.add('advantage-toggle');
+    advCheckbox.checked = traitData?.advantage || false;
+
+    const disLabel = document.createElement('label');
+    disLabel.textContent = 'Disadvantage';
+    const disCheckbox = document.createElement('input');
+    disCheckbox.type = 'checkbox';
+    disCheckbox.classList.add('disadvantage-toggle');
+    disCheckbox.checked = traitData?.disadvantage || false;
+
+    advDisWrapper.appendChild(advLabel);
+    advDisWrapper.appendChild(advCheckbox);
+    advDisWrapper.appendChild(disLabel);
+    advDisWrapper.appendChild(disCheckbox);
+
+    // Append only if the category is 'skills'
+    if (categorySelect.value === 'skills' || categorySelect.value === "saves") {
+        adjustmentContainer.appendChild(advDisWrapper);
+    }
 
     // Append ability adjustment fields
     traitSettings.appendChild(adjustmentContainer);
@@ -6696,7 +6793,7 @@ function addNewTrait(groupContainer, traitData = null) {
             adjustmentValueInput.value = 0;
             return; 
         }
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value);
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value, advCheckbox, disCheckbox);
     });
     
     // Delete Trait Button
@@ -6746,7 +6843,7 @@ function addNewTrait(groupContainer, traitData = null) {
     // Add the trait item to the list of traits in the group
     traitsList.appendChild(traitItem);
     if(traitName.value){
-        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value)
+        handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName.value, advCheckbox, disCheckbox)
     }
     
     updateContent();
@@ -6772,37 +6869,48 @@ addGroupButton.addEventListener('click', createNewGroup);
 
 
 
-function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName) {
+function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValueInput, previousState, traitName, advCheckbox, disCheckbox) {
     // Function to apply or update the bonus when a field changes
     function applyBonus() {
         const category = categorySelect.value;
         const subCategory = subCategorySelect.value;
-        const value = parseInt(adjustmentValueInput.value, 10); // Parse as integer
+        const value = parseInt(adjustmentValueInput.value, 10);
+
+        const advToggle = advCheckbox
+        const disToggle = disCheckbox
+        const advantage = advToggle?.checked || false;
+        const disadvantage = disToggle?.checked || false;
 
         // Remove the previous bonus if it exists
         if (previousState.category && previousState.subCategory && previousState.value !== null) {
             removeBonus(previousState.category, previousState.subCategory, {
-                source: "trait: " + traitName ,
+                source: "trait: " + traitName,
                 value: previousState.value,
+                advantage: previousState.advantage || false,
+                disadvantage: previousState.disadvantage || false,
             });
         }
 
-        // Only add the new bonus if value is valid and non-zero
-        if (category && subCategory && !isNaN(value) && value !== 0) {
+        // Only add if meaningful
+        if (category && subCategory && (!isNaN(value) && value !== 0 || advantage || disadvantage)) {
             addBonus(category, subCategory, {
                 source: "trait: " + traitName,
-                value: value,
+                value: value || 0,
+                advantage,
+                disadvantage
             });
 
-            // Update the previous state
             previousState.category = category;
             previousState.subCategory = subCategory;
             previousState.value = value;
+            previousState.advantage = advantage;
+            previousState.disadvantage = disadvantage;
         } else {
-            // Reset previous state if no valid bonus
             previousState.category = null;
             previousState.subCategory = null;
             previousState.value = null;
+            previousState.advantage = null;
+            previousState.disadvantage = null;
         }
     }
 
@@ -6810,6 +6918,8 @@ function handleTraitAdjustment(categorySelect, subCategorySelect, adjustmentValu
     categorySelect.addEventListener("change", applyBonus);
     subCategorySelect.addEventListener("change", applyBonus);
     adjustmentValueInput.addEventListener("input", applyBonus);
+    advCheckbox.addEventListener("change", applyBonus);
+    disCheckbox.addEventListener("change", applyBonus);
 
     // Initialize the adjustment with the current state
     applyBonus();
@@ -6873,6 +6983,8 @@ function processGroupTraitData() {
                 const adjustmentValue = traitSettings.querySelector('.adjustment-value').value;
                 const numberOfUses = traitSettings.querySelector('.trait-uses-input').value;
                 const resetType = traitSettings.querySelector('.reset-type-dropdown').value;
+                const advCheckbox = traitSettings.querySelector('.advantage-toggle');
+                const disCheckbox = traitSettings.querySelector('.disadvantage-toggle');
 
                 // Save the trait settings in the traitDataObject
                 traitDataObject['adjustmentCategory'] = adjustmentCategory;
@@ -6881,6 +6993,12 @@ function processGroupTraitData() {
                 traitDataObject['adjustmentValue'] = adjustmentValue;
                 traitDataObject['numberOfUses'] = numberOfUses;
                 traitDataObject['resetType'] = resetType;
+                if (advCheckbox) {
+                    traitDataObject['advantage'] = advCheckbox.checked;
+                }
+                if (disCheckbox) {
+                    traitDataObject['disadvantage'] = disCheckbox.checked;
+                }
             }
 
             // Add the trait data to the list of traits for this group
@@ -7549,6 +7667,7 @@ document.getElementById("importCharacterData").addEventListener("click", () => {
     document.getElementById("importTitle").textContent = "Import Character Data"
     document.getElementById("importTitle").setAttribute("data-type", "characters")
 });
+
 document.getElementById("importCustomSpell").addEventListener("click", () => {
     document.getElementById("importModal").style.display = "flex";
     document.getElementById("importTitle").textContent = "Import Spell Data"
@@ -7569,36 +7688,53 @@ document.getElementById("importCancelButton").addEventListener("click", () => {
 });
 
 
+function isDnDBeyondFormat(data) {
+    // It's D&D Beyond if:
+    // - data is an object
+    // - it has "success" === true
+    // - it has a "data" key with typical D&D Beyond structure
+    return (
+        typeof data === 'object' &&
+        data !== null &&
+        data.success === true &&
+        data.data &&
+        typeof data.data === 'object' &&
+        Array.isArray(data.data.stats) && // common D&D Beyond marker
+        data.data.stats.length === 6
+    );
+}
+
 
 // Handle saving the imported data
 document.getElementById("importSaveButton").addEventListener("click", async () => {
     const importTextArea = document.getElementById("importTextArea");
-    const importDataType = document.getElementById("importTitle").getAttribute('data-type')
-    console.log(importDataType)
+    const importDataType = document.getElementById("importTitle").getAttribute('data-type');
     const data = importTextArea.value;
 
     try {
-        // Parse the JSON data
-        const parsedData = JSON.parse(data);
+        let parsedData = JSON.parse(data);
 
-        // Extract the character key and data
+        console.warn(parsedData)
+
+        // Detect and convert D&D Beyond data if needed
+        if (isDnDBeyondFormat(parsedData)) {
+            console.warn("D&D Data")
+            parsedData = convertDnDBeyondToMyFormat(parsedData);
+        }
+
         const key = Object.keys(parsedData)[0];
         const dataInfo = parsedData[key];
 
-        if (importDataType === "characters"){
-            // Save the character data using the specified function
+        if (importDataType === "characters") {
             saveToCampaignStorage(importDataType, key, dataInfo, true);
-        }
-        else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
+        } else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
             saveToGlobalStorage(importDataType, key, dataInfo, true);
-        }
-        else{
+        } else {
             showErrorModal("Invalid dataType. Please check the format and try again.");
+            return;
         }
 
-        
-
-        // Close the modal and clear the text area
+        // Close the modal and clear the textarea
         document.getElementById("importModal").style.display = "none";
         importTextArea.value = "";
 

@@ -206,7 +206,7 @@
   },
   {
     "index": "light-hammer",
-    "name": "Light hammer",
+    "name": "Light Hammer",
     "equipment_category": {
       "index": "weapon",
       "name": "Weapon"
@@ -417,7 +417,7 @@
   },
   {
     "index": "crossbow-light",
-    "name": "Crossbow, light",
+    "name": "Crossbow, Light",
     "equipment_category": {
       "index": "weapon",
       "name": "Weapon"
@@ -1456,8 +1456,7 @@
     "name": "Padded Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Light",
     "armor_class": {
@@ -1470,16 +1469,14 @@
     "cost": {
       "quantity": 5,
       "unit": "gp"
-    },
-    "url": "/api/equipment/padded-armor"
+    }
   },
   {
     "index": "leather-armor",
     "name": "Leather Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Light",
     "armor_class": {
@@ -1492,16 +1489,14 @@
     "cost": {
       "quantity": 10,
       "unit": "gp"
-    },
-    "url": "/api/equipment/leather-armor"
+    }
   },
   {
     "index": "studded-leather-armor",
     "name": "Studded Leather Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Light",
     "armor_class": {
@@ -1514,16 +1509,14 @@
     "cost": {
       "quantity": 45,
       "unit": "gp"
-    },
-    "url": "/api/equipment/studded-leather-armor"
+    }
   },
   {
     "index": "hide-armor",
     "name": "Hide Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Medium",
     "armor_class": {
@@ -1537,16 +1530,14 @@
     "cost": {
       "quantity": 10,
       "unit": "gp"
-    },
-    "url": "/api/equipment/hide-armor"
+    }
   },
   {
     "index": "chain-shirt",
     "name": "Chain Shirt",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Medium",
     "armor_class": {
@@ -1560,16 +1551,14 @@
     "cost": {
       "quantity": 50,
       "unit": "gp"
-    },
-    "url": "/api/equipment/chain-shirt"
+    }
   },
   {
     "index": "scale-mail",
     "name": "Scale Mail",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Medium",
     "armor_class": {
@@ -1583,16 +1572,14 @@
     "cost": {
       "quantity": 50,
       "unit": "gp"
-    },
-    "url": "/api/equipment/scale-mail"
+    }
   },
   {
     "index": "breastplate",
     "name": "Breastplate",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Medium",
     "armor_class": {
@@ -1606,16 +1593,14 @@
     "cost": {
       "quantity": 400,
       "unit": "gp"
-    },
-    "url": "/api/equipment/breastplate"
+    }
   },
   {
     "index": "half-plate-armor",
     "name": "Half Plate Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Medium",
     "armor_class": {
@@ -1629,16 +1614,14 @@
     "cost": {
       "quantity": 750,
       "unit": "gp"
-    },
-    "url": "/api/equipment/half-plate-armor"
+    }
   },
   {
     "index": "ring-mail",
     "name": "Ring Mail",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Heavy",
     "armor_class": {
@@ -1651,16 +1634,14 @@
     "cost": {
       "quantity": 30,
       "unit": "gp"
-    },
-    "url": "/api/equipment/ring-mail"
+    }
   },
   {
     "index": "chain-mail",
     "name": "Chain Mail",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Heavy",
     "armor_class": {
@@ -1673,16 +1654,14 @@
     "cost": {
       "quantity": 75,
       "unit": "gp"
-    },
-    "url": "/api/equipment/chain-mail"
+    }
   },
   {
     "index": "splint-armor",
     "name": "Splint Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Heavy",
     "armor_class": {
@@ -1695,16 +1674,14 @@
     "cost": {
       "quantity": 200,
       "unit": "gp"
-    },
-    "url": "/api/equipment/splint-armor"
+    }
   },
   {
     "index": "plate-armor",
     "name": "Plate Armor",
     "equipment_category": {
       "index": "armor",
-      "name": "Armor",
-      "url": "/api/equipment-categories/armor"
+      "name": "Armor"
     },
     "armor_category": "Heavy",
     "armor_class": {
@@ -1717,16 +1694,14 @@
     "cost": {
       "quantity": 1500,
       "unit": "gp"
-    },
-    "url": "/api/equipment/plate-armor"
+    }
   },
   {
     "index": "shield",
     "name": "Shield",
     "equipment_category": {
       "index": "shield",
-      "name": "shield",
-      "url": "/api/equipment-categories/armor"
+      "name": "shield"
     },
     "armor_category": "Shield",
     "armor_class": {
@@ -1739,8 +1714,7 @@
     "cost": {
       "quantity": 10,
       "unit": "gp"
-    },
-    "url": "/api/equipment/shield"
+    }
   },
   {
     "index": "abacus",
@@ -1782,7 +1756,7 @@
   },
   {
     "index": "alchemists-fire-flask",
-    "name": "Alchemist's fire (flask)",
+    "name": "Alchemist's Fire",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -1909,7 +1883,7 @@
   },
   {
     "index": "crossbow-bolt",
-    "name": "Crossbow bolt",
+    "name": "Crossbow Bolts",
     "equipment_category": {
       "index": "equipment",
       "name": "Adventuring Gear",
@@ -2424,7 +2398,7 @@
   },
   {
     "index": "clothes-common",
-    "name": "Clothes, common",
+    "name": "Clothes, Common",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -2441,7 +2415,7 @@
   },
   {
     "index": "clothes-costume",
-    "name": "Clothes, costume",
+    "name": "Clothes, Costume",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -2458,7 +2432,7 @@
   },
   {
     "index": "clothes-fine",
-    "name": "Clothes, fine",
+    "name": "Clothes, Fine",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -2475,7 +2449,7 @@
   },
   {
     "index": "clothes-travelers",
-    "name": "Clothes, traveler's",
+    "name": "Clothes, Traveler's",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -2492,7 +2466,7 @@
   },
   {
     "index": "component-pouch",
-    "name": "Component pouch",
+    "name": "Component Pouch",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -2761,7 +2735,7 @@
   },
   {
     "index": "hunting-trap",
-    "name": "Hunting trap",
+    "name": "Hunting Trap",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3019,7 +2993,7 @@
   },
   {
     "index": "lantern-bullseye",
-    "name": "Lantern, bullseye",
+    "name": "Lantern, Bullseye",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear",
@@ -3041,7 +3015,7 @@
   },
   {
     "index": "lantern-hooded",
-    "name": "Lantern, hooded",
+    "name": "Lantern, Hooded",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear",
@@ -3176,7 +3150,7 @@
   },
   {
     "index": "oil-flask",
-    "name": "Oil (flask)",
+    "name": "Oil",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3217,7 +3191,7 @@
   },
   {
     "index": "parchment-one-sheet",
-    "name": "Parchment (one sheet)",
+    "name": "Parchment",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3437,6 +3411,27 @@
     ]
   },
   {
+    "index": "holy-symbol",
+    "name": "Holy Symbol",
+    "equipment_category": {
+      "index": "adventuring-gear",
+      "name": "Adventuring Gear"
+    },
+    "gear_category": {
+      "index": "holy-symbols",
+      "name": "Holy Symbols"
+    },
+    "cost": {
+      "quantity": 5,
+      "unit": "gp"
+    },
+    "weight": 2,
+    "desc": [
+      "A holy symbol is a representation of a god or pantheon. It might be an amulet depicting a symbol representing a deity, the same symbol carefully engraved or inlaid as an emblem on a shield, or a tiny box holding a fragment of a sacred relic.",
+      "Appendix B lists the symbols commonly associated with many gods in the multiverse. A cleric or paladin can use a holy symbol as a spellcasting focus. To use the symbol in this way, the caster must hold it in hand, wear it visibly, or bear it on a shield."
+    ]
+  },
+  {
     "index": "robes",
     "name": "Robes",
     "equipment_category": {
@@ -3455,7 +3450,7 @@
   },
   {
     "index": "rope-hempen-50-feet",
-    "name": "Rope, hempen (50 feet)",
+    "name": "Rope, Hempen (50 feet)",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3583,7 +3578,7 @@
   },
   {
     "index": "signet-ring",
-    "name": "Signet ring",
+    "name": "Signet Ring",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3600,7 +3595,7 @@
   },
   {
     "index": "small-knife",
-    "name": "Small knife",
+    "name": "Small Knife",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -3712,7 +3707,7 @@
   },
   {
     "index": "tent-two-person",
-    "name": "Tent, two-person",
+    "name": "Tent, Two-Person",
     "equipment_category": {
       "index": "adventuring-gear",
       "name": "Adventuring Gear"
@@ -10854,7 +10849,7 @@
   },
   {
     "index": "wand-of-the-war-mage-1",
-    "name": "Wand of the War Mage +1",
+    "name": "Wand of the War Mage, +1",
     "equipment_category": {
       "index": "wondrous-item",
       "name": "Wondrous Item",
@@ -10899,7 +10894,7 @@
   },
   {
     "index": "wand-of-the-war-mage-2",
-    "name": "Wand of the War Mage +2",
+    "name": "Wand of the War Mage, +2",
     "equipment_category": {
       "index": "wondrous-item",
       "name": "Wondrous Item",
@@ -15158,7 +15153,7 @@
   },
   {
     "index": "dagger-1",
-    "name": "Dagger +1",
+    "name": "Dagger, +1",
     "equipment_category": {
       "index": "weapon",
       "name": "Weapon"

@@ -378,7 +378,7 @@ tr.spell-row {
     color: red;
 }
 
-.skillBlock .disadvantage::after, .skillBlock .advantage::after {
+.skillBlock .disadvantage::after, .skillBlock .advantage::after{
     margin-left: 38px;
     position: relative;
     top: 3px; /* Moves down 3px */
@@ -387,8 +387,36 @@ tr.spell-row {
     
 }
 
-.skillBlock .disadvantage::after{
+.savesBlock .disadvantage::after, .savesBlock .advantage::after {
+    margin-left: -15px;
+    position: relative;
+    top: 3px; /* Moves down 3px */
+    display: inline-block; /* Required for positioning */
+    font-size: 1.2em;
+}
+
+.playerStats .disadvantage::after,
+.playerStats .advantage::after {
+    margin-left: 0px;
+    position: relative;
+    top: 3px;
+    display: inline-block;
+    font-size: .9em; 
+}
+
+.skillBlock .disadvantage::after, .playerStats .disadvantage::after, .savesBlock .disadvantage::after{
     top: 2px;
+}
+
+.adv-dis-wrapper{
+    margin-top: 0px;
+    margin-bottom: 15px;
+    padding: 5px;
+    padding-left: 0px;
+}
+
+.advantage-toggle{
+    margin-right: 20px;
 }
 
 .advantage::after { 
