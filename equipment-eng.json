@@ -8594,6 +8594,13 @@
         "key": "PassivePerception",
         "value": 5,
         "description": "Grants a +5 bonus to Passive Perception."
+      },
+      {
+        "category": "skills",
+        "key": "Perception",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
       }
     ]
   },
@@ -20423,6 +20430,13 @@
       }
     ],
     "bonus": [
+      {
+        "category": "skills",
+        "key": "Persuasion",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      }
     ],
     "cost": {
       "quantity": 1500,
@@ -20483,6 +20497,13 @@
     "properties": [
     ],
     "bonus": [
+      {
+        "category": "skills",
+        "key": "Stealth",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      }
     ],
     "cost": {
       "quantity": 1500,
@@ -21071,6 +21092,13 @@
       }
     ],
     "bonus": [
+      {
+        "category": "skills",
+        "key": "Stealth",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      }
     ],
     "cost": {
       "quantity": 1500,
@@ -21103,6 +21131,13 @@
       }
     ],
     "bonus": [
+      {
+        "category": "skills",
+        "key": "Stealth",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      }
     ],
     "cost": {
       "quantity": 1500,
@@ -21593,6 +21628,19 @@
     "properties": [
     ],
     "bonus": [
+      {
+        "category": "senses",
+        "key": "PassiveInvestigation",
+        "value": 5,
+        "description": "Grants a +5 bonus to Passive Investigation while worn and attuned."
+      },
+      {
+        "category": "skills",
+        "key": "Investigation",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      }
     ],
     "cost": {
       "quantity": 1500,
@@ -21630,6 +21678,13 @@
         "key": "PassivePerception",
         "value": 5,
         "description": "Grants a +5 bonus to Passive Perception while worn and attuned."
+      },
+      {
+        "category": "skills",
+        "key": "Perception",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
       }
     ],
     "cost": {
@@ -23383,6 +23438,19 @@
       }
     ],
     "bonus": [
+      {
+        "category": "skills",
+        "key": "Perception",
+        "value": 0,
+        "description": "",
+        "advantage": "true"
+      },
+      {
+        "category": "senses",
+        "key": "PassivePerception",
+        "value": 5,
+        "description": ""
+      }
     ],
     "cost": {
       "quantity": 1200,

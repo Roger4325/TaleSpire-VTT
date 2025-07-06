@@ -5288,6 +5288,8 @@ function addItemToInventory(item, group) {
                         addBonus(bonus.category, bonus.key, {
                             source: item.name,
                             value: bonus.value,
+                            advantage: bonus.advantage || false,
+                            disadvantage: bonus.disadvantage || false,
                         });
                     });
                     console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5440,6 +5442,8 @@ function equipWeapon(item) {
                     addBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5462,6 +5466,8 @@ function unequipWeapon(item) {
                 removeBonus(bonus.category, bonus.key, {
                     source: item.name,
                     value: bonus.value,
+                    advantage: bonus.advantage || false,
+                    disadvantage: bonus.disadvantage || false,
                 });
                 
             });
@@ -5490,6 +5496,8 @@ function equipArmor(item) {
                     addBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5538,6 +5546,8 @@ function unequipArmor(item) {
                     removeBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} unequipped: Bonuses removed.`);
@@ -5585,6 +5595,8 @@ function equipShield(item) {
                     addBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5618,6 +5630,8 @@ function unequipShield(item) {
                     removeBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} unequipped: Bonuses removed.`);
@@ -5656,6 +5670,8 @@ function equipJewelry(item) {
                     addBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,  
                     });
                 });
                 console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5677,6 +5693,8 @@ function unequipJewelry(item) {
                 removeBonus(bonus.category, bonus.key, {
                     source: item.name,
                     value: bonus.value,
+                    advantage: bonus.advantage || false,
+                    disadvantage: bonus.disadvantage || false,
                 });
                 
             });
@@ -5723,9 +5741,12 @@ function addToAttunementList(item) {
                 if (item.bonus) {
                     // Add each bonus from the item to the appropriate stat
                     item.bonus.forEach((bonus) => {
+                        console.log(item)
                         addBonus(bonus.category, bonus.key, {
                             source: item.name,
                             value: bonus.value,
+                            advantage: bonus.advantage || false,
+                            disadvantage: bonus.disadvantage || false,
                         });
                     });
                     console.log(`${item.name} equipped: Bonuses applied.`);
@@ -5743,6 +5764,8 @@ function addToAttunementList(item) {
                     removeBonus(bonus.category, bonus.key, {
                         source: item.name,
                         value: bonus.value,
+                        advantage: bonus.advantage || false,
+                        disadvantage: bonus.disadvantage || false,
                     });
                 });
                 console.log(`${item.name} unequipped: Bonuses removed.`);
