@@ -1,0 +1,2878 @@
+{
+  "classes": {
+    "fighter": {
+      "name": "Fighter",
+      "hitDie": 10,
+      "primaryAbilities": ["Strength", "Dexterity"],
+      "savingThrowProficiencies": ["Strength", "Constitution"],
+      "skillOptions": {
+        "choose": 2,
+        "from": ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"]
+      },
+      "equipmentProficiencies": {
+        "armor": ["Light armor", "Medium armor", "Heavy armor", "Shields"],
+        "weapons": ["Simple weapons", "Martial weapons"],
+        "tools": [],
+        "other": []
+      },
+      "multiclassRequirements": {
+        "prerequisite": {"Strength": 13, "Dexterity": 13},
+        "anyOf": true
+      },
+      "multiclassGains": {
+        "hitDie": 10,
+        "equipmentProficiencies": {
+          "armor": ["Light armor", "Medium armor", "Shields"],
+          "weapons": ["Simple weapons", "Martial weapons"],
+          "tools": [],
+          "other": []
+        },
+        "skillOptions": null
+      },
+      "levelProgression": {
+        "1": {
+          "features": ["Fighting Style", "Second Wind"],
+          "choices": {
+            "Fighting Style": {
+              "type": "choice",
+              "choose": 1,
+              "options": [
+                {
+                  "name": "Archery",
+                  "description": "You gain a +2 bonus to attack rolls you make with ranged weapons."
+                },
+                {
+                  "name": "Defense",
+                  "description": "While you are wearing armor, you gain a +1 bonus to AC."
+                },
+                {
+                  "name": "Dueling",
+                  "description": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
+                },
+                {
+                  "name": "Great Weapon Fighting",
+                  "description": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll."
+                },
+                {
+                  "name": "Protection",
+                  "description": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield."
+                },
+                {
+                  "name": "Two-Weapon Fighting",
+                  "description": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack."
+                }
+              ]
+            }
+          },
+          "automaticFeatures": {
+            "Second Wind": {
+              "description": "You have a limited well of stamina that you can draw on to protect yourself from harm. On your turn, you can use a bonus action to regain hit points equal to 1d10 + your fighter level. Once you use this feature, you must finish a short or long rest before you can use it again.",
+              "uses": "1/short rest"
+            }
+          }
+        },
+        "2": {
+          "features": ["Action Surge"],
+          "automaticFeatures": {
+            "Action Surge": {
+              "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again.",
+              "uses": "1/short rest"
+            }
+          }
+        },
+        "3": {
+          "features": ["Martial Archetype"],
+          "choices": {
+            "Martial Archetype": {
+              "type": "subclass",
+              "choose": 1,
+              "options": ["Champion", "Battle Master", "Eldritch Knight"]
+            }
+          }
+        },
+        "4": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "5": {
+          "features": ["Extra Attack"],
+          "automaticFeatures": {
+            "Extra Attack": {
+              "description": "You can attack twice, instead of once, whenever you take the Attack action on your turn."
+            }
+          }
+        },
+        "6": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "7": {
+          "features": ["Martial Archetype feature"]
+        },
+        "8": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "9": {
+          "features": ["Indomitable"],
+          "automaticFeatures": {
+            "Indomitable": {
+              "description": "You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.",
+              "uses": "1/long rest"
+            }
+          }
+        },
+        "10": {
+          "features": ["Martial Archetype feature"]
+        },
+        "11": {
+          "features": ["Extra Attack (2)"],
+          "automaticFeatures": {
+            "Extra Attack (2)": {
+              "description": "You can attack three times whenever you take the Attack action on your turn."
+            }
+          }
+        },
+        "12": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "13": {
+          "features": ["Indomitable (two uses)"],
+          "automaticFeatures": {
+            "Indomitable": {
+              "description": "You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.",
+              "uses": "2/long rest"
+            }
+          }
+        },
+        "14": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "15": {
+          "features": ["Martial Archetype feature"]
+        },
+        "16": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "17": {
+          "features": ["Action Surge (two uses)", "Indomitable (three uses)"],
+          "automaticFeatures": {
+            "Action Surge": {
+              "description": "You can push yourself beyond your normal limits for a moment. On your turn, you can take one additional action. Once you use this feature, you must finish a short or long rest before you can use it again.",
+              "uses": "2/short rest"
+            },
+            "Indomitable": {
+              "description": "You can reroll a saving throw that you fail. If you do so, you must use the new roll, and you can't use this feature again until you finish a long rest.",
+              "uses": "3/long rest"
+            }
+          }
+        },
+        "18": {
+          "features": ["Martial Archetype feature"]
+        },
+        "19": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "20": {
+          "features": ["Extra Attack (3)"],
+          "automaticFeatures": {
+            "Extra Attack (3)": {
+              "description": "You can attack four times whenever you take the Attack action on your turn."
+            }
+          }
+        }
+      },
+      "subclasses": {
+        "Champion": {
+          "name": "Champion",
+          "features": {
+            "3": {
+              "features": ["Improved Critical"],
+              "automaticFeatures": {
+                "Improved Critical": {
+                  "description": "Your weapon attacks score a critical hit on a roll of 19 or 20."
+                }
+              }
+            },
+            "7": {
+              "features": ["Remarkable Athlete"],
+              "automaticFeatures": {
+                "Remarkable Athlete": {
+                  "description": "You can add half your proficiency bonus (rounded up) to any Strength, Dexterity, or Constitution check you make that doesn't already use your proficiency bonus."
+                }
+              }
+            },
+            "10": {
+              "features": ["Additional Fighting Style"],
+              "choices": {
+                "Additional Fighting Style": {
+                  "type": "choice",
+                  "choose": 1,
+                  "options": [
+                    {
+                      "name": "Archery",
+                      "description": "You gain a +2 bonus to attack rolls you make with ranged weapons."
+                    },
+                    {
+                      "name": "Defense",
+                      "description": "While you are wearing armor, you gain a +1 bonus to AC."
+                    },
+                    {
+                      "name": "Dueling",
+                      "description": "When you are wielding a melee weapon in one hand and no other weapons, you gain a +2 bonus to damage rolls with that weapon."
+                    },
+                    {
+                      "name": "Great Weapon Fighting",
+                      "description": "When you roll a 1 or 2 on a damage die for an attack you make with a melee weapon that you are wielding with two hands, you can reroll the die and must use the new roll."
+                    },
+                    {
+                      "name": "Protection",
+                      "description": "When a creature you can see attacks a target other than you that is within 5 feet of you, you can use your reaction to impose disadvantage on the attack roll. You must be wielding a shield."
+                    },
+                    {
+                      "name": "Two-Weapon Fighting",
+                      "description": "When you engage in two-weapon fighting, you can add your ability modifier to the damage of the second attack."
+                    }
+                  ]
+                }
+              }
+            },
+            "15": {
+              "features": ["Superior Critical"],
+              "automaticFeatures": {
+                "Superior Critical": {
+                  "description": "Your weapon attacks score a critical hit on a roll of 18-20."
+                }
+              }
+            },
+            "18": {
+              "features": ["Survivor"],
+              "automaticFeatures": {
+                "Survivor": {
+                  "description": "At the start of each of your turns, you regain hit points equal to 5 + your Constitution modifier if you have no more than half of your hit points left. You don't gain this benefit if you have 0 hit points."
+                }
+              }
+            }
+          }
+        },
+        "Battle Master": {
+          "name": "Battle Master",
+          "features": {
+            "3": {
+              "features": ["Combat Superiority", "Maneuvers"],
+              "choices": {
+                "Maneuvers": {
+                  "type": "choice",
+                  "choose": 3,
+                  "options": [
+                    {
+                      "name": "Commander's Strike",
+                      "description": "When you take the Attack action on your turn, you can forgo one of your attacks and use a bonus action to direct one of your companions to strike..."
+                    },
+                    {
+                      "name": "Disarming Attack",
+                      "description": "When you hit a creature with a weapon attack, you can expend one superiority die to attempt to disarm the target..."
+                    },
+                    {
+                      "name": "Distracting Strike",
+                      "description": "When you hit a creature with a weapon attack, you can expend one superiority die to distract the creature..."
+                    }
+                  ]
+                }
+              },
+              "automaticFeatures": {
+                "Combat Superiority": {
+                  "description": "You learn maneuvers that are fueled by special dice called superiority dice. You have four superiority dice, which are d8s.",
+                  "superiorityDice": 4,
+                  "dieType": "d8"
+                }
+              }
+            },
+            "7": {
+              "features": ["Know Your Enemy"],
+              "automaticFeatures": {
+                "Know Your Enemy": {
+                  "description": "If you spend at least 1 minute observing or interacting with another creature outside combat, you can learn certain information about its capabilities compared to your own."
+                }
+              }
+            },
+            "10": {
+              "features": ["Improved Combat Superiority"],
+              "automaticFeatures": {
+                "Improved Combat Superiority": {
+                  "description": "Your superiority dice turn into d10s. At 18th level, they turn into d12s.",
+                  "superiorityDice": 5,
+                  "dieType": "d10"
+                }
+              },
+              "choices": {
+                "Additional Maneuvers": {
+                  "type": "choice",
+                  "choose": 2,
+                  "options": [
+                    {
+                      "name": "Feinting Attack",
+                      "description": "You can expend one superiority die and use a bonus action on your turn to feint..."
+                    },
+                    {
+                      "name": "Goading Attack",
+                      "description": "When you hit a creature with a weapon attack, you can expend one superiority die to attempt to goad the target..."
+                    }
+                  ]
+                }
+              }
+            },
+            "15": {
+              "features": ["Relentless"],
+              "automaticFeatures": {
+                "Relentless": {
+                  "description": "When you roll initiative and have no superiority dice remaining, you regain one superiority die."
+                }
+              },
+              "choices": {
+                "Additional Maneuvers": {
+                  "type": "choice",
+                  "choose": 2,
+                  "options": [
+                    {
+                      "name": "Lunging Attack",
+                      "description": "When you make a melee weapon attack on your turn, you can expend one superiority die to increase your reach..."
+                    }
+                  ]
+                }
+              }
+            },
+            "18": {
+              "features": ["Improved Combat Superiority"],
+              "automaticFeatures": {
+                "Improved Combat Superiority": {
+                  "description": "Your superiority dice turn into d12s.",
+                  "superiorityDice": 6,
+                  "dieType": "d12"
+                }
+              }
+            }
+          }
+        },
+        "Eldritch Knight": {
+          "name": "Eldritch Knight",
+          "spellcasting": {
+            "ability": "Intelligence",
+            "ritual": false,
+            "spellsKnown": {
+              "3": 2,
+              "4": 3,
+              "7": 4,
+              "8": 5,
+              "10": 6,
+              "11": 7,
+              "13": 8,
+              "14": 9,
+              "16": 10,
+              "19": 11,
+              "20": 12
+            },
+            "cantripsKnown": {
+              "3": 2,
+              "10": 3,
+              "14": 4
+            },
+            "spellSlots": {
+              "3": {"1": 2},
+              "4": {"1": 3},
+              "7": {"1": 4, "2": 2},
+              "8": {"1": 4, "2": 2},
+              "10": {"1": 4, "2": 3},
+              "11": {"1": 4, "2": 3},
+              "13": {"1": 4, "2": 3, "3": 2},
+              "14": {"1": 4, "2": 3, "3": 2},
+              "16": {"1": 4, "2": 3, "3": 3},
+              "19": {"1": 4, "2": 3, "3": 3, "4": 1},
+              "20": {"1": 4, "2": 3, "3": 3, "4": 1}
+            },
+            "spellList": "wizard",
+            "restrictions": {
+              "schoolsAllowed": ["abjuration", "evocation"],
+              "exceptionsAtLevel": {
+                "8": 1,
+                "14": 1,
+                "20": 1
+              }
+            }
+          },
+          "features": {
+            "3": {
+              "features": ["Spellcasting", "Weapon Bond"],
+              "automaticFeatures": {
+                "Weapon Bond": {
+                  "description": "You learn a ritual that creates a magical bond between yourself and one weapon. You can't be disarmed of that weapon unless you are incapacitated."
+                }
+              }
+            },
+            "7": {
+              "features": ["War Magic"],
+              "automaticFeatures": {
+                "War Magic": {
+                  "description": "When you use your action to cast a cantrip, you can make one weapon attack as a bonus action."
+                }
+              }
+            },
+            "10": {
+              "features": ["Eldritch Strike"],
+              "automaticFeatures": {
+                "Eldritch Strike": {
+                  "description": "When you hit a creature with your weapon attack, that creature has disadvantage on the next saving throw it makes against a spell you cast before the end of your next turn."
+                }
+              }
+            },
+            "15": {
+              "features": ["Arcane Charge"],
+              "automaticFeatures": {
+                "Arcane Charge": {
+                  "description": "When you use your Action Surge, you can teleport up to 30 feet to an unoccupied space you can see. You can teleport before or after the additional action."
+                }
+              }
+            },
+            "18": {
+              "features": ["Improved War Magic"],
+              "automaticFeatures": {
+                "Improved War Magic": {
+                  "description": "When you use your action to cast a spell, you can make one weapon attack as a bonus action."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "wizard": {
+      "name": "Wizard",
+      "hitDie": 6,
+      "primaryAbilities": ["Intelligence"],
+      "savingThrowProficiencies": ["Intelligence", "Wisdom"],
+      "skillOptions": {
+        "choose": 2,
+        "from": ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"]
+      },
+      "equipmentProficiencies": {
+        "armor": [],
+        "weapons": ["Daggers", "Darts", "Slings", "Quarterstaffs", "Light crossbows"],
+        "tools": [],
+        "other": []
+      },
+      "multiclassRequirements": {
+        "prerequisite": {"Intelligence": 13}
+      },
+      "multiclassGains": {
+        "hitDie": 6,
+        "equipmentProficiencies": {
+          "armor": [],
+          "weapons": [],
+          "tools": [],
+          "other": []
+        },
+        "skillOptions": null
+      },
+      "spellcasting": {
+        "ability": "Intelligence",
+        "ritual": true,
+        "spellbook": true,
+        "cantripsKnown": {
+          "1": 3,
+          "4": 4,
+          "10": 5,
+          "14": 6
+        },
+        "spellSlots": {
+          "1": {"1": 2},
+          "2": {"1": 3},
+          "3": {"1": 4, "2": 2},
+          "4": {"1": 4, "2": 3},
+          "5": {"1": 4, "2": 3, "3": 2},
+          "6": {"1": 4, "2": 3, "3": 3},
+          "7": {"1": 4, "2": 3, "3": 3, "4": 1},
+          "8": {"1": 4, "2": 3, "3": 3, "4": 2},
+          "9": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 1},
+          "10": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2},
+          "11": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "12": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "13": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "14": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "15": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "16": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "17": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1, "9": 1},
+          "18": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 1, "7": 1, "8": 1, "9": 1},
+          "19": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 1, "8": 1, "9": 1},
+          "20": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 2, "8": 1, "9": 1}
+        },
+        "spellList": "wizard",
+        "spellbookStart": 6,
+        "spellsPerLevel": 2
+      },
+      "levelProgression": {
+        "1": {
+          "features": ["Spellcasting", "Arcane Recovery"],
+          "automaticFeatures": {
+            "Arcane Recovery": {
+              "description": "You have learned to regain some of your magical energy by studying your spellbook. Once per day when you finish a short rest, you can choose expended spell slots to recover.",
+              "uses": "1/long rest"
+            }
+          }
+        },
+        "2": {
+          "features": ["Arcane Tradition"],
+          "choices": {
+            "Arcane Tradition": {
+              "type": "subclass",
+              "choose": 1,
+              "options": ["School of Abjuration", "School of Conjuration", "School of Divination", "School of Enchantment", "School of Evocation", "School of Illusion", "School of Necromancy", "School of Transmutation"]
+            }
+          }
+        },
+        "4": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "6": {
+          "features": ["Arcane Tradition feature"]
+        },
+        "8": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "10": {
+          "features": ["Arcane Tradition feature"]
+        },
+        "12": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "14": {
+          "features": ["Arcane Tradition feature"]
+        },
+        "16": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "18": {
+          "features": ["Spell Mastery"],
+          "choices": {
+            "Spell Mastery": {
+              "type": "choice",
+              "choose": 2,
+              "options": [
+                {
+                  "name": "1st Level Spell",
+                  "description": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot."
+                },
+                {
+                  "name": "2nd Level Spell",
+                  "description": "Choose a 1st-level wizard spell and a 2nd-level wizard spell that are in your spellbook. You can cast those spells at their lowest level without expending a spell slot."
+                }
+              ]
+            }
+          }
+        },
+        "19": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "20": {
+          "features": ["Signature Spells"],
+          "choices": {
+            "Signature Spells": {
+              "type": "choice",
+              "choose": 2,
+              "options": [
+                {
+                  "name": "3rd Level Signature Spell",
+                  "description": "Choose two 3rd-level wizard spells in your spellbook as your signature spells. You always have these spells prepared, and you can cast each of them once at 3rd level without expending a spell slot."
+                }
+              ]
+            }
+          }
+        }
+      },
+      "subclasses": {
+        "School of Evocation": {
+          "name": "School of Evocation",
+          "features": {
+            "2": {
+              "features": ["Evocation Savant", "Sculpt Spells"],
+              "automaticFeatures": {
+                "Evocation Savant": {
+                  "description": "The gold and time you must spend to copy an evocation spell into your spellbook is halved."
+                },
+                "Sculpt Spells": {
+                  "description": "You can create pockets of relative safety within the effects of your evocation spells. When you cast an evocation spell that affects other creatures, you can choose a number of them equal to 1 + the spell's level."
+                }
+              }
+            },
+            "6": {
+              "features": ["Potent Cantrip"],
+              "automaticFeatures": {
+                "Potent Cantrip": {
+                  "description": "Your damaging cantrips affect even creatures that avoid the brunt of the effect. When a creature succeeds on a saving throw against your cantrip, the creature takes half the cantrip's damage (if any) but suffers no additional effect."
+                }
+              }
+            },
+            "10": {
+              "features": ["Empowered Evocation"],
+              "automaticFeatures": {
+                "Empowered Evocation": {
+                  "description": "You can add your Intelligence modifier to one damage roll of any wizard evocation spell you cast."
+                }
+              }
+            },
+            "14": {
+              "features": ["Overchannel"],
+              "automaticFeatures": {
+                "Overchannel": {
+                  "description": "When you cast a wizard spell of 1st through 5th level that deals damage, you can deal maximum damage with that spell. Once you use this feature, you can't use it again until you finish a long rest."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "rogue": {
+      "name": "Rogue",
+      "hitDie": 8,
+      "primaryAbilities": ["Dexterity"],
+      "savingThrowProficiencies": ["Dexterity", "Intelligence"],
+      "skillOptions": {
+        "choose": 4,
+        "from": ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth"]
+      },
+      "equipmentProficiencies": {
+        "armor": ["Light armor"],
+        "weapons": ["Simple weapons", "Hand crossbows", "Longswords", "Rapiers", "Shortswords"],
+        "tools": ["Thieves' tools"],
+        "other": []
+      },
+      "multiclassRequirements": {
+        "prerequisite": {"Dexterity": 13}
+      },
+      "multiclassGains": {
+        "hitDie": 8,
+        "equipmentProficiencies": {
+          "armor": ["Light armor"],
+          "weapons": ["Simple weapons", "Hand crossbows", "Longswords", "Rapiers", "Shortswords"],
+          "tools": ["Thieves' tools"],
+          "other": []
+        },
+        "skillOptions": {
+          "choose": 1,
+          "from": ["Acrobatics", "Athletics", "Deception", "Insight", "Intimidation", "Investigation", "Perception", "Performance", "Persuasion", "Sleight of Hand", "Stealth"]
+        }
+      },
+                    "levelProgression": {
+        "1": {
+          "features": ["Expertise", "Sneak Attack", "Thieves' Cant"],
+          "choices": {
+            "Expertise": {
+              "type": "choice",
+              "choose": 2,
+              "options": [
+                {
+                  "name": "Skill Expertise",
+                  "description": "Choose two of your skill proficiencies, or one of your skill proficiencies and your proficiency with thieves' tools. Your proficiency bonus is doubled for any ability check you make that uses either of the chosen proficiencies."
+                }
+              ]
+            }
+          },
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Once per turn, you can deal an extra 1d6 damage to one creature you hit with an attack if you have advantage on the attack roll. The attack must use a finesse or a ranged weapon.",
+              "damage": "1d6"
+            },
+            "Thieves' Cant": {
+              "description": "You know thieves' cant, a secret mix of dialect, jargon, and code that allows you to hide messages in seemingly normal conversation."
+            }
+          }
+        },
+        "2": {
+          "features": ["Cunning Action"],
+          "automaticFeatures": {
+            "Cunning Action": {
+              "description": "You can take a bonus action on each of your turns to take the Dash, Disengage, or Hide action."
+            }
+          }
+        },
+        "3": {
+          "features": ["Roguish Archetype"],
+          "choices": {
+            "Roguish Archetype": {
+              "type": "subclass",
+              "choose": 1,
+              "options": ["Thief", "Assassin", "Arcane Trickster"]
+            }
+          },
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 2d6.",
+              "damage": "2d6"
+            }
+          }
+        },
+        "4": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "5": {
+          "features": ["Uncanny Dodge"],
+          "automaticFeatures": {
+            "Uncanny Dodge": {
+              "description": "When an attacker that you can see hits you with an attack, you can use your reaction to halve the attack's damage against you."
+            },
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 3d6.",
+              "damage": "3d6"
+            }
+          }
+        },
+        "6": {
+          "features": ["Expertise"],
+          "choices": {
+            "Expertise": {
+              "type": "choice",
+              "choose": 2,
+              "options": [
+                {
+                  "name": "Additional Skill Expertise",
+                  "description": "Choose two more of your proficiencies (in skills or with thieves' tools) to gain expertise."
+                }
+              ]
+            }
+          }
+        },
+        "7": {
+          "features": ["Evasion"],
+          "automaticFeatures": {
+            "Evasion": {
+              "description": "When you are subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw, and only half damage if you fail."
+            },
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 4d6.",
+              "damage": "4d6"
+            }
+          }
+        },
+        "8": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "9": {
+          "features": ["Roguish Archetype feature"],
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 5d6.",
+              "damage": "5d6"
+            }
+          }
+        },
+        "10": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "11": {
+          "features": ["Reliable Talent"],
+          "automaticFeatures": {
+            "Reliable Talent": {
+              "description": "Whenever you make an ability check that lets you add your proficiency bonus, you can treat a d20 roll of 9 or lower as a 10."
+            },
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 6d6.",
+              "damage": "6d6"
+            }
+          }
+        },
+        "12": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "13": {
+          "features": ["Roguish Archetype feature"],
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 7d6.",
+              "damage": "7d6"
+            }
+          }
+        },
+        "14": {
+          "features": ["Blindsense"],
+          "automaticFeatures": {
+            "Blindsense": {
+              "description": "If you are able to hear, you are aware of the location of any hidden or invisible creature within 10 feet of you."
+            }
+          }
+        },
+        "15": {
+          "features": ["Slippery Mind"],
+          "automaticFeatures": {
+            "Slippery Mind": {
+              "description": "You have acquired greater mental strength. You gain proficiency in Wisdom saving throws."
+            },
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 8d6.",
+              "damage": "8d6"
+            }
+          }
+        },
+        "16": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "17": {
+          "features": ["Roguish Archetype feature"],
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 9d6.",
+              "damage": "9d6"
+            }
+          }
+        },
+        "18": {
+          "features": ["Elusive"],
+          "automaticFeatures": {
+            "Elusive": {
+              "description": "You are so evasive that attackers rarely gain the upper hand against you. No attack roll has advantage against you while you aren't incapacitated."
+            }
+          }
+        },
+        "19": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          },
+          "automaticFeatures": {
+            "Sneak Attack": {
+              "description": "Your sneak attack damage increases to 10d6.",
+              "damage": "10d6"
+            }
+          }
+        },
+        "20": {
+          "features": ["Stroke of Luck"],
+          "automaticFeatures": {
+            "Stroke of Luck": {
+              "description": "If your attack misses a target within range, you can turn the miss into a hit. Alternatively, if you fail an ability check, you can treat the d20 roll as a 20.",
+              "uses": "1/short rest"
+            }
+          }
+        }
+      },
+      "subclasses": {
+        "Thief": {
+          "name": "Thief",
+          "features": {
+            "3": {
+              "features": ["Fast Hands", "Second-Story Work"],
+              "automaticFeatures": {
+                "Fast Hands": {
+                  "description": "You can use the bonus action granted by your Cunning Action to make a Dexterity (Sleight of Hand) check, use your thieves' tools to disarm a trap or open a lock, or take the Use an Object action."
+                },
+                "Second-Story Work": {
+                  "description": "You gain the ability to climb faster than normal; climbing no longer costs you extra movement. In addition, when you make a running jump, the distance you cover increases by a number of feet equal to your Dexterity modifier."
+                }
+              }
+            },
+            "9": {
+              "features": ["Supreme Sneak"],
+              "automaticFeatures": {
+                "Supreme Sneak": {
+                  "description": "You have advantage on a Dexterity (Stealth) check if you move no more than half your speed on the same turn."
+                }
+              }
+            },
+            "13": {
+              "features": ["Use Magic Device"],
+              "automaticFeatures": {
+                "Use Magic Device": {
+                  "description": "You have learned enough about the workings of magic that you can improvise the use of items even when they are not intended for you. You ignore all class, race, and level requirements on the use of magic items."
+                }
+              }
+            },
+            "17": {
+              "features": ["Thief's Reflexes"],
+              "automaticFeatures": {
+                "Thief's Reflexes": {
+                  "description": "You have become adept at laying ambushes and quickly escaping danger. You can take two turns during the first round of any combat. You take your first turn at your normal initiative and your second turn at your initiative minus 10."
+                }
+              }
+            }
+          }
+        },
+        "Assassin": {
+          "name": "Assassin",
+          "features": {
+            "3": {
+              "features": ["Assassinate", "Bonus Proficiencies"],
+              "automaticFeatures": {
+                "Assassinate": {
+                  "description": "You are at your deadliest when you get the drop on your enemies. You have advantage on attack rolls against any creature that hasn't taken a turn in the combat yet. In addition, any hit you score against a creature that is surprised is a critical hit."
+                },
+                "Bonus Proficiencies": {
+                  "description": "You gain proficiency with the disguise kit and the poisoner's kit."
+                }
+              }
+            },
+            "9": {
+              "features": ["Infiltration Expertise"],
+              "automaticFeatures": {
+                "Infiltration Expertise": {
+                  "description": "You can unfailingly create false identities for yourself. You must spend seven days and 25 gp to establish the history, profession, and affiliations for an identity."
+                }
+              }
+            },
+            "13": {
+              "features": ["Impostor"],
+              "automaticFeatures": {
+                "Impostor": {
+                  "description": "You gain the ability to unerringly mimic another person's speech, writing, and behavior. You must spend at least three hours studying these three components of the person's behavior, listening to speech, examining handwriting, and observing mannerisms."
+                }
+              }
+            },
+            "17": {
+              "features": ["Death Strike"],
+              "automaticFeatures": {
+                "Death Strike": {
+                  "description": "You become a master of instant death. When you attack and hit a creature that is surprised, it must make a Constitution saving throw (DC 8 + your Dexterity modifier + your proficiency bonus). On a failed save, double the damage of your attack against the creature."
+                }
+              }
+            }
+          }
+        },
+        "Arcane Trickster": {
+          "name": "Arcane Trickster",
+          "spellcasting": {
+            "ability": "Intelligence",
+            "ritual": false,
+            "spellsKnown": {
+              "3": 3,
+              "4": 4,
+              "7": 5,
+              "8": 6,
+              "10": 7,
+              "11": 8,
+              "13": 9,
+              "14": 10,
+              "16": 11,
+              "19": 12,
+              "20": 13
+            },
+            "cantripsKnown": {
+              "3": 3,
+              "10": 4,
+              "14": 5
+            },
+            "spellSlots": {
+              "3": {"1": 2},
+              "4": {"1": 3},
+              "7": {"1": 4, "2": 2},
+              "8": {"1": 4, "2": 2},
+              "10": {"1": 4, "2": 3},
+              "11": {"1": 4, "2": 3},
+              "13": {"1": 4, "2": 3, "3": 2},
+              "14": {"1": 4, "2": 3, "3": 2},
+              "16": {"1": 4, "2": 3, "3": 3},
+              "19": {"1": 4, "2": 3, "3": 3, "4": 1},
+              "20": {"1": 4, "2": 3, "3": 3, "4": 1}
+            },
+            "spellList": "wizard",
+            "restrictions": {
+              "schoolsAllowed": ["enchantment", "illusion"],
+              "exceptionsAtLevel": {
+                "8": 1,
+                "14": 1,
+                "20": 1
+              }
+            }
+          },
+          "features": {
+            "3": {
+              "features": ["Spellcasting", "Mage Hand Legerdemain"],
+              "automaticFeatures": {
+                "Mage Hand Legerdemain": {
+                  "description": "When you cast mage hand, you can make the spectral hand invisible, and you can perform the following additional tasks: stow/retrieve objects, use thieves' tools, plant objects on someone, steal objects."
+                }
+              }
+            },
+            "9": {
+              "features": ["Magical Ambush"],
+              "automaticFeatures": {
+                "Magical Ambush": {
+                  "description": "If you are hidden from a creature when you cast a spell on it, the creature has disadvantage on any saving throw it makes against the spell this turn."
+                }
+              }
+            },
+            "13": {
+              "features": ["Versatile Trickster"],
+              "automaticFeatures": {
+                "Versatile Trickster": {
+                  "description": "You gain the ability to distract targets with your mage hand. As a bonus action on your turn, you can designate a creature within 5 feet of the spectral hand created by the spell. Doing so gives you advantage on attack rolls against that creature until the end of the turn."
+                }
+              }
+            },
+            "17": {
+              "features": ["Spell Thief"],
+              "automaticFeatures": {
+                "Spell Thief": {
+                  "description": "You gain the ability to magically steal the knowledge of how to cast a spell from another spellcaster. Immediately after a creature casts a spell that targets you or includes you in its area of effect, you can use your reaction to force the creature to make a saving throw with its spellcasting ability modifier."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "cleric": {
+      "name": "Cleric",
+      "hitDie": 8,
+      "primaryAbilities": ["Wisdom"],
+      "savingThrowProficiencies": ["Wisdom", "Charisma"],
+      "skillOptions": {
+        "choose": 2,
+        "from": ["History", "Insight", "Medicine", "Persuasion", "Religion"]
+      },
+      "equipmentProficiencies": {
+        "armor": ["Light armor", "Medium armor", "Shields"],
+        "weapons": ["Simple weapons"],
+        "tools": [],
+        "other": []
+      },
+      "multiclassRequirements": {
+        "prerequisite": {"Wisdom": 13}
+      },
+      "multiclassGains": {
+        "hitDie": 8,
+        "equipmentProficiencies": {
+          "armor": ["Light armor", "Medium armor", "Shields"],
+          "weapons": ["Simple weapons"],
+          "tools": [],
+          "other": []
+        },
+        "skillOptions": null
+      },
+      "spellcasting": {
+        "ability": "Wisdom",
+        "ritual": true,
+        "spellsPrepared": "class level + Wisdom modifier",
+        "cantripsKnown": {
+          "1": 3,
+          "4": 4,
+          "10": 5,
+          "14": 6
+        },
+        "spellSlots": {
+          "1": {"1": 2},
+          "2": {"1": 3},
+          "3": {"1": 4, "2": 2},
+          "4": {"1": 4, "2": 3},
+          "5": {"1": 4, "2": 3, "3": 2},
+          "6": {"1": 4, "2": 3, "3": 3},
+          "7": {"1": 4, "2": 3, "3": 3, "4": 1},
+          "8": {"1": 4, "2": 3, "3": 3, "4": 2},
+          "9": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 1},
+          "10": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2},
+          "11": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "12": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "13": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "14": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "15": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "16": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "17": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1, "9": 1},
+          "18": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 1, "7": 1, "8": 1, "9": 1},
+          "19": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 1, "8": 1, "9": 1},
+          "20": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 2, "8": 1, "9": 1}
+        },
+        "spellList": "cleric",
+        "domainSpells": true
+      },
+      "levelProgression": {
+        "1": {
+          "features": ["Spellcasting", "Divine Domain"],
+          "choices": {
+            "Divine Domain": {
+              "type": "subclass",
+              "choose": 1,
+              "options": ["Knowledge", "Life", "Light", "Nature", "Tempest", "Trickery", "War"]
+            }
+          }
+        },
+        "2": {
+          "features": ["Channel Divinity (1/rest)", "Divine Domain feature"],
+          "automaticFeatures": {
+            "Channel Divinity": {
+              "description": "You gain the ability to channel divine energy directly from your deity, using that energy to fuel magical effects.",
+              "uses": "1/short rest"
+            },
+            "Turn Undead": {
+              "description": "As an action, you present your holy symbol and speak a prayer censuring the undead. Each undead that can see or hear you within 30 feet of you must make a Wisdom saving throw."
+            }
+          }
+        },
+        "4": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "5": {
+          "features": ["Destroy Undead (CR 1/2)"],
+          "automaticFeatures": {
+            "Destroy Undead": {
+              "description": "When an undead fails its saving throw against your Turn Undead feature, the creature is instantly destroyed if its challenge rating is at or below 1/2."
+            }
+          }
+        },
+        "6": {
+          "features": ["Channel Divinity (2/rest)", "Divine Domain feature"],
+          "automaticFeatures": {
+            "Channel Divinity": {
+              "description": "You can use your Channel Divinity twice between rests.",
+              "uses": "2/short rest"
+            }
+          }
+        },
+        "8": {
+          "features": ["Ability Score Improvement", "Destroy Undead (CR 1)", "Divine Domain feature"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          },
+          "automaticFeatures": {
+            "Destroy Undead": {
+              "description": "Your Destroy Undead feature now affects creatures of CR 1 or lower."
+            }
+          }
+        },
+        "10": {
+          "features": ["Divine Intervention"],
+          "automaticFeatures": {
+            "Divine Intervention": {
+              "description": "You can call on your deity to intervene on your behalf when your need is great. Imploring your deity's aid requires you to use your action. Roll a d100. If you roll a number equal to or lower than your cleric level, your deity intervenes."
+            }
+          }
+        },
+        "11": {
+          "features": ["Destroy Undead (CR 2)"],
+          "automaticFeatures": {
+            "Destroy Undead": {
+              "description": "Your Destroy Undead feature now affects creatures of CR 2 or lower."
+            }
+          }
+        },
+        "12": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "14": {
+          "features": ["Destroy Undead (CR 3)"],
+          "automaticFeatures": {
+            "Destroy Undead": {
+              "description": "Your Destroy Undead feature now affects creatures of CR 3 or lower."
+            }
+          }
+        },
+        "16": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "17": {
+          "features": ["Destroy Undead (CR 4)", "Divine Domain feature"],
+          "automaticFeatures": {
+            "Destroy Undead": {
+              "description": "Your Destroy Undead feature now affects creatures of CR 4 or lower."
+            }
+          }
+        },
+        "18": {
+          "features": ["Channel Divinity (3/rest)"],
+          "automaticFeatures": {
+            "Channel Divinity": {
+              "description": "You can use your Channel Divinity three times between rests.",
+              "uses": "3/short rest"
+            }
+          }
+        },
+        "19": {
+          "features": ["Ability Score Improvement"],
+          "choices": {
+            "Ability Score Improvement": {
+              "type": "asi_or_feat",
+              "choose": 1,
+              "options": ["ASI", "Feat"]
+            }
+          }
+        },
+        "20": {
+          "features": ["Divine Intervention Improvement"],
+          "automaticFeatures": {
+            "Divine Intervention": {
+              "description": "Your call for intervention succeeds automatically, no roll required."
+            }
+          }
+        }
+      },
+      "subclasses": {
+        "Life": {
+          "name": "Life Domain",
+          "domainSpells": {
+            "1": ["Bless", "Cure Wounds"],
+            "3": ["Lesser Restoration", "Spiritual Weapon"],
+            "5": ["Beacon of Hope", "Revivify"],
+            "7": ["Death Ward", "Guardian of Faith"],
+            "9": ["Mass Cure Wounds", "Raise Dead"]
+          },
+          "features": {
+            "1": {
+              "features": ["Bonus Proficiency", "Disciple of Life"],
+              "automaticFeatures": {
+                "Bonus Proficiency": {
+                  "description": "You gain proficiency with heavy armor."
+                },
+                "Disciple of Life": {
+                  "description": "Your healing spells are more effective. Whenever you use a spell of 1st level or higher to restore hit points to a creature, the creature regains additional hit points equal to 2 + the spell's level."
+                }
+              }
+            },
+            "2": {
+              "features": ["Channel Divinity: Preserve Life"],
+              "automaticFeatures": {
+                "Channel Divinity: Preserve Life": {
+                  "description": "You can use your Channel Divinity to heal the badly injured. As an action, you present your holy symbol and evoke healing energy that can restore a number of hit points equal to five times your cleric level."
+                }
+              }
+            },
+            "6": {
+              "features": ["Blessed Healer"],
+              "automaticFeatures": {
+                "Blessed Healer": {
+                  "description": "The healing spells you cast on others heal you as well. When you cast a spell of 1st level or higher that restores hit points to a creature other than you, you regain hit points equal to 2 + the spell's level."
+                }
+              }
+            },
+            "8": {
+              "features": ["Divine Strike"],
+              "automaticFeatures": {
+                "Divine Strike": {
+                  "description": "You gain the ability to infuse your weapon strikes with divine energy. Once on each of your turns when you hit a creature with a weapon attack, you can cause the attack to deal an extra 1d8 radiant damage to the target. When you reach 14th level, the extra damage increases to 2d8."
+                }
+              }
+            },
+            "17": {
+              "features": ["Supreme Healing"],
+              "automaticFeatures": {
+                "Supreme Healing": {
+                  "description": "When you would normally roll one or more dice to restore hit points with a spell, you instead use the highest number possible for each die."
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "druid": {
+      "name": "Druid",
+      "hitDie": 8,
+      "primaryAbility": ["wisdom"],
+      "savingThrowProficiencies": ["intelligence", "wisdom"],
+      "skillProficiencies": {
+        "choose": 2,
+        "from": ["arcana", "animal_handling", "insight", "medicine", "nature", "perception", "religion", "survival"]
+      },
+      "proficiencies": {
+        "armor": ["light_armor", "medium_armor", "shields_non_metal"],
+        "weapons": ["clubs", "daggers", "darts", "javelins", "maces", "quarterstaffs", "scimitars", "sickles", "slings", "spears"],
+        "tools": ["herbalism_kit"],
+        "languages": ["druidic"]
+      },
+      "spellcasting": {
+        "ability": "wisdom",
+        "ritual": true,
+        "spellcastingFocus": "druidcraft_focus",
+        "cantripsKnown": {
+          "1": 2, "4": 3, "10": 4
+        },
+        "spellsKnown": "all_prepared",
+        "spellsPrepared": "druid_level_plus_wisdom_modifier",
+        "spellSlots": {
+          "1": {"1": 2},
+          "2": {"1": 3},
+          "3": {"1": 4, "2": 2},
+          "4": {"1": 4, "2": 3},
+          "5": {"1": 4, "2": 3, "3": 2},
+          "6": {"1": 4, "2": 3, "3": 3},
+          "7": {"1": 4, "2": 3, "3": 3, "4": 1},
+          "8": {"1": 4, "2": 3, "3": 3, "4": 2},
+          "9": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 1},
+          "10": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2},
+          "11": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "12": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "13": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "14": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "15": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "16": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "17": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1, "9": 1},
+          "18": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 1, "7": 1, "8": 1, "9": 1},
+          "19": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 1, "8": 1, "9": 1},
+          "20": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 2, "8": 1, "9": 1}
+        }
+      },
+      "equipment": {
+        "startingEquipment": [
+          {
+            "choose": 1,
+            "from": ["wooden_shield", "any_simple_weapon"]
+          },
+          "scimitar",
+          "leather_armor",
+          "explorers_pack",
+          "studded_leather",
+          "any_simple_weapon"
+        ]
+      },
+      "multiclassing": {
+        "prerequisite": {"wisdom": 13},
+        "proficienciesGained": {
+          "armor": ["light_armor", "medium_armor", "shields_non_metal"],
+          "weapons": []
+        }
+      },
+      "levelProgression": {
+        "1": {
+          "proficiencyBonus": 2,
+          "features": ["druidic", "spellcasting"]
+        },
+        "2": {
+          "proficiencyBonus": 2,
+          "features": ["wild_shape", "druid_circle"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.25,
+            "restrictions": ["no_flying", "no_swimming"]
+          }
+        },
+        "3": {
+          "proficiencyBonus": 2,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.25,
+            "restrictions": ["no_flying", "no_swimming"]
+          }
+        },
+        "4": {
+          "proficiencyBonus": 2,
+          "features": ["ability_score_improvement", "wild_shape_improvement"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.5,
+            "restrictions": ["no_flying", "no_swimming"]
+          },
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "5": {
+          "proficiencyBonus": 3,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.5,
+            "restrictions": ["no_flying", "no_swimming"]
+          }
+        },
+        "6": {
+          "proficiencyBonus": 3,
+          "features": ["druid_circle_feature"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.5,
+            "restrictions": ["no_flying", "no_swimming"]
+          }
+        },
+        "7": {
+          "proficiencyBonus": 3,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 0.5,
+            "restrictions": ["no_flying", "no_swimming"]
+          }
+        },
+        "8": {
+          "proficiencyBonus": 3,
+          "features": ["ability_score_improvement", "wild_shape_improvement"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          },
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "9": {
+          "proficiencyBonus": 4,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "10": {
+          "proficiencyBonus": 4,
+          "features": ["druid_circle_feature"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "11": {
+          "proficiencyBonus": 4,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "12": {
+          "proficiencyBonus": 4,
+          "features": ["ability_score_improvement"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          },
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "13": {
+          "proficiencyBonus": 5,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "14": {
+          "proficiencyBonus": 5,
+          "features": ["druid_circle_feature"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "15": {
+          "proficiencyBonus": 5,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "16": {
+          "proficiencyBonus": 5,
+          "features": ["ability_score_improvement"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          },
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "17": {
+          "proficiencyBonus": 6,
+          "features": [],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "18": {
+          "proficiencyBonus": 6,
+          "features": ["timeless_body", "beast_spells"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        },
+        "19": {
+          "proficiencyBonus": 6,
+          "features": ["ability_score_improvement"],
+          "wildShape": {
+            "uses": 2,
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          },
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "20": {
+          "proficiencyBonus": 6,
+          "features": ["archdruid"],
+          "wildShape": {
+            "uses": "unlimited",
+            "maxCR": 1,
+            "restrictions": ["no_flying", "swimming_allowed"]
+          }
+        }
+      },
+      "subclasses": {
+        "circle_of_the_land": {
+          "name": "Circle of the Land",
+          "features": {
+            "2": ["bonus_cantrip", "natural_recovery"],
+            "3": ["circle_spells"],
+            "6": ["lands_stride"],
+            "10": ["natures_ward"],
+            "14": ["natures_sanctuary"]
+          },
+          "bonusCantrips": {
+            "2": ["druid_cantrip"]
+          },
+          "choices": {
+            "2": {
+              "land_type": {
+                "choose": 1,
+                "from": ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp", "underdark"]
+              }
+            }
+          },
+          "circleSpells": {
+            "arctic": {
+              "3": ["hold_person", "spike_growth"],
+              "5": ["sleet_storm", "slow"],
+              "7": ["freedom_of_movement", "ice_storm"],
+              "9": ["commune_with_nature", "cone_of_cold"]
+            },
+            "coast": {
+              "3": ["mirror_image", "misty_step"],
+              "5": ["water_breathing", "water_walk"],
+              "7": ["control_water", "freedom_of_movement"],
+              "9": ["conjure_elemental", "scrying"]
+            },
+            "desert": {
+              "3": ["blur", "silence"],
+              "5": ["create_food_and_water", "protection_from_energy"],
+              "7": ["blight", "hallucinatory_terrain"],
+              "9": ["insect_plague", "wall_of_stone"]
+            },
+            "forest": {
+              "3": ["barkskin", "spider_climb"],
+              "5": ["call_lightning", "plant_growth"],
+              "7": ["divination", "freedom_of_movement"],
+              "9": ["commune_with_nature", "tree_stride"]
+            },
+            "grassland": {
+              "3": ["invisibility", "pass_without_trace"],
+              "5": ["daylight", "haste"],
+              "7": ["divination", "freedom_of_movement"],
+              "9": ["dream", "insect_plague"]
+            },
+            "mountain": {
+              "3": ["spider_climb", "spike_growth"],
+              "5": ["lightning_bolt", "meld_into_stone"],
+              "7": ["stone_shape", "stoneskin"],
+              "9": ["passwall", "wall_of_stone"]
+            },
+            "swamp": {
+              "3": ["darkness", "melfs_acid_arrow"],
+              "5": ["water_walk", "stinking_cloud"],
+              "7": ["freedom_of_movement", "locate_creature"],
+              "9": ["insect_plague", "scrying"]
+            },
+            "underdark": {
+              "3": ["spider_climb", "web"],
+              "5": ["gaseous_form", "stinking_cloud"],
+              "7": ["greater_invisibility", "stone_shape"],
+              "9": ["cloudkill", "insect_plague"]
+            }
+          }
+        },
+        "circle_of_the_moon": {
+          "name": "Circle of the Moon",
+          "features": {
+            "2": ["combat_wild_shape", "circle_forms"],
+            "6": ["primal_strike"],
+            "10": ["elemental_wild_shape"],
+            "14": ["thousand_forms"]
+          },
+          "wildShapeImprovements": {
+            "2": {
+              "maxCR": 1,
+              "restrictions": ["no_flying"]
+            },
+            "4": {
+              "maxCR": 1,
+              "restrictions": ["swimming_allowed"]
+            },
+            "8": {
+              "maxCR": 1,
+              "restrictions": ["flying_allowed"]
+            },
+            "10": {
+              "elementalForms": true
+            }
+          }
+        }
+      }
+    },
+    "barbarian": {
+      "name": "Barbarian",
+      "hitDie": 12,
+      "primaryAbility": ["strength"],
+      "savingThrowProficiencies": ["strength", "constitution"],
+      "skillProficiencies": {
+        "choose": 2,
+        "from": ["animal_handling", "athletics", "intimidation", "nature", "perception", "survival"]
+      },
+      "proficiencies": {
+        "armor": ["light_armor", "medium_armor", "shields"],
+        "weapons": ["simple_weapons", "martial_weapons"],
+        "tools": [],
+        "languages": []
+      },
+      "equipment": {
+        "startingEquipment": [
+          {
+            "choose": 1,
+            "from": ["greataxe", "any_martial_melee_weapon"]
+          },
+          {
+            "choose": 1,
+            "from": ["two_handaxes", "any_simple_weapon"]
+          },
+          "explorers_pack",
+          "four_javelins"
+        ]
+      },
+      "multiclassing": {
+        "prerequisite": {"strength": 13},
+        "proficienciesGained": {
+          "armor": ["shields"],
+          "weapons": ["simple_weapons", "martial_weapons"]
+        }
+      },
+      "levelProgression": {
+        "1": {
+          "proficiencyBonus": 2,
+          "features": ["rage", "unarmored_defense"],
+          "rages": 2,
+          "rageDamage": 2
+        },
+        "2": {
+          "proficiencyBonus": 2,
+          "features": ["reckless_attack", "danger_sense"],
+          "rages": 2,
+          "rageDamage": 2
+        },
+        "3": {
+          "proficiencyBonus": 2,
+          "features": ["primal_path"],
+          "rages": 3,
+          "rageDamage": 2,
+          "choices": {
+            "primal_path": {
+              "choose": 1,
+              "from": ["path_of_the_berserker", "path_of_the_totem_warrior"]
+            }
+          }
+        },
+        "4": {
+          "proficiencyBonus": 2,
+          "features": ["ability_score_improvement"],
+          "rages": 3,
+          "rageDamage": 2,
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "5": {
+          "proficiencyBonus": 3,
+          "features": ["extra_attack", "fast_movement"],
+          "rages": 3,
+          "rageDamage": 2
+        },
+        "6": {
+          "proficiencyBonus": 3,
+          "features": ["path_feature"],
+          "rages": 4,
+          "rageDamage": 2
+        },
+        "7": {
+          "proficiencyBonus": 3,
+          "features": ["feral_instinct"],
+          "rages": 4,
+          "rageDamage": 2
+        },
+        "8": {
+          "proficiencyBonus": 3,
+          "features": ["ability_score_improvement"],
+          "rages": 4,
+          "rageDamage": 2,
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "9": {
+          "proficiencyBonus": 4,
+          "features": ["brutal_critical_1"],
+          "rages": 4,
+          "rageDamage": 3
+        },
+        "10": {
+          "proficiencyBonus": 4,
+          "features": ["path_feature"],
+          "rages": 4,
+          "rageDamage": 3
+        },
+        "11": {
+          "proficiencyBonus": 4,
+          "features": ["relentless_rage"],
+          "rages": 4,
+          "rageDamage": 3
+        },
+        "12": {
+          "proficiencyBonus": 4,
+          "features": ["ability_score_improvement"],
+          "rages": 5,
+          "rageDamage": 3,
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "13": {
+          "proficiencyBonus": 5,
+          "features": ["brutal_critical_2"],
+          "rages": 5,
+          "rageDamage": 3
+        },
+        "14": {
+          "proficiencyBonus": 5,
+          "features": ["path_feature"],
+          "rages": 5,
+          "rageDamage": 3
+        },
+        "15": {
+          "proficiencyBonus": 5,
+          "features": ["persistent_rage"],
+          "rages": 5,
+          "rageDamage": 3
+        },
+        "16": {
+          "proficiencyBonus": 5,
+          "features": ["ability_score_improvement"],
+          "rages": 5,
+          "rageDamage": 4,
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "17": {
+          "proficiencyBonus": 6,
+          "features": ["brutal_critical_3"],
+          "rages": 6,
+          "rageDamage": 4
+        },
+        "18": {
+          "proficiencyBonus": 6,
+          "features": ["indomitable_might"],
+          "rages": 6,
+          "rageDamage": 4
+        },
+        "19": {
+          "proficiencyBonus": 6,
+          "features": ["ability_score_improvement"],
+          "rages": 6,
+          "rageDamage": 4,
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "20": {
+          "proficiencyBonus": 6,
+          "features": ["primal_champion"],
+          "rages": "unlimited",
+          "rageDamage": 4
+        }
+      },
+      "subclasses": {
+        "path_of_the_berserker": {
+          "name": "Path of the Berserker",
+          "features": {
+            "3": ["frenzy"],
+            "6": ["mindless_rage"],
+            "10": ["intimidating_presence"],
+            "14": ["retaliation"]
+          }
+        },
+        "path_of_the_totem_warrior": {
+          "name": "Path of the Totem Warrior",
+          "features": {
+            "3": ["spirit_seeker", "totem_spirit"],
+            "6": ["aspect_of_the_beast"],
+            "10": ["spirit_walker"],
+            "14": ["totemic_attunement"]
+          },
+          "choices": {
+            "3": {
+              "totem_spirit": {
+                "choose": 1,
+                "from": ["bear", "eagle", "wolf"]
+              }
+            },
+            "6": {
+              "aspect_of_the_beast": {
+                "choose": 1,
+                "from": ["bear", "eagle", "wolf"]
+              }
+            },
+            "14": {
+              "totemic_attunement": {
+                "choose": 1,
+                "from": ["bear", "eagle", "wolf"]
+              }
+            }
+          }
+        }
+      }
+    },
+    "bard": {
+      "name": "Bard",
+      "hitDie": 8,
+      "primaryAbility": ["charisma"],
+      "savingThrowProficiencies": ["dexterity", "charisma"],
+      "skillProficiencies": {
+        "choose": 3,
+        "from": ["all_skills"]
+      },
+      "proficiencies": {
+        "armor": ["light_armor"],
+        "weapons": ["simple_weapons", "hand_crossbows", "longswords", "rapiers", "shortswords"],
+        "tools": ["three_musical_instruments"],
+        "languages": []
+      },
+      "spellcasting": {
+        "ability": "charisma",
+        "ritual": true,
+        "spellcastingFocus": "musical_instrument",
+        "cantripsKnown": {
+          "1": 2, "4": 3, "10": 4
+        },
+        "spellsKnown": {
+          "1": 4, "2": 5, "3": 6, "4": 7, "5": 8, "6": 9, "7": 10, "8": 11, "9": 12, "10": 14, "11": 15, "13": 16, "14": 18, "15": 19, "17": 20
+        },
+        "spellSlots": {
+          "1": {"1": 2},
+          "2": {"1": 3},
+          "3": {"1": 4, "2": 2},
+          "4": {"1": 4, "2": 3},
+          "5": {"1": 4, "2": 3, "3": 2},
+          "6": {"1": 4, "2": 3, "3": 3},
+          "7": {"1": 4, "2": 3, "3": 3, "4": 1},
+          "8": {"1": 4, "2": 3, "3": 3, "4": 2},
+          "9": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 1},
+          "10": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2},
+          "11": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "12": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1},
+          "13": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "14": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1},
+          "15": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "16": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1},
+          "17": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 2, "6": 1, "7": 1, "8": 1, "9": 1},
+          "18": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 1, "7": 1, "8": 1, "9": 1},
+          "19": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 1, "8": 1, "9": 1},
+          "20": {"1": 4, "2": 3, "3": 3, "4": 3, "5": 3, "6": 2, "7": 2, "8": 1, "9": 1}
+        }
+      },
+      "equipment": {
+        "startingEquipment": [
+          {
+            "choose": 1,
+            "from": ["rapier", "longsword", "any_simple_weapon"]
+          },
+          {
+            "choose": 1,
+            "from": ["diplomats_pack", "entertainers_pack"]
+          },
+          "lute",
+          "leather_armor",
+          "dagger"
+        ]
+      },
+      "multiclassing": {
+        "prerequisite": {"charisma": 13},
+        "proficienciesGained": {
+          "armor": ["light_armor"],
+          "weapons": [],
+          "tools": ["one_musical_instrument"]
+        }
+      },
+      "levelProgression": {
+        "1": {
+          "proficiencyBonus": 2,
+          "features": ["bardic_inspiration", "spellcasting"],
+          "bardicInspiration": "d6",
+          "bardicInspirationUses": "charisma_modifier"
+        },
+        "2": {
+          "proficiencyBonus": 2,
+          "features": ["jack_of_all_trades", "song_of_rest"],
+          "bardicInspiration": "d6",
+          "bardicInspirationUses": "charisma_modifier"
+        },
+        "3": {
+          "proficiencyBonus": 2,
+          "features": ["bard_college", "expertise"],
+          "bardicInspiration": "d6",
+          "bardicInspirationUses": "charisma_modifier",
+          "choices": {
+            "bard_college": {
+              "choose": 1,
+              "from": ["college_of_lore", "college_of_valor"]
+            },
+            "expertise": {
+              "choose": 2,
+              "from": ["proficient_skills_and_tools"]
+            }
+          }
+        },
+        "4": {
+          "proficiencyBonus": 2,
+          "features": ["ability_score_improvement"],
+          "bardicInspiration": "d6",
+          "bardicInspirationUses": "charisma_modifier",
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "5": {
+          "proficiencyBonus": 3,
+          "features": ["bardic_inspiration_improvement", "font_of_inspiration"],
+          "bardicInspiration": "d8",
+          "bardicInspirationUses": "short_rest"
+        },
+        "6": {
+          "proficiencyBonus": 3,
+          "features": ["countercharm", "college_feature"],
+          "bardicInspiration": "d8",
+          "bardicInspirationUses": "short_rest"
+        },
+        "7": {
+          "proficiencyBonus": 3,
+          "features": [],
+          "bardicInspiration": "d8",
+          "bardicInspirationUses": "short_rest"
+        },
+        "8": {
+          "proficiencyBonus": 3,
+          "features": ["ability_score_improvement"],
+          "bardicInspiration": "d8",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "9": {
+          "proficiencyBonus": 4,
+          "features": ["song_of_rest_improvement"],
+          "bardicInspiration": "d8",
+          "bardicInspirationUses": "short_rest"
+        },
+        "10": {
+          "proficiencyBonus": 4,
+          "features": ["bardic_inspiration_improvement", "expertise", "magical_secrets"],
+          "bardicInspiration": "d10",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "expertise": {
+              "choose": 2,
+              "from": ["proficient_skills_and_tools"]
+            },
+            "magical_secrets": {
+              "choose": 2,
+              "from": ["any_spell_list"]
+            }
+          }
+        },
+        "11": {
+          "proficiencyBonus": 4,
+          "features": [],
+          "bardicInspiration": "d10",
+          "bardicInspirationUses": "short_rest"
+        },
+        "12": {
+          "proficiencyBonus": 4,
+          "features": ["ability_score_improvement"],
+          "bardicInspiration": "d10",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "13": {
+          "proficiencyBonus": 5,
+          "features": ["song_of_rest_improvement"],
+          "bardicInspiration": "d10",
+          "bardicInspirationUses": "short_rest"
+        },
+        "14": {
+          "proficiencyBonus": 5,
+          "features": ["college_feature", "magical_secrets"],
+          "bardicInspiration": "d10",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "magical_secrets": {
+              "choose": 2,
+              "from": ["any_spell_list"]
+            }
+          }
+        },
+        "15": {
+          "proficiencyBonus": 5,
+          "features": ["bardic_inspiration_improvement"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest"
+        },
+        "16": {
+          "proficiencyBonus": 5,
+          "features": ["ability_score_improvement"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "17": {
+          "proficiencyBonus": 6,
+          "features": ["song_of_rest_improvement"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest"
+        },
+        "18": {
+          "proficiencyBonus": 6,
+          "features": ["magical_secrets"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "magical_secrets": {
+              "choose": 2,
+              "from": ["any_spell_list"]
+            }
+          }
+        },
+        "19": {
+          "proficiencyBonus": 6,
+          "features": ["ability_score_improvement"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest",
+          "choices": {
+            "ability_score_improvement": {
+              "choose": 1,
+              "from": ["ability_scores", "feat"]
+            }
+          }
+        },
+        "20": {
+          "proficiencyBonus": 6,
+          "features": ["superior_inspiration"],
+          "bardicInspiration": "d12",
+          "bardicInspirationUses": "short_rest"
+        }
+      },
+      "subclasses": {
+        "college_of_lore": {
+          "name": "College of Lore",
+          "features": {
+            "3": ["bonus_proficiencies", "cutting_words"],
+            "6": ["additional_magical_secrets"],
+            "14": ["peerless_skill"]
+          },
+          "choices": {
+            "3": {
+              "bonus_proficiencies": {
+                "choose": 3,
+                "from": ["all_skills"]
+              }
+            },
+            "6": {
+              "additional_magical_secrets": {
+                "choose": 2,
+                "from": ["any_spell_list"],
+                "restriction": "max_3rd_level"
+              }
+            }
+          }
+        },
+        "college_of_valor": {
+          "name": "College of Valor",
+          "features": {
+            "3": ["bonus_proficiencies", "combat_inspiration"],
+            "6": ["extra_attack"],
+            "14": ["combat_inspiration_improvement"]
+          },
+          "bonusProficiencies": {
+            "3": {
+              "armor": ["medium_armor", "shields"],
+              "weapons": ["martial_weapons"]
+            }
+          }
+        }
+      }
+    },
+    "monk": {
+      "name": "Monk",
+      "hitDie": 8,
+      "primaryAbility": ["Dexterity", "Wisdom"],
+      "savingThrows": ["Strength", "Dexterity"],
+      "skillChoices": {
+        "count": 2,
+        "options": ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"]
+      },
+      "equipment": {
+        "armor": [],
+        "weapons": ["Simple weapons", "Shortswords"],
+        "tools": ["One artisan's tools or musical instrument"],
+        "other": ["Shortsword or any simple weapon", "Dungeoneer's pack or explorer's pack", "10 darts"]
+      },
+      "features": {
+        "1": [
+          {
+            "name": "Unarmored Defense",
+            "description": "While not wearing armor, your AC equals 10 + Dex modifier + Wis modifier."
+          },
+          {
+            "name": "Martial Arts",
+            "description": "You can use Dexterity instead of Strength for unarmed strikes and monk weapons."
+          }
+        ],
+        "2": [
+          {
+            "name": "Ki",
+            "description": "You can spend ki points to fuel various abilities."
+          },
+          {
+            "name": "Unarmored Movement",
+            "description": "Your speed increases by 10 feet while not wearing armor or wielding a shield."
+          }
+        ],
+        "3": [
+          {
+            "name": "Monastic Tradition",
+            "description": "Choose a monastic tradition: Way of the Open Hand, Way of Shadow, Way of the Four Elements, or others."
+          },
+          {
+            "name": "Deflect Missiles",
+            "description": "You can use your reaction to deflect or catch ranged weapon attacks."
+          }
+        ],
+        "4": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          },
+          {
+            "name": "Slow Fall",
+            "description": "You can use your reaction to reduce falling damage."
+          }
+        ],
+        "5": [
+          {
+            "name": "Extra Attack",
+            "description": "You can attack twice when you take the Attack action."
+          },
+          {
+            "name": "Stunning Strike",
+            "description": "You can spend ki to attempt to stun a creature with your attacks."
+          }
+        ],
+        "6": [
+          {
+            "name": "Ki-Empowered Strikes",
+            "description": "Your unarmed strikes count as magical for overcoming resistance."
+          },
+          {
+            "name": "Monastic Tradition Feature",
+            "description": "You gain a feature from your chosen monastic tradition."
+          }
+        ],
+        "7": [
+          {
+            "name": "Evasion",
+            "description": "You can dodge out of the way of certain area effects."
+          },
+          {
+            "name": "Stillness of Mind",
+            "description": "You can use your action to end one effect causing you to be charmed or frightened."
+          }
+        ],
+        "8": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "9": [
+          {
+            "name": "Unarmored Movement Improvement",
+            "description": "You can move along vertical surfaces and across liquids."
+          }
+        ],
+        "10": [
+          {
+            "name": "Purity of Body",
+            "description": "You are immune to disease and poison."
+          }
+        ],
+        "11": [
+          {
+            "name": "Monastic Tradition Feature",
+            "description": "You gain a feature from your chosen monastic tradition."
+          }
+        ],
+        "12": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "13": [
+          {
+            "name": "Tongue of the Sun and Moon",
+            "description": "You can understand all spoken languages and speak to any creature with a language."
+          }
+        ],
+        "14": [
+          {
+            "name": "Diamond Soul",
+            "description": "You gain proficiency in all saving throws and can reroll failed saves."
+          }
+        ],
+        "15": [
+          {
+            "name": "Timeless Body",
+            "description": "You age more slowly and don't need food or water."
+          }
+        ],
+        "16": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "17": [
+          {
+            "name": "Monastic Tradition Feature",
+            "description": "You gain a feature from your chosen monastic tradition."
+          }
+        ],
+        "18": [
+          {
+            "name": "Empty Body",
+            "description": "You can become invisible and gain resistance to all damage."
+          }
+        ],
+        "19": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "20": [
+          {
+            "name": "Perfect Self",
+            "description": "When you roll for initiative and have no ki points remaining, you regain 4 ki points."
+          }
+        ]
+      },
+      "subclasses": {
+        "open_hand": {
+          "name": "Way of the Open Hand",
+          "features": {
+            "3": [
+              {
+                "name": "Open Hand Technique",
+                "description": "Your Flurry of Blows attacks can knock prone, push, or prevent reactions."
+              }
+            ],
+            "6": [
+              {
+                "name": "Wholeness of Body",
+                "description": "You can heal yourself as an action."
+              }
+            ],
+            "11": [
+              {
+                "name": "Tranquility",
+                "description": "You can cast sanctuary on yourself without expending a spell slot."
+              }
+            ],
+            "17": [
+              {
+                "name": "Quivering Palm",
+                "description": "You can set up lethal vibrations in someone's body."
+              }
+            ]
+          }
+        },
+        "shadow": {
+          "name": "Way of Shadow",
+          "features": {
+            "3": [
+              {
+                "name": "Shadow Arts",
+                "description": "You can use ki to cast certain spells."
+              }
+            ],
+            "6": [
+              {
+                "name": "Shadow Step",
+                "description": "You can teleport between shadows and have advantage on your next attack."
+              }
+            ],
+            "11": [
+              {
+                "name": "Cloak of Shadows",
+                "description": "You can become invisible in dim light or darkness."
+              }
+            ],
+            "17": [
+              {
+                "name": "Opportunist",
+                "description": "You can exploit a creature's momentary distraction."
+              }
+            ]
+          }
+        },
+        "four_elements": {
+          "name": "Way of the Four Elements",
+          "features": {
+            "3": [
+              {
+                "name": "Disciple of the Elements",
+                "description": "You learn elemental disciplines that let you harness the power of the elements."
+              }
+            ],
+            "6": [
+              {
+                "name": "Extra Elemental Discipline",
+                "description": "You learn another elemental discipline."
+              }
+            ],
+            "11": [
+              {
+                "name": "Extra Elemental Discipline",
+                "description": "You learn another elemental discipline."
+              }
+            ],
+            "17": [
+              {
+                "name": "Extra Elemental Discipline",
+                "description": "You learn another elemental discipline."
+              }
+            ]
+          }
+        }
+      }
+    },
+    "artificer": {
+      "name": "Artificer",
+      "hitDie": 8,
+      "primaryAbility": ["Intelligence"],
+      "savingThrows": ["Constitution", "Intelligence"],
+      "skillChoices": {
+        "count": 2,
+        "options": ["Arcana", "History", "Investigation", "Medicine", "Nature", "Perception", "Sleight of Hand"]
+      },
+      "equipment": {
+        "armor": ["Light armor", "Medium armor", "Shields"],
+        "weapons": ["Simple weapons", "Martial weapons (firearms if available)"],
+        "tools": ["Thieves' tools", "Tinker's tools", "One artisan's tools"],
+        "other": ["Light crossbow and 20 bolts", "Simple weapon", "Studded leather armor", "Thieves' tools", "Dungeoneer's pack"]
+      },
+      "spellcasting": {
+        "type": "half",
+        "ability": "Intelligence",
+        "ritual": true,
+        "spellsKnown": "table",
+        "cantrips": true
+      },
+      "features": {
+        "1": [
+          {
+            "name": "Magical Tinkering",
+            "description": "You can imbue tiny objects with minor magical properties."
+          },
+          {
+            "name": "Spellcasting",
+            "description": "You can cast artificer spells using Intelligence as your spellcasting ability."
+          }
+        ],
+        "2": [
+          {
+            "name": "Infuse Item",
+            "description": "You can imbue mundane items with magical infusions."
+          }
+        ],
+        "3": [
+          {
+            "name": "Artificer Specialist",
+            "description": "Choose a specialist: Alchemist, Armorer, Battle Smith, or Artillerist."
+          },
+          {
+            "name": "The Right Tool for the Job",
+            "description": "You can produce any set of artisan's tools with tinker's tools."
+          }
+        ],
+        "4": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "5": [
+          {
+            "name": "Arcane Armament",
+            "description": "You can now infuse weapons and armor."
+          }
+        ],
+        "6": [
+          {
+            "name": "Tool Expertise",
+            "description": "Double your proficiency bonus for ability checks using tools."
+          }
+        ],
+        "7": [
+          {
+            "name": "Flash of Genius",
+            "description": "You can use your reaction to add your Intelligence modifier to ability checks or saving throws."
+          }
+        ],
+        "8": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "9": [
+          {
+            "name": "Arcane Armament Improvement",
+            "description": "Your infused weapons gain additional properties."
+          }
+        ],
+        "10": [
+          {
+            "name": "Magic Item Adept",
+            "description": "You can attune to more magic items and craft common magic items."
+          }
+        ],
+        "11": [
+          {
+            "name": "Spell-Storing Item",
+            "description": "You can store spells in magic items for others to use."
+          }
+        ],
+        "12": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "13": [
+          {
+            "name": "Arcane Armament Greater",
+            "description": "Your infused weapons become even more powerful."
+          }
+        ],
+        "14": [
+          {
+            "name": "Magic Item Savant",
+            "description": "You can attune to even more magic items and ignore some requirements."
+          }
+        ],
+        "15": [
+          {
+            "name": "Arcane Armament Superior",
+            "description": "Your infused weapons reach their peak power."
+          }
+        ],
+        "16": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "17": [
+          {
+            "name": "Arcane Armament Ultimate",
+            "description": "Your infused weapons become legendary in power."
+          }
+        ],
+        "18": [
+          {
+            "name": "Magic Item Master",
+            "description": "You can attune to up to six magic items at once."
+          }
+        ],
+        "19": [
+          {
+            "name": "Ability Score Improvement",
+            "description": "Increase one ability score by 2, or two ability scores by 1 each."
+          }
+        ],
+        "20": [
+          {
+            "name": "Soul of Artifice",
+            "description": "You gain resistance to all damage types and can use magic items to cheat death."
+          }
+        ]
+      },
+      "subclasses": {
+        "alchemist": {
+          "name": "Alchemist",
+          "features": {
+            "3": [
+              {
+                "name": "Tool Proficiency",
+                "description": "You gain proficiency with alchemist's supplies."
+              },
+              {
+                "name": "Alchemist Spells",
+                "description": "You learn additional spells that don't count against your spells known."
+              },
+              {
+                "name": "Experimental Elixir",
+                "description": "You can create magical elixirs with random beneficial effects."
+              }
+            ],
+            "5": [
+              {
+                "name": "Alchemical Savant",
+                "description": "Add your Intelligence modifier to spell damage and healing."
+              }
+            ],
+            "9": [
+              {
+                "name": "Restorative Reagents",
+                "description": "Your experimental elixirs provide additional healing."
+              }
+            ],
+            "15": [
+              {
+                "name": "Chemical Mastery",
+                "description": "You gain resistance to acid and poison damage and can cast certain spells."
+              }
+            ]
+          }
+        },
+        "armorer": {
+          "name": "Armorer",
+          "features": {
+            "3": [
+              {
+                "name": "Tool Proficiency",
+                "description": "You gain proficiency with heavy armor and smith's tools."
+              },
+              {
+                "name": "Armorer Spells",
+                "description": "You learn additional spells that don't count against your spells known."
+              },
+              {
+                "name": "Arcane Armor",
+                "description": "Your armor becomes integrated with your magic."
+              },
+              {
+                "name": "Armor Model",
+                "description": "Choose Guardian or Infiltrator armor model."
+              }
+            ],
+            "5": [
+              {
+                "name": "Extra Attack",
+                "description": "You can attack twice when you take the Attack action."
+              }
+            ],
+            "9": [
+              {
+                "name": "Armor Modifications",
+                "description": "You can modify your armor with additional capabilities."
+              }
+            ],
+            "15": [
+              {
+                "name": "Perfected Armor",
+                "description": "Your armor gains enhanced defensive capabilities."
+              }
+            ]
+          }
+        },
+        "artillerist": {
+          "name": "Artillerist",
+          "features": {
+            "3": [
+              {
+                "name": "Tool Proficiency",
+                "description": "You gain proficiency with woodcarver's tools."
+              },
+              {
+                "name": "Artillerist Spells",
+                "description": "You learn additional spells that don't count against your spells known."
+              },
+              {
+                "name": "Eldritch Cannons",
+                "description": "You can create magical cannons that fight alongside you."
+              }
+            ],
+            "5": [
+              {
+                "name": "Arcane Firearm",
+                "description": "Your spellcasting focus becomes a magical firearm."
+              }
+            ],
+            "9": [
+              {
+                "name": "Explosive Cannon",
+                "description": "Your eldritch cannons can explode when destroyed."
+              }
+            ],
+            "15": [
+              {
+                "name": "Fortified Position",
+                "description": "You can create temporary cover and enhance your cannons."
+              }
+            ]
+          }
+        },
+        "battle_smith": {
+          "name": "Battle Smith",
+          "features": {
+            "3": [
+              {
+                "name": "Tool Proficiency",
+                "description": "You gain proficiency with leatherworker's tools."
+              },
+              {
+                "name": "Battle Smith Spells",
+                "description": "You learn additional spells that don't count against your spells known."
+              },
+              {
+                "name": "Battle Ready",
+                "description": "You can use Intelligence for weapon attacks."
+              },
+              {
+                "name": "Steel Defender",
+                "description": "You create a mechanical companion."
+              }
+            ],
+            "5": [
+              {
+                "name": "Extra Attack",
+                "description": "You can attack twice when you take the Attack action."
+              }
+            ],
+            "9": [
+              {
+                "name": "Arcane Jolt",
+                "description": "Your weapon attacks can channel magical energy."
+              }
+            ],
+            "15": [
+              {
+                "name": "Improved Defender",
+                "description": "Your Steel Defender gains enhanced abilities."
+              }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
