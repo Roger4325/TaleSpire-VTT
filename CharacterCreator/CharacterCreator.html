@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<script>
+    function logSymbioteEvent(event) {
+        console.log(event);
+    }
+
+    async function onStateChangeEvent(msg) {
+        if (msg.kind === "hasInitialized") {
+            //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
+        }
+    }
+</script>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="CharacterCreator.css">
+    <link rel="stylesheet" href="../styleShared.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Character Creator</title>
+    
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>D&D Character Creator</h1>
+            <p>Create your perfect adventurer</p>
+        </div>
+
+        <div class="creator-container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" onclick="switchTab('basics')">Basics</button>
+                <button class="nav-tab" onclick="switchTab('species')">Species</button>
+                <button class="nav-tab" onclick="switchTab('class')">Class</button>
+                <button class="nav-tab" onclick="switchTab('abilities')">Abilities</button>
+                <button class="nav-tab" onclick="switchTab('features')">Backgrounds</button>
+                <button class="nav-tab" onclick="switchTab('summary')">Summary</button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Basics Tab -->
+                <div id="basics" class="tab-pane active">
+                    <h2>Character Basics</h2>
+                    <div class="form-group">
+                        <label for="characterName">Character Name</label>
+                        <input type="text" id="characterName" class="form-control" placeholder="Enter character name">
+                    </div>
+                    <div class="form-group">
+                        <label for="characterAlignment">Alignment</label>
+                        <select id="characterAlignment" class="form-control">
+                            <option value="">Select alignment</option>
+                            <option value="lawful-good">Lawful Good</option>
+                            <option value="neutral-good">Neutral Good</option>
+                            <option value="chaotic-good">Chaotic Good</option>
+                            <option value="lawful-neutral">Lawful Neutral</option>
+                            <option value="true-neutral">True Neutral</option>
+                            <option value="chaotic-neutral">Chaotic Neutral</option>
+                            <option value="lawful-evil">Lawful Evil</option>
+                            <option value="neutral-evil">Neutral Evil</option>
+                            <option value="chaotic-evil">Chaotic Evil</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="hitPointsMethod">Hit Points Calculation Method</label>
+                        <select id="hitPointsMethod" class="form-control">
+                            <option value="average">Average (Recommended)</option>
+                            <option value="rolled">Rolled</option>
+                        </select>
+                        <small class="form-text">Average: Uses average roll rounded up for each level. Rolled: Allows manual input of rolled hit points.</small>
+                    </div>
+                    
+                    <div id="rerollOnesContainer" class="form-group checkbox-item hidden">
+                        <input type="checkbox" id="rerollOnesHitDice">
+                        <label for="rerollOnesHitDice">Reroll 1s on Hit Dice</label>
+                        <small class="form-text">When enabled, any hit dice roll of 1 will be automatically rerolled once.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="abilityScoreMethod">Ability Score Generation Method</label>
+                        <select id="abilityScoreMethod" class="form-control">
+                            <option value="manual">Manual/Rolled</option>
+                            <option value="standard-array">Standard Array</option>
+                            <option value="point-buy">Point Buy</option>
+                        </select>
+                        <small class="form-text">Choose how to generate your ability scores. Manual allows rolling or custom values.</small>
+                    </div>
+                </div>
+
+                <!-- Species Tab -->
+                <div id="species" class="tab-pane">
+                    <h2>Choose Your Species</h2>
+                    <div id="speciesSelection" class="species-selection">
+                        <!-- Species will be populated here -->
+                    </div>
+                    
+                    <div id="speciesModal" class="modalCharacterCreator hidden">
+                        <div class="modalCreatorContent" id="speciesModalContent">
+                            <!-- Species details will be shown here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Class Tab -->
+                <div id="class" class="tab-pane">
+                    <h2>Choose Your Class</h2>
+                    <div id="classSelection" class="class-selection">
+                        <!-- Classes will be populated here -->
+                    </div>
+
+                    <section id="classInfoDisplay" class="hidden">
+                        <div id="levelSelection" style="display: none;">
+                            <div class="level-display">
+                                <h3>Character Level</h3>
+                                <input type="range" id="levelSlider" class="level-slider" min="1" max="20" value="1">
+                                <div class="level-value" id="levelValue">Level 1</div>
+                            </div>
+                        </div>
+
+                        <div id="subclassSelection" style="display: none;">
+                            <h3>Choose Your Subclass</h3>
+                            <div id="subclassOptions" class="subclass-options">
+                                <!-- Subclasses will be populated here -->
+                                <p>
+                                    here is subclass
+                                </p>
+                            </div> 
+                        </div>
+                        
+                        <div id="subraceSelection" style="display: none;">
+                            <!-- Subraces will be populated here -->
+                        </div>
+                    </section>
+                    
+                    
+                </div>
+
+                <!-- Abilities Tab -->
+                <div id="abilities" class="tab-pane">
+                    <h3>Set Ability Scores</h3>
+                    <!-- Dynamic ability score interface will be populated here -->
+                </div>
+
+                <!-- Features Tab -->
+                <div id="features" class="tab-pane">
+                    <h2>Character Features & Choices</h2>
+                    <div id="featureChoices">
+                        <!-- Feature choices will be populated here -->
+                    </div>
+                </div>
+
+                <!-- Summary Tab -->
+                <div id="summary" class="tab-pane">
+                    <h2>Character Summary</h2>
+                    <div id="characterSummary">
+                        <!-- Summary will be populated here -->
+                    </div>
+                    <div class="navigation-buttons">
+                        <button class="btn btn-secondary" onclick="goBack()">Back to Main</button>
+                        <button class="btn btn-success" onclick="saveCharacter()">Save Character</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<div id="classModal" class="modalCharacterCreator hidden">
+    <div class="modalCreatorContent" id="classModalContent"></div>
+</div>
+
+<div id="confirmModal" class="modalConfirm hidden">
+  <div class="modalContentConfirm" id="confirmModalContent">
+    <p id="confirmMessage"></p>
+    <button id="confirmYes">Yes</button>
+    <button id="confirmNo">No</button>
+  </div>
+</div>
+
+<footer>
+
+</footer>
+
+<script src="LoadCharacter.js" defer></script>
+<script src="CharacterCreator.js" defer></script>
+
+<script src="Species.js" defer></script>
+<script src="AbilityScore.js" defer></script>
+<script src="ClassCreator.js" defer></script>
+
+<script src="Backgrounds.js" defer></script>
+
+
+<script src="SavingCharacter.js" defer></script>

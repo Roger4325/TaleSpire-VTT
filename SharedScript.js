@@ -116,14 +116,15 @@ const characterStatBonuses = {
         CHA: { bonuses: [] },
         All: { bonuses: [] },
     },
-    // attributes: {
-    //     STR: { bonuses: [] },
-    //     DEX: { bonuses: [] },
-    //     CON: { bonuses: [] },
-    //     INT: { bonuses: [] },
-    //     WIS: { bonuses: [] },
-    //     CHA: { bonuses: [] },
-    // },
+    attributes: {
+        STR: { bonuses: [] },
+        DEX: { bonuses: [] },
+        CON: { bonuses: [] },
+        INT: { bonuses: [] },
+        WIS: { bonuses: [] },
+        CHA: { bonuses: [] },
+        All: { bonuses: [] },
+    },
 
     combatStats: {
         AC: { bonuses: [] },
@@ -140,9 +141,11 @@ const characterStatBonuses = {
         SpellSaveDC: { bonuses: [] },
         SpellAttackModifier: { bonuses: [] },
         SpellAttackandSave: { bonuses: [] },
-        // HitPoints: { bonuses: [] },
+        HitPoints: { bonuses: [] },
         // Speed: { bonuses: [] },
         CarryWeightBonus:{ bonuses: [] },
+        BrutalCritical:{ bonuses: [] },
+        CriticalThreashold:{ bonuses: [] },
     },
     senses: {
         PassivePerception: { bonuses: [] },
@@ -1540,7 +1543,7 @@ const translations = {
             None: "None",
             skills: "Skills",
             saves: "Saves",
-            // attributes: "Attributes",
+            attributes: "Attributes",
             combatStats: "Combat Stats",
             senses: "Senses",
         },
@@ -1579,14 +1582,15 @@ const translations = {
                 CHA: "CHA",
                 All: "All",
             },
-            // attributes: {
-            //     STR: { bonuses: [] },
-            //     DEX: { bonuses: [] },
-            //     CON: { bonuses: [] },
-            //     INT: { bonuses: [] },
-            //     WIS: { bonuses: [] },
-            //     CHA: { bonuses: [] },
-            // },
+            attributes: {
+                STR: "STR",
+                DEX: "DEX",
+                CON: "CON",
+                INT: "INT",
+                WIS: "WIS",
+                CHA: "CHA",
+                All: "All",
+            },
 
             combatStats: {
                 AC: "AC",
@@ -1603,7 +1607,9 @@ const translations = {
                 SpellSaveDC: "SpellSaveDC",
                 SpellAttackModifier: "SpellAttackModifier",
                 SpellAttackandSave: "SpellAttackandSave",
-                // HitPoints: "HitPoints",
+                BrutalCritical: "Brutal Critical",
+                CriticalThreashold: "CriticalThreshold",
+                HitPoints: "HitPoints",
                 // Speed: "Speed",
                 CarryWeightBonus: "CarryWeightBonus",
             },
@@ -2768,6 +2774,7 @@ const translations = {
             None: "Ninguno",
             skills: "Habilidades",
             saves: "Tiradas de Salvación",
+            attributes: "Atributos",
             combatStats: "Estadísticas de Combate",
             senses: "Sentidos",
         },
@@ -2806,14 +2813,15 @@ const translations = {
                 CHA: "CAR",
                 All: "Todo",
             },
-            // attributes: {
-            //     STR: { bonuses: [] },
-            //     DEX: { bonuses: [] },
-            //     CON: { bonuses: [] },
-            //     INT: { bonuses: [] },
-            //     WIS: { bonuses: [] },
-            //     CHA: { bonuses: [] },
-            // },
+            attributes: {
+                STR: "FUE",
+                DEX: "DES",
+                CON: "CON",
+                INT: "INT",
+                WIS: "SAB",
+                CHA: "CAR",
+                All: "Todo",
+            },
 
             combatStats: {
                 AC: "CA",
@@ -2830,7 +2838,9 @@ const translations = {
                 SpellSaveDC: "CD Hechizo",
                 SpellAttackModifier: "Mod Atque Hechizo",
                 SpellAttackandSave: "Atque+CD Hechizo",
-                // HitPoints: "PuntosdeGolpe",
+                BrutalCritical: "Crítico Brutal",
+                CriticalThreashold: "Umbral Crítico",
+                HitPoints: "PuntosdeGolpe",
                 // Speed: "Velocidad",
                 CarryWeightBonus: "Bono Carga",
             },
@@ -2944,8 +2954,8 @@ async function setupLanguageSelector() {
 //Creating an array of all singleton objects that will be used throughout this project to only read from the JSON files once.
 const AppData = {
     spellLookupInfo: null,
-    monsterLookupInfo:null,
-    equipmentLookupInfo:null,
+    monsterLookupInfo: null,
+    equipmentLookupInfo: null,
 };
 
 
@@ -2959,10 +2969,12 @@ function toggleSettings() {
 }
 
 // Toggle settings on click
-settingsToggle.addEventListener('click', function (e) {
-    e.stopPropagation(); // Prevent click from propagating to the document
-    toggleSettings();
-});
+if(settingsToggle){
+    settingsToggle.addEventListener('click', function (e) {
+        e.stopPropagation(); // Prevent click from propagating to the document
+        toggleSettings();
+    });
+}
 
 // Close settings if clicked outside
 document.addEventListener('click', function (e) {
@@ -4284,13 +4296,16 @@ const settingsButton = document.getElementById('settings-button');
 const dropdown = document.getElementById('settings-option-dropdown');
 
 // Toggle dropdown when button is clicked
-settingsButton.addEventListener('click', function () {
-    if (dropdown.style.display === 'none' || dropdown.style.display === '') {
-        dropdown.style.display = 'block';
-    } else {
-        dropdown.style.display = 'none';
-    }
-});
+if (settingsButton){
+    settingsButton.addEventListener('click', function () {
+        if (dropdown.style.display === 'none' || dropdown.style.display === '') {
+            dropdown.style.display = 'block';
+        } else {
+            dropdown.style.display = 'none';
+        }
+    }); 
+}
+
 
 // Hide dropdown if clicking outside
 document.addEventListener('click', function (event) {
@@ -4316,13 +4331,17 @@ const secondaryColorPicker = document.getElementById("secondaryColor");
 const applyCustomThemeBtn = document.getElementById("applyCustomTheme");
 
 // Open and close modal
-openModalBtn.addEventListener("click", () => {
-  themeModal.classList.add("show");
-});
+if(openModalBtn){
+    openModalBtn.addEventListener("click", () => {
+        themeModal.classList.add("show");
+    });
+    closeModalBtn.addEventListener("click", () => {
+        themeModal.classList.remove("show");
+    });
+}
 
-closeModalBtn.addEventListener("click", () => {
-  themeModal.classList.remove("show");
-});
+
+
 
 // Apply theme
 themeButtons.forEach((button) => {
@@ -4360,39 +4379,42 @@ document.querySelectorAll('.hex-input').forEach((input) => {
 });
 
 // Apply custom theme button
-applyCustomThemeBtn.addEventListener("click", () => {
-    const primaryColor = primaryColorPicker.value.trim();
-    const secondaryColor = secondaryColorPicker.value.trim();
-  
-    if (/^#[0-9A-Fa-f]{6}$/.test(primaryColor) && /^#[0-9A-Fa-f]{6}$/.test(secondaryColor)) {
-      // Find the custom theme's CSS rule
-        const stylesheet = Array.from(document.styleSheets).find(sheet =>
-            sheet.href && sheet.href.includes("styleShared.css")
-        );
-
-        console.log("Targeted Stylesheet:", stylesheet);
-  
-        if (stylesheet) {
-            const rules = Array.from(stylesheet.cssRules).find(rule =>
-            rule.selectorText === ".alternate-theme-custom"
+if(applyCustomThemeBtn){
+    applyCustomThemeBtn.addEventListener("click", () => {
+        const primaryColor = primaryColorPicker.value.trim();
+        const secondaryColor = secondaryColorPicker.value.trim();
+    
+        if (/^#[0-9A-Fa-f]{6}$/.test(primaryColor) && /^#[0-9A-Fa-f]{6}$/.test(secondaryColor)) {
+        // Find the custom theme's CSS rule
+            const stylesheet = Array.from(document.styleSheets).find(sheet =>
+                sheet.href && sheet.href.includes("styleShared.css")
             );
+
+            console.log("Targeted Stylesheet:", stylesheet);
     
-            if (rules) {
-            rules.style.setProperty("--border-outline-color", primaryColor);
-            rules.style.setProperty("--button-color-hover", lightenHexColor(primaryColor, 20));
-            rules.style.setProperty("--action-button-color", secondaryColor);
-            rules.style.setProperty("--action-button-color-hover", lightenHexColor(secondaryColor, 20));
+            if (stylesheet) {
+                const rules = Array.from(stylesheet.cssRules).find(rule =>
+                rule.selectorText === ".alternate-theme-custom"
+                );
+        
+                if (rules) {
+                rules.style.setProperty("--border-outline-color", primaryColor);
+                rules.style.setProperty("--button-color-hover", lightenHexColor(primaryColor, 20));
+                rules.style.setProperty("--action-button-color", secondaryColor);
+                rules.style.setProperty("--action-button-color-hover", lightenHexColor(secondaryColor, 20));
+                }
             }
+        
+            alert("Custom theme applied!");
+            document.documentElement.className = "alternate-theme-custom"; // Apply custom theme class
+            saveThemeSettings("alternate-theme-custom", primaryColor, secondaryColor); // Save the settings
+        } else {
+        errorModal("Please enter valid HEX color codes for both fields.");
         }
-    
-        alert("Custom theme applied!");
-        document.documentElement.className = "alternate-theme-custom"; // Apply custom theme class
-        saveThemeSettings("alternate-theme-custom", primaryColor, secondaryColor); // Save the settings
-    } else {
-      errorModal("Please enter valid HEX color codes for both fields.");
-    }
-    
-});
+        
+    });
+}
+
 
 // Function to lighten a HEX color
 function lightenHexColor(hex, percent) {
@@ -6147,4 +6169,3 @@ function resetItemForm() {
     if (additionalFields) additionalFields.innerHTML = '';
     
 }
-

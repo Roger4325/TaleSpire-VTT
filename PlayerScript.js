@@ -7361,7 +7361,6 @@ async function handleSyncEvents(event) {
 
 
 function getPlayerData() {
-    console.log(document.getElementById('spellSaveDc').textContent)
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
         hp: {
@@ -8364,4 +8363,28 @@ function updateExtrasCardDataFromLoad(extrasData) {
             monsterCardsContainer.appendChild(newMonsterCard);
         
     });
+}
+
+
+
+
+
+
+
+
+
+
+function openCharacterCreator() {
+    // Option 1: Open in new window/tab
+    // window.open('./Character Creator/D&D Character Creator.html', '_blank');
+    
+    // Option 2: Open in same window (uncomment if you prefer this)
+    // window.location.href = './CharacterCreator/CharacterCreator.html';
+    
+    // Option 3: Open in popup window (uncomment if you prefer this)
+    const popup = window.open(
+        './CharacterCreator/CharacterCreator.html', 
+        'CharacterCreator'
+    );
+    popup.focus();
 }
