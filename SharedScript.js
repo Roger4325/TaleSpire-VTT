@@ -37,6 +37,8 @@ function setupNav(){
 
 }
 
+let modalShouldShowActions = false;
+
 
 async function setVersionToggle() {
     const versionData = await loadDataFromGlobalStorage("D&DVersion");
@@ -2979,7 +2981,9 @@ if(settingsToggle){
 // Close settings if clicked outside
 document.addEventListener('click', function (e) {
     if (!settingsContainer.contains(e.target) && e.target !== settingsToggle) {
-        settingsContainer.classList.remove('active');
+        setTimeout(() => {
+            settingsContainer.classList.remove('active');
+        }, 300);
     }
 });
 
@@ -3596,129 +3600,183 @@ function onRollResults(rollResults){
     console.log(rollResults)
 }
 
+// Utility function for timeouts
+function withTimeout(promise, ms = 3000, operation = "API call") {
+    return Promise.race([
+        promise,
+        new Promise((_, reject) => 
+            setTimeout(() => reject(new Error(`${operation} timed out after ${ms}ms`)), ms)
+        )
+    ]);
+}
+
 async function handleRollResult(rollEvent) {
-    if (trackedIds[rollEvent.payload.rollId] === undefined) {
-        console.log("undefined roll");
-        return;
-    }
+    try {
+        if (trackedIds[rollEvent.payload.rollId] === undefined) {
+            console.log("undefined roll");
+            return;
+        }
 
-    if (rollEvent.kind === "rollResults") {
-        let roll = rollEvent.payload;
-        let resultGroups = []; // Store all the result groups here
+        if (rollEvent.kind === "rollResults") {
+            let roll = rollEvent.payload;
+            let resultGroups = []; // Store all the result groups here
 
-        let blessRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bless");
-        let baneRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bane");
-        
-        if (roll.resultsGroups !== undefined) {
-            // Determine if it's advantage or disadvantage
-            let isAdvantage = trackedIds[roll.rollId] === "advantage";
-            let isDisadvantage = trackedIds[roll.rollId] === "disadvantage";
+            let blessRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bless");
+            let baneRollGroup = roll.resultsGroups.find(group => group.name.trim().toLowerCase() === "bane");
+            
+            if (roll.resultsGroups !== undefined) {
+                // Determine if it's advantage or disadvantage
+                let isAdvantage = trackedIds[roll.rollId] === "advantage";
+                let isDisadvantage = trackedIds[roll.rollId] === "disadvantage";
 
-            // Iterate over each group, skipping "Bless" and "Bane"
-            for (let group of roll.resultsGroups) {
-                // Skip "Bless" and "Bane" groups
-                if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
+                // Build result groups (no API calls here - safe)
+                for (let group of roll.resultsGroups) {
+                    // Skip "Bless" and "Bane" groups
+                    if (group.name.trim().toLowerCase() === "bless" || group.name.trim().toLowerCase() === "bane") continue;
 
-                // Combine with Bless and Bane
-                let combinedGroup = combineWithBlessBane({
-                    name: group.name,
-                    result: group.result
-                }, blessRollGroup, baneRollGroup);
+                    // Combine with Bless and Bane
+                    let combinedGroup = combineWithBlessBane({
+                        name: group.name,
+                        result: group.result
+                    }, blessRollGroup, baneRollGroup);
 
-                resultGroups.push(combinedGroup);
-            }
+                    resultGroups.push(combinedGroup);
+                }
 
-            // For advantage or disadvantage
-            if (isAdvantage || isDisadvantage) {
-                let finalResultGroup = null;
-                let finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
+                // For advantage or disadvantage
+                if (isAdvantage || isDisadvantage) {
+                    let finalResultGroup = null;
+                    let finalResult = isAdvantage ? Number.MIN_SAFE_INTEGER : Number.MAX_SAFE_INTEGER;
 
-                for (let group of resultGroups) {
+                    // CRITICAL: Process all dice evaluations with timeouts
+                    for (let group of resultGroups) {
+                        try {
+                            let groupSum = await withTimeout(
+                                TS.dice.evaluateDiceResultsGroup(group),
+                                2000, // 2 second timeout per dice group
+                                `Dice evaluation for ${group.name}`
+                            );
+                        
+                            if (isAdvantage && groupSum > finalResult) {
+                                console.log("advantage");
+                                finalResult = groupSum;
+                                finalResultGroup = group;
+                            } else if (isDisadvantage && groupSum < finalResult) {
+                                console.log("disadvantage");
+                                finalResult = groupSum;
+                                finalResultGroup = group;
+                            }
+                        } catch (error) {
+                            console.error(`Failed to evaluate dice group ${group.name}:`, error.message);
+                            // Continue with other groups instead of failing completely
+                        }
+                    }
+                    
+                    // Display the best/worst roll based on advantage/disadvantage
+                    if (finalResultGroup) {
+                        await withTimeout(
+                            displayResult([finalResultGroup], roll.rollId),
+                            3000,
+                            "Display advantage/disadvantage result"
+                        );
+                    }
+                } 
+                else {
+                    // Normal roll - check the original roll results for "Bless" and "Bane"
+                    if (roll.resultsGroups.length > 1 && 
+                        !roll.resultsGroups.some(group => {
+                            let groupName = group.name.trim().toLowerCase();
+                            return groupName.includes('bane') || groupName.includes('bless');
+                        })) {
+                        
+                        // Proceed if neither Bless nor Bane are present
+                        console.log("Neither Bless nor Bane found in resultsGroups");
+
+                        // Calculate total manually (no API calls - much safer)
+                        let totalValue = 0;
+                        resultGroups.forEach((diceGroup) => {
+                            if (diceGroup.result.operands) {
+                                diceGroup.result.operands.forEach(operand => {
+                                    if (operand.kind && operand.results) {
+                                        totalValue += operand.results.reduce((sum, roll) => sum + roll, 0);
+                                    } else if (operand.value) {
+                                        totalValue += operand.value;
+                                    }
+                                });
+                            } else if (diceGroup.result.kind && diceGroup.result.results) {
+                                totalValue += diceGroup.result.results.reduce((sum, roll) => sum + roll, 0);
+                            }
+                        });
                 
-                    let groupSum = await TS.dice.evaluateDiceResultsGroup(group);
-                
-                    if (isAdvantage && groupSum > finalResult) {
-                        console.log("advantage")
-                        finalResult = groupSum;
-                        finalResultGroup = group;
-                    } else if (isDisadvantage && groupSum < finalResult) {
-                        console.log("disadvantage")
-                        finalResult = groupSum;
-                        finalResultGroup = group;
+                        // Create a simple result group to hold only the total value
+                        let combinedResultGroup = {
+                            name: 'Combined Total',
+                            result: {
+                                value: totalValue
+                            }
+                        };
+                        
+                        resultGroups.push(combinedResultGroup);
+
+                        await withTimeout(
+                            displayResult(resultGroups, roll.rollId),
+                            3000,
+                            "Display combined result"
+                        );
+                    }
+                    else {
+                        // Normal roll
+                        console.log(resultGroups);
+
+                        if (resultGroups.length > 0) {
+                            let normalGroup = resultGroups[0];
+                            
+                            try {
+                                let normalResult = await withTimeout(
+                                    TS.dice.evaluateDiceResultsGroup(normalGroup),
+                                    2000,
+                                    "Normal dice evaluation"
+                                );
+                                console.log(normalResult);
+                        
+                                // Display the normal roll result
+                                await withTimeout(
+                                    displayResult([normalGroup], roll.rollId),
+                                    3000,
+                                    "Display normal result"
+                                );
+                            } catch (error) {
+                                console.error("Failed to process normal roll:", error.message);
+                                // Still try to display something
+                                try {
+                                    await withTimeout(
+                                        displayResult([normalGroup], roll.rollId),
+                                        3000,
+                                        "Fallback display result"
+                                    );
+                                } catch (displayError) {
+                                    console.error("Complete failure to display result:", displayError.message);
+                                }
+                            }
+                        } else {
+                            console.warn("No result groups to process");
+                        }
                     }
                 }
-                
-                // Display the best/worst roll based on advantage/disadvantage
-                if (finalResultGroup) {
-                    await displayResult([finalResultGroup], roll.rollId); // Send the group in an array
-                }
-            } 
-            
-            else {
-                // Normal roll - check the original roll results for "Bless" and "Bane"
-                if (roll.resultsGroups.length > 1 && 
-                    !roll.resultsGroups.some(group => {
-                        // Convert group name to lower case for case-insensitive comparison
-                        let groupName = group.name.trim().toLowerCase();
-                        return groupName.includes('bane') || groupName.includes('bless');
-                    })) {
-                    // Proceed if neither Bless nor Bane are present
-                    console.log("Neither Bless nor Bane found in resultsGroups");
-
-
-                    let totalValue = 0; // To accumulate the sum of all dice results
-                    resultGroups.forEach((diceGroup) => {
-                        // Check if the result has operands (complex operation)
-                        if (diceGroup.result.operands) {
-                            // Loop through each operand in the current result group
-                            diceGroup.result.operands.forEach(operand => {
-                                if (operand.kind && operand.results) {
-                                    // It's a dice roll, sum up the results
-                                    totalValue += operand.results.reduce((sum, roll) => sum + roll, 0);
-                                } else if (operand.value) {
-                                    // It's a static value
-                                    totalValue += operand.value;
-                                }
-                            });
-                        } else if (diceGroup.result.kind && diceGroup.result.results) {
-                            // Direct dice results (simple dice rolls like d6)
-                            totalValue += diceGroup.result.results.reduce((sum, roll) => sum + roll, 0);
-                        }
-                    });
-            
-                    // Create a simple result group to hold only the total value
-                    let combinedResultGroup = {
-                        name: 'Combined Total',
-                        result: {
-                            value: totalValue // Store just the total value
-                        }
-                    };
-                    
-
-                    resultGroups.push(combinedResultGroup)
-
-                    await displayResult(resultGroups, roll.rollId);
-                }
-                
-                else {
-                    // Normal roll
-                    console.log(resultGroups)
-
-                    let normalGroup = resultGroups[0]; // Assuming the first group is the main roll group
-                    let normalResult = await TS.dice.evaluateDiceResultsGroup(normalGroup); //This code give the total rolled value of the dice group. 
-
-                    console.log(normalResult)
-            
-                    // Display the normal roll result
-                    await displayResult([normalGroup], roll.rollId);
-                }
-                
-                    
             }
-            
+        } else if (rollEvent.kind === "rollRemoved") {
+            // Handle the case when the user removes the roll
+            console.log("Roll removed:", rollEvent.payload.rollId);
         }
-    } else if (rollEvent.kind === "rollRemoved") {
-        // Handle the case when the user removes the roll
+    } catch (error) {
+        console.error("handleRollResult failed completely:", error);
+        // Don't let this crash the entire roll system
+        try {
+            // Cleanup the tracked roll ID to prevent memory leaks
+            delete trackedIds[rollEvent.payload?.rollId];
+        } catch (cleanupError) {
+            console.error("Failed to cleanup tracked ID:", cleanupError);
+        }
     }
 }
 
@@ -3728,8 +3786,8 @@ async function displayResult(resultGroups, rollId) {
 
     for (const resultGroup of resultGroups) {
         console.log(resultGroup.name)
-        if (resultGroup.name.trim().toLowerCase() === "initiative") {
-            handleInitiativeResult(resultGroup); // Call the function for initiative results
+        if (resultGroup.name.trim().toLowerCase().includes("initiative")) {
+            handleInitiativeResult(resultGroup);
         }
         if (resultGroup.name.trim().toLowerCase() === "hit dice") {
             
@@ -3853,6 +3911,7 @@ function saveToCampaignStorage(dataType, dataId, data, shouldCheck) {
 }
 
 async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
+    console.warn(dataType, dataId, data, shouldCheck)
     try {
         // Load the existing data from global storage
         const existingData = await TS.localStorage.global.getBlob();
@@ -3895,7 +3954,6 @@ async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
                 if (dataType === "Custom Monsters"){
                     console.log("load completed.");
                     await loadMonsterDataFiles(); // Ensure this runs after save completes
-                    
                 }
 
                 // Close the modal
@@ -4008,30 +4066,6 @@ function loadDataFromCampaignStorage(dataType) {
     });
 }
 
-//Error Modal that will display any and all errors that happen when the user does something that they shouldn't like putting incorrect dice into a dice only input.
-function showErrorModal(errorMessage, delayTimer = 2000) {
-    const modal = document.getElementById('errorModal');
-    const modalMessage = document.getElementById('errorModalMessage');
-    const closeButton = document.querySelector('#errorModal .close');
-
-    // Set the error message
-    modalMessage.innerHTML = errorMessage;
-    modal.style.display = 'block';
-
-    // Add click listener to close button
-    closeButton.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
-
-    // Automatically hide modal after the specified delay
-    setTimeout(() => {
-        modal.style.display = 'none';
-    }, delayTimer);
-}
-
-
-
-
 
 
 // Delete data from global storage
@@ -4100,42 +4134,6 @@ function removeFromCampaignStorage(dataType, dataId) {
         .catch((error) => {
             errorModal('Failed to delete data from campaign storage: ' + error);
         });
-}
-
-
-
-
-
-
-
-let exists = false
-function errorModal(modalText){
-    const errorModal = document.getElementById('errorModal');
-    const closeModal = errorModal.querySelector('.close');
-    const overWriteButton = errorModal.querySelector('#overWriteButton');
-    const removeButton = errorModal.querySelector('#removeButton');
-    const modalContent = errorModal.querySelector('.modal-content p')
-
-    modalContent.textContent = modalText;
-
-    errorModal.style.display = 'block';
-
-    // Close the error modal
-    closeModal.addEventListener('click', function() {
-        errorModal.style.display = 'none';
-    });
-    
-    if(exists === true){
-        // Show the "Remove Monster" button
-        removeButton.style.display = 'block';
-        overWriteButton.style.display = 'block';
-    }
-    else{
-        removeButton.style.display = 'none';
-        overWriteButton.style.display = 'none';
-    }
-
-    exists = false; // Reset the global variable
 }
 
 
@@ -4311,7 +4309,9 @@ if (settingsButton){
 document.addEventListener('click', function (event) {
     const isClickInside = settingsButton.contains(event.target) || dropdown.contains(event.target);
     if (!isClickInside) {
-        dropdown.style.display = 'none';
+        setTimeout(() => {
+            dropdown.style.display = 'none';
+        }, 300);
     }
 });
 
@@ -4500,7 +4500,30 @@ document.getElementById('exportCustomItem').addEventListener("click", async () =
 });
 
 
+// Function to export data from the character sheet. This will allow DM's to share spells and equipment. Or allow DM's to share character sheets with their players. 
+async function exportData(dataType, key) {
+    let keyData
+    if (dataType === "characters"){
+        const allData = await loadDataFromCampaignStorage(dataType);
+        keyData = allData[key];
+    }
+    else{
+        const allData = await loadDataFromGlobalStorage(dataType);
+        console.log(allData)
+        keyData = allData[key];
+    }
+   
+    // Wrap the character data with its key
+    const jsonWithKey = { [key]: keyData};
 
+    const jsonString = JSON.stringify(jsonWithKey, null, 2);
+    try {
+        await navigator.clipboard.writeText(jsonString);
+        showErrorModal(`Exported: '${key}' has been copied to clipboard:`,5000);
+    } catch (error) {
+        console.error("Failed to copy data to clipboard:", error);
+    }
+}
 
 
 const openHomebrewButton = document.getElementById('openHomebrew');
@@ -6168,4 +6191,129 @@ function resetItemForm() {
     const additionalFields = document.getElementById('additional-fields');
     if (additionalFields) additionalFields.innerHTML = '';
     
+}
+
+/**
+ * Creates and shows an error modal with optional action buttons
+ * @param {string} modalText - The error message to display
+ * @param {boolean} showActions - Whether to show remove/overwrite buttons (uses global 'exists' logic)
+ */
+function errorModal(modalText, showActions = null) {
+    // Remove any existing error modal
+    removeExistingModal('errorModal');
+    
+    // Determine if we should show action buttons
+    const shouldShowActions = showActions !== null ? showActions : modalShouldShowActions;
+    
+    // Create modal HTML
+    const modalHTML = `
+        <div id="errorModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>${modalText}</p>
+                ${shouldShowActions ? `
+                    <button id="removeButton" class="nonRollButton">Delete from Global</button>
+                    <button id="overWriteButton" class="nonRollButton">Replace the Global information</button>
+                ` : ''}
+            </div>
+        </div>
+    `;
+    
+    // Add modal to DOM
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Get references to elements
+    const modal = document.getElementById('errorModal');
+    const closeButton = modal.querySelector('.close');
+    const removeButton = modal.querySelector('#removeButton');
+    const overwriteButton = modal.querySelector('#overWriteButton');
+    
+    // Add close functionality
+    const closeModal = () => {
+        modal.remove();
+        modalShouldShowActions = false; // Reset the flag
+    };
+    
+    closeButton.addEventListener('click', closeModal);
+    
+    // Add window click to close (optional - removes modal if clicking outside)
+    const handleWindowClick = (event) => {
+        if (event.target === modal) {
+            closeModal();
+            window.removeEventListener('click', handleWindowClick);
+        }
+    };
+    window.addEventListener('click', handleWindowClick);
+    
+    // Return button references for external event handling
+    return {
+        modal,
+        removeButton,
+        overwriteButton,
+        close: closeModal
+    };
+}
+
+/**
+ * Shows an auto-dismissing error modal
+ * @param {string} errorMessage - The error message to display
+ * @param {number} delayTimer - Time in ms before auto-close (default: 2000)
+ */
+function showErrorModal(errorMessage, delayTimer = 2000) {
+    // Remove any existing error modal
+    removeExistingModal('errorModal');
+    
+    // Create modal HTML (simpler version without action buttons)
+    const modalHTML = `
+        <div id="errorModal" class="modal" style="display: block;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>${errorMessage}</p>
+            </div>
+        </div>
+    `;
+    
+    // Add modal to DOM
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Get references
+    const modal = document.getElementById('errorModal');
+    const closeButton = modal.querySelector('.close');
+    
+    // Close functionality
+    const closeModal = () => {
+        if (modal && modal.parentNode) {
+            modal.remove();
+        }
+        if (autoCloseTimer) {
+            clearTimeout(autoCloseTimer);
+        }
+    };
+    
+    // Add close event listener
+    closeButton.addEventListener('click', closeModal);
+    
+    // Auto-close timer
+    const autoCloseTimer = setTimeout(closeModal, delayTimer);
+    
+    return { modal, close: closeModal };
+}
+
+/**
+ * Helper function to remove existing modals
+ * @param {string} modalId - The ID of the modal to remove
+ */
+function removeExistingModal(modalId) {
+    const existingModal = document.getElementById(modalId);
+    if (existingModal) {
+        existingModal.remove();
+    }
+}
+
+/**
+ * Set flag to show action buttons in next errorModal call
+ * This replaces your global 'exists' variable pattern
+ */
+function setModalActions(shouldShow) {
+    modalShouldShowActions = shouldShow;
 }

@@ -5,6 +5,10 @@
     --action-button-color-hover: var(--ts-button-hover);
 
     --button-color-hover: var(--ts-button-hover);
+
+    --dot-color: var(--ts-button-background), #444;
+    --dot-off-color: var(--ts-accent-background), #444;
+    --track-color: var(--ts-accent-background), #444;
 }
 
 .alternate-theme-purple{
@@ -35,6 +39,185 @@
 }
 
 
+
+
+
+.abacus-card {
+    background: none;
+    border-radius: 5px;
+    padding: 5px;
+    border: 1px solid var(--border-outline-color);
+    margin: 1em 0;
+}
+
+.abacus-card h2 {
+    margin: 0 0 0.5em;
+    font-size: 16px;
+}
+
+.abacus-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-items: center;
+    margin-bottom: 5px;
+}
+
+.abacus-controls .field {
+    flex: 1;
+    display: grid;
+    gap: 6px;
+}
+
+#abacusInput {
+    padding: 3px 4px;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    background-color: rgb(61, 61, 61);
+    color: white;
+}
+
+#abacusInput:focus {
+    outline: 2px solid var(--border-outline-color);
+    outline-offset: 1px;
+}
+
+#abacusSetBtn {
+    padding: 1px 2px;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 6px;
+    background: var(--border-outline-color);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#abacusSetBtn:hover {
+    background: var(--button-color-hover);
+    border-color: var(--button-color-hover);
+}
+
+.abacus {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+    border: 2px solid var(--border-outline-color);
+    border-radius: 8px;
+    position: relative;
+    
+}
+
+.abacus .rail {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--border-outline-color);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.cell {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1; /* sit above rail */
+}
+  
+.dot {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+/* Base skull color */
+.dot svg .skull-base {
+    fill: rgba(121, 121, 121, 0.5);
+}
+
+
+
+
+
+.dot svg {
+    width: 20px;
+    height: 20px;
+    fill: rgba(121, 121, 121, 0.5); /* inactive color */
+    transition: fill 0.2s ease;
+}
+
+.dot svg path {
+    fill: rgba(121, 121, 121, 0.5); /* matches your inactive color */
+}
+
+.dot.active svg path {
+    fill: color-mix(in srgb, var(--border-outline-color), transparent 15%);
+}
+
+.dot.active svg {
+    transform: scale(1.3);
+}
+
+/* Eyes + mouth stay white */
+.dot.active svg .skull-eye,
+.dot.active svg .skull-mouth{
+    fill: white;
+}
+
+
+.dot:hover {
+    transform: scale(1.4);
+}
+
+
+.timers-row {
+    display: flex;
+    gap: 5px;
+    justify-content: flex-start;
+    margin-top: 5px;
+  }
+  
+  .timer-card {
+    flex: 1;
+    width: 250px;
+    background: none;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .timer-card h2 {
+    font-size: 14px;
+    margin: 0 0 4px;
+  }
+  
+  .timer-card input[type="number"] {
+    width: 95%;
+    padding: 4px 4px;
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    font-size: 16px;
+    -moz-appearance: textfield;
+    background-color: rgb(61, 61, 61);
+    color: white;
+  }
+  
+  /* Show nice arrows */
+  .timer-card input[type="number"]::-webkit-inner-spin-button,
+  .timer-card input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+  }
 
 /* Reset some default styles */
 body, h1, h2, h3, p {
@@ -1334,4 +1517,20 @@ margin: 2px;
 .version-option.active {
     background-color: var(--action-button-color);
     color: white;
+}
+
+
+
+
+/*These are to hide the timers and abacus for the build version. These are used for daggerheart. */
+.timers-row {
+    display: none !important;
+}
+
+.abacus-controls{
+    display: none !important;
+}
+
+.abacus{
+    display: none !important;
 }

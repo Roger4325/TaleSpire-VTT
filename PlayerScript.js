@@ -4351,9 +4351,9 @@ function updateSpellDamageDice(ability, damageDice, spellDetails) {
         });
 
         // Hide context menu on clicking elsewhere
-        document.addEventListener('click', () => {
-            contextMenu.style.display = 'none';
-        });
+        // document.addEventListener('click', () => {
+        //     contextMenu.style.display = 'none';
+        // });
 
 
 
@@ -6016,6 +6016,7 @@ document.getElementById('item-search').addEventListener('input', function() {
 
 document.getElementById('confirm-add-item').addEventListener('click', function() {
     const itemName = document.getElementById('item-select').value;
+    console.log("Confirm clicked, itemName:", itemName); // <-- Add this
     let selectedBag = document.getElementById('bag-select').value;
     let item;
 
@@ -7356,10 +7357,6 @@ async function handleSyncEvents(event) {
 }
 
 
-
-
-
-
 function getPlayerData() {
     return {
         characterName: document.getElementById('playerCharacterInput').textContent,
@@ -7624,32 +7621,6 @@ function requestInitList(){
     TS.sync.send(JSON.stringify(message), gmClient.id).catch(console.error);
 }
 
-
-
-// Function to export data from the character sheet. This will allow DM's to share spells and equipment. Or allow DM's to share character sheets with their players. 
-async function exportData(dataType, key) {
-    let keyData
-    if (dataType === "characters"){
-        const allData = await loadDataFromCampaignStorage(dataType);
-        keyData = allData[key];
-    }
-    else{
-        const allData = await loadDataFromGlobalStorage(dataType);
-        console.log(allData)
-        keyData = allData[key];
-    }
-   
-    // Wrap the character data with its key
-    const jsonWithKey = { [key]: keyData};
-
-    const jsonString = JSON.stringify(jsonWithKey, null, 2);
-    try {
-        await navigator.clipboard.writeText(jsonString);
-        showErrorModal(`Exported: '${key}' has been copied to clipboard:`,5000);
-    } catch (error) {
-        console.error("Failed to copy data to clipboard:", error);
-    }
-}
 
 document.getElementById('exportCharacterData').addEventListener("click", async () => {
     const characterKey = document.getElementById("customCharacterSelect").value;

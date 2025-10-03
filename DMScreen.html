@@ -177,6 +177,35 @@
                     <button id="load-encounter" class="nonRollButton">Load Encounter</button>
                 </div>
                 
+
+                <div class="timers-row">
+                    <!-- Consequence Clock -->
+                    <div class="timer-card">
+                        <h2 id="clockTitle">Consequence Clock</h2>
+                        <input id="consequenceClock" type="number" min="0" value="0" step="1" />
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <div class="timer-card">
+                        <h2 id="countdownTitle">Countdown Timer</h2>
+                        <input id="countdownTimer" type="number" min="0" value="10" step="1" />
+                    </div>
+                </div>
+
+                <!-- ✅ Abacus stays totally separate -->
+                <div class="abacus-controls">
+                    <h2 id="abacusTitle">Fear (0–12)</h2>
+                    <div class="field">
+                        <input id="abacusInput" type="number" min="0" max="12" step="1" />
+                    </div>
+                    <button id="abacusSetBtn" type="button">Set</button>
+                </div>
+
+                <section id="abacusRegion" class="abacus">
+                    <div class="rail"></div>
+                </section>
+
+                
                 <div class ="monster-group-header-02">
                     <div id="toggleContainer" class="toggle-container">
                         <div id="disadvButton" class="toggle-button">DisAdv</div>
@@ -796,14 +825,6 @@
        
 
     </body>
-    <div id="errorModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <p id="errorModalMessage"></p>
-            <button id="removeButton" class="nonRollButton" style="display: none;">Delete from Global</button>
-            <button id="overWriteButton" class="nonRollButton" style="display: none;">Replace the Global information</button>
-        </div>
-    </div>
 
     <div id="monsterFormModal" style="display: none;">
         <div class="monster-modal-background">
@@ -1507,6 +1528,15 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div id="errorModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="errorModalMessage"></p>
+            <button id="removeButton" class="nonRollButton" style="display: none;">Delete from Global</button>
+            <button id="overWriteButton" class="nonRollButton" style="display: none;">Replace the Global information</button>
         </div>
     </div>
     <script>
