@@ -1524,13 +1524,17 @@ margin: 2px;
 
 /*These are to hide the timers and abacus for the build version. These are used for daggerheart. */
 .timers-row {
-    display: none !important;
+    display: none;
 }
 
 .abacus-controls{
-    display: none !important;
+    display: none;
 }
 
 .abacus{
-    display: none !important;
+    display: none;
+}
+
+.abacusRegion{
+    display: none;
 }

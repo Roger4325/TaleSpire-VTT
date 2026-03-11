@@ -729,7 +729,13 @@ function updateAC() {
         // Use equipped armor's base AC and apply Dex mod up to the limit
         let effectiveDexMod = 0;
         if (equippedArmor.armor_class.dex_bonus === true){
-            effectiveDexMod = equippedArmor.armor_class.max_bonus || dexScore;
+            if (dexScore > equippedArmor.armor_class.max_bonus){
+                effectiveDexMod = equippedArmor.armor_class.max_bonus || dexScore;
+            }
+            else{
+                effectiveDexMod = dexScore;
+            }
+            
         }
         else{
         }

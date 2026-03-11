@@ -4856,7 +4856,8 @@ saveSpellButton.addEventListener('click', async () => {
         damage_dice_upcast: document.getElementById('damageDiceUpcastForm').value.trim(),
         spell_save_dc_type: document.getElementById('saveDCType').value.trim(),
         ability_modifier: document.getElementById('abilityModifier').value.trim(),
-        damage_type_01: document.getElementById('spellDamageType01').value.trim()
+        damage_type_01: document.getElementById('spellDamageType01').value.trim(),
+        year: document.getElementById('yearModifier').value.trim()
     };
 
     spells.push(spell); // Add spell to the array
