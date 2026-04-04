@@ -2575,7 +2575,7 @@ function updateCharacterUI(characterData, characterName) {
     loadSpellData(characterData.spellData);
     loadGroupTraitData(characterData.groupTraitData);
     loadNotesGroupData(characterData.groupNotesData);
-    
+
     loadAndSetLanguage()
     updateActionTableUI(characterData.actionTable);
     updateAdjustmentValues()
@@ -3612,7 +3612,7 @@ function gatherSpellSlotsToReset() {
 
     // Loop through all spell groups
     spellGroups.forEach(group => {
-        const spellLevel = group.getAttribute('spelllevel'); // Get the spell level from the attribute
+        const spellLevel = group.getAttribute('spellLevel'); // Get the spell level from the attribute
         const slotContainer = group.querySelector('.spell-slots'); // Locate the spell slots container
 
         if (slotContainer) {
@@ -4072,7 +4072,7 @@ function populateListWithAllSpells(spellsData, inputRef, row, dropdownContainer)
 
 
 
-function loadSpell(spell,row) {
+function loadSpell(spell,row, skipUpcast = false) {
     // Retrieve the spell data object and array
 
     const spellDataObject = AppData.spellLookupInfo;
@@ -4140,11 +4140,16 @@ function loadSpell(spell,row) {
     }
 
     if(spellDetails.higher_level === "" || spellLevel === "Cantrip"){
+        // No upcasting available
+    }
+    else if(!spellLevel || !baseLevel){
+        // Safety check: if either is missing, don't upcast
     }
     else if(spellLevel > baseLevel){
         row.classList.add('upcast-spell');
     }
-    else{
+    else if(!skipUpcast){
+        // Only generate upcast spells if not skipping (i.e., not during initial load)
         generateUpcastSpells(spell, spellLevel, spellDetails, row);
     }
 
@@ -4214,7 +4219,7 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
 
             // Handle spell data within the spell container
             const spellGroup = document.querySelector(`.spell-group[spellLevel="${spellLevels[i]}"]`);
-            const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spelllevel="${spellLevels[i]}"]`) : null;
+            const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spellLevel="${spellLevels[i]}"]`) : null;
 
             if (spellContainer) {
                 // Check for existing spell table or create one if it doesn't exist
@@ -4235,11 +4240,83 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
 }
 
 document.getElementById('showUpcastSpells').addEventListener('change', function() {
-    document.querySelectorAll('.upcast-spell').forEach(row => {
-        row.style.display = this.checked ? '' : 'none';
-    });
+    if (this.checked) {
+        // Generate upcast spells for all existing non-upcast spells
+        regenerateAllUpcastSpells();
+    } else {
+        // Remove all upcast spells from DOM
+        document.querySelectorAll('.upcast-spell').forEach(row => {
+            row.remove();
+        });
+    }
     updateContent();
 });
+
+// Function to regenerate all upcast spells for existing spells
+function regenerateAllUpcastSpells() {
+    const spellDataObject = AppData.spellLookupInfo;
+    const spellDataArray = spellDataObject.spellsData;
+
+    // Find all non-upcast spell rows
+    const allSpellRows = document.querySelectorAll('.spell-row:not(.upcast-spell):not(.spell-header)');
+
+    allSpellRows.forEach(row => {
+        const spellNameInput = row.querySelector('.spell-name-input');
+        if (!spellNameInput || !spellNameInput.value) return;
+
+        const spellName = spellNameInput.value.trim();
+        const spellLevel = row.dataset.spellLevel;
+
+        // Find the spell details
+        const spellDetails = spellDataArray.find(spell => spell.name === spellName);
+        if (!spellDetails) return;
+
+        // Check if this spell can be upcast
+        if (spellDetails.higher_level === "" || spellLevel === "Cantrip") return;
+
+        const baseLevel = spellDetails.level;
+
+        // Only generate upcast if this is at base level
+        if (spellLevel === baseLevel) {
+            generateUpcastSpells({ name: spellName }, spellLevel, spellDetails, row);
+        }
+    });
+}
+
+// Handle tooltip display for upcast spell arrows - only show when hovering arrow area
+function setupUpcastTooltips() {
+    document.addEventListener('mousemove', function(e) {
+        const target = e.target.closest('.upcast-spell .spell-name');
+        if (!target) {
+            // Remove tooltip class from all spell-name elements
+            document.querySelectorAll('.upcast-spell .spell-name.show-arrow-tooltip').forEach(el => {
+                el.classList.remove('show-arrow-tooltip');
+            });
+            return;
+        }
+
+        // Get mouse position relative to the spell-name element
+        const rect = target.getBoundingClientRect();
+        const mouseX = e.clientX - rect.left;
+
+        // Arrow is positioned at left: 230px with width: 40px (230-270px range)
+        if (mouseX >= 230 && mouseX <= 270) {
+            target.classList.add('show-arrow-tooltip');
+        } else {
+            target.classList.remove('show-arrow-tooltip');
+        }
+    });
+
+    // Also handle when mouse leaves the document
+    document.addEventListener('mouseleave', function() {
+        document.querySelectorAll('.upcast-spell .spell-name.show-arrow-tooltip').forEach(el => {
+            el.classList.remove('show-arrow-tooltip');
+        });
+    });
+}
+
+// Initialize tooltip handling on page load
+setupUpcastTooltips();
 
 function updateSpelltoHitorDC(spellDetails) {
     
@@ -4795,7 +4872,7 @@ function processSpellData() {
     // Loop through each spell level container
     const spellContainers = document.querySelectorAll('.spell-container');
     spellContainers.forEach(container => {
-        const spellLevel = container.getAttribute('spelllevel');
+        const spellLevel = container.getAttribute('spellLevel');
         spellData[spellLevel] = {
             spells: [],
             slots: []
@@ -4828,7 +4905,7 @@ function processSpellData() {
     // Collect spell slots information
     const spellGroups = document.querySelectorAll('.spell-group');
     spellGroups.forEach(group => {
-        const spellLevel = group.querySelector('.spell-container').getAttribute('spelllevel');
+        const spellLevel = group.querySelector('.spell-container').getAttribute('spellLevel');
         if(spellLevel !== "Cantrip"){
             const spellSlotsContainer = group.querySelector('.spell-slots');
 
@@ -4898,7 +4975,7 @@ function loadSpellData(spellData) {
         }
 
         // Handle spell data within the spell container
-        const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spelllevel="${spellLevel}"]`) : null;
+        const spellContainer = spellGroup ? spellGroup.querySelector(`.spell-container[spellLevel="${spellLevel}"]`) : null;
 
         if (spellContainer) {
             // Check for existing spell table or create one if it doesn't exist
@@ -4912,7 +4989,7 @@ function loadSpellData(spellData) {
             spells.forEach(spell => {
                 const spellRow = createSpellRow(spell, spellLevel);
                 spellTable.appendChild(spellRow);
-                loadSpell(spell, spellRow);  // Populates the row with spell details
+                loadSpell(spell, spellRow, true);  // Populates the row with spell details (skip upcast during load)
             });
         } else {
             console.error(`Spell container for level ${spellLevel} not found.`);
@@ -4922,6 +4999,11 @@ function loadSpellData(spellData) {
     updateAllSpellDCs();
     updateAllSpellDamageDice();
     updateSpellDCHeader();
+
+    // After all spells are loaded, generate upcast spells if the toggle is enabled
+    if (document.getElementById('showUpcastSpells').checked) {
+        regenerateAllUpcastSpells();
+    }
 }
 
 
