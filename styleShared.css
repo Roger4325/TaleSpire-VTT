@@ -105,10 +105,11 @@
     border: 2px solid var(--border-outline-color);
     border-radius: 8px;
     position: relative;
-    
+    display: none;
 }
 
 .abacus .rail {
+    display: none;
     position: absolute;
     top: 50%;
     left: 0;

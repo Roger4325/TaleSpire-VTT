@@ -4205,23 +4205,99 @@ async function readSpellJson() {
 
 async function readMonsterJsonList() {
     try {
-        // Fetch the data from the JSON file
-        const response = await fetch(`Monster_Manual-${savedLanguage}.json`);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
+        // 1. Get the current D&D version setting
+        const versionData = await loadDataFromGlobalStorage("D&DVersion");
+        const versionSetting = versionData?.Version || '2014';
+
+        // 2. Helper function to fetch JSON with base-language fallback
+        async function fetchMonsterFile(yearSuffix) {
+            const primaryName = `Monster_Manual-${savedLanguage}${yearSuffix}.json`;
+            
+            try {
+                const response = await fetch(primaryName);
+                if (response.ok) {
+                    return await response.json();
+                }
+                throw new Error(`File ${primaryName} not found.`);
+            } catch (error) {
+                // If the 2024 file fails, fall back to the non-year file of the SAME language
+                if (yearSuffix === '-2024') {
+                    console.warn(`Could not load ${primaryName}, falling back to base language file`);
+                    const fallbackName = `Monster_Manual-${savedLanguage}.json`;
+                    try {
+                        const fallbackResponse = await fetch(fallbackName);
+                        if (fallbackResponse.ok) {
+                            return await fallbackResponse.json();
+                        }
+                    } catch (fallbackError) {
+                        console.error(`Failed to load fallback ${fallbackName}`, fallbackError);
+                    }
+                } else {
+                    console.error(`Failed to load ${primaryName}`, error);
+                }
+                return {}; // Fail safely if both missing
+            }
         }
-        const monsterData = await response.json();
-        const allCreatureData = (await loadDataFromGlobalStorage("Custom Monsters"));
 
-        // Combine the data
-        const combinedData = {
-            ...allCreatureData,
-            ...monsterData
-        };
+        let combinedData = {};
 
-        // Extract and sort monster names
+        // 3. Fetch 2014 official data if needed
+        if (versionSetting === '2014' || versionSetting === 'both') {
+            const data2014 = await fetchMonsterFile('');
+            Object.assign(combinedData, data2014);
+        }
+
+        // 4. Fetch 2024 official data if needed
+        if (versionSetting === '2024' || versionSetting === 'both') {
+            const data2024 = await fetchMonsterFile('-2024');
+            
+            for (const key in data2024) {
+                let monster = data2024[key];
+                let finalKey = key;
+                
+                // If 'both' is selected, alter the 2024 key and Name property to prevent overwriting
+                if (versionSetting === 'both') {
+                    const symbol = ' 🜁';
+                    finalKey = key + symbol;
+                    monster = { ...monster, Name: monster.Name + symbol };
+                }
+                
+                combinedData[finalKey] = monster;
+            }
+        }
+
+        // 5. Load and process Custom Monsters (Homebrew)
+        const customDataRaw = await loadDataFromGlobalStorage("Custom Monsters");
+        const customData = typeof customDataRaw === 'object' && customDataRaw !== null ? customDataRaw : {};
+
+        for (const key in customData) {
+            let monster = customData[key];
+            let finalKey = key;
+            // Handle potentially uppercase or lowercase properties
+            const monsterYear = monster.Year || monster.year || '';
+
+            if (monsterYear === '2014') {
+                if (versionSetting === '2014' || versionSetting === 'both') {
+                    combinedData[finalKey] = monster;
+                }
+            } else if (monsterYear === '2024') {
+                if (versionSetting === '2024' || versionSetting === 'both') {
+                    if (versionSetting === 'both') {
+                        const symbol = ' 🜁';
+                        finalKey = key + symbol;
+                        monster = { ...monster, Name: (monster.Name || key) + symbol };
+                    }
+                    combinedData[finalKey] = monster;
+                }
+            } else {
+                // If NO year is saved, show it exactly once regardless of version settings
+                combinedData[finalKey] = monster;
+            }
+        }
+
+        // 6. Extract and sort all monster names
         const monsterNames = Object.keys(combinedData).sort((a, b) => {
-            // Remove articles for sorting (adjust based on language)
+            // Remove articles for sorting
             const cleanA = a.replace(/^(the|a|an) /i, '');
             const cleanB = b.replace(/^(the|a|an) /i, '');
             
@@ -4236,12 +4312,12 @@ async function readMonsterJsonList() {
             monsterNames: monsterNames,
             monsterData: combinedData
         };
+
     } catch (error) {
         console.error('Error loading data:', error);
         return null;
     }
 }
-
 
 // read the JSON file equipment.json and save the data and names to variables
 // this function also get's all equipment saved to the global storage and creates one object out of both set's of information. 

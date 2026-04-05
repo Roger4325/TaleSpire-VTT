@@ -4669,5 +4669,5 @@ function initAbacus() {
     });
   
     console.log("Abacus initialized with", MAX, "cells.");
-    render(0);
+    // render(0);
 }
