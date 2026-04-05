@@ -7201,8 +7201,26 @@ function addNewNote(groupContainer, noteData = null) {
 
     // Auto-resize description textarea
     noteDescription.addEventListener('input', function () {
-        noteDescription.style.height = 'auto';
-        noteDescription.style.height = `${noteDescription.scrollHeight}px`;
+        // Save all scroll positions
+        const currentScrollPos = noteDescription.scrollTop;
+        const currentHeight = noteDescription.offsetHeight;
+        const windowScrollY = window.scrollY || window.pageYOffset;
+        const windowScrollX = window.scrollX || window.pageXOffset;
+
+        // Temporarily set to a minimum height instead of 'auto'
+        noteDescription.style.height = '0px';
+        const newHeight = noteDescription.scrollHeight;
+
+        // Only update if height actually changed
+        if (newHeight !== currentHeight) {
+            noteDescription.style.height = `${newHeight}px`;
+        } else {
+            noteDescription.style.height = `${currentHeight}px`;
+        }
+
+        // Restore all scroll positions
+        noteDescription.scrollTop = currentScrollPos;
+        window.scrollTo(windowScrollX, windowScrollY);
     });
 
     //Saving everything when a note has been changed. 

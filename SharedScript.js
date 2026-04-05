@@ -5918,12 +5918,36 @@ function setupMagicBonusSelection() {
 // Function to auto-resize textareas
 function autoResizeTextareas() {
     const textareas = document.querySelectorAll('.note-description');
+
+    // Save all scroll positions
+    const docsSection = document.getElementById('Docs');
+    const savedScrollTop = docsSection ? docsSection.scrollTop : 0;
+    const windowScrollY = window.scrollY || window.pageYOffset;
+    const windowScrollX = window.scrollX || window.pageXOffset;
+
     textareas.forEach((textarea) => {
-        setTimeout(() => {
-            textarea.style.height = 'auto'; // Reset height
-            textarea.style.height = `${textarea.scrollHeight}px`; // Adjust to content
-        }, 10); // Delay allows the browser to calculate scrollHeight
+        // Use requestAnimationFrame for better timing control
+        requestAnimationFrame(() => {
+            const currentHeight = textarea.offsetHeight;
+            textarea.style.height = '0px';
+            const newHeight = textarea.scrollHeight;
+
+            // Only update if needed
+            if (newHeight !== currentHeight) {
+                textarea.style.height = `${newHeight}px`;
+            } else {
+                textarea.style.height = `${currentHeight}px`;
+            }
+        });
     });
+
+    // Restore all scroll positions
+    if (docsSection) {
+        requestAnimationFrame(() => {
+            docsSection.scrollTop = savedScrollTop;
+            window.scrollTo(windowScrollX, windowScrollY);
+        });
+    }
 }
 
 
