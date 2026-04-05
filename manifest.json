@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "name": "Talespire 5e Toolset",
-  "summary": "A VTT like experiance for Talespire",
+  "summary": "A VTT like experience for Talespire",
   "descriptionFilePath": "/README.md",
   "version": "0.7.9.1",
   "license": "MIT",
