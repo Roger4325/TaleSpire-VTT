@@ -14,7 +14,6 @@ If you want traditional written guides instead of the video script, start here:
 - [Player Character Sheet Guide](docs/README_PLAYER_CHARACTER_SHEET.md)
 - [Character Creator Guide](docs/README_CHARACTER_CREATOR.md)
 - [Homebrew, Imports, and Exports Guide](docs/README_HOMEBREW_AND_IMPORTS.md)
-- [YouTube Walkthrough Script](YOUTUBE_WALKTHROUGH_SCRIPT.md)
 
 ## What The Toolset Includes
 
