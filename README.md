@@ -8,7 +8,7 @@ The app routes by mode:
 
 ## Documentation
 
-If you want traditional written guides instead of the video script, start here:
+If you want traditional written guides instead of the video, start here:
 
 - [DM Screen Guide](docs/README_DM_SCREEN.md)
 - [Player Character Sheet Guide](docs/README_PLAYER_CHARACTER_SHEET.md)
