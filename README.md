@@ -12,7 +12,6 @@ If you want traditional written guides instead of the video, start here:
 
 - [DM Screen Guide](docs/README_DM_SCREEN.md)
 - [Player Character Sheet Guide](docs/README_PLAYER_CHARACTER_SHEET.md)
-- [Character Creator Guide](docs/README_CHARACTER_CREATOR.md)
 - [Homebrew, Imports, and Exports Guide](docs/README_HOMEBREW_AND_IMPORTS.md)
 
 ## What The Toolset Includes
@@ -30,8 +29,7 @@ If you are new to the toolset, this order works well:
 
 1. Read the [Player Character Sheet Guide](docs/README_PLAYER_CHARACTER_SHEET.md) if you are a player.
 2. Read the [DM Screen Guide](docs/README_DM_SCREEN.md) if you are running sessions.
-3. Read the [Character Creator Guide](docs/README_CHARACTER_CREATOR.md) if you want to build new characters from scratch.
-4. Read the [Homebrew, Imports, and Exports Guide](docs/README_HOMEBREW_AND_IMPORTS.md) if you want to move data around or build custom content.
+3. Read the [Homebrew, Imports, and Exports Guide](docs/README_HOMEBREW_AND_IMPORTS.md) if you want to move data around or build custom content.
 
 ## Notes
 
