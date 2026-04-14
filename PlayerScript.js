@@ -4434,7 +4434,7 @@ function updateSpellsDC(ability, saveType, row){
     const proficiencyBonus = parseInt(document.getElementById("profBonus").textContent);
 
     const spellSaveDc = spellAbilityScoreModifer + proficiencyBonus + 8;
-    if(saveType){
+    if(saveType  && spellDCSelections){
         spellDCSelections.textContent = saveType + " " + spellSaveDc;
     }
 
@@ -4564,7 +4564,6 @@ function updateAllSpellDCs() {
 
     // Loop through each spell row in the table
     spellRows.forEach(row => {
-        // Try different selectors depending on your structure
         const spellNameInput = row.querySelector('.spell-name-input');
 
         if (spellNameInput) {
@@ -4594,7 +4593,7 @@ function updateAllSpellDCs() {
 
                 
 
-                if (saveType) {
+                if (saveType && spellDCSelection) {
                     spellDCSelection.textContent = saveType + " " + spellSaveDC;
                 }
 
