@@ -57,6 +57,8 @@ Conditions can affect multiple parts of the sheet. Examples include:
 - Roll adjustments
 - Other mechanical updates linked to the condition system
 
+- Example - Haste for a +2 to AC
+
 ## Player Stats Tab
 
 The Player Stats tab is your core character summary.
@@ -100,9 +102,7 @@ This tab helps you:
 
 Actions can come from:
 - Equipped items
-- Character setup
 - Manual entries
-- Features and traits
 
 ### Add Or Edit Actions
 
@@ -110,11 +110,13 @@ You can manually add actions using the `+` control in the actions area.
 
 You can also:
 - Filter by action category
-- Edit action details
-- Open action settings using the `i` button
+
+- Open action settings using the `i` button to edit action details
 
 Important note:
 - Traits, conditions, and equipment can influence how actions behave, so make sure the action type and settings are correct.
+- An example is the archery fighting style that can add a +2 to all ranged weapons. So ensure you bow is set to Ranged in the settings. 
+
 
 ## Spell List Tab
 
@@ -124,7 +126,7 @@ You can use it to:
 - Review spell details
 - Track spell slots
 - Add spells
-- Adjust spell slot layouts
+- Adjust total number of spell slots
 
 ### Spell Details
 
@@ -237,22 +239,11 @@ The DM can also control which enemies are visible in the initiative view, so hid
 The player settings menu includes:
 - Language selection
 - Theme controls
-- Exhaustion homebrew toggle
+- Exhaustion homebrew toggle - This is a Homebrew version of Exhaustion that subtracts one from all d20 rolls per exahustion level.
 - D&D version toggle
 - Upcast display toggle
 
-These settings let you shape the interface to fit your table and your character setup.
-
-## Suggested Player Workflow
-
-A good player workflow looks like this:
-
-1. Import or load your character.
-2. Review the quick stats in the header.
-3. Check conditions, inspiration, and rest controls.
-4. Make sure your actions, spells, and inventory are set up.
-5. Use Features & Traits for anything that affects calculations.
-6. Use Extras for alternate forms and companions.
+These settings let you shape the interface to fit your table and your character setup. 
 
 ## Tips
 

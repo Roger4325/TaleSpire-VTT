@@ -104,19 +104,6 @@ This is helpful for:
 
 The initiative area also includes additional scene-management tools.
 
-### Timers And Pressure Tools
-
-Depending on your setup, the tracker may include:
-- A consequence clock
-- A countdown timer
-- A fear tracker
-
-These are useful for:
-- Timed events
-- Environmental pressure
-- Failing forward mechanics
-- Homebrew table systems
-
 ## DM Tables
 
 The DM Tables tab works as a quick-reference and utility section.
@@ -159,7 +146,7 @@ Use it for:
 - Plot hooks
 - Loot reminders
 - In-session objectives
-
+ 
 Basic workflow:
 1. Add a task.
 2. Check it off when complete.
@@ -179,6 +166,7 @@ This is especially useful for:
 - Monster casters
 - NPC spellcasters
 - Homebrew spell use during sessions
+- Quickly reading what your players are casting
 
 ## Notes
 
@@ -224,12 +212,12 @@ You can switch between supported languages and keep the interface aligned with y
 
 You can:
 - Use a preset theme
-- Use a custom theme
-- Adjust primary and secondary colors
+- Use a custom theme 
+- Adjust primary and secondary colors using Hex Codes
 
 ### Exhaustion Homebrew
 
-This setting enables the custom exhaustion behavior used by the toolset.
+This setting enables the custom exhaustion behavior used by the toolset. This is a Homebrew version of Exhaustion that subtracts one from all d20 rolls per exahustion level.
 
 ### D&D Version Toggle
 
@@ -253,20 +241,9 @@ You can also:
 - Delete unused homebrew
 - Watch storage usage for local and global storage
 
-## Suggested DM Workflow
-
-A good DM workflow looks like this:
-
-1. Set language, theme, and rules version.
-2. Prepare or load any custom content you need.
-3. Save encounters before the session.
-4. Use DM Tables and Notes during play.
-5. Run combat from the Initiative Tracker.
-6. Keep larger campaign documents in Google Docs if needed.
-
 ## Tips
 
-- Request player stats when you want the freshest synced player information.
-- Save encounters before a session if you expect to reuse them.
+- Request player stats when you want the freshest synced player information. This should sync whenever they update their sheets as well. 
+- Save encounters before a session so you can quickly load them for play.
 - Keep built-in notes concise for best results.
 - Use Google Docs for long-term campaign material.
