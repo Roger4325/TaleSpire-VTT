@@ -3859,6 +3859,19 @@ function combineWithBlessBane(resultGroup, blessRollGroup, baneRollGroup) {
 
 
 function saveToCampaignStorage(dataType, dataId, data, shouldCheck) {
+    // Outside TaleSpire (browser testing) write to the localStorage fallback.
+    if (typeof TS === 'undefined' || !TS.localStorage) {
+        try {
+            const raw = window.localStorage.getItem('tsvtt-campaign-storage');
+            const allData = raw ? JSON.parse(raw) : {};
+            if (!allData[dataType]) allData[dataType] = {};
+            allData[dataType][dataId] = data;
+            window.localStorage.setItem('tsvtt-campaign-storage', JSON.stringify(allData));
+        } catch (error) {
+            console.error("Browser-fallback campaign save failed:", error);
+        }
+        return;
+    }
     // Load the existing data from global storage
     TS.localStorage.campaign.getBlob()
         .then((existingData) => {
@@ -3912,6 +3925,19 @@ function saveToCampaignStorage(dataType, dataId, data, shouldCheck) {
 
 async function saveToGlobalStorage(dataType, dataId, data, shouldCheck) {
     console.warn(dataType, dataId, data, shouldCheck)
+    // Outside TaleSpire (browser testing) write to the localStorage fallback.
+    if (typeof TS === 'undefined' || !TS.localStorage) {
+        try {
+            const raw = window.localStorage.getItem('tsvtt-global-storage');
+            const allData = raw ? JSON.parse(raw) : {};
+            if (!allData[dataType]) allData[dataType] = {};
+            allData[dataType][dataId] = data;
+            window.localStorage.setItem('tsvtt-global-storage', JSON.stringify(allData));
+        } catch (error) {
+            console.error("Browser-fallback global save failed:", error);
+        }
+        return;
+    }
     try {
         // Load the existing data from global storage
         const existingData = await TS.localStorage.global.getBlob();
@@ -4016,6 +4042,17 @@ let globalFileSize = 0;
 function loadDataFromGlobalStorage(dataType) {
     console.log("loading Global Storage")
     return new Promise((resolve, reject) => {
+        // Outside TaleSpire (browser testing) there is no TS API.
+        if (typeof TS === 'undefined' || !TS.localStorage) {
+            try {
+                const raw = window.localStorage.getItem('tsvtt-global-storage');
+                const allData = raw ? JSON.parse(raw) : {};
+                resolve(allData[dataType] || {});
+            } catch (error) {
+                resolve({});
+            }
+            return;
+        }
         TS.localStorage.global.getBlob()
             .then((data) => {
                 if (data) {
@@ -4045,6 +4082,18 @@ let localFileSize = 0
 function loadDataFromCampaignStorage(dataType) {
     console.log("loading Campaign Storage")
     return new Promise((resolve, reject) => {
+        // Outside TaleSpire (browser testing) fall back to the same blob the
+        // Character Creator uses in window.localStorage.
+        if (typeof TS === 'undefined' || !TS.localStorage) {
+            try {
+                const raw = window.localStorage.getItem('tsvtt-campaign-storage');
+                const allData = raw ? JSON.parse(raw) : {};
+                resolve(allData[dataType] || {});
+            } catch (error) {
+                resolve({});
+            }
+            return;
+        }
         TS.localStorage.campaign.getBlob()
             .then((data) => {
                 if (data) {
@@ -4621,6 +4670,7 @@ openHomebrewButton.addEventListener('click', () => {
 
     loadAndDisplayCustomSpells()
     loadAndDisplayCustomItems()
+    loadAndDisplayCustomSubclasses()
 });
 
 // Close the form
@@ -6417,4 +6467,729 @@ function removeExistingModal(modalId) {
  */
 function setModalActions(shouldShow) {
     modalShouldShowActions = shouldShow;
+}
+
+// ============================================================================
+// Homebrew subclasses
+// ----------------------------------------------------------------------------
+// Custom subclasses live in global storage under "Custom Subclasses", keyed by
+// subclass name. The stored shape matches Classes.json subclasses plus a
+// parentClass key, a year ("2014" = 5e / "2024" = 5.5e) and a description:
+//   { name, parentClass, year, description,
+//     features: { "3": { features: [..], automaticFeatures: { name: {description} } } } }
+// The Character Creator merges these into classesData on load (filtered by the
+// D&DVersion setting), which makes them selectable like built-in subclasses.
+// ============================================================================
+
+const SUBCLASS_PARENT_CLASSES = {
+    barbarian: "Barbarian", bard: "Bard", cleric: "Cleric", druid: "Druid",
+    fighter: "Fighter", monk: "Monk", paladin: "Paladin", ranger: "Ranger",
+    rogue: "Rogue", sorcerer: "Sorcerer", warlock: "Warlock", wizard: "Wizard"
+};
+
+// The levels at which each class gains subclass features, per edition.
+// Used to verify homebrew subclasses against 5e (2014) and 5.5e (2024) design.
+const SUBCLASS_FEATURE_LEVELS = {
+    "2014": {
+        barbarian: [3, 6, 10, 14],  bard: [3, 6, 14],        cleric: [1, 2, 6, 8, 17],
+        druid: [2, 6, 10, 14],      fighter: [3, 7, 10, 15, 18], monk: [3, 6, 11, 17],
+        paladin: [3, 7, 15, 20],    ranger: [3, 7, 11, 15],  rogue: [3, 9, 13, 17],
+        sorcerer: [1, 6, 14, 18],   warlock: [1, 6, 10, 14], wizard: [2, 6, 10, 14]
+    },
+    "2024": {
+        barbarian: [3, 6, 10, 14],  bard: [3, 6, 10, 14],    cleric: [3, 6, 10, 17],
+        druid: [3, 6, 10, 14],      fighter: [3, 7, 10, 15, 18], monk: [3, 6, 11, 17],
+        paladin: [3, 7, 15, 20],    ranger: [3, 7, 11, 15],  rogue: [3, 9, 13, 17],
+        sorcerer: [3, 6, 14, 18],   warlock: [3, 6, 10, 14], wizard: [3, 6, 10, 14]
+    }
+};
+
+const SUBCLASS_EDITION_LABELS = { "2014": "5e (2014)", "2024": "5.5e (2024)" };
+
+// Standard third-caster progression (Eldritch Knight / Arcane Trickster).
+// Complete for every level 3-20 so generated casters work at any level.
+const THIRD_CASTER_SPELLS_KNOWN = {
+    "3": 3, "4": 4, "7": 5, "8": 6, "10": 7, "11": 8,
+    "13": 9, "14": 10, "16": 11, "19": 12, "20": 13
+};
+const THIRD_CASTER_SPELL_SLOTS = {
+    "3": { "1": 2 },  "4": { "1": 3 },  "5": { "1": 3 },  "6": { "1": 3 },
+    "7": { "1": 4, "2": 2 },  "8": { "1": 4, "2": 2 },  "9": { "1": 4, "2": 2 },
+    "10": { "1": 4, "2": 3 }, "11": { "1": 4, "2": 3 }, "12": { "1": 4, "2": 3 },
+    "13": { "1": 4, "2": 3, "3": 2 }, "14": { "1": 4, "2": 3, "3": 2 }, "15": { "1": 4, "2": 3, "3": 2 },
+    "16": { "1": 4, "2": 3, "3": 3 }, "17": { "1": 4, "2": 3, "3": 3 }, "18": { "1": 4, "2": 3, "3": 3 },
+    "19": { "1": 4, "2": 3, "3": 3, "4": 1 }, "20": { "1": 4, "2": 3, "3": 3, "4": 1 }
+};
+
+const SUBCLASS_SPELL_SCHOOLS = [
+    "Abjuration", "Conjuration", "Divination", "Enchantment",
+    "Evocation", "Illusion", "Necromancy", "Transmutation"
+];
+
+// Class levels at which always-prepared subclass spells are granted, per
+// edition (domain/circle/oath patterns). Classes without an official pattern
+// get no grant-level warning.
+const SUBCLASS_SPELL_GRANT_LEVELS = {
+    "2014": { cleric: [1, 3, 5, 7, 9], druid: [3, 5, 7, 9], paladin: [3, 5, 9, 13, 17] },
+    "2024": { cleric: [3, 5, 7, 9], druid: [3, 5, 7, 9], paladin: [3, 5, 9, 13, 17] }
+};
+
+// Every known spell name (both editions plus Custom Spells), lowercased, for
+// verifying subclass spell lists. null until loaded; empty set = unavailable.
+let homebrewSpellNameIndex = null;
+async function getSpellNameIndex() {
+    if (homebrewSpellNameIndex) return homebrewSpellNameIndex;
+    const names = new Set();
+    try {
+        const response = await fetch('spells-eng.json');
+        if (response.ok) {
+            const catalog = await response.json();
+            catalog.forEach(spell => { if (spell.name) names.add(spell.name.toLowerCase()); });
+        }
+    } catch (error) {
+        console.error("Could not load spell catalog for verification:", error);
+    }
+    try {
+        const customSpells = await loadDataFromGlobalStorage("Custom Spells");
+        Object.keys(customSpells || {}).forEach(name => names.add(name.toLowerCase()));
+    } catch (error) {
+        console.error("Could not load custom spells for verification:", error);
+    }
+    homebrewSpellNameIndex = names;
+    return names;
+}
+
+// Built-in subclass names per class, loaded once from the creator's data file
+// so homebrew names can be checked for collisions with official content.
+let builtInSubclassIndex = null;
+async function getBuiltInSubclassIndex() {
+    if (builtInSubclassIndex) return builtInSubclassIndex;
+    try {
+        const response = await fetch('CharacterCreator/Classes.json');
+        if (!response.ok) throw new Error('Classes.json not reachable');
+        const data = await response.json();
+        builtInSubclassIndex = {};
+        Object.entries(data.classes || {}).forEach(([classKey, info]) => {
+            builtInSubclassIndex[classKey] = Object.keys(info.subclasses || {});
+        });
+    } catch (error) {
+        console.error("Could not load built-in subclass list:", error);
+        builtInSubclassIndex = {};
+    }
+    return builtInSubclassIndex;
+}
+
+function loadAndDisplayCustomSubclasses() {
+    const subclassSelect = document.getElementById("customSubclassSelect");
+    if (!subclassSelect) return;
+    loadDataFromGlobalStorage("Custom Subclasses")
+        .then((subclasses) => {
+            subclassSelect.innerHTML = "";
+            for (const subclassName in subclasses) {
+                const option = document.createElement("option");
+                option.value = subclassName;
+                const parent = SUBCLASS_PARENT_CLASSES[subclasses[subclassName]?.parentClass] || '?';
+                option.textContent = subclassName + ' (' + parent + ')';
+                subclassSelect.appendChild(option);
+            }
+
+            if (Object.keys(subclasses).length === 0) {
+                const placeholderOption = document.createElement("option");
+                placeholderOption.value = "";
+                placeholderOption.textContent = "No subclasses available";
+                subclassSelect.appendChild(placeholderOption);
+                subclassSelect.disabled = true;
+                document.getElementById("deleteCustomSubclasses").disabled = true;
+            } else {
+                subclassSelect.disabled = false;
+                document.getElementById("deleteCustomSubclasses").disabled = false;
+            }
+        })
+        .catch((error) => {
+            console.error("Failed to load custom subclasses:", error);
+        });
+}
+
+/**
+ * Verifies a homebrew subclass against 5e/5.5e design.
+ * errors block saving; warnings ask for a confirming second save click.
+ */
+async function validateCustomSubclass(subclass) {
+    const errors = [];
+    const warnings = [];
+
+    const parentDisplay = SUBCLASS_PARENT_CLASSES[subclass.parentClass];
+    if (!subclass.name) errors.push("The subclass needs a name.");
+    if (!parentDisplay) errors.push("Pick the class this subclass belongs to.");
+
+    const year = SUBCLASS_FEATURE_LEVELS[subclass.year] ? subclass.year : "2014";
+    const editionLabel = SUBCLASS_EDITION_LABELS[year];
+
+    const levels = Object.keys(subclass.features || {}).map(Number).sort((a, b) => a - b);
+    if (levels.length === 0) {
+        errors.push("Add at least one feature.");
+    }
+
+    let missingNames = 0;
+    Object.values(subclass.features || {}).forEach(levelBlock => {
+        (levelBlock.features || []).forEach(featureName => {
+            if (!featureName) missingNames++;
+        });
+    });
+    if (missingNames > 0) errors.push("Every feature needs a name.");
+
+    if (levels.some(lvl => isNaN(lvl) || lvl < 1 || lvl > 20)) {
+        errors.push("Feature levels must be between 1 and 20.");
+    }
+
+    // Collision with official content for that class
+    if (subclass.name && parentDisplay) {
+        const index = await getBuiltInSubclassIndex();
+        const builtIns = index[subclass.parentClass] || [];
+        if (builtIns.some(n => n.toLowerCase() === subclass.name.toLowerCase())) {
+            errors.push('"' + subclass.name + '" already exists as a built-in ' + parentDisplay + ' subclass.');
+        }
+    }
+
+    // Verify feature levels against the class's subclass progression for the edition
+    if (parentDisplay && levels.length > 0) {
+        const expected = SUBCLASS_FEATURE_LEVELS[year][subclass.parentClass] || [];
+        const unexpected = levels.filter(lvl => !expected.includes(lvl));
+        const missing = expected.filter(lvl => !levels.includes(lvl));
+        if (unexpected.length > 0) {
+            warnings.push(parentDisplay + ' subclasses in ' + editionLabel + ' gain features at levels ' +
+                expected.join(', ') + ' — your level(s) ' + unexpected.join(', ') + ' fall outside that pattern.');
+        }
+        if (missing.length > 0) {
+            warnings.push('No feature at expected ' + editionLabel + ' level(s) ' +
+                missing.join(', ') + ' for ' + parentDisplay + '.');
+        }
+    }
+
+    // --- Subclass spell lists (domain/oath style or patron style) ---
+    const spellBlock = subclass.subclassSpells;
+    if (spellBlock && spellBlock.mode && spellBlock.mode !== 'none') {
+        const grantLevels = Object.keys(spellBlock.byLevel || {}).map(Number);
+        if (grantLevels.length === 0) {
+            errors.push('Add at least one spell level, or set Granted Spells to None.');
+        }
+        if (grantLevels.some(lvl => isNaN(lvl) || lvl < 1 || lvl > 20)) {
+            errors.push('Spell grant levels must be between 1 and 20.');
+        }
+
+        const allNames = [];
+        Object.values(spellBlock.byLevel || {}).forEach(list => allNames.push(...(list || [])));
+        if (allNames.length === 0 && grantLevels.length > 0) {
+            errors.push('List at least one spell per grant level.');
+        }
+
+        // Verify spell names against the 5e/5.5e catalogs and Custom Spells
+        const nameIndex = await getSpellNameIndex();
+        if (nameIndex && nameIndex.size > 0 && allNames.length > 0) {
+            const unknown = allNames.filter(name => !nameIndex.has(String(name).toLowerCase()));
+            if (unknown.length > 0) {
+                warnings.push('Not found in the 5e/5.5e spell catalogs or Custom Spells: ' +
+                    unknown.join(', ') + '. Check the spelling — unknown spells are skipped on the sheet.');
+            }
+        }
+
+        // Grant-level pattern check (always-prepared lists only)
+        if (spellBlock.mode === 'prepared' && parentDisplay && grantLevels.length > 0) {
+            const pattern = SUBCLASS_SPELL_GRANT_LEVELS[year]?.[subclass.parentClass];
+            if (pattern) {
+                const offPattern = grantLevels.filter(lvl => !pattern.includes(lvl));
+                if (offPattern.length > 0) {
+                    warnings.push(parentDisplay + ' subclasses in ' + editionLabel +
+                        ' grant spells at levels ' + pattern.join(', ') + ' — your level(s) ' +
+                        offPattern.join(', ') + ' fall outside that pattern.');
+                }
+            }
+        }
+    }
+
+    // --- Subclass spellcasting (third-caster) ---
+    if (subclass.spellcasting) {
+        if (!SUBCLASS_PARENT_CLASSES[subclass.spellcasting.spellList]) {
+            errors.push('Pick the class spell list the subclass casts from.');
+        }
+        if (!['Intelligence', 'Wisdom', 'Charisma'].includes(subclass.spellcasting.ability)) {
+            errors.push('Pick a spellcasting ability (Intelligence, Wisdom, or Charisma).');
+        }
+    }
+
+    return { errors: errors, warnings: warnings };
+}
+
+// --- Form plumbing (present on both the Player Sheet and DM Screen) ---------
+
+const customSubclassesButton = document.getElementById('customSubclasses');
+const subclassFormModal = document.getElementById('subclassFormModal');
+
+function subclassExpectedLevels() {
+    const parentClass = document.getElementById('subclassFormClass').value;
+    const year = document.getElementById('subclassFormYear').value;
+    const table = SUBCLASS_FEATURE_LEVELS[year] || {};
+    return table[parentClass] || [];
+}
+
+function updateSubclassLevelGuide() {
+    const guide = document.getElementById('subclassLevelGuide');
+    const parentClass = document.getElementById('subclassFormClass').value;
+    const year = document.getElementById('subclassFormYear').value;
+    const parentDisplay = SUBCLASS_PARENT_CLASSES[parentClass];
+    const expected = subclassExpectedLevels();
+    guide.textContent = parentDisplay && expected.length
+        ? parentDisplay + ' subclasses in ' + SUBCLASS_EDITION_LABELS[year] +
+          ' gain features at levels ' + expected.join(', ') + '.'
+        : '';
+}
+
+function clearSubclassValidation() {
+    const box = document.getElementById('subclassValidation');
+    box.innerHTML = '';
+    document.getElementById('saveSubclass').dataset.warningsConfirmed = '';
+    document.getElementById('saveSubclass').textContent = 'Save Subclass';
+}
+
+function showSubclassValidation(errors, warnings) {
+    const box = document.getElementById('subclassValidation');
+    box.innerHTML = '';
+    errors.forEach(text => {
+        const p = document.createElement('p');
+        p.className = 'subclass-validation-error';
+        p.textContent = '✖ ' + text;
+        box.appendChild(p);
+    });
+    warnings.forEach(text => {
+        const p = document.createElement('p');
+        p.className = 'subclass-validation-warning';
+        p.textContent = '⚠ ' + text;
+        box.appendChild(p);
+    });
+}
+
+function addSubclassFeatureRow(level = '', name = '', description = '') {
+    const rows = document.getElementById('subclassFeatureRows');
+    const row = document.createElement('div');
+    row.className = 'subclass-feature-row';
+
+    const levelInput = document.createElement('input');
+    levelInput.type = 'number';
+    levelInput.min = '1';
+    levelInput.max = '20';
+    levelInput.className = 'subclass-feature-level';
+    levelInput.placeholder = 'Lvl';
+    levelInput.title = 'Class level the feature is gained at';
+    levelInput.value = level;
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'subclass-feature-name';
+    nameInput.placeholder = 'Feature name';
+    nameInput.value = name;
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'nonRollButton subclass-feature-remove';
+    removeButton.textContent = '✖';
+    removeButton.title = 'Remove this feature';
+    removeButton.addEventListener('click', () => {
+        row.remove();
+        clearSubclassValidation();
+    });
+
+    const descInput = document.createElement('textarea');
+    descInput.rows = 3;
+    descInput.className = 'subclass-feature-desc';
+    descInput.placeholder = 'What the feature does';
+    descInput.value = description;
+
+    [levelInput, nameInput, descInput].forEach(el =>
+        el.addEventListener('input', clearSubclassValidation));
+
+    const topLine = document.createElement('div');
+    topLine.className = 'subclass-feature-row-top';
+    topLine.appendChild(levelInput);
+    topLine.appendChild(nameInput);
+    topLine.appendChild(removeButton);
+
+    row.appendChild(topLine);
+    row.appendChild(descInput);
+    rows.appendChild(row);
+}
+
+/** One row of the subclass spell list: grant level + comma-separated names. */
+function addSubclassSpellRow(level = '', names = '') {
+    const rows = document.getElementById('subclassSpellRows');
+    const row = document.createElement('div');
+    row.className = 'subclass-feature-row subclass-spell-row';
+
+    const levelInput = document.createElement('input');
+    levelInput.type = 'number';
+    levelInput.min = '1';
+    levelInput.max = '20';
+    levelInput.className = 'subclass-feature-level subclass-spell-level';
+    levelInput.placeholder = 'Lvl';
+    levelInput.title = 'Class level the spells are granted at';
+    levelInput.value = level;
+
+    const namesInput = document.createElement('input');
+    namesInput.type = 'text';
+    namesInput.className = 'subclass-feature-name subclass-spell-names';
+    namesInput.placeholder = 'Spell names, comma separated (e.g. Bless, Cure Wounds)';
+    namesInput.value = names;
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'nonRollButton subclass-feature-remove';
+    removeButton.textContent = '✖';
+    removeButton.title = 'Remove this spell level';
+    removeButton.addEventListener('click', () => {
+        row.remove();
+        clearSubclassValidation();
+    });
+
+    [levelInput, namesInput].forEach(el =>
+        el.addEventListener('input', clearSubclassValidation));
+
+    const topLine = document.createElement('div');
+    topLine.className = 'subclass-feature-row-top';
+    topLine.appendChild(levelInput);
+    topLine.appendChild(namesInput);
+    topLine.appendChild(removeButton);
+    row.appendChild(topLine);
+    rows.appendChild(row);
+}
+
+/** Shows/hides the casting options and spell rows to match the mode selects. */
+function syncSubclassSpellSections() {
+    const castingOn = document.getElementById('subclassCastingType').value === 'third';
+    document.getElementById('subclassCastingOptions').style.display = castingOn ? '' : 'none';
+
+    const spellsOn = document.getElementById('subclassSpellMode').value !== 'none';
+    document.getElementById('subclassSpellRows').style.display = spellsOn ? '' : 'none';
+    document.getElementById('addSubclassSpellRow').style.display = spellsOn ? '' : 'none';
+    if (spellsOn && !document.querySelectorAll('#subclassSpellRows .subclass-spell-row').length) {
+        addSubclassSpellRow();
+    }
+}
+
+function resetSubclassForm() {
+    document.getElementById('subclassFormTitle').textContent = 'Create a Subclass';
+    document.getElementById('subclassFormName').value = '';
+    document.getElementById('subclassFormClass').selectedIndex = 0;
+    document.getElementById('subclassFormYear').selectedIndex = 0;
+    document.getElementById('subclassFormDesc').value = '';
+    document.getElementById('subclassFeatureRows').innerHTML = '';
+    // Seed one row per expected feature level so the design pattern is visible
+    subclassExpectedLevels().forEach(lvl => addSubclassFeatureRow(lvl));
+
+    document.getElementById('subclassCastingType').value = 'none';
+    document.getElementById('subclassCastingAbility').selectedIndex = 0;
+    document.getElementById('subclassCastingList').selectedIndex = 0;
+    document.getElementById('subclassCastingCantrips').selectedIndex = 0;
+    document.querySelectorAll('#subclassCastingSchools input').forEach(cb => { cb.checked = false; });
+    document.getElementById('subclassSpellMode').value = 'none';
+    document.getElementById('subclassSpellRows').innerHTML = '';
+    syncSubclassSpellSections();
+
+    updateSubclassLevelGuide();
+    clearSubclassValidation();
+}
+
+function populateSubclassForm(subclassData) {
+    document.getElementById('subclassFormTitle').textContent = 'Edit Subclass';
+    document.getElementById('subclassFormName').value = subclassData.name || '';
+    document.getElementById('subclassFormClass').value = subclassData.parentClass || 'barbarian';
+    document.getElementById('subclassFormYear').value =
+        SUBCLASS_FEATURE_LEVELS[subclassData.year] ? subclassData.year : '2014';
+    document.getElementById('subclassFormDesc').value = subclassData.description || '';
+
+    const rows = document.getElementById('subclassFeatureRows');
+    rows.innerHTML = '';
+    Object.keys(subclassData.features || {})
+        .sort((a, b) => Number(a) - Number(b))
+        .forEach(level => {
+            const block = subclassData.features[level];
+            (block.features || []).forEach(featureName => {
+                const description = (block.automaticFeatures &&
+                    block.automaticFeatures[featureName] &&
+                    block.automaticFeatures[featureName].description) || '';
+                addSubclassFeatureRow(level, featureName, description);
+            });
+        });
+    if (!rows.children.length) addSubclassFeatureRow();
+
+    // Spellcasting (third-caster block)
+    const casting = subclassData.spellcasting;
+    document.getElementById('subclassCastingType').value = casting ? 'third' : 'none';
+    if (casting) {
+        document.getElementById('subclassCastingAbility').value = casting.ability || 'Intelligence';
+        document.getElementById('subclassCastingList').value =
+            SUBCLASS_PARENT_CLASSES[casting.spellList] ? casting.spellList : 'wizard';
+        // The cantrip pattern is identified by its level-3 value (2 = EK, 3 = AT)
+        const firstCantrips = casting.cantripsKnown?.["3"] === 3 ? '3,4,5' : '2,3,4';
+        document.getElementById('subclassCastingCantrips').value = firstCantrips;
+        const allowed = (casting.restrictions?.schoolsAllowed || []).map(s => s.toLowerCase());
+        document.querySelectorAll('#subclassCastingSchools input').forEach(cb => {
+            cb.checked = allowed.includes(cb.value.toLowerCase());
+        });
+    }
+
+    // Granted spell lists
+    const spellBlock = subclassData.subclassSpells;
+    document.getElementById('subclassSpellMode').value =
+        spellBlock && spellBlock.mode ? spellBlock.mode : 'none';
+    document.getElementById('subclassSpellRows').innerHTML = '';
+    if (spellBlock) {
+        Object.keys(spellBlock.byLevel || {})
+            .sort((a, b) => Number(a) - Number(b))
+            .forEach(level => addSubclassSpellRow(level, (spellBlock.byLevel[level] || []).join(', ')));
+    }
+    syncSubclassSpellSections();
+
+    updateSubclassLevelGuide();
+    clearSubclassValidation();
+}
+
+/** Reads the form into the stored subclass shape. */
+function collectSubclassFromForm() {
+    const features = {};
+    document.querySelectorAll('#subclassFeatureRows .subclass-feature-row').forEach(row => {
+        const level = row.querySelector('.subclass-feature-level').value.trim();
+        const name = row.querySelector('.subclass-feature-name').value.trim();
+        const description = row.querySelector('.subclass-feature-desc').value.trim();
+        if (!level && !name && !description) return; // skip fully empty rows
+
+        const key = String(parseInt(level, 10));
+        if (!features[key]) features[key] = { features: [], automaticFeatures: {} };
+        features[key].features.push(name);
+        features[key].automaticFeatures[name] = { description: description };
+    });
+
+    const subclass = {
+        name: document.getElementById('subclassFormName').value.trim(),
+        parentClass: document.getElementById('subclassFormClass').value,
+        year: document.getElementById('subclassFormYear').value,
+        description: document.getElementById('subclassFormDesc').value.trim(),
+        features: features,
+        homebrew: true
+    };
+
+    // Third-caster spellcasting: generated from the standard EK/AT progression
+    if (document.getElementById('subclassCastingType').value === 'third') {
+        const cantripPattern = document.getElementById('subclassCastingCantrips').value
+            .split(',').map(Number); // e.g. [2, 3, 4]
+        subclass.spellcasting = {
+            ability: document.getElementById('subclassCastingAbility').value,
+            ritual: false,
+            spellsKnown: { ...THIRD_CASTER_SPELLS_KNOWN },
+            cantripsKnown: { "3": cantripPattern[0], "10": cantripPattern[1], "14": cantripPattern[2] },
+            spellSlots: JSON.parse(JSON.stringify(THIRD_CASTER_SPELL_SLOTS)),
+            spellList: document.getElementById('subclassCastingList').value
+        };
+        const schools = [...document.querySelectorAll('#subclassCastingSchools input:checked')]
+            .map(cb => cb.value.toLowerCase());
+        if (schools.length > 0) {
+            subclass.spellcasting.restrictions = {
+                schoolsAllowed: schools,
+                exceptionsAtLevel: { "8": 1, "14": 1, "20": 1 }
+            };
+        }
+    }
+
+    // Granted spell lists (always prepared or added to the class list)
+    const spellMode = document.getElementById('subclassSpellMode').value;
+    if (spellMode !== 'none') {
+        const byLevel = {};
+        document.querySelectorAll('#subclassSpellRows .subclass-spell-row').forEach(row => {
+            const level = row.querySelector('.subclass-spell-level').value.trim();
+            const names = row.querySelector('.subclass-spell-names').value
+                .split(',').map(s => s.trim()).filter(Boolean);
+            if (!level && names.length === 0) return; // skip empty rows
+
+            const key = String(parseInt(level, 10));
+            if (!byLevel[key]) byLevel[key] = [];
+            byLevel[key].push(...names);
+        });
+        subclass.subclassSpells = { mode: spellMode, byLevel: byLevel };
+    }
+
+    return subclass;
+}
+
+if (customSubclassesButton) {
+    customSubclassesButton.addEventListener('click', () => {
+        loadAndDisplayCustomSubclasses();
+        resetSubclassForm();
+        subclassFormModal.style.display = 'block';
+        homebrewModal.style.display = 'none';
+    });
+
+    document.getElementById('closeSubclassForm').addEventListener('click', () => {
+        subclassFormModal.style.display = 'none';
+    });
+
+    document.getElementById('subclassFormClass').addEventListener('change', () => {
+        updateSubclassLevelGuide();
+        clearSubclassValidation();
+    });
+    document.getElementById('subclassFormYear').addEventListener('change', () => {
+        updateSubclassLevelGuide();
+        clearSubclassValidation();
+    });
+    document.getElementById('subclassFormName').addEventListener('input', clearSubclassValidation);
+
+    document.getElementById('addSubclassFeature').addEventListener('click', () => {
+        addSubclassFeatureRow();
+        clearSubclassValidation();
+    });
+
+    document.getElementById('subclassCastingType').addEventListener('change', () => {
+        syncSubclassSpellSections();
+        clearSubclassValidation();
+    });
+    document.getElementById('subclassSpellMode').addEventListener('change', () => {
+        syncSubclassSpellSections();
+        clearSubclassValidation();
+    });
+    ['subclassCastingAbility', 'subclassCastingList', 'subclassCastingCantrips'].forEach(id => {
+        document.getElementById(id).addEventListener('change', clearSubclassValidation);
+    });
+    document.querySelectorAll('#subclassCastingSchools input').forEach(cb => {
+        cb.addEventListener('change', clearSubclassValidation);
+    });
+    document.getElementById('addSubclassSpellRow').addEventListener('click', () => {
+        addSubclassSpellRow();
+        clearSubclassValidation();
+    });
+
+    document.getElementById('saveSubclass').addEventListener('click', async () => {
+        const saveButton = document.getElementById('saveSubclass');
+        const subclass = collectSubclassFromForm();
+        const result = await validateCustomSubclass(subclass);
+
+        if (result.errors.length > 0) {
+            showSubclassValidation(result.errors, result.warnings);
+            return;
+        }
+
+        // Warnings need one confirming click ("Save Anyway")
+        if (result.warnings.length > 0 && saveButton.dataset.warningsConfirmed !== 'true') {
+            showSubclassValidation([], result.warnings);
+            saveButton.dataset.warningsConfirmed = 'true';
+            saveButton.textContent = 'Save Anyway';
+            return;
+        }
+
+        try {
+            await saveToGlobalStorage("Custom Subclasses", subclass.name, subclass, false);
+        } catch (error) {
+            console.error("Failed to save custom subclass:", error);
+        }
+
+        subclassFormModal.style.display = 'none';
+        loadAndDisplayCustomSubclasses();
+    });
+
+    document.getElementById("deleteCustomSubclasses").addEventListener("click", () => {
+        const selected = document.getElementById("customSubclassSelect").value;
+        if (!selected) {
+            errorModal("No subclass selected for deletion.");
+            return;
+        }
+        removeFromGlobalStorage("Custom Subclasses", selected)
+            .then(() => loadAndDisplayCustomSubclasses())
+            .catch((error) => console.error("Failed to delete subclass:", error));
+    });
+
+    document.getElementById("editCustomSubclasses").addEventListener("click", () => {
+        const selected = document.getElementById("customSubclassSelect").value;
+        if (!selected) {
+            errorModal("No subclass selected for editing.");
+            return;
+        }
+        loadDataFromGlobalStorage("Custom Subclasses")
+            .then((subclasses) => {
+                const subclassData = subclasses[selected];
+                if (subclassData) {
+                    subclassFormModal.style.display = 'block';
+                    homebrewModal.style.display = 'none';
+                    populateSubclassForm(subclassData);
+                } else {
+                    errorModal('Subclass "' + selected + '" data not found.');
+                }
+            })
+            .catch((error) => console.error("Failed to load subclass for editing:", error));
+    });
+
+    document.getElementById('exportCustomSubclass').addEventListener("click", () => {
+        const subclassKey = document.getElementById("customSubclassSelect").value;
+        exportData("Custom Subclasses", subclassKey);
+    });
+}
+
+// --- Import ----------------------------------------------------------------
+// The Import Subclass button opens the shared import modal with its data-type.
+// On the Player Sheet the import save handler lives in PlayerScript.js; the DM
+// Screen has no PlayerScript, so a generic save/cancel handler is bound here
+// (detected by the player-only Import Character Data button being absent).
+
+const importCustomSubclassButton = document.getElementById('importCustomSubclass');
+if (importCustomSubclassButton && document.getElementById('importModal')) {
+    importCustomSubclassButton.addEventListener('click', () => {
+        document.getElementById("importModal").style.display = "flex";
+        document.getElementById("importTitle").textContent = "Import Subclass Data";
+        document.getElementById("importTitle").setAttribute('data-type', "Custom Subclasses");
+    });
+}
+
+if (!document.getElementById('importCharacterData') && document.getElementById('importModal')) {
+    // DM Screen import wiring (also brings the spell/item import buttons to life)
+    [
+        { buttonId: 'importCustomSpell', type: 'Custom Spells', title: 'Import Spell Data' },
+        { buttonId: 'importCustomItem', type: 'Custom Equipment', title: 'Import Item Data' }
+    ].forEach(({ buttonId, type, title }) => {
+        const button = document.getElementById(buttonId);
+        if (button) {
+            button.addEventListener('click', () => {
+                document.getElementById("importModal").style.display = "flex";
+                document.getElementById("importTitle").textContent = title;
+                document.getElementById("importTitle").setAttribute('data-type', type);
+            });
+        }
+    });
+
+    document.getElementById("importCancelButton").addEventListener("click", () => {
+        document.getElementById("importModal").style.display = "none";
+    });
+
+    document.getElementById("importSaveButton").addEventListener("click", async () => {
+        const importTextArea = document.getElementById("importTextArea");
+        const importDataType = document.getElementById("importTitle").getAttribute('data-type');
+        try {
+            const parsedData = JSON.parse(importTextArea.value);
+            const key = Object.keys(parsedData)[0];
+            const dataInfo = parsedData[key];
+
+            if (importDataType === "Custom Subclasses") {
+                const result = await validateCustomSubclass(dataInfo || {});
+                if (result.errors.length > 0) {
+                    showErrorModal("Subclass failed verification: " + result.errors.join(' '));
+                    return;
+                }
+            } else if (importDataType !== "Custom Spells" && importDataType !== "Custom Equipment") {
+                showErrorModal("Invalid dataType. Please check the format and try again.");
+                return;
+            }
+
+            await saveToGlobalStorage(importDataType, key, dataInfo, true);
+            document.getElementById("importModal").style.display = "none";
+            importTextArea.value = "";
+            showErrorModal("'" + importDataType + "' data for '" + key + "' successfully imported and saved.");
+        } catch (error) {
+            console.error("Failed to import data:", error);
+            showErrorModal("Invalid data. Please check the format and try again.");
+        }
+    });
 }

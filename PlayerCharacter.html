@@ -82,12 +82,18 @@
                                 
 
                                 <li>
-                                    <!-- <div class="character-creator-section">
-                                        <button id="createCharacterBtn" class="create-character-btn" onclick="openCharacterCreator()">
-                                            <span class="btn-icon">⚔️</span>
-                                            Create New Character
+                                    <div class="character-creator-section">
+                                        <button id="createCharacterBtn" class="create-character-btn nonRollButton" onclick="openCharacterCreator()">
+                                            Create Character
                                         </button>
-                                    </div> -->
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="character-creator-section">
+                                        <button id="editCharacterBtn" class="create-character-btn nonRollButton" onclick="openCharacterCreatorForEdit()" data-title="Open the loaded character in the Character Creator to level up or edit levels">
+                                            Level Up / Edit
+                                        </button>
+                                    </div>
                                 </li>
                                 
                                 <!-- Add more options as needed -->
@@ -1532,6 +1538,22 @@
                     <hr>
                     <div class="monsterEditorSubsection">
                         <div>
+                            <button id="customSubclasses" class="nonRollButton">Create Subclass</button>
+                            <button id="importCustomSubclass" class="nonRollButton">Import Subclass</button>
+                        </div>
+                        <div class="deleteMonster">
+                            <div class="deleteMonster-header">
+                                <label id="customSubclassSelectLabel" for="customSubclassSelect">Select Subclass to Delete/Edit:</label>
+                                <button id="deleteCustomSubclasses" class="nonRollButton">Delete Subclass</button>
+                                <button id="editCustomSubclasses" class="nonRollButton">Edit Subclass</button>
+                                <button id="exportCustomSubclass" class="nonRollButton">Export Subclass</button>
+                            </div>
+                            <select id="customSubclassSelect"></select>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="monsterEditorSubsection">
+                        <div>
                             <button id="customItems" class="nonRollButton">Create Item</button>
                             <button id="importCustomItem" class="nonRollButton">Import Item</button>
                         </div>
@@ -1562,6 +1584,123 @@
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Homebrew subclass form -->
+<div id="subclassFormModal" style="display: none;">
+    <div class="spell-modal-background">
+        <span id="closeSubclassForm" class="close">&times;</span>
+        <form id="subclassForm" onsubmit="return false;">
+            <h2 id="subclassFormTitle">Create a Subclass</h2>
+
+            <div class="form-row">
+                <label id="subclassNameLabel" for="subclassFormName">Subclass Name:</label>
+                <input type="text" id="subclassFormName" placeholder="e.g., Oath of the Open Sea" required>
+            </div>
+
+            <div class="form-row">
+                <label id="subclassClassLabel" for="subclassFormClass">Class:</label>
+                <select id="subclassFormClass" required>
+                    <option value="barbarian">Barbarian</option>
+                    <option value="bard">Bard</option>
+                    <option value="cleric">Cleric</option>
+                    <option value="druid">Druid</option>
+                    <option value="fighter">Fighter</option>
+                    <option value="monk">Monk</option>
+                    <option value="paladin">Paladin</option>
+                    <option value="ranger">Ranger</option>
+                    <option value="rogue">Rogue</option>
+                    <option value="sorcerer">Sorcerer</option>
+                    <option value="warlock">Warlock</option>
+                    <option value="wizard">Wizard</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label id="subclassYearLabel" for="subclassFormYear">Edition:</label>
+                <select id="subclassFormYear">
+                    <option value="2014">5e (2014)</option>
+                    <option value="2024">5.5e (2024)</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <label id="subclassDescLabel" for="subclassFormDesc">Description:</label>
+                <textarea id="subclassFormDesc" rows="3" placeholder="Short flavor text for this subclass"></textarea>
+            </div>
+
+            <p id="subclassLevelGuide" class="subclass-level-guide"></p>
+
+            <div id="subclassFeatureRows"></div>
+            <button id="addSubclassFeature" class="nonRollButton" type="button">+ Add Feature</button>
+
+            <div class="form-row">
+                <label id="subclassCastingTypeLabel" for="subclassCastingType">Spellcasting:</label>
+                <select id="subclassCastingType">
+                    <option value="none">None</option>
+                    <option value="third">Third-caster (Eldritch Knight style)</option>
+                </select>
+            </div>
+            <div id="subclassCastingOptions" style="display: none;">
+                <div class="form-row">
+                    <label id="subclassCastingAbilityLabel" for="subclassCastingAbility">Casting Ability:</label>
+                    <select id="subclassCastingAbility">
+                        <option value="Intelligence">Intelligence</option>
+                        <option value="Wisdom">Wisdom</option>
+                        <option value="Charisma">Charisma</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="subclassCastingListLabel" for="subclassCastingList">Spell List:</label>
+                    <select id="subclassCastingList">
+                        <option value="wizard">Wizard</option>
+                        <option value="bard">Bard</option>
+                        <option value="cleric">Cleric</option>
+                        <option value="druid">Druid</option>
+                        <option value="paladin">Paladin</option>
+                        <option value="ranger">Ranger</option>
+                        <option value="sorcerer">Sorcerer</option>
+                        <option value="warlock">Warlock</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="subclassCastingCantripsLabel" for="subclassCastingCantrips">Cantrips Known:</label>
+                    <select id="subclassCastingCantrips">
+                        <option value="2,3,4">2 / 3 / 4 (Eldritch Knight pattern)</option>
+                        <option value="3,4,5">3 / 4 / 5 (Arcane Trickster pattern)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="subclassCastingSchoolsLabel">Allowed Schools (none checked = no restriction):</label>
+                    <div id="subclassCastingSchools">
+                        <label><input type="checkbox" value="Abjuration"><span>Abjuration</span></label>
+                        <label><input type="checkbox" value="Conjuration"><span>Conjuration</span></label>
+                        <label><input type="checkbox" value="Divination"><span>Divination</span></label>
+                        <label><input type="checkbox" value="Enchantment"><span>Enchantment</span></label>
+                        <label><input type="checkbox" value="Evocation"><span>Evocation</span></label>
+                        <label><input type="checkbox" value="Illusion"><span>Illusion</span></label>
+                        <label><input type="checkbox" value="Necromancy"><span>Necromancy</span></label>
+                        <label><input type="checkbox" value="Transmutation"><span>Transmutation</span></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label id="subclassSpellModeLabel" for="subclassSpellMode">Granted Spells:</label>
+                <select id="subclassSpellMode">
+                    <option value="none">None</option>
+                    <option value="prepared">Always prepared (domain/oath style)</option>
+                    <option value="expanded">Added to spell list (patron style)</option>
+                </select>
+            </div>
+            <div id="subclassSpellRows" style="display: none;"></div>
+            <button id="addSubclassSpellRow" class="nonRollButton" type="button" style="display: none;">+ Add Spell Level</button>
+
+            <div id="subclassValidation"></div>
+
+            <button id="saveSubclass" class="nonRollButton" type="button">Save Subclass</button>
+        </form>
     </div>
 </div>
 

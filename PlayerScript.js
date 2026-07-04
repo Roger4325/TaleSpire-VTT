@@ -1002,7 +1002,7 @@ function updateDerivedStats(category) {
             updateSaveModifier();
             break;
         case "attributes":
-            // updateAttributes();
+            updateAttributes();
             break;
         case "combatStats":
             updateCombatStats();
@@ -1024,6 +1024,71 @@ function updateCombatStats(){
     updateSpellDCHeader();
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
     updateSpelltoHitDice(spellCastingAbility)
+}
+
+const ATTRIBUTE_SCORE_ELEMENT_IDS = {
+    STR: 'strengthScore', DEX: 'dexterityScore', CON: 'constitutionScore',
+    INT: 'intelligenceScore', WIS: 'wisdomScore', CHA: 'charismaScore'
+};
+
+/**
+ * Applies "attributes" stat bonuses (from trait adjustments) to the displayed
+ * ability scores. The displayed score is base + bonuses; the base is what
+ * gets saved (see getAllEditableContent), so bonuses re-applied by traits on
+ * the next load don't stack. data-applied-attr-bonus tracks what's currently
+ * baked into the displayed number.
+ */
+function updateAttributes() {
+    const allBonuses = characterStatBonuses.attributes.All.bonuses
+        .reduce((total, bonus) => total + (bonus.value || 0), 0);
+
+    Object.entries(ATTRIBUTE_SCORE_ELEMENT_IDS).forEach(([key, elementId]) => {
+        const scoreElement = document.getElementById(elementId);
+        if (!scoreElement) return;
+
+        const applied = parseInt(scoreElement.dataset.appliedAttrBonus || '0', 10);
+        const displayed = parseInt(scoreElement.textContent, 10) || 0;
+        const base = displayed - applied;
+
+        const bonus = characterStatBonuses.attributes[key].bonuses
+            .reduce((total, b) => total + (b.value || 0), 0) + allBonuses;
+
+        const newTotal = base + bonus;
+        scoreElement.textContent = newTotal;
+        scoreElement.dataset.appliedAttrBonus = bonus;
+
+        // Refresh the modifier button/label next to the score
+        const abilityModifier = calculateAbilityModifier(newTotal);
+        const container = scoreElement.parentElement;
+        const button = container.querySelector('.actionButton');
+        const label = container.querySelector('.actionButtonLabel');
+        button.textContent = abilityModifier > 0 ? `+${abilityModifier}` : `${abilityModifier}`;
+        label.setAttribute('value', abilityModifier);
+    });
+
+    // Same derived-stat cascade as a manual ability score edit
+    updateAdjustmentValues()
+    updateSkillModifier();
+    updateSaveModifier();
+    updateHitDiceValue()
+    updateAC();
+    // Spell stats need the spell catalog, which loads async during init
+    if (AppData?.spellLookupInfo?.spellsData) {
+        updateAllToHitDice();
+        updateAllSpellDCs();
+        updateAllSpellDamageDice();
+        updateSpellDCHeader()
+        const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+        updateSpelltoHitDice(spellCastingAbility)
+    }
+}
+
+/** The saved (base) value of an ability score div: displayed minus trait bonuses. */
+function getBaseAttributeScore(scoreElement) {
+    const applied = parseInt(scoreElement.dataset.appliedAttrBonus || '0', 10);
+    const displayed = parseInt(scoreElement.textContent, 10);
+    if (isNaN(displayed)) return scoreElement.innerText;
+    return String(displayed - applied);
 }
 
 
@@ -2232,6 +2297,13 @@ function getAllEditableContent() {
 
     const content = {};
 
+    // Preserve the structured build record written by the Character Creator.
+    // It has no DOM representation, so without this it would be dropped every
+    // time the sheet rebuilds the save from the page.
+    if (window.characterCreatorBuildData) {
+        content['characterCreatorData'] = window.characterCreatorBuildData;
+    }
+
     // Add specific elements to the content object
     content['characterTempHp'] = characterTempHp.value;
     content['currentHitDice'] = currentHitDice.textContent
@@ -2244,9 +2316,14 @@ function getAllEditableContent() {
     content['playerToolsProficiency'] = [...playerToolsProficiency];
 
     // Add other content-editable elements to the content object
+    const abilityScoreIds = Object.values(ATTRIBUTE_SCORE_ELEMENT_IDS);
     editableElements.forEach((element) => {
         const id = element.id;
-        const value = element.innerText;
+        // Ability scores save their BASE value; trait "attributes" bonuses are
+        // re-applied on load, so saving the displayed total would stack them.
+        const value = abilityScoreIds.includes(id)
+            ? getBaseAttributeScore(element)
+            : element.innerText;
         content[id] = value;
     });
 
@@ -2498,6 +2575,10 @@ inputElements.forEach((element) => {
 
 
 function updateCharacterUI(characterData, characterName) {
+    // Hold on to the Character Creator's structured build record (if any) so it
+    // survives the sheet's DOM-based save cycle. Old saves simply won't have it.
+    window.characterCreatorBuildData = characterData.characterCreatorData || null;
+
     const characterNameElement = document.getElementById("playerCharacterInput");
     const characterAlignment = document.getElementById('alignment-select');
     const characterTempHpElement = document.getElementById("tempHP");
@@ -2642,6 +2723,18 @@ async function loadAndPickaCharacter() {
     const dataType = "characters";
     const allCharactersData = await loadDataFromCampaignStorage(dataType);
 
+    // If the Character Creator sent us back here with a character to open,
+    // load it directly instead of showing the picker.
+    try {
+        const requested = await getRequestedSheetCharacter();
+        if (requested && allCharactersData[requested]) {
+            loadAndDisplayCharacter(requested, allCharactersData);
+            return;
+        }
+    } catch (error) {
+        console.error("Failed to check for a requested character:", error);
+    }
+
     // Step 2: Create a full-screen overlay element
     const overlay = document.createElement('div');
     overlay.classList.add('character-overlay');
@@ -2716,6 +2809,9 @@ async function loadAndPickaCharacter() {
             const newCharacterName = characterInput.value.trim();
             if (newCharacterName) {
                 console.log(`Creating new character: ${newCharacterName}`);
+                // Starting a brand-new character: don't carry over the previous
+                // character's creator build record.
+                window.characterCreatorBuildData = null;
                 // Add logic to save new character data
                 const characterName = document.getElementById("playerCharacterInput");
                 characterName.textContent = newCharacterName
@@ -7743,6 +7839,14 @@ document.getElementById("importSaveButton").addEventListener("click", async () =
 
         if (importDataType === "characters") {
             saveToCampaignStorage(importDataType, key, dataInfo, true);
+        } else if (importDataType === "Custom Subclasses") {
+            // Verify against 5e/5.5e subclass structure before accepting
+            const result = await validateCustomSubclass(dataInfo || {});
+            if (result.errors.length > 0) {
+                showErrorModal("Subclass failed verification: " + result.errors.join(' '));
+                return;
+            }
+            saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
             saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else {
@@ -8368,17 +8472,149 @@ function updateExtrasCardDataFromLoad(extrasData) {
 
 
 
-function openCharacterCreator() {
-    // Option 1: Open in new window/tab
-    // window.open('./Character Creator/D&D Character Creator.html', '_blank');
-    
-    // Option 2: Open in same window (uncomment if you prefer this)
-    // window.location.href = './CharacterCreator/CharacterCreator.html';
-    
-    // Option 3: Open in popup window (uncomment if you prefer this)
-    const popup = window.open(
-        './CharacterCreator/CharacterCreator.html', 
-        'CharacterCreator'
-    );
-    popup.focus();
+// ---------------------------------------------------------------------------
+// Character Creator navigation
+// ---------------------------------------------------------------------------
+// The symbiote runs as a single webview inside TaleSpire, where window.open()
+// replaces the current view instead of opening a popup. Query strings are not
+// guaranteed to survive that navigation, so requests between the sheet and
+// the Character Creator are also passed through a small "handoff" record kept
+// in TS global storage (or window.localStorage when testing in a browser).
+
+const CREATOR_HANDOFF_BROWSER_KEY = 'tsvtt-creator-handoff';
+const CREATOR_HANDOFF_MAX_AGE_MS = 5 * 60 * 1000;
+
+function sheetHasTaleSpire() {
+    return typeof TS !== 'undefined' && TS.localStorage && TS.localStorage.global;
 }
+
+// payload = {action: 'edit'|'load', name, time} — or null to clear.
+async function writeCreatorHandoff(payload) {
+    if (!sheetHasTaleSpire()) {
+        try {
+            if (payload) window.localStorage.setItem(CREATOR_HANDOFF_BROWSER_KEY, JSON.stringify(payload));
+            else window.localStorage.removeItem(CREATOR_HANDOFF_BROWSER_KEY);
+        } catch (error) { /* no storage available; the query string still works */ }
+        return;
+    }
+    try {
+        const blob = await TS.localStorage.global.getBlob();
+        let allData = {};
+        if (blob) {
+            try { allData = JSON.parse(blob); } catch (error) { allData = {}; }
+        }
+        if (payload) allData.creatorHandoff = payload;
+        else delete allData.creatorHandoff;
+        await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+    } catch (error) {
+        console.error("Failed to write creator handoff:", error);
+    }
+}
+
+async function readAndClearCreatorHandoff() {
+    let payload = null;
+    if (!sheetHasTaleSpire()) {
+        try {
+            const raw = window.localStorage.getItem(CREATOR_HANDOFF_BROWSER_KEY);
+            if (raw) {
+                payload = JSON.parse(raw);
+                window.localStorage.removeItem(CREATOR_HANDOFF_BROWSER_KEY);
+            }
+        } catch (error) { /* ignore */ }
+    } else {
+        try {
+            const blob = await TS.localStorage.global.getBlob();
+            if (blob) {
+                const allData = JSON.parse(blob);
+                if (allData.creatorHandoff) {
+                    payload = allData.creatorHandoff;
+                    delete allData.creatorHandoff;
+                    await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+                }
+            }
+        } catch (error) {
+            console.error("Failed to read creator handoff:", error);
+        }
+    }
+    // Ignore requests left behind by an old session.
+    if (payload && payload.time && (Date.now() - payload.time) > CREATOR_HANDOFF_MAX_AGE_MS) {
+        return null;
+    }
+    return payload;
+}
+
+function navigateWithinSymbiote(url) {
+    if (sheetHasTaleSpire()) {
+        // Inside TaleSpire this replaces the current webview content.
+        window.open(url);
+    } else {
+        window.location.href = url;
+    }
+}
+
+async function openCharacterCreator() {
+    // Starting a brand-new character: make sure no stale edit request is waiting.
+    await writeCreatorHandoff(null);
+    navigateWithinSymbiote('./CharacterCreator/CharacterCreator.html');
+}
+
+// Opens the Character Creator pre-loaded with the currently loaded character so
+// levels can be added or edited. Falls back to a blank creator if no character
+// is loaded yet.
+async function openCharacterCreatorForEdit() {
+    const nameElement = document.getElementById("playerCharacterInput");
+    const characterName = nameElement ? nameElement.textContent.trim() : "";
+
+    if (characterName) {
+        await writeCreatorHandoff({ action: 'edit', name: characterName, time: Date.now() });
+    } else {
+        await writeCreatorHandoff(null);
+    }
+
+    // TaleSpire resolves symbiote URLs as local files, so a query string makes
+    // the page fail to load ("not available"). Inside TaleSpire the storage
+    // handoff alone carries the request; the query string is for browser testing.
+    const url = (characterName && typeof TS === 'undefined')
+        ? `./CharacterCreator/CharacterCreator.html?edit=${encodeURIComponent(characterName)}`
+        : './CharacterCreator/CharacterCreator.html';
+    navigateWithinSymbiote(url);
+}
+
+// Returns the character the Character Creator asked the sheet to open, if any.
+async function getRequestedSheetCharacter() {
+    let fromQuery = null;
+    try {
+        const params = new URLSearchParams(window.location.search);
+        fromQuery = params.get('load');
+    } catch (error) { /* ignore */ }
+
+    // Always consume the handoff so it can't fire again later.
+    const handoff = await readAndClearCreatorHandoff();
+
+    if (fromQuery) return fromQuery;
+    if (handoff && handoff.action === 'load' && handoff.name) return handoff.name;
+    return null;
+}
+
+// When the Character Creator saves a character into campaign storage it notifies
+// us so the sheet can refresh without re-picking the character manually.
+window.addEventListener('message', async (event) => {
+    const msg = event.data;
+    if (!msg || msg.type !== 'tsvtt-character-saved' || !msg.characterName) return;
+
+    try {
+        const currentNameElement = document.getElementById("playerCharacterInput");
+        const currentName = currentNameElement ? currentNameElement.textContent.trim() : "";
+
+        // Only auto-load when the saved character is the one on screen,
+        // or when no character is loaded yet.
+        if (currentName && currentName !== msg.characterName) return;
+
+        const allCharactersData = await loadDataFromCampaignStorage("characters");
+        if (allCharactersData && allCharactersData[msg.characterName]) {
+            loadAndDisplayCharacter(msg.characterName, allCharactersData);
+        }
+    } catch (error) {
+        console.error("Failed to reload character after creator save:", error);
+    }
+});

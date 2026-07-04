@@ -9,13 +9,13 @@ function addNewClass(className) {
     
     // Check if class already exists
     if (currentCharacter.classes.some(cls => cls.className === className)) {
-        alert(`You already have the ${className} class!`);
+        showError(`You already have the ${className} class!`);
         return;
     }
     
     // Check total level limit
     if (currentCharacter.totalLevel >= 20) {
-        alert("Cannot add class - total level would exceed 20!");
+        showError("Cannot add class - total level would exceed 20!");
         return;
     }
     
@@ -120,7 +120,7 @@ async function updateClassLevel(classIndex, newLevel) {
     
     // Check total level limit
     if (currentCharacter.totalLevel + levelDifference > 20) {
-        alert("Cannot increase level - total would exceed 20!");
+        showError("Cannot increase level - total would exceed 20!");
         return false;
     }
     
@@ -156,10 +156,16 @@ async function updateClassLevel(classIndex, newLevel) {
     
     // Update display for this class
     displaySingleClass(classIndex);
-    
+
     // Update level dropdowns for all other classes since their max levels may have changed
     updateAllClassLevelDropdowns();
-    
+
+    // Refresh the total level header
+    const totalLevelDisplay = document.querySelector('.total-level-display h3');
+    if (totalLevelDisplay) {
+        totalLevelDisplay.textContent = `Total Level: ${currentCharacter.totalLevel}/20`;
+    }
+
     updateMulticlassHitPoints();
     
     // Update rolled hit points interface if using rolled method
@@ -224,11 +230,15 @@ function getMaxLevelForClass(classIndex) {
  * Updates hit points calculation for multiclass characters
  */
 function updateMulticlassHitPoints() {
-    if (!currentCharacter.isMulticlassing) {
+    normalizeRolledHitPointKeys();
+
+    // The per-class math below works for one class too; only fall back to the
+    // legacy single-class method when no classes array exists at all.
+    if (!Array.isArray(currentCharacter.classes) || currentCharacter.classes.length === 0) {
         updateHitPoints(); // Use single class method
         return;
     }
-    
+
     let totalHitPoints = 0;
     let totalBonuses = 0;
     
@@ -271,6 +281,27 @@ function updateMulticlassHitPoints() {
     
     // Update display
     updateMulticlassHitPointsDisplay();
+}
+
+/**
+ * Rolled HP keys are canonically "<className>-<level>". Older saves (and the
+ * legacy single-class flow) used plain level numbers; fold those onto the
+ * first class so the values survive reloading and multiclassing.
+ */
+function normalizeRolledHitPointKeys() {
+    if (!currentCharacter.rolledHitPoints) return;
+    const primary = (currentCharacter.classes && currentCharacter.classes[0]?.className) || currentCharacter.class;
+    if (!primary) return;
+
+    Object.keys(currentCharacter.rolledHitPoints).forEach(key => {
+        if (/^\d+$/.test(key)) {
+            const newKey = `${primary}-${key}`;
+            if (!(newKey in currentCharacter.rolledHitPoints)) {
+                currentCharacter.rolledHitPoints[newKey] = currentCharacter.rolledHitPoints[key];
+            }
+            delete currentCharacter.rolledHitPoints[key];
+        }
+    });
 }
 
 /**
@@ -518,7 +549,7 @@ function rollMulticlassHitPoints() {
     });
     
     if (unrolledLevels.length === 0) {
-        alert('All levels have been rolled!');
+        showSuccess('All levels have been rolled!');
         return;
     }
     
@@ -596,32 +627,25 @@ function displayAllClasses() {
             existingClass.subclass = currentCharacter.subclass || "";
             existingClass.level = currentCharacter.level || 1;
             
-            // Migrate choices from legacy format if they exist
+            // Migrate level-based choices from the legacy store into the class
+            // entry WITHOUT wiping choices the class entry already has (e.g.
+            // choices restored when editing an existing character).
+            existingClass.choices = existingClass.choices || {};
             if (currentCharacter.choices && Object.keys(currentCharacter.choices).length > 0) {
                 console.log('Migrating legacy choices to multiclass format');
-                console.log('Legacy choices structure:', currentCharacter.choices);
-                existingClass.choices = {};
-                
+
                 Object.keys(currentCharacter.choices).forEach(level => {
                     const levelNum = parseInt(level);
                     if (!isNaN(levelNum)) {
-                        existingClass.choices[levelNum] = {};
-                        
+                        existingClass.choices[levelNum] = existingClass.choices[levelNum] || {};
+
                         Object.keys(currentCharacter.choices[level]).forEach(choiceKey => {
-                            existingClass.choices[levelNum][choiceKey] = currentCharacter.choices[level][choiceKey];
-                            console.log(`Migrated choice: Level ${levelNum}, ${choiceKey} =`, currentCharacter.choices[level][choiceKey]);
+                            if (existingClass.choices[levelNum][choiceKey] === undefined) {
+                                existingClass.choices[levelNum][choiceKey] = currentCharacter.choices[level][choiceKey];
+                            }
                         });
-                    } else {
-                        console.warn('Invalid level key found:', level);
                     }
                 });
-                
-                console.log('Migrated choices structure:', existingClass.choices);
-                
-                // Don't clear legacy choices yet - let the interface rebuild first
-                // currentCharacter.choices = {};
-            } else {
-                existingClass.choices = existingClass.choices || {};
             }
             
             currentCharacter.totalLevel = currentCharacter.level || 1;
@@ -718,10 +742,15 @@ function displayAllClasses() {
         renderMulticlassRolledHitPointsInterface();
     }
     
-    // Clear legacy choices after interface is fully built
-    if (currentCharacter.choices && Object.keys(currentCharacter.choices).length > 0) {
-        console.log('Clearing legacy choices after interface rebuild');
-        currentCharacter.choices = {};
+    // Clear migrated LEVEL choices from the legacy store after the interface
+    // is built. Non-numeric keys (race/background choices like languages or
+    // skill picks) must stay - they are not class choices.
+    if (currentCharacter.choices) {
+        Object.keys(currentCharacter.choices).forEach(key => {
+            if (!isNaN(parseInt(key))) {
+                delete currentCharacter.choices[key];
+            }
+        });
     }
 }
 
@@ -1027,14 +1056,14 @@ function getSavedChoiceValue(level, choiceKey, className = null) {
         classesLength: currentCharacter.classes.length
     });
     
-    // For multiclass mode, check class-specific choices first
-    if (currentCharacter.isMulticlassing && className) {
-        const targetClass = currentCharacter.classes.find(cls => cls.className === className);        
+    // Check class-specific choices first (works for single class and multiclass)
+    if (className) {
+        const targetClass = currentCharacter.classes.find(cls => cls.className === className);
         if (targetClass && targetClass.choices && targetClass.choices[level] && targetClass.choices[level][choiceKey]) {
             const value = targetClass.choices[level][choiceKey];
             return value;
         }
-    } else if (currentCharacter.isMulticlassing && currentCharacter.classes.length > 0) {
+    } else if (currentCharacter.classes.length > 0) {
         // If no className specified but in multiclass mode, check the first class
         const targetClass = currentCharacter.classes[0];
         if (targetClass && targetClass.choices && targetClass.choices[level] && targetClass.choices[level][choiceKey]) {
@@ -1088,6 +1117,13 @@ function buildMulticlassSingleChoice(body, status, choiceDef, level, choiceKey, 
         // For ASI choices, if saved choice is an array, dropdown should show "ASI"
         if (Array.isArray(savedChoice) && choiceKey.includes('Ability Score')) {
             dropdownValue = 'ASI';
+        }
+        // A chosen feat is stored as the feat's own name; the dropdown shows "Feat"
+        else if (typeof savedChoice === 'string' &&
+                 Array.from(select.options).some(o => o.value === 'Feat') &&
+                 typeof featsData !== 'undefined' &&
+                 featsData.feats?.some(f => f.name === savedChoice)) {
+            dropdownValue = 'Feat';
         }
         // For subclass choices, ensure the subclass name matches exactly
         else if (choiceKey.includes('Archetype') || choiceKey.includes('subclass')) {
@@ -1280,17 +1316,14 @@ function buildMulticlassMultipleChoice(body, status, choiceDef, level, choiceKey
  */
 function buildMulticlassASI(body, status, level, choiceKey, idBase, suffix, idx, className) {
     // Reuse existing ASI logic but pass className to handleChoiceSelection
-    buildASI(body, status, level, choiceKey, idBase, suffix, idx);
-    // Note: The ASI builder needs to be updated to support className parameter
+    buildASI(body, status, level, choiceKey, idBase, suffix, idx, className);
 }
 
 /**
- * Builds feat interface for multiclass  
+ * Builds feat interface for multiclass
  */
 function buildMulticlassFeat(body, status, level, choiceKey, idBase, className) {
-    // Reuse existing feat logic but pass className to handleChoiceSelection
-    buildFeat(body, status, level, choiceKey, idBase);
-    // Note: The feat builder needs to be updated to support className parameter
+    buildFeat(body, status, level, choiceKey, idBase, true, className);
 }
 
 /**
@@ -1303,7 +1336,7 @@ function showAddClassModal() {
     );
     
     if (availableClasses.length === 0) {
-        alert("You already have all available classes!");
+        showError("You already have all available classes!");
         return;
     }
     
@@ -1828,27 +1861,50 @@ function addSubclassFeaturesToDisplay(subclassKey) {
 
 
 /**
+ * Returns the choice store a class's selections belong in: the class entry's
+ * own choices when a className is given (multiclass-safe), otherwise the
+ * legacy character-wide store.
+ */
+function getChoiceStoreForClass(className = null) {
+    if (className && currentCharacter.classes) {
+        const target = currentCharacter.classes.find(cls => cls.className === className);
+        if (target) {
+            target.choices = target.choices || {};
+            return target.choices;
+        }
+    }
+    currentCharacter.choices = currentCharacter.choices || {};
+    return currentCharacter.choices;
+}
+
+/**
  * Renders one of two ASI selects. When both are chosen,
- * stores [selA,selB] into currentCharacter.choices[level][choiceKey]
+ * stores [selA,selB] into the class's choice store
  * and flips status ✔. Also applies ability score bonuses.
  */
-function buildASI(body, status, level, choiceKey, idBase, suffix, idx) {
+function buildASI(body, status, level, choiceKey, idBase, suffix, idx, className = null) {
     const sub = document.createElement('select');
     sub.id = `${idBase}-secondary-${suffix}`;
     sub.appendChild(new Option(`Pick Ability #${idx+1}`,'', true, true));
 
+    const choiceStore = getChoiceStoreForClass(className);
+
     // Get abilities and filter based on current totals
     const abilities = ['strength','dexterity','constitution','intelligence','wisdom','charisma'];
-    const asiSource = `ASI Level ${level} ${suffix}`; // Make source unique for A vs B
-    
+    // Source must be unique per class AND per selector (A/B) so multiclass
+    // ASIs at the same class level don't overwrite each other.
+    const asiSource = className
+        ? `ASI Level ${className}-${level} ${suffix}`
+        : `ASI Level ${level} ${suffix}`;
+
     abilities.forEach(ability => {
         const baseScore = currentCharacter.abilities[ability] || 8;
         const currentBonus = currentCharacter.abilityBonuses?.[ability] || 0;
         const currentTotal = baseScore + currentBonus;
-        
+
         // For initial display, check if adding +1 would exceed 20
         // But don't disable if this is a current selection being restored
-        const currentChoices = currentCharacter.choices[level]?.[choiceKey];
+        const currentChoices = choiceStore[level]?.[choiceKey];
         const isCurrentSelection = currentChoices && Array.isArray(currentChoices) && 
                                   (currentChoices[0] === ability || currentChoices[1] === ability);
         
@@ -1870,7 +1926,7 @@ function buildASI(body, status, level, choiceKey, idBase, suffix, idx) {
     });
 
     // Set current selection if it exists
-    const currentChoices = currentCharacter.choices[level]?.[choiceKey];
+    const currentChoices = choiceStore[level]?.[choiceKey];
     if (currentChoices && Array.isArray(currentChoices)) {
         if (suffix === 'A' && currentChoices[0]) {
             sub.value = currentChoices[0];
@@ -1892,33 +1948,33 @@ function buildASI(body, status, level, choiceKey, idBase, suffix, idx) {
             if ((currentTotal + 1) > 20) {
                 // Reset the dropdown and show warning
                 sub.value = '';
-                alert(`Cannot select ${newAbility.charAt(0).toUpperCase() + newAbility.slice(1)} - total would exceed 20.`);
+                showError(`Cannot select ${newAbility.charAt(0).toUpperCase() + newAbility.slice(1)} - total would exceed 20.`);
                 return;
             }
         }
         
         // Remove existing bonus for this specific selector (A or B)
-        const oldChoices = currentCharacter.choices[level]?.[choiceKey];
-        
+        const oldChoices = choiceStore[level]?.[choiceKey];
+
         if (oldChoices && Array.isArray(oldChoices)) {
             const oldAbility = suffix === 'A' ? oldChoices[0] : oldChoices[1];
-            
+
             if (oldAbility && oldAbility !== newAbility) {
                 removeAbilityBonus(oldAbility, asiSource);
             }
         }
-        
-        // Store new choices
-        currentCharacter.choices[level] = currentCharacter.choices[level] || {};
-        const currentChoices = currentCharacter.choices[level][choiceKey] || ['', ''];
-        
+
+        // Store new choices in the class's own store
+        choiceStore[level] = choiceStore[level] || {};
+        const currentChoices = choiceStore[level][choiceKey] || ['', ''];
+
         // Update the specific choice (A or B)
         if (suffix === 'A') {
             currentChoices[0] = newAbility;
         } else {
             currentChoices[1] = newAbility;
         }
-        currentCharacter.choices[level][choiceKey] = currentChoices;
+        choiceStore[level][choiceKey] = currentChoices;
         
         // Apply new bonus for this specific selector
         if (newAbility) {
@@ -2061,31 +2117,49 @@ function refreshAllASIDropdowns() {
  * Call this when loading a character or updating class data
  */
 function applyExistingASIBonuses() {
-    if (!currentCharacter.choices) return;
-    
     // First, clear all existing ASI bonuses to avoid double-application
     clearAllASIBonuses();
-    
-    Object.entries(currentCharacter.choices).forEach(([level, levelChoices]) => {
-        if (typeof levelChoices === 'object' && levelChoices !== null && !isNaN(parseInt(level))) {
-            Object.entries(levelChoices).forEach(([choiceKey, choiceValue]) => {
-                // Check if this is an ASI choice
-                if ((choiceKey.includes('ASI') || choiceKey === 'Ability Score Improvement') && 
-                    Array.isArray(choiceValue) && choiceValue.length === 2) {
-                    
-                    // Apply bonuses for both selected abilities with unique sources
-                    choiceValue.forEach((ability, index) => {
-                        if (ability) {
-                            const suffix = index === 0 ? 'A' : 'B';
-                            const asiSource = `ASI Level ${level} ${suffix}`;
-                            addAbilityBonus(ability, 1, asiSource);
-                        }
-                    });
-                }
-            });
+
+    // Helper that applies every ASI found in a choices store.
+    // sourcePrefix keeps multiclass sources unique per class.
+    const applyFromChoices = (choicesObj, sourcePrefix = '') => {
+        if (!choicesObj) return;
+        Object.entries(choicesObj).forEach(([level, levelChoices]) => {
+            if (typeof levelChoices === 'object' && levelChoices !== null && !isNaN(parseInt(level))) {
+                Object.entries(levelChoices).forEach(([choiceKey, choiceValue]) => {
+                    // Check if this is an ASI choice
+                    if ((choiceKey.includes('ASI') || choiceKey === 'Ability Score Improvement') &&
+                        Array.isArray(choiceValue) && choiceValue.length === 2) {
+
+                        // Apply bonuses for both selected abilities with unique sources
+                        choiceValue.forEach((ability, index) => {
+                            if (ability) {
+                                const suffix = index === 0 ? 'A' : 'B';
+                                const asiSource = `ASI Level ${sourcePrefix}${level} ${suffix}`;
+                                addAbilityBonus(ability, 1, asiSource);
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    };
+
+    // Legacy single-class store
+    applyFromChoices(currentCharacter.choices);
+
+    // Per-class stores (multiclass). Skip the legacy store duplicates: if a
+    // class entry shares its choices object with the legacy store this would
+    // double-apply, so only apply per-class choices that are distinct objects.
+    (currentCharacter.classes || []).forEach(cls => {
+        if (cls.choices && cls.choices !== currentCharacter.choices) {
+            applyFromChoices(cls.choices, `${cls.className}-`);
         }
     });
-    
+
+    // Half-feat ability increases live alongside ASIs; re-apply them too
+    syncFeatAbilityBonuses();
+
     // Update the UI to reflect the applied bonuses
     updateAbilityTotalsUI();
 }
@@ -2109,19 +2183,224 @@ function clearAllASIBonuses() {
     updateAbilityBonuses();
 }
 
+// Feats.json ability codes -> the ability names the bonus system uses
+const FEAT_ABILITY_CODE_MAP = {
+    STR: 'strength', DEX: 'dexterity', CON: 'constitution',
+    INT: 'intelligence', WIS: 'wisdom', CHA: 'charisma'
+};
+
+/** Feats like Resilient grant save proficiency in the chosen ability. */
+function featGrantsSaveProficiency(featData) {
+    return (featData?.bonus || []).some(b =>
+        b.category === 'saves' && b.advantage === 'proficiency');
+}
+
+/** The ability a feat's increase applies to (auto for single-option feats). */
+function getFeatChosenAbility(featName, featData) {
+    const options = featData?.abilityScoreIncrease || [];
+    if (options.length === 1) return FEAT_ABILITY_CODE_MAP[options[0].ability] || null;
+    if (options.length > 1) return currentCharacter.featAbilityChoices?.[featName] || null;
+    return null;
+}
+
+/**
+ * Reconciles ability score bonuses from feats (half feats like Actor).
+ * Strips every "Feat: ..." bonus source, then re-adds one per selected feat:
+ * automatically when the feat lists a single ability, from
+ * currentCharacter.featAbilityChoices when the feat offers a choice.
+ * A bonus that would push the total past 20 is not applied (5e cap).
+ * Also reconciles feat-granted save proficiencies (Resilient).
+ */
+function syncFeatAbilityBonuses() {
+    Object.values(FEAT_ABILITY_CODE_MAP).forEach(ability => {
+        const sources = currentCharacter.abilityBonusSources[ability];
+        if (sources) {
+            currentCharacter.abilityBonusSources[ability] =
+                sources.filter(bonus => !bonus.source.startsWith('Feat: '));
+        }
+    });
+    updateAbilityBonuses();
+
+    Object.entries(currentCharacter.selectedFeats || {}).forEach(([featName, featData]) => {
+        const options = featData?.abilityScoreIncrease || [];
+        if (options.length === 0) return;
+
+        let entry = null;
+        if (options.length === 1) {
+            entry = options[0];
+        } else {
+            const chosen = currentCharacter.featAbilityChoices?.[featName];
+            entry = options.find(o => FEAT_ABILITY_CODE_MAP[o.ability] === chosen) || null;
+        }
+        if (!entry) return; // choose-one feat without a pick yet
+
+        const ability = FEAT_ABILITY_CODE_MAP[entry.ability];
+        if (!ability) return;
+
+        const total = (currentCharacter.abilities[ability] || 8) +
+                      (currentCharacter.abilityBonuses?.[ability] || 0);
+        if (total + (entry.increase || 1) > 20) return;
+
+        addAbilityBonus(ability, entry.increase || 1, `Feat: ${featName}`);
+    });
+
+    // --- Save proficiencies from feats (Resilient) ---
+    // savingThrows is a plain boolean map with no sources, so track what the
+    // feats granted in featSaveProficiencies and reconcile against it. A save
+    // the class itself grants is never revoked.
+    const classSaves = new Set();
+    const firstClass = (currentCharacter.classes || [])[0];
+    const firstClassInfo = firstClass ? classesData?.classes?.[firstClass.className] : null;
+    (firstClassInfo?.savingThrowProficiencies || []).forEach(save => {
+        classSaves.add(save.toLowerCase());
+    });
+
+    currentCharacter.savingThrows = currentCharacter.savingThrows || {};
+    const previousGrants = currentCharacter.featSaveProficiencies || {};
+    const currentGrants = {};
+
+    Object.entries(currentCharacter.selectedFeats || {}).forEach(([featName, featData]) => {
+        if (!featGrantsSaveProficiency(featData)) return;
+        const ability = getFeatChosenAbility(featName, featData);
+        if (ability) currentGrants[featName] = ability;
+    });
+
+    Object.entries(previousGrants).forEach(([featName, ability]) => {
+        if (currentGrants[featName] === ability) return;
+        const stillJustified = Object.values(currentGrants).includes(ability) ||
+                               classSaves.has(ability);
+        if (!stillJustified) {
+            currentCharacter.savingThrows[ability] = false;
+        }
+    });
+
+    Object.values(currentGrants).forEach(ability => {
+        currentCharacter.savingThrows[ability] = true;
+    });
+    currentCharacter.featSaveProficiencies = currentGrants;
+
+    updateAbilityTotalsUI();
+    updateAbilityModifiers();
+}
+
+/**
+ * Dropdown for half feats that offer a choice of ability (+1 STR or DEX...).
+ * Rebuilt whenever the feat selection changes; single-ability feats apply
+ * automatically and don't render one.
+ */
+function buildFeatAbilityChoice(body, featName, featData) {
+    body.querySelectorAll('.feat-ability-choice').forEach(el => el.remove());
+
+    const options = featData?.abilityScoreIncrease || [];
+    if (options.length <= 1) return;
+
+    const wrap = document.createElement('div');
+    wrap.className = 'feat-ability-choice';
+
+    const label = document.createElement('label');
+    label.textContent = featGrantsSaveProficiency(featData)
+        ? 'Ability Score Increase & Saving Throw Proficiency: '
+        : 'Ability Score Increase: ';
+    wrap.appendChild(label);
+
+    const select = document.createElement('select');
+    select.appendChild(new Option('-- pick an ability --', '', true, true));
+
+    const savedChoice = currentCharacter.featAbilityChoices?.[featName] || '';
+
+    options.forEach(entry => {
+        const ability = FEAT_ABILITY_CODE_MAP[entry.ability];
+        if (!ability) return;
+        const total = (currentCharacter.abilities[ability] || 8) +
+                      (currentCharacter.abilityBonuses?.[ability] || 0);
+        const isCurrent = ability === savedChoice;
+        // The saved choice's own +1 is already in the total, so don't cap it out
+        const atMax = !isCurrent && (total + (entry.increase || 1)) > 20;
+
+        const displayName = ability.charAt(0).toUpperCase() + ability.slice(1);
+        const option = new Option(`${displayName} +${entry.increase || 1} (${total}${atMax ? ' - Max' : ''})`, ability);
+        if (atMax) {
+            option.disabled = true;
+            option.style.color = '#999';
+            option.style.fontStyle = 'italic';
+        }
+        select.appendChild(option);
+    });
+
+    const choiceStatus = document.createElement('span');
+    const setStatus = complete => {
+        choiceStatus.textContent = complete ? '✔' : '❗';
+        choiceStatus.className = complete ? 'choice-status complete' : 'choice-status incomplete';
+    };
+
+    if (savedChoice) select.value = savedChoice;
+    setStatus(!!select.value);
+
+    select.onchange = () => {
+        currentCharacter.featAbilityChoices = currentCharacter.featAbilityChoices || {};
+        if (select.value) {
+            currentCharacter.featAbilityChoices[featName] = select.value;
+        } else {
+            delete currentCharacter.featAbilityChoices[featName];
+        }
+        setStatus(!!select.value);
+        syncFeatAbilityBonuses();
+        updateClassesDataForSave();
+    };
+
+    wrap.appendChild(select);
+    wrap.appendChild(choiceStatus);
+    body.appendChild(wrap);
+}
+
 /**
  * Renders the Feat dropdown using featsData with duplicate prevention
  * @param {boolean} hideUnavailable - If true, removes unavailable feats entirely; if false, shows them grayed out
  */
-function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = true) {
+function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = true, className = null) {
     const featSelect = document.createElement('select');
     featSelect.id = `${idBase}-secondary-feat`;
     featSelect.appendChild(new Option('-- pick a feat --','', true, true));
 
+    // The feat previously saved for THIS choice (stored as the feat's name).
+    // The duplicate filter below would hide it (it's already in selectedFeats),
+    // so it has to be kept in the list and preselected explicitly.
+    const savedValue = getSavedChoiceValue(level, choiceKey, className);
+    let savedFeat = (typeof savedValue === 'string' && savedValue !== 'Feat' &&
+                     featsData.feats?.some(f => f.name === savedValue))
+        ? savedValue : null;
+
+    // Older saves stored just the generic 'Feat' marker while the actual feat
+    // only lived in selectedFeats. Recover it: the feat that no other choice
+    // claims belongs to this one.
+    if (!savedFeat && savedValue === 'Feat' && currentCharacter.selectedFeats) {
+        const claimed = new Set();
+        const collect = (choices) => {
+            Object.values(choices || {}).forEach(levelChoices => {
+                if (levelChoices && typeof levelChoices === 'object') {
+                    Object.values(levelChoices).forEach(v => {
+                        if (typeof v === 'string') claimed.add(v);
+                    });
+                }
+            });
+        };
+        (currentCharacter.classes || []).forEach(cls => collect(cls.choices));
+        collect(currentCharacter.choices);
+
+        const unclaimed = Object.keys(currentCharacter.selectedFeats)
+            .filter(name => !claimed.has(name));
+        if (unclaimed.length > 0) {
+            savedFeat = unclaimed[0];
+            // Normalize the stored choice to the feat's name so the next save
+            // (and the next load) doesn't need this recovery.
+            handleChoiceSelection(level, choiceKey, savedFeat, 'feat', className);
+        }
+    }
+
     // Create feat options array in the expected format
     if (featsData.feats && Array.isArray(featsData.feats)) {
         const featOptions = featsData.feats.map(feat => feat.name);
-        const filteredFeats = hideUnavailable ? 
+        const filteredFeats = hideUnavailable ?
             getAvailableChoiceOptions(featOptions, 'Feats') :
             getAllChoiceOptionsWithStatus(featOptions, 'Feats');
 
@@ -2138,24 +2417,32 @@ function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = tru
                 featSelect.appendChild(option);
             }
         });
+
+        if (savedFeat && !Array.from(featSelect.options).some(o => o.value === savedFeat)) {
+            featSelect.appendChild(new Option(savedFeat, savedFeat));
+        }
     }
 
     featSelect.onchange = () => {
         const selectedFeat = featSelect.value;
-        
+
         // Clear any existing feat descriptions
         body.querySelectorAll('.feat-description').forEach(el => el.remove());
-        
+
         // Initialize selectedFeats if it doesn't exist
         currentCharacter.selectedFeats = currentCharacter.selectedFeats || {};
-        
+
         // Get the current choice to see if there was a previous feat selected
-        const currentChoice = currentCharacter.choices[level] && currentCharacter.choices[level][choiceKey];
+        const featChoiceStore = getChoiceStoreForClass(className);
+        const currentChoice = featChoiceStore[level] && featChoiceStore[level][choiceKey];
         if (currentChoice && currentChoice !== 'Feat' && currentChoice !== selectedFeat) {
-            // Remove the previously selected feat
+            // Remove the previously selected feat and its ability pick
             delete currentCharacter.selectedFeats[currentChoice];
+            if (currentCharacter.featAbilityChoices) {
+                delete currentCharacter.featAbilityChoices[currentChoice];
+            }
         }
-        
+
         if (selectedFeat) {
             // Find the selected feat data
             const featData = featsData.feats.find(f => f.name === selectedFeat);
@@ -2163,9 +2450,9 @@ function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = tru
                 // Store the feat data in the character
                 currentCharacter.selectedFeats[selectedFeat] = featData;
             }
-            
+
             // Save the actual feat name instead of just "Feat"
-            handleChoiceSelection(level, choiceKey, selectedFeat, 'feat');
+            handleChoiceSelection(level, choiceKey, selectedFeat, 'feat', className);
             status.textContent = '✔';
             status.className = 'choice-status complete';
             
@@ -2179,15 +2466,24 @@ function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = tru
                 descDiv.innerHTML = `<strong>${selectedFeat}:</strong> ${featData.description.join(' ')}`;
                 body.appendChild(descDiv);
             }
+
+            // Half feats: apply the +1 (or offer the ability pick)
+            buildFeatAbilityChoice(body, selectedFeat, featData);
+            syncFeatAbilityBonuses();
         } else {
             // Remove any previously selected feat for this choice
-            const currentChoice = currentCharacter.choices[level] && currentCharacter.choices[level][choiceKey];
-            if (currentChoice && currentChoice !== 'Feat' && currentChoice !== '') {
-                delete currentCharacter.selectedFeats[currentChoice];
+            const previousChoice = featChoiceStore[level] && featChoiceStore[level][choiceKey];
+            if (previousChoice && previousChoice !== 'Feat' && previousChoice !== '') {
+                delete currentCharacter.selectedFeats[previousChoice];
+                if (currentCharacter.featAbilityChoices) {
+                    delete currentCharacter.featAbilityChoices[previousChoice];
+                }
             }
-            
+            body.querySelectorAll('.feat-ability-choice').forEach(el => el.remove());
+            syncFeatAbilityBonuses();
+
             // Clear the choice if no feat is selected
-            handleChoiceSelection(level, choiceKey, '', 'feat');
+            handleChoiceSelection(level, choiceKey, '', 'feat', className);
             status.textContent = '❗';
             status.className = 'choice-status incomplete';
             
@@ -2197,6 +2493,31 @@ function buildFeat(body, status, level, choiceKey, idBase, hideUnavailable = tru
     };
 
     body.appendChild(featSelect);
+
+    // Restore the previously chosen feat
+    if (savedFeat) {
+        featSelect.value = savedFeat;
+        if (featSelect.value === savedFeat) {
+            status.textContent = '✔';
+            status.className = 'choice-status complete';
+
+            const featData = featsData.feats.find(f => f.name === savedFeat);
+            currentCharacter.selectedFeats = currentCharacter.selectedFeats || {};
+            if (featData && !currentCharacter.selectedFeats[savedFeat]) {
+                currentCharacter.selectedFeats[savedFeat] = featData;
+            }
+            if (featData && featData.description) {
+                const descDiv = document.createElement('div');
+                descDiv.className = 'feat-description';
+                descDiv.innerHTML = `<strong>${savedFeat}:</strong> ${featData.description.join(' ')}`;
+                body.appendChild(descDiv);
+            }
+
+            // Restore the half-feat ability pick and its bonus
+            buildFeatAbilityChoice(body, savedFeat, featData);
+            syncFeatAbilityBonuses();
+        }
+    }
 }
 
 // Add all automatic features, each in its own <div>
@@ -2865,6 +3186,13 @@ function buildSingleChoiceSelectWithFiltering(body, status, choiceDef, level, ch
             dropdownValue = 'ASI';
             console.log('Converting ASI array to dropdown value:', dropdownValue);
         }
+        // A chosen feat is stored as the feat's own name; the dropdown shows "Feat"
+        else if (typeof savedChoice === 'string' &&
+                 Array.from(select.options).some(o => o.value === 'Feat') &&
+                 typeof featsData !== 'undefined' &&
+                 featsData.feats?.some(f => f.name === savedChoice)) {
+            dropdownValue = 'Feat';
+        }
         // For subclass choices, ensure the subclass name matches exactly
         else if (choiceKey.includes('Archetype') || choiceKey.includes('subclass')) {
             // savedChoice should be the subclass name - use it directly
@@ -2945,7 +3273,7 @@ function buildSingleChoiceSelectWithFiltering(body, status, choiceDef, level, ch
             if (!canSelectChoice(choiceKey, choice)) {
                 // Reset selection if trying to select unavailable option
                 select.value = '';
-                alert(`${choice} is no longer available for selection.`);
+                showError(`${choice} is no longer available for selection.`);
                 return;
             }
             
@@ -3071,7 +3399,7 @@ function buildMultipleChoiceSelectWithFiltering(body, status, choiceDef, level, 
                 // Double-check that this option can still be selected
                 if (checkbox.checked && !canSelectChoice(choiceKey, opt.originalName)) {
                     checkbox.checked = false;
-                    alert(`${opt.originalName} is no longer available for selection.`);
+                    showError(`${opt.originalName} is no longer available for selection.`);
                     return;
                 }
                 
@@ -3170,119 +3498,113 @@ function buildMultipleChoiceSelectWithFiltering(body, status, choiceDef, level, 
 }
 
 /**
- * Renders a skill choice interface
+ * Renders a skill choice interface.
+ * NOTE: this is the live definition — Species.js declares older copies, but
+ * this file loads last so this one wins. One dropdown per pick (e.g. Half-Elf
+ * Skill Versatility's "choose 2"); stored as an array under
+ * `${source}-skill-choice` (older saves stored a single string).
  */
 function renderSkillChoice(parent, skillOptions, source) {
     const container = document.createElement('div');
     container.className = 'choice-container';
-    
+
+    const chooseCount = skillOptions.choose || 1;
+
     const title = document.createElement('h4');
-    title.textContent = `Skill Choice (Choose ${skillOptions.choose})`;
+    title.textContent = `Skill Choice (Choose ${chooseCount})`;
     title.className = 'choice-title';
     container.appendChild(title);
-    
+
     const description = document.createElement('p');
     description.textContent = skillOptions.description;
     description.className = 'choice-description';
     container.appendChild(description);
-    
+
     // Show already taken skills as warning, not blocking
     const takenSkills = getTakenSkills(skillOptions.options);
     if (takenSkills.length > 0) {
         const takenDiv = document.createElement('div');
         takenDiv.className = 'taken-skills-warning';
-        takenDiv.innerHTML = `<strong>Note:</strong> ${takenSkills.map(skill => 
+        takenDiv.innerHTML = `<strong>Note:</strong> ${takenSkills.map(skill =>
             `${skill} (${getSkillSource(skill)})`
         ).join(', ')} are already taken. Selecting them again will duplicate the proficiency.`;
         container.appendChild(takenDiv);
     }
-    
-    const select = document.createElement('select');
-    select.className = 'choice-select';
-    select.appendChild(new Option('-- select skill --', '', true, true));
-    
-    skillOptions.options.forEach(skill => {
-        const option = new Option(skill, skill);
-        // Don't disable options - just show if they're already taken
-        if (hasSkillProficiency(skill)) {
-            option.text = `${skill} (already taken)`;
-        }
-        select.appendChild(option);
-    });
-    
-    // Update the dropdown options to reflect current state
-    updateDropdownOptions(select);
-    
-    // Track the currently selected skill for this choice
+
     const choiceKey = `${source}-skill-choice`;
-    const currentChoice = currentCharacter.choices[choiceKey] || null;
-    
-    // If there's a current choice, select it
-    if (currentChoice) {
-        select.value = currentChoice;
-    }
-    
-    select.onchange = () => {
-        console.warn('=== SPECIES SKILL SELECTION CHANGE ===');
-        
-        // Get the current choice from storage (not from closure)
-        const previousChoice = currentCharacter.choices[choiceKey] || null;
-        console.warn('Previous choice from storage:', previousChoice);
-        console.warn('New choice:', select.value);
-        console.warn('Current choices object:', currentCharacter.choices);
-        console.warn('Choice key:', choiceKey);
-        console.warn('Taken skills BEFORE change:', [...currentCharacter.skills.proficiencies]);
-        
-        // Remove previous choice if it exists and is different
-        if (previousChoice && previousChoice !== select.value) {
-            console.warn('Removing previous choice:', previousChoice);
-            removeSkillProficiency(previousChoice);
-        } else {
-            console.warn('NOT removing previous choice. previousChoice:', previousChoice, 'select.value:', select.value);
-        }
-        
-        if (select.value && select.value !== '') {
-            // Add new skill proficiency (allows duplication)
-            addSkillProficiency(select.value, `${source} Choice`);
-            
-            // Store the choice
-            currentCharacter.choices[choiceKey] = select.value;
-            
-            // Update status
-            const status = container.querySelector('.choice-status');
-            if (status) {
-                status.textContent = '✔';
-                status.className = 'choice-status complete';
-            }
-        } else {
-            // Clear the choice
-            delete currentCharacter.choices[choiceKey];
-            
-            // Update status
-            const status = container.querySelector('.choice-status');
-            if (status) {
-                status.textContent = '❗';
-                status.className = 'choice-status incomplete';
-            }
-        }
-        
-        console.warn('Taken skills AFTER change:', [...currentCharacter.skills.proficiencies]);
-        
-        // Update this specific dropdown's options
-        updateDropdownOptions(select);
-        
-        // Update other skill displays without re-rendering
-        updateSkillOptionDisplays();
-    };
-    
-    container.appendChild(select);
-    
-    // Add status indicator
+
+    // One slot per pick. Older saves stored a single string; normalize to array.
+    let picks = currentCharacter.choices[choiceKey];
+    if (typeof picks === 'string') picks = [picks];
+    if (!Array.isArray(picks)) picks = [];
+    picks = picks.slice(0, chooseCount);
+    currentCharacter.choices[choiceKey] = picks;
+
     const status = document.createElement('span');
-    status.className = currentChoice ? 'choice-status complete' : 'choice-status incomplete';
-    status.textContent = currentChoice ? '✔' : '❗';
     title.appendChild(status);
-    
+
+    const updateStatus = () => {
+        const filled = picks.filter(p => p).length;
+        const complete = filled >= chooseCount;
+        status.textContent = complete ? '✔' : `❗ (${filled}/${chooseCount})`;
+        status.className = complete ? 'choice-status complete' : 'choice-status incomplete';
+    };
+
+    const selects = [];
+    for (let slot = 0; slot < chooseCount; slot++) {
+        const select = document.createElement('select');
+        select.className = 'choice-select';
+        select.appendChild(new Option('-- select skill --', '', true, true));
+
+        skillOptions.options.forEach(skill => {
+            const option = new Option(skill, skill);
+            // Don't disable options - just show if they're already taken
+            if (hasSkillProficiency(skill)) {
+                option.text = `${skill} (already taken)`;
+            }
+            select.appendChild(option);
+        });
+
+        // Update the dropdown options to reflect current state
+        updateDropdownOptions(select);
+
+        // Restore a previously made pick for this slot
+        if (picks[slot]) {
+            select.value = picks[slot];
+        }
+
+        select.onchange = () => {
+            const previousChoice = picks[slot] || null;
+
+            // Don't allow the same skill in two slots of this choice
+            if (select.value && picks.some((p, i) => i !== slot && p === select.value)) {
+                showError(`${select.value} is already one of your picks here.`);
+                select.value = previousChoice || '';
+                return;
+            }
+
+            if (previousChoice && previousChoice !== select.value) {
+                removeSkillProficiency(previousChoice);
+            }
+
+            if (select.value && select.value !== '') {
+                addSkillProficiency(select.value, `${source} Choice`);
+                picks[slot] = select.value;
+            } else {
+                picks[slot] = '';
+            }
+
+            currentCharacter.choices[choiceKey] = picks;
+            updateStatus();
+            selects.forEach(s => updateDropdownOptions(s));
+            updateSkillOptionDisplays();
+        };
+
+        container.appendChild(select);
+        selects.push(select);
+    }
+
+    updateStatus();
     parent.appendChild(container);
 }
 
@@ -3415,15 +3737,16 @@ function getLevel1HitPoints(hitDie) {
  */
 function getTotalRolledHitPoints(rolledHitPoints, hitDie) {
     let total = 0;
-    
+
     // Level 1 is always maximum
     total += getLevel1HitPoints(hitDie);
-    
-    // Add rolled values for levels 2+ (treat missing as 0)
+
+    // Add rolled values for levels 2+ (treat missing as 0). Canonical keys are
+    // "<className>-<level>"; plain level numbers are the legacy form.
     for (let level = 2; level <= currentCharacter.level; level++) {
-        total += rolledHitPoints[level] || 0;
+        total += rolledHitPoints[`${currentCharacter.class}-${level}`] || rolledHitPoints[level] || 0;
     }
-    
+
     return total;
 }
 
@@ -3567,13 +3890,18 @@ function updateHitPointsDisplay() {
  */
 function renderRolledHitPointsInterface() {
     if (currentCharacter.hitPointsCalculationMethod !== 'rolled') return;
-    
-    // Use multiclass interface if in multiclass mode
-    if (currentCharacter.isMulticlassing) {
+
+    normalizeRolledHitPointKeys();
+
+    // Use the per-class interface whenever the classes array is populated
+    // (the multiclass-style view is also what a restored character shows,
+    // even with a single class).
+    if (currentCharacter.isMulticlassing ||
+        (Array.isArray(currentCharacter.classes) && currentCharacter.classes.length > 0)) {
         renderMulticlassRolledHitPointsInterface();
         return;
     }
-    
+
     const classInfo = getClassInfo(currentCharacter.class);
     const hitDie = classInfo.hitDie;
     const level = currentCharacter.level;
@@ -3775,7 +4103,7 @@ function rollHitPoints() {
     }
     
     if (nextLevelToRoll === null) {
-        alert('All levels have been rolled!');
+        showSuccess('All levels have been rolled!');
         return;
     }
     
@@ -4052,8 +4380,11 @@ function getClassDataFromLoaded(classKey) {
 
 /**
  * Builds the initial class data structure
+ * @param {Object} classInfo - Class definition from Classes.json
+ * @param {string} subclassKey - Selected subclass key (or empty)
+ * @param {number} [classLevel] - Levels taken in THIS class (defaults to legacy single-class level)
  */
-function buildClassDataStructure(classInfo, subclassKey) {
+function buildClassDataStructure(classInfo, subclassKey, classLevel = currentCharacter.level) {
     return {
         "group-title": "Class Features",
         "group-chevron": false,
@@ -4061,7 +4392,7 @@ function buildClassDataStructure(classInfo, subclassKey) {
         "basicInfo": {
             "className": classInfo.name,
             "hitDie": classInfo.hitDie,
-            "level": currentCharacter.level,
+            "level": classLevel,
             "subclassName": subclassKey && classInfo.subclasses && classInfo.subclasses[subclassKey] ? classInfo.subclasses[subclassKey].name : null,
             "primaryAbilities": classInfo.primaryAbilities || [],
             "savingThrowProficiencies": classInfo.savingThrowProficiencies || []
@@ -4081,10 +4412,10 @@ function buildClassDataStructure(classInfo, subclassKey) {
 /**
  * Adds level progression features to class data with consolidation for scaling features
  */
-function addLevelProgressionFeatures(currentClassData, classInfo) {
+function addLevelProgressionFeatures(currentClassData, classInfo, classLevel = currentCharacter.level) {
     const featureTracker = new Map(); // Track features by base name to consolidate scaling versions
-    
-    for (let level = 1; level <= currentCharacter.level; level++) {
+
+    for (let level = 1; level <= classLevel; level++) {
         const levelData = classInfo.levelProgression && classInfo.levelProgression[level.toString()];
         if (!levelData) continue;
         
@@ -4094,22 +4425,16 @@ function addLevelProgressionFeatures(currentClassData, classInfo) {
                 // Extract base feature name (remove scaling indicators)
                 const baseFeatureName = getBaseFeatureName(featureName);
                 
-                // Extract bonus information if present
-                let adjustmentCategory = "None";
-                let adjustmentSubCategory = "";
-                let adjustmentValue = "0";
-                let adjustmentAbility = "NONE";
-                
-                if (featureData.bonus) {
-                    adjustmentCategory = featureData.bonus.adjustmentCategory || "None";
-                    adjustmentSubCategory = featureData.bonus.adjustmentSubCategory || "";
-                    adjustmentValue = featureData.bonus.adjustmentValue ? featureData.bonus.adjustmentValue.toString() : "0";
-                    adjustmentAbility = featureData.bonus.adjustmentAbility || "NONE";
-                }
-                
-                const currentUses = featureData.usesByLevel ? getUsesForLevel(featureData.usesByLevel, level) : "0";
-                const resetType = featureData.usesByLevel ? getResetTypeForLevel(featureData.usesByLevel, level) : "none";
-                
+                // Sheet adjustment (validated against what the sheet supports,
+                // and level-scaled when the data provides bonusByLevel)
+                const { adjustmentCategory, adjustmentSubCategory, adjustmentValue, adjustmentAbility } =
+                    getFeatureBonusForLevel(featureData, classLevel);
+
+                // Uses scale with the class's current level, not the level the
+                // feature was gained at (e.g. Rage: 2 uses at 1st, 4 at 6th).
+                const currentUses = featureData.usesByLevel ? getUsesForLevel(featureData.usesByLevel, classLevel) : "0";
+                const resetType = featureData.usesByLevel ? getResetTypeForLevel(featureData.usesByLevel, classLevel) : "none";
+
                 // Check if we already have this base feature
                 if (featureTracker.has(baseFeatureName)) {
                     const existing = featureTracker.get(baseFeatureName);
@@ -4222,16 +4547,101 @@ function getResetTypeForLevel(usesByLevel, level) {
     return resetType;
 }
 
+// Trait adjustment targets the sheet actually supports (mirror of
+// characterStatBonuses in SharedScript.js — including its "CriticalThreashold"
+// spelling). A target the sheet doesn't know would land on the wrong dropdown
+// option when the trait loads (it falls back to the first option, AC, and
+// mis-applies the bonus), so anything invalid is stripped to "None".
+const VALID_TRAIT_ADJUSTMENTS = {
+    skills: ['Acrobatics', 'AnimalHandling', 'Arcana', 'Athletics', 'Deception', 'History',
+             'Initiative', 'Insight', 'Intimidation', 'Investigation', 'Medicine', 'Nature',
+             'Perception', 'Performance', 'Persuasion', 'Religion', 'SleightOfHand', 'Stealth',
+             'Survival', 'All'],
+    saves: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'All'],
+    attributes: ['STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'All'],
+    combatStats: ['AC', 'RangedAttackRolls', 'RageDamageBonus', 'RangedDamageRolls',
+                  'EldritchBlastDamage', 'SpellSaveDC', 'SpellAttackModifier', 'SpellAttackandSave',
+                  'HitPoints', 'CarryWeightBonus', 'BrutalCritical', 'CriticalThreashold'],
+    senses: ['PassivePerception', 'PassiveInsight', 'PassiveInvestigation']
+};
+
+const VALID_TRAIT_ABILITIES = ['NONE', 'STR', 'DEX', 'CON', 'INT', 'WIS', 'CHA', 'Proficiency'];
+
+const NO_TRAIT_BONUS = Object.freeze({
+    adjustmentCategory: "None",
+    adjustmentSubCategory: "",
+    adjustmentValue: "0",
+    adjustmentAbility: "NONE"
+});
+
+/**
+ * Validates a bonus block from Classes.json against what the sheet supports.
+ */
+function sanitizeTraitBonus(bonus) {
+    if (!bonus) return { ...NO_TRAIT_BONUS };
+
+    // Data uses the correct spelling; the sheet's key is misspelled.
+    const subCategoryFixes = { 'CriticalThreshold': 'CriticalThreashold' };
+    const category = bonus.adjustmentCategory || "None";
+    let subCategory = bonus.adjustmentSubCategory || "";
+    subCategory = subCategoryFixes[subCategory] || subCategory;
+
+    const validSubs = VALID_TRAIT_ADJUSTMENTS[category];
+    if (!validSubs || !validSubs.includes(subCategory)) {
+        return { ...NO_TRAIT_BONUS };
+    }
+
+    const ability = VALID_TRAIT_ABILITIES.includes(bonus.adjustmentAbility)
+        ? bonus.adjustmentAbility
+        : "NONE";
+
+    // When the adjustment tracks an ability (e.g. Unarmored Defense adding CON
+    // to AC), pre-fill the value with the current modifier; the sheet
+    // recalculates it on every load anyway (updateAdjustmentValues).
+    let value = bonus.adjustmentValue !== undefined ? bonus.adjustmentValue.toString() : "0";
+    const abilityNames = {
+        STR: 'strength', DEX: 'dexterity', CON: 'constitution',
+        INT: 'intelligence', WIS: 'wisdom', CHA: 'charisma'
+    };
+    if (abilityNames[ability] && typeof getAbilityModifierFor === 'function') {
+        value = String(getAbilityModifierFor(abilityNames[ability]));
+    }
+
+    return {
+        adjustmentCategory: category,
+        adjustmentSubCategory: subCategory,
+        adjustmentValue: value,
+        adjustmentAbility: ability
+    };
+}
+
+/**
+ * Resolves a feature's sheet adjustment at the class's current level.
+ * Supports a flat `bonus` block and a level-scaled `bonusByLevel` block
+ * ({"1": {...}, "9": {...}} — the highest threshold <= classLevel wins).
+ */
+function getFeatureBonusForLevel(featureData, classLevel) {
+    let bonus = featureData.bonus || null;
+    if (featureData.bonusByLevel) {
+        Object.entries(featureData.bonusByLevel).forEach(([levelThreshold, data]) => {
+            if (classLevel >= parseInt(levelThreshold)) {
+                bonus = data;
+            }
+        });
+    }
+    return sanitizeTraitBonus(bonus);
+}
+
 /**
  * Adds subclass features to class data with consolidation for scaling features
  */
-function addSubclassFeatures(currentClassData, classInfo, subclassKey) {
+function addSubclassFeatures(currentClassData, classInfo, subclassKey, classLevel = currentCharacter.level) {
     if (!subclassKey || !classInfo.subclasses || !classInfo.subclasses[subclassKey]) return;
-    
+
     const subclassInfo = classInfo.subclasses[subclassKey];
     const subclassFeatureTracker = new Map(); // Track subclass features by base name
-    
-    for (let level = 1; level <= currentCharacter.level; level++) {
+
+    for (let level = 1; level <= classLevel; level++) {
         const subclassLevelData = subclassInfo.features && subclassInfo.features[level.toString()];
         if (!subclassLevelData) continue;
         
@@ -4241,22 +4651,16 @@ function addSubclassFeatures(currentClassData, classInfo, subclassKey) {
                 // Extract base feature name (remove scaling indicators)
                 const baseFeatureName = getBaseFeatureName(featureName);
                 
-                // Extract bonus information if present
-                let adjustmentCategory = "None";
-                let adjustmentSubCategory = "";
-                let adjustmentValue = "0";
-                let adjustmentAbility = "NONE";
-                
-                if (featureData.bonus) {
-                    adjustmentCategory = featureData.bonus.adjustmentCategory || "None";
-                    adjustmentSubCategory = featureData.bonus.adjustmentSubCategory || "";
-                    adjustmentValue = featureData.bonus.adjustmentValue ? featureData.bonus.adjustmentValue.toString() : "0";
-                    adjustmentAbility = featureData.bonus.adjustmentAbility || "NONE";
-                }
-                
-                const currentUses = featureData.usesByLevel ? getUsesForLevel(featureData.usesByLevel, level) : "0";
-                const resetType = featureData.usesByLevel ? getResetTypeForLevel(featureData.usesByLevel, level) : "none";
-                
+                // Sheet adjustment (validated against what the sheet supports,
+                // and level-scaled when the data provides bonusByLevel)
+                const { adjustmentCategory, adjustmentSubCategory, adjustmentValue, adjustmentAbility } =
+                    getFeatureBonusForLevel(featureData, classLevel);
+
+                // Uses scale with the class's current level, not the level the
+                // feature was gained at.
+                const currentUses = featureData.usesByLevel ? getUsesForLevel(featureData.usesByLevel, classLevel) : "0";
+                const resetType = featureData.usesByLevel ? getResetTypeForLevel(featureData.usesByLevel, classLevel) : "none";
+
                 // Check if we already have this base feature
                 if (subclassFeatureTracker.has(baseFeatureName)) {
                     const existing = subclassFeatureTracker.get(baseFeatureName);
@@ -4331,22 +4735,22 @@ function addSubclassFeatures(currentClassData, classInfo, subclassKey) {
 /**
  * Finds the choice definition for a given choice key and level
  */
-function findChoiceDefinition(classInfo, level, choiceKey) {
+function findChoiceDefinition(classInfo, level, choiceKey, subclassKey = currentCharacter.subclass) {
     // Check class level progression
     const levelData = classInfo.levelProgression && classInfo.levelProgression[level.toString()];
     if (levelData && levelData.choices && levelData.choices[choiceKey]) {
         return levelData.choices[choiceKey];
     }
-    
+
     // Check subclass features if applicable
-    if (currentCharacter.subclass && classInfo.subclasses && classInfo.subclasses[currentCharacter.subclass]) {
-        const subclassData = classInfo.subclasses[currentCharacter.subclass];
+    if (subclassKey && classInfo.subclasses && classInfo.subclasses[subclassKey]) {
+        const subclassData = classInfo.subclasses[subclassKey];
         const subclassLevelData = subclassData.features && subclassData.features[level.toString()];
         if (subclassLevelData && subclassLevelData.choices && subclassLevelData.choices[choiceKey]) {
             return subclassLevelData.choices[choiceKey];
         }
     }
-    
+
     return null;
 }
 
@@ -4436,16 +4840,18 @@ function createSingleChoiceTrait(choiceKey, level, optionDetails, index = null) 
 /**
  * Adds current character choices to class data with duplicate filtering
  */
-function addClassChoices(currentClassData) {
-    if (!currentCharacter.choices) return;
-    
-    const classInfo = getClassDataFromLoaded(currentCharacter.class);
+function addClassChoices(currentClassData, classInfo = null, choicesObj = null, subclassKey = currentCharacter.subclass) {
+    // Default to the legacy single-class globals when not called with explicit data
+    if (!classInfo) classInfo = getClassDataFromLoaded(currentCharacter.class);
+    if (!choicesObj) choicesObj = currentCharacter.choices;
+
+    if (!choicesObj) return;
     if (!classInfo) return;
-    
+
     // Track added traits to prevent duplicates in save data
     const addedTraitNames = new Set();
-    
-    Object.entries(currentCharacter.choices).forEach(([level, levelChoices]) => {
+
+    Object.entries(choicesObj).forEach(([level, levelChoices]) => {
         // Only process numeric levels (actual character levels), skip special choice keys
         if (!isNaN(parseInt(level)) && typeof levelChoices === 'object' && levelChoices !== null) {
             Object.entries(levelChoices).forEach(([choiceKey, choiceValue]) => {
@@ -4518,7 +4924,7 @@ function addClassChoices(currentClassData) {
                 }
                 
                 // Find the choice definition
-                const choiceDefinition = findChoiceDefinition(classInfo, level, choiceKey);
+                const choiceDefinition = findChoiceDefinition(classInfo, level, choiceKey, subclassKey);
                 if (!choiceDefinition) {
                     // Fallback to generic choice if no definition found
                     const traitName = `${choiceKey} Choice (Level ${level})`;
@@ -4581,7 +4987,7 @@ function addClassChoices(currentClassData) {
     });
     
     // Handle special non-level-based choices (like skill selections)
-    Object.entries(currentCharacter.choices).forEach(([choiceKey, choiceValue]) => {
+    Object.entries(choicesObj).forEach(([choiceKey, choiceValue]) => {
         // Skip numeric levels (already processed above)
         if (isNaN(parseInt(choiceKey))) {
             if (choiceKey === 'class-skill-choice' && Array.isArray(choiceValue)) {
@@ -4676,12 +5082,12 @@ function addSelectedFeats(currentClassData) {
 /**
  * Populates skill proficiencies from character data
  */
-function populateClassSkillProficiencies(currentClassData) {
+function populateClassSkillProficiencies(currentClassData, className = currentCharacter.class) {
     if (currentCharacter.skills && currentCharacter.skills.proficiencies) {
         // Filter skills that come from class sources
         const classSkills = currentCharacter.skills.proficiencies.filter(skill => {
             const source = currentCharacter.skills.sources[skill];
-            return source && (source.includes('Class') || source.includes(currentCharacter.class));
+            return source && (source.includes('Class') || (className && source.toLowerCase().includes(className.toLowerCase())));
         });
         currentClassData.skillProficiencies = [...classSkills];
     }
@@ -4962,39 +5368,71 @@ function updateExistingSelectOptions(card, choiceKey, choiceDef) {
 }
 
 /**
- * Main function to update classesData based on current character selections
+ * Main function to update classesData based on current character selections.
+ * Builds one entry per class so multiclass characters save every class's
+ * features and choices, not just the primary class.
  */
 function updateClassesDataForSave() {
     // Clear all previous class data first
     saveClassesData = {};
-    
+
     if (!validateClassData()) {
         return;
     }
 
-    // Get class data from loaded data
-    const classKey = currentCharacter.class;
-    const subclassKey = currentCharacter.subclass;
-    
     try {
-        const classInfo = getClassDataFromLoaded(classKey);
-        if (!classInfo) return;
+        // Build the list of classes to process. Prefer the multiclass array;
+        // fall back to the legacy single-class fields if it's empty.
+        let classEntries = currentCharacter.classes && currentCharacter.classes.length > 0
+            ? currentCharacter.classes
+            : [{
+                className: currentCharacter.class,
+                subclass: currentCharacter.subclass || "",
+                level: currentCharacter.level || 1,
+                choices: currentCharacter.choices || {}
+            }];
 
-        // Build the class data structure
-        const currentClassData = buildClassDataStructure(classInfo, subclassKey);
-        
-        // Process all components
-        addLevelProgressionFeatures(currentClassData, classInfo);
-        addSubclassFeatures(currentClassData, classInfo, subclassKey);
-        addClassChoices(currentClassData);
-        addSelectedFeats(currentClassData);
-        populateClassSkillProficiencies(currentClassData);
+        classEntries.forEach((clsEntry, index) => {
+            const classKey = clsEntry.className;
+            const subclassKey = clsEntry.subclass || (index === 0 ? currentCharacter.subclass : "");
+            const classInfo = getClassDataFromLoaded(classKey);
+            if (!classInfo) return;
 
-        saveClassDataToGlobal(currentClassData, classKey, subclassKey);
-        
+            // Build the class data structure for this class's own level
+            const currentClassData = buildClassDataStructure(classInfo, subclassKey, clsEntry.level);
+
+            // Process all components for this class
+            addLevelProgressionFeatures(currentClassData, classInfo, clsEntry.level);
+            addSubclassFeatures(currentClassData, classInfo, subclassKey, clsEntry.level);
+
+            // Per-class choices; for the primary class also merge any choices
+            // still stored in the legacy global store.
+            const choicesObj = { ...(clsEntry.choices || {}) };
+            if (index === 0 && currentCharacter.choices) {
+                Object.entries(currentCharacter.choices).forEach(([key, value]) => {
+                    if (choicesObj[key] === undefined) {
+                        choicesObj[key] = value;
+                    }
+                });
+            }
+            addClassChoices(currentClassData, classInfo, choicesObj, subclassKey);
+
+            // Feats and class skills are character-wide; attach them to the
+            // primary class only so they aren't duplicated per class.
+            if (index === 0) {
+                addSelectedFeats(currentClassData);
+                populateClassSkillProficiencies(currentClassData, classKey);
+            }
+
+            const saveKey = subclassKey ? `${classKey}-${subclassKey}` : classKey;
+            saveClassesData[saveKey] = currentClassData;
+        });
+
+        console.log('Updated classesData for save:', saveClassesData);
+
         // Refresh choice interfaces to update duplicate states
         setTimeout(() => refreshChoiceInterfaces(), 100);
-        
+
     } catch (error) {
         console.error('Error updating classesData for save:', error);
     }

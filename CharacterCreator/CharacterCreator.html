@@ -7,7 +7,18 @@
 
     async function onStateChangeEvent(msg) {
         if (msg.kind === "hasInitialized") {
-            //the TS Symbiote API has initialized and we can begin the setup. think of this as "init".
+            // The TS Symbiote API is ready. Anything that talks to TS storage
+            // (loading a character for editing, saving) waits on this signal —
+            // calls made before it fail inside TaleSpire.
+            window.__tsvttTaleSpireReady = true;
+            if (window.__tsvttTaleSpireReadyResolve) {
+                window.__tsvttTaleSpireReadyResolve();
+            }
+            // Page init may have checked for an edit handoff before the API
+            // was usable; re-check now (defined in LoadCharacter.js).
+            if (typeof onTaleSpireReady === 'function') {
+                onTaleSpireReady();
+            }
         }
     }
 </script>
@@ -24,6 +35,10 @@
         <div class="header">
             <h1>D&D Character Creator</h1>
             <p>Create your perfect adventurer</p>
+            <button class="btn btn-secondary header-sheet-button" onclick="openCharacterSheet()"
+                    title="Return to the character sheet without loading a character">
+                &larr; Character Sheet
+            </button>
         </div>
 
         <div class="creator-container">
@@ -33,6 +48,8 @@
                 <button class="nav-tab" onclick="switchTab('class')">Class</button>
                 <button class="nav-tab" onclick="switchTab('abilities')">Abilities</button>
                 <button class="nav-tab" onclick="switchTab('features')">Backgrounds</button>
+                <button class="nav-tab" onclick="switchTab('equipment')">Equipment</button>
+                <button class="nav-tab" onclick="switchTab('spells')">Spells</button>
                 <button class="nav-tab" onclick="switchTab('summary')">Summary</button>
             </div>
 
@@ -40,6 +57,10 @@
                 <!-- Basics Tab -->
                 <div id="basics" class="tab-pane active">
                     <h2>Character Basics</h2>
+                    <div class="form-group">
+                        <button class="btn btn-secondary" onclick="showLoadCharacterPicker()">Load / Edit Existing Character</button>
+                        <small class="form-text">Open a character already saved in this campaign to add levels or change earlier ones.</small>
+                    </div>
                     <div class="form-group">
                         <label for="characterName">Character Name</label>
                         <input type="text" id="characterName" class="form-control" placeholder="Enter character name">
@@ -148,14 +169,32 @@
                 </div>
 
                 <!-- Summary Tab -->
+                <div id="equipment" class="tab-pane">
+                    <h2>Starting Equipment</h2>
+                    <div id="equipmentContent">
+                        <!-- Rendered by displayStartingEquipment() -->
+                    </div>
+                </div>
+
+                <div id="spells" class="tab-pane">
+                    <h2>Spells</h2>
+                    <div id="spellsContent">
+                        <!-- Rendered by displaySpellSelection() -->
+                    </div>
+                </div>
+
                 <div id="summary" class="tab-pane">
                     <h2>Character Summary</h2>
                     <div id="characterSummary">
                         <!-- Summary will be populated here -->
                     </div>
                     <div class="navigation-buttons">
-                        <button class="btn btn-secondary" onclick="goBack()">Back to Main</button>
+                        <button class="btn btn-secondary" onclick="copySaveToClipboard()">Copy JSON</button>
                         <button class="btn btn-success" onclick="saveCharacter()">Save Character</button>
+                        <button class="btn btn-success" onclick="saveCharacterAndOpenSheet()"
+                                title="Save this character and open it on the character sheet">
+                            Save &amp; Open Sheet
+                        </button>
                     </div>
                 </div>
             </div>
@@ -190,3 +229,5 @@
 
 
 <script src="SavingCharacter.js" defer></script>
+<script src="Equipment.js" defer></script>
+<script src="Spells.js" defer></script>

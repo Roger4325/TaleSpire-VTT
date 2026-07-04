@@ -79,6 +79,10 @@
         {
           "ability": "STR",
           "increase": 1
+        },
+        {
+          "ability": "DEX",
+          "increase": 1
         }
       ]
     },
@@ -668,6 +672,26 @@
       "abilityScoreIncrease": [
         {
           "ability": "STR",
+          "increase": 1
+        },
+        {
+          "ability": "DEX",
+          "increase": 1
+        },
+        {
+          "ability": "CON",
+          "increase": 1
+        },
+        {
+          "ability": "INT",
+          "increase": 1
+        },
+        {
+          "ability": "WIS",
+          "increase": 1
+        },
+        {
+          "ability": "CHA",
           "increase": 1
         }
       ],

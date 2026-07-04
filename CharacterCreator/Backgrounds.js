@@ -6,6 +6,38 @@ let backgroundsData = {};
 // Current selected background
 let selectedBackground = null;
 
+// "One type of ..." tool proficiency entries expand into a pick from these lists
+const BACKGROUND_TOOL_CATEGORIES = {
+    "One type of artisan's tools": [
+        "Alchemist's supplies", "Brewer's supplies", "Calligrapher's supplies",
+        "Carpenter's tools", "Cartographer's tools", "Cobbler's tools",
+        "Cook's utensils", "Glassblower's tools", "Jeweler's tools",
+        "Leatherworker's tools", "Mason's tools", "Painter's supplies",
+        "Potter's tools", "Smith's tools", "Tinker's tools",
+        "Weaver's tools", "Woodcarver's tools"
+    ],
+    "One type of gaming set": [
+        "Dice set", "Dragonchess set", "Playing card set", "Three-Dragon Ante set"
+    ],
+    "One type of musical instrument": [
+        "Bagpipes", "Drum", "Dulcimer", "Flute", "Horn",
+        "Lute", "Lyre", "Pan flute", "Shawm", "Viol"
+    ]
+};
+
+const BACKGROUND_ALL_SKILLS = [
+    'Acrobatics', 'Animal Handling', 'Arcana', 'Athletics', 'Deception',
+    'History', 'Insight', 'Intimidation', 'Investigation', 'Medicine',
+    'Nature', 'Perception', 'Performance', 'Persuasion', 'Religion',
+    'Sleight of Hand', 'Stealth', 'Survival'
+];
+
+// Choices made for a background are stored under keys prefixed with its name;
+// fixed grants use source `bg.name`, chosen ones use `${bg.name} Choice`
+function backgroundChoiceKey(bg, kind, item) {
+    return `${bg.name}-${kind}-${item.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
+}
+
 // Initialize backgrounds
 async function loadBackgroundsData() {
     try {
@@ -153,48 +185,62 @@ function selectBackground(backgroundKey) {
 function clearBackgroundBonuses(backgroundKey) {
     const bg = backgroundsData[backgroundKey];
     if (!bg) return;
-    
-    // Remove skill proficiencies
-    bg.skillProficiencies.forEach(skill => {
-        if (getSkillSource(skill) === bg.name) {
+
+    // Everything this background granted carries one of these two sources
+    const fromBackground = source => source === bg.name || source === `${bg.name} Choice`;
+
+    [...(currentCharacter.skills?.proficiencies || [])].forEach(skill => {
+        if (fromBackground(getSkillSource(skill))) {
             removeSkillProficiency(skill);
         }
     });
-    
-    // Remove language proficiencies
-    if (bg.languages.length > 0) {
-        bg.languages.forEach(lang => {
-            if (!lang.includes('of your choice') && getLanguageSource(lang) === bg.name) {
-                removeLanguageProficiency(lang);
-            }
-        });
-    }
-    
-    // Clear language choices
+
+    [...(currentCharacter.tools?.proficiencies || [])].forEach(tool => {
+        if (fromBackground(getToolSource(tool))) {
+            removeToolProficiency(tool);
+        }
+    });
+
+    [...(currentCharacter.languages?.proficiencies || [])].forEach(lang => {
+        if (fromBackground(getLanguageSource(lang))) {
+            removeLanguageProficiency(lang);
+        }
+    });
+
+    // Clear all stored choices for this background (languages, tools, skill replacements)
     if (currentCharacter && currentCharacter.choices) {
         Object.keys(currentCharacter.choices).forEach(key => {
-            if (key.startsWith(`${bg.name}-language-choice`)) {
+            if (key.startsWith(`${bg.name}-`)) {
                 delete currentCharacter.choices[key];
             }
         });
     }
-    
+
     // Update UI
     updateSkillOptionDisplays();
 }
 
 // Apply background features
 function applyBackgroundFeatures(bg) {
-    // Apply skill proficiencies
+    // Apply skill proficiencies. Skills already granted by another source stay
+    // with that source; the info section then offers a replacement pick
+    // (5e rule: duplicate proficiencies let you choose a different one).
     bg.skillProficiencies.forEach(skill => {
         if (!hasSkillProficiency(skill)) {
             addSkillProficiency(skill, bg.name);
         }
     });
-    
+
+    // Apply fixed tool proficiencies ("One type of ..." entries are picked in the UI)
+    (bg.toolProficiencies || []).forEach(tool => {
+        if (!BACKGROUND_TOOL_CATEGORIES[tool] && !hasToolProficiency(tool)) {
+            addToolProficiency(tool, bg.name);
+        }
+    });
+
     // Apply language proficiencies
     if (bg.languageOptions) {
-        // Will be handled in the UI
+        // Picked in the UI; saved picks are re-applied below
     } else if (bg.languages.length > 0) {
         bg.languages.forEach(lang => {
             if (!lang.includes('of your choice') && !hasLanguageProficiency(lang)) {
@@ -202,7 +248,21 @@ function applyBackgroundFeatures(bg) {
             }
         });
     }
-    
+
+    // Re-apply saved choices (relevant when a saved character is loaded)
+    const choices = currentCharacter.choices || {};
+    Object.entries(choices).forEach(([key, value]) => {
+        if (!value || !key.startsWith(`${bg.name}-`)) return;
+        const values = Array.isArray(value) ? value : [value];
+        if (key.startsWith(`${bg.name}-tool-choice-`)) {
+            values.forEach(tool => addToolProficiency(tool, `${bg.name} Choice`));
+        } else if (key.startsWith(`${bg.name}-skill-replacement-`)) {
+            values.forEach(skill => addSkillProficiency(skill, `${bg.name} Choice`));
+        } else if (key.startsWith(`${bg.name}-language-choice`)) {
+            values.forEach(lang => addLanguageProficiency(lang, `${bg.name} Choice`));
+        }
+    });
+
     // Update UI
     updateSkillOptionDisplays();
 }
@@ -258,15 +318,13 @@ function displayBackgroundInfoSection(backgroundKey) {
     `;
     scrollContainer.appendChild(featuresSection);
     
-    // Add language choice section if needed
-    if (bg.languageOptions) {
-        const choicesContainer = document.createElement('div');
-        choicesContainer.id = 'backgroundChoices';
-        choicesContainer.className = 'choice-group';
-        scrollContainer.appendChild(choicesContainer);
-        
-        renderBackgroundChoices(choicesContainer, bg);
-    }
+    // Add choices section (languages, tool picks, duplicate-skill replacements)
+    const choicesContainer = document.createElement('div');
+    choicesContainer.id = 'backgroundChoices';
+    choicesContainer.className = 'choice-group';
+    scrollContainer.appendChild(choicesContainer);
+
+    renderBackgroundChoices(choicesContainer, bg);
     
     // Add change background button
     const buttonContainer = document.createElement('div');
@@ -277,14 +335,145 @@ function displayBackgroundInfoSection(backgroundKey) {
     container.appendChild(buttonContainer);
 }
 
-// Render background choices (languages, etc.)
+// Render background choices (languages, tools, duplicate-skill replacements)
 function renderBackgroundChoices(parent, bg) {
     if (!bg) return;
-    
+
+    // Replacement picks for skills another source already granted
+    renderBackgroundSkillReplacements(parent, bg);
+
+    // Tool proficiency picks ("One type of artisan's tools", ...)
+    (bg.toolProficiencies || []).forEach(tool => {
+        if (BACKGROUND_TOOL_CATEGORIES[tool]) {
+            renderBackgroundToolChoice(parent, bg, tool);
+        }
+    });
+
     // Add language choices
     if (bg.languageOptions) {
         renderLanguageChoices(parent, bg.languageOptions, bg.name);
     }
+}
+
+// A skill this background grants is already covered by class/race: per the 5e
+// duplicate-proficiency rule the player picks a different skill instead.
+function renderBackgroundSkillReplacements(parent, bg) {
+    const duplicated = bg.skillProficiencies.filter(skill => {
+        const source = getSkillSource(skill);
+        return hasSkillProficiency(skill) && source !== bg.name && source !== `${bg.name} Choice`;
+    });
+    if (duplicated.length === 0) return;
+
+    duplicated.forEach(skill => {
+        const container = document.createElement('div');
+        container.className = 'choice-container';
+
+        const choiceKey = backgroundChoiceKey(bg, 'skill-replacement', skill);
+        const currentChoice = currentCharacter.choices?.[choiceKey] || '';
+
+        const title = document.createElement('h4');
+        title.textContent = `Replacement Skill for ${skill}`;
+        title.className = 'choice-title';
+        container.appendChild(title);
+
+        const status = document.createElement('span');
+        status.className = currentChoice ? 'choice-status complete' : 'choice-status incomplete';
+        status.textContent = currentChoice ? '✔' : '❗';
+        title.appendChild(status);
+
+        const description = document.createElement('p');
+        description.className = 'choice-description';
+        description.textContent = `${bg.name} grants ${skill}, but you already have it from ` +
+            `${getSkillSource(skill)}. Choose a different skill proficiency instead.`;
+        container.appendChild(description);
+
+        const select = document.createElement('select');
+        select.className = 'choice-select';
+        select.appendChild(new Option('-- select skill --', '', true, true));
+        BACKGROUND_ALL_SKILLS
+            .filter(s => !hasSkillProficiency(s) || s === currentChoice)
+            .forEach(s => select.appendChild(new Option(s, s)));
+        if (currentChoice) select.value = currentChoice;
+
+        select.onchange = () => {
+            const previous = currentCharacter.choices?.[choiceKey];
+            if (previous && previous !== select.value &&
+                getSkillSource(previous) === `${bg.name} Choice`) {
+                removeSkillProficiency(previous);
+            }
+
+            if (!currentCharacter.choices) currentCharacter.choices = {};
+            if (select.value) {
+                addSkillProficiency(select.value, `${bg.name} Choice`);
+                currentCharacter.choices[choiceKey] = select.value;
+                status.textContent = '✔';
+                status.className = 'choice-status complete';
+            } else {
+                delete currentCharacter.choices[choiceKey];
+                status.textContent = '❗';
+                status.className = 'choice-status incomplete';
+            }
+            updateSkillOptionDisplays();
+        };
+
+        container.appendChild(select);
+        parent.appendChild(container);
+    });
+}
+
+// Dropdown for a "One type of ..." tool proficiency
+function renderBackgroundToolChoice(parent, bg, category) {
+    const options = BACKGROUND_TOOL_CATEGORIES[category];
+    const container = document.createElement('div');
+    container.className = 'choice-container';
+
+    const choiceKey = backgroundChoiceKey(bg, 'tool-choice', category);
+    const currentChoice = currentCharacter.choices?.[choiceKey] || '';
+
+    const title = document.createElement('h4');
+    title.textContent = `Tool Proficiency (${category})`;
+    title.className = 'choice-title';
+    container.appendChild(title);
+
+    const status = document.createElement('span');
+    status.className = currentChoice ? 'choice-status complete' : 'choice-status incomplete';
+    status.textContent = currentChoice ? '✔' : '❗';
+    title.appendChild(status);
+
+    const select = document.createElement('select');
+    select.className = 'choice-select';
+    select.appendChild(new Option('-- select tool --', '', true, true));
+    options.forEach(tool => {
+        const option = new Option(tool, tool);
+        if (hasToolProficiency(tool) && tool !== currentChoice) {
+            option.text = `${tool} (already taken)`;
+        }
+        select.appendChild(option);
+    });
+    if (currentChoice) select.value = currentChoice;
+
+    select.onchange = () => {
+        const previous = currentCharacter.choices?.[choiceKey];
+        if (previous && previous !== select.value &&
+            getToolSource(previous) === `${bg.name} Choice`) {
+            removeToolProficiency(previous);
+        }
+
+        if (!currentCharacter.choices) currentCharacter.choices = {};
+        if (select.value) {
+            addToolProficiency(select.value, `${bg.name} Choice`);
+            currentCharacter.choices[choiceKey] = select.value;
+            status.textContent = '✔';
+            status.className = 'choice-status complete';
+        } else {
+            delete currentCharacter.choices[choiceKey];
+            status.textContent = '❗';
+            status.className = 'choice-status incomplete';
+        }
+    };
+
+    container.appendChild(select);
+    parent.appendChild(container);
 }
 
 // Render language choices
@@ -323,20 +512,21 @@ function renderSingleLanguageChoice(container, languageOptions, source) {
     const select = document.createElement('select');
     select.className = 'choice-select';
     select.appendChild(new Option('-- select language --', '', true, true));
-    
-    // Filter out languages the character already knows
-    const availableLanguages = languageOptions.options.filter(lang => 
-        !hasLanguageProficiency(lang)
+
+    // Track the currently selected language for this choice
+    const choiceKey = `${source}-language-choice`;
+    const currentChoice = currentCharacter.choices && currentCharacter.choices[choiceKey] ?
+                          currentCharacter.choices[choiceKey] : null;
+
+    // Filter out languages the character already knows (keep the saved pick,
+    // which is already applied as a proficiency)
+    const availableLanguages = languageOptions.options.filter(lang =>
+        !hasLanguageProficiency(lang) || lang === currentChoice
     );
-    
+
     availableLanguages.forEach(lang => {
         select.appendChild(new Option(lang, lang));
     });
-    
-    // Track the currently selected language for this choice
-    const choiceKey = `${source}-language-choice`;
-    const currentChoice = currentCharacter.choices && currentCharacter.choices[choiceKey] ? 
-                          currentCharacter.choices[choiceKey] : null;
     
     // If there's a current choice, select it
     if (currentChoice) {
