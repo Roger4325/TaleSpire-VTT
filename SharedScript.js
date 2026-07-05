@@ -7193,3 +7193,103 @@ if (!document.getElementById('importCharacterData') && document.getElementById('
         }
     });
 }
+
+
+// ============================================================================
+// Chunked sync transport
+// ----------------------------------------------------------------------------
+// TS.sync.send payloads are limited to ~1KB (≈500 UTF-16 characters) and the
+// API is rate limited. Messages that don't fit in one send are base64-encoded
+// (no JSON-escaping inflation), sliced into fixed-size chunks and sent with a
+// delay between each; the receiver reassembles them and routes the original
+// message through its normal handler map. Small messages are sent unchanged,
+// so everything existing keeps its wire format.
+// ============================================================================
+
+const SYNC_MAX_MESSAGE_CHARS = 460;   // safe single-message budget
+const SYNC_CHUNK_PART_CHARS = 370;    // payload per chunk (envelope ≈ 80 chars)
+const SYNC_CHUNK_SEND_DELAY_MS = 200; // spacing between sends (rate limit)
+const SYNC_CHUNK_ABANDON_MS = 30000;  // drop half-received transfers after 30s
+
+function encodeSyncPayload(str) {
+    return btoa(unescape(encodeURIComponent(str)));
+}
+
+function decodeSyncPayload(base64) {
+    return decodeURIComponent(escape(atob(base64)));
+}
+
+/**
+ * Sends a message object to one client, chunking + throttling when it exceeds
+ * the single-message budget. Resolves with the number of messages sent.
+ */
+async function sendSyncMessageSafe(messageObject, clientId, onProgress) {
+    const raw = JSON.stringify(messageObject);
+    if (raw.length <= SYNC_MAX_MESSAGE_CHARS) {
+        await TS.sync.send(raw, clientId);
+        return 1;
+    }
+
+    const encoded = encodeSyncPayload(raw);
+    const total = Math.ceil(encoded.length / SYNC_CHUNK_PART_CHARS);
+    const transferId = 'tx' + Date.now() + '-' + Math.floor(Math.random() * 10000);
+
+    for (let seq = 0; seq < total; seq++) {
+        const chunk = {
+            type: 'chunk',
+            id: transferId,
+            seq: seq,
+            total: total,
+            part: encoded.slice(seq * SYNC_CHUNK_PART_CHARS, (seq + 1) * SYNC_CHUNK_PART_CHARS)
+        };
+        await TS.sync.send(JSON.stringify(chunk), clientId);
+        if (onProgress) onProgress(seq + 1, total);
+        if (seq < total - 1) {
+            await new Promise(resolve => setTimeout(resolve, SYNC_CHUNK_SEND_DELAY_MS));
+        }
+    }
+    return total;
+}
+
+// Partial transfers per sender+id, cleaned up when abandoned
+const pendingSyncChunks = {};
+
+/**
+ * Receiver side: collects chunks and, once complete, dispatches the original
+ * message through the provided dispatcher (each screen passes its own).
+ */
+function receiveSyncChunk(message, fromClient, dispatch) {
+    if (!message || !message.id || !Number.isInteger(message.seq) ||
+        !Number.isInteger(message.total) || message.total < 1) return;
+
+    const key = fromClient + '-' + message.id;
+    let transfer = pendingSyncChunks[key];
+    if (!transfer) {
+        transfer = pendingSyncChunks[key] = {
+            parts: new Array(message.total),
+            received: 0,
+            timer: null
+        };
+    }
+
+    // Reset the abandon timer on every chunk
+    clearTimeout(transfer.timer);
+    transfer.timer = setTimeout(() => { delete pendingSyncChunks[key]; }, SYNC_CHUNK_ABANDON_MS);
+
+    if (message.seq >= 0 && message.seq < transfer.parts.length &&
+        transfer.parts[message.seq] === undefined) {
+        transfer.parts[message.seq] = message.part;
+        transfer.received++;
+    }
+
+    if (transfer.received === transfer.parts.length) {
+        clearTimeout(transfer.timer);
+        delete pendingSyncChunks[key];
+        try {
+            const original = JSON.parse(decodeSyncPayload(transfer.parts.join('')));
+            dispatch(original, fromClient);
+        } catch (error) {
+            console.error('Failed to reassemble chunked sync message:', error);
+        }
+    }
+}

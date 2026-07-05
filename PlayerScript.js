@@ -56,7 +56,11 @@ const messageHandlers = {
     'target-selection': handleTargetSelection,
     'player-init-list': createPlayerInit,
     'player-init-turn': handleInitTurn,
-    'player-init-round': handleInitRound
+    'player-init-round': handleInitRound,
+    'give-item': handleGiveItem,
+    'give-spell': handleGiveSpell,
+    // Reassembles oversized messages (see SharedScript's chunked transport)
+    'chunk': (message, fromClient) => receiveSyncChunk(message, fromClient, handleIncomingMessage)
 };
 
 let monsterNames
@@ -2309,6 +2313,7 @@ function getAllEditableContent() {
     content['currentHitDice'] = currentHitDice.textContent
     content['insp'] = getInspirationState();
     content['upcastToggle'] = upcastToggle.checked ? 1 : 0;
+    content['upcastModeToggle'] = document.getElementById("upcastCastButton").checked ? 1 : 0;
     content['exhaustionToggle'] = exhaustionToggle.checked ? 1 : 0;
     content['playerWeaponProficiency'] = [...playerWeaponProficiency];
     content['playerArmorProficiency'] = [...playerArmorProficiency];
@@ -2591,6 +2596,7 @@ function updateCharacterUI(characterData, characterName) {
     currentHitDice.textContent = characterData.currentHitDice;
 
     setUpcastToggle(characterData.upcastToggle)
+    setUpcastModeToggle(characterData.upcastModeToggle)
     setExhaustionToggle(characterData.exhaustionToggle)
 
     const characterInit = document.getElementById("initiativeButton");
@@ -2674,6 +2680,15 @@ function updateCharacterUI(characterData, characterName) {
 
 async function loadAndSetLanguage(){
     setLanguage(savedLanguage);
+}
+
+function setUpcastModeToggle(value) {
+    document.getElementById("upcastCastButton").checked = value === 1;
+}
+
+/** True when the "Upcast Via Cast Button" mode is active. */
+function isUpcastCastMode() {
+    return document.getElementById("upcastCastButton").checked;
 }
 
 function setUpcastToggle(value) {
@@ -4005,6 +4020,20 @@ function createSpellRow(spell,spellLevel) {
     spellNameContainer.appendChild(magGlassButton); // Append the magnifying glass button
     // spellNameContainer.appendChild(diceButton); // Append the dice button
 
+    // "Cast at level" button (Upcast Via Cast Button mode). Styled like the
+    // mag-glass button so the row stays aligned; shows the pinned level
+    // ("⮝3") after casting upcast. Hidden until loadSpell marks the row
+    // upcastable and the mode is on.
+    if (spellLevel !== 'Cantrip') {
+        const upcastCastButton = document.createElement('button');
+        upcastCastButton.classList.add('upcast-cast-button');
+        upcastCastButton.textContent = '⮝';
+        upcastCastButton.title = 'Cast this spell at a chosen level';
+        upcastCastButton.style.display = 'none';
+        upcastCastButton.addEventListener('click', () => openUpcastCastModal(row));
+        spellNameContainer.appendChild(upcastCastButton);
+    }
+
     // Other spell details
     const castTime = document.createElement('td');
     castTime.classList.add('spell-cast-time');
@@ -4239,8 +4268,16 @@ function loadSpell(spell,row) {
     }
     else if(spellLevel > baseLevel){
         row.classList.add('upcast-spell');
+        if (isUpcastCastMode()) row.style.display = 'none';
     }
     else{
+        // Base row of an upcastable spell: usable with the cast button, and
+        // the source for generated per-level rows in the classic mode
+        row.dataset.upcastable = '1';
+        const upcastCastButton = row.querySelector('.upcast-cast-button');
+        if (upcastCastButton) {
+            upcastCastButton.style.display = isUpcastCastMode() ? '' : 'none';
+        }
         generateUpcastSpells(spell, spellLevel, spellDetails, row);
     }
 
@@ -4300,7 +4337,9 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
     // Find the corresponding spell object based on the spell name
     let spellData = spellDataArray.find(spellData => spellData.name === spell.name);
     
-    if (baseLevelIndex === -1 || !document.getElementById('showUpcastSpells').checked) return;
+    // The cast-button mode replaces the generated per-level rows entirely
+    if (baseLevelIndex === -1 || isUpcastCastMode() ||
+        !document.getElementById('showUpcastSpells').checked) return;
 
     for (let i = baseLevelIndex + 1; i < spellLevels.length; i++) {
         const container = document.querySelector(`#${spellLevelContainer[i].replace(' ', '-')}-container`);
@@ -4320,6 +4359,12 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
                     spellContainer.appendChild(spellTable);
                 }
 
+                // Don't create the same upcast row twice (mode switches and
+                // reloads can retrigger generation)
+                const alreadyThere = [...spellTable.querySelectorAll('.spell-row.upcast-spell .spell-name-input')]
+                    .some(input => input.value.trim() === spellData.name);
+                if (alreadyThere) continue;
+
                 const spellRow = createSpellRow(spellData, spellLevels[i]);
                 spellTable.appendChild(spellRow);
                 loadSpell(spellData, spellRow);  // Populates the row with spell details
@@ -4332,9 +4377,180 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
 
 document.getElementById('showUpcastSpells').addEventListener('change', function() {
     document.querySelectorAll('.upcast-spell').forEach(row => {
-        row.style.display = this.checked ? '' : 'none';
+        row.style.display = (this.checked && !isUpcastCastMode()) ? '' : 'none';
     });
     updateContent();
+});
+
+/**
+ * Applies the "Upcast Via Cast Button" mode: hides the generated per-level
+ * rows and shows a cast button on upcastable base rows (or the reverse).
+ * Turning the mode off regenerates any per-level rows that were skipped.
+ */
+function applyUpcastCastMode() {
+    const castMode = isUpcastCastMode();
+    const showRows = document.getElementById('showUpcastSpells').checked;
+
+    document.querySelectorAll('.upcast-spell').forEach(row => {
+        row.style.display = (!castMode && showRows) ? '' : 'none';
+    });
+
+    document.querySelectorAll('.spell-row[data-upcastable="1"]').forEach(row => {
+        const button = row.querySelector('.upcast-cast-button');
+        if (button) button.style.display = castMode ? '' : 'none';
+
+        // Leaving cast mode: clear any chosen cast level and rebuild the
+        // per-level rows generation skipped while the mode was on
+        if (!castMode) {
+            clearCastLevel(row);
+            const spellName = row.querySelector('.spell-name-input')?.value.trim();
+            const spellDetails = AppData?.spellLookupInfo?.spellsData?.find(s => s.name === spellName);
+            if (spellDetails && showRows) {
+                generateUpcastSpells(spellDetails, spellDetails.level, spellDetails);
+            }
+        }
+    });
+
+    updateAllSpellDamageDice();
+    updateContent();
+}
+
+document.getElementById('upcastCastButton').addEventListener('change', applyUpcastCastMode);
+
+const SPELL_LEVEL_ORDINALS = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th'];
+
+function spellLevelKeyFor(levelNumber) {
+    return `${SPELL_LEVEL_ORDINALS[levelNumber - 1]}-level`;
+}
+
+/** Scaled damage dice for casting at castLevel (base dice when no scaling). */
+function getDiceForCastLevel(spellDetails, castLevel) {
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    if (!spellDetails.damage_dice) return '';
+    if (castLevel <= baseLevelNumber || !spellDetails.damage_dice_upcast) {
+        return spellDetails.damage_dice;
+    }
+    return calculateUpcastDamage(spellDetails.damage_dice,
+        spellDetails.damage_dice_upcast, castLevel - baseLevelNumber);
+}
+
+function clearCastLevel(row) {
+    delete row.dataset.castLevel;
+    const button = row.querySelector('.upcast-cast-button');
+    if (button) {
+        button.textContent = '⮝';
+        button.title = 'Cast this spell at a chosen level';
+        button.classList.remove('pinned');
+    }
+}
+
+/**
+ * Level picker for the cast-button mode: one row per spell level with slots,
+ * showing remaining slots and the scaled dice, plus the spell's own
+ * "At Higher Levels" text for non-damage changes (extra targets, ...).
+ */
+function openUpcastCastModal(row) {
+    const spellName = row.querySelector('.spell-name-input')?.value.trim();
+    const spellDetails = AppData?.spellLookupInfo?.spellsData?.find(s => s.name === spellName);
+    if (!spellDetails) return;
+
+    const modal = document.getElementById('upcastModal');
+    const effects = document.getElementById('upcastEffects');
+    document.getElementById('spellTitle').textContent = spellDetails.name;
+    effects.innerHTML = '';
+
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    // Offer every level the sheet is currently showing (the spell-level
+    // dropdown), from the spell's own level up
+    const shownMaxLevel = Math.min(9,
+        parseInt(document.querySelector('.spell-level-dropdown')?.value, 10) || 9);
+
+    for (let castLevel = baseLevelNumber; castLevel <= Math.max(shownMaxLevel, baseLevelNumber); castLevel++) {
+        const group = document.querySelector(`.spell-group[spellLevel="${spellLevelKeyFor(castLevel)}"]`);
+        const slots = group ? group.querySelectorAll('.spell-slot') : [];
+        const freeSlots = group ? group.querySelectorAll('.spell-slot:not(.used)').length : 0;
+        const dice = getDiceForCastLevel(spellDetails, castLevel);
+
+        const line = document.createElement('div');
+        line.classList.add('upcast-cast-row');
+
+        const levelCell = document.createElement('span');
+        levelCell.classList.add('upcast-cast-level');
+        levelCell.textContent = SPELL_LEVEL_ORDINALS[castLevel - 1];
+        line.appendChild(levelCell);
+
+        const slotsCell = document.createElement('span');
+        slotsCell.classList.add('upcast-cast-slots');
+        slotsCell.textContent = slots.length > 0 ? `${freeSlots}/${slots.length}` : '—';
+        slotsCell.title = slots.length > 0
+            ? `${freeSlots} of ${slots.length} slots left`
+            : 'No slots of this level on the sheet';
+        line.appendChild(slotsCell);
+
+        const diceCell = document.createElement('span');
+        diceCell.classList.add('upcast-cast-dice');
+        diceCell.textContent = dice || '';
+        line.appendChild(diceCell);
+
+        const castButton = document.createElement('button');
+        castButton.classList.add('nonRollButton', 'upcast-cast-confirm');
+        castButton.textContent = 'Cast';
+        castButton.disabled = freeSlots === 0;
+        castButton.addEventListener('click', () => {
+            castSpellAtLevel(row, spellDetails, castLevel);
+            modal.style.display = 'none';
+        });
+        line.appendChild(castButton);
+
+        effects.appendChild(line);
+    }
+
+    if (spellDetails.higher_level) {
+        const higher = document.createElement('p');
+        higher.classList.add('upcast-higher-level-text');
+        const em = document.createElement('em');
+        em.textContent = 'At Higher Levels. ';
+        higher.appendChild(em);
+        higher.appendChild(document.createTextNode(spellDetails.higher_level));
+        effects.appendChild(higher);
+    }
+
+    modal.style.display = 'flex';
+}
+
+/**
+ * Spends one slot of the chosen level and pins the row's damage dice (and a
+ * small "@Nth" chip) to that cast level until it's cast again.
+ */
+function castSpellAtLevel(row, spellDetails, castLevel) {
+    const group = document.querySelector(`.spell-group[spellLevel="${spellLevelKeyFor(castLevel)}"]`);
+    const freeSlot = group ? group.querySelector('.spell-slot:not(.used)') : null;
+    if (!freeSlot) {
+        showErrorModal(`No ${SPELL_LEVEL_ORDINALS[castLevel - 1]}-level spell slots left.`);
+        return;
+    }
+    freeSlot.textContent = ' ';
+    freeSlot.classList.add('used');
+
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    if (castLevel > baseLevelNumber) {
+        row.dataset.castLevel = castLevel;
+        const button = row.querySelector('.upcast-cast-button');
+        if (button) {
+            button.textContent = `⮝${castLevel}`;
+            button.title = `Last cast at ${SPELL_LEVEL_ORDINALS[castLevel - 1]} level — click to cast again`;
+            button.classList.add('pinned');
+        }
+    } else {
+        clearCastLevel(row);
+    }
+
+    updateAllSpellDamageDice();
+    updateContent();
+}
+
+document.querySelector('#upcastModal .close').addEventListener('click', () => {
+    document.getElementById('upcastModal').style.display = 'none';
 });
 
 function updateSpelltoHitorDC(spellDetails) {
@@ -4574,8 +4790,16 @@ function updateAllSpellDamageDice() {
                     let upCastedDice
                     const spellLevel = row.getAttribute('data-spell-level');
                     const baseLevel = spellDetails.level;
+                    const castLevel = parseInt(row.dataset.castLevel || '0', 10);
                     if(spellDetails.higher_level === "" || spellLevel === "Cantrip"){
                         // No upcasting needed
+                    }
+                    else if (castLevel > getLevelNumber(baseLevel)) {
+                        // Cast-button mode: the row is pinned to a chosen level
+                        if (spellDetails.damage_dice_upcast) {
+                            adjustedDamageDice = calculateUpcastDamage(spellDetails.damage_dice,
+                                spellDetails.damage_dice_upcast, castLevel - getLevelNumber(baseLevel));
+                        }
                     }
                     else if(spellLevel > baseLevel){
                         if (spellDetails.damage_dice_upcast) {
@@ -7549,6 +7773,57 @@ function handleRollDice(message, FromClient) {
 
 
 
+
+// DM gave this player an item: download it if it's homebrew, then drop it
+// straight into the backpack through the normal inventory path (so the save
+// format is exactly the same as a manually added item).
+async function handleGiveItem(message) {
+    const item = message?.data?.item;
+    if (!item || !item.name) return;
+
+    const catalog = Array.isArray(AppData.equipmentLookupInfo)
+        ? AppData.equipmentLookupInfo
+        : (AppData.equipmentLookupInfo?.equipmentData || []);
+    const isKnown = catalog.some(entry => entry.name === item.name);
+    if (!isKnown) {
+        // Homebrew item this player doesn't have yet: save it to their own
+        // storage and refresh the catalog so it stays usable later
+        await saveToGlobalStorage("Custom Equipment", item.name, item, false);
+        AppData.equipmentLookupInfo = await readEquipmentJson();
+    }
+
+    const itemCopy = JSON.parse(JSON.stringify(item));
+    delete itemCopy.uniqueId;
+    if (!itemCopy.equipment_category) {
+        itemCopy.equipment_category = { index: "equipment", name: "Equipment" };
+    }
+    if (!itemCopy.cost) {
+        itemCopy.cost = { quantity: 0, unit: "gp" };
+    }
+    itemCopy.quantity = itemCopy.quantity > 0 ? itemCopy.quantity : 1;
+
+    addItemToInventory(itemCopy, 'backpack');
+    updateWeight();
+    updateContent();
+    showErrorModal(`The DM gave you ${item.name} — added to your backpack.`);
+}
+
+// DM sent this player a spell: download it if it's homebrew. The player adds
+// it to their spell list themselves (it isn't auto-prepared).
+async function handleGiveSpell(message) {
+    const spell = message?.data?.spell;
+    if (!spell || !spell.name) return;
+
+    const isKnown = (AppData.spellLookupInfo?.spellsData || [])
+        .some(entry => entry.name === spell.name);
+    if (!isKnown) {
+        await saveToGlobalStorage("Custom Spells", spell.name, spell, false);
+        await loadSpellDataFiles();
+    }
+
+    showErrorModal(`The DM sent you the spell ${spell.name} — ` +
+        `you can now add it to your spell list from the spell search.`);
+}
 
 // Handle a target selection request (e.g., for combat)
 function handleTargetSelection(message, FromClient) {

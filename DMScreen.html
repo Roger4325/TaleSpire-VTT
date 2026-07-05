@@ -1549,6 +1549,25 @@
                                 <select id="customShopSelect"></select>
                             </div>
                         </div>
+                        <hr>
+                        <div class="monsterEditorSubsection" id="giveToPlayerSection">
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label id="givePlayerSelectLabel" for="givePlayerSelect">Give to Player:</label>
+                                </div>
+                                <select id="givePlayerSelect"></select>
+                                <div class="give-row">
+                                    <input type="text" id="giveItemInput" list="giveItemOptions" placeholder="Item name...">
+                                    <datalist id="giveItemOptions"></datalist>
+                                    <button id="giveItemButton" class="nonRollButton">Give Item</button>
+                                </div>
+                                <div class="give-row">
+                                    <input type="text" id="giveSpellInput" list="giveSpellOptions" placeholder="Spell name...">
+                                    <datalist id="giveSpellOptions"></datalist>
+                                    <button id="giveSpellButton" class="nonRollButton">Send Spell</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1639,3 +1639,28 @@ margin: 2px;
 .abacusRegion{
     display: none;
 }
+/* Give to Player (DM homebrew menu) */
+.give-row {
+    display: flex;
+    gap: 6px;
+    margin-top: 6px;
+    align-items: center;
+}
+
+.give-row input {
+    flex: 1;
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
+    border-radius: 5px;
+    color: white;
+    padding: 5px;
+}
+
+.give-row button {
+    white-space: nowrap;
+}
+
+#givePlayerSelect {
+    width: 100%;
+    margin-top: 4px;
+}

@@ -2449,3 +2449,86 @@ display: none;
 .tooltip.show {
     opacity: 1;
 }
+/* "Upcast Via Cast Button" mode.
+   The button floats at the same spot as the classic upcast rows' ⮝ marker
+   (absolutely positioned, so it never disturbs the row layout); when a cast
+   level is pinned it shows e.g. "⮝4". */
+.upcast-cast-button {
+    position: absolute;
+    left: 235px;
+    top: 0px;
+    font-size: 1.4em;
+    color: var(--border-outline-color);
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    white-space: nowrap;
+    z-index: 2;
+    line-height: 1;
+}
+
+.upcast-cast-button:hover {
+    color: var(--button-color-hover);
+}
+
+.upcast-cast-button.pinned {
+    color: var(--action-button-color);
+    font-weight: bold;
+}
+
+/* Level picker: fixed columns (level | slots | dice | cast) so nothing wraps */
+.upcast-cast-row {
+    display: grid;
+    grid-template-columns: 2.6em 3.2em 1fr auto;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 2px;
+    border-bottom: 1px solid var(--border-outline-color);
+}
+
+.upcast-cast-row:last-of-type {
+    border-bottom: none;
+}
+
+.upcast-cast-level {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+.upcast-cast-slots {
+    opacity: 0.85;
+    white-space: nowrap;
+    text-align: center;
+}
+
+.upcast-cast-dice {
+    color: var(--button-color-hover);
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: left;
+}
+
+.upcast-cast-confirm {
+    padding: 2px 12px;
+    white-space: nowrap;
+}
+
+.upcast-cast-confirm:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#upcastEffects {
+    text-align: left;
+}
+
+.upcast-higher-level-text {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-outline-color);
+    font-size: 0.9em;
+    line-height: 1.4;
+}
