@@ -3,6 +3,117 @@
     "fighter": {
       "name": "Fighter",
       "hitDie": 10,
+      "startingEquipment": {
+        "fixed": [],
+        "choices": [
+          {
+            "name": "Armor",
+            "options": [
+              {
+                "label": "Chain mail",
+                "items": [
+                  {
+                    "name": "Chain Mail",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Leather armor, longbow and 20 arrows",
+                "items": [
+                  {
+                    "name": "Leather Armor",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Longbow",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Arrow",
+                    "quantity": 20
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Weapons",
+            "options": [
+              {
+                "label": "A martial weapon and a shield",
+                "items": [
+                  {
+                    "name": "Shield",
+                    "quantity": 1
+                  }
+                ],
+                "select": {
+                  "category": "Martial",
+                  "count": 1
+                }
+              },
+              {
+                "label": "Two martial weapons",
+                "select": {
+                  "category": "Martial",
+                  "count": 2
+                }
+              }
+            ]
+          },
+          {
+            "name": "Ranged option",
+            "options": [
+              {
+                "label": "A light crossbow and 20 bolts",
+                "items": [
+                  {
+                    "name": "Crossbow, Light",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Crossbow Bolts",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "label": "Two handaxes",
+                "items": [
+                  {
+                    "name": "Handaxe",
+                    "quantity": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Strength", "Dexterity"],
       "savingThrowProficiencies": ["Strength", "Constitution"],
       "skillOptions": {
@@ -718,17 +829,17 @@
             "ability": "Intelligence",
             "ritual": false,
             "spellsKnown": {
-              "3": 2,
-              "4": 3,
-              "7": 4,
-              "8": 5,
-              "10": 6,
-              "11": 7,
-              "13": 8,
-              "14": 9,
-              "16": 10,
-              "19": 11,
-              "20": 12
+              "3": 3,
+              "4": 4,
+              "7": 5,
+              "8": 6,
+              "10": 7,
+              "11": 8,
+              "13": 9,
+              "14": 10,
+              "16": 11,
+              "19": 12,
+              "20": 13
             },
             "cantripsKnown": {
               "3": 2,
@@ -809,6 +920,89 @@
     "wizard": {
       "name": "Wizard",
       "hitDie": 6,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Spellbook",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "Quarterstaff",
+                "items": [
+                  {
+                    "name": "Quarterstaff",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Dagger",
+                "items": [
+                  {
+                    "name": "Dagger",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Spellcasting focus",
+            "options": [
+              {
+                "label": "Component pouch",
+                "items": [
+                  {
+                    "name": "Component Pouch",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "An arcane focus",
+                "select": {
+                  "oneOf": [
+                    "Crystal",
+                    "Orb",
+                    "Rod",
+                    "Staff",
+                    "Wand"
+                  ],
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Scholar's pack",
+                "items": [
+                  {
+                    "name": "Scholar's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Intelligence"],
       "savingThrowProficiencies": ["Intelligence", "Wisdom"],
       "skillOptions": {
@@ -1362,6 +1556,110 @@
     "rogue": {
       "name": "Rogue",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Leather Armor",
+            "quantity": 1
+          },
+          {
+            "name": "Dagger",
+            "quantity": 2
+          },
+          {
+            "name": "Thieves' Tools",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "Rapier",
+                "items": [
+                  {
+                    "name": "Rapier",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Shortsword",
+                "items": [
+                  {
+                    "name": "Shortsword",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Ranged option",
+            "options": [
+              {
+                "label": "Shortbow and quiver of 20 arrows",
+                "items": [
+                  {
+                    "name": "Shortbow",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Quiver",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Arrow",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "label": "Shortsword",
+                "items": [
+                  {
+                    "name": "Shortsword",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Burglar's pack",
+                "items": [
+                  {
+                    "name": "Burglar's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Dexterity"],
       "savingThrowProficiencies": ["Dexterity", "Intelligence"],
       "skillOptions": {
@@ -1799,6 +2097,123 @@
     "cleric": {
       "name": "Cleric",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Shield",
+            "quantity": 1
+          },
+          {
+            "name": "Holy Symbol",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "Mace",
+                "items": [
+                  {
+                    "name": "Mace",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Warhammer (if proficient)",
+                "items": [
+                  {
+                    "name": "Warhammer",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Armor",
+            "options": [
+              {
+                "label": "Scale mail",
+                "items": [
+                  {
+                    "name": "Scale Mail",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Leather armor",
+                "items": [
+                  {
+                    "name": "Leather Armor",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Chain mail (if proficient)",
+                "items": [
+                  {
+                    "name": "Chain Mail",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Ranged option",
+            "options": [
+              {
+                "label": "A light crossbow and 20 bolts",
+                "items": [
+                  {
+                    "name": "Crossbow, Light",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Crossbow Bolts",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Priest's pack",
+                "items": [
+                  {
+                    "name": "Priest's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Wisdom"],
       "savingThrowProficiencies": ["Wisdom", "Charisma"],
       "skillOptions": {
@@ -2079,6 +2494,66 @@
     "druid": {
       "name": "Druid",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Leather Armor",
+            "quantity": 1
+          },
+          {
+            "name": "Explorer's Pack",
+            "quantity": 1
+          },
+          {
+            "name": "Totem",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Shield or weapon",
+            "options": [
+              {
+                "label": "A wooden shield",
+                "items": [
+                  {
+                    "name": "Shield",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Melee weapon",
+            "options": [
+              {
+                "label": "Scimitar",
+                "items": [
+                  {
+                    "name": "Scimitar",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any simple melee weapon",
+                "select": {
+                  "category": "Simple Melee",
+                  "count": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Wisdom"],
       "savingThrowProficiencies": ["Intelligence", "Wisdom"],
       "skillOptions": {
@@ -2365,6 +2840,62 @@
     "barbarian": {
       "name": "Barbarian",
       "hitDie": 12,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Explorer's Pack",
+            "quantity": 1
+          },
+          {
+            "name": "Javelin",
+            "quantity": 4
+          }
+        ],
+        "choices": [
+          {
+            "name": "Primary weapon",
+            "options": [
+              {
+                "label": "Greataxe",
+                "items": [
+                  {
+                    "name": "Greataxe",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any martial melee weapon",
+                "select": {
+                  "category": "Martial Melee",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Secondary weapon",
+            "options": [
+              {
+                "label": "Two handaxes",
+                "items": [
+                  {
+                    "name": "Handaxe",
+                    "quantity": 2
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Strength"],
       "savingThrowProficiencies": ["Strength", "Constitution"],
       "skillOptions": {
@@ -2408,10 +2939,36 @@
                 "1": 2,
                 "9": 3,
                 "16": 4
+              },
+              "bonusByLevel": {
+                "1": {
+                  "adjustmentCategory": "combatStats",
+                  "adjustmentSubCategory": "RageDamageBonus",
+                  "adjustmentAbility": "NONE",
+                  "adjustmentValue": "2"
+                },
+                "9": {
+                  "adjustmentCategory": "combatStats",
+                  "adjustmentSubCategory": "RageDamageBonus",
+                  "adjustmentAbility": "NONE",
+                  "adjustmentValue": "3"
+                },
+                "16": {
+                  "adjustmentCategory": "combatStats",
+                  "adjustmentSubCategory": "RageDamageBonus",
+                  "adjustmentAbility": "NONE",
+                  "adjustmentValue": "4"
+                }
               }
             },
             "Unarmored Defense": {
-              "description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit."
+              "description": "While you are not wearing any armor, your Armor Class equals 10 + your Dexterity modifier + your Constitution modifier. You can use a shield and still gain this benefit.",
+              "bonus": {
+                "adjustmentCategory": "combatStats",
+                "adjustmentSubCategory": "AC",
+                "adjustmentAbility": "CON",
+                "adjustmentValue": "0"
+              }
             }
           }
         },
@@ -2485,7 +3042,13 @@
           "features": ["Brutal Critical (1 die)"],
           "automaticFeatures": {
             "Brutal Critical": {
-              "description": "You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack."
+              "description": "You can roll one additional weapon damage die when determining the extra damage for a critical hit with a melee attack.",
+              "bonus": {
+                "adjustmentCategory": "combatStats",
+                "adjustmentSubCategory": "BrutalCritical",
+                "adjustmentAbility": "NONE",
+                "adjustmentValue": "1"
+              }
             }
           }
         },
@@ -2515,7 +3078,13 @@
           "features": ["Brutal Critical (2 dice)"],
           "automaticFeatures": {
             "Brutal Critical": {
-              "description": "You can roll two additional weapon damage dice when determining the extra damage for a critical hit with a melee attack."
+              "description": "You can roll two additional weapon damage dice when determining the extra damage for a critical hit with a melee attack.",
+              "bonus": {
+                "adjustmentCategory": "combatStats",
+                "adjustmentSubCategory": "BrutalCritical",
+                "adjustmentAbility": "NONE",
+                "adjustmentValue": "2"
+              }
             }
           }
         },
@@ -2545,7 +3114,13 @@
           "features": ["Brutal Critical (3 dice)"],
           "automaticFeatures": {
             "Brutal Critical": {
-              "description": "You can roll three additional weapon damage dice when determining the extra damage for a critical hit with a melee attack."
+              "description": "You can roll three additional weapon damage dice when determining the extra damage for a critical hit with a melee attack.",
+              "bonus": {
+                "adjustmentCategory": "combatStats",
+                "adjustmentSubCategory": "BrutalCritical",
+                "adjustmentAbility": "NONE",
+                "adjustmentValue": "3"
+              }
             }
           }
         },
@@ -2716,6 +3291,104 @@
     "bard": {
       "name": "Bard",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Leather Armor",
+            "quantity": 1
+          },
+          {
+            "name": "Dagger",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "Rapier",
+                "items": [
+                  {
+                    "name": "Rapier",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Longsword",
+                "items": [
+                  {
+                    "name": "Longsword",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Diplomat's pack",
+                "items": [
+                  {
+                    "name": "Diplomat's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Entertainer's pack",
+                "items": [
+                  {
+                    "name": "Entertainer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Musical instrument",
+            "options": [
+              {
+                "label": "Lute",
+                "items": [
+                  {
+                    "name": "Lute",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any other musical instrument",
+                "select": {
+                  "oneOf": [
+                    "Bagpipes",
+                    "Drum",
+                    "Dulcimer",
+                    "Flute",
+                    "Lyre",
+                    "Horn",
+                    "Pan flute",
+                    "Shawm",
+                    "Viol"
+                  ],
+                  "count": 1
+                }
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Charisma"],
       "savingThrowProficiencies": ["Dexterity", "Charisma"],
       "skillOptions": {
@@ -3112,6 +3785,60 @@
     "monk": {
       "name": "Monk",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Dart",
+            "quantity": 10
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "Shortsword",
+                "items": [
+                  {
+                    "name": "Shortsword",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Dexterity", "Wisdom"],
       "savingThrowProficiencies": ["Strength", "Dexterity"],
       "skillOptions": {
@@ -3142,7 +3869,13 @@
           "features": ["Unarmored Defense", "Martial Arts"],
           "automaticFeatures": {
             "Unarmored Defense": {
-              "description": "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier."
+              "description": "Beginning at 1st level, while you are wearing no armor and not wielding a shield, your AC equals 10 + your Dexterity modifier + your Wisdom modifier.",
+              "bonus": {
+                "adjustmentCategory": "combatStats",
+                "adjustmentSubCategory": "AC",
+                "adjustmentAbility": "WIS",
+                "adjustmentValue": "0"
+              }
             },
             "Martial Arts": {
               "description": "At 1st level, your practice of martial arts gives you mastery of combat styles that use unarmed strikes and monk weapons, which are shortswords and any simple melee weapons that don't have the two-handed or heavy property. You gain the following benefits while you are unarmed or wielding only monk weapons and you aren't wearing armor or wielding a shield: You can use Dexterity instead of Strength for the attack and damage rolls of your unarmed strikes and monk weapons. You can roll a d4 in place of the normal damage of your unarmed strike or monk weapon. This die changes as you gain monk levels, as shown in the Martial Arts column of the Monk table. When you use the Attack action with an unarmed strike or a monk weapon on your turn, you can make one unarmed strike as a bonus action.",
@@ -3706,6 +4439,89 @@
     "paladin": {
       "name": "Paladin",
       "hitDie": 10,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Chain Mail",
+            "quantity": 1
+          },
+          {
+            "name": "Holy Symbol",
+            "quantity": 1
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapons",
+            "options": [
+              {
+                "label": "A martial weapon and a shield",
+                "items": [
+                  {
+                    "name": "Shield",
+                    "quantity": 1
+                  }
+                ],
+                "select": {
+                  "category": "Martial",
+                  "count": 1
+                }
+              },
+              {
+                "label": "Two martial weapons",
+                "select": {
+                  "category": "Martial",
+                  "count": 2
+                }
+              }
+            ]
+          },
+          {
+            "name": "Secondary weapon",
+            "options": [
+              {
+                "label": "Five javelins",
+                "items": [
+                  {
+                    "name": "Javelin",
+                    "quantity": 5
+                  }
+                ]
+              },
+              {
+                "label": "Any simple melee weapon",
+                "select": {
+                  "category": "Simple Melee",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Priest's pack",
+                "items": [
+                  {
+                    "name": "Priest's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Strength", "Charisma"],
       "savingThrowProficiencies": ["Wisdom", "Charisma"],
       "skillOptions": {
@@ -4101,6 +4917,91 @@
     "ranger": {
       "name": "Ranger",
       "hitDie": 10,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Longbow",
+            "quantity": 1
+          },
+          {
+            "name": "Quiver",
+            "quantity": 1
+          },
+          {
+            "name": "Arrow",
+            "quantity": 20
+          }
+        ],
+        "choices": [
+          {
+            "name": "Armor",
+            "options": [
+              {
+                "label": "Scale mail",
+                "items": [
+                  {
+                    "name": "Scale Mail",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Leather armor",
+                "items": [
+                  {
+                    "name": "Leather Armor",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "name": "Weapons",
+            "options": [
+              {
+                "label": "Two shortswords",
+                "items": [
+                  {
+                    "name": "Shortsword",
+                    "quantity": 2
+                  }
+                ]
+              },
+              {
+                "label": "Two simple melee weapons",
+                "select": {
+                  "category": "Simple Melee",
+                  "count": 2
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Dexterity", "Wisdom"],
       "savingThrowProficiencies": ["Strength", "Dexterity"],
       "skillOptions": {
@@ -4548,6 +5449,91 @@
     "sorcerer": {
       "name": "Sorcerer",
       "hitDie": 6,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Dagger",
+            "quantity": 2
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "A light crossbow and 20 bolts",
+                "items": [
+                  {
+                    "name": "Crossbow, Light",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Crossbow Bolts",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Spellcasting focus",
+            "options": [
+              {
+                "label": "Component pouch",
+                "items": [
+                  {
+                    "name": "Component Pouch",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "An arcane focus",
+                "select": {
+                  "oneOf": [
+                    "Crystal",
+                    "Orb",
+                    "Rod",
+                    "Staff",
+                    "Wand"
+                  ],
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Explorer's pack",
+                "items": [
+                  {
+                    "name": "Explorer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Charisma"],
       "savingThrowProficiencies": ["Constitution", "Charisma"],
       "skillOptions": {
@@ -4902,6 +5888,107 @@
     "warlock": {
       "name": "Warlock",
       "hitDie": 8,
+      "startingEquipment": {
+        "fixed": [
+          {
+            "name": "Leather Armor",
+            "quantity": 1
+          },
+          {
+            "name": "Dagger",
+            "quantity": 2
+          }
+        ],
+        "choices": [
+          {
+            "name": "Weapon",
+            "options": [
+              {
+                "label": "A light crossbow and 20 bolts",
+                "items": [
+                  {
+                    "name": "Crossbow, Light",
+                    "quantity": 1
+                  },
+                  {
+                    "name": "Crossbow Bolts",
+                    "quantity": 20
+                  }
+                ]
+              },
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Spellcasting focus",
+            "options": [
+              {
+                "label": "Component pouch",
+                "items": [
+                  {
+                    "name": "Component Pouch",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "An arcane focus",
+                "select": {
+                  "oneOf": [
+                    "Crystal",
+                    "Orb",
+                    "Rod",
+                    "Staff",
+                    "Wand"
+                  ],
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Simple weapon",
+            "options": [
+              {
+                "label": "Any simple weapon",
+                "select": {
+                  "category": "Simple",
+                  "count": 1
+                }
+              }
+            ]
+          },
+          {
+            "name": "Pack",
+            "options": [
+              {
+                "label": "Scholar's pack",
+                "items": [
+                  {
+                    "name": "Scholar's Pack",
+                    "quantity": 1
+                  }
+                ]
+              },
+              {
+                "label": "Dungeoneer's pack",
+                "items": [
+                  {
+                    "name": "Dungeoneer's Pack",
+                    "quantity": 1
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "primaryAbilities": ["Charisma"],
       "savingThrowProficiencies": ["Wisdom", "Charisma"],
       "skillOptions": {

@@ -84,6 +84,14 @@ const messageHandlers = {
     'apply-damage': handleApplyMonsterDamage,
     'update-init' : handleUpdatePlayerInitiative,
     'request-init-list' : handleRequestInitList,
+    // Reassembles oversized messages (see SharedScript's chunked transport)
+    'chunk': (message, fromClient) => receiveSyncChunk(message, fromClient, (original, from) => {
+        if (original.type && messageHandlers[original.type]) {
+            messageHandlers[original.type](original, from);
+        } else {
+            console.warn("Unhandled reassembled message type:", original.type);
+        }
+    })
     // Add more as needed
 };
 
@@ -4688,4 +4696,131 @@ function initAbacus() {
   
     console.log("Abacus initialized with", MAX, "cells.");
     // render(0);
+}
+
+
+// ============================================================================
+// Give to Player (Homebrew menu)
+// ----------------------------------------------------------------------------
+// Sends an item or spell to a chosen player over TS.sync. The player's sheet
+// handles 'give-item' / 'give-spell': items are added straight to their
+// backpack (and custom items saved into their own storage first), spells are
+// only downloaded — the player adds them to their spell list themselves.
+// ============================================================================
+
+function getGiveEquipmentCatalog() {
+    const info = AppData.equipmentLookupInfo;
+    if (Array.isArray(info)) return info;
+    return info?.equipmentData || [];
+}
+
+function populateGiveToPlayerSection() {
+    const playerSelect = document.getElementById('givePlayerSelect');
+    if (!playerSelect) return;
+
+    playerSelect.innerHTML = '';
+    if (clients.length === 0) {
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No players connected';
+        playerSelect.appendChild(option);
+        playerSelect.disabled = true;
+    } else {
+        playerSelect.disabled = false;
+        clients.forEach(client => {
+            const option = document.createElement('option');
+            option.value = client.id;
+            option.textContent = client.name;
+            playerSelect.appendChild(option);
+        });
+    }
+
+    const itemOptions = document.getElementById('giveItemOptions');
+    itemOptions.innerHTML = '';
+    getGiveEquipmentCatalog().forEach(item => {
+        if (!item?.name) return;
+        const option = document.createElement('option');
+        option.value = item.name;
+        itemOptions.appendChild(option);
+    });
+
+    const spellOptions = document.getElementById('giveSpellOptions');
+    spellOptions.innerHTML = '';
+    (AppData.spellLookupInfo?.spellsData || []).forEach(spell => {
+        if (!spell?.name) return;
+        const option = document.createElement('option');
+        option.value = spell.name;
+        spellOptions.appendChild(option);
+    });
+}
+
+async function sendGiveMessage(type, payload, playerId, successText, button) {
+    const message = { type: type, data: payload };
+
+    // Large payloads are chunked + throttled (sync messages max out around
+    // 500 characters); lock the button so clicks can't stack transfers
+    let originalLabel;
+    if (button) {
+        originalLabel = button.textContent;
+        button.disabled = true;
+        button.textContent = 'Sending…';
+    }
+
+    try {
+        await sendSyncMessageSafe(message, playerId, (sent, total) => {
+            if (button && total > 1) button.textContent = `Sending ${sent}/${total}…`;
+        });
+        showErrorModal(successText);
+    } catch (error) {
+        console.error('Failed to send to player:', error);
+        showErrorModal('Could not reach that player — are they still on the board?');
+    } finally {
+        if (button) {
+            button.disabled = false;
+            button.textContent = originalLabel;
+        }
+    }
+}
+
+if (document.getElementById('giveToPlayerSection')) {
+    // Refresh the player list and name suggestions whenever homebrew opens
+    document.getElementById('openHomebrew').addEventListener('click', populateGiveToPlayerSection);
+
+    document.getElementById('giveItemButton').addEventListener('click', () => {
+        const playerSelect = document.getElementById('givePlayerSelect');
+        const playerId = playerSelect.value;
+        const playerName = playerSelect.options[playerSelect.selectedIndex]?.textContent || 'player';
+        const itemName = document.getElementById('giveItemInput').value.trim();
+
+        if (!playerId) { showErrorModal('No player selected.'); return; }
+        const item = getGiveEquipmentCatalog().find(i =>
+            i.name && i.name.toLowerCase() === itemName.toLowerCase());
+        if (!item) { showErrorModal(`Item "${itemName}" not found.`); return; }
+
+        // Fresh copy without any sheet-local state
+        const itemCopy = JSON.parse(JSON.stringify(item));
+        delete itemCopy.uniqueId;
+
+        sendGiveMessage('give-item', { item: itemCopy }, playerId,
+            `Gave ${item.name} to ${playerName}.`,
+            document.getElementById('giveItemButton'));
+        document.getElementById('giveItemInput').value = '';
+    });
+
+    document.getElementById('giveSpellButton').addEventListener('click', () => {
+        const playerSelect = document.getElementById('givePlayerSelect');
+        const playerId = playerSelect.value;
+        const playerName = playerSelect.options[playerSelect.selectedIndex]?.textContent || 'player';
+        const spellName = document.getElementById('giveSpellInput').value.trim();
+
+        if (!playerId) { showErrorModal('No player selected.'); return; }
+        const spell = (AppData.spellLookupInfo?.spellsData || []).find(s =>
+            s.name && s.name.toLowerCase() === spellName.toLowerCase());
+        if (!spell) { showErrorModal(`Spell "${spellName}" not found.`); return; }
+
+        sendGiveMessage('give-spell', { spell: JSON.parse(JSON.stringify(spell)) }, playerId,
+            `Sent ${spell.name} to ${playerName}.`,
+            document.getElementById('giveSpellButton'));
+        document.getElementById('giveSpellInput').value = '';
+    });
 }

@@ -56,7 +56,11 @@ const messageHandlers = {
     'target-selection': handleTargetSelection,
     'player-init-list': createPlayerInit,
     'player-init-turn': handleInitTurn,
-    'player-init-round': handleInitRound
+    'player-init-round': handleInitRound,
+    'give-item': handleGiveItem,
+    'give-spell': handleGiveSpell,
+    // Reassembles oversized messages (see SharedScript's chunked transport)
+    'chunk': (message, fromClient) => receiveSyncChunk(message, fromClient, handleIncomingMessage)
 };
 
 let monsterNames
@@ -1002,7 +1006,7 @@ function updateDerivedStats(category) {
             updateSaveModifier();
             break;
         case "attributes":
-            // updateAttributes();
+            updateAttributes();
             break;
         case "combatStats":
             updateCombatStats();
@@ -1024,6 +1028,71 @@ function updateCombatStats(){
     updateSpellDCHeader();
     const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
     updateSpelltoHitDice(spellCastingAbility)
+}
+
+const ATTRIBUTE_SCORE_ELEMENT_IDS = {
+    STR: 'strengthScore', DEX: 'dexterityScore', CON: 'constitutionScore',
+    INT: 'intelligenceScore', WIS: 'wisdomScore', CHA: 'charismaScore'
+};
+
+/**
+ * Applies "attributes" stat bonuses (from trait adjustments) to the displayed
+ * ability scores. The displayed score is base + bonuses; the base is what
+ * gets saved (see getAllEditableContent), so bonuses re-applied by traits on
+ * the next load don't stack. data-applied-attr-bonus tracks what's currently
+ * baked into the displayed number.
+ */
+function updateAttributes() {
+    const allBonuses = characterStatBonuses.attributes.All.bonuses
+        .reduce((total, bonus) => total + (bonus.value || 0), 0);
+
+    Object.entries(ATTRIBUTE_SCORE_ELEMENT_IDS).forEach(([key, elementId]) => {
+        const scoreElement = document.getElementById(elementId);
+        if (!scoreElement) return;
+
+        const applied = parseInt(scoreElement.dataset.appliedAttrBonus || '0', 10);
+        const displayed = parseInt(scoreElement.textContent, 10) || 0;
+        const base = displayed - applied;
+
+        const bonus = characterStatBonuses.attributes[key].bonuses
+            .reduce((total, b) => total + (b.value || 0), 0) + allBonuses;
+
+        const newTotal = base + bonus;
+        scoreElement.textContent = newTotal;
+        scoreElement.dataset.appliedAttrBonus = bonus;
+
+        // Refresh the modifier button/label next to the score
+        const abilityModifier = calculateAbilityModifier(newTotal);
+        const container = scoreElement.parentElement;
+        const button = container.querySelector('.actionButton');
+        const label = container.querySelector('.actionButtonLabel');
+        button.textContent = abilityModifier > 0 ? `+${abilityModifier}` : `${abilityModifier}`;
+        label.setAttribute('value', abilityModifier);
+    });
+
+    // Same derived-stat cascade as a manual ability score edit
+    updateAdjustmentValues()
+    updateSkillModifier();
+    updateSaveModifier();
+    updateHitDiceValue()
+    updateAC();
+    // Spell stats need the spell catalog, which loads async during init
+    if (AppData?.spellLookupInfo?.spellsData) {
+        updateAllToHitDice();
+        updateAllSpellDCs();
+        updateAllSpellDamageDice();
+        updateSpellDCHeader()
+        const spellCastingAbility = document.querySelector('.spellcasting-dropdown').value;
+        updateSpelltoHitDice(spellCastingAbility)
+    }
+}
+
+/** The saved (base) value of an ability score div: displayed minus trait bonuses. */
+function getBaseAttributeScore(scoreElement) {
+    const applied = parseInt(scoreElement.dataset.appliedAttrBonus || '0', 10);
+    const displayed = parseInt(scoreElement.textContent, 10);
+    if (isNaN(displayed)) return scoreElement.innerText;
+    return String(displayed - applied);
 }
 
 
@@ -2232,11 +2301,19 @@ function getAllEditableContent() {
 
     const content = {};
 
+    // Preserve the structured build record written by the Character Creator.
+    // It has no DOM representation, so without this it would be dropped every
+    // time the sheet rebuilds the save from the page.
+    if (window.characterCreatorBuildData) {
+        content['characterCreatorData'] = window.characterCreatorBuildData;
+    }
+
     // Add specific elements to the content object
     content['characterTempHp'] = characterTempHp.value;
     content['currentHitDice'] = currentHitDice.textContent
     content['insp'] = getInspirationState();
     content['upcastToggle'] = upcastToggle.checked ? 1 : 0;
+    content['upcastModeToggle'] = document.getElementById("upcastCastButton").checked ? 1 : 0;
     content['exhaustionToggle'] = exhaustionToggle.checked ? 1 : 0;
     content['playerWeaponProficiency'] = [...playerWeaponProficiency];
     content['playerArmorProficiency'] = [...playerArmorProficiency];
@@ -2244,9 +2321,14 @@ function getAllEditableContent() {
     content['playerToolsProficiency'] = [...playerToolsProficiency];
 
     // Add other content-editable elements to the content object
+    const abilityScoreIds = Object.values(ATTRIBUTE_SCORE_ELEMENT_IDS);
     editableElements.forEach((element) => {
         const id = element.id;
-        const value = element.innerText;
+        // Ability scores save their BASE value; trait "attributes" bonuses are
+        // re-applied on load, so saving the displayed total would stack them.
+        const value = abilityScoreIds.includes(id)
+            ? getBaseAttributeScore(element)
+            : element.innerText;
         content[id] = value;
     });
 
@@ -2498,6 +2580,10 @@ inputElements.forEach((element) => {
 
 
 function updateCharacterUI(characterData, characterName) {
+    // Hold on to the Character Creator's structured build record (if any) so it
+    // survives the sheet's DOM-based save cycle. Old saves simply won't have it.
+    window.characterCreatorBuildData = characterData.characterCreatorData || null;
+
     const characterNameElement = document.getElementById("playerCharacterInput");
     const characterAlignment = document.getElementById('alignment-select');
     const characterTempHpElement = document.getElementById("tempHP");
@@ -2510,6 +2596,7 @@ function updateCharacterUI(characterData, characterName) {
     currentHitDice.textContent = characterData.currentHitDice;
 
     setUpcastToggle(characterData.upcastToggle)
+    setUpcastModeToggle(characterData.upcastModeToggle)
     setExhaustionToggle(characterData.exhaustionToggle)
 
     const characterInit = document.getElementById("initiativeButton");
@@ -2595,6 +2682,15 @@ async function loadAndSetLanguage(){
     setLanguage(savedLanguage);
 }
 
+function setUpcastModeToggle(value) {
+    document.getElementById("upcastCastButton").checked = value === 1;
+}
+
+/** True when the "Upcast Via Cast Button" mode is active. */
+function isUpcastCastMode() {
+    return document.getElementById("upcastCastButton").checked;
+}
+
 function setUpcastToggle(value) {
     const upcastToggle = document.getElementById("showUpcastSpells");
     upcastToggle.checked = value === 1;
@@ -2641,6 +2737,18 @@ async function loadAndPickaCharacter() {
     // Step 1: Load all characters from global storage
     const dataType = "characters";
     const allCharactersData = await loadDataFromCampaignStorage(dataType);
+
+    // If the Character Creator sent us back here with a character to open,
+    // load it directly instead of showing the picker.
+    try {
+        const requested = await getRequestedSheetCharacter();
+        if (requested && allCharactersData[requested]) {
+            loadAndDisplayCharacter(requested, allCharactersData);
+            return;
+        }
+    } catch (error) {
+        console.error("Failed to check for a requested character:", error);
+    }
 
     // Step 2: Create a full-screen overlay element
     const overlay = document.createElement('div');
@@ -2716,6 +2824,9 @@ async function loadAndPickaCharacter() {
             const newCharacterName = characterInput.value.trim();
             if (newCharacterName) {
                 console.log(`Creating new character: ${newCharacterName}`);
+                // Starting a brand-new character: don't carry over the previous
+                // character's creator build record.
+                window.characterCreatorBuildData = null;
                 // Add logic to save new character data
                 const characterName = document.getElementById("playerCharacterInput");
                 characterName.textContent = newCharacterName
@@ -3909,6 +4020,20 @@ function createSpellRow(spell,spellLevel) {
     spellNameContainer.appendChild(magGlassButton); // Append the magnifying glass button
     // spellNameContainer.appendChild(diceButton); // Append the dice button
 
+    // "Cast at level" button (Upcast Via Cast Button mode). Styled like the
+    // mag-glass button so the row stays aligned; shows the pinned level
+    // ("⮝3") after casting upcast. Hidden until loadSpell marks the row
+    // upcastable and the mode is on.
+    if (spellLevel !== 'Cantrip') {
+        const upcastCastButton = document.createElement('button');
+        upcastCastButton.classList.add('upcast-cast-button');
+        upcastCastButton.textContent = '⮝';
+        upcastCastButton.title = 'Cast this spell at a chosen level';
+        upcastCastButton.style.display = 'none';
+        upcastCastButton.addEventListener('click', () => openUpcastCastModal(row));
+        spellNameContainer.appendChild(upcastCastButton);
+    }
+
     // Other spell details
     const castTime = document.createElement('td');
     castTime.classList.add('spell-cast-time');
@@ -4143,8 +4268,16 @@ function loadSpell(spell,row) {
     }
     else if(spellLevel > baseLevel){
         row.classList.add('upcast-spell');
+        if (isUpcastCastMode()) row.style.display = 'none';
     }
     else{
+        // Base row of an upcastable spell: usable with the cast button, and
+        // the source for generated per-level rows in the classic mode
+        row.dataset.upcastable = '1';
+        const upcastCastButton = row.querySelector('.upcast-cast-button');
+        if (upcastCastButton) {
+            upcastCastButton.style.display = isUpcastCastMode() ? '' : 'none';
+        }
         generateUpcastSpells(spell, spellLevel, spellDetails, row);
     }
 
@@ -4204,7 +4337,9 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
     // Find the corresponding spell object based on the spell name
     let spellData = spellDataArray.find(spellData => spellData.name === spell.name);
     
-    if (baseLevelIndex === -1 || !document.getElementById('showUpcastSpells').checked) return;
+    // The cast-button mode replaces the generated per-level rows entirely
+    if (baseLevelIndex === -1 || isUpcastCastMode() ||
+        !document.getElementById('showUpcastSpells').checked) return;
 
     for (let i = baseLevelIndex + 1; i < spellLevels.length; i++) {
         const container = document.querySelector(`#${spellLevelContainer[i].replace(' ', '-')}-container`);
@@ -4224,6 +4359,12 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
                     spellContainer.appendChild(spellTable);
                 }
 
+                // Don't create the same upcast row twice (mode switches and
+                // reloads can retrigger generation)
+                const alreadyThere = [...spellTable.querySelectorAll('.spell-row.upcast-spell .spell-name-input')]
+                    .some(input => input.value.trim() === spellData.name);
+                if (alreadyThere) continue;
+
                 const spellRow = createSpellRow(spellData, spellLevels[i]);
                 spellTable.appendChild(spellRow);
                 loadSpell(spellData, spellRow);  // Populates the row with spell details
@@ -4236,9 +4377,180 @@ function generateUpcastSpells(baseSpell, baseLevel, spell) {
 
 document.getElementById('showUpcastSpells').addEventListener('change', function() {
     document.querySelectorAll('.upcast-spell').forEach(row => {
-        row.style.display = this.checked ? '' : 'none';
+        row.style.display = (this.checked && !isUpcastCastMode()) ? '' : 'none';
     });
     updateContent();
+});
+
+/**
+ * Applies the "Upcast Via Cast Button" mode: hides the generated per-level
+ * rows and shows a cast button on upcastable base rows (or the reverse).
+ * Turning the mode off regenerates any per-level rows that were skipped.
+ */
+function applyUpcastCastMode() {
+    const castMode = isUpcastCastMode();
+    const showRows = document.getElementById('showUpcastSpells').checked;
+
+    document.querySelectorAll('.upcast-spell').forEach(row => {
+        row.style.display = (!castMode && showRows) ? '' : 'none';
+    });
+
+    document.querySelectorAll('.spell-row[data-upcastable="1"]').forEach(row => {
+        const button = row.querySelector('.upcast-cast-button');
+        if (button) button.style.display = castMode ? '' : 'none';
+
+        // Leaving cast mode: clear any chosen cast level and rebuild the
+        // per-level rows generation skipped while the mode was on
+        if (!castMode) {
+            clearCastLevel(row);
+            const spellName = row.querySelector('.spell-name-input')?.value.trim();
+            const spellDetails = AppData?.spellLookupInfo?.spellsData?.find(s => s.name === spellName);
+            if (spellDetails && showRows) {
+                generateUpcastSpells(spellDetails, spellDetails.level, spellDetails);
+            }
+        }
+    });
+
+    updateAllSpellDamageDice();
+    updateContent();
+}
+
+document.getElementById('upcastCastButton').addEventListener('change', applyUpcastCastMode);
+
+const SPELL_LEVEL_ORDINALS = ['1st', '2nd', '3rd', '4th', '5th', '6th', '7th', '8th', '9th'];
+
+function spellLevelKeyFor(levelNumber) {
+    return `${SPELL_LEVEL_ORDINALS[levelNumber - 1]}-level`;
+}
+
+/** Scaled damage dice for casting at castLevel (base dice when no scaling). */
+function getDiceForCastLevel(spellDetails, castLevel) {
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    if (!spellDetails.damage_dice) return '';
+    if (castLevel <= baseLevelNumber || !spellDetails.damage_dice_upcast) {
+        return spellDetails.damage_dice;
+    }
+    return calculateUpcastDamage(spellDetails.damage_dice,
+        spellDetails.damage_dice_upcast, castLevel - baseLevelNumber);
+}
+
+function clearCastLevel(row) {
+    delete row.dataset.castLevel;
+    const button = row.querySelector('.upcast-cast-button');
+    if (button) {
+        button.textContent = '⮝';
+        button.title = 'Cast this spell at a chosen level';
+        button.classList.remove('pinned');
+    }
+}
+
+/**
+ * Level picker for the cast-button mode: one row per spell level with slots,
+ * showing remaining slots and the scaled dice, plus the spell's own
+ * "At Higher Levels" text for non-damage changes (extra targets, ...).
+ */
+function openUpcastCastModal(row) {
+    const spellName = row.querySelector('.spell-name-input')?.value.trim();
+    const spellDetails = AppData?.spellLookupInfo?.spellsData?.find(s => s.name === spellName);
+    if (!spellDetails) return;
+
+    const modal = document.getElementById('upcastModal');
+    const effects = document.getElementById('upcastEffects');
+    document.getElementById('spellTitle').textContent = spellDetails.name;
+    effects.innerHTML = '';
+
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    // Offer every level the sheet is currently showing (the spell-level
+    // dropdown), from the spell's own level up
+    const shownMaxLevel = Math.min(9,
+        parseInt(document.querySelector('.spell-level-dropdown')?.value, 10) || 9);
+
+    for (let castLevel = baseLevelNumber; castLevel <= Math.max(shownMaxLevel, baseLevelNumber); castLevel++) {
+        const group = document.querySelector(`.spell-group[spellLevel="${spellLevelKeyFor(castLevel)}"]`);
+        const slots = group ? group.querySelectorAll('.spell-slot') : [];
+        const freeSlots = group ? group.querySelectorAll('.spell-slot:not(.used)').length : 0;
+        const dice = getDiceForCastLevel(spellDetails, castLevel);
+
+        const line = document.createElement('div');
+        line.classList.add('upcast-cast-row');
+
+        const levelCell = document.createElement('span');
+        levelCell.classList.add('upcast-cast-level');
+        levelCell.textContent = SPELL_LEVEL_ORDINALS[castLevel - 1];
+        line.appendChild(levelCell);
+
+        const slotsCell = document.createElement('span');
+        slotsCell.classList.add('upcast-cast-slots');
+        slotsCell.textContent = slots.length > 0 ? `${freeSlots}/${slots.length}` : '—';
+        slotsCell.title = slots.length > 0
+            ? `${freeSlots} of ${slots.length} slots left`
+            : 'No slots of this level on the sheet';
+        line.appendChild(slotsCell);
+
+        const diceCell = document.createElement('span');
+        diceCell.classList.add('upcast-cast-dice');
+        diceCell.textContent = dice || '';
+        line.appendChild(diceCell);
+
+        const castButton = document.createElement('button');
+        castButton.classList.add('nonRollButton', 'upcast-cast-confirm');
+        castButton.textContent = 'Cast';
+        castButton.disabled = freeSlots === 0;
+        castButton.addEventListener('click', () => {
+            castSpellAtLevel(row, spellDetails, castLevel);
+            modal.style.display = 'none';
+        });
+        line.appendChild(castButton);
+
+        effects.appendChild(line);
+    }
+
+    if (spellDetails.higher_level) {
+        const higher = document.createElement('p');
+        higher.classList.add('upcast-higher-level-text');
+        const em = document.createElement('em');
+        em.textContent = 'At Higher Levels. ';
+        higher.appendChild(em);
+        higher.appendChild(document.createTextNode(spellDetails.higher_level));
+        effects.appendChild(higher);
+    }
+
+    modal.style.display = 'flex';
+}
+
+/**
+ * Spends one slot of the chosen level and pins the row's damage dice (and a
+ * small "@Nth" chip) to that cast level until it's cast again.
+ */
+function castSpellAtLevel(row, spellDetails, castLevel) {
+    const group = document.querySelector(`.spell-group[spellLevel="${spellLevelKeyFor(castLevel)}"]`);
+    const freeSlot = group ? group.querySelector('.spell-slot:not(.used)') : null;
+    if (!freeSlot) {
+        showErrorModal(`No ${SPELL_LEVEL_ORDINALS[castLevel - 1]}-level spell slots left.`);
+        return;
+    }
+    freeSlot.textContent = ' ';
+    freeSlot.classList.add('used');
+
+    const baseLevelNumber = getLevelNumber(spellDetails.level);
+    if (castLevel > baseLevelNumber) {
+        row.dataset.castLevel = castLevel;
+        const button = row.querySelector('.upcast-cast-button');
+        if (button) {
+            button.textContent = `⮝${castLevel}`;
+            button.title = `Last cast at ${SPELL_LEVEL_ORDINALS[castLevel - 1]} level — click to cast again`;
+            button.classList.add('pinned');
+        }
+    } else {
+        clearCastLevel(row);
+    }
+
+    updateAllSpellDamageDice();
+    updateContent();
+}
+
+document.querySelector('#upcastModal .close').addEventListener('click', () => {
+    document.getElementById('upcastModal').style.display = 'none';
 });
 
 function updateSpelltoHitorDC(spellDetails) {
@@ -4478,8 +4790,16 @@ function updateAllSpellDamageDice() {
                     let upCastedDice
                     const spellLevel = row.getAttribute('data-spell-level');
                     const baseLevel = spellDetails.level;
+                    const castLevel = parseInt(row.dataset.castLevel || '0', 10);
                     if(spellDetails.higher_level === "" || spellLevel === "Cantrip"){
                         // No upcasting needed
+                    }
+                    else if (castLevel > getLevelNumber(baseLevel)) {
+                        // Cast-button mode: the row is pinned to a chosen level
+                        if (spellDetails.damage_dice_upcast) {
+                            adjustedDamageDice = calculateUpcastDamage(spellDetails.damage_dice,
+                                spellDetails.damage_dice_upcast, castLevel - getLevelNumber(baseLevel));
+                        }
                     }
                     else if(spellLevel > baseLevel){
                         if (spellDetails.damage_dice_upcast) {
@@ -7454,6 +7774,57 @@ function handleRollDice(message, FromClient) {
 
 
 
+// DM gave this player an item: download it if it's homebrew, then drop it
+// straight into the backpack through the normal inventory path (so the save
+// format is exactly the same as a manually added item).
+async function handleGiveItem(message) {
+    const item = message?.data?.item;
+    if (!item || !item.name) return;
+
+    const catalog = Array.isArray(AppData.equipmentLookupInfo)
+        ? AppData.equipmentLookupInfo
+        : (AppData.equipmentLookupInfo?.equipmentData || []);
+    const isKnown = catalog.some(entry => entry.name === item.name);
+    if (!isKnown) {
+        // Homebrew item this player doesn't have yet: save it to their own
+        // storage and refresh the catalog so it stays usable later
+        await saveToGlobalStorage("Custom Equipment", item.name, item, false);
+        AppData.equipmentLookupInfo = await readEquipmentJson();
+    }
+
+    const itemCopy = JSON.parse(JSON.stringify(item));
+    delete itemCopy.uniqueId;
+    if (!itemCopy.equipment_category) {
+        itemCopy.equipment_category = { index: "equipment", name: "Equipment" };
+    }
+    if (!itemCopy.cost) {
+        itemCopy.cost = { quantity: 0, unit: "gp" };
+    }
+    itemCopy.quantity = itemCopy.quantity > 0 ? itemCopy.quantity : 1;
+
+    addItemToInventory(itemCopy, 'backpack');
+    updateWeight();
+    updateContent();
+    showErrorModal(`The DM gave you ${item.name} — added to your backpack.`);
+}
+
+// DM sent this player a spell: download it if it's homebrew. The player adds
+// it to their spell list themselves (it isn't auto-prepared).
+async function handleGiveSpell(message) {
+    const spell = message?.data?.spell;
+    if (!spell || !spell.name) return;
+
+    const isKnown = (AppData.spellLookupInfo?.spellsData || [])
+        .some(entry => entry.name === spell.name);
+    if (!isKnown) {
+        await saveToGlobalStorage("Custom Spells", spell.name, spell, false);
+        await loadSpellDataFiles();
+    }
+
+    showErrorModal(`The DM sent you the spell ${spell.name} — ` +
+        `you can now add it to your spell list from the spell search.`);
+}
+
 // Handle a target selection request (e.g., for combat)
 function handleTargetSelection(message, FromClient) {
     const { targetId } = message.data;
@@ -7743,6 +8114,14 @@ document.getElementById("importSaveButton").addEventListener("click", async () =
 
         if (importDataType === "characters") {
             saveToCampaignStorage(importDataType, key, dataInfo, true);
+        } else if (importDataType === "Custom Subclasses") {
+            // Verify against 5e/5.5e subclass structure before accepting
+            const result = await validateCustomSubclass(dataInfo || {});
+            if (result.errors.length > 0) {
+                showErrorModal("Subclass failed verification: " + result.errors.join(' '));
+                return;
+            }
+            saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
             saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else {
@@ -8368,17 +8747,149 @@ function updateExtrasCardDataFromLoad(extrasData) {
 
 
 
-function openCharacterCreator() {
-    // Option 1: Open in new window/tab
-    // window.open('./Character Creator/D&D Character Creator.html', '_blank');
-    
-    // Option 2: Open in same window (uncomment if you prefer this)
-    // window.location.href = './CharacterCreator/CharacterCreator.html';
-    
-    // Option 3: Open in popup window (uncomment if you prefer this)
-    const popup = window.open(
-        './CharacterCreator/CharacterCreator.html', 
-        'CharacterCreator'
-    );
-    popup.focus();
+// ---------------------------------------------------------------------------
+// Character Creator navigation
+// ---------------------------------------------------------------------------
+// The symbiote runs as a single webview inside TaleSpire, where window.open()
+// replaces the current view instead of opening a popup. Query strings are not
+// guaranteed to survive that navigation, so requests between the sheet and
+// the Character Creator are also passed through a small "handoff" record kept
+// in TS global storage (or window.localStorage when testing in a browser).
+
+const CREATOR_HANDOFF_BROWSER_KEY = 'tsvtt-creator-handoff';
+const CREATOR_HANDOFF_MAX_AGE_MS = 5 * 60 * 1000;
+
+function sheetHasTaleSpire() {
+    return typeof TS !== 'undefined' && TS.localStorage && TS.localStorage.global;
 }
+
+// payload = {action: 'edit'|'load', name, time} — or null to clear.
+async function writeCreatorHandoff(payload) {
+    if (!sheetHasTaleSpire()) {
+        try {
+            if (payload) window.localStorage.setItem(CREATOR_HANDOFF_BROWSER_KEY, JSON.stringify(payload));
+            else window.localStorage.removeItem(CREATOR_HANDOFF_BROWSER_KEY);
+        } catch (error) { /* no storage available; the query string still works */ }
+        return;
+    }
+    try {
+        const blob = await TS.localStorage.global.getBlob();
+        let allData = {};
+        if (blob) {
+            try { allData = JSON.parse(blob); } catch (error) { allData = {}; }
+        }
+        if (payload) allData.creatorHandoff = payload;
+        else delete allData.creatorHandoff;
+        await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+    } catch (error) {
+        console.error("Failed to write creator handoff:", error);
+    }
+}
+
+async function readAndClearCreatorHandoff() {
+    let payload = null;
+    if (!sheetHasTaleSpire()) {
+        try {
+            const raw = window.localStorage.getItem(CREATOR_HANDOFF_BROWSER_KEY);
+            if (raw) {
+                payload = JSON.parse(raw);
+                window.localStorage.removeItem(CREATOR_HANDOFF_BROWSER_KEY);
+            }
+        } catch (error) { /* ignore */ }
+    } else {
+        try {
+            const blob = await TS.localStorage.global.getBlob();
+            if (blob) {
+                const allData = JSON.parse(blob);
+                if (allData.creatorHandoff) {
+                    payload = allData.creatorHandoff;
+                    delete allData.creatorHandoff;
+                    await TS.localStorage.global.setBlob(JSON.stringify(allData, null, 4));
+                }
+            }
+        } catch (error) {
+            console.error("Failed to read creator handoff:", error);
+        }
+    }
+    // Ignore requests left behind by an old session.
+    if (payload && payload.time && (Date.now() - payload.time) > CREATOR_HANDOFF_MAX_AGE_MS) {
+        return null;
+    }
+    return payload;
+}
+
+function navigateWithinSymbiote(url) {
+    if (sheetHasTaleSpire()) {
+        // Inside TaleSpire this replaces the current webview content.
+        window.open(url);
+    } else {
+        window.location.href = url;
+    }
+}
+
+async function openCharacterCreator() {
+    // Starting a brand-new character: make sure no stale edit request is waiting.
+    await writeCreatorHandoff(null);
+    navigateWithinSymbiote('./CharacterCreator/CharacterCreator.html');
+}
+
+// Opens the Character Creator pre-loaded with the currently loaded character so
+// levels can be added or edited. Falls back to a blank creator if no character
+// is loaded yet.
+async function openCharacterCreatorForEdit() {
+    const nameElement = document.getElementById("playerCharacterInput");
+    const characterName = nameElement ? nameElement.textContent.trim() : "";
+
+    if (characterName) {
+        await writeCreatorHandoff({ action: 'edit', name: characterName, time: Date.now() });
+    } else {
+        await writeCreatorHandoff(null);
+    }
+
+    // TaleSpire resolves symbiote URLs as local files, so a query string makes
+    // the page fail to load ("not available"). Inside TaleSpire the storage
+    // handoff alone carries the request; the query string is for browser testing.
+    const url = (characterName && typeof TS === 'undefined')
+        ? `./CharacterCreator/CharacterCreator.html?edit=${encodeURIComponent(characterName)}`
+        : './CharacterCreator/CharacterCreator.html';
+    navigateWithinSymbiote(url);
+}
+
+// Returns the character the Character Creator asked the sheet to open, if any.
+async function getRequestedSheetCharacter() {
+    let fromQuery = null;
+    try {
+        const params = new URLSearchParams(window.location.search);
+        fromQuery = params.get('load');
+    } catch (error) { /* ignore */ }
+
+    // Always consume the handoff so it can't fire again later.
+    const handoff = await readAndClearCreatorHandoff();
+
+    if (fromQuery) return fromQuery;
+    if (handoff && handoff.action === 'load' && handoff.name) return handoff.name;
+    return null;
+}
+
+// When the Character Creator saves a character into campaign storage it notifies
+// us so the sheet can refresh without re-picking the character manually.
+window.addEventListener('message', async (event) => {
+    const msg = event.data;
+    if (!msg || msg.type !== 'tsvtt-character-saved' || !msg.characterName) return;
+
+    try {
+        const currentNameElement = document.getElementById("playerCharacterInput");
+        const currentName = currentNameElement ? currentNameElement.textContent.trim() : "";
+
+        // Only auto-load when the saved character is the one on screen,
+        // or when no character is loaded yet.
+        if (currentName && currentName !== msg.characterName) return;
+
+        const allCharactersData = await loadDataFromCampaignStorage("characters");
+        if (allCharactersData && allCharactersData[msg.characterName]) {
+            loadAndDisplayCharacter(msg.characterName, allCharactersData);
+        }
+    } catch (error) {
+        console.error("Failed to reload character after creator save:", error);
+    }
+});

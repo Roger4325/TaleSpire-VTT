@@ -1,3 +1,28 @@
+/* ============================================================================
+   Theme tokens
+   TaleSpire injects the --ts-* variables (and styleShared.css maps a few more
+   onto them) only inside the game. Every token below falls back to a matching
+   dark-theme color so the creator renders correctly in a plain browser too.
+   ========================================================================== */
+:root {
+    --cc-font: var(--ts-font-family, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif);
+    --cc-bg: var(--ts-background-color, #22252d);
+    --cc-text: var(--ts-text-color, #e9e7e2);
+    --cc-border: var(--border-outline-color, #3f4553);
+    --cc-accent: var(--button-color-hover, #8b99e6);
+    --cc-accent-strong: var(--action-button-color, #5b6bd6);
+
+    /* Theme-agnostic layers: translucent tints that sit on ANY theme color */
+    --cc-raise: rgba(255, 255, 255, 0.04);          /* raised surface */
+    --cc-raise-strong: rgba(255, 255, 255, 0.09);   /* hover surface */
+    --cc-sunken: rgba(0, 0, 0, 0.22);               /* inputs */
+    --cc-glow: rgba(139, 153, 230, 0.35);           /* focus ring / accent glow */
+    --cc-accent-tint: rgba(139, 153, 230, 0.08);    /* selected surface */
+    --cc-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --cc-radius: 10px;
+    --cc-radius-sm: 7px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -5,10 +30,12 @@
 }
 
 body {
-    font-family: var(--ts-font-family);
-    background: rgb(2, 2, 2);
+    font-family: var(--cc-font);
+    background:
+        radial-gradient(1100px 500px at 50% -12%, rgba(139, 153, 230, 0.09), transparent 60%),
+        #0e1015;
     min-height: 100vh;
-    color: white;
+    color: var(--cc-text);
     overflow-y: hidden;
 }
 
@@ -24,55 +51,267 @@ body {
     margin-bottom: 5px;
     color: white;
     height: 10vh;
+    position: relative;
+}
+
+.header-sheet-button {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    padding: 8px 14px;
+    font-size: 14px;
+}
+
+/* Starting Equipment tab */
+.equipment-note {
+    opacity: 0.8;
+    font-style: italic;
+    margin: 10px 0;
+}
+
+.equipment-choice {
+    border: 1px solid var(--cc-border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    margin: 10px 0;
+}
+
+.equipment-option {
+    display: block;
+    margin: 6px 0;
+    cursor: pointer;
+}
+
+.equipment-option input[type="radio"] {
+    margin-right: 8px;
+}
+
+.equipment-pick {
+    display: block;
+    margin: 6px 0 6px 26px;
+    max-width: 320px;
+}
+
+.equipment-fixed ul, #equipmentContent ul {
+    margin: 6px 0 12px 24px;
+}
+
+.pack-contents {
+    font-size: 0.85em;
+    opacity: 0.8;
+    margin: 2px 0 4px 18px;
+}
+
+.pack-contents-wrap {
+    margin: 2px 0 8px 26px;
+    font-size: 0.9em;
+}
+
+/* Spells tab */
+#spellsContent {
+    max-height: calc(100vh - 250px);
+    overflow-y: auto;
+    padding-right: 6px;
+}
+
+.spell-class-section {
+    border: 1px solid var(--cc-border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 14px 0;
+}
+
+.spell-counters {
+    font-weight: bold;
+    margin: 6px 0;
+}
+
+.spell-counters-complete {
+    color: #6fdc6f;
+}
+
+.spell-search {
+    max-width: 320px;
+    margin: 8px 0;
+}
+
+.spell-level-group {
+    margin: 8px 0;
+    border: 1px solid var(--cc-border);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+.spell-level-group summary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Expandable spell cards */
+.spell-card {
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    margin: 6px 0;
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    overflow: hidden;
+    transition: border-color 0.2s ease;
+}
+
+.spell-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.spell-card-header:hover {
+    background: var(--cc-raise-strong);
+}
+
+.spell-card-selected {
+    border-color: var(--cc-accent);
+    background: linear-gradient(var(--cc-accent-tint), var(--cc-accent-tint)) var(--cc-bg);
+}
+
+/* Generous hit area around the checkbox so marking a spell doesn't
+   accidentally expand the card */
+.spell-card-checkbox-wrap {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: stretch;
+    padding: 8px 10px;
+    margin: -8px 0 -8px -12px;
+    cursor: pointer;
+}
+
+.spell-card-checkbox-wrap:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.spell-card-checkbox {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    accent-color: var(--cc-accent);
+}
+
+.spell-card-title {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 0;
+}
+
+.spell-card-subtitle {
+    font-size: 0.8em;
+    opacity: 0.7;
+    font-style: italic;
+}
+
+.spell-card-badge {
+    flex-shrink: 0;
+    font-size: 0.72em;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border: 1px solid var(--cc-border);
+    border-radius: 4px;
+    padding: 2px 6px;
+    opacity: 0.85;
+}
+
+/* Spell already granted by another class / subclass list; sits under the
+   spell name inside the title column */
+.spell-card-badge-owned {
+    border-color: #6fdc6f;
+    color: #6fdc6f;
+    opacity: 1;
+    align-self: flex-start;
+    margin-top: 3px;
+    white-space: normal;
+}
+
+.spell-card-owned {
+    border-left: 3px solid #6fdc6f;
+}
+
+.spell-card-chevron {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.spell-card-details {
+    padding: 4px 14px 10px 14px;
+    border-top: 1px solid var(--cc-border);
+}
+
+.spell-card-details.hidden {
+    display: none;
+}
+
+.spell-stat {
+    margin: 4px 0;
+    font-size: 0.9em;
+}
+
+.spell-desc {
+    margin: 8px 0 0 0;
+    font-size: 0.9em;
+    line-height: 1.45;
 }
 
 .header h1 {
-    font-size: 2.5em;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    color: var(--ts-text-color);
-    background: linear-gradient(135deg, var(--button-color-hover), #4a90e2);
+    font-size: 2.1em;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, var(--cc-accent), #4a90e2);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     position: relative;
-    padding: 10px 0;
-    filter: drop-shadow(0 0 8px rgba(139, 153, 230, 0.3));
+    padding: 8px 0 10px 0;
+    filter: drop-shadow(0 0 10px rgba(139, 153, 230, 0.25));
 }
 
 .header h1::after {
     content: '';
     position: absolute;
-    bottom: 0;
+    bottom: 2px;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 3px;
-    background: linear-gradient(90deg, transparent, var(--button-color-hover), transparent);
+    width: 120px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cc-accent), transparent);
     border-radius: 2px;
-    box-shadow: 0 0 10px rgba(139, 153, 230, 0.5);
 }
 
 .header p {
-    color: var(--ts-text-color);
-    opacity: 0.8;
+    color: var(--cc-text);
+    opacity: 0.65;
+    font-size: 0.9em;
+    letter-spacing: 0.04em;
 }
 
 .creator-container {
-    background: var(--ts-background-color);
-    border: 2px solid var(--border-outline-color);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    border: 1px solid var(--cc-border);
+    border-radius: 14px;
+    box-shadow: var(--cc-shadow);
     overflow: hidden;
     height: 100%;
 }
 
-/* Tab Navigation - Updated to match your styleShared.css */
+/* Tab Navigation */
 .nav-tabs {
     display: flex;
     flex-direction: row;
-    background: var(--ts-background-color);
-    border-bottom: 2px solid var(--border-outline-color);
+    background: rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid var(--cc-border);
     width: 100%;
     overflow: hidden;
 }
@@ -84,44 +323,56 @@ body {
     text-align: center;
     cursor: pointer;
     border: none;
-    background: var(--ts-background-color);
-    font-size: 14px;
-    transition: all 0.3s ease;
+    background: transparent;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: background 0.2s ease, color 0.2s ease;
     position: relative;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    opacity: 0.7;
+    font-family: var(--cc-font);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
+.nav-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 20%;
+    right: 20%;
+    height: 2px;
+    border-radius: 2px 2px 0 0;
+    background: transparent;
+    transition: background 0.2s ease, left 0.2s ease, right 0.2s ease;
+}
+
 .nav-tab:hover {
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-raise-strong);
+    opacity: 1;
 }
 
 .nav-tab.active {
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
-    font-weight: bold;
+    background: var(--cc-accent-tint);
+    color: var(--cc-accent);
+    opacity: 1;
 }
 
 .nav-tab.active::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--border-outline-color);
+    background: var(--cc-accent);
+    left: 12%;
+    right: 12%;
+    box-shadow: 0 0 8px var(--cc-glow);
 }
 
 .tab-content {
     padding: 15px;
     min-height: 600px;
     height: fit-content;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: var(--cc-bg);
+    color: var(--cc-text);
 }
 
 .tab-pane {
@@ -140,59 +391,59 @@ body {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .form-control {
     width: 100%;
-    padding: 10px;
-    border: 2px solid var(--border-outline-color);
-    border-radius: 5px;
-    font-size: 16px;
-    transition: border-color 0.3s ease;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    padding: 10px 12px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    font-size: 15px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    background: linear-gradient(var(--cc-sunken), var(--cc-sunken)) var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .form-control:focus {
     outline: none;
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
+    border-color: var(--cc-accent);
+    box-shadow: 0 0 0 3px var(--cc-glow);
 }
 
 .form-control option {
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: var(--cc-bg);
+    color: var(--cc-text);
 }
 
 .card {
-    background: var(--ts-background-color);
-    border: 2px solid var(--border-outline-color);
-    border-radius: 10px;
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
     padding: 20px;
     margin-bottom: 20px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--ts-text-color);
+    transition: border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    color: var(--cc-text);
 }
 
 .card:hover {
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 .card.selected {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
+    border-color: var(--cc-accent);
+    background: linear-gradient(var(--cc-accent-tint), var(--cc-accent-tint)) var(--cc-bg);
 }
 
 .card h3, .card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .ability-scores {
@@ -204,52 +455,52 @@ body {
 
 .ability-score {
     text-align: center;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     padding: 15px;
     border-radius: 8px;
-    border: 2px solid var(--border-outline-color);
-    color: var(--ts-text-color);
+    border: 2px solid var(--cc-border);
+    color: var(--cc-text);
 }
 
 .ability-score label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .ability-score input {
     width: 60px;
     padding: 8px;
     text-align: center;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 4px;
     font-size: 16px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .modifier {
     margin-top: 5px;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 .choice-group {
     margin-bottom: 25px;
     padding: 20px;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     border-radius: 8px;
-    border-left: 4px solid var(--button-color-hover);
-    color: var(--ts-text-color);
+    border-left: 4px solid var(--cc-accent);
+    color: var(--cc-text);
 }
 
 .choice-group h4 {
     margin-bottom: 15px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .checkbox-group {
@@ -262,54 +513,66 @@ body {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .checkbox-item input[type="checkbox"] {
     width: 18px;
     height: 18px;
-    accent-color: var(--button-color-hover);
+    accent-color: var(--cc-accent);
 }
 
 .btn {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
+    padding: 10px 22px;
+    border: 1px solid transparent;
+    border-radius: var(--cc-radius-sm);
+    font-size: 15px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    font-family: var(--ts-font-family);
+    transition: background 0.2s ease, border-color 0.2s ease,
+                transform 0.15s ease, box-shadow 0.2s ease;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    font-family: var(--cc-font);
 }
 
-
+.btn:active {
+    transform: translateY(1px);
+}
 
 .btn-primary {
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: linear-gradient(160deg, var(--cc-accent), var(--cc-accent-strong));
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 .btn-primary:hover {
-    background: var(--action-button-color-hover);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px var(--cc-glow);
+    filter: brightness(1.08);
 }
 
 .btn-secondary {
-    background: var(--border-outline-color);
-    color: var(--ts-text-color);
+    background: var(--cc-raise-strong);
+    border-color: var(--cc-border);
+    color: var(--cc-text);
 }
 
 .btn-secondary:hover {
-    background: var(--button-color-hover);
+    border-color: var(--cc-accent);
+    color: var(--cc-accent);
+    background: var(--cc-accent-tint);
 }
 
 .btn-success {
-    background: #28a745;
-    color: white;
+    background: linear-gradient(160deg, #34b357, #248f43);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 .btn-success:hover {
-    background: #218838;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(52, 179, 87, 0.35);
+    filter: brightness(1.08);
 }
 
 .navigation-buttons {
@@ -317,29 +580,29 @@ body {
     justify-content: space-between;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 1px solid var(--border-outline-color);
+    border-top: 1px solid var(--cc-border);
 }
 
 .feature-list {
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     border-radius: 8px;
     padding: 15px;
     margin-top: 15px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .feature-item {
     padding: 10px;
     margin-bottom: 10px;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     border-radius: 5px;
-    border-left: 3px solid var(--button-color-hover);
-    color: var(--ts-text-color);
+    border-left: 3px solid var(--cc-accent);
+    color: var(--cc-text);
 }
 
 .feature-item h5 {
     margin-bottom: 5px;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 .subclass-options {
@@ -347,34 +610,34 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 15px;
     margin-top: 15px;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     z-index: 100;
 }
 
 .level-display {
     text-align: center;
     margin-bottom: 20px;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .level-slider {
     width: 100%;
     margin: 10px 0;
-    accent-color: var(--button-color-hover);
+    accent-color: var(--cc-accent);
 }
 
 .summary-section {
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     border-radius: 8px;
     padding: 20px;
     margin-bottom: 20px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .summary-section h3 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 15px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .summary-grid {
@@ -384,15 +647,15 @@ body {
 }
 
 .summary-item {
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     padding: 15px;
     border-radius: 5px;
-    border-left: 3px solid var(--button-color-hover);
-    color: var(--ts-text-color);
+    border-left: 3px solid var(--cc-accent);
+    color: var(--cc-text);
 }
 
 .summary-item strong {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .error-message {
@@ -491,14 +754,15 @@ body {
 }
 
 .species-card {
-    border: 2px solid var(--border-outline-color);
-    border-radius: 8px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
     padding: 10px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, transform 0.15s ease,
+                box-shadow 0.2s ease, background 0.2s ease;
     cursor: pointer;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    color: var(--cc-text);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -510,27 +774,28 @@ body {
 }
 
 .species-card:hover {
-    border-color: var(--button-color-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--cc-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(var(--cc-raise-strong), var(--cc-raise-strong)) var(--cc-bg);
 }
 
 .species-card.selected {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
-    box-shadow: inset 0 0 15px rgba(139, 153, 230, 0.1);
+    border-color: var(--cc-accent);
+    background: linear-gradient(var(--cc-accent-tint), var(--cc-accent-tint)) var(--cc-bg);
+    box-shadow: 0 0 12px var(--cc-glow) inset;
 }
 
 .species-card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 6px;
     font-size: 1.1em;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-weight: bold;
 }
 
 .species-card p {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin-bottom: 0;
     opacity: 0.8;
     font-size: 0.8em;
@@ -549,7 +814,7 @@ body {
 }
 
 #classInfoDisplay{
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     max-height: calc(100vh - 300px);
     overflow-y: auto;
     padding-right: 5px;
@@ -591,14 +856,15 @@ body {
 }
 
 .class-card {
-    border: 2px solid var(--border-outline-color);
-    border-radius: 8px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
     padding: 8px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, transform 0.15s ease,
+                box-shadow 0.2s ease, background 0.2s ease;
     cursor: pointer;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    color: var(--cc-text);
     position: relative;
     overflow: hidden;
     display: flex;
@@ -611,27 +877,28 @@ body {
 
 /* Simple, clean hover effect */
 .class-card:hover {
-    border-color: var(--button-color-hover);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    border-color: var(--cc-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(var(--cc-raise-strong), var(--cc-raise-strong)) var(--cc-bg);
 }
 
 .class-card.selected {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
-    box-shadow: inset 0 0 15px rgba(139, 153, 230, 0.1);
+    border-color: var(--cc-accent);
+    background: linear-gradient(var(--cc-accent-tint), var(--cc-accent-tint)) var(--cc-bg);
+    box-shadow: 0 0 12px var(--cc-glow) inset;
 }
 
 .class-card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 4px;
     font-size: 1em;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-weight: bold;
 }
 
 .class-card p {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin-bottom: 0;
     opacity: 0.8;
     font-size: 0.75em;
@@ -642,30 +909,30 @@ body {
     text-align: center;
     margin: 30px 0;
     padding: 20px;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     border-radius: 10px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .level-display h3 {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin-bottom: 15px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .level-slider {
     width: 100%;
     max-width: 400px;
     margin: 20px 0;
-    accent-color: var(--action-button-color);
+    accent-color: var(--cc-accent-strong);
 }
 
 .level-value {
     font-size: 1.5em;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-top: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .subclass-options {
@@ -676,14 +943,15 @@ body {
 }
 
 .subclass-card {
-    border: 2px solid var(--border-outline-color);
-    border-radius: 8px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
     padding: 15px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, transform 0.15s ease,
+                box-shadow 0.2s ease, background 0.2s ease;
     cursor: pointer;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    color: var(--cc-text);
     position: relative;
     overflow: hidden;
 }
@@ -696,43 +964,44 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--button-color-hover), var(--border-outline-color));
+    background: linear-gradient(90deg, var(--cc-accent), var(--cc-border));
     opacity: 0.6;
 }
 
 .subclass-card:hover {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
+    border-color: var(--cc-accent);
+    background: var(--cc-bg);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(139, 153, 230, 0.1);
 }
 
 .subclass-card:hover::before {
     opacity: 1;
-    background: linear-gradient(90deg, var(--button-color-hover), #ffd700);
+    background: linear-gradient(90deg, var(--cc-accent), #ffd700);
 }
 
 .subclass-card.selected {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
+    border-color: var(--cc-accent);
+    background: var(--cc-bg);
     box-shadow: inset 0 0 10px rgba(139, 153, 230, 0.1), 0 0 10px rgba(139, 153, 230, 0.2);
 }
 
 .subclass-card.selected::before {
     opacity: 1;
-    background: linear-gradient(90deg, #ffd700, var(--button-color-hover));
+    background: linear-gradient(90deg, #ffd700, var(--cc-accent));
 }
 
 /* Subrace card styling */
 .subrace-card {
-    border: 2px solid var(--border-outline-color);
-    border-radius: 8px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius);
     padding: 15px;
     text-align: center;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s ease, transform 0.15s ease,
+                box-shadow 0.2s ease, background 0.2s ease;
     cursor: pointer;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    color: var(--cc-text);
     position: relative;
     overflow: hidden;
     margin-bottom: 15px;
@@ -745,72 +1014,73 @@ body {
     left: 0;
     right: 0;
     height: 2px;
-    background: linear-gradient(90deg, var(--button-color-hover), var(--border-outline-color));
+    background: linear-gradient(90deg, var(--cc-accent), var(--cc-border));
     opacity: 0.6;
 }
 
 .subrace-card:hover {
-    border-color: var(--button-color-hover);
-    background: var(--ts-background-color);
+    border-color: var(--cc-accent);
+    background: var(--cc-bg);
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(139, 153, 230, 0.1);
 }
 
 .subrace-card:hover::before {
     opacity: 1;
-    background: linear-gradient(90deg, var(--button-color-hover), #4a90e2);
+    background: linear-gradient(90deg, var(--cc-accent), #4a90e2);
 }
 
 .subrace-card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .subrace-card p {
     margin: 5px 0;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-size: 0.9em;
 }
 
 .subrace-card button {
     margin-top: 10px;
     padding: 8px 16px;
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     transition: all 0.3s ease;
 }
 
 .subrace-card button:hover {
-    background: var(--action-button-color);
+    background: var(--cc-accent-strong);
     transform: translateY(-1px);
 }
 
 
 
 #levelDropdown{
-    color: var(--ts-text-color);
-    background: var(--ts-background-color);
-    border: 1px solid var(--border-outline-color);
+    color: var(--cc-text);
+    background: var(--cc-bg);
+    border: 1px solid var(--cc-border);
 }
 
 /* Base card styling */
 .feature-card, .choice-card {
-  background-size: cover;
-  border: 2px solid var(--border-outline-color);
-  border-radius: 8px;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--cc-border);
+  border-radius: var(--cc-radius);
   margin: 0.5rem 0;
-  /* overflow: hidden; */
-  transition: all 0.4s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
   padding: 0 1em;
-  background: var(--ts-background-color);
-  color: var(--ts-text-color);
+  background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+  color: var(--cc-text);
   position: relative;
+}
+
+.feature-card:hover, .choice-card:hover {
+  border-color: var(--cc-accent);
 }
 
 .feature-card::before, .choice-card::before {
@@ -820,14 +1090,14 @@ body {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, var(--border-outline-color), var(--button-color-hover), var(--border-outline-color));
+  background: linear-gradient(90deg, var(--cc-border), var(--cc-accent), var(--cc-border));
   opacity: 0.6;
   transition: opacity 0.3s ease;
 }
 
 .feature-card:hover::before, .choice-card:hover::before {
   opacity: 1;
-  background: linear-gradient(90deg, var(--button-color-hover), #4a90e2, var(--button-color-hover));
+  background: linear-gradient(90deg, var(--cc-accent), #4a90e2, var(--cc-accent));
 }
 
 /* When the body is visible we give more space */
@@ -845,16 +1115,16 @@ body {
 
 /* Header styling */
 .card-header {
-  background: var(--ts-background-color);
-  border-bottom: 1px solid var(--border-outline-color);
+  background: var(--cc-bg);
+  border-bottom: 1px solid var(--cc-border);
   padding: 0.5em;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--ts-text-color);
-  font-family: var(--ts-font-family);
+  color: var(--cc-text);
+  font-family: var(--cc-font);
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
@@ -876,8 +1146,8 @@ body {
 }
 
 .card-header:hover {
-  background: var(--ts-background-color);
-  border-bottom-color: var(--button-color-hover);
+  background: var(--cc-bg);
+  border-bottom-color: var(--cc-accent);
   box-shadow: 0 2px 8px rgba(139, 153, 230, 0.2);
   transform: translateX(2px);
 }
@@ -885,7 +1155,7 @@ body {
 .card-header::after {
   content: '▶';
   font-size: 0.8em;
-  color: var(--button-color-hover);
+  color: var(--cc-accent);
   transition: transform 0.3s ease;
   margin-left: 8px;
 }
@@ -900,10 +1170,10 @@ body {
 
 /* Body styling */
 .card-body {
-  background: var(--ts-background-color);
-  border-top: 1px dashed var(--border-outline-color);
+  background: var(--cc-bg);
+  border-top: 1px dashed var(--cc-border);
   transition: all 0.3s ease;
-  color: var(--ts-text-color);
+  color: var(--cc-text);
   padding: 0.5em;
   max-height: none;
   overflow: visible;
@@ -923,9 +1193,9 @@ body {
 }
 
 .card-body select{
-    color: var(--ts-text-color);
-    background: var(--ts-background-color);
-    border: 1px solid var(--border-outline-color);
+    color: var(--cc-text);
+    background: var(--cc-bg);
+    border: 1px solid var(--cc-border);
     max-width: 100%;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -1023,19 +1293,23 @@ option:disabled {
 
 .modalCharacterCreator, .modalConfirm {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0,0,0,0.9); display: flex;
+    background-color: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
     justify-content: center; align-items: center;
     z-index: 1000;
 }
 .modalCreatorContent, .modalContentConfirm {
-    background: var(--ts-background-color); 
-    padding: 20px; 
-    border-radius: 8px;
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    padding: 20px;
+    border-radius: 14px;
     width: 90vw;
     max-width: 800px;
-    color: var(--ts-text-color);
-    border: 2px solid var(--border-outline-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    border: 1px solid var(--cc-border);
+    font-family: var(--cc-font);
+    box-shadow: var(--cc-shadow);
 }
 
 /* Confirmation Modal Styling */
@@ -1048,7 +1322,7 @@ option:disabled {
     margin-bottom: 20px;
     font-size: 1.1em;
     line-height: 1.4;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 /* Confirmation Dialog Buttons */
@@ -1061,7 +1335,7 @@ option:disabled {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     min-width: 80px;
 }
 
@@ -1125,16 +1399,16 @@ option:disabled {
 /* Multiple choice selection styles */
 .multi-choice-container {
     margin: 15px 0;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     padding-left: 20px;
-    border-left: 2px solid var(--button-color-hover);
+    border-left: 2px solid var(--cc-accent);
 }
 
 .multi-choice-instruction {
     font-weight: bold;
     margin-bottom: 15px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .multi-choice-option {
@@ -1148,35 +1422,35 @@ option:disabled {
     margin-right: 8px;
     width: 18px;
     height: 18px;
-    accent-color: var(--button-color-hover);
+    accent-color: var(--cc-accent);
 }
 
 .multi-choice-option label {
     cursor: pointer;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .multi-choice-description {
     margin-top: 4px;
     font-style: italic;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
     padding-left: 26px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Level 1 Character Creation Styles */
 .skill-selection-container {
     margin: 15px 0;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .skill-instruction {
     font-weight: bold;
     margin-bottom: 15px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .skill-option {
@@ -1189,13 +1463,13 @@ option:disabled {
     margin-right: 8px;
     width: 18px;
     height: 18px;
-    accent-color: var(--button-color-hover);
+    accent-color: var(--cc-accent);
 }
 
 .skill-option label {
     cursor: pointer;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .skill-option.skill-taken {
@@ -1214,18 +1488,18 @@ option:disabled {
 
 .skill-source {
     font-size: 0.8em;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     font-style: italic;
 }
 
 .taken-skills-warning {
     background: rgba(139, 153, 230, 0.1);
-    border: 1px solid var(--button-color-hover);
+    border: 1px solid var(--cc-accent);
     border-radius: 4px;
     padding: 8px;
     margin-bottom: 15px;
-    color: var(--button-color-hover);
-    font-family: var(--ts-font-family);
+    color: var(--cc-accent);
+    font-family: var(--cc-font);
     font-size: 0.9em;
 }
 
@@ -1239,14 +1513,14 @@ option:disabled {
     margin-bottom: 8px;
     padding: 8px;
     background: rgba(139, 153, 230, 0.05);
-    border-left: 3px solid var(--button-color-hover);
+    border-left: 3px solid var(--cc-accent);
     border-radius: 4px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .equipment-list li strong {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 /* Feat description styling */
@@ -1254,16 +1528,16 @@ option:disabled {
     margin-top: 10px;
     padding: 10px;
     background: rgba(139, 153, 230, 0.1);
-    border-left: 3px solid var(--button-color-hover);
+    border-left: 3px solid var(--cc-accent);
     border-radius: 4px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     font-size: 0.9em;
     line-height: 1.4;
 }
 
 .feat-description strong {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 /* Species modal styling */
@@ -1277,8 +1551,8 @@ option:disabled {
     padding: 10px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 4px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .species-basic-info p,
@@ -1295,21 +1569,21 @@ option:disabled {
 .species-traits strong,
 .species-skills strong,
 .species-special-features strong {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 .subrace-info {
     margin: 10px 0;
     padding: 8px;
     background: rgba(139, 153, 230, 0.1);
-    border-left: 3px solid var(--button-color-hover);
+    border-left: 3px solid var(--cc-accent);
     border-radius: 4px;
 }
 
 .subrace-info h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 5px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .subrace-info p {
@@ -1325,28 +1599,28 @@ option:disabled {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-weight: bold;
     transition: all 0.3s ease;
 }
 
 #selectSpeciesButton {
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
 }
 
 #selectSpeciesButton:hover {
-    background: var(--action-button-color);
+    background: var(--cc-accent-strong);
     transform: translateY(-1px);
 }
 
 #cancelSpeciesButton {
-    background: var(--border-outline-color);
-    color: var(--ts-text-color);
+    background: var(--cc-border);
+    color: var(--cc-text);
 }
 
 #cancelSpeciesButton:hover {
-    background: var(--button-color-hover);
+    background: var(--cc-accent);
 }
 
 /* Continue note styling */
@@ -1354,11 +1628,11 @@ option:disabled {
     margin-top: 20px;
     padding: 15px;
     background: rgba(139, 153, 230, 0.1);
-    border: 2px solid var(--button-color-hover);
+    border: 2px solid var(--cc-accent);
     border-radius: 8px;
     text-align: center;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .continue-note p {
@@ -1368,7 +1642,7 @@ option:disabled {
 }
 
 .continue-note strong {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 /* Choice container styling */
@@ -1376,14 +1650,14 @@ option:disabled {
     margin: 15px 0;
     padding: 15px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 6px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .choice-title {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 8px;
     font-size: 1.1em;
     font-weight: bold;
@@ -1402,18 +1676,18 @@ option:disabled {
 .choice-select {
     width: 100%;
     padding: 8px 12px;
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     font-size: 0.9em;
     transition: border-color 0.3s ease;
 }
 
 .choice-select:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .choice-select:disabled {
@@ -1427,19 +1701,19 @@ option:disabled {
     width: 100%;
     margin: 8px 0;
     padding: 10px 15px;
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
-    border: 2px solid var(--border-outline-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
+    border: 2px solid var(--cc-border);
     border-radius: 6px;
     cursor: pointer;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-weight: bold;
     transition: all 0.3s ease;
 }
 
 .subrace-select-button:hover {
-    background: var(--action-button-color);
-    border-color: var(--button-color-hover);
+    background: var(--cc-accent-strong);
+    border-color: var(--cc-accent);
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(139, 153, 230, 0.2);
 }
@@ -1459,7 +1733,7 @@ option:disabled {
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 8px;
 }
 
@@ -1482,17 +1756,17 @@ option:disabled {
 
 .class-header-level-row label {
     margin-right: 10px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .class-header-level-row select {
     padding: 5px 10px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .hit-points-container {
@@ -1503,19 +1777,19 @@ option:disabled {
 .hit-points-container div:first-child {
     font-weight: bold;
     margin-bottom: 5px;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .hit-points-container div:nth-child(2) {
     font-size: 1.2em;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 .hit-points-container div:last-child {
     font-size: 0.8em;
     opacity: 0.8;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 /* Rolled Hit Points Interface */
@@ -1523,15 +1797,15 @@ option:disabled {
     margin-top: 10px;
     padding: 10px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 6px;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
 }
 
 .rolled-hit-points-container h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 8px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-size: 1em;
     cursor: pointer;
     display: flex;
@@ -1543,7 +1817,7 @@ option:disabled {
 .rolled-hit-points-container h4::after {
     content: '▼';
     font-size: 0.8em;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     transition: transform 0.3s ease;
 }
 
@@ -1573,16 +1847,16 @@ option:disabled {
     width: 60px;
     text-align: center;
     padding: 5px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .rolled-hit-points-container input:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .rolled-hit-points-container input:disabled {
@@ -1594,8 +1868,8 @@ option:disabled {
 .rolled-hit-points-container label {
     font-size: 0.8em;
     margin-bottom: 5px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 /* Hit Point Roll Controls */
@@ -1607,7 +1881,7 @@ option:disabled {
     padding: 6px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 4px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .hp-roll-controls .btn-primary {
@@ -1617,13 +1891,13 @@ option:disabled {
 
 .hp-roll-count {
     font-size: 0.65em;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     font-weight: bold;
     padding: 4px 8px;
     background: rgba(139, 153, 230, 0.1);
     border-radius: 3px;
-    border: 1px solid var(--button-color-hover);
+    border: 1px solid var(--cc-accent);
 }
 
 /* Hit point dice styling */
@@ -1668,15 +1942,15 @@ option:disabled {
 #rolledHitPointsInputs .die {
     width: 30px;
     height: 30px;
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.3em;
     font-weight: bold;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     animation: hitPointDieRoll 0.8s ease-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     margin-bottom: 5px;
@@ -1784,10 +2058,10 @@ option:disabled {
 /* Form text styling */
 .form-text {
     font-size: 0.8em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.7;
     margin-top: 5px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Ability Score Generation Styles */
@@ -1797,14 +2071,14 @@ option:disabled {
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 6px;
 }
 
 .rolled-scores-display h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .rolled-scores-container {
@@ -1820,7 +2094,7 @@ option:disabled {
     align-items: center;
     padding: 15px;
     background: rgba(139, 153, 230, 0.1);
-    border: 2px solid var(--button-color-hover);
+    border: 2px solid var(--cc-accent);
     border-radius: 8px;
     min-width: 80px;
     animation: scoreAppear 0.5s ease-out;
@@ -1852,15 +2126,15 @@ option:disabled {
 .die {
     width: 20px;
     height: 20px;
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
     border-radius: 3px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 0.8em;
     font-weight: bold;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     animation: dieRoll 0.6s ease-out;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -1889,25 +2163,25 @@ option:disabled {
 .score-total {
     font-size: 1.8em;
     font-weight: bold;
-    color: var(--button-color-hover);
-    font-family: var(--ts-font-family);
+    color: var(--cc-accent);
+    font-family: var(--cc-font);
     margin: 5px 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .score-label {
     font-size: 0.8em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     text-align: center;
 }
 
 .rolled-scores-instructions {
     font-style: italic;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Available scores display (Standard Array) */
@@ -1915,19 +2189,19 @@ option:disabled {
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 6px;
 }
 
 .available-scores-display h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .available-scores-display p {
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     line-height: 1.4;
 }
 
@@ -1935,18 +2209,18 @@ option:disabled {
 .ability-score-select {
     width: 100%;
     padding: 8px 12px;
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     font-size: 0.9em;
     transition: border-color 0.3s ease;
 }
 
 .ability-score-select:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .ability-score-select option:disabled {
@@ -1959,19 +2233,19 @@ option:disabled {
     margin-bottom: 20px;
     padding: 15px;
     background: rgba(139, 153, 230, 0.05);
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 6px;
 }
 
 .points-display h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .points-display p {
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     line-height: 1.4;
     margin: 5px 0;
 }
@@ -1995,22 +2269,22 @@ option:disabled {
 .point-buy-btn {
     width: 30px;
     height: 30px;
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 50%;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: var(--cc-bg);
+    color: var(--cc-text);
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .point-buy-btn:hover {
-    border-color: var(--button-color-hover);
-    background: var(--button-color-hover);
+    border-color: var(--cc-accent);
+    background: var(--cc-accent);
     transform: scale(1.1);
 }
 
@@ -2023,17 +2297,17 @@ option:disabled {
 .point-buy-score-value {
     font-size: 1.2em;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     min-width: 30px;
     text-align: center;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .point-buy-cost {
     font-size: 0.8em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* New Ability Score Layout - 2x3 Grid */
@@ -2050,8 +2324,8 @@ option:disabled {
     flex-direction: column;
     align-items: center;
     padding: 20px;
-    background: var(--ts-background-color);
-    border: 2px solid var(--border-outline-color);
+    background: var(--cc-bg);
+    border: 2px solid var(--cc-border);
     border-radius: 12px;
     transition: all 0.3s ease;
     min-height: 120px;
@@ -2059,7 +2333,7 @@ option:disabled {
 }
 
 .ability-score-card:hover {
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
@@ -2070,7 +2344,7 @@ option:disabled {
     color: white;
     text-align: center;
     margin-bottom: 2px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .ability-score-input {
@@ -2079,17 +2353,17 @@ option:disabled {
     font-size: 2em;
     font-weight: bold;
     text-align: center;
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 8px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     transition: border-color 0.3s ease;
 }
 
 .ability-score-input:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .ability-score-select {
@@ -2098,11 +2372,11 @@ option:disabled {
     font-size: 1.5em;
     font-weight: bold;
     text-align: center;
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 8px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     transition: border-color 0.3s ease;
     padding: 8px;
     overflow: visible;
@@ -2110,30 +2384,30 @@ option:disabled {
 
 .ability-score-select:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .ability-score-select option {
     font-size: 1.2em;
     padding: 12px;
     text-align: center;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: var(--cc-bg);
+    color: var(--cc-text);
     border: none;
 }
 
 .ability-score-select option:hover {
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
 }
 
 .ability-modifier {
     font-size: 1.2em;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     text-align: center;
     margin-top: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Point Buy Specific Styles */
@@ -2147,18 +2421,18 @@ option:disabled {
 .point-buy-score-value {
     font-size: 2em;
     font-weight: bold;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     min-width: 60px;
     text-align: center;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .point-buy-cost {
     font-size: 0.9em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
     text-align: center;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Standard Array Status */
@@ -2167,7 +2441,7 @@ option:disabled {
     padding: 8px 12px;
     border-radius: 6px;
     font-weight: bold;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     text-align: center;
 }
 
@@ -2241,16 +2515,16 @@ vuplex-dropdown.vuplex-dropdown-upwards {
     font-size: 1em;
     color: white;
     margin-bottom: 4px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .ability-bonus-display {
     font-size: 0.8em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
     margin-top: 4px;
     text-align: center;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 /* Level selector styling */
@@ -2262,22 +2536,22 @@ vuplex-dropdown.vuplex-dropdown-upwards {
     padding: 10px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 6px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .level-selector label {
     margin-right: 10px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .level-selector select {
     padding: 5px 10px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 /* Remove spinners (up/down arrows) from number inputs in rolled hit points */
@@ -2318,7 +2592,7 @@ vuplex-dropdown.vuplex-dropdown-upwards {
     width: 18px;
     height: 18px;
     margin: 0;
-    accent-color: var(--button-color-hover);
+    accent-color: var(--cc-accent);
 }
 
 .form-group.checkbox-item label {
@@ -2355,14 +2629,14 @@ vuplex-dropdown.vuplex-dropdown-upwards {
     padding: 10px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 4px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .background-equipment-section h3 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 15px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .background-equipment-list {
@@ -2375,14 +2649,14 @@ vuplex-dropdown.vuplex-dropdown-upwards {
     margin-bottom: 8px;
     padding: 8px;
     background: rgba(139, 153, 230, 0.05);
-    border-left: 3px solid var(--button-color-hover);
+    border-left: 3px solid var(--cc-accent);
     border-radius: 4px;
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
 }
 
 .background-equipment-list li strong {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
 }
 
 /* Duplicate Prevention Styles */
@@ -2431,13 +2705,13 @@ select option:disabled {
 }
 
 .subclass-card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 8px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .subclass-card p {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.9;
     line-height: 1.4;
 }
@@ -2451,8 +2725,8 @@ select option:disabled {
 
 /* Multiclass UI Styles */
 .multiclass-header-container {
-    background: var(--ts-background-color);
-    border: 1px solid var(--border-outline-color);
+    background: var(--cc-bg);
+    border: 1px solid var(--cc-border);
     border-radius: 10px;
     padding: 5px;
     margin-bottom: 10px;
@@ -2475,9 +2749,9 @@ select option:disabled {
 }
 
 .total-level-display h3 {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin: 0;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-size: 1.2em;
 }
 
@@ -2503,26 +2777,26 @@ select option:disabled {
     padding: 4px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 6px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .multiclass-hit-points-container .hit-points-label {
     font-size: 0.9em;
     font-weight: bold;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin: 0;
 }
 
 .multiclass-hit-points-container .hit-points-value {
     font-size: 1.4em;
     font-weight: bold;
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin: 0;
 }
 
 .multiclass-hit-points-container .hit-points-breakdown {
     font-size: 0.7em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
     margin: 0;
     line-height: 1.2;
@@ -2536,9 +2810,9 @@ select option:disabled {
 }
 
 .multiclass-class-container {
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 10px;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
     overflow: hidden;
 }
 
@@ -2622,19 +2896,19 @@ select option:disabled {
 /* Class Level Details */
 .class-level-details {
     padding: 20px;
-    background: var(--ts-background-color);
+    background: var(--cc-bg);
 }
 
 .multiclass-level-block {
-    border-left: 3px solid var(--button-color-hover);
+    border-left: 3px solid var(--cc-accent);
     padding-left: 15px;
     margin-bottom: 20px;
 }
 
 .multiclass-level-header {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 10px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-size: 1.1em;
 }
 
@@ -2647,30 +2921,30 @@ select option:disabled {
 }
 
 .modal-class-card {
-    border: 2px solid var(--border-outline-color);
+    border: 2px solid var(--cc-border);
     border-radius: 8px;
     padding: 15px;
     text-align: center;
     cursor: pointer;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
+    background: var(--cc-bg);
+    color: var(--cc-text);
     transition: all 0.3s ease;
 }
 
 .modal-class-card:hover {
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .modal-class-card h4 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 8px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .modal-class-card p {
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
     font-size: 0.9em;
 }
@@ -2685,13 +2959,13 @@ select option:disabled {
     padding: 10px;
     background: rgba(139, 153, 230, 0.05);
     border-radius: 6px;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
 }
 
 .multiclass-hp-class-section h5 {
-    color: var(--button-color-hover);
+    color: var(--cc-accent);
     margin-bottom: 8px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     font-size: 0.95em;
 }
 
@@ -2711,20 +2985,20 @@ select option:disabled {
 
 .multiclass-hp-levels label {
     font-size: 0.75em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     margin-bottom: 3px;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
 }
 
 .multiclass-hp-levels input {
     width: 40px;
     height: 30px;
     text-align: center;
-    border: 1px solid var(--border-outline-color);
+    border: 1px solid var(--cc-border);
     border-radius: 4px;
-    background: var(--ts-background-color);
-    color: var(--ts-text-color);
-    font-family: var(--ts-font-family);
+    background: var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
     font-weight: bold;
     font-size: 0.9em;
     padding: 2px;
@@ -2732,7 +3006,7 @@ select option:disabled {
 
 .multiclass-hp-levels input:focus {
     outline: none;
-    border-color: var(--button-color-hover);
+    border-color: var(--cc-accent);
 }
 
 .multiclass-hp-levels input:disabled {
@@ -2752,15 +3026,15 @@ select option:disabled {
 .multiclass-hp-levels .die {
     width: 30px;
     height: 30px;
-    background: var(--button-color-hover);
-    color: var(--ts-text-color);
+    background: var(--cc-accent);
+    color: var(--cc-text);
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.3em;
     font-weight: bold;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     animation: hitPointDieRoll 0.8s ease-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
     margin-bottom: 5px;
@@ -2826,9 +3100,9 @@ select option:disabled {
 
 .multiclass-hp-levels .score-label {
     font-size: 0.8em;
-    color: var(--ts-text-color);
+    color: var(--cc-text);
     opacity: 0.8;
-    font-family: var(--ts-font-family);
+    font-family: var(--cc-font);
     text-align: center;
 }
 
@@ -2925,5 +3199,174 @@ select option:disabled {
         width: 30px;
         height: 25px;
         font-size: 0.8em;
+    }
+}
+
+/* ============================================================================
+   Modern polish layer — appended last so it wins cascade ties.
+   Global finishing touches shared by every tab.
+   ========================================================================== */
+
+/* Section headings */
+.tab-content h2 {
+    font-size: 1.3em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--cc-border);
+    color: var(--cc-text);
+}
+
+.tab-content h3 {
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Every dropdown gets the same sunken, rounded treatment */
+select,
+.choice-select,
+.card-body select,
+#levelDropdown,
+.class-header-level-row select {
+    padding: 7px 10px;
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    background: linear-gradient(var(--cc-sunken), var(--cc-sunken)) var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+select:hover:not(:disabled) {
+    border-color: var(--cc-accent);
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--cc-accent);
+    box-shadow: 0 0 0 3px var(--cc-glow);
+}
+
+select option {
+    background: var(--cc-bg);
+    color: var(--cc-text);
+}
+
+/* Text/number inputs that aren't .form-control */
+input[type="text"],
+input[type="number"] {
+    border: 1px solid var(--cc-border);
+    border-radius: var(--cc-radius-sm);
+    background: linear-gradient(var(--cc-sunken), var(--cc-sunken)) var(--cc-bg);
+    color: var(--cc-text);
+    font-family: var(--cc-font);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus {
+    outline: none;
+    border-color: var(--cc-accent);
+    box-shadow: 0 0 0 3px var(--cc-glow);
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    accent-color: var(--cc-accent);
+}
+
+/* Collapsible spell level groups */
+.spell-level-group {
+    background: linear-gradient(var(--cc-raise), var(--cc-raise)) var(--cc-bg);
+    border-radius: var(--cc-radius-sm);
+}
+
+.spell-level-group summary {
+    padding: 4px 2px;
+    border-radius: var(--cc-radius-sm);
+    transition: color 0.15s ease;
+}
+
+.spell-level-group summary:hover {
+    color: var(--cc-accent);
+}
+
+/* Slim, rounded scrollbars everywhere */
+::-webkit-scrollbar {
+    width: 9px;
+    height: 9px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+/* Keyboard focus visibility */
+button:focus-visible,
+.nav-tab:focus-visible,
+.spell-card-header:focus-visible {
+    outline: 2px solid var(--cc-accent);
+    outline-offset: 2px;
+}
+
+/* Text selection matches the accent */
+::selection {
+    background: var(--cc-glow);
+    color: var(--cc-text);
+}
+
+/* Selection grids: pack cards tightly instead of stretching rows to fill the
+   container, and let headings/notes span the full row instead of eating a
+   grid cell */
+.species-selection,
+.class-selection {
+    grid-template-rows: none;
+    grid-auto-rows: min-content;
+    align-content: start;
+}
+
+.species-selection > :not(.species-card),
+.class-selection > :not(.class-card) {
+    grid-column: 1 / -1;
+}
+
+/* Narrow panels (TaleSpire symbiote width): the sheet button can't float over
+   the centered title, so stack it above and tighten the header */
+@media (max-width: 900px) {
+    .header {
+        height: auto;
+        margin-bottom: 8px;
+    }
+
+    .header-sheet-button {
+        position: static;
+        display: inline-block;
+        margin-bottom: 2px;
+        padding: 5px 12px;
+        font-size: 12px;
+    }
+
+    .header h1 {
+        font-size: 1.45em;
+        padding: 2px 0 8px 0;
+    }
+
+    .header h1::after {
+        width: 90px;
+    }
+
+    .header p {
+        display: none;
     }
 }

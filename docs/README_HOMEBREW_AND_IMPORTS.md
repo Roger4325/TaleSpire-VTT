@@ -9,6 +9,7 @@ The toolset supports both built-in content and custom content. Depending on wher
 Common content types include:
 - Characters
 - Custom spells
+- Custom subclasses
 - Custom items
 - Custom monsters
 - Custom shops
@@ -20,6 +21,7 @@ Common content types include:
 Use the `Homebrew` button to manage:
 - Monsters
 - Spells
+- Subclasses
 - Items
 - Shops
 
@@ -27,6 +29,7 @@ Use the `Homebrew` button to manage:
 
 Use the `Homebrew` button to manage:
 - Spells
+- Subclasses
 - Items
 - Character data
 
@@ -52,6 +55,24 @@ Custom spells can be used when:
 - A campaign includes homebrew magic
 - You want to test a spell design
 - You want to share a custom spell between saves
+
+### Custom Subclasses
+
+Custom subclasses can be created from the Homebrew menu on both the DM Screen and the Player Sheet. Each subclass records:
+- The class it belongs to
+- The edition it targets: 5e (2014) or 5.5e (2024)
+- Its features, each tied to a class level
+
+The form is verified against both editions: it shows the levels at which the chosen class gains subclass features for the chosen edition, blocks names that collide with built-in subclasses, and warns when feature levels fall outside the official pattern (you can still save anyway for intentional homebrew).
+
+Subclasses can also grant spells:
+- **Spellcasting (third-caster)**: gives the subclass an Eldritch Knight-style progression. Pick the casting ability, which class list it casts from, the cantrip pattern, and optionally restrict spell schools. The known-spells and slot tables are generated automatically.
+- **Granted Spells — Always prepared**: domain/oath-style lists. Each entry is a class level plus the spells granted at it; they show as "always prepared" in the Character Creator and don't count against the prepared total.
+- **Granted Spells — Added to spell list**: patron-style expansion. The listed spells become pickable class spells for characters with the subclass.
+
+Spell names are verified against the 5e and 5.5e catalogs plus your Custom Spells; unknown names produce a warning, and prepared-list grant levels are checked against the official domain/circle/oath patterns.
+
+Saved subclasses appear in the Character Creator as selectable subclasses for their class, filtered by the D&D Version setting the same way spells are. Import and export work like spells: export copies the subclass JSON to the clipboard, import accepts that same JSON. (Custom base classes are planned to follow the same storage pattern in the future.)
 
 ### Custom Items
 

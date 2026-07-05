@@ -119,8 +119,8 @@ async function initializeCharacterCreator() {
 
         await loadLanguageData();
         await loadSpellDataFiles();
-        
-        
+
+
         // Set initial visibility of reroll ones checkbox
         const rerollOnesContainer = document.getElementById('rerollOnesContainer');
         if (rerollOnesContainer) {
@@ -130,10 +130,22 @@ async function initializeCharacterCreator() {
                 rerollOnesContainer.classList.add('hidden');
             }
         }
-        
+
+        // Everything is loaded and the default tabs are rendered. Only now may
+        // a character be restored — restoring earlier gets clobbered by the
+        // renders above (the TS "hasInitialized" retry waits on this flag).
+        window.__creatorInitComplete = true;
+
+        // If opened from the sheet with ?edit=<name>, load that character
+        if (typeof initializeEditFlowIfRequested === 'function') {
+            await initializeEditFlowIfRequested();
+        }
+
     } catch (error) {
         console.error('Error initializing character creator:', error);
         showError('Failed to load character creation data. Please try again.');
+        // Don't leave the edit-flow retry waiting forever on a failed init
+        window.__creatorInitComplete = true;
     }
 }
 
@@ -157,10 +169,44 @@ async function loadLanguageData(){
     console.log(savedLanguage);
 }
 let globalFileSize = 0;
+
+/**
+ * Inside TaleSpire the TS API exists as soon as the page loads, but calls fail
+ * until the "hasInitialized" state event fires (see onStateChangeEvent in
+ * CharacterCreator.html). Everything that touches TS storage awaits this.
+ * Outside TaleSpire (browser testing) it resolves immediately.
+ */
+function waitForTaleSpireReady(timeoutMs = 15000) {
+    if (typeof TS === 'undefined' || window.__tsvttTaleSpireReady) {
+        return Promise.resolve();
+    }
+    if (!window.__tsvttTaleSpireReadyPromise) {
+        window.__tsvttTaleSpireReadyPromise = new Promise((resolve) => {
+            window.__tsvttTaleSpireReadyResolve = resolve;
+            // Safety valve: don't hang forever if the event never arrives.
+            setTimeout(resolve, timeoutMs);
+        });
+    }
+    return window.__tsvttTaleSpireReadyPromise;
+}
+
 // Retrieve data from global storage
 function loadDataFromGlobalStorage(dataType) {
     console.log("loading Global Storage")
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
+        // Outside TaleSpire (e.g. testing in a browser) read the same
+        // localStorage fallback blob the sheet writes to
+        if (typeof TS === 'undefined' || !TS.localStorage) {
+            try {
+                const raw = window.localStorage.getItem('tsvtt-global-storage');
+                const allData = raw ? JSON.parse(raw) : {};
+                resolve(allData[dataType] || {});
+            } catch (error) {
+                resolve({});
+            }
+            return;
+        }
+        await waitForTaleSpireReady();
         TS.localStorage.global.getBlob()
             .then((data) => {
                 if (data) {
@@ -707,6 +753,26 @@ function scrollToElement(elementId) {
     }
 }
 
+// Non-blocking toast message (native alert() doesn't behave well inside the
+// TaleSpire webview and freezes automated testing).
+function showCreatorToast(message, isError) {
+    let toast = document.getElementById('creatorToast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'creatorToast';
+        toast.style.cssText =
+            'position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:2000;' +
+            'padding:12px 20px;border-radius:6px;color:#fff;font-weight:bold;' +
+            'box-shadow:0 4px 12px rgba(0,0,0,0.4);max-width:80%;text-align:center;';
+        document.body.appendChild(toast);
+    }
+    toast.style.background = isError ? '#a33' : '#2e7d32';
+    toast.textContent = message;
+    toast.style.display = 'block';
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => { toast.style.display = 'none'; }, isError ? 5000 : 3500);
+}
+
 function showError(message) {
     const errorDiv = document.getElementById('errorMessage');
     if (errorDiv) {
@@ -716,7 +782,7 @@ function showError(message) {
             errorDiv.style.display = 'none';
         }, 5000);
     } else {
-        alert(message);
+        showCreatorToast(message, true);
     }
 }
 
@@ -729,7 +795,7 @@ function showSuccess(message) {
             successDiv.style.display = 'none';
         }, 3000);
     } else {
-        alert(message);
+        showCreatorToast(message, false);
     }
 }
 
@@ -752,6 +818,16 @@ function switchTab(tabId) {
     const activePane = document.getElementById(tabId);
     if (activePane) {
         activePane.classList.add('active');
+    }
+
+    // The equipment tab is rendered on demand (it depends on the chosen class)
+    if (tabId === 'equipment' && typeof displayStartingEquipment === 'function') {
+        displayStartingEquipment();
+    }
+
+    // The spells tab too (it depends on class, level, subclass and abilities)
+    if (tabId === 'spells' && typeof displaySpellSelection === 'function') {
+        displaySpellSelection();
     }
 }
 

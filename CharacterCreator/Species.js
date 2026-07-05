@@ -2192,6 +2192,18 @@ function addToolProficiency(tool, source) {
     }
 }
 
+// Helper function to check for a tool proficiency
+function hasToolProficiency(tool) {
+    return !!(currentCharacter.tools && currentCharacter.tools.proficiencies &&
+              currentCharacter.tools.proficiencies.includes(tool));
+}
+
+// Helper function to get the source of a tool proficiency
+function getToolSource(tool) {
+    return (currentCharacter.tools && currentCharacter.tools.sources &&
+            currentCharacter.tools.sources[tool]) || null;
+}
+
 // Helper function to remove a tool proficiency
 function removeToolProficiency(tool) {
     if (!currentCharacter.tools || !currentCharacter.tools.proficiencies) return;
@@ -2203,119 +2215,6 @@ function removeToolProficiency(tool) {
     }
 }
 
-/**
- * Renders a skill choice interface
- */
-function renderSkillChoice(parent, skillOptions, source) {
-    const container = document.createElement('div');
-    container.className = 'choice-container';
-    
-    const title = document.createElement('h4');
-    title.textContent = `Skill Choice (Choose ${skillOptions.choose})`;
-    title.className = 'choice-title';
-    container.appendChild(title);
-    
-    const description = document.createElement('p');
-    description.textContent = skillOptions.description;
-    description.className = 'choice-description';
-    container.appendChild(description);
-    
-    // Show already taken skills as warning, not blocking
-    const takenSkills = getTakenSkills(skillOptions.options);
-    if (takenSkills.length > 0) {
-        const takenDiv = document.createElement('div');
-        takenDiv.className = 'taken-skills-warning';
-        takenDiv.innerHTML = `<strong>Note:</strong> ${takenSkills.map(skill => 
-            `${skill} (${getSkillSource(skill)})`
-        ).join(', ')} are already taken. Selecting them again will duplicate the proficiency.`;
-        container.appendChild(takenDiv);
-    }
-    
-    const select = document.createElement('select');
-    select.className = 'choice-select';
-    select.appendChild(new Option('-- select skill --', '', true, true));
-    
-    skillOptions.options.forEach(skill => {
-        const option = new Option(skill, skill);
-        // Don't disable options - just show if they're already taken
-        if (hasSkillProficiency(skill)) {
-            option.text = `${skill} (already taken)`;
-        }
-        select.appendChild(option);
-    });
-    
-    // Update the dropdown options to reflect current state
-    updateDropdownOptions(select);
-    
-    // Track the currently selected skill for this choice
-    const choiceKey = `${source}-skill-choice`;
-    const currentChoice = currentCharacter.choices[choiceKey] || null;
-    
-    // If there's a current choice, select it
-    if (currentChoice) {
-        select.value = currentChoice;
-    }
-    
-    select.onchange = () => {
-        console.warn('=== SPECIES SKILL SELECTION CHANGE ===');
-        
-        // Get the current choice from storage (not from closure)
-        const previousChoice = currentCharacter.choices[choiceKey] || null;
-        console.warn('Previous choice from storage:', previousChoice);
-        console.warn('New choice:', select.value);
-        console.warn('Current choices object:', currentCharacter.choices);
-        console.warn('Choice key:', choiceKey);
-        console.warn('Taken skills BEFORE change:', [...currentCharacter.skills.proficiencies]);
-        
-        // Remove previous choice if it exists and is different
-        if (previousChoice && previousChoice !== select.value) {
-            console.warn('Removing previous choice:', previousChoice);
-            removeSkillProficiency(previousChoice);
-        } else {
-            console.warn('NOT removing previous choice. previousChoice:', previousChoice, 'select.value:', select.value);
-        }
-        
-        if (select.value && select.value !== '') {
-            // Add new skill proficiency (allows duplication)
-            addSkillProficiency(select.value, `${source} Choice`);
-            
-            // Store the choice
-            currentCharacter.choices[choiceKey] = select.value;
-            
-            // Update status
-            const status = container.querySelector('.choice-status');
-            if (status) {
-                status.textContent = '✔';
-                status.className = 'choice-status complete';
-            }
-        } else {
-            // Clear the choice
-            delete currentCharacter.choices[choiceKey];
-            
-            // Update status
-            const status = container.querySelector('.choice-status');
-            if (status) {
-                status.textContent = '❗';
-                status.className = 'choice-status incomplete';
-            }
-        }
-        
-        console.warn('Taken skills AFTER change:', [...currentCharacter.skills.proficiencies]);
-        
-        // Update this specific dropdown's options
-        updateDropdownOptions(select);
-        
-        // Update other skill displays without re-rendering
-        updateSkillOptionDisplays();
-    };
-    
-    container.appendChild(select);
-    
-    // Add status indicator
-    const status = document.createElement('span');
-    status.className = currentChoice ? 'choice-status complete' : 'choice-status incomplete';
-    status.textContent = currentChoice ? '✔' : '❗';
-    title.appendChild(status);
-    
-    parent.appendChild(container);
-}
+// NOTE: renderSkillChoice lives in ClassCreator.js (loaded after this file, so
+// its definition is the one in effect). A second copy here previously shadowed
+// fixes — don't re-add one.
