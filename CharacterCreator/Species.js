@@ -623,6 +623,14 @@ function applyTraitEffects(traitName, choiceValue, speciesName) {
     
     // Find the trait in the species data
     const trait = speciesInfo.traits.find(t => t.name === traitName);
+
+    // Flexible ("choose your own") ASI applies its bonuses directly rather than
+    // through a static effects list (used on load to re-apply saved picks).
+    if (getFlexibleAsiConfig(trait, speciesInfo)) {
+        applyFlexibleAsiChoice(choiceValue, speciesInfo);
+        return;
+    }
+
     if (!trait || !trait.effects) return;
     
     // Apply the effects defined in the JSON data
@@ -871,8 +879,13 @@ function renderTraitCard(container, trait, speciesName) {
     // Handle trait choices if they exist
     if (trait.choices) {
         renderTraitChoices(body, trait, speciesName);
+    } else {
+        // Floating-ASI races (Goliath, etc.) carry a descriptive ASI trait with
+        // no choices block; render an interactive picker for it instead.
+        const asiConfig = getFlexibleAsiConfig(trait, racesData[speciesName]);
+        if (asiConfig) renderFlexibleAsiChoice(body, trait, speciesName, asiConfig);
     }
-    
+
     traitCard.appendChild(body);
     container.appendChild(traitCard);
 }
@@ -886,8 +899,11 @@ function renderTraitChoices(container, trait, speciesName) {
         renderSelectChoice(choicesContainer, trait, speciesName);
     } else if (trait.choices.type === 'multiple') {
         renderMultipleChoice(choicesContainer, trait, speciesName);
+    } else if (trait.choices.type === 'abilityScoreIncrease') {
+        renderFlexibleAsiChoice(choicesContainer, trait, speciesName,
+            getFlexibleAsiConfig(trait, racesData[speciesName]));
     }
-    
+
     container.appendChild(choicesContainer);
 }
 
@@ -1043,7 +1059,194 @@ function renderMultipleChoice(container, trait, speciesName) {
     updateChoiceCount(container, selectedChoices, choiceLimit);
 }
 
+// ========== FLEXIBLE ("choose your own") ABILITY SCORE INCREASE ==========
+//
+// Races with floating ability scores (2024-style, e.g. Goliath) used to render
+// a plain "apply this manually" note because the builder couldn't set the
+// bonuses. This makes those picks selectable right on the race, applies them to
+// the character immediately, and persists them via traitChoices.
 
+const FLEXIBLE_ASI_ABILITIES = [
+    { value: 'strength', label: 'Strength' },
+    { value: 'dexterity', label: 'Dexterity' },
+    { value: 'constitution', label: 'Constitution' },
+    { value: 'intelligence', label: 'Intelligence' },
+    { value: 'wisdom', label: 'Wisdom' },
+    { value: 'charisma', label: 'Charisma' }
+];
+
+// Default 5e (2024) distribution: +2/+1 to two abilities, or +1 to three.
+const DEFAULT_FLEXIBLE_ASI_CONFIG = {
+    type: 'abilityScoreIncrease',
+    modes: [
+        { key: '2-1', label: 'One ability +2 and a different one +1', values: [2, 1] },
+        { key: '1-1-1', label: 'Three different abilities +1', values: [1, 1, 1] }
+    ]
+};
+
+/**
+ * Returns the flexible-ASI config for a trait, or null if the trait isn't a
+ * choose-your-own ability score increase. Recognises an explicit data marker
+ * (`choices.type === 'abilityScoreIncrease'`) and, as a fallback, the
+ * generated "Ability Score Increase" note on a floating-ASI race (empty
+ * `abilityScoreIncrease`, no choices/effects of its own).
+ */
+function getFlexibleAsiConfig(trait, speciesInfo) {
+    if (!trait) return null;
+
+    if (trait.choices && trait.choices.type === 'abilityScoreIncrease') {
+        return {
+            type: 'abilityScoreIncrease',
+            modes: Array.isArray(trait.choices.modes) && trait.choices.modes.length
+                ? trait.choices.modes
+                : DEFAULT_FLEXIBLE_ASI_CONFIG.modes
+        };
+    }
+
+    const isAsiTrait = /ability score increase/i.test(trait.name || '');
+    const raceAsiEmpty = !speciesInfo || !speciesInfo.abilityScoreIncrease ||
+        Object.keys(speciesInfo.abilityScoreIncrease).length === 0;
+    if (isAsiTrait && raceAsiEmpty && !trait.choices && !trait.effects) {
+        return DEFAULT_FLEXIBLE_ASI_CONFIG;
+    }
+    return null;
+}
+
+function flexibleAsiSource(speciesInfo) {
+    return `${speciesInfo.name} ASI Choice`;
+}
+
+/** Clear then (re)apply the ability bonuses for a flexible ASI selection. */
+function applyFlexibleAsiChoice(choiceValue, speciesInfo) {
+    const source = flexibleAsiSource(speciesInfo);
+    ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma']
+        .forEach(ability => removeAbilityBonus(ability, source));
+
+    if (choiceValue && Array.isArray(choiceValue.picks)) {
+        // Guard against duplicate abilities landing on the sheet
+        const used = new Set();
+        choiceValue.picks.forEach(pick => {
+            if (pick && pick.ability && pick.value && !used.has(pick.ability)) {
+                used.add(pick.ability);
+                addAbilityBonus(pick.ability, pick.value, source);
+            }
+        });
+    }
+
+    updateAbilityBonuses();
+    if (typeof updateAbilityTotalsUI === 'function') updateAbilityTotalsUI();
+    if (typeof updateAbilityModifiers === 'function') updateAbilityModifiers();
+}
+
+/**
+ * Renders the interactive flexible-ASI picker: a distribution mode selector
+ * plus one ability dropdown per increase, enforcing distinct abilities.
+ */
+function renderFlexibleAsiChoice(container, trait, speciesName, config) {
+    const speciesInfo = racesData[speciesName];
+
+    const wrap = document.createElement('div');
+    wrap.className = 'trait-choices flexible-asi-choice';
+
+    const label = document.createElement('p');
+    label.textContent = 'Assign your ability score increases: ';
+    const status = document.createElement('span');
+    status.className = 'choice-status incomplete';
+    status.textContent = '❗';
+    label.appendChild(status);
+    wrap.appendChild(label);
+
+    const modeSelect = document.createElement('select');
+    modeSelect.className = 'trait-choice-select';
+    config.modes.forEach(m => modeSelect.appendChild(new Option(m.label, m.key)));
+    wrap.appendChild(modeSelect);
+
+    const picksContainer = document.createElement('div');
+    picksContainer.className = 'flexible-asi-picks';
+    wrap.appendChild(picksContainer);
+
+    const saved = currentCharacter.traitChoices && currentCharacter.traitChoices[trait.name];
+    modeSelect.value = (saved && saved.mode) || config.modes[0].key;
+
+    const getMode = () => config.modes.find(m => m.key === modeSelect.value) || config.modes[0];
+
+    const refreshOptionStates = () => {
+        const selects = [...picksContainer.querySelectorAll('select')];
+        const chosen = selects.map(s => s.value).filter(Boolean);
+        selects.forEach(s => {
+            [...s.options].forEach(o => {
+                if (!o.value) return;
+                o.disabled = chosen.includes(o.value) && s.value !== o.value;
+            });
+        });
+    };
+
+    const commit = () => {
+        const mode = getMode();
+        const selects = [...picksContainer.querySelectorAll('select')];
+        const picks = [];
+        selects.forEach((s, i) => {
+            if (s.value) picks.push({ ability: s.value, value: mode.values[i] });
+        });
+
+        const choiceValue = { mode: mode.key, picks };
+        currentCharacter.traitChoices = currentCharacter.traitChoices || {};
+        currentCharacter.traitChoices[trait.name] = choiceValue;
+
+        applyFlexibleAsiChoice(choiceValue, speciesInfo);
+
+        const complete = picks.length === mode.values.length;
+        status.textContent = complete ? '✔' : '❗';
+        status.className = complete ? 'choice-status complete' : 'choice-status incomplete';
+
+        if (typeof updateRacesDataForSave === 'function') updateRacesDataForSave();
+        refreshOptionStates();
+    };
+
+    const buildPicks = () => {
+        picksContainer.innerHTML = '';
+        const mode = getMode();
+        const savedPicks = (saved && saved.mode === mode.key && Array.isArray(saved.picks)) ? saved.picks : [];
+
+        mode.values.forEach((val, i) => {
+            const row = document.createElement('div');
+            row.className = 'flexible-asi-row';
+
+            const rowLabel = document.createElement('label');
+            rowLabel.textContent = `+${val} to `;
+            row.appendChild(rowLabel);
+
+            const sel = document.createElement('select');
+            sel.className = 'trait-choice-select';
+            sel.appendChild(new Option('-- select ability --', ''));
+            FLEXIBLE_ASI_ABILITIES.forEach(a => sel.appendChild(new Option(a.label, a.value)));
+            if (savedPicks[i] && savedPicks[i].ability) sel.value = savedPicks[i].ability;
+
+            sel.addEventListener('change', () => {
+                const others = [...picksContainer.querySelectorAll('select')]
+                    .filter(s => s !== sel).map(s => s.value);
+                if (sel.value && others.includes(sel.value)) {
+                    if (typeof showError === 'function') {
+                        showError('Choose a different ability — each increase must go to a distinct score.');
+                    }
+                    sel.value = '';
+                }
+                commit();
+            });
+
+            row.appendChild(sel);
+            picksContainer.appendChild(row);
+        });
+        refreshOptionStates();
+    };
+
+    modeSelect.addEventListener('change', () => { buildPicks(); commit(); });
+
+    buildPicks();
+    commit(); // reflect any saved picks (and re-apply their bonuses)
+
+    container.appendChild(wrap);
+}
 
 
 
@@ -1081,8 +1284,11 @@ function openSpeciesModal(speciesName) {
     asiDiv.className = 'species-asi';
     if (asi.all) {
         asiDiv.innerHTML = `<p><strong>Ability Score Increase:</strong> +1 to all abilities</p>`;
+    } else if (!asi || Object.keys(asi).length === 0) {
+        // Floating-ASI race: increases are chosen after selecting the race
+        asiDiv.innerHTML = `<p><strong>Ability Score Increase:</strong> Choose your own (set after selecting this race)</p>`;
     } else {
-        const asiList = Object.entries(asi).map(([ability, value]) => 
+        const asiList = Object.entries(asi).map(([ability, value]) =>
             `+${value} ${ability.charAt(0).toUpperCase() + ability.slice(1)}`
         ).join(', ');
         asiDiv.innerHTML = `<p><strong>Ability Score Increase:</strong> ${asiList}</p>`;
@@ -1341,10 +1547,27 @@ function applyRacialToolProficiencies(raceName) {
 
 // Apply subrace features
 function applySubraceFeatures(raceName, subraceKey, subrace) {
-    // Apply subrace ability score increases
+    // Apply subrace ability score increases.
+    // Most subraces carry the same increase in BOTH `abilityScoreIncrease` and a
+    // `bonuses` entry; the latter is already applied by applyRacialBonuses, so
+    // only apply increases here that the bonuses array doesn't already cover.
+    // That fixes double-counting (e.g. Hill Dwarf Wisdom, Mountain Dwarf
+    // Strength) while still supporting subraces that only define
+    // `abilityScoreIncrease`.
     if (subrace.abilityScoreIncrease) {
+        const ABBR_TO_ABILITY = {
+            STR: 'strength', DEX: 'dexterity', CON: 'constitution',
+            INT: 'intelligence', WIS: 'wisdom', CHA: 'charisma'
+        };
+        const coveredByBonuses = new Set(
+            (subrace.bonuses || [])
+                .filter(b => b.category === 'attributes' && ABBR_TO_ABILITY[b.key])
+                .map(b => ABBR_TO_ABILITY[b.key])
+        );
         Object.entries(subrace.abilityScoreIncrease).forEach(([ability, value]) => {
-            addAbilityBonus(ability, value, `${subrace.name} Subrace`);
+            if (!coveredByBonuses.has(ability)) {
+                addAbilityBonus(ability, value, `${subrace.name} Subrace`);
+            }
         });
     }
     
@@ -1623,16 +1846,27 @@ function validateRaceData() {
  * Fetches race data from JSON file
  */
 async function fetchRaceDataFromJSON(raceKey) {
+    // DM-provided races take priority, mirroring the merge in loadRacesData
+    const localRaces = await loadLocalContentJson('../local-content/races.json');
+    if (localRaces && localRaces[raceKey]) {
+        return localRaces[raceKey];
+    }
+
     const response = await fetch('./Races.json');
     const originalRacesData = await response.json();
     const speciesInfo = originalRacesData[raceKey];
-    
-    if (!speciesInfo) {
-        console.error(`Race "${raceKey}" not found in Races.json`);
-        return null;
+
+    if (speciesInfo) return speciesInfo;
+
+    // Homebrew races (global storage "Custom Races") are merged into racesData
+    // by loadRacesData but aren't in Races.json / local-content; fall back to
+    // the already-merged in-memory copy.
+    if (typeof racesData !== 'undefined' && racesData && racesData[raceKey]) {
+        return racesData[raceKey];
     }
-    
-    return speciesInfo;
+
+    console.error(`Race "${raceKey}" not found in Races.json`);
+    return null;
 }
 
 /**

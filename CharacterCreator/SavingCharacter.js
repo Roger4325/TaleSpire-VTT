@@ -323,7 +323,13 @@ function buildEquipmentProficienciesForSave() {
 
         (source.weapons || []).forEach(w => weapons.add(normalizeProficiencyName(w)));
         (source.armor || []).forEach(a => armor.add(normalizeProficiencyName(a)));
-        (source.tools || []).forEach(t => tools.add(normalizeProficiencyName(t)));
+        (source.tools || []).forEach(t => {
+            // Count-based grants ("Three Musical Instruments") are represented by
+            // the specific tools the player picked (in currentCharacter.tools),
+            // so don't emit the placeholder string itself.
+            if (typeof parseClassToolChoice === 'function' && parseClassToolChoice(t)) return;
+            tools.add(normalizeProficiencyName(t));
+        });
     });
 
     // Racial proficiencies tracked on the character
@@ -567,6 +573,9 @@ function buildCharacterCreatorData() {
         // put into spellData (so the merge can tell creator spells from spells
         // the player added on the sheet).
         spellSelections: JSON.parse(JSON.stringify(currentCharacter.spellSelections || {})),
+        // Bard Magical Secrets (any-class spell picks that don't count against
+        // the class spells-known budget)
+        magicalSecrets: JSON.parse(JSON.stringify(currentCharacter.magicalSecrets || {})),
         creatorSpellsByLevel: typeof collectCreatorSpellsByLevel === 'function'
             ? collectCreatorSpellsByLevel()
             : {}

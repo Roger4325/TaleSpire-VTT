@@ -72,7 +72,8 @@ let currentCharacter = {
     savingThrows: {},
     skills: {
         proficiencies: [],
-        sources: {} // Track where each skill came from
+        sources: {}, // Track where each skill came from
+        expertise: [] // Skills with doubled proficiency (rogue/bard)
     },
     languages: {
         proficiencies: [],
@@ -245,11 +246,19 @@ async function readSpellJson() {
         if (!response.ok) throw new Error('Network response was not ok');
         const spellsData = await response.json();
 
-        let combinedData = isGlobalDataAnObject 
+        // Optional DM-provided spells: same shape as spells-eng.json entries.
+        // A local spell with the same name and year replaces the shipped one.
+        const localSpells = (await loadLocalContentJson('../local-content/spells.json')) || [];
+        const localSpellKeys = new Set(localSpells.map(s => `${(s.name || '').toLowerCase()}|${s.year || '2014'}`));
+        const officialSpells = localSpellKeys.size
+            ? spellsData.filter(s => !localSpellKeys.has(`${(s.name || '').toLowerCase()}|${s.year || '2014'}`))
+            : spellsData;
+
+        let combinedData = isGlobalDataAnObject
             ? Object.values(allSpellData)
             : allSpellData;
-        
-        combinedData = [...combinedData, ...spellsData];
+
+        combinedData = [...combinedData, ...officialSpells, ...localSpells];
 
         const versionData = await loadDataFromGlobalStorage("D&DVersion");
         const versionSetting = versionData?.Version || '2014';
@@ -1028,7 +1037,7 @@ function updateSkillOptionDisplays() {
             
             const takenSkills = getTakenSkills(availableSkills);
             if (takenSkills.length > 0) {
-                warning.innerHTML = `<strong>Already taken:</strong> ${takenSkills.map(skill => 
+                warning.innerHTML = `<strong>Already taken:</strong> ${takenSkills.map(skill =>
                     `${skill} (${getSkillSource(skill)})`
                 ).join(', ')}`;
                 warning.style.display = 'block';
@@ -1037,6 +1046,11 @@ function updateSkillOptionDisplays() {
             }
         }
     });
+
+    // Expertise pickers list the character's proficient skills, so a change to
+    // skill proficiencies must refresh them (e.g. a rogue picking skills and
+    // expertise at the same level).
+    if (typeof refreshExpertiseChoices === 'function') refreshExpertiseChoices();
 }
 
 /**
@@ -1102,7 +1116,7 @@ function refreshSkillDisplays() {
             
             const takenSkills = getTakenSkills(availableSkills);
             if (takenSkills.length > 0) {
-                warning.innerHTML = `<strong>Already taken:</strong> ${takenSkills.map(skill => 
+                warning.innerHTML = `<strong>Already taken:</strong> ${takenSkills.map(skill =>
                     `${skill} (${getSkillSource(skill)})`
                 ).join(', ')}`;
                 warning.style.display = 'block';
@@ -1111,6 +1125,11 @@ function refreshSkillDisplays() {
             }
         }
     });
+
+    // Expertise pickers list the character's proficient skills, so a change to
+    // skill proficiencies must refresh them (e.g. a rogue picking skills and
+    // expertise at the same level).
+    if (typeof refreshExpertiseChoices === 'function') refreshExpertiseChoices();
 }
 
 

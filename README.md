@@ -13,6 +13,7 @@ If you want traditional written guides instead of the video, start here:
 - [DM Screen Guide](docs/README_DM_SCREEN.md)
 - [Player Character Sheet Guide](docs/README_PLAYER_CHARACTER_SHEET.md)
 - [Homebrew, Imports, and Exports Guide](docs/README_HOMEBREW_AND_IMPORTS.md)
+- [Local Content Guide](docs/README_LOCAL_CONTENT.md) — load DM-provided spells, races, classes, and subclasses from a gitignored `local-content/` folder
 
 ## What The Toolset Includes
 

@@ -10,6 +10,8 @@ Common content types include:
 - Characters
 - Custom spells
 - Custom subclasses
+- Custom races
+- Custom feats
 - Custom items
 - Custom monsters
 - Custom shops
@@ -22,6 +24,8 @@ Use the `Homebrew` button to manage:
 - Monsters
 - Spells
 - Subclasses
+- Races
+- Feats
 - Items
 - Shops
 
@@ -30,6 +34,8 @@ Use the `Homebrew` button to manage:
 Use the `Homebrew` button to manage:
 - Spells
 - Subclasses
+- Races
+- Feats
 - Items
 - Character data
 
@@ -73,6 +79,33 @@ Subclasses can also grant spells:
 Spell names are verified against the 5e and 5.5e catalogs plus your Custom Spells; unknown names produce a warning, and prepared-list grant levels are checked against the official domain/circle/oath patterns.
 
 Saved subclasses appear in the Character Creator as selectable subclasses for their class, filtered by the D&D Version setting the same way spells are. Import and export work like spells: export copies the subclass JSON to the clipboard, import accepts that same JSON. (Custom base classes are planned to follow the same storage pattern in the future.)
+
+### Custom Races
+
+Custom races can be created from the Homebrew menu on both the DM Screen and the Player Sheet. Each race records:
+- The edition it targets: 5e (2014) or 5.5e (2024)
+- Size and walking speed
+- Ability score increases (each row is a fixed bonus such as +2 Dexterity, +1 Wisdom)
+- Languages
+- Traits, each with a name and description
+- Skill, weapon, armor, and tool proficiencies
+- Spells granted (verified against the 5e/5.5e catalogs plus your Custom Spells)
+
+The form blocks names that collide with a built-in or DM-provided race and warns on things like a 0 speed, no ability increase, or an unknown granted spell (you can still save anyway for intentional homebrew). Saved races appear in the Character Creator's Species step, filtered by the D&D Version setting.
+
+### Custom Feats
+
+Custom feats can be created from the Homebrew menu on both the DM Screen and the Player Sheet. Each feat records:
+- The edition it targets: 5e (2014) or 5.5e (2024)
+- A prerequisite line (free text; leave blank for none)
+- A description (one paragraph per line; start a line with a bullet for a bullet point)
+- Ability score increase: add one ability for a fixed +N, or add several to let the player pick one of them (half-feat style — the Character Creator renders the picker automatically)
+- Spells granted and proficiencies granted
+- Whether the feat can be taken more than once
+
+The form blocks names that collide with a built-in or DM-provided feat and warns on an empty description or an unknown granted spell. Saved feats appear in the Character Creator's feat choice lists, filtered by the D&D Version setting.
+
+Both races and feats import and export like spells and subclasses: export copies the JSON to the clipboard, import accepts that same JSON.
 
 ### Custom Items
 
