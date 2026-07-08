@@ -525,14 +525,19 @@ margin: 2px;
 /* The container that holds the modal content */
 .homebrew-modal-background {
     background-color: rgb(2, 2, 2);
-    margin: 5% auto; /* Center the modal */
+    margin: 3% auto; /* Center the modal */
     padding: 10px;
     border: 1px solid var(--border-outline-color);
     width: 90%; /* Adjust the width as needed */
+    max-width: 1000px; /* keep it compact on wide monitors */
     border-radius: 5px;
     z-index: 9;
     position: relative;
-    height: 90%;
+    height: auto; /* size to content instead of always filling 90% */
+    max-height: 94%; /* but never exceed the viewport */
+    box-sizing: border-box; /* keep padding inside the height cap */
+    overflow-y: auto; /* scroll tall content instead of running off-screen */
+    font-size: 0.9rem; /* shrink the whole creator a touch */
 }
 
 /* Center the modal content */
@@ -540,13 +545,20 @@ margin: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
 }
 
 #homebrewModalSubsectionStorage{
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 5%;
+    grid-template-columns: 1fr 1fr; /* the two storage bars sit side by side */
+    gap: 6px 16px;
+    align-items: start;
+}
+
+/* The editor holds every create/delete row; span it under both storage bars */
+#homebrewModalSubsectionEditor{
+    grid-column: 1 / -1;
 }
 
 
@@ -574,12 +586,17 @@ margin: 2px;
 .deleteMonster {
     border: 1px solid var(--border-outline-color);
     border-radius: 5px;
-    padding: 10px;
+    padding: 6px;
 }
 
 .deleteMonster-header {
-    gap: 10px; 
-    margin-bottom: 5px; 
+    gap: 10px;
+    margin-bottom: 4px;
+}
+
+/* Tighten the dividers between each create/delete row */
+#homebrewModalSubsectionEditor hr {
+    margin: 6px 0;
 }
 
 #customMonsterSelect, #customShopSelect {
@@ -1400,6 +1417,84 @@ margin: 2px;
     margin: 5px 0;
 }
 
+/* Homebrew race & feat form modals (mirror the subclass form) */
+#raceFormModal,
+#featFormModal {
+    display: none;
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+#raceForm,
+#featForm {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#raceFormModal button,
+#featFormModal button {
+    margin-top: 10px;
+}
+
+.homebrew-subhead {
+    font-weight: bold;
+    margin: 10px 0 2px;
+    color: var(--button-color-hover);
+}
+
+.homebrew-hint {
+    font-style: italic;
+    opacity: 0.8;
+    margin: 0 0 6px;
+    font-size: 0.9em;
+}
+
+.homebrew-ability-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.homebrew-ability-row .homebrew-ability-select {
+    flex: 1;
+}
+
+.homebrew-ability-plus {
+    opacity: 0.8;
+}
+
+.homebrew-ability-value {
+    width: 60px;
+    flex: 0 0 60px;
+}
+
+.homebrew-ability-row input,
+.homebrew-ability-row select {
+    background-color: rgb(2, 2, 2);
+    border: 1px solid var(--border-outline-color);
+    padding: 5px;
+    border-radius: 5px;
+    color: white;
+}
+
+.homebrew-ability-row .subclass-feature-remove {
+    margin-top: 0 !important;
+}
+
+.race-trait-name {
+    flex: 1;
+}
+
 .subclass-feature-row {
     border: 1px solid var(--border-outline-color);
     border-radius: 5px;
@@ -1640,11 +1735,22 @@ margin: 2px;
     display: none;
 }
 /* Give to Player (DM homebrew menu) */
+/* Only one child here, so override the 1fr/6fr grid and let it fill the row */
+#giveToPlayerSection {
+    grid-template-columns: 1fr;
+}
+
 .give-row {
     display: flex;
     gap: 6px;
     margin-top: 6px;
     align-items: center;
+}
+
+/* Positioned wrapper so the custom autocomplete dropdown anchors to the input */
+.give-input-wrap {
+    position: relative;
+    flex: 1;
 }
 
 .give-row input {
@@ -1654,6 +1760,24 @@ margin: 2px;
     border-radius: 5px;
     color: white;
     padding: 5px;
+}
+
+.give-input-wrap input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.give-input-wrap .dropdown {
+    width: 100%;
+    margin-top: 3px;
+    padding-block: 4px; /* a little breathing room above/below the items */
+    max-height: 260px;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.55); /* lift the list off the panel */
+}
+
+.give-input-wrap .dropdown-item {
+    border-radius: 4px;
+    margin: 0 4px;
 }
 
 .give-row button {

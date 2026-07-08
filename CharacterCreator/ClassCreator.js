@@ -488,11 +488,24 @@ function renderMulticlassRolledHitPointsInterface() {
     contentContainer.appendChild(inputsContainer);
     rolledContainer.appendChild(contentContainer);
     
-    // Add to the bottom of the multiclass header container
+    // Add to the bottom of the multiclass header container when it exists.
+    // A freshly selected single class is shown by displayClassInfoSection,
+    // which builds a `.class-header-container` instead — fall back to inserting
+    // right after it so the rolled-HP inputs still appear (previously they only
+    // showed up once a second class forced the multiclass view to render).
     const multiclassHeaderContainer = document.querySelector('.multiclass-header-container');
     if (multiclassHeaderContainer) {
         // Append directly to the multiclass header container so it's inside
         multiclassHeaderContainer.appendChild(rolledContainer);
+        return;
+    }
+
+    const classInfoDisplay = document.getElementById('classInfoDisplay');
+    const singleClassHeader = document.querySelector('.class-header-container');
+    if (singleClassHeader && singleClassHeader.parentNode) {
+        singleClassHeader.parentNode.insertBefore(rolledContainer, singleClassHeader.nextSibling);
+    } else if (classInfoDisplay) {
+        classInfoDisplay.appendChild(rolledContainer);
     }
 }
 
@@ -1018,6 +1031,17 @@ function renderMulticlassLevel(classData, classInfo, level, container) {
  * @param {string} className - Name of the class (for unique IDs)
  */
 function renderMulticlassChoices(parent, level, choiceKey, choiceDef, className) {
+    // Expertise and Magical Secrets carry only a placeholder option in the
+    // data; they need their own pickers (proficient skills / any-class spells).
+    if (isExpertiseChoiceKey(choiceKey)) {
+        renderExpertiseChoiceCard(parent, level, choiceKey, choiceDef, className);
+        return;
+    }
+    if (isMagicalSecretsChoiceKey(choiceKey)) {
+        renderMagicalSecretsChoiceCard(parent, level, choiceKey, choiceDef, className);
+        return;
+    }
+
     // Create unique IDs that include the class name to avoid conflicts
     const safeKey = choiceKey.replace(/[^a-zA-Z0-9_-]/g, '');
     const safeClassName = className.replace(/[^a-zA-Z0-9_-]/g, '');
@@ -1309,6 +1333,389 @@ function buildMulticlassMultipleChoice(body, status, choiceDef, level, choiceKey
         status.textContent = `❗ (${selectedChoices.length}/${choiceDef.choose})`;
         status.className = 'choice-status incomplete';
     }
+}
+
+// ========== SPECIAL CHOICE TYPES: EXPERTISE & MAGICAL SECRETS ==========
+//
+// Both are stored in Classes.json with a single placeholder option (e.g.
+// "Skill Expertise", "Any Class Spell") because the real options are dynamic:
+// expertise picks from the character's own skill proficiencies, and magical
+// secrets picks spells from any class list. These renderers replace the generic
+// checkbox interface for those choice keys in both the single-class and
+// multiclass views.
+
+/** Expertise choice keys are exactly "Expertise" today, but match loosely so
+ *  homebrew "... Expertise" skill choices are handled too. Feature-only
+ *  entries (e.g. Assassin's "Infiltration Expertise") never reach here because
+ *  only `choices` entries are rendered through renderChoices. */
+function isExpertiseChoiceKey(choiceKey) {
+    return /\bexpertise\b/i.test(choiceKey);
+}
+
+function isMagicalSecretsChoiceKey(choiceKey) {
+    return /magical secrets/i.test(choiceKey);
+}
+
+/** Resolve the class entry a choice belongs to. Multiclass passes the name;
+ *  single-class falls back to the only/primary class. */
+function resolveChoiceClassName(className) {
+    if (className) return className;
+    if (currentCharacter.classes && currentCharacter.classes[0]) {
+        return currentCharacter.classes[0].className;
+    }
+    return currentCharacter.class || null;
+}
+
+function classDisplayName(className) {
+    return classesData?.classes?.[className]?.name || className || 'class';
+}
+
+/** Store an array/object choice value on the owning class entry (mirrors what
+ *  handleChoiceSelection does, but without the duplicate-tracking validation
+ *  that would reject skill/spell names). */
+function storeSpecialChoiceValue(level, choiceKey, ownerClass, value) {
+    const targetClass = ownerClass
+        ? currentCharacter.classes.find(c => c.className === ownerClass)
+        : (currentCharacter.classes && currentCharacter.classes[0]);
+    if (targetClass) {
+        targetClass.choices = targetClass.choices || {};
+        targetClass.choices[level] = targetClass.choices[level] || {};
+        targetClass.choices[level][choiceKey] = value;
+    } else {
+        currentCharacter.choices = currentCharacter.choices || {};
+        currentCharacter.choices[level] = currentCharacter.choices[level] || {};
+        currentCharacter.choices[level][choiceKey] = value;
+    }
+    if (typeof updateClassesDataForSave === 'function') updateClassesDataForSave();
+}
+
+function setChoiceCountStatus(status, count, needed) {
+    if (count >= needed) {
+        status.textContent = '✔';
+        status.className = 'choice-status complete';
+    } else {
+        status.textContent = count > 0 ? `❗ (${count}/${needed})` : '❗';
+        status.className = 'choice-status incomplete';
+    }
+}
+
+// ---- Expertise ----
+
+function addExpertiseSkill(skill) {
+    currentCharacter.skills = currentCharacter.skills || {};
+    currentCharacter.skills.expertise = currentCharacter.skills.expertise || [];
+    if (!currentCharacter.skills.expertise.includes(skill)) {
+        currentCharacter.skills.expertise.push(skill);
+    }
+}
+
+function removeExpertiseSkill(skill) {
+    if (!currentCharacter.skills || !Array.isArray(currentCharacter.skills.expertise)) return;
+    const idx = currentCharacter.skills.expertise.indexOf(skill);
+    if (idx > -1) currentCharacter.skills.expertise.splice(idx, 1);
+}
+
+/** Renders the expertise picker card. Rebuildable so it can refresh when the
+ *  character's skill proficiencies change (rogue picks skills and expertise at
+ *  the same level). */
+function renderExpertiseChoiceCard(parent, level, choiceKey, choiceDef, className) {
+    const ownerClass = resolveChoiceClassName(className);
+    const safeKey = choiceKey.replace(/[^a-zA-Z0-9_-]/g, '');
+    const safeClass = (ownerClass || 'class').replace(/[^a-zA-Z0-9_-]/g, '');
+    const idBase = `expertise-${safeClass}-${safeKey}-L${level}`;
+
+    const existing = document.getElementById(`${idBase}-card`);
+    if (existing) existing.remove();
+
+    const chooseCount = choiceDef.choose || 2;
+    const { card, header, body } = renderSimpleCard(
+        parent,
+        `${choiceKey} (choose ${chooseCount})`,
+        choiceDef.description || '',
+        idBase
+    );
+    card.id = `${idBase}-card`;
+    card.classList.add('expertise-choice-card');
+
+    const status = document.createElement('span');
+    status.classList.add('choice-status', 'incomplete');
+    status.textContent = '❗';
+    header.insertBefore(status, header.firstChild);
+
+    const build = () => buildExpertiseInterface(body, status, level, choiceKey, ownerClass, chooseCount);
+    // Stash for refreshExpertiseChoices() to call when proficiencies change
+    card._rebuildExpertise = build;
+    build();
+}
+
+function buildExpertiseInterface(body, status, level, choiceKey, ownerClass, chooseCount) {
+    body.innerHTML = '';
+
+    let selected = getSavedChoiceValue(level, choiceKey, ownerClass);
+    selected = Array.isArray(selected) ? selected.filter(s => typeof s === 'string') : [];
+
+    const proficientSkills = [...(currentCharacter.skills?.proficiencies || [])].sort();
+
+    if (proficientSkills.length === 0) {
+        const note = document.createElement('p');
+        note.className = 'equipment-note';
+        note.textContent = 'Choose your skill proficiencies first — expertise doubles your ' +
+            'proficiency bonus for skills you are already proficient in.';
+        body.appendChild(note);
+        setChoiceCountStatus(status, selected.length, chooseCount);
+        return;
+    }
+
+    const instruction = document.createElement('p');
+    instruction.className = 'multi-choice-instruction';
+    instruction.textContent = `Choose ${chooseCount} skill${chooseCount > 1 ? 's' : ''} to gain ` +
+        `expertise in (proficiency bonus doubled):`;
+    body.appendChild(instruction);
+
+    const container = document.createElement('div');
+    container.className = 'multi-choice-container';
+
+    proficientSkills.forEach((skill, i) => {
+        const isSelectedHere = selected.includes(skill);
+        // Expertise already assigned by a different expertise choice/source
+        const takenElsewhere = (currentCharacter.skills?.expertise || []).includes(skill) && !isSelectedHere;
+
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'multi-choice-option';
+        if (takenElsewhere) optionDiv.classList.add('skill-taken');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `expertise-${level}-${choiceKey.replace(/[^a-zA-Z0-9_-]/g, '')}-opt-${i}`;
+        checkbox.value = skill;
+        checkbox.checked = isSelectedHere;
+        checkbox.disabled = takenElsewhere;
+
+        const label = document.createElement('label');
+        label.htmlFor = checkbox.id;
+        label.textContent = takenElsewhere ? `${skill} (expertise already assigned)` : skill;
+
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                if (selected.length >= chooseCount) {
+                    checkbox.checked = false;
+                    return;
+                }
+                selected.push(skill);
+                addExpertiseSkill(skill);
+            } else {
+                const idx = selected.indexOf(skill);
+                if (idx > -1) selected.splice(idx, 1);
+                removeExpertiseSkill(skill);
+            }
+            storeSpecialChoiceValue(level, choiceKey, ownerClass, [...selected]);
+            setChoiceCountStatus(status, selected.length, chooseCount);
+            // Other expertise cards must update their "already assigned" marks
+            refreshExpertiseChoices();
+        });
+
+        optionDiv.appendChild(checkbox);
+        optionDiv.appendChild(label);
+        container.appendChild(optionDiv);
+    });
+
+    body.appendChild(container);
+    setChoiceCountStatus(status, selected.length, chooseCount);
+}
+
+/** Re-render every expertise card in place. Called when skill proficiencies
+ *  change so newly-picked skills become available for expertise. */
+function refreshExpertiseChoices() {
+    document.querySelectorAll('.expertise-choice-card').forEach(card => {
+        if (typeof card._rebuildExpertise === 'function') card._rebuildExpertise();
+    });
+}
+
+// ---- Magical Secrets ----
+
+const MAGICAL_SECRETS_SOURCE_CLASSES =
+    ['Bard', 'Cleric', 'Druid', 'Paladin', 'Ranger', 'Sorcerer', 'Warlock', 'Wizard'];
+
+function getMagicalSecretsStore() {
+    if (!currentCharacter.magicalSecrets) currentCharacter.magicalSecrets = {};
+    return currentCharacter.magicalSecrets;
+}
+
+function magicalSecretsKey(ownerClass, level, choiceKey) {
+    return `${ownerClass || 'class'}-L${level}-${choiceKey}`;
+}
+
+/** Highest spell level the owning class can cast (from its own slot table),
+ *  which bounds magical-secrets picks. Cantrips are always allowed. */
+function getMagicalSecretsMaxSpellLevel(ownerClass) {
+    const entry = (currentCharacter.classes || []).find(c => c.className === ownerClass);
+    if (entry && typeof getSpellBudgetForClass === 'function') {
+        const budget = getSpellBudgetForClass(entry);
+        if (budget && budget.maxSpellLevel) return budget.maxSpellLevel;
+    }
+    return 9;
+}
+
+function renderMagicalSecretsChoiceCard(parent, level, choiceKey, choiceDef, className) {
+    const ownerClass = resolveChoiceClassName(className);
+    const safeKey = choiceKey.replace(/[^a-zA-Z0-9_-]/g, '');
+    const safeClass = (ownerClass || 'class').replace(/[^a-zA-Z0-9_-]/g, '');
+    const idBase = `magicsecrets-${safeClass}-${safeKey}-L${level}`;
+
+    const existing = document.getElementById(`${idBase}-card`);
+    if (existing) existing.remove();
+
+    const chooseCount = choiceDef.choose || 2;
+    const { card, header, body } = renderSimpleCard(
+        parent,
+        `${choiceKey} (choose ${chooseCount})`,
+        choiceDef.description || '',
+        idBase
+    );
+    card.id = `${idBase}-card`;
+    card.classList.add('magic-secrets-choice-card');
+
+    const status = document.createElement('span');
+    status.classList.add('choice-status', 'incomplete');
+    status.textContent = '❗';
+    header.insertBefore(status, header.firstChild);
+
+    buildMagicalSecretsInterface(body, status, level, choiceKey, ownerClass, chooseCount);
+}
+
+function buildMagicalSecretsInterface(body, status, level, choiceKey, ownerClass, chooseCount) {
+    body.innerHTML = '';
+
+    const store = getMagicalSecretsStore();
+    const key = magicalSecretsKey(ownerClass, level, choiceKey);
+    const entry = store[key] = store[key] || {};
+    entry.ownerClass = ownerClass;
+    entry.level = level;
+    entry.choiceKey = choiceKey;
+    entry.sourceClass = entry.sourceClass || '';
+    entry.spells = Array.isArray(entry.spells) ? entry.spells : [];
+
+    // Recomputed on each render: the class level can change after this card is
+    // first built (level-up appends the card before syncing the class level).
+    const note = document.createElement('p');
+    note.className = 'equipment-note';
+    body.appendChild(note);
+    const updateNote = (maxLevel) => {
+        note.textContent = `Choose ${chooseCount} spell${chooseCount > 1 ? 's' : ''} from any class's ` +
+            `spell list — a cantrip or a spell up to level ${maxLevel}. They count as ` +
+            `${classDisplayName(ownerClass)} spells and are added to your sheet.`;
+    };
+
+    const select = document.createElement('select');
+    select.className = 'choice-select';
+    select.appendChild(new Option('-- select a class to browse --', ''));
+    MAGICAL_SECRETS_SOURCE_CLASSES.forEach(c => select.appendChild(new Option(c, c)));
+    if (entry.sourceClass) select.value = entry.sourceClass;
+    body.appendChild(select);
+
+    const counter = document.createElement('p');
+    counter.className = 'spell-counters';
+    body.appendChild(counter);
+
+    const listContainer = document.createElement('div');
+    listContainer.className = 'magic-secrets-spell-list';
+    body.appendChild(listContainer);
+
+    const updateCounter = () => {
+        counter.textContent = `Selected: ${entry.spells.length}/${chooseCount}`;
+        counter.className = 'spell-counters' + (entry.spells.length >= chooseCount ? ' spell-counters-complete' : '');
+        setChoiceCountStatus(status, entry.spells.length, chooseCount);
+    };
+
+    const renderList = () => {
+        const maxLevel = getMagicalSecretsMaxSpellLevel(ownerClass);
+        updateNote(maxLevel);
+        listContainer.innerHTML = '';
+        const cls = select.value;
+        if (!cls) {
+            const hint = document.createElement('p');
+            hint.className = 'equipment-note';
+            hint.textContent = 'Select a class above to browse its spells.';
+            listContainer.appendChild(hint);
+            return;
+        }
+
+        const allSpells = (typeof AppData !== 'undefined' && AppData?.spellLookupInfo?.spellsData) || [];
+        if (allSpells.length === 0) {
+            const hint = document.createElement('p');
+            hint.className = 'equipment-note';
+            hint.textContent = 'Spell list is still loading — open the Spells tab once, then return here.';
+            listContainer.appendChild(hint);
+            return;
+        }
+
+        const options = allSpells.filter(sp => {
+            const lvl = spellCatalogLevel(sp);
+            if (lvl > maxLevel) return false;
+            const list = (sp.class || '').split(',').map(x => x.trim());
+            return list.includes(cls);
+        });
+
+        for (let lvl = 0; lvl <= maxLevel; lvl++) {
+            const group = options
+                .filter(s => spellCatalogLevel(s) === lvl)
+                .sort((a, b) => a.name.localeCompare(b.name));
+            if (group.length === 0) continue;
+
+            const details = document.createElement('details');
+            details.className = 'spell-level-group';
+            details.open = (lvl <= 1);
+            const summary = document.createElement('summary');
+            summary.textContent = lvl === 0 ? `Cantrips (${group.length})` : `Level ${lvl} (${group.length})`;
+            details.appendChild(summary);
+
+            group.forEach(sp => {
+                const row = document.createElement('div');
+                row.className = 'multi-choice-option';
+
+                const cb = document.createElement('input');
+                cb.type = 'checkbox';
+                cb.value = sp.name;
+                cb.checked = entry.spells.includes(sp.name);
+
+                const label = document.createElement('label');
+                label.textContent = `${sp.name}${sp.school ? ` — ${sp.school}` : ''}`;
+
+                cb.addEventListener('change', () => {
+                    if (cb.checked) {
+                        if (entry.spells.length >= chooseCount) {
+                            cb.checked = false;
+                            if (typeof showError === 'function') {
+                                showError(`You can only choose ${chooseCount} spells for ${choiceKey}.`);
+                            }
+                            return;
+                        }
+                        if (!entry.spells.includes(sp.name)) entry.spells.push(sp.name);
+                    } else {
+                        const i = entry.spells.indexOf(sp.name);
+                        if (i > -1) entry.spells.splice(i, 1);
+                    }
+                    entry.sourceClass = select.value;
+                    if (typeof updateClassesDataForSave === 'function') updateClassesDataForSave();
+                    updateCounter();
+                });
+
+                row.appendChild(cb);
+                row.appendChild(label);
+                details.appendChild(row);
+            });
+
+            listContainer.appendChild(details);
+        }
+    };
+
+    select.onchange = () => {
+        entry.sourceClass = select.value;
+        renderList();
+    };
+
+    renderList();
+    updateCounter();
 }
 
 /**
@@ -2987,23 +3394,169 @@ function renderLevel1CharacterCreation(parent, className) {
             equipmentList.appendChild(weaponItem);
         }
         
-        if (classInfo.equipmentProficiencies.tools && classInfo.equipmentProficiencies.tools.length > 0) {
+        // Tools split into fixed grants (shown as text) and count-based picks
+        // ("Three Musical Instruments" etc.) that need a selection interface.
+        const toolEntries = classInfo.equipmentProficiencies.tools || [];
+        const fixedTools = toolEntries.filter(t => !parseClassToolChoice(t));
+        const choiceTools = toolEntries.filter(t => parseClassToolChoice(t));
+
+        if (fixedTools.length > 0) {
             const toolItem = document.createElement('li');
-            toolItem.innerHTML = `<strong>Tools:</strong> ${classInfo.equipmentProficiencies.tools.join(', ')}`;
+            toolItem.innerHTML = `<strong>Tools:</strong> ${fixedTools.join(', ')}`;
             equipmentList.appendChild(toolItem);
         }
-        
+
         if (classInfo.equipmentProficiencies.other && classInfo.equipmentProficiencies.other.length > 0) {
             const otherItem = document.createElement('li');
             otherItem.innerHTML = `<strong>Other:</strong> ${classInfo.equipmentProficiencies.other.join(', ')}`;
             equipmentList.appendChild(otherItem);
         }
-        
+
         body.appendChild(equipmentList);
-        
+
+        // Grant the fixed tool proficiencies to the character
+        fixedTools.forEach(tool => {
+            if (!hasToolProficiency(tool)) addToolProficiency(tool, `${classInfo.name} Class`);
+        });
+
+        // Render a picker for each count-based tool proficiency
+        choiceTools.forEach(entry => {
+            renderClassToolChoice(body, entry, classInfo.name);
+        });
+
         // Store equipment proficiencies in character
         currentCharacter.equipmentProficiencies = classInfo.equipmentProficiencies;
     }
+}
+
+// "Count-word category" tool proficiency grants (e.g. "Three Musical
+// Instruments", "One Artisan Tool") expand into a pick from these lists.
+const CLASS_TOOL_CATEGORY_OPTIONS = {
+    'musical instrument': [
+        "Bagpipes", "Drum", "Dulcimer", "Flute", "Horn",
+        "Lute", "Lyre", "Pan flute", "Shawm", "Viol"
+    ],
+    'artisan tool': [
+        "Alchemist's supplies", "Brewer's supplies", "Calligrapher's supplies",
+        "Carpenter's tools", "Cartographer's tools", "Cobbler's tools",
+        "Cook's utensils", "Glassblower's tools", "Jeweler's tools",
+        "Leatherworker's tools", "Mason's tools", "Painter's supplies",
+        "Potter's tools", "Smith's tools", "Tinker's tools",
+        "Weaver's tools", "Woodcarver's tools"
+    ],
+    'gaming set': [
+        "Dice set", "Dragonchess set", "Playing card set", "Three-Dragon Ante set"
+    ]
+};
+
+const TOOL_COUNT_WORDS = { one: 1, two: 2, three: 3, four: 4, five: 5 };
+
+/**
+ * Parses a count-based tool proficiency string like "Three Musical Instruments"
+ * or "One Artisan Tool" into { count, category, options }. Returns null for
+ * fixed grants ("Thieves' Tools", "Herbalism Kit") that need no selection.
+ */
+function parseClassToolChoice(entry) {
+    if (typeof entry !== 'string') return null;
+    const match = entry.trim().match(/^(one|two|three|four|five|\d+)\s+(.*)$/i);
+    if (!match) return null;
+
+    const count = TOOL_COUNT_WORDS[match[1].toLowerCase()] || parseInt(match[1], 10);
+    if (!count) return null;
+
+    // Normalise the category ("Musical Instruments" -> "musical instrument")
+    let cat = match[2].toLowerCase().replace(/[’']s\b/g, '').replace(/s\b/g, '').trim();
+    // Map common variants onto our category keys
+    if (cat.includes('musical instrument')) cat = 'musical instrument';
+    else if (cat.includes('artisan')) cat = 'artisan tool';
+    else if (cat.includes('gaming set')) cat = 'gaming set';
+
+    const options = CLASS_TOOL_CATEGORY_OPTIONS[cat];
+    if (!options) return null;
+
+    return { count, category: cat, options };
+}
+
+/**
+ * Renders a checkbox picker for a count-based class tool proficiency. Choices
+ * are stored in the character-wide choice store (so they persist and re-apply
+ * on load) and granted via addToolProficiency so they flow onto the sheet.
+ */
+function renderClassToolChoice(parent, entry, className) {
+    const parsed = parseClassToolChoice(entry);
+    if (!parsed) return;
+
+    const { count, options } = parsed;
+    const choiceKey = `class-tool-choice-${className}-${entry}`.replace(/\s+/g, '-').toLowerCase();
+    const source = `${className} Class`;
+
+    currentCharacter.choices = currentCharacter.choices || {};
+    let selected = currentCharacter.choices[choiceKey];
+    selected = Array.isArray(selected) ? selected.filter(t => typeof t === 'string') : [];
+
+    // Re-apply saved picks as proficiencies (relevant on load)
+    selected.forEach(tool => {
+        if (!hasToolProficiency(tool)) addToolProficiency(tool, source);
+    });
+
+    const container = document.createElement('div');
+    container.className = 'skill-selection-container tool-choice-container';
+
+    const instruction = document.createElement('p');
+    instruction.className = 'skill-instruction';
+    instruction.textContent = `Choose ${count} ${entry.replace(/^(one|two|three|four|five|\d+)\s+/i, '')}:`;
+    container.appendChild(instruction);
+
+    const status = document.createElement('span');
+    status.className = 'choice-status incomplete';
+    instruction.appendChild(status);
+
+    const updateStatus = () => setChoiceCountStatus(status, selected.length, count);
+
+    options.forEach((tool, i) => {
+        const isSelected = selected.includes(tool);
+        const takenElsewhere = hasToolProficiency(tool) && getToolSource(tool) !== source && !isSelected;
+
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'skill-option';
+        if (takenElsewhere) optionDiv.classList.add('skill-taken');
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = `${choiceKey}-opt-${i}`;
+        checkbox.value = tool;
+        checkbox.checked = isSelected;
+        checkbox.disabled = takenElsewhere;
+
+        const label = document.createElement('label');
+        label.htmlFor = checkbox.id;
+        label.textContent = takenElsewhere ? `${tool} (already taken)` : tool;
+
+        checkbox.addEventListener('change', () => {
+            if (checkbox.checked) {
+                if (selected.length >= count) {
+                    checkbox.checked = false;
+                    return;
+                }
+                selected.push(tool);
+                addToolProficiency(tool, source);
+            } else {
+                const idx = selected.indexOf(tool);
+                if (idx > -1) selected.splice(idx, 1);
+                if (getToolSource(tool) === source) removeToolProficiency(tool);
+            }
+            currentCharacter.choices[choiceKey] = [...selected];
+            if (typeof updateClassesDataForSave === 'function') updateClassesDataForSave();
+            updateStatus();
+        });
+
+        optionDiv.appendChild(checkbox);
+        optionDiv.appendChild(label);
+        container.appendChild(optionDiv);
+    });
+
+    parent.appendChild(container);
+    updateStatus();
 }
 
 /**
@@ -3078,6 +3631,17 @@ function getAllChoiceOptionsWithStatus(options, choiceKey) {
  * @param {boolean} hideUnavailable - If true, removes unavailable options; if false, shows them grayed out
  */
 function renderChoices(parent, level, choiceKey, choiceDef, hideUnavailable = true) {
+    // Expertise and Magical Secrets carry only a placeholder option in the
+    // data; they need their own pickers (proficient skills / any-class spells).
+    if (isExpertiseChoiceKey(choiceKey)) {
+        renderExpertiseChoiceCard(parent, level, choiceKey, choiceDef, null);
+        return;
+    }
+    if (isMagicalSecretsChoiceKey(choiceKey)) {
+        renderMagicalSecretsChoiceCard(parent, level, choiceKey, choiceDef, null);
+        return;
+    }
+
     // Sanitize the choiceKey so generated IDs are always valid CSS selectors
     const safeKey  = choiceKey.replace(/[^a-zA-Z0-9_-]/g, '');
     const idBase   = `choice-${safeKey}-L${level}`;

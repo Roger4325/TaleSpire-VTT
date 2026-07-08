@@ -148,6 +148,8 @@
                         <!-- Actions -->
                         <div id="monsterActions" class="monster-actions"></div>
                         <hr id="monsterActionsHR" class="monsterActionsDivider">
+                        <div id="monsterBonusActions" class="monster-actions"></div>
+                        <hr id="monsterBonusActionsHR" class="monsterActionsDivider">
                         <div id="monsterReactions" class="monster-actions"></div>
                         <hr id="monsterActionsHR" class="monsterActionsDivider">
                         <div id="monsterLegendaryActions" class="monster-actions"></div>
@@ -1065,7 +1067,12 @@
                     <legend id="actionsLegend">Actions</legend>
                     <button type="button" id="addActionButton" class="nonRollButton">Add Action</button>
                 </fieldset>
-        
+
+                <fieldset id="monsterFormBonusActions">
+                    <legend id="bonusActionsLegend">Bonus Actions</legend>
+                    <button type="button" id="addBonusActionButton" class="nonRollButton">Add Bonus Action</button>
+                </fieldset>
+
                 <fieldset id="monsterFormReactions">
                     <legend id="reactionsLegend">Reactions</legend>
                     <button type="button" id="addReactionButton" class="nonRollButton">Add Reaction</button>
@@ -1523,6 +1530,38 @@
                         <hr>
                         <div class="monsterEditorSubsection">
                             <div>
+                                <button id="customRaces" class="nonRollButton">Create Race</button>
+                                <button id="importCustomRace" class="nonRollButton">Import Race</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label id="customRaceSelectLabel" for="customRaceSelect">Select Race to Delete/Edit:</label>
+                                    <button id="deleteCustomRaces" class="nonRollButton">Delete Race</button>
+                                    <button id="editCustomRaces" class="nonRollButton">Edit Race</button>
+                                    <button id="exportCustomRace" class="nonRollButton">Export Race</button>
+                                </div>
+                                <select id="customRaceSelect"></select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="monsterEditorSubsection">
+                            <div>
+                                <button id="customFeats" class="nonRollButton">Create Feat</button>
+                                <button id="importCustomFeat" class="nonRollButton">Import Feat</button>
+                            </div>
+                            <div class="deleteMonster">
+                                <div class="deleteMonster-header">
+                                    <label id="customFeatSelectLabel" for="customFeatSelect">Select Feat to Delete/Edit:</label>
+                                    <button id="deleteCustomFeats" class="nonRollButton">Delete Feat</button>
+                                    <button id="editCustomFeats" class="nonRollButton">Edit Feat</button>
+                                    <button id="exportCustomFeat" class="nonRollButton">Export Feat</button>
+                                </div>
+                                <select id="customFeatSelect"></select>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="monsterEditorSubsection">
+                            <div>
                                 <button id="customItems" class="nonRollButton">Create Item</button>
                                 <button id="importCustomItem" class="nonRollButton">Import Item</button>
                             </div>
@@ -1557,13 +1596,17 @@
                                 </div>
                                 <select id="givePlayerSelect"></select>
                                 <div class="give-row">
-                                    <input type="text" id="giveItemInput" list="giveItemOptions" placeholder="Item name...">
-                                    <datalist id="giveItemOptions"></datalist>
+                                    <div class="give-input-wrap">
+                                        <input type="text" id="giveItemInput" placeholder="Item name..." autocomplete="off">
+                                        <div id="giveItemDropdown" class="dropdown"></div>
+                                    </div>
                                     <button id="giveItemButton" class="nonRollButton">Give Item</button>
                                 </div>
                                 <div class="give-row">
-                                    <input type="text" id="giveSpellInput" list="giveSpellOptions" placeholder="Spell name...">
-                                    <datalist id="giveSpellOptions"></datalist>
+                                    <div class="give-input-wrap">
+                                        <input type="text" id="giveSpellInput" placeholder="Spell name..." autocomplete="off">
+                                        <div id="giveSpellDropdown" class="dropdown"></div>
+                                    </div>
                                     <button id="giveSpellButton" class="nonRollButton">Send Spell</button>
                                 </div>
                             </div>
@@ -1712,8 +1755,131 @@
             </form>
         </div>
     </div>
+
+    <!-- Homebrew race form -->
+    <div id="raceFormModal" style="display: none;">
+        <div class="spell-modal-background">
+            <span id="closeRaceForm" class="close">&times;</span>
+            <form id="raceForm" onsubmit="return false;">
+                <h2 id="raceFormTitle">Create a Race</h2>
+
+                <div class="form-row">
+                    <label id="raceNameLabel" for="raceFormName">Race Name:</label>
+                    <input type="text" id="raceFormName" placeholder="e.g., Aarakocra" required>
+                </div>
+                <div class="form-row">
+                    <label id="raceYearLabel" for="raceFormYear">Edition:</label>
+                    <select id="raceFormYear">
+                        <option value="2014">5e (2014)</option>
+                        <option value="2024">5.5e (2024)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="raceSizeLabel" for="raceFormSize">Size:</label>
+                    <select id="raceFormSize">
+                        <option value="Medium">Medium</option>
+                        <option value="Small">Small</option>
+                        <option value="Small or Medium">Small or Medium</option>
+                        <option value="Large">Large</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="raceSpeedLabel" for="raceFormSpeed">Walking Speed (ft):</label>
+                    <input type="number" id="raceFormSpeed" min="0" max="120" value="30">
+                </div>
+                <div class="form-row">
+                    <label id="raceLanguagesLabel" for="raceFormLanguages">Languages:</label>
+                    <input type="text" id="raceFormLanguages" placeholder="Common, Elvish">
+                </div>
+
+                <label class="homebrew-subhead">Ability Score Increases</label>
+                <p class="homebrew-hint">Each row adds a fixed bonus (e.g. +2 Dexterity, +1 Wisdom).</p>
+                <div id="raceAbilityRows"></div>
+                <button id="addRaceAbility" class="nonRollButton" type="button">+ Add Ability Increase</button>
+
+                <label class="homebrew-subhead">Traits</label>
+                <div id="raceTraitRows"></div>
+                <button id="addRaceTrait" class="nonRollButton" type="button">+ Add Trait</button>
+
+                <div class="form-row">
+                    <label id="raceSkillsLabel" for="raceFormSkills">Skill Proficiencies:</label>
+                    <input type="text" id="raceFormSkills" placeholder="Perception, Stealth">
+                </div>
+                <div class="form-row">
+                    <label id="raceWeaponsLabel" for="raceFormWeapons">Weapon Proficiencies:</label>
+                    <input type="text" id="raceFormWeapons" placeholder="Longsword, Shortbow">
+                </div>
+                <div class="form-row">
+                    <label id="raceArmorLabel" for="raceFormArmor">Armor Proficiencies:</label>
+                    <input type="text" id="raceFormArmor" placeholder="Light armor">
+                </div>
+                <div class="form-row">
+                    <label id="raceToolsLabel" for="raceFormTools">Tool Proficiencies:</label>
+                    <input type="text" id="raceFormTools" placeholder="Smith's tools">
+                </div>
+                <div class="form-row">
+                    <label id="raceSpellsLabel" for="raceFormSpells">Spells Granted:</label>
+                    <input type="text" id="raceFormSpells" placeholder="Dancing Lights, Faerie Fire">
+                </div>
+
+                <div id="raceValidation"></div>
+                <button id="saveRace" class="nonRollButton" type="button">Save Race</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Homebrew feat form -->
+    <div id="featFormModal" style="display: none;">
+        <div class="spell-modal-background">
+            <span id="closeFeatForm" class="close">&times;</span>
+            <form id="featForm" onsubmit="return false;">
+                <h2 id="featFormTitle">Create a Feat</h2>
+
+                <div class="form-row">
+                    <label id="featNameLabel" for="featFormName">Feat Name:</label>
+                    <input type="text" id="featFormName" placeholder="e.g., Alert" required>
+                </div>
+                <div class="form-row">
+                    <label id="featYearLabel" for="featFormYear">Edition:</label>
+                    <select id="featFormYear">
+                        <option value="2014">5e (2014)</option>
+                        <option value="2024">5.5e (2024)</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label id="featPrereqLabel" for="featFormPrereq">Prerequisite:</label>
+                    <input type="text" id="featFormPrereq" placeholder="e.g., Dexterity 13 or higher (blank if none)">
+                </div>
+                <div class="form-row">
+                    <label id="featDescLabel" for="featFormDesc">Description:</label>
+                    <textarea id="featFormDesc" rows="5" placeholder="One paragraph per line. Start a line with • for a bullet point."></textarea>
+                </div>
+                <div class="form-row">
+                    <label id="featMultipleLabel" for="featFormMultiple">Can be taken more than once:</label>
+                    <input type="checkbox" id="featFormMultiple">
+                </div>
+
+                <label class="homebrew-subhead">Ability Score Increase</label>
+                <p class="homebrew-hint">Add one ability for a fixed +N. Add several to let the player choose one of them (half-feat style).</p>
+                <div id="featAbilityRows"></div>
+                <button id="addFeatAbility" class="nonRollButton" type="button">+ Add Ability Option</button>
+
+                <div class="form-row">
+                    <label id="featSpellsLabel" for="featFormSpells">Spells Granted:</label>
+                    <input type="text" id="featFormSpells" placeholder="Misty Step">
+                </div>
+                <div class="form-row">
+                    <label id="featProfsLabel" for="featFormProfs">Proficiencies Granted:</label>
+                    <input type="text" id="featFormProfs" placeholder="One skill of choice, Firearms">
+                </div>
+
+                <div id="featValidation"></div>
+                <button id="saveFeat" class="nonRollButton" type="button">Save Feat</button>
+            </form>
+        </div>
+    </div>
     <script>
-        
+
 
     </script>
     <footer>

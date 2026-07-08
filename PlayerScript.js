@@ -8122,6 +8122,20 @@ document.getElementById("importSaveButton").addEventListener("click", async () =
                 return;
             }
             saveToGlobalStorage(importDataType, key, dataInfo, true);
+        } else if (importDataType === "Custom Races") {
+            const result = await validateCustomRace(dataInfo || {});
+            if (result.errors.length > 0) {
+                showErrorModal("Race failed verification: " + result.errors.join(' '));
+                return;
+            }
+            saveToGlobalStorage(importDataType, key, dataInfo, true);
+        } else if (importDataType === "Custom Feats") {
+            const result = await validateCustomFeat(dataInfo || {});
+            if (result.errors.length > 0) {
+                showErrorModal("Feat failed verification: " + result.errors.join(' '));
+                return;
+            }
+            saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else if (importDataType === "Custom Spells" || importDataType === "Custom Equipment") {
             saveToGlobalStorage(importDataType, key, dataInfo, true);
         } else {

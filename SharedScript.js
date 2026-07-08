@@ -1275,17 +1275,20 @@ const translations = {
         quickActionsLegend: "Quick Actions",
         traitsLegend: "Traits",
         actionsLegend: "Actions",
+        bonusActionsLegend: "Bonus Actions",
         reactionsLegend: "Reactions",
         legendaryActionsLegend: "Legendary Actions",
         saveMonsterButton: "Save Monster",
         addTraitButton: "Add Trait",
         addActionButton: "Add Action",
+        addBonusActionButton: "Add Bonus Action",
         addReactionButton: "Add Reaction",
         addLegendaryActionsButton: "Add Legendary Actions",
 
         dynamicSections: {
             monsterFormTraits: "Traits",
             monsterFormActions: "Actions",
+            monsterFormBonusActions: "Bonus Actions",
             monsterFormReactions: "Reactions",
             monsterFormLegendaryActions: "Legendary Actions",
             monsterFormQuickActions: "Quick Actions"
@@ -2461,17 +2464,20 @@ const translations = {
         quickActionsLegend: "Acciones Rápidas",
         traitsLegend: "Rasgos",
         actionsLegend: "Acciones",
+        bonusActionsLegend: "Acciones Adicionales",
         reactionsLegend: "Reacciones",
         legendaryActionsLegend: "Acciones Legendarias",
         saveMonsterButton: "Guardar Monstruo",
         addTraitButton: "Agregar Rasgo",
         addActionButton: "Agregar Acción",
+        addBonusActionButton: "Agregar Acción Adicional",
         addReactionButton: "Agregar Reacción",
         addLegendaryActionsButton: "Agregar Acciones Legendarias",
 
         dynamicSections: {
             monsterFormTraits: "Rasgos",
             monsterFormActions: "Acciones",
+            monsterFormBonusActions: "Acciones Adicionales",
             monsterFormReactions: "Reacciones",
             monsterFormLegendaryActions: "Acciones Legendarias",
             monsterFormQuickActions: "Acciones Rápidas"
@@ -4189,6 +4195,20 @@ function removeFromCampaignStorage(dataType, dataId) {
 
 
 
+// Fetches an optional DM-provided JSON file from the gitignored local-content/
+// folder (see docs/README_LOCAL_CONTENT.md). Returns null when the file is
+// absent or unparseable so callers can fall through to shipped data only.
+async function loadLocalContentJson(path) {
+    try {
+        const response = await fetch(path);
+        if (!response.ok) return null;
+        return await response.json();
+    } catch (error) {
+        console.warn(`Local content file ${path} not loaded:`, error);
+        return null;
+    }
+}
+
 // read the JSON file spells.json and save the data and names to variables
 async function readSpellJson() {
     try {
@@ -4199,17 +4219,31 @@ async function readSpellJson() {
         if (!response.ok) throw new Error('Network response was not ok');
         const spellsData = await response.json();
 
-        let combinedData = isGlobalDataAnObject 
+        // Optional DM-provided spells: same shape as spells-eng.json entries.
+        // A local spell with the same name and year replaces the shipped one.
+        const localSpells = (await loadLocalContentJson('local-content/spells.json')) || [];
+        const localSpellKeys = new Set(localSpells.map(s => `${(s.name || '').toLowerCase()}|${s.year || '2014'}`));
+        const officialSpells = localSpellKeys.size
+            ? spellsData.filter(s => !localSpellKeys.has(`${(s.name || '').toLowerCase()}|${s.year || '2014'}`))
+            : spellsData;
+
+        // The DM's own homebrew (Custom Spells) should always be available
+        // regardless of the 2014/2024 edition toggle — only the official and
+        // local-content catalogs get edition-filtered. Otherwise a homebrew
+        // spell tagged for one edition silently disappears (from spell lists
+        // AND the "give spell" picker) whenever the campaign is set to the
+        // other edition.
+        const customSpells = isGlobalDataAnObject
             ? Object.values(allSpellData)
-            : allSpellData;
-        
-        combinedData = [...combinedData, ...spellsData];
+            : (allSpellData || []);
+
+        const officialCatalog = [...officialSpells, ...localSpells];
 
         const versionData = await loadDataFromGlobalStorage("D&DVersion");
         const versionSetting = versionData?.Version || '2014';
-        
-        // Add version filtering
-        let filteredData = combinedData.filter(spell => {
+
+        // Edition filtering applies to the official/local catalog only
+        let filteredOfficial = officialCatalog.filter(spell => {
             const spellYear = spell.year || '2014';
             if (versionSetting === 'both') return true;
             return spellYear === versionSetting;
@@ -4219,24 +4253,27 @@ async function readSpellJson() {
         if (versionSetting === 'both') {
             // Create a map to track spell name occurrences
             const spellCountMap = {};
-            
-            filteredData = filteredData.map(spell => {
+
+            filteredOfficial = filteredOfficial.map(spell => {
                 // Create a copy of the spell object to avoid mutation
                 const modifiedSpell = {...spell};
-                
+
                 const year = modifiedSpell.year || '2014';
                 const symbol = year === '2014' ? '' : ' 🜁';
-                
+
                 // Count occurrences to handle duplicates
                 const count = spellCountMap[modifiedSpell.name] || 0;
                 spellCountMap[modifiedSpell.name] = count + 1;
-                
+
                 // Append symbol to the spell name
                 modifiedSpell.name += symbol;
-                
+
                 return modifiedSpell;
             });
         }
+
+        // Homebrew first, then the edition-filtered official catalog
+        const filteredData = [...customSpells, ...filteredOfficial];
 
         // Extract spell names from the modified/filtered data
         const spellNames = filteredData.map(spell => spell.name);
@@ -6549,6 +6586,8 @@ async function getSpellNameIndex() {
     } catch (error) {
         console.error("Could not load spell catalog for verification:", error);
     }
+    const localSpells = await loadLocalContentJson('local-content/spells.json');
+    (localSpells || []).forEach(spell => { if (spell.name) names.add(spell.name.toLowerCase()); });
     try {
         const customSpells = await loadDataFromGlobalStorage("Custom Spells");
         Object.keys(customSpells || {}).forEach(name => names.add(name.toLowerCase()));
@@ -6576,6 +6615,14 @@ async function getBuiltInSubclassIndex() {
         console.error("Could not load built-in subclass list:", error);
         builtInSubclassIndex = {};
     }
+    // DM-provided subclasses count as built-in for homebrew collision checks
+    const localSubclasses = await loadLocalContentJson('local-content/subclasses.json');
+    Object.entries(localSubclasses || {}).forEach(([classKey, subs]) => {
+        builtInSubclassIndex[classKey] = builtInSubclassIndex[classKey] || [];
+        Object.keys(subs || {}).forEach(name => {
+            if (!builtInSubclassIndex[classKey].includes(name)) builtInSubclassIndex[classKey].push(name);
+        });
+    });
     return builtInSubclassIndex;
 }
 
@@ -7178,6 +7225,18 @@ if (!document.getElementById('importCharacterData') && document.getElementById('
                     showErrorModal("Subclass failed verification: " + result.errors.join(' '));
                     return;
                 }
+            } else if (importDataType === "Custom Races") {
+                const result = await validateCustomRace(dataInfo || {});
+                if (result.errors.length > 0) {
+                    showErrorModal("Race failed verification: " + result.errors.join(' '));
+                    return;
+                }
+            } else if (importDataType === "Custom Feats") {
+                const result = await validateCustomFeat(dataInfo || {});
+                if (result.errors.length > 0) {
+                    showErrorModal("Feat failed verification: " + result.errors.join(' '));
+                    return;
+                }
             } else if (importDataType !== "Custom Spells" && importDataType !== "Custom Equipment") {
                 showErrorModal("Invalid dataType. Please check the format and try again.");
                 return;
@@ -7191,6 +7250,599 @@ if (!document.getElementById('importCharacterData') && document.getElementById('
             console.error("Failed to import data:", error);
             showErrorModal("Invalid data. Please check the format and try again.");
         }
+    });
+}
+
+
+// ============================================================================
+// Homebrew races & feats
+// ----------------------------------------------------------------------------
+// Custom races live in global storage under "Custom Races" (keyed by name) and
+// custom feats under "Custom Feats". They mirror the built-in Races.json /
+// Feats.json shapes so the Character Creator can merge them in and treat them
+// like official content. Create / edit / delete / import / export work exactly
+// like Custom Subclasses and Custom Spells.
+// ============================================================================
+
+const HOMEBREW_ABILITY_OPTIONS = [
+    ['strength', 'STR', 'Strength'], ['dexterity', 'DEX', 'Dexterity'],
+    ['constitution', 'CON', 'Constitution'], ['intelligence', 'INT', 'Intelligence'],
+    ['wisdom', 'WIS', 'Wisdom'], ['charisma', 'CHA', 'Charisma']
+];
+
+function homebrewSlug(name) {
+    return (name || '').toString().toLowerCase().normalize('NFKD')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+}
+
+// Built-in names, loaded once, so homebrew can be checked for collisions.
+let builtInRaceIndex = null;
+async function getBuiltInRaceIndex() {
+    if (builtInRaceIndex) return builtInRaceIndex;
+    const names = new Set();
+    try {
+        const response = await fetch('CharacterCreator/Races.json');
+        if (response.ok) {
+            const data = await response.json();
+            Object.values(data || {}).forEach(r => { if (r && r.name) names.add(r.name.toLowerCase()); });
+        }
+    } catch (error) {
+        console.error("Could not load built-in race list:", error);
+    }
+    const localRaces = await loadLocalContentJson('local-content/races.json');
+    Object.values(localRaces || {}).forEach(r => { if (r && r.name) names.add(r.name.toLowerCase()); });
+    builtInRaceIndex = names;
+    return names;
+}
+
+let builtInFeatIndex = null;
+async function getBuiltInFeatIndex() {
+    if (builtInFeatIndex) return builtInFeatIndex;
+    const names = new Set();
+    try {
+        const response = await fetch('CharacterCreator/Feats.json');
+        if (response.ok) {
+            const data = await response.json();
+            (data.feats || []).forEach(f => { if (f && f.name) names.add(f.name.toLowerCase()); });
+        }
+    } catch (error) {
+        console.error("Could not load built-in feat list:", error);
+    }
+    const localFeats = await loadLocalContentJson('local-content/feats.json');
+    (localFeats || []).forEach(f => { if (f && f.name) names.add(f.name.toLowerCase()); });
+    builtInFeatIndex = names;
+    return names;
+}
+
+// --- Shared form widgets ----------------------------------------------------
+
+function makeHomebrewAbilitySelect(selectedCode) {
+    const select = document.createElement('select');
+    select.className = 'homebrew-ability-select';
+    HOMEBREW_ABILITY_OPTIONS.forEach(([, code, label]) => {
+        const option = new Option(label, code);
+        if (code === selectedCode) option.selected = true;
+        select.appendChild(option);
+    });
+    return select;
+}
+
+/** One ability-score row: ability picker + amount. Used by race and feat forms. */
+function addHomebrewAbilityRow(containerId, code = 'STR', value = 1, onChange) {
+    const rows = document.getElementById(containerId);
+    const row = document.createElement('div');
+    row.className = 'homebrew-ability-row';
+
+    const select = makeHomebrewAbilitySelect(code);
+    const plus = document.createElement('span');
+    plus.className = 'homebrew-ability-plus';
+    plus.textContent = '+';
+    const amount = document.createElement('input');
+    amount.type = 'number';
+    amount.min = '1';
+    amount.max = '5';
+    amount.value = value;
+    amount.className = 'homebrew-ability-value';
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'nonRollButton subclass-feature-remove';
+    removeButton.textContent = '✖';
+    removeButton.addEventListener('click', () => { row.remove(); if (onChange) onChange(); });
+
+    [select, amount].forEach(el => el.addEventListener('input', () => { if (onChange) onChange(); }));
+
+    row.appendChild(select);
+    row.appendChild(plus);
+    row.appendChild(amount);
+    row.appendChild(removeButton);
+    rows.appendChild(row);
+}
+
+function showHomebrewValidation(boxId, errors, warnings) {
+    const box = document.getElementById(boxId);
+    if (!box) return;
+    box.innerHTML = '';
+    errors.forEach(text => {
+        const p = document.createElement('p');
+        p.className = 'subclass-validation-error';
+        p.textContent = '✖ ' + text;
+        box.appendChild(p);
+    });
+    warnings.forEach(text => {
+        const p = document.createElement('p');
+        p.className = 'subclass-validation-warning';
+        p.textContent = '⚠ ' + text;
+        box.appendChild(p);
+    });
+}
+
+function homebrewCsv(id) {
+    return document.getElementById(id).value.split(',').map(s => s.trim()).filter(Boolean);
+}
+
+// ============================================================================
+// Custom races
+// ============================================================================
+
+function clearRaceValidation() {
+    const box = document.getElementById('raceValidation');
+    if (box) box.innerHTML = '';
+    const button = document.getElementById('saveRace');
+    if (button) { button.dataset.warningsConfirmed = ''; button.textContent = 'Save Race'; }
+}
+
+/** One race trait: name + description (same layout as a subclass feature). */
+function addRaceTraitRow(name = '', description = '') {
+    const rows = document.getElementById('raceTraitRows');
+    const row = document.createElement('div');
+    row.className = 'subclass-feature-row';
+
+    const nameInput = document.createElement('input');
+    nameInput.type = 'text';
+    nameInput.className = 'race-trait-name';
+    nameInput.placeholder = 'Trait name';
+    nameInput.value = name;
+
+    const removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.className = 'nonRollButton subclass-feature-remove';
+    removeButton.textContent = '✖';
+    removeButton.addEventListener('click', () => { row.remove(); clearRaceValidation(); });
+
+    const descInput = document.createElement('textarea');
+    descInput.rows = 2;
+    descInput.className = 'race-trait-desc';
+    descInput.placeholder = 'What the trait does';
+    descInput.value = description;
+
+    [nameInput, descInput].forEach(el => el.addEventListener('input', clearRaceValidation));
+
+    const topLine = document.createElement('div');
+    topLine.className = 'subclass-feature-row-top';
+    topLine.appendChild(nameInput);
+    topLine.appendChild(removeButton);
+
+    row.appendChild(topLine);
+    row.appendChild(descInput);
+    rows.appendChild(row);
+}
+
+function resetRaceForm() {
+    document.getElementById('raceFormTitle').textContent = 'Create a Race';
+    document.getElementById('raceFormName').value = '';
+    document.getElementById('raceFormYear').selectedIndex = 0;
+    document.getElementById('raceFormSize').value = 'Medium';
+    document.getElementById('raceFormSpeed').value = '30';
+    ['raceFormLanguages', 'raceFormSkills', 'raceFormWeapons', 'raceFormArmor',
+     'raceFormTools', 'raceFormSpells'].forEach(id => { document.getElementById(id).value = ''; });
+    document.getElementById('raceAbilityRows').innerHTML = '';
+    document.getElementById('raceTraitRows').innerHTML = '';
+    addRaceTraitRow();
+    clearRaceValidation();
+}
+
+function populateRaceForm(race) {
+    document.getElementById('raceFormTitle').textContent = 'Edit Race';
+    document.getElementById('raceFormName').value = race.name || '';
+    document.getElementById('raceFormYear').value = race.year === '2024' ? '2024' : '2014';
+    document.getElementById('raceFormSize').value = race.size || 'Medium';
+    document.getElementById('raceFormSpeed').value = race.speed || 30;
+    document.getElementById('raceFormLanguages').value = (race.languages || []).join(', ');
+    document.getElementById('raceFormSkills').value = (race.skillProficiencies || []).join(', ');
+    document.getElementById('raceFormWeapons').value = (race.weaponProficiencies || []).join(', ');
+    document.getElementById('raceFormArmor').value = (race.armorProficiencies || []).join(', ');
+    document.getElementById('raceFormTools').value = (race.toolProficiencies || []).join(', ');
+    document.getElementById('raceFormSpells').value = (race.spellsGranted || []).join(', ');
+
+    const abilityRows = document.getElementById('raceAbilityRows');
+    abilityRows.innerHTML = '';
+    Object.entries(race.abilityScoreIncrease || {}).forEach(([full, value]) => {
+        const opt = HOMEBREW_ABILITY_OPTIONS.find(a => a[0] === full);
+        addHomebrewAbilityRow('raceAbilityRows', opt ? opt[1] : 'STR', value, clearRaceValidation);
+    });
+
+    const traitRows = document.getElementById('raceTraitRows');
+    traitRows.innerHTML = '';
+    (race.traits || []).forEach(t => addRaceTraitRow(t.name, t.description));
+    if (!traitRows.children.length) addRaceTraitRow();
+
+    clearRaceValidation();
+}
+
+function collectRaceFromForm() {
+    const name = document.getElementById('raceFormName').value.trim();
+
+    const abilityScoreIncrease = {};
+    const bonuses = [];
+    document.querySelectorAll('#raceAbilityRows .homebrew-ability-row').forEach(row => {
+        const code = row.querySelector('.homebrew-ability-select').value;
+        const value = parseInt(row.querySelector('.homebrew-ability-value').value, 10);
+        if (!code || !value) return;
+        const full = (HOMEBREW_ABILITY_OPTIONS.find(a => a[1] === code) || [])[0];
+        if (!full) return;
+        abilityScoreIncrease[full] = value;
+        bonuses.push({ category: 'attributes', key: code, value: value, source: name });
+    });
+
+    const traits = [];
+    document.querySelectorAll('#raceTraitRows .subclass-feature-row').forEach(row => {
+        const traitName = row.querySelector('.race-trait-name').value.trim();
+        const traitDesc = row.querySelector('.race-trait-desc').value.trim();
+        if (!traitName && !traitDesc) return;
+        traits.push({ name: traitName, description: traitDesc });
+    });
+
+    const race = {
+        name: name,
+        year: document.getElementById('raceFormYear').value,
+        size: document.getElementById('raceFormSize').value,
+        speed: parseInt(document.getElementById('raceFormSpeed').value, 10) || 30,
+        languages: homebrewCsv('raceFormLanguages'),
+        abilityScoreIncrease: abilityScoreIncrease,
+        bonuses: bonuses,
+        traits: traits,
+        homebrew: true
+    };
+    const skills = homebrewCsv('raceFormSkills'); if (skills.length) race.skillProficiencies = skills;
+    const weapons = homebrewCsv('raceFormWeapons'); if (weapons.length) race.weaponProficiencies = weapons;
+    const armor = homebrewCsv('raceFormArmor'); if (armor.length) race.armorProficiencies = armor;
+    const tools = homebrewCsv('raceFormTools'); if (tools.length) race.toolProficiencies = tools;
+    const spells = homebrewCsv('raceFormSpells'); if (spells.length) race.spellsGranted = spells;
+    return race;
+}
+
+async function validateCustomRace(race) {
+    const errors = [];
+    const warnings = [];
+    if (!race.name) {
+        errors.push('The race needs a name.');
+    } else {
+        const index = await getBuiltInRaceIndex();
+        if (index.has(race.name.toLowerCase())) {
+            errors.push('A built-in race is already named "' + race.name + '". Pick a different name.');
+        }
+    }
+    if (!race.speed || race.speed <= 0) {
+        warnings.push('Walking speed is 0 - most races move 25-35 ft.');
+    }
+    if (Object.keys(race.abilityScoreIncrease || {}).length === 0) {
+        warnings.push('No ability score increase set - this race grants no ability bonuses.');
+    }
+    const spells = race.spellsGranted || [];
+    if (spells.length) {
+        const known = await getSpellNameIndex();
+        const unknown = spells.filter(s => !known.has(s.toLowerCase()));
+        if (unknown.length) warnings.push("These granted spells aren't in the catalog: " + unknown.join(', ') + '.');
+    }
+    return { errors: errors, warnings: warnings };
+}
+
+function loadAndDisplayCustomRaces() {
+    const select = document.getElementById('customRaceSelect');
+    if (!select) return;
+    loadDataFromGlobalStorage('Custom Races')
+        .then(races => {
+            select.innerHTML = '';
+            const names = Object.keys(races || {});
+            names.forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+            const empty = names.length === 0;
+            if (empty) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No races available';
+                select.appendChild(option);
+            }
+            select.disabled = empty;
+            document.getElementById('deleteCustomRaces').disabled = empty;
+        })
+        .catch(error => console.error('Failed to load custom races:', error));
+}
+
+const customRacesButton = document.getElementById('customRaces');
+if (customRacesButton) {
+    const raceFormModal = document.getElementById('raceFormModal');
+    customRacesButton.addEventListener('click', () => {
+        loadAndDisplayCustomRaces();
+        resetRaceForm();
+        raceFormModal.style.display = 'block';
+        homebrewModal.style.display = 'none';
+    });
+    document.getElementById('closeRaceForm').addEventListener('click', () => {
+        raceFormModal.style.display = 'none';
+    });
+    document.getElementById('raceFormName').addEventListener('input', clearRaceValidation);
+    document.getElementById('addRaceAbility').addEventListener('click', () => {
+        addHomebrewAbilityRow('raceAbilityRows', 'DEX', 2, clearRaceValidation);
+        clearRaceValidation();
+    });
+    document.getElementById('addRaceTrait').addEventListener('click', () => {
+        addRaceTraitRow();
+        clearRaceValidation();
+    });
+    document.getElementById('saveRace').addEventListener('click', async () => {
+        const saveButton = document.getElementById('saveRace');
+        const race = collectRaceFromForm();
+        const result = await validateCustomRace(race);
+        if (result.errors.length > 0) {
+            showHomebrewValidation('raceValidation', result.errors, result.warnings);
+            return;
+        }
+        if (result.warnings.length > 0 && saveButton.dataset.warningsConfirmed !== 'true') {
+            showHomebrewValidation('raceValidation', [], result.warnings);
+            saveButton.dataset.warningsConfirmed = 'true';
+            saveButton.textContent = 'Save Anyway';
+            return;
+        }
+        try {
+            await saveToGlobalStorage('Custom Races', race.name, race, false);
+        } catch (error) {
+            console.error('Failed to save custom race:', error);
+        }
+        raceFormModal.style.display = 'none';
+        loadAndDisplayCustomRaces();
+    });
+    document.getElementById('deleteCustomRaces').addEventListener('click', () => {
+        const selected = document.getElementById('customRaceSelect').value;
+        if (!selected) { errorModal('No race selected for deletion.'); return; }
+        removeFromGlobalStorage('Custom Races', selected)
+            .then(() => loadAndDisplayCustomRaces())
+            .catch(error => console.error('Failed to delete race:', error));
+    });
+    document.getElementById('editCustomRaces').addEventListener('click', () => {
+        const selected = document.getElementById('customRaceSelect').value;
+        if (!selected) { errorModal('No race selected for editing.'); return; }
+        loadDataFromGlobalStorage('Custom Races')
+            .then(races => {
+                const data = races[selected];
+                if (data) {
+                    raceFormModal.style.display = 'block';
+                    homebrewModal.style.display = 'none';
+                    populateRaceForm(data);
+                } else {
+                    errorModal('Race "' + selected + '" data not found.');
+                }
+            })
+            .catch(error => console.error('Failed to load race for editing:', error));
+    });
+    document.getElementById('exportCustomRace').addEventListener('click', () => {
+        exportData('Custom Races', document.getElementById('customRaceSelect').value);
+    });
+}
+
+const importCustomRaceButton = document.getElementById('importCustomRace');
+if (importCustomRaceButton && document.getElementById('importModal')) {
+    importCustomRaceButton.addEventListener('click', () => {
+        document.getElementById('importModal').style.display = 'flex';
+        document.getElementById('importTitle').textContent = 'Import Race Data';
+        document.getElementById('importTitle').setAttribute('data-type', 'Custom Races');
+    });
+}
+
+// ============================================================================
+// Custom feats
+// ============================================================================
+
+function clearFeatValidation() {
+    const box = document.getElementById('featValidation');
+    if (box) box.innerHTML = '';
+    const button = document.getElementById('saveFeat');
+    if (button) { button.dataset.warningsConfirmed = ''; button.textContent = 'Save Feat'; }
+}
+
+function resetFeatForm() {
+    document.getElementById('featFormTitle').textContent = 'Create a Feat';
+    document.getElementById('featFormName').value = '';
+    document.getElementById('featFormYear').selectedIndex = 0;
+    document.getElementById('featFormPrereq').value = '';
+    document.getElementById('featFormDesc').value = '';
+    document.getElementById('featFormMultiple').checked = false;
+    document.getElementById('featFormSpells').value = '';
+    document.getElementById('featFormProfs').value = '';
+    document.getElementById('featAbilityRows').innerHTML = '';
+    clearFeatValidation();
+}
+
+function populateFeatForm(feat) {
+    document.getElementById('featFormTitle').textContent = 'Edit Feat';
+    document.getElementById('featFormName').value = feat.name || '';
+    document.getElementById('featFormYear').value = feat.year === '2024' ? '2024' : '2014';
+    document.getElementById('featFormPrereq').value = feat.prerequisite || '';
+    document.getElementById('featFormDesc').value = (feat.description || []).join('\n');
+    document.getElementById('featFormMultiple').checked = !!feat.multiple;
+    document.getElementById('featFormSpells').value = (feat.spellsGranted || []).join(', ');
+    document.getElementById('featFormProfs').value = (feat.proficienciesGranted || []).join(', ');
+
+    const abilityRows = document.getElementById('featAbilityRows');
+    abilityRows.innerHTML = '';
+    (feat.abilityScoreIncrease || []).forEach(a =>
+        addHomebrewAbilityRow('featAbilityRows', a.ability, a.increase, clearFeatValidation));
+
+    clearFeatValidation();
+}
+
+function collectFeatFromForm() {
+    const name = document.getElementById('featFormName').value.trim();
+    const description = document.getElementById('featFormDesc').value
+        .split('\n').map(s => s.trim()).filter(Boolean);
+
+    const abilityScoreIncrease = [];
+    document.querySelectorAll('#featAbilityRows .homebrew-ability-row').forEach(row => {
+        const code = row.querySelector('.homebrew-ability-select').value;
+        const increase = parseInt(row.querySelector('.homebrew-ability-value').value, 10);
+        if (!code || !increase) return;
+        abilityScoreIncrease.push({ ability: code, increase: increase });
+    });
+
+    const feat = {
+        index: homebrewSlug(name),
+        name: name,
+        prerequisite: document.getElementById('featFormPrereq').value.trim(),
+        description: description,
+        bonus: [],
+        year: document.getElementById('featFormYear').value,
+        homebrew: true
+    };
+    if (abilityScoreIncrease.length) feat.abilityScoreIncrease = abilityScoreIncrease;
+    const spells = homebrewCsv('featFormSpells'); if (spells.length) feat.spellsGranted = spells;
+    const profs = homebrewCsv('featFormProfs'); if (profs.length) feat.proficienciesGranted = profs;
+    if (document.getElementById('featFormMultiple').checked) feat.multiple = true;
+    return feat;
+}
+
+async function validateCustomFeat(feat) {
+    const errors = [];
+    const warnings = [];
+    if (!feat.name) {
+        errors.push('The feat needs a name.');
+    } else {
+        const index = await getBuiltInFeatIndex();
+        if (index.has(feat.name.toLowerCase())) {
+            errors.push('A built-in feat is already named "' + feat.name + '". Pick a different name.');
+        }
+    }
+    if (!(feat.description || []).length) {
+        warnings.push('The feat has no description text.');
+    }
+    if ((feat.abilityScoreIncrease || []).length > 1) {
+        warnings.push('Several ability options are set - the builder will let the player pick one of them (half-feat style).');
+    }
+    const spells = feat.spellsGranted || [];
+    if (spells.length) {
+        const known = await getSpellNameIndex();
+        const unknown = spells.filter(s => !known.has(s.toLowerCase()));
+        if (unknown.length) warnings.push("These granted spells aren't in the catalog: " + unknown.join(', ') + '.');
+    }
+    return { errors: errors, warnings: warnings };
+}
+
+function loadAndDisplayCustomFeats() {
+    const select = document.getElementById('customFeatSelect');
+    if (!select) return;
+    loadDataFromGlobalStorage('Custom Feats')
+        .then(feats => {
+            select.innerHTML = '';
+            const names = Object.keys(feats || {});
+            names.forEach(name => {
+                const option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                select.appendChild(option);
+            });
+            const empty = names.length === 0;
+            if (empty) {
+                const option = document.createElement('option');
+                option.value = '';
+                option.textContent = 'No feats available';
+                select.appendChild(option);
+            }
+            select.disabled = empty;
+            document.getElementById('deleteCustomFeats').disabled = empty;
+        })
+        .catch(error => console.error('Failed to load custom feats:', error));
+}
+
+const customFeatsButton = document.getElementById('customFeats');
+if (customFeatsButton) {
+    const featFormModal = document.getElementById('featFormModal');
+    customFeatsButton.addEventListener('click', () => {
+        loadAndDisplayCustomFeats();
+        resetFeatForm();
+        featFormModal.style.display = 'block';
+        homebrewModal.style.display = 'none';
+    });
+    document.getElementById('closeFeatForm').addEventListener('click', () => {
+        featFormModal.style.display = 'none';
+    });
+    document.getElementById('featFormName').addEventListener('input', clearFeatValidation);
+    ['featFormPrereq', 'featFormDesc', 'featFormSpells', 'featFormProfs'].forEach(id =>
+        document.getElementById(id).addEventListener('input', clearFeatValidation));
+    document.getElementById('featFormMultiple').addEventListener('change', clearFeatValidation);
+    document.getElementById('addFeatAbility').addEventListener('click', () => {
+        addHomebrewAbilityRow('featAbilityRows', 'STR', 1, clearFeatValidation);
+        clearFeatValidation();
+    });
+    document.getElementById('saveFeat').addEventListener('click', async () => {
+        const saveButton = document.getElementById('saveFeat');
+        const feat = collectFeatFromForm();
+        const result = await validateCustomFeat(feat);
+        if (result.errors.length > 0) {
+            showHomebrewValidation('featValidation', result.errors, result.warnings);
+            return;
+        }
+        if (result.warnings.length > 0 && saveButton.dataset.warningsConfirmed !== 'true') {
+            showHomebrewValidation('featValidation', [], result.warnings);
+            saveButton.dataset.warningsConfirmed = 'true';
+            saveButton.textContent = 'Save Anyway';
+            return;
+        }
+        try {
+            await saveToGlobalStorage('Custom Feats', feat.name, feat, false);
+        } catch (error) {
+            console.error('Failed to save custom feat:', error);
+        }
+        featFormModal.style.display = 'none';
+        loadAndDisplayCustomFeats();
+    });
+    document.getElementById('deleteCustomFeats').addEventListener('click', () => {
+        const selected = document.getElementById('customFeatSelect').value;
+        if (!selected) { errorModal('No feat selected for deletion.'); return; }
+        removeFromGlobalStorage('Custom Feats', selected)
+            .then(() => loadAndDisplayCustomFeats())
+            .catch(error => console.error('Failed to delete feat:', error));
+    });
+    document.getElementById('editCustomFeats').addEventListener('click', () => {
+        const selected = document.getElementById('customFeatSelect').value;
+        if (!selected) { errorModal('No feat selected for editing.'); return; }
+        loadDataFromGlobalStorage('Custom Feats')
+            .then(feats => {
+                const data = feats[selected];
+                if (data) {
+                    featFormModal.style.display = 'block';
+                    homebrewModal.style.display = 'none';
+                    populateFeatForm(data);
+                } else {
+                    errorModal('Feat "' + selected + '" data not found.');
+                }
+            })
+            .catch(error => console.error('Failed to load feat for editing:', error));
+    });
+    document.getElementById('exportCustomFeat').addEventListener('click', () => {
+        exportData('Custom Feats', document.getElementById('customFeatSelect').value);
+    });
+}
+
+const importCustomFeatButton = document.getElementById('importCustomFeat');
+if (importCustomFeatButton && document.getElementById('importModal')) {
+    importCustomFeatButton.addEventListener('click', () => {
+        document.getElementById('importModal').style.display = 'flex';
+        document.getElementById('importTitle').textContent = 'Import Feat Data';
+        document.getElementById('importTitle').setAttribute('data-type', 'Custom Feats');
     });
 }
 

@@ -869,6 +869,7 @@ function populateMonsterFields(monster) {
     checkAndPopulateSection('monsterSkills', monster.Skills, 'skill');
     checkAndPopulateSection('monsterSaves', monster.Saves, 'savingThrow');
     checkAndPopulateSection('monsterActions', monster.Actions, 'action');
+    checkAndPopulateSection('monsterBonusActions', monster.BonusActions, 'action');
     checkAndPopulateSection('monsterReactions', monster.Reactions, 'action');
     checkAndPopulateSection('monsterAbilities', monster.Traits, 'traits');
     checkAndPopulateSection('monsterLegendaryActions', monster.LegendaryActions, 'legendaryAction');
@@ -2541,6 +2542,7 @@ document.getElementById("monsterCreationForm").addEventListener("submit", functi
         QuickAction: collectDynamicFields("monsterFormQuickActions"),
         Traits: collectDynamicFields("monsterFormTraits"),
         Actions: collectDynamicFields("monsterFormActions"),
+        BonusActions: collectDynamicFields("monsterFormBonusActions"),
         Reactions: collectDynamicFields("monsterFormReactions"),
         LegendaryActions: collectDynamicFields("monsterFormLegendaryActions")
     };
@@ -2667,6 +2669,7 @@ function populateDynamicFields(sectionId, data) {
 // Buttons to add dynamic entries
 document.getElementById("addTraitButton").addEventListener("click", () => addDynamicField("monsterFormTraits"));
 document.getElementById("addActionButton").addEventListener("click", () => addDynamicField("monsterFormActions"));
+document.getElementById("addBonusActionButton").addEventListener("click", () => addDynamicField("monsterFormBonusActions"));
 document.getElementById("addReactionButton").addEventListener("click", () => addDynamicField("monsterFormReactions"));
 document.getElementById("addLegendaryActionsButton").addEventListener("click", () => addDynamicField("monsterFormLegendaryActions"));
 
@@ -2897,6 +2900,7 @@ function populateMonsterForm(monster) {
 
     populateDynamicFields("monsterFormTraits", monster.Traits);
     populateDynamicFields("monsterFormActions", monster.Actions);
+    populateDynamicFields("monsterFormBonusActions", monster.BonusActions);
     populateDynamicFields("monsterFormReactions", monster.Reactions);
     populateDynamicFields("monsterFormLegendaryActions", monster.LegendaryActions);
     populateDynamicFields("monsterFormQuickActions", monster.QuickAction);
@@ -4714,7 +4718,7 @@ function getGiveEquipmentCatalog() {
     return info?.equipmentData || [];
 }
 
-function populateGiveToPlayerSection() {
+async function populateGiveToPlayerSection() {
     const playerSelect = document.getElementById('givePlayerSelect');
     if (!playerSelect) return;
 
@@ -4735,23 +4739,81 @@ function populateGiveToPlayerSection() {
         });
     }
 
-    const itemOptions = document.getElementById('giveItemOptions');
-    itemOptions.innerHTML = '';
-    getGiveEquipmentCatalog().forEach(item => {
-        if (!item?.name) return;
-        const option = document.createElement('option');
-        option.value = item.name;
-        itemOptions.appendChild(option);
-    });
+    // The item/spell autocompletes read these catalogs live when the field is
+    // focused, so make sure they're loaded before the DM starts typing.
+    if (!AppData.equipmentLookupInfo) await loadEquipmentDataFiles();
+    if (!AppData.spellLookupInfo) await loadSpellDataFiles();
+}
 
-    const spellOptions = document.getElementById('giveSpellOptions');
-    spellOptions.innerHTML = '';
-    (AppData.spellLookupInfo?.spellsData || []).forEach(spell => {
-        if (!spell?.name) return;
-        const option = document.createElement('option');
-        option.value = spell.name;
-        spellOptions.appendChild(option);
-    });
+// TaleSpire's webview doesn't render native <datalist> popups, so the give-to-
+// player fields use the same hand-rolled dropdown as the shop/monster/player
+// lists. getNames() is read live so newly-created homebrew shows up right away.
+function setupGiveDropdown(inputId, dropdownId, getNames) {
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    if (!input || !dropdown) return;
+
+    function render() {
+        const search = input.value.trim().toLowerCase();
+        dropdown.innerHTML = '';
+        getNames()
+            .filter(name => name.toLowerCase().includes(search))
+            .slice(0, 100) // catalogs run to the hundreds; cap the visible list
+            .forEach(name => {
+                const option = document.createElement('div');
+                option.classList.add('dropdown-item');
+                option.textContent = name;
+                // mousedown fires before the input's blur, so the pick registers
+                option.addEventListener('mousedown', () => {
+                    input.value = name;
+                    dropdown.style.display = 'none';
+                    updateGiveDropdownSpace();
+                });
+                dropdown.appendChild(option);
+            });
+        dropdown.style.display = dropdown.childElementCount ? 'block' : 'none';
+        updateGiveDropdownSpace();
+    }
+
+    input.addEventListener('focus', render);
+    input.addEventListener('input', render);
+    input.addEventListener('blur', () => setTimeout(() => {
+        dropdown.style.display = 'none';
+        updateGiveDropdownSpace();
+    }, 200));
+}
+
+// An open autocomplete is absolutely positioned, so on its own it doesn't grow
+// the panel — it just spills past the bottom of the modal and off-screen. Reserve
+// exactly enough space below the content for the open list (plus a little
+// padding); the panel's height:auto then expands to contain it, and if the panel
+// is already capped at max-height we scroll the list into view instead.
+function updateGiveDropdownSpace() {
+    const modalContent = document.querySelector('.homebrew-modal-content');
+    if (!modalContent) return;
+    const scroller = document.querySelector('.homebrew-modal-background');
+
+    const open = ['giveItemDropdown', 'giveSpellDropdown']
+        .map(id => document.getElementById(id))
+        .filter(dd => dd && dd.style.display === 'block');
+
+    // Clear any prior reservation so we measure the natural content bottom
+    modalContent.style.paddingBottom = '';
+    if (open.length === 0) return;
+
+    const contentBottom = modalContent.getBoundingClientRect().bottom;
+    const listBottom = Math.max(...open.map(dd => dd.getBoundingClientRect().bottom));
+    const overhang = listBottom - contentBottom;
+    if (overhang > 0) modalContent.style.paddingBottom = (overhang + 24) + 'px';
+
+    // If the panel is capped at its max height, reveal the reserved space
+    if (scroller) {
+        const scRect = scroller.getBoundingClientRect();
+        const listBottomNow = Math.max(...open.map(dd => dd.getBoundingClientRect().bottom));
+        if (listBottomNow > scRect.bottom) {
+            scroller.scrollTop += (listBottomNow - scRect.bottom) + 12;
+        }
+    }
 }
 
 async function sendGiveMessage(type, payload, playerId, successText, button) {
@@ -4785,6 +4847,12 @@ async function sendGiveMessage(type, payload, playerId, successText, button) {
 if (document.getElementById('giveToPlayerSection')) {
     // Refresh the player list and name suggestions whenever homebrew opens
     document.getElementById('openHomebrew').addEventListener('click', populateGiveToPlayerSection);
+
+    // Autocomplete dropdowns for the item/spell fields (read the catalogs live)
+    setupGiveDropdown('giveItemInput', 'giveItemDropdown',
+        () => getGiveEquipmentCatalog().map(i => i && i.name).filter(Boolean));
+    setupGiveDropdown('giveSpellInput', 'giveSpellDropdown',
+        () => (AppData.spellLookupInfo?.spellsData || []).map(s => s && s.name).filter(Boolean));
 
     document.getElementById('giveItemButton').addEventListener('click', () => {
         const playerSelect = document.getElementById('givePlayerSelect');

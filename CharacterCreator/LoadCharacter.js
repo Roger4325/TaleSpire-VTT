@@ -6,6 +6,21 @@
 // added or changed and saved back non-destructively.
 // ============================================================================
 
+// Fetches an optional DM-provided JSON file from the gitignored local-content/
+// folder at the repo root (see docs/README_LOCAL_CONTENT.md). Returns null
+// when the file is absent or unparseable so callers fall through to shipped
+// data only. Also used by Species.js and CharacterCreator.js.
+async function loadLocalContentJson(path) {
+    try {
+        const response = await fetch(path);
+        if (!response.ok) return null;
+        return await response.json();
+    } catch (error) {
+        console.warn(`Local content file ${path} not loaded:`, error);
+        return null;
+    }
+}
+
 // Load classes data from JSON file
 async function loadClassesData() {
     try {
@@ -14,11 +29,66 @@ async function loadClassesData() {
             throw new Error('Failed to load classes data');
         }
         classesData = await response.json();
+        await mergeLocalClassesIntoClassesData();
+        await mergeLocalSubclassesIntoClassesData();
         await mergeCustomSubclassesIntoClassesData();
     } catch (error) {
         console.error('Error loading classes data:', error);
         throw error;
     }
+}
+
+/**
+ * Merges DM-provided classes (local-content/classes.json, same shape as
+ * Classes.json) into classesData. A local class with the same key as a
+ * built-in replaces it entirely, so a full-book version of a trimmed class
+ * can be dropped in; new keys add whole new classes (e.g. artificer).
+ */
+async function mergeLocalClassesIntoClassesData() {
+    const local = await loadLocalContentJson('../local-content/classes.json');
+    if (!local || !local.classes) return;
+    classesData.classes = classesData.classes || {};
+    Object.assign(classesData.classes, local.classes);
+}
+
+/**
+ * Merges DM-provided subclasses (local-content/subclasses.json) into
+ * classesData. Shape: { "<classKey>": { "<Subclass Name>": {...} } } where
+ * each definition matches the Classes.json subclass shape, plus an optional
+ * "year" ("2014"/"2024", default "2014") filtered by the D&DVersion setting
+ * like the spell catalog. Unlike homebrew subclasses, a local subclass with
+ * the same name as a built-in replaces it (to complete trimmed entries).
+ */
+async function mergeLocalSubclassesIntoClassesData() {
+    const local = await loadLocalContentJson('../local-content/subclasses.json');
+    if (!local) return;
+
+    const versionData = await loadDataFromGlobalStorage("D&DVersion");
+    const versionSetting = versionData?.Version || '2014';
+
+    Object.entries(local).forEach(([classKey, subs]) => {
+        const classInfo = classesData.classes?.[classKey];
+        if (!classInfo || !subs) return;
+        classInfo.subclasses = classInfo.subclasses || {};
+
+        Object.entries(subs).forEach(([subName, subDef]) => {
+            if (!subDef) return;
+            const year = subDef.year || '2014';
+            if (versionSetting !== 'both' && year !== versionSetting) return;
+
+            classInfo.subclasses[subName] = subDef;
+
+            // Offer it in the level-up subclass choice dropdown too
+            Object.values(classInfo.levelProgression || {}).forEach(levelData => {
+                Object.values(levelData.choices || {}).forEach(choiceDef => {
+                    if (choiceDef?.type === 'subclass' && Array.isArray(choiceDef.options) &&
+                        !choiceDef.options.includes(subName)) {
+                        choiceDef.options.push(subName);
+                    }
+                });
+            });
+        });
+    });
 }
 
 /**
@@ -86,10 +156,49 @@ async function loadFeatsData() {
             return;
         }
         featsData = await response.json();
+        // DM-provided feats (local-content/feats.json): a flat array of feat
+        // objects in the same shape as featsData.feats. Same-name entries
+        // replace built-ins; new names are appended.
+        const localFeats = await loadLocalContentJson('../local-content/feats.json');
+        if (Array.isArray(localFeats) && localFeats.length) {
+            featsData.feats = featsData.feats || [];
+            const byName = new Map(featsData.feats.map(f => [f.name, f]));
+            localFeats.forEach(f => byName.set(f.name, f));
+            featsData.feats = Array.from(byName.values());
+        }
+
+        // Homebrew feats (sheet Homebrew tab, global storage "Custom Feats"),
+        // filtered by the D&DVersion setting; new names are appended and never
+        // shadow a built-in or DM-provided feat.
+        try {
+            const customFeats = await loadDataFromGlobalStorage('Custom Feats');
+            if (customFeats && Object.keys(customFeats).length) {
+                const versionData = await loadDataFromGlobalStorage('D&DVersion');
+                const versionSetting = versionData?.Version || '2014';
+                featsData.feats = featsData.feats || [];
+                const byName = new Map(featsData.feats.map(f => [f.name, f]));
+                Object.values(customFeats).forEach(f => {
+                    if (!f || !f.name || byName.has(f.name)) return;
+                    const year = f.year || '2014';
+                    if (versionSetting !== 'both' && year !== versionSetting) return;
+                    byName.set(f.name, f);
+                });
+                featsData.feats = Array.from(byName.values());
+            }
+        } catch (error) {
+            console.error('Failed to merge custom feats:', error);
+        }
     } catch (error) {
         console.error('Error loading feats data:', error);
         featsData = {};
     }
+}
+
+// Slug used to key homebrew races into racesData (matches how the sheet's
+// Homebrew form stores them by name).
+function customRaceKey(name) {
+    return (name || '').toString().toLowerCase().normalize('NFKD')
+        .replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 }
 
 // Load races data from JSON file
@@ -100,6 +209,30 @@ async function loadRacesData() {
             throw new Error('Failed to load races data');
         }
         racesData = await response.json();
+        // DM-provided races (local-content/races.json, same shape as
+        // Races.json): same-key entries replace built-ins, new keys add races
+        const localRaces = await loadLocalContentJson('../local-content/races.json');
+        if (localRaces) Object.assign(racesData, localRaces);
+
+        // Homebrew races (sheet Homebrew tab, global storage "Custom Races"),
+        // filtered by the D&DVersion setting; keyed by a slug of the name and
+        // never allowed to shadow a built-in / DM-provided race.
+        try {
+            const customRaces = await loadDataFromGlobalStorage('Custom Races');
+            if (customRaces && Object.keys(customRaces).length) {
+                const versionData = await loadDataFromGlobalStorage('D&DVersion');
+                const versionSetting = versionData?.Version || '2014';
+                Object.values(customRaces).forEach(race => {
+                    if (!race || !race.name) return;
+                    const year = race.year || '2014';
+                    if (versionSetting !== 'both' && year !== versionSetting) return;
+                    const key = customRaceKey(race.name);
+                    if (!racesData[key]) racesData[key] = race;
+                });
+            }
+        } catch (error) {
+            console.error('Failed to merge custom races:', error);
+        }
     } catch (error) {
         console.error('Error loading races data:', error);
         throw error;
@@ -346,6 +479,7 @@ function restoreFromCreatorData(ccd, characterName) {
 
     // --- Spell picks (editable again on level-up) ---
     currentCharacter.spellSelections = deepCopy(ccd.spellSelections || {});
+    currentCharacter.magicalSecrets = deepCopy(ccd.magicalSecrets || {});
 
     // --- Recompute HP and refresh derived save data ---
     updateMulticlassHitPoints();

@@ -314,6 +314,11 @@ body {
     border-bottom: 1px solid var(--cc-border);
     width: 100%;
     overflow: hidden;
+    /* Follow the container's rounded corners so the active/hover tab tint is
+       clipped to the curve instead of squaring off over the rounded bubble
+       (container radius 14px minus its 1px border = 13px inner radius). */
+    border-top-left-radius: 13px;
+    border-top-right-radius: 13px;
 }
 
 .nav-tab {

@@ -163,11 +163,18 @@ function getSubclassDisplayName(clsEntry) {
     return info?.subclasses?.[clsEntry.subclass]?.name || clsEntry.subclass;
 }
 
-/** Loose match between a subclass name and a catalog tag field. */
+/**
+ * Loose match between a subclass name and a catalog tag field, on whole-word
+ * boundaries so e.g. the "Light" domain tag doesn't match "Twilight Domain".
+ */
 function subclassMatchesField(subclassDisplay, fieldValue) {
     const tags = String(fieldValue).split(',').map(t => t.trim().toLowerCase());
     const name = subclassDisplay.toLowerCase();
-    return tags.some(tag => tag && (name.includes(tag) || tag.includes(name)));
+    const wordMatch = (needle, haystack) => {
+        const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        return new RegExp(`\\b${escaped}\\b`).test(haystack);
+    };
+    return tags.some(tag => tag && (wordMatch(tag, name) || wordMatch(name, tag)));
 }
 
 /**
@@ -280,6 +287,17 @@ function collectCreatorSpellsByLevel() {
         (picks.cantrips || []).forEach(add);
         (picks.spells || []).forEach(add);
         getAutoGrantedSpells(clsEntry, budget).forEach(spell => add(spell.name));
+    });
+
+    // Magical Secrets (bard, and similar "any class" grants) — extra spells that
+    // don't count against a class's normal spells-known budget. Only include
+    // entries whose owning class is still on the character at the required level.
+    Object.values(currentCharacter.magicalSecrets || {}).forEach(entry => {
+        if (!entry || !Array.isArray(entry.spells) || entry.spells.length === 0) return;
+        const owner = entries.find(c => c.className === entry.ownerClass);
+        if (!owner) return;
+        if (entry.level && (owner.level || 1) < entry.level) return;
+        entry.spells.forEach(add);
     });
 
     return result;
